@@ -127,6 +127,18 @@
     @keyframes printin{to{opacity:1;transform:none}}
   }
 
+  /* photo slots */
+  .photo{margin:0}
+  .photo-frame{position:relative;aspect-ratio:3/2;background:#ECEBE6;border:1px solid var(--rule);overflow:hidden}
+  .photo-frame img{width:100%;height:100%;object-fit:cover}
+  .photo-frame .placeholder{position:absolute;inset:0;display:grid;place-items:center}
+  .photo-frame .placeholder svg{width:72px;height:auto;opacity:.14}
+  .photo figcaption{margin-top:10px;font-size:13.5px;color:var(--muted);line-height:1.45}
+  .photo-band{padding:0 0 clamp(72px,9vw,128px)}
+  .photo-band .photo{grid-column:5/span 8}
+  @media (max-width:900px){.photo-band .photo{grid-column:1/-1}}
+  .about .photo{margin-bottom:32px;max-width:520px}
+
   /* leak list */
   .leaks{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:28px 40px}
   @media (max-width:640px){.leaks{grid-template-columns:1fr}}
@@ -264,6 +276,13 @@
     </div>
   </section>
 
+  <div class="photo-band"><div class="wrap grid">
+    <figure class="photo"><div class="photo-frame"><div class="placeholder" aria-hidden="true"><svg viewBox="0 0 60 48" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M59.9999 5.52467C58.6648 5.58869 56.9226 5.88879 55.6332 6.2856C53.0875 7.09156 51.1649 8.54769 49.7972 10.5394C48.4904 12.4428 47.9606 14.5248 47.8915 16.713C47.746 21.3182 47.8709 25.9244 47.806 30.5296C47.7724 32.9294 47.4674 35.3068 46.516 37.581C44.6085 42.141 41.0985 45.3982 35.7082 47.0546C34.1597 47.5304 32.5386 47.7664 30.8927 47.8936C28.2304 48.0993 25.5791 47.9653 22.9204 47.8384C19.3017 47.6659 15.8535 46.8401 12.4143 45.958C11.7888 45.7975 11.1654 45.6311 10.4463 45.4428C11.32 45.2944 12.0892 45.173 12.8538 45.0326C17.2699 44.2217 20.7393 42.1926 23.3397 39.0553C24 38.2587 24.5967 37.4287 25.0301 36.4898C25.0836 36.2968 25.2622 36.2687 25.4065 36.2107C26.7769 35.6617 28.0801 35.0243 29.2503 34.1924C30.7572 33.121 31.8838 31.801 32.8005 30.3362C34.1941 28.1084 34.8983 25.6986 35.3692 23.2273C35.7216 21.3775 35.9125 19.5099 36.2106 17.6543C36.4924 15.9009 36.8621 14.1651 37.7205 12.5357C38.4056 11.2347 39.2507 10.0285 40.3897 8.96682C42.0761 7.39527 44.1243 6.3254 46.4455 5.60264C47.5212 5.2677 48.6233 5.02455 49.7946 4.92389C50.1678 4.84805 50.5954 4.83063 50.927 4.79113C51.019 4.79214 51.0781 4.78041 51.1662 4.75685C51.511 4.74697 51.817 4.70345 52.1147 4.67905C53.9906 4.61961 55.6937 4.68173 57.3317 4.69146C57.7321 4.68961 57.7652 4.6566 58.1428 4.77947C58.4417 4.86056 59.3747 5.27204 59.9999 5.52467Z" fill="#FF323C"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M43.3379 4.71047C39.3743 6.33295 36.869 9.0063 35.5853 12.5561C34.9272 14.376 34.7019 16.2642 34.4439 18.1461C34.0694 20.8792 33.6846 23.6124 32.6232 26.2313C31.6738 28.5738 30.3337 30.7181 28.1632 32.417C26.7846 33.496 25.1924 34.2913 23.4622 34.9276C21.5482 35.443 19.6009 35.6773 17.618 35.6668C13.5109 35.6448 9.62996 34.7625 5.878 33.3883C3.85116 32.6461 1.91185 31.7648 0.00235041 30.784C-0.00618591 30.7791 0.0119553 30.7783 0.00303524 30.78C0.139848 30.6903 0.294639 30.7727 0.447295 30.8071C2.74346 31.3232 5.07798 31.5553 7.44632 31.4072C11.8663 31.1313 15.4277 29.4644 18.1304 26.4687C19.7305 24.6954 20.6807 22.6649 21.2338 20.4931C21.7823 18.3389 22.269 16.173 22.8404 14.0233C23.4904 11.5789 24.5052 9.25469 26.1615 7.16032C28.3673 4.37145 31.271 2.32932 34.9417 1.08115C36.4209 0.578163 37.9458 0.270616 39.5199 0.109586C42.4771 -0.192985 45.3669 0.170126 48.2442 0.720645C50.8225 1.21394 52.7325 1.82757 55.1391 2.72032C57.6961 3.7072 57.2593 3.37526 55.3864 3.259C55.0324 3.23707 54.3626 3.18818 54.0073 3.19355C50.3641 3.15093 46.2464 3.64064 43.3379 4.71047Z" fill="#FF323C"/>
+</svg></div></div><figcaption data-i18n="photo.1">Photo to come: the back of a work van, 6:40 a.m., before the first call.</figcaption></figure>
+  </div></div>
+
   <section id="how">
     <div class="wrap grid">
       <div class="side"><h2 data-i18n="how.h2">How it works</h2></div>
@@ -338,6 +357,10 @@
     <div class="wrap grid">
       <div class="side"><h2 data-i18n="about.h2">Who's behind it</h2></div>
       <div class="main">
+        <figure class="photo"><div class="photo-frame"><div class="placeholder" aria-hidden="true"><svg viewBox="0 0 60 48" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M59.9999 5.52467C58.6648 5.58869 56.9226 5.88879 55.6332 6.2856C53.0875 7.09156 51.1649 8.54769 49.7972 10.5394C48.4904 12.4428 47.9606 14.5248 47.8915 16.713C47.746 21.3182 47.8709 25.9244 47.806 30.5296C47.7724 32.9294 47.4674 35.3068 46.516 37.581C44.6085 42.141 41.0985 45.3982 35.7082 47.0546C34.1597 47.5304 32.5386 47.7664 30.8927 47.8936C28.2304 48.0993 25.5791 47.9653 22.9204 47.8384C19.3017 47.6659 15.8535 46.8401 12.4143 45.958C11.7888 45.7975 11.1654 45.6311 10.4463 45.4428C11.32 45.2944 12.0892 45.173 12.8538 45.0326C17.2699 44.2217 20.7393 42.1926 23.3397 39.0553C24 38.2587 24.5967 37.4287 25.0301 36.4898C25.0836 36.2968 25.2622 36.2687 25.4065 36.2107C26.7769 35.6617 28.0801 35.0243 29.2503 34.1924C30.7572 33.121 31.8838 31.801 32.8005 30.3362C34.1941 28.1084 34.8983 25.6986 35.3692 23.2273C35.7216 21.3775 35.9125 19.5099 36.2106 17.6543C36.4924 15.9009 36.8621 14.1651 37.7205 12.5357C38.4056 11.2347 39.2507 10.0285 40.3897 8.96682C42.0761 7.39527 44.1243 6.3254 46.4455 5.60264C47.5212 5.2677 48.6233 5.02455 49.7946 4.92389C50.1678 4.84805 50.5954 4.83063 50.927 4.79113C51.019 4.79214 51.0781 4.78041 51.1662 4.75685C51.511 4.74697 51.817 4.70345 52.1147 4.67905C53.9906 4.61961 55.6937 4.68173 57.3317 4.69146C57.7321 4.68961 57.7652 4.6566 58.1428 4.77947C58.4417 4.86056 59.3747 5.27204 59.9999 5.52467Z" fill="#FF323C"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M43.3379 4.71047C39.3743 6.33295 36.869 9.0063 35.5853 12.5561C34.9272 14.376 34.7019 16.2642 34.4439 18.1461C34.0694 20.8792 33.6846 23.6124 32.6232 26.2313C31.6738 28.5738 30.3337 30.7181 28.1632 32.417C26.7846 33.496 25.1924 34.2913 23.4622 34.9276C21.5482 35.443 19.6009 35.6773 17.618 35.6668C13.5109 35.6448 9.62996 34.7625 5.878 33.3883C3.85116 32.6461 1.91185 31.7648 0.00235041 30.784C-0.00618591 30.7791 0.0119553 30.7783 0.00303524 30.78C0.139848 30.6903 0.294639 30.7727 0.447295 30.8071C2.74346 31.3232 5.07798 31.5553 7.44632 31.4072C11.8663 31.1313 15.4277 29.4644 18.1304 26.4687C19.7305 24.6954 20.6807 22.6649 21.2338 20.4931C21.7823 18.3389 22.269 16.173 22.8404 14.0233C23.4904 11.5789 24.5052 9.25469 26.1615 7.16032C28.3673 4.37145 31.271 2.32932 34.9417 1.08115C36.4209 0.578163 37.9458 0.270616 39.5199 0.109586C42.4771 -0.192985 45.3669 0.170126 48.2442 0.720645C50.8225 1.21394 52.7325 1.82757 55.1391 2.72032C57.6961 3.7072 57.2593 3.37526 55.3864 3.259C55.0324 3.23707 54.3626 3.18818 54.0073 3.19355C50.3641 3.15093 46.2464 3.64064 43.3379 4.71047Z" fill="#FF323C"/>
+</svg></div></div><figcaption data-i18n="photo.2">Photo to come: Franco at a shop, walk sheet in hand.</figcaption></figure>
         <p data-i18n="about.p1">Lumora Ops is run by Franco Soto out of Gainesville. He grew up in Peru, so Spanish is a first language, not a translation.</p>
         <p data-i18n="about.p2">He got here by building automation for his own work first: systems that run a job while he's asleep. Lumora Ops is that same habit pointed at other people's shops, with the difference that it starts by watching how the shop actually runs, not by selling software.</p>
         <p class="muted" data-i18n="about.p3">One person, on purpose. You get the person who walked your shop, every time.</p>
@@ -438,6 +461,8 @@
     "who.p1":"Primero los oficios de emergencia, porque ahí una llamada perdida cuesta más y la cuenta es más clara. Un solo trabajo recuperado fuera de horario suele pagar el mes.",
     "who.p2":"También food trucks, restaurantes y discotecas: un reporte mensual a partir del export de tu punto de venta, en español o en inglés, sobre qué se vendió, cuándo, y qué noches están muertas. Más las dos o tres automatizaciones que de verdad importan, como el post de ubicación y el pedido de reseña.",
     "who.p3":"Florida marca el trabajo. La temporada de huracanes, la humedad, las piscinas y los alquileres aparecen todos en la hoja.",
+    "photo.1":"Foto por venir: la parte trasera de una camioneta de trabajo, 6:40 a.m., antes de la primera llamada.",
+    "photo.2":"Foto por venir: Franco en un negocio, con la hoja de visita en la mano.",
     "about.h2":"Quién está detrás",
     "about.p1":"Lumora Ops lo dirige Franco Soto desde Gainesville. Creció en Perú, así que el español es lengua materna, no una traducción.",
     "about.p2":"Llegó aquí construyendo automatización para su propio trabajo primero: sistemas que hacen la tarea mientras él duerme. Lumora Ops es esa misma costumbre apuntada a negocios ajenos, con la diferencia de que empieza mirando cómo funciona el negocio de verdad, no vendiendo software.",
