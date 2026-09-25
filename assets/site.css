@@ -406,6 +406,7 @@ a.sheet-card:hover{border-color:var(--ink)}
 .cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--g)}
 @media (max-width:760px){.cols3{grid-template-columns:1fr}}
 .linkrows{border-top:1px solid var(--ink)}
+.sec-head+.linkrows{border-top:0}
 .linkrows>li{border-bottom:1px solid var(--rule)}
 .linkrows a{display:flex;align-items:center;gap:14px;padding:10px 0;font-size:17px;font-weight:500;color:var(--ink);text-decoration:none}
 .linkrows a span{text-decoration:underline;text-decoration-color:var(--rule);text-decoration-thickness:1px;text-underline-offset:5px}
@@ -635,7 +636,9 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
 .prose blockquote{background:var(--sheet);border:1px solid var(--rule);border-radius:18px 18px 18px 4px;padding:16px 20px;font-size:16.5px;line-height:1.55;color:var(--ink);max-width:36em}
 .prose .formula{padding:18px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--rule);font-size:clamp(19px,2vw,23px);line-height:1.35;letter-spacing:-0.01em}
 .sources{margin-top:56px;padding-top:18px;border-top:1px solid var(--ink);font-size:15px;line-height:1.55}
-.sources h2{font-size:19px;letter-spacing:0;margin-bottom:12px}
+.sources h2{font-size:19px;letter-spacing:0;margin:0 0 12px;padding-top:0;border-top:0}
+.sources p{padding:8px 0}
+.art-faq .faq{margin-top:18px}
 .sources li{padding:8px 0;border-bottom:1px solid var(--rule)}
 .sources a{overflow-wrap:anywhere;word-break:break-word}
 
