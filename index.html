@@ -1,510 +1,152 @@
 <!doctype html>
-<html lang="en">
+<!-- Built by _build/build.py from _build/content. Edit those and rebuild: changes made in this file are overwritten. -->
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lumora Ops</title>
-<meta name="description" content="Ops and automation for Gainesville trades and local businesses. A two-day walk of your shop, a sheet of what it leaks in dollars, one fix inside the tools you already use. English and Spanish.">
-<meta property="og:title" content="Lumora Ops">
-<meta property="og:description" content="Ops and automation for Gainesville trades and local businesses. A two-day walk, a sheet of what your shop leaks in dollars, one fix inside the tools you already use.">
+<title>Lumora | Shop operations for Gainesville trades</title>
+<meta name="description" content="Shop operations for Gainesville trades and local businesses. We walk your shop, put a dollar figure on what it leaks and fix one leak at a time, inside the tools you already pay for when they can do the job. English or Spanish.">
+<link rel="canonical" href="https://lumorafl.com/">
+<link rel="alternate" hreflang="en" href="https://lumorafl.com/">
+<link rel="alternate" hreflang="es" href="https://lumorafl.com/es/">
+<link rel="alternate" hreflang="x-default" href="https://lumorafl.com/">
+<meta property="og:title" content="Lumora | Shop operations for Gainesville trades">
+<meta property="og:description" content="Shop operations for Gainesville trades and local businesses. We walk your shop, put a dollar figure on what it leaks and fix one leak at a time, inside the tools you already pay for when they can do the job. English or Spanish.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="assets/mark-650.png">
+<meta property="og:url" content="https://lumorafl.com/">
+<meta property="og:image" content="https://lumorafl.com/assets/mark-650.png">
+<meta property="og:site_name" content="Lumora">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="es_US">
+<meta name="theme-color" content="#F6F5F2">
 <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --paper:#F6F5F2;
-    --sheet:#FFFFFF;
-    --ink:#000000;
-    --body:#2B2B29;
-    --muted:#75746D;
-    --rule:#D8D7D0;
-    --signal:#FF323C;
-    --signal-ink:#D0202A;
-    --font:"Familjen Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-    --w:1160px;
-    --gutter:24px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{
-    background:var(--paper);
-    color:var(--body);
-    font-family:var(--font);
-    font-size:17px;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-  }
-  a{color:inherit;text-decoration:none}
-  p a{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
-  ::selection{background:var(--ink);color:var(--paper)}
-  :focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:2px}
-  img,svg{display:block;max-width:100%}
-  .wrap{width:min(var(--w),100% - 2*var(--gutter));margin-inline:auto}
-
-  /* nav */
-  .nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
-  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:24px}
-  .brand{display:flex;align-items:center;height:64px}
-  .brand svg{height:22px;width:auto}
-  .nav-right{display:flex;align-items:center;gap:28px}
-  .lang{display:inline-flex;border:1px solid var(--rule);border-radius:999px;padding:2px;background:var(--paper)}
-  .lang button{font:inherit;font-size:13px;font-weight:500;line-height:1;padding:7px 11px;border:0;background:transparent;color:var(--muted);border-radius:999px;cursor:pointer;transition:background .15s,color .15s}
-  .lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-  .lang button:hover:not([aria-pressed="true"]){color:var(--ink)}
-  .btn{display:inline-flex;align-items:center;justify-content:center;font:inherit;font-weight:500;font-size:15px;line-height:1;padding:13px 20px;border-radius:999px;background:var(--ink);color:var(--paper);border:1px solid var(--ink);cursor:pointer;transition:background .15s,border-color .15s,transform .15s}
-  .btn:hover{background:#222;border-color:#222}
-  .btn:active{transform:translateY(1px)}
-  .btn.signal{background:var(--signal);border-color:var(--signal);color:#fff}
-  .btn.signal:hover{background:var(--signal-ink);border-color:var(--signal-ink)}
-  .btn.quiet{background:transparent;color:var(--ink)}
-  .btn.quiet:hover{background:var(--ink);color:var(--paper)}
-  .nav .btn{padding:10px 16px;font-size:14px}
-  .nav-link{font-size:15px;color:var(--muted);transition:color .15s}
-  .nav-link:hover{color:var(--ink)}
-  @media (max-width:720px){.nav-link{display:none}.nav .btn{display:none}}
-
-  /* type */
-  h1,h2,h3{color:var(--ink);font-weight:600;letter-spacing:-0.02em;line-height:1.08;text-wrap:balance}
-  h1{font-size:clamp(34px,5.4vw,66px)}
-  h2{font-size:clamp(26px,3.4vw,40px);letter-spacing:-0.018em}
-  h3{font-size:22px;letter-spacing:-0.01em;line-height:1.25}
-  .lede{font-size:clamp(18px,1.6vw,21px);line-height:1.5;color:var(--body);max-width:34em}
-  .muted{color:var(--muted)}
-  .small{font-size:14px;line-height:1.5}
-  .num{font-variant-numeric:tabular-nums}
-
-  /* sections */
-  section{padding:clamp(72px,9vw,128px) 0;border-top:1px solid var(--rule)}
-  .grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);row-gap:40px}
-  .side{grid-column:1/span 3}
-  .main{grid-column:5/span 8}
-  .side h2{position:sticky;top:96px}
-  @media (max-width:900px){.side{grid-column:1/-1}.main{grid-column:1/-1}.side h2{position:static}}
-
-  /* hero */
-  .hero{padding:clamp(56px,8vw,120px) 0 clamp(64px,8vw,120px);border-top:0}
-  .hero .grid{row-gap:48px;align-items:start}
-  .hero-copy{grid-column:1/span 7}
-  .hero-sheet{grid-column:8/span 5;align-self:center}
-  @media (max-width:900px){.hero-copy{grid-column:1/-1}.hero-sheet{grid-column:1/-1;max-width:520px}}
-  .hero h1{margin-bottom:28px}
-  .hero .lede{margin-bottom:36px}
-  .cta-row{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center}
-  .cta-row .textlink{font-size:15px;color:var(--ink);border-bottom:1px solid var(--rule);padding-bottom:2px;transition:border-color .15s}
-  .cta-row .textlink:hover{border-color:var(--ink)}
-
-  /* the walk sheet */
-  .sheet{position:relative;background:var(--sheet);border:1px solid var(--rule);box-shadow:4px 4px 0 var(--rule);padding:26px 26px 20px}
-  .sheet-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding-bottom:16px;border-bottom:1px solid var(--ink)}
-  .sheet-head strong{display:block;color:var(--ink);font-weight:600;font-size:15px}
-  .sheet-head span{display:block;font-size:13px;color:var(--muted);margin-top:3px}
-  .stamp{flex:none;font-size:12px;font-weight:600;color:var(--signal);border:1.5px solid var(--signal);border-radius:3px;padding:4px 7px;line-height:1;letter-spacing:.01em;transform:rotate(-4deg)}
-  .sheet ol{list-style:none;counter-reset:leak}
-  .sheet li{display:grid;grid-template-columns:1fr auto;gap:6px 18px;padding:13px 0;border-bottom:1px solid var(--rule);font-size:14px;line-height:1.4}
-  .sheet li:last-child{border-bottom:0}
-  .sheet li .what{color:var(--body)}
-  .sheet li .what b{display:block;color:var(--ink);font-weight:500;margin-bottom:2px}
-  .sheet li .usd{color:var(--signal-ink);font-weight:600;font-size:15px;white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
-  .sheet li .usd.none{color:var(--muted);font-weight:400;font-size:13px}
-  .sheet-foot{margin-top:14px;padding-top:12px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:16px;font-size:13px}
-  .sheet-foot .total{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
-  .sheet-note{margin-top:14px;font-size:12.5px;color:var(--muted);line-height:1.45}
-  .sheet-mark{position:absolute;right:-14px;bottom:-18px;width:56px;height:auto;opacity:.95}
-
-  /* print-in moment, once */
-  @media (prefers-reduced-motion:no-preference){
-    .sheet li{opacity:0;transform:translateY(4px);animation:printin .45s ease-out forwards}
-    .sheet li:nth-child(1){animation-delay:.25s}
-    .sheet li:nth-child(2){animation-delay:.40s}
-    .sheet li:nth-child(3){animation-delay:.55s}
-    .sheet li:nth-child(4){animation-delay:.70s}
-    .sheet-foot{opacity:0;animation:printin .45s ease-out .9s forwards}
-    @keyframes printin{to{opacity:1;transform:none}}
-  }
-
-  /* photo slots */
-  .photo{margin:0}
-  .photo-frame{position:relative;aspect-ratio:3/2;background:#ECEBE6;border:1px solid var(--rule);overflow:hidden}
-  .photo-frame img{width:100%;height:100%;object-fit:cover}
-  .photo-frame .placeholder{position:absolute;inset:0;display:grid;place-items:center}
-  .photo-frame .placeholder svg{width:72px;height:auto;opacity:.14}
-  .photo figcaption{margin-top:10px;font-size:13.5px;color:var(--muted);line-height:1.45}
-  .photo-band{padding:0 0 clamp(72px,9vw,128px)}
-  .photo-band .photo{grid-column:5/span 8}
-  @media (max-width:900px){.photo-band .photo{grid-column:1/-1}}
-  .about .photo{margin-bottom:32px;max-width:520px}
-
-  /* leak list */
-  .leaks{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:28px 40px}
-  @media (max-width:640px){.leaks{grid-template-columns:1fr}}
-  .leaks li{padding-top:14px;border-top:1px solid var(--rule)}
-  .leaks h3{margin-bottom:8px}
-  .leaks p{font-size:15.5px;color:var(--body)}
-
-  /* steps */
-  .steps{list-style:none;counter-reset:step}
-  .steps li{display:grid;grid-template-columns:52px 1fr auto;gap:8px 20px;padding:26px 0;border-top:1px solid var(--rule);counter-increment:step;align-items:start}
-  .steps li:last-of-type{border-bottom:1px solid var(--rule)}
-  .steps li::before{content:counter(step);font-size:15px;font-weight:500;color:var(--muted);padding-top:5px;font-variant-numeric:tabular-nums}
-  .steps h3{margin-bottom:8px}
-  .steps p{font-size:15.5px;max-width:52ch}
-  .steps .price{grid-column:3;font-weight:600;color:var(--ink);white-space:nowrap;padding-top:4px;font-variant-numeric:tabular-nums}
-  @media (max-width:640px){.steps li{grid-template-columns:40px 1fr}.steps .price{grid-column:2;padding-top:0}}
-  .steps-after{margin-top:22px;font-size:15.5px;max-width:52ch}
-
-  /* rules */
-  .rules{list-style:none;max-width:60ch}
-  .rules li{padding:20px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:14px 1fr;gap:16px;align-items:start}
-  .rules li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--signal);margin-top:9px}
-  .rules p{font-size:16.5px;color:var(--body)}
-  .rules p b{color:var(--ink);font-weight:500}
-
-  /* who */
-  .trades{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 28px;list-style:none}
-  .trades li{font-size:15px;color:var(--ink);border:1px solid var(--rule);border-radius:999px;padding:8px 14px;background:var(--sheet)}
-  .who p{max-width:56ch;margin-bottom:16px}
-
-  /* about + contact */
-  .about p{max-width:52ch;margin-bottom:16px}
-  .contact{background:var(--sheet)}
-  .contact p{max-width:48ch}
-  .contact .btn.signal{margin-top:8px}
-  .contact-lines{margin-top:36px;display:grid;gap:10px;font-size:15px;color:var(--muted)}
-  .contact-lines a{color:var(--ink);border-bottom:1px solid var(--rule);padding-bottom:1px;transition:border-color .15s}
-  .contact-lines a:hover{border-color:var(--ink)}
-
-  footer{background:var(--ink);color:#8B8A83;font-size:13.5px;padding:28px 0 40px;border-top:1px solid #2A2A28}
-  footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between;align-items:center}
-  footer svg{height:18px;width:auto}
-</style>
+<link rel="preload" href="assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/site.css?v=23a8d444">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "name": "Lumora", "url": "https://lumorafl.com/", "description": "Shop operations for Gainesville trades and local businesses. We walk your shop, put a dollar figure on what it leaks and fix one leak at a time, inside the tools you already pay for when they can do the job. English or Spanish.", "logo": "https://lumorafl.com/assets/mark-650.png", "image": "https://lumorafl.com/assets/mark-650.png", "areaServed": {"@type": "AdministrativeArea", "name": "Alachua County, Florida"}, "address": {"@type": "PostalAddress", "addressLocality": "Gainesville", "addressRegion": "FL", "addressCountry": "US"}, "availableLanguage": ["English", "Spanish"], "parentOrganization": {"@type": "Organization", "name": "Lumora Group LLC"}}</script>
+<script>(function(){try{var q=new URLSearchParams(location.search).get("lang"),s=null,inside=false;try{s=localStorage.getItem("lumora-lang")}catch(e){}try{inside=!!document.referrer&&new URL(document.referrer).host===location.host}catch(e){}if(q==="es"||(q!=="en"&&s==="es"&&!inside)){location.replace("es/"+location.hash)}}catch(e){}})();</script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
+<svg class="defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><g id="lm-word" fill="currentColor"><path d="M107.001 14.4V57.5246H99V14.4H107.001Z"/><path d="M138.356 54.6307C135.859 57.0516 132.398 58.2622 127.972 58.2622C123.546 58.2622 120.066 57.0516 117.531 54.6307C115.034 52.1717 113.786 48.7862 113.786 44.4737V26.5997H121.787V44.4737C121.787 46.4407 122.335 48.0106 123.432 49.1834C124.529 50.3561 126.042 50.9424 127.972 50.9424C129.901 50.9424 131.414 50.3561 132.511 49.1834C133.608 48.0106 134.157 46.4407 134.157 44.4737V26.5997H142.157V44.4737C142.157 48.8239 140.89 52.2096 138.356 54.6307Z"/><path d="M186.431 25.7486C190.139 25.7486 193.146 26.9023 195.453 29.2099C197.837 31.5175 199.028 34.7328 199.028 38.8562V57.5246H191.028V40.3315C191.028 38.0239 190.46 36.246 189.325 34.9975C188.228 33.7493 186.734 33.125 184.842 33.125C182.8 33.125 181.154 33.8059 179.906 35.1679C178.658 36.4918 178.033 38.2886 178.033 40.5583V57.5246H170.033V40.3882C170.033 38.1185 169.465 36.3406 168.33 35.0544C167.233 33.7682 165.72 33.125 163.791 33.125C161.824 33.125 160.197 33.8059 158.911 35.1679C157.663 36.5297 157.038 38.3455 157.038 40.6152V57.5246H149.038V26.5997H156.868V31.0258C157.738 29.399 159.024 28.1129 160.727 27.167C162.429 26.1835 164.283 25.7107 166.288 25.7486C168.255 25.7486 170.052 26.2214 171.678 27.167C173.343 28.1129 174.572 29.4557 175.367 31.1959C176.501 29.4936 178.052 28.1695 180.019 27.2239C181.986 26.2404 184.124 25.7486 186.431 25.7486Z"/><path d="M204.246 42.0338C204.246 37.4566 205.797 33.6168 208.899 30.515C212.039 27.3374 216.011 25.7486 220.815 25.7486C225.619 25.7486 229.591 27.3374 232.731 30.515C235.833 33.6168 237.384 37.4566 237.384 42.0338C237.384 46.6488 235.833 50.5073 232.731 53.6093C229.591 56.749 225.619 58.319 220.815 58.319C216.011 58.319 212.039 56.749 208.899 53.6093C205.797 50.5073 204.246 46.6488 204.246 42.0338ZM214.686 48.3322C216.313 50.0345 218.356 50.8855 220.815 50.8855C223.198 50.8855 225.222 50.0345 226.886 48.3322C228.551 46.5542 229.383 44.4547 229.383 42.0338C229.383 39.6127 228.551 37.5322 226.886 35.7919C225.222 34.0898 223.198 33.2386 220.815 33.2386C218.356 33.2386 216.313 34.0898 214.686 35.7919C213.06 37.4566 212.247 39.5371 212.247 42.0338C212.247 44.4926 213.06 46.5922 214.686 48.3322Z"/><path d="M251.018 57.5246H243.019V26.5997H250.678V30.7418C252.533 27.413 255.37 25.7486 259.19 25.7486C260.438 25.7486 261.686 25.9754 262.934 26.4295L262.253 34.0898C260.892 33.6737 259.663 33.4656 258.566 33.4656C256.219 33.4656 254.366 34.26 253.006 35.8488C251.681 37.3997 251.018 39.7262 251.018 42.8282V57.5246Z"/><path d="M289.397 30.288V26.5997H297V57.5246H289.397V53.9498C286.75 56.8248 283.457 58.2622 279.523 58.2622C275.059 58.2622 271.39 56.7113 268.514 53.6093C265.639 50.5073 264.202 46.6109 264.202 41.9203C264.202 37.2674 265.658 33.4277 268.572 30.4015C271.486 27.3374 275.136 25.8053 279.523 25.8053C283.382 25.8053 286.673 27.2995 289.397 30.288ZM289.51 42.0338C289.51 39.6127 288.677 37.5132 287.014 35.7353C285.386 33.9953 283.325 33.125 280.829 33.125C278.294 33.125 276.214 33.9953 274.586 35.7353C272.998 37.4755 272.203 39.5748 272.203 42.0338C272.203 44.5303 273.017 46.6488 274.644 48.389C276.269 50.129 278.333 50.999 280.829 50.999C283.325 50.999 285.386 50.129 287.014 48.389C288.677 46.6109 289.51 44.4926 289.51 42.0338Z"/></g><g id="lm-mark"><path id="lm-body" fill-rule="evenodd" clip-rule="evenodd" d="M90 8.4409C85.8561 8.5788 81.8053 9.6543 78.5818 11.9296C75.3583 14.2048 72.962 17.6797 72.166 21.5559C71.77 23.4841 71.77 25.5116 71.77 27.525C71.77 33.4927 71.77 39.4603 71.77 45.428C71.77 49.2815 71.77 53.1885 70.2579 56.7901C68.7265 60.4376 65.6443 63.7719 62.1274 66.1376C58.6105 68.5034 54.6589 69.9005 50.7291 70.7849C47.0072 71.6225 43.3048 72.0001 39.5853 72.0001C35.4501 72.0001 31.2938 71.5333 27.1654 70.5199C23.2446 69.5573 19.3491 68.1017 13.4902 65.5518C18.9353 66.2577 23.7401 65.0072 27.3381 63.5431C31.7025 61.7671 35.86 59.0385 39.2758 56.1487C43.3184 52.7287 46.5352 48.903 48.5787 45.5599C49.882 43.4278 50.9656 41.0708 51.8262 38.4557C52.6869 35.8406 53.3246 32.9674 53.9172 30.0677C54.5099 27.1679 55.0576 24.2416 55.7823 21.6864C56.5069 19.1312 57.4085 16.9473 58.8638 15.0547C60.3192 13.1622 62.3283 11.5612 64.8204 10.3245C67.3125 9.0878 70.2876 8.2154 73.2911 7.704C75.5687 7.3162 77.8627 7.1359 80.0564 7.1359C83.6485 7.1359 86.9717 7.6193 90 8.4409Z" fill="#FF323C"/><path id="lm-crest" fill-rule="evenodd" clip-rule="evenodd" d="M0 47.5235C4.2778 48.0257 8.2391 48.0494 12.3023 47.292C16.3654 46.5346 20.5305 44.9959 23.8039 42.6413C27.0774 40.2867 29.4592 37.116 30.9594 33.3639C32.4596 29.6118 33.0781 25.2782 34.2347 21.2198C35.3913 17.1614 37.0861 13.3783 39.6425 10.2153C42.199 7.0523 45.6171 4.5095 49.3595 2.7949C53.5349 0.8819 58.1139 0 62.753 0C66.4297 0 70.1441 0.554 73.7422 1.2518C77.8111 2.0409 81.7313 3.014 85.1911 4.701C81.4497 4.2352 77.4952 4.2807 73.592 4.8711C69.6889 5.4614 65.837 6.5968 62.6593 8.3485C59.4815 10.1003 56.9779 12.4685 55.2857 15.5037C53.5935 18.5389 52.7127 22.2411 51.8998 26.1803C51.0869 30.1195 50.3418 34.2956 49.0854 37.9777C47.8289 41.6597 46.061 44.8477 43.7883 47.4888C41.5157 50.1299 38.7384 52.2243 35.3579 53.2774C33.352 53.9022 31.1338 54.1605 28.7581 54.1605C27.1302 54.1605 25.4283 54.0392 23.6747 53.834C19.3621 53.3293 14.737 52.3168 10.6412 51.2183C6.5455 50.1199 2.9791 48.9355 0 47.5235Z" fill="#FF323C"/></g></defs><defs><symbol id="i-ac" viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M480-254.62q-94.23 0-159.81-65.57-65.57-65.58-65.57-159.81t65.57-160q65.58-65.77 159.81-65.77T640-640q65.77 65.77 65.77 160T640-320.19q-65.77 65.57-160 65.57Zm-23.85-61.84V-423l-75 75q16.7 12.46 35.23 20.69 18.54 8.23 39.77 10.85Zm47.7 0q20.23-2.62 39.27-10.65 19.03-8.04 35.73-20.51l-75-75v106.16Zm108.53-64.69q12.47-16.7 20.51-35.73 8.03-19.04 10.65-39.27H537.38l75 75Zm-75-122.7h106.16q-2.62-20.23-10.65-39.27-8.04-19.03-20.51-35.73l-75 75ZM503.85-537l75-75q-16.7-12.46-35.23-20.69-18.54-8.23-39.77-10.85V-537ZM480-446.54q14.31 0 23.88-9.58 9.58-9.57 9.58-23.88 0-14.31-9.58-23.88-9.57-9.58-23.88-9.58-14.31 0-23.88 9.58-9.58 9.57-9.58 23.88 0 14.31 9.58 23.88 9.57 9.58 23.88 9.58Zm-23.85-90.84v-106.16q-20.23 2.62-39.27 10.65-19.03 8.04-35.73 20.51l75 75Zm-139.69 33.53h106.16l-75-75q-12.47 16.7-20.51 35.73-8.03 19.04-10.65 39.27Zm31.16 122.7 75-75H316.08q3 20.23 11.23 39.27 8.23 19.03 20.31 35.73ZM140-140v-680h680v680H140Zm60-60h560v-560H200v560Zm0 0v-560 560Z"/></symbol><symbol id="i-bolt" viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="m422-232 207-248H469l29-227-185 267h139l-30 208Zm-78.92 129.69 40-277.69h-185l329.61-475.77h49.23L537.31-540H757.3L392.31-102.31h-49.23ZM471-470Z"/></symbol><symbol id="i-bug" viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M480-139.62q-61.31 0-108.73-33t-75.96-85.84l-88.85 50.54-30-52.08 94.93-55q-3.77-12.15-5.97-25.19-2.19-13.04-4.19-25.96H147.31v-60h113.54q1.23-15.46 3.81-30.43 2.57-14.96 6.73-29.04L176.08-541l30-51.69 88.23 51.54q7.61-14.39 17.34-27.89 9.74-13.5 20.35-24.88-1.61-6.23-1.81-12.46-.19-6.23-.19-12.46 0-24.77 7.77-47.16 7.77-22.38 21.31-41l-57.16-57.15 41.77-42.77 60.77 58.77q17-10.16 35.89-15.42 18.88-5.27 39.65-5.27t40.15 5.77q19.39 5.76 36.39 15.92l59.77-59.77 41.77 42.77-57.54 57.54q13.54 18.61 21 40.8 7.46 22.2 7.46 46.97v11.96q0 5.73-1.62 11.96 10.62 11.38 20.16 25.19 9.54 13.81 17.15 28.19l88.46-50.54 30 51.7L687.61-486q4.16 13.31 7.04 27.31 2.89 14 4.5 28.69h113.54v60H699.15q-1.61 14.69-4.19 28.5t-6.35 27.12L783.92-259l-30 51.69-88.84-51.54q-28.54 52.85-76.16 86.04-47.61 33.19-108.92 33.19Zm-87.54-497.53q18.92-11.23 41.12-17.23 22.19-6 46.42-6 23.85 0 45.42 5.69 21.58 5.69 40.5 16.54-5.69-30.31-29.73-50.5-24.04-20.2-56.19-20.2-32.54 0-57.19 20.7-24.66 20.69-30.35 51ZM480-199.62q73 0 116.69-61.19T640.38-400q0-70-40.69-135.19T480-600.38q-78.38 0-119.38 64.69t-41 135.69q0 78 43.69 139.19T480-199.62ZM450-290v-210.38h60V-290h-60Z"/></symbol><symbol id="i-clipboard" viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M140-140v-680h250.31q3.77-33.31 29.08-56.65 25.3-23.35 60.8-23.35T541-876.65q25.31 23.34 28.69 56.65H820v680H140Zm60-60h560v-560H200v560Zm90-94.62h260v-59.99H290v59.99ZM290-450h380v-60H290v60Zm0-155.39h380v-59.99H290v59.99Zm190-180.76q13 0 21.5-8.5t8.5-21.5q0-13-8.5-21.5t-21.5-8.5q-13 0-21.5 8.5t-8.5 21.5q0 13 8.5 21.5t21.5 8.5ZM200-200v-560 560Z"/></symbol><symbol id="i-faucet" viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M100-370.77v-60h198.46V-490H180v-60h178.46v119.23H450v-276q0-64.47 44.76-108.85Q539.53-860 603.87-860q42.9 0 79.59 22.46 36.69 22.46 56.15 61.77l41 82.39-53.92 27.15L685.31-749q-12.2-23.28-34.39-37.14Q628.74-800 603.23-800q-38.85 0-66.04 27.19Q510-745.61 510-706.77v276h91.54V-550H780v60H661.54v59.23H860v60H100ZM180-140v-230.77h60V-200h480v-170.77h60V-140H180Z"/></symbol><symbol id="i-leak-calls" viewBox="-4 -7 62 62"><path fill="currentColor" transform="matrix(0.05 0 0 0.05 0 48)" d="M161.77-142.69 29.85-271.39l32.69-33.69q84.61-89.07 195.58-132Q369.08-480 480-480t220.88 43.42q109.97 43.43 196.2 131.5l33.07 33.69-131.92 128.7L650-254.62v-136.3q-41.85-13.93-84.54-21.5Q522.77-420 480-420q-42.77 0-85.46 7.58-42.69 7.57-84.54 21.5v136.3L161.77-142.69ZM250-367.39q-37.08 18.08-71.39 42-34.3 23.93-64.46 51.39l53.08 53.08 82.77-63.7v-82.77Zm460 1.23v80.77l82.77 64.47L846.62-272q-32.85-29.85-66-53.08-33.16-23.23-70.62-41.08Zm-460-1.23Zm460 1.23ZM479.15-519.08 280.38-717.85V-600h-59.99v-220h219.99v60H322.54l156 156L698-823.46l42.77 42.77-261.62 261.61Z"/><path class="drop" fill="#FF323C" stroke="none" transform="matrix(0.013372 0 0 0.013372 45.541 42.203)" d="M489.85-206.15q10.46-1 17.23-7.77t6.77-16.46q0-11.31-7.47-17.89-7.46-6.58-18.76-5.58-41 3-89.31-24.03Q350-304.92 338-371.92q-2-10.23-8.58-16.08-6.57-5.85-15.65-5.85-10.92 0-18.19 8.2-7.27 8.19-4.66 21.03 16.23 87.16 78.47 124.62 62.23 37.46 120.46 33.85ZM480-100q-128.54 0-214.27-88.23Q180-276.46 180-408q0-93.08 74.5-204.04T480-853.84Q631-723 705.5-612.04 780-501.08 780-408q0 131.54-85.73 219.77Q608.54-100 480-100Z"/></symbol><symbol id="i-leak-followups" viewBox="-4 -7 62 62"><path fill="currentColor" transform="matrix(0.05 0 0 0.05 0 48)" d="M140-100v-680h127.69v-84.61h61.54V-780h303.08v-84.61h60V-780H820v306.15h-60v-73.84H200V-160h285.77v60H140ZM760-6.15q-68.38 0-120.38-42.04t-67.54-105.66h49.69q14.54 44.39 51.85 72.2 37.31 27.8 86.38 27.8 60.55 0 103.35-42.8T906.15-200q0-60.55-42.8-103.35T760-346.15q-32.85 0-62.08 14.15-29.23 14.15-50.92 38.15h66.85v47.7h-147.7v-147.7h47.7v65.47q27.76-29.47 65.69-47.47 37.92-18 80.46-18 80.45 0 137.15 56.7T953.85-200q0 80.45-56.7 137.15T760-6.15ZM200-607.69h560V-720H200v112.31Zm0 0V-720v112.31Z"/><path class="drop" fill="#FF323C" stroke="none" transform="matrix(0.013372 0 0 0.013372 46.726 49.03)" d="M489.85-206.15q10.46-1 17.23-7.77t6.77-16.46q0-11.31-7.47-17.89-7.46-6.58-18.76-5.58-41 3-89.31-24.03Q350-304.92 338-371.92q-2-10.23-8.58-16.08-6.57-5.85-15.65-5.85-10.92 0-18.19 8.2-7.27 8.19-4.66 21.03 16.23 87.16 78.47 124.62 62.23 37.46 120.46 33.85ZM480-100q-128.54 0-214.27-88.23Q180-276.46 180-408q0-93.08 74.5-204.04T480-853.84Q631-723 705.5-612.04 780-501.08 780-408q0 131.54-85.73 219.77Q608.54-100 480-100Z"/></symbol><symbol id="i-leak-language" viewBox="-4 -7 62 62"><path fill="currentColor" transform="matrix(0.05 0 0 0.05 0 48)" d="m476-100 178.15-460h62.46l178.16 460h-63.62l-45.3-122H584.92l-45.31 122H476ZM160.38-217.69l-42.15-42.16 198.92-199.3q-34.61-35-65.8-83.08Q220.15-590.31 200-640h63.61q17.31 36.31 42.12 72.62 24.81 36.3 53.58 66.07 42.61-43 80.61-104.42T493.62-720H67.69v-60H330v-64.61h60V-780h262.31v60h-97.93q-19.46 67.38-62.03 140.88-42.58 73.5-90.89 121.2l98.69 101.07-22.69 61.62-118.15-121.16-198.93 198.7Zm443.77-57.39h162.46l-81.23-218.23-81.23 218.23Z"/><path class="drop" fill="#FF323C" stroke="none" transform="matrix(0.013372 0 0 0.013372 43.772 44.337)" d="M489.85-206.15q10.46-1 17.23-7.77t6.77-16.46q0-11.31-7.47-17.89-7.46-6.58-18.76-5.58-41 3-89.31-24.03Q350-304.92 338-371.92q-2-10.23-8.58-16.08-6.57-5.85-15.65-5.85-10.92 0-18.19 8.2-7.27 8.19-4.66 21.03 16.23 87.16 78.47 124.62 62.23 37.46 120.46 33.85ZM480-100q-128.54 0-214.27-88.23Q180-276.46 180-408q0-93.08 74.5-204.04T480-853.84Q631-723 705.5-612.04 780-501.08 780-408q0 131.54-85.73 219.77Q608.54-100 480-100Z"/></symbol><symbol id="i-leak-quotes" viewBox="-4 -7 62 62"><path fill="currentColor" transform="matrix(0.05 0 0 0.05 0 48)" d="M687.69-100q-74.92 0-127.46-52.54-52.54-52.54-52.54-127.46 0-74.92 52.54-127.46Q612.77-460 687.69-460q74.93 0 127.46 52.54 52.54 52.54 52.54 127.46 0 74.92-52.54 127.46Q762.62-100 687.69-100Zm66.62-88.46 24.92-24.92-73.84-73.92v-110.39H670v124.92l84.31 84.31ZM140-140v-680h248.54q8.31-29.23 33.96-48.46t57.5-19.23q33.08 0 58.42 19.23 25.35 19.23 33.66 48.46H820v317.69q-14.16-9.15-28.77-15.65-14.62-6.5-31.23-11.58V-760H660v104.61H300V-760H200v560h240.85q5.08 16.61 11.77 31.42 6.69 14.81 16.61 28.58H140Zm340.07-615.38q15.39 0 25.74-10.42 10.34-10.41 10.34-25.81 0-15.39-10.41-25.74-10.41-10.34-25.81-10.34-15.39 0-25.74 10.41-10.34 10.42-10.34 25.81 0 15.39 10.41 25.74 10.41 10.35 25.81 10.35Z"/><path class="drop" fill="#FF323C" stroke="none" transform="matrix(0.013372 0 0 0.013372 42.418 44.337)" d="M489.85-206.15q10.46-1 17.23-7.77t6.77-16.46q0-11.31-7.47-17.89-7.46-6.58-18.76-5.58-41 3-89.31-24.03Q350-304.92 338-371.92q-2-10.23-8.58-16.08-6.57-5.85-15.65-5.85-10.92 0-18.19 8.2-7.27 8.19-4.66 21.03 16.23 87.16 78.47 124.62 62.23 37.46 120.46 33.85ZM480-100q-128.54 0-214.27-88.23Q180-276.46 180-408q0-93.08 74.5-204.04T480-853.84Q631-723 705.5-612.04 780-501.08 780-408q0 131.54-85.73 219.77Q608.54-100 480-100Z"/></symbol><symbol id="i-leak-retyping" viewBox="-4 -7 62 62"><path fill="currentColor" transform="matrix(0.05 0 0 0.05 0 48)" d="M290-260v-600h480v600H290Zm60-60h360v-480H350v480ZM150-120v-587.69h60V-180h407.69v60H150Zm200-200v-480 480Z"/><path class="drop" fill="#FF323C" stroke="none" transform="matrix(0.013372 0 0 0.013372 37.533 43.337)" d="M489.85-206.15q10.46-1 17.23-7.77t6.77-16.46q0-11.31-7.47-17.89-7.46-6.58-18.76-5.58-41 3-89.31-24.03Q350-304.92 338-371.92q-2-10.23-8.58-16.08-6.57-5.85-15.65-5.85-10.92 0-18.19 8.2-7.27 8.19-4.66 21.03 16.23 87.16 78.47 124.62 62.23 37.46 120.46 33.85ZM480-100q-128.54 0-214.27-88.23Q180-276.46 180-408q0-93.08 74.5-204.04T480-853.84Q631-723 705.5-612.04 780-501.08 780-408q0 131.54-85.73 219.77Q608.54-100 480-100Z"/></symbol><symbol id="i-leak-reviews" viewBox="-4 -7 62 62"><path fill="currentColor" transform="matrix(0.05 0 0 0.05 0 48)" d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143Zm-91 125.46 57.31-246.77-191.46-165.92 252.61-21.92L480-828.84l98.54 232.69 252.61 21.92-191.46 165.92L697-161.54 480-292.46 263-161.54ZM480-470Z"/><path class="drop" fill="#FF323C" stroke="none" transform="matrix(0.013372 0 0 0.013372 40.591 41.26)" d="M489.85-206.15q10.46-1 17.23-7.77t6.77-16.46q0-11.31-7.47-17.89-7.46-6.58-18.76-5.58-41 3-89.31-24.03Q350-304.92 338-371.92q-2-10.23-8.58-16.08-6.57-5.85-15.65-5.85-10.92 0-18.19 8.2-7.27 8.19-4.66 21.03 16.23 87.16 78.47 124.62 62.23 37.46 120.46 33.85ZM480-100q-128.54 0-214.27-88.23Q180-276.46 180-408q0-93.08 74.5-204.04T480-853.84Q631-723 705.5-612.04 780-501.08 780-408q0 131.54-85.73 219.77Q608.54-100 480-100Z"/></symbol><symbol id="i-mold" viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M280-240h400v-354.31L480-745 280-594.31V-240Zm-60 60v-368.69l-123.92 93.3-35.46-47.23L480-820l420.38 316.77-36.07 47.84L740-549.08V-180H220Zm260-150q29.15 0 49.58-20.42Q550-370.85 550-400q0-23.15-12.89-48.85-12.88-25.69-57.11-89.61-45 65.08-57.5 90T410-400q0 29.15 20.42 49.58Q450.85-330 480-330Zm0-70Z"/></symbol><symbol id="i-never" viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M480.07-100q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Zm-.07-60q56.29 0 108.42-19.04 52.12-19.04 95.27-55.11L234.15-683.69q-35.69 43.15-54.92 95.27Q160-536.29 160-480q0 134 93 227t227 93Zm245.85-116.31q36.07-43.15 55.11-95.27Q800-423.71 800-480q0-134-93-227t-227-93q-56.43 0-108.68 18.85-52.24 18.84-95.01 55.3l449.54 449.54Z"/></symbol><symbol id="i-pin" viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M480.07-485.39q29.85 0 51.04-21.26 21.2-21.26 21.2-51.11 0-29.85-21.26-51.05Q509.79-630 479.93-630q-29.85 0-51.04 21.26-21.2 21.26-21.2 51.12 0 29.85 21.26 51.04 21.26 21.19 51.12 21.19ZM480-179.46q117.38-105.08 179.65-201.58 62.27-96.5 62.27-169.04 0-109.38-69.5-179.84-69.5-70.46-172.42-70.46-102.92 0-172.42 70.46-69.5 70.46-69.5 179.84 0 72.54 62.27 169.04 62.27 96.5 179.65 201.58Zm0 79.84Q329-230.46 253.54-343.15q-75.46-112.7-75.46-206.93 0-138.46 89.57-224.19Q357.23-860 480-860t212.35 85.73q89.57 85.73 89.57 224.19 0 94.23-75.46 206.93Q631-230.46 480-99.62Zm0-458.07Z"/></symbol><symbol id="i-roof" viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M367.69-180v-224.62h224.62V-180H367.69Zm60-60h104.62v-104.62H427.69V-240ZM96.08-455.39 60-503.23 480-820l166.92 125.46V-780h97.69v159.39l155.77 117.38-36.07 47.84-384.31-289-383.92 289ZM480-292.31Z"/></symbol><symbol id="i-spanish" viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M520-290v-100h60v40h140v-100H520v-220h260v100h-60v-40H580v100h200v220H520ZM180-670h260v60H240v100h160v60H240v100h200v60H180v-380Z"/></symbol></defs></svg>
+<div class="util"><div class="wrap util-in">
+  <p class="util-where">Gainesville, serving Alachua County.</p>
+  <p class="util-call">Call or text <span class="ph">[phone]</span></p>
+  <nav class="lang" aria-label="Language"><span class="on" aria-current="true" lang="en"><span aria-hidden="true">EN</span><span class="sr-only">English</span></span><a href="es/" hreflang="es" lang="es" data-lang="es"><span aria-hidden="true">ES</span><span class="sr-only">Español</span></a></nav>
+</div></div>
+<header class="bar"><div class="wrap bar-in">
+  <a class="brand" href="./" aria-label="Lumora, home page"><svg viewBox="0 0 297 72" width="99" height="24" aria-hidden="true" focusable="false"><use href="#lm-word"/><use href="#lm-mark"/></svg></a>
+  <nav class="nav-main" aria-label="Main"><ul><li><a href="how-it-works/">How it works</a></li><li><a href="industries/">Industries</a></li><li><a href="leak-check/">Leak check</a></li><li><a href="about/">About</a></li><li><a href="articles/">Articles</a></li><li><a href="contact/">Contact</a></li></ul></nav>
+  <a class="btn btn-bar" href="contact/">Free conversation</a>
+  <details class="menu">
+    <summary><span class="ico" aria-hidden="true"></span><span class="menu-t">Menu</span></summary>
+    <div class="menu-panel"><div class="wrap">
+      <nav aria-label="Main"><ul><li><a href="./" aria-current="page">Home</a></li><li><a href="how-it-works/">How it works</a></li><li><a href="industries/">Industries</a></li><li><a href="leak-check/">Leak check</a></li><li><a href="about/">About</a></li><li><a href="articles/">Articles</a></li><li><a href="contact/">Contact</a></li></ul></nav>
+      <a class="btn" href="contact/">Book the free conversation</a>
+    </div></div>
+  </details>
+</div></header>
+<main id="main">
 
-<header class="nav">
-  <div class="wrap">
-    <a class="brand" href="#top" aria-label="Lumora">
-      <svg viewBox="0 0 297 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color:#000"><path d="M107.001 14.4V57.5246H99V14.4H107.001Z" fill="currentColor"/>
-<path d="M138.356 54.6307C135.859 57.0516 132.398 58.2622 127.972 58.2622C123.546 58.2622 120.066 57.0516 117.531 54.6307C115.034 52.1717 113.786 48.7862 113.786 44.4737V26.5997H121.787V44.4737C121.787 46.4407 122.335 48.0106 123.432 49.1834C124.529 50.3561 126.042 50.9424 127.972 50.9424C129.901 50.9424 131.414 50.3561 132.511 49.1834C133.608 48.0106 134.157 46.4407 134.157 44.4737V26.5997H142.157V44.4737C142.157 48.8239 140.89 52.2096 138.356 54.6307Z" fill="currentColor"/>
-<path d="M186.431 25.7486C190.139 25.7486 193.146 26.9023 195.453 29.2099C197.837 31.5175 199.028 34.7328 199.028 38.8562V57.5246H191.028V40.3315C191.028 38.0239 190.46 36.246 189.325 34.9975C188.228 33.7493 186.734 33.125 184.842 33.125C182.8 33.125 181.154 33.8059 179.906 35.1679C178.658 36.4918 178.033 38.2886 178.033 40.5583V57.5246H170.033V40.3882C170.033 38.1185 169.465 36.3406 168.33 35.0544C167.233 33.7682 165.72 33.125 163.791 33.125C161.824 33.125 160.197 33.8059 158.911 35.1679C157.663 36.5297 157.038 38.3455 157.038 40.6152V57.5246H149.038V26.5997H156.868V31.0258C157.738 29.399 159.024 28.1129 160.727 27.167C162.429 26.1835 164.283 25.7107 166.288 25.7486C168.255 25.7486 170.052 26.2214 171.678 27.167C173.343 28.1129 174.572 29.4557 175.367 31.1959C176.501 29.4936 178.052 28.1695 180.019 27.2239C181.986 26.2404 184.124 25.7486 186.431 25.7486Z" fill="currentColor"/>
-<path d="M204.246 42.0338C204.246 37.4566 205.797 33.6168 208.899 30.515C212.039 27.3374 216.011 25.7486 220.815 25.7486C225.619 25.7486 229.591 27.3374 232.731 30.515C235.833 33.6168 237.384 37.4566 237.384 42.0338C237.384 46.6488 235.833 50.5073 232.731 53.6093C229.591 56.749 225.619 58.319 220.815 58.319C216.011 58.319 212.039 56.749 208.899 53.6093C205.797 50.5073 204.246 46.6488 204.246 42.0338ZM214.686 48.3322C216.313 50.0345 218.356 50.8855 220.815 50.8855C223.198 50.8855 225.222 50.0345 226.886 48.3322C228.551 46.5542 229.383 44.4547 229.383 42.0338C229.383 39.6127 228.551 37.5322 226.886 35.7919C225.222 34.0898 223.198 33.2386 220.815 33.2386C218.356 33.2386 216.313 34.0898 214.686 35.7919C213.06 37.4566 212.247 39.5371 212.247 42.0338C212.247 44.4926 213.06 46.5922 214.686 48.3322Z" fill="currentColor"/>
-<path d="M251.018 57.5246H243.019V26.5997H250.678V30.7418C252.533 27.413 255.37 25.7486 259.19 25.7486C260.438 25.7486 261.686 25.9754 262.934 26.4295L262.253 34.0898C260.892 33.6737 259.663 33.4656 258.566 33.4656C256.219 33.4656 254.366 34.26 253.006 35.8488C251.681 37.3997 251.018 39.7262 251.018 42.8282V57.5246Z" fill="currentColor"/>
-<path d="M289.397 30.288V26.5997H297V57.5246H289.397V53.9498C286.75 56.8248 283.457 58.2622 279.523 58.2622C275.059 58.2622 271.39 56.7113 268.514 53.6093C265.639 50.5073 264.202 46.6109 264.202 41.9203C264.202 37.2674 265.658 33.4277 268.572 30.4015C271.486 27.3374 275.136 25.8053 279.523 25.8053C283.382 25.8053 286.673 27.2995 289.397 30.288ZM289.51 42.0338C289.51 39.6127 288.677 37.5132 287.014 35.7353C285.386 33.9953 283.325 33.125 280.829 33.125C278.294 33.125 276.214 33.9953 274.586 35.7353C272.998 37.4755 272.203 39.5748 272.203 42.0338C272.203 44.5303 273.017 46.6488 274.644 48.389C276.269 50.129 278.333 50.999 280.829 50.999C283.325 50.999 285.386 50.129 287.014 48.389C288.677 46.6109 289.51 44.4926 289.51 42.0338Z" fill="currentColor"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M89.9999 8.28699C87.9971 8.38302 85.3838 8.83318 83.4498 9.42839C79.6312 10.6373 76.7474 12.8215 74.6959 15.809C72.7355 18.6642 71.9409 21.7872 71.8372 25.0695C71.6191 31.9772 71.8064 38.8866 71.7091 45.7944C71.6586 49.3941 71.201 52.9601 69.7741 56.3715C66.9128 63.2115 61.6478 68.0973 53.5622 70.5819C51.2395 71.2955 48.8079 71.6496 46.339 71.8404C42.3457 72.1489 38.3686 71.948 34.3807 71.7575C28.9525 71.4988 23.7802 70.2602 18.6214 68.937C17.6832 68.6962 16.7481 68.4467 15.6694 68.1641C16.9799 67.9415 18.1339 67.7595 19.2807 67.5489C25.9048 66.3325 31.1089 63.2889 35.0095 58.583C36 57.388 36.895 56.143 37.5451 54.7346C37.6254 54.4452 37.8933 54.403 38.1097 54.3161C40.1653 53.4925 42.1202 52.5364 43.8754 51.2886C46.1358 49.6814 47.8257 47.7015 49.2008 45.5043C51.2912 42.1625 52.3475 38.5479 53.0537 34.841C53.5824 32.0663 53.8687 29.2649 54.3159 26.4814C54.7386 23.8514 55.2931 21.2477 56.5808 18.8035C57.6084 16.852 58.876 15.0427 60.5846 13.4502C63.1141 11.0929 66.1864 9.48808 69.6682 8.40395C71.2818 7.90153 72.935 7.53681 74.6918 7.38582C75.2517 7.27206 75.8931 7.24593 76.3905 7.18668C76.5285 7.18819 76.6171 7.1706 76.7493 7.13526C77.2666 7.12043 77.7256 7.05517 78.172 7.01856C80.9859 6.92939 83.5405 7.02259 85.9975 7.03718C86.5981 7.0344 86.6479 6.98489 87.2141 7.16919C87.6625 7.29083 89.062 7.90804 89.9999 8.28699Z" fill="#FF323C"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M65.0069 7.06571C59.0615 9.49942 55.3035 13.5095 53.378 18.8342C52.3908 21.5641 52.0529 24.3962 51.6659 27.2191C51.1041 31.3188 50.5269 35.4186 48.9348 39.3469C47.5107 42.8608 45.5006 46.0771 42.2448 48.6255C40.1769 50.2439 37.7886 51.437 35.1933 52.3914C32.3223 53.1645 29.4013 53.516 26.427 53.5002C20.2664 53.4672 14.4449 52.1438 8.817 50.0825C5.77674 48.9692 2.86777 47.6472 0.00352561 46.1761C-0.00927887 46.1686 0.017933 46.1674 0.00455287 46.1701C0.209772 46.0355 0.441959 46.159 0.670942 46.2107C4.1152 46.9847 7.61697 47.3329 11.1695 47.1108C17.7994 46.697 23.1415 44.1966 27.1956 39.7031C29.5958 37.0431 31.0211 33.9974 31.8507 30.7397C32.6735 27.5084 33.4035 24.2595 34.2606 21.0349C35.2357 17.3684 36.7578 13.882 39.2423 10.7405C42.551 6.55718 46.9065 3.49397 52.4126 1.62172C54.6314 0.867244 56.9188 0.405923 59.2798 0.164379C63.7157 -0.289477 68.0503 0.255189 72.3663 1.08097C76.2337 1.82091 79.0988 2.74135 82.7087 4.08048C86.5441 5.56079 85.889 5.06289 83.0796 4.8885C82.5486 4.8556 81.5439 4.78228 81.011 4.79033C75.5461 4.7264 69.3695 5.46096 65.0069 7.06571Z" fill="#FF323C"/></svg>
-    </a>
-    <nav class="nav-right" aria-label="Main">
-      <a class="nav-link" href="#how" data-i18n="nav.how">How it works</a>
-      <a class="nav-link" href="#cost" data-i18n="nav.cost">The walk</a>
-      <div class="lang" role="group" aria-label="Language">
-        <button type="button" data-lang="en" aria-pressed="true">EN</button>
-        <button type="button" data-lang="es" aria-pressed="false">ES</button>
+<section class="hero" aria-labelledby="hero-h">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1 id="hero-h">We walk your shop and hand you a sheet of what it leaks, in dollars.</h1>
+      <p class="lede">Then we fix one leak at a time, inside the tools you already pay for when they can do the job. For trades and local shops in Gainesville, emergency trades first, in English or Spanish.</p>
+      <div class="actions">
+        <a class="btn" href="contact/">Book the free conversation</a>
+        <a class="tl" href="how-it-works/">How the walk works</a>
       </div>
-      <a class="btn" href="#contact" data-i18n="nav.cta">Book a walk</a>
-    </nav>
+      <p class="price-line"><b>The walk: $500, flat.</b> Counts toward the fix if it starts within 30 days.</p>
+    </div>
+    <div class="hero-sheet">
+      <figure class="sheet home" aria-labelledby="sheet-t">
+  <div class="sheet-head"><div><span class="sheet-title" id="sheet-t">Walk sheet</span><span class="sheet-sub">Plumbing, 2 trucks, Alachua County</span></div><span class="stamp">Sample</span></div>
+  <dl class="sheet-src"><dt>Built from</dt><dd>Calls: the phone company’s call history, past 30 days. Quotes and invoices: a QuickBooks export. Jobs: the calendar. Visit: week one.</dd></dl>
+  <table>
+    <caption class="sr-only">Sample walk sheet with illustrative numbers: each leak, the effort to fix it and the profit it loses a month.</caption>
+    <thead><tr><th scope="col">Leak</th><th scope="col" class="eff">Effort</th><th scope="col" class="usd">Profit lost, a month</th></tr></thead>
+    <tbody><tr><th scope="row" class="leak"><span class="lk"><svg class="ico lk-i" aria-hidden="true" focusable="false"><use href="#i-leak-calls"/></svg><span class="lk-t"><b><span class="nw">After-hours</span> calls to voicemail</b><span class="saw">14 a month. 3 called back, 11 were not called back.</span><span class="f">11 calls × 40% book rate × $310 margin</span><span class="in">Effort: Low</span></span></span></th><td class="eff">Low</td><td class="usd">$1,364 / mo</td></tr><tr><th scope="row" class="leak"><span class="lk"><svg class="ico lk-i" aria-hidden="true" focusable="false"><use href="#i-leak-quotes"/></svg><span class="lk-t"><b>Quotes sent 48+ hours after the visit</b><span class="saw">9 of 22. 5 went cold, observed.</span><span class="f">5 jobs × $380 margin</span><span class="in">Effort: Medium</span></span></span></th><td class="eff">Medium</td><td class="usd">$1,900 / mo</td></tr><tr><th scope="row" class="leak"><span class="lk"><svg class="ico lk-i" aria-hidden="true" focusable="false"><use href="#i-leak-retyping"/></svg><span class="lk-t"><b>Same job typed in three places</b><span class="saw">Paper ticket, calendar, QuickBooks.</span><span class="f">40 min a day × 22 days × $28 an hour</span><span class="in">Effort: Medium</span></span></span></th><td class="eff">Medium</td><td class="usd">$411 / mo</td></tr><tr><th scope="row" class="leak"><span class="lk"><svg class="ico lk-i" aria-hidden="true" focusable="false"><use href="#i-leak-reviews"/></svg><span class="lk-t"><b>Reviews never requested</b><span class="saw">61 jobs finished this month, 0 review requests sent. The Google page still shows 12 reviews.</span><span class="in">Effort: Low</span></span></span></th><td class="eff">Low</td><td class="usd none">not priced</td></tr></tbody>
+    <tfoot><tr><th scope="row">Leaking, before any fix</th><td class="eff"></td><td class="usd">$3,675 / mo</td></tr></tfoot>
+  </table>
+  <div class="sheet-end"><p class="sheet-note">Illustrative numbers. Your sheet is built from your call log, your invoices and your calendar.</p><svg class="sheet-mark" viewBox="0 0 90 72" aria-hidden="true" focusable="false"><use href="#lm-mark"/></svg></div>
+</figure>
+      <p class="sheet-more"><a class="tl" href="how-it-works/#sample">See the full sample sheet</a></p>
+    </div>
   </div>
-</header>
-
-<main id="top">
-
-  <section class="hero">
-    <div class="wrap grid">
-      <div class="hero-copy">
-        <h1 data-i18n="hero.h1">We walk your shop for two days and hand you a sheet of what it leaks, in dollars.</h1>
-        <p class="lede" data-i18n="hero.lede">Then we fix one thing, inside the tools you already pay for. For trades and local businesses in Gainesville, in English or Spanish.</p>
-        <div class="cta-row">
-          <a class="btn signal" href="#contact" data-i18n="hero.cta">Book a walk</a>
-          <a class="textlink" href="#cost" data-i18n="hero.link">How the walk works</a>
-        </div>
-      </div>
-
-      <div class="hero-sheet">
-        <div class="sheet" aria-label="Sample walk sheet">
-          <div class="sheet-head">
-            <div>
-              <strong data-i18n="sheet.title">Walk sheet</strong>
-              <span data-i18n="sheet.sub">Plumbing, 4 trucks, Alachua County</span>
-            </div>
-            <span class="stamp" data-i18n="sheet.stamp">Sample</span>
-          </div>
-          <ol>
-            <li>
-              <span class="what"><b data-i18n="sheet.r1.b">After-hours calls to voicemail</b><span data-i18n="sheet.r1.t">14 a month. 3 called back. 11 went to the next name on Google.</span></span>
-              <span class="usd num" data-i18n="sheet.r1.usd">$3,700 / mo</span>
-            </li>
-            <li>
-              <span class="what"><b data-i18n="sheet.r2.b">Quotes sent 48+ hours after the visit</b><span data-i18n="sheet.r2.t">9 of 22. Five of those went cold.</span></span>
-              <span class="usd num" data-i18n="sheet.r2.usd">$2,100 / mo</span>
-            </li>
-            <li>
-              <span class="what"><b data-i18n="sheet.r3.b">Same job typed in three places</b><span data-i18n="sheet.r3.t">Paper ticket, calendar, QuickBooks. About 40 minutes a day.</span></span>
-              <span class="usd num" data-i18n="sheet.r3.usd">$1,300 / mo</span>
-            </li>
-            <li>
-              <span class="what"><b data-i18n="sheet.r4.b">Reviews asked for</b><span data-i18n="sheet.r4.t">0 of 61 finished jobs. Google profile stuck at 12 reviews.</span></span>
-              <span class="usd none" data-i18n="sheet.r4.usd">not priced</span>
-            </li>
-          </ol>
-          <div class="sheet-foot">
-            <span data-i18n="sheet.foot">Leaking, before any fix</span>
-            <span class="total num" data-i18n="sheet.total">$7,100 / mo</span>
-          </div>
-          <p class="sheet-note" data-i18n="sheet.note">Illustrative numbers. Your sheet is built from your call log, your invoices, and your calendar.</p>
-          <img class="sheet-mark" src="assets/mark.svg" alt="" width="60" height="48">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="finds">
-    <div class="wrap grid">
-      <div class="side"><h2 data-i18n="finds.h2">What a walk usually finds</h2></div>
-      <div class="main">
-        <ul class="leaks">
-          <li><h3 data-i18n="finds.1.h">Calls that ring out</h3><p data-i18n="finds.1.p">After five, on Saturdays, and whenever the one person who answers is under a sink. An emergency call that goes to voicemail is a job that goes to someone else.</p></li>
-          <li><h3 data-i18n="finds.2.h">Quotes that leave late</h3><p data-i18n="finds.2.p">The visit was Tuesday. The number went out Friday. By then the customer had two other numbers.</p></li>
-          <li><h3 data-i18n="finds.3.h">The same job, typed three times</h3><p data-i18n="finds.3.p">Once on the paper ticket, once in the calendar, once in QuickBooks. Nobody's job, so it's the owner's job, at night.</p></li>
-          <li><h3 data-i18n="finds.4.h">Reviews nobody asked for</h3><p data-i18n="finds.4.p">Sixty happy customers a month and a Google profile that has said twelve reviews since 2023.</p></li>
-          <li><h3 data-i18n="finds.5.h">Dispatch that lives in one head</h3><p data-i18n="finds.5.p">Who is where, what truck has the part, who's next. When that person is out, the day stops.</p></li>
-          <li><h3 data-i18n="finds.6.h">Follow-ups that never happen</h3><p data-i18n="finds.6.p">The maintenance that's due, the estimate that was never answered, the customer from last spring. All real money, none of it on anyone's list.</p></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <div class="photo-band"><div class="wrap grid">
-    <figure class="photo"><div class="photo-frame"><div class="placeholder" aria-hidden="true"><svg viewBox="0 0 60 48" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M59.9999 5.52467C58.6648 5.58869 56.9226 5.88879 55.6332 6.2856C53.0875 7.09156 51.1649 8.54769 49.7972 10.5394C48.4904 12.4428 47.9606 14.5248 47.8915 16.713C47.746 21.3182 47.8709 25.9244 47.806 30.5296C47.7724 32.9294 47.4674 35.3068 46.516 37.581C44.6085 42.141 41.0985 45.3982 35.7082 47.0546C34.1597 47.5304 32.5386 47.7664 30.8927 47.8936C28.2304 48.0993 25.5791 47.9653 22.9204 47.8384C19.3017 47.6659 15.8535 46.8401 12.4143 45.958C11.7888 45.7975 11.1654 45.6311 10.4463 45.4428C11.32 45.2944 12.0892 45.173 12.8538 45.0326C17.2699 44.2217 20.7393 42.1926 23.3397 39.0553C24 38.2587 24.5967 37.4287 25.0301 36.4898C25.0836 36.2968 25.2622 36.2687 25.4065 36.2107C26.7769 35.6617 28.0801 35.0243 29.2503 34.1924C30.7572 33.121 31.8838 31.801 32.8005 30.3362C34.1941 28.1084 34.8983 25.6986 35.3692 23.2273C35.7216 21.3775 35.9125 19.5099 36.2106 17.6543C36.4924 15.9009 36.8621 14.1651 37.7205 12.5357C38.4056 11.2347 39.2507 10.0285 40.3897 8.96682C42.0761 7.39527 44.1243 6.3254 46.4455 5.60264C47.5212 5.2677 48.6233 5.02455 49.7946 4.92389C50.1678 4.84805 50.5954 4.83063 50.927 4.79113C51.019 4.79214 51.0781 4.78041 51.1662 4.75685C51.511 4.74697 51.817 4.70345 52.1147 4.67905C53.9906 4.61961 55.6937 4.68173 57.3317 4.69146C57.7321 4.68961 57.7652 4.6566 58.1428 4.77947C58.4417 4.86056 59.3747 5.27204 59.9999 5.52467Z" fill="#FF323C"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M43.3379 4.71047C39.3743 6.33295 36.869 9.0063 35.5853 12.5561C34.9272 14.376 34.7019 16.2642 34.4439 18.1461C34.0694 20.8792 33.6846 23.6124 32.6232 26.2313C31.6738 28.5738 30.3337 30.7181 28.1632 32.417C26.7846 33.496 25.1924 34.2913 23.4622 34.9276C21.5482 35.443 19.6009 35.6773 17.618 35.6668C13.5109 35.6448 9.62996 34.7625 5.878 33.3883C3.85116 32.6461 1.91185 31.7648 0.00235041 30.784C-0.00618591 30.7791 0.0119553 30.7783 0.00303524 30.78C0.139848 30.6903 0.294639 30.7727 0.447295 30.8071C2.74346 31.3232 5.07798 31.5553 7.44632 31.4072C11.8663 31.1313 15.4277 29.4644 18.1304 26.4687C19.7305 24.6954 20.6807 22.6649 21.2338 20.4931C21.7823 18.3389 22.269 16.173 22.8404 14.0233C23.4904 11.5789 24.5052 9.25469 26.1615 7.16032C28.3673 4.37145 31.271 2.32932 34.9417 1.08115C36.4209 0.578163 37.9458 0.270616 39.5199 0.109586C42.4771 -0.192985 45.3669 0.170126 48.2442 0.720645C50.8225 1.21394 52.7325 1.82757 55.1391 2.72032C57.6961 3.7072 57.2593 3.37526 55.3864 3.259C55.0324 3.23707 54.3626 3.18818 54.0073 3.19355C50.3641 3.15093 46.2464 3.64064 43.3379 4.71047Z" fill="#FF323C"/>
-</svg></div></div><figcaption data-i18n="photo.1">Photo to come: the back of a work van, 6:40 a.m., before the first call.</figcaption></figure>
-  </div></div>
-
-  <section id="how">
-    <div class="wrap grid">
-      <div class="side"><h2 data-i18n="how.h2">How it works</h2></div>
-      <div class="main">
-        <ol class="steps" id="cost">
-          <li>
-            <div>
-              <h3 data-i18n="how.1.h">The walk</h3>
-              <p data-i18n="how.1.p">Two days at your shop. We watch the phone, the whiteboard, the truck, the invoice pile. You get the sheet: every leak with a number next to it, biggest first.</p>
-            </div>
-            <span class="price num" data-i18n="how.1.price">$500, flat</span>
-          </li>
-          <li>
-            <div>
-              <h3 data-i18n="how.2.h">One fix</h3>
-              <p data-i18n="how.2.p">The biggest number on the sheet gets fixed first, inside what you already use: your phone line, Excel, QuickBooks, Jobber, a group chat. The fix is quoted against that number, so you see what it costs next to what the leak costs you.</p>
-            </div>
-            <span class="price num" data-i18n="how.2.price">Priced from the sheet</span>
-          </li>
-          <li>
-            <div>
-              <h3 data-i18n="how.3.h">Keep it running</h3>
-              <p data-i18n="how.3.p">A monthly check. Is the fix still working, what broke, what's the next number on the sheet. Cancel any month.</p>
-            </div>
-            <span class="price num" data-i18n="how.3.price">Monthly, sized to the shop</span>
-          </li>
-        </ol>
-        <p class="steps-after" data-i18n="how.after">If you'd rather have the whole shop done at once, that's a full build, scoped and quoted from the sheet. Most owners start with one fix and see if it holds.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="rules">
-    <div class="wrap grid">
-      <div class="side"><h2 data-i18n="rules.h2">Rules we keep</h2></div>
-      <div class="main">
-        <ul class="rules">
-          <li><p data-i18n="rules.1"><b>Nothing here replaces your people.</b> It replaces retyping, waiting, and forgetting. Your techs still do the work; they just stop doing the paperwork twice.</p></li>
-          <li><p data-i18n="rules.2"><b>We build inside what you already pay for.</b> If the fix needs a new subscription, you'll hear the monthly cost before we start, and why the free option lost.</p></li>
-          <li><p data-i18n="rules.3"><b>No cameras. No recorded calls.</b> Florida law needs everyone's consent for that, and it's a bad way to treat a crew anyway. We work from your call log, your invoices, and your calendar.</p></li>
-          <li><p data-i18n="rules.4"><b>You own everything.</b> Logins, documents, automations. If we stop working together, it keeps running without us.</p></li>
-          <li><p data-i18n="rules.5"><b>No cold calls, no cold email.</b> If you're reading this, someone handed it to you, or you found it. That's the only way we take work.</p></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="who" class="who">
-    <div class="wrap grid">
-      <div class="side"><h2 data-i18n="who.h2">Who it's for</h2></div>
-      <div class="main">
-        <ul class="trades">
-          <li data-i18n="who.t1">Plumbing</li>
-          <li data-i18n="who.t2">Electrical</li>
-          <li data-i18n="who.t3">AC and heating</li>
-          <li data-i18n="who.t4">Mold and water damage</li>
-          <li data-i18n="who.t5">Pest control</li>
-          <li data-i18n="who.t6">Roofing</li>
-          <li data-i18n="who.t7">Cleaning</li>
-          <li data-i18n="who.t8">Pool service</li>
-          <li data-i18n="who.t9">Pressure washing</li>
-          <li data-i18n="who.t10">Auto repair</li>
-        </ul>
-        <p data-i18n="who.p1">Emergency trades first, because a missed call there costs the most and the math is the cleanest. One recovered after-hours job usually pays for the month.</p>
-        <p data-i18n="who.p2">Also food trucks, restaurants, and clubs: a monthly report from your point-of-sale export, in Spanish or English, on what sold, when, and which nights are dead. Plus the two or three automations that actually matter for you, like the location post and the review ask.</p>
-        <p class="muted" data-i18n="who.p3">Florida shapes the work. Hurricane season, humidity, pools, and rentals all show up on the sheet.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="about" class="about">
-    <div class="wrap grid">
-      <div class="side"><h2 data-i18n="about.h2">Who's behind it</h2></div>
-      <div class="main">
-        <figure class="photo"><div class="photo-frame"><div class="placeholder" aria-hidden="true"><svg viewBox="0 0 60 48" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M59.9999 5.52467C58.6648 5.58869 56.9226 5.88879 55.6332 6.2856C53.0875 7.09156 51.1649 8.54769 49.7972 10.5394C48.4904 12.4428 47.9606 14.5248 47.8915 16.713C47.746 21.3182 47.8709 25.9244 47.806 30.5296C47.7724 32.9294 47.4674 35.3068 46.516 37.581C44.6085 42.141 41.0985 45.3982 35.7082 47.0546C34.1597 47.5304 32.5386 47.7664 30.8927 47.8936C28.2304 48.0993 25.5791 47.9653 22.9204 47.8384C19.3017 47.6659 15.8535 46.8401 12.4143 45.958C11.7888 45.7975 11.1654 45.6311 10.4463 45.4428C11.32 45.2944 12.0892 45.173 12.8538 45.0326C17.2699 44.2217 20.7393 42.1926 23.3397 39.0553C24 38.2587 24.5967 37.4287 25.0301 36.4898C25.0836 36.2968 25.2622 36.2687 25.4065 36.2107C26.7769 35.6617 28.0801 35.0243 29.2503 34.1924C30.7572 33.121 31.8838 31.801 32.8005 30.3362C34.1941 28.1084 34.8983 25.6986 35.3692 23.2273C35.7216 21.3775 35.9125 19.5099 36.2106 17.6543C36.4924 15.9009 36.8621 14.1651 37.7205 12.5357C38.4056 11.2347 39.2507 10.0285 40.3897 8.96682C42.0761 7.39527 44.1243 6.3254 46.4455 5.60264C47.5212 5.2677 48.6233 5.02455 49.7946 4.92389C50.1678 4.84805 50.5954 4.83063 50.927 4.79113C51.019 4.79214 51.0781 4.78041 51.1662 4.75685C51.511 4.74697 51.817 4.70345 52.1147 4.67905C53.9906 4.61961 55.6937 4.68173 57.3317 4.69146C57.7321 4.68961 57.7652 4.6566 58.1428 4.77947C58.4417 4.86056 59.3747 5.27204 59.9999 5.52467Z" fill="#FF323C"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M43.3379 4.71047C39.3743 6.33295 36.869 9.0063 35.5853 12.5561C34.9272 14.376 34.7019 16.2642 34.4439 18.1461C34.0694 20.8792 33.6846 23.6124 32.6232 26.2313C31.6738 28.5738 30.3337 30.7181 28.1632 32.417C26.7846 33.496 25.1924 34.2913 23.4622 34.9276C21.5482 35.443 19.6009 35.6773 17.618 35.6668C13.5109 35.6448 9.62996 34.7625 5.878 33.3883C3.85116 32.6461 1.91185 31.7648 0.00235041 30.784C-0.00618591 30.7791 0.0119553 30.7783 0.00303524 30.78C0.139848 30.6903 0.294639 30.7727 0.447295 30.8071C2.74346 31.3232 5.07798 31.5553 7.44632 31.4072C11.8663 31.1313 15.4277 29.4644 18.1304 26.4687C19.7305 24.6954 20.6807 22.6649 21.2338 20.4931C21.7823 18.3389 22.269 16.173 22.8404 14.0233C23.4904 11.5789 24.5052 9.25469 26.1615 7.16032C28.3673 4.37145 31.271 2.32932 34.9417 1.08115C36.4209 0.578163 37.9458 0.270616 39.5199 0.109586C42.4771 -0.192985 45.3669 0.170126 48.2442 0.720645C50.8225 1.21394 52.7325 1.82757 55.1391 2.72032C57.6961 3.7072 57.2593 3.37526 55.3864 3.259C55.0324 3.23707 54.3626 3.18818 54.0073 3.19355C50.3641 3.15093 46.2464 3.64064 43.3379 4.71047Z" fill="#FF323C"/>
-</svg></div></div><figcaption data-i18n="photo.2">Photo to come: Franco at a shop, walk sheet in hand.</figcaption></figure>
-        <p data-i18n="about.p1">Lumora Ops is run by Franco Soto out of Gainesville. He grew up in Peru, so Spanish is a first language, not a translation.</p>
-        <p data-i18n="about.p2">He got here by building automation for his own work first: systems that run a job while he's asleep. Lumora Ops is that same habit pointed at other people's shops, with the difference that it starts by watching how the shop actually runs, not by selling software.</p>
-        <p class="muted" data-i18n="about.p3">One person, on purpose. You get the person who walked your shop, every time.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" class="contact">
-    <div class="wrap grid">
-      <div class="side"><h2 data-i18n="contact.h2">Book a walk</h2></div>
-      <div class="main">
-        <p class="lede" data-i18n="contact.lede">Send a note with your trade and your town. You'll get a reply in English or Spanish, and a date for the walk if it's a fit.</p>
-        <a class="btn signal" id="mailBtn" href="mailto:cottofranco@gmail.com?subject=Walk%20request" data-i18n="contact.cta">Email Lumora Ops</a>
-        <div class="contact-lines">
-          <span><a href="mailto:cottofranco@gmail.com">cottofranco@gmail.com</a></span>
-          <span data-i18n="contact.where">Gainesville and Alachua County. Farther in Florida by arrangement.</span>
-        </div>
-      </div>
-    </div>
-  </section>
+</section>
+<div class="facts"><div class="wrap"><ul><li><svg class="ico fact-i" aria-hidden="true" focusable="false"><use href="#i-clipboard"/></svg><span>The owner walks your shop himself.</span></li><li><svg class="ico fact-i" aria-hidden="true" focusable="false"><use href="#i-pin"/></svg><span>Gainesville, serving Alachua County.</span></li><li><svg class="ico fact-i" aria-hidden="true" focusable="false"><use href="#i-never"/></svg><span>No cameras. No recorded calls.</span></li><li><svg class="ico fact-i" aria-hidden="true" focusable="false"><use href="#i-spanish"/></svg><span>English or Spanish</span></li></ul></div></div>
+<section class="sec first" id="finds" aria-labelledby="finds-h"><div class="wrap split">
+  <div class="side"><div class="side-in"><h2 id="finds-h">What a walk looks for</h2></div></div>
+  <div class="main"><ul class="leaks"><li><svg class="ico leak-i" aria-hidden="true" focusable="false"><use href="#i-leak-calls"/></svg><div><h3>Calls that ring out</h3><p>After five, on Saturdays and any time whoever answers the phone is under a sink. The sheet counts how many of those calls were never returned.</p></div></li><li><svg class="ico leak-i" aria-hidden="true" focusable="false"><use href="#i-leak-quotes"/></svg><div><h3>Quotes that leave late</h3><p>The visit was Tuesday. The quote went out Friday. By then the customer had two other quotes.</p></div></li><li><svg class="ico leak-i" aria-hidden="true" focusable="false"><use href="#i-leak-retyping"/></svg><div><h3>The same job, typed three times</h3><p>Once on the paper ticket, once in the calendar, once in QuickBooks. Nobody’s job, so it’s the owner’s job, at night.</p></div></li><li><svg class="ico leak-i" aria-hidden="true" focusable="false"><use href="#i-leak-reviews"/></svg><div><h3>Reviews never requested</h3><p>61 jobs finished this month, and nobody asked for a review. The Google page still shows 12 reviews.</p></div></li><li><svg class="ico leak-i" aria-hidden="true" focusable="false"><use href="#i-leak-language"/></svg><div><h3>Texts in one language</h3><p>The booking tool confirms every job in English, even for the customers who called in Spanish.</p></div></li><li><svg class="ico leak-i" aria-hidden="true" focusable="false"><use href="#i-leak-followups"/></svg><div><h3><span class="nw">Follow-ups</span> that never happen</h3><p>The maintenance that’s due, the estimate nobody answered, the customer from last spring. All real money, none of it on anyone’s list.</p></div></li></ul></div>
+</div></section>
+<section class="sec white" id="how" aria-labelledby="how-h"><div class="wrap">
+  <div class="sec-head"><h2 id="how-h">How it works</h2><p class="sec-desc">Four steps. You can stop after any of them.</p></div>
+  <ol class="steps4" id="cost"><li><h3>A free conversation</h3><p>20 minutes. We bring one number about your shop, taken from its public listings.</p></li><li id="walk"><h3>The walk</h3><p>A visit in week one, your call history and a sheet of every leak in dollars, within five business days of having the data.</p><p class="price"><b>The walk: $500, flat.</b> Counts toward the fix if it starts within 30 days.</p></li><li><h3>One fix</h3><p>Priced from the sheet. Built inside the tools you already pay for when they can do the job.</p><p class="aside">Some fixes use AI. Most are a phone rule or a spreadsheet.</p></li><li><h3>The monthly check</h3><p>What the fix did in your numbers, what broke and the next leak with a dollar figure. Cancel any month.</p></li></ol><p class="more"><a class="tl" href="how-it-works/">How it works, step by step</a></p>
+</div></section>
+<section class="sec " id="who" aria-labelledby="who-h"><div class="wrap split">
+  <div class="side"><div class="side-in"><h2 id="who-h">Who we walk for</h2><p class="sec-desc">A missed call costs the most where the work is an emergency, and the math is cleanest there. Those shops come first.</p><figure class="photo"><div class="adf"><svg class="adf-art" viewBox="0 0 300 200" aria-hidden="true" focusable="false"><path class="adf-thirds" d="M100 0V200M200 0V200M0 66.667H300M0 133.333H300"/><path class="adf-crop" d="M8 23V8H23M277 8H292V23M8 177V192H23M277 192H292V177"/><text class="adf-n" x="15" y="44">Shot 1</text><path class="adf-arrow" d="M285 72H253"/><path class="adf-head" d="M247 72l8 -4v8Z"/><text class="adf-l" x="285" y="66" text-anchor="end">Light</text></svg><p class="adf-q">Photo to come</p></div><figcaption>The back of a work van, 6:40 a.m., before the first call.</figcaption></figure></div></div>
+  <div class="main"><div class="group"><h3>Emergency trades, first</h3><ul class="trades"><li><a href="industries/plumbing/"><svg class="ico tr-i" aria-hidden="true" focusable="false"><use href="#i-faucet"/></svg><span class="nm">Plumbing</span><span class="ln">Calls that ring out while you are under a sink.</span></a></li><li><a href="industries/ac-and-heating/"><svg class="ico tr-i" aria-hidden="true" focusable="false"><use href="#i-ac"/></svg><span class="nm">AC and heating</span><span class="ln">Summer evenings, when <span class="nw">after-hours</span> calls peak.</span></a></li><li><a href="industries/electrical/"><svg class="ico tr-i" aria-hidden="true" focusable="false"><use href="#i-bolt"/></svg><span class="nm">Electrical</span><span class="ln">Calls that ring out while everyone is on a job.</span></a></li><li><a href="industries/water-damage-and-mold/"><svg class="ico tr-i" aria-hidden="true" focusable="false"><use href="#i-mold"/></svg><span class="nm">Water damage and mold</span><span class="ln"><span class="nw">Storm-season</span> calls, and job files typed twice.</span></a></li><li><a href="industries/pest-control/"><svg class="ico tr-i" aria-hidden="true" focusable="false"><use href="#i-bug"/></svg><span class="nm">Pest control</span><span class="ln">Reviews never requested, and customers nobody called back.</span></a></li><li><a href="industries/roofing/"><svg class="ico tr-i" aria-hidden="true" focusable="false"><use href="#i-roof"/></svg><span class="nm">Roofing</span><span class="ln">Big estimates nobody followed up.</span></a></li></ul></div>
+  <div class="group"><h3>Then scheduled trades, and food</h3><ul class="trades one"><li><a href="industries/restaurants-and-bars/"><span class="nm">Restaurants and bars</span><span class="ln">Dead nights your <span class="nw">point-of-sale</span> report already shows.</span></a></li></ul><p class="after-list">Also cleaning, pool service, pressure washing and auto repair. The walk works the same way.</p><p class="after-list">For restaurants and bars, the sheet starts from your <span class="nw">point-of-sale</span> report: what sold, when and which nights sit empty, explained in English or Spanish. Food trucks too.</p></div>
+  <p class="after-list muted">Florida shapes the work. Hurricane season, humidity, pools and rentals all show up on the sheet.</p>
+  <p class="more"><a class="tl" href="industries/">All industries</a></p></div>
+</div></section>
+<section class="sec white" id="leak" aria-labelledby="leak-h"><div class="wrap teaser">
+  <div class="teaser-copy">
+    <h2 id="leak-h">What do the calls that ring out cost you?</h2>
+    <p>Put in your own numbers: calls a week, how many ring out, what a job earns you. You get a rough monthly figure in about a minute. Nothing you type leaves your device.</p>
+    <div class="actions"><a class="btn" href="leak-check/">Try the leak check</a></div>
+    <p class="fine">An estimate from your numbers. The walk counts the real ones.</p>
+  </div>
+  <div class="teaser-math"><div class="sheet-card">
+  <div class="sheet-head"><div><span class="sheet-title">Leak check</span><span class="sheet-sub">Missed calls</span></div><span class="stamp">Sample</span></div>
+  <div class="mini-lines"><div><span>4 a week nobody returned × 52 ÷ 12</span><span>17.3 a month</span></div><div><span>× 30% that would have booked</span><span>5.2 jobs</span></div><div class="sum"><span>× $300 profit a job</span><span>$1,560 a month</span></div></div>
+</div></div>
+</div></section>
+<section class="sec " id="rules" aria-labelledby="rules-h"><div class="wrap split">
+  <div class="side"><div class="side-in"><h2 id="rules-h">Rules we keep</h2><figure class="photo"><div class="adf"><svg class="adf-art" viewBox="0 0 300 200" aria-hidden="true" focusable="false"><path class="adf-thirds" d="M100 0V200M200 0V200M0 66.667H300M0 133.333H300"/><path class="adf-crop" d="M8 23V8H23M277 8H292V23M8 177V192H23M277 192H292V177"/><text class="adf-n" x="15" y="44">Shot 9</text><path class="adf-arrow" d="M15 72H47"/><path class="adf-head" d="M53 72l-8 -4v8Z"/><text class="adf-l" x="15" y="66" text-anchor="start">Light</text></svg><p class="adf-q">Photo to come</p></div><figcaption>A box on a counter, delivered by hand.</figcaption></figure></div></div>
+  <div class="main"><p class="rules-lead">It replaces retyping, waiting and forgetting.</p><p class="rules-lead-p">Every fix goes after a task: the job typed into three places, the quote that waits until Friday, the <span class="nw">follow-up</span> nobody owns.</p>
+  <ul class="rules-grid"><li><p><b>We build inside what you already pay for.</b> If a fix needs a new subscription, you hear the monthly cost before we start, and why the free option lost.</p></li><li><p><b>No cameras. No recorded calls.</b> Florida law needs everyone’s consent to record a call, and a crew should not work under a camera. We work from your call history, your invoices and your calendar.</p></li><li><p><b>No cold calls, no cold email.</b> Work comes from people who pass our name along, and rooms we walk into.</p></li></ul></div>
+</div></section>
+<section class="sec " id="about" aria-labelledby="about-h"><div class="wrap split">
+  <div class="side"><div class="side-in"><h2 id="about-h">One contact, start to finish</h2><figure class="photo"><div class="adf"><svg class="adf-art" viewBox="0 0 300 200" aria-hidden="true" focusable="false"><path class="adf-thirds" d="M100 0V200M200 0V200M0 66.667H300M0 133.333H300"/><path class="adf-crop" d="M8 23V8H23M277 8H292V23M8 177V192H23M277 192H292V177"/><text class="adf-n" x="15" y="44">Shot 2</text><path class="adf-arrow" d="M15 72H47"/><path class="adf-head" d="M53 72l-8 -4v8Z"/><text class="adf-l" x="15" y="66" text-anchor="start">Light</text></svg><p class="adf-q">Photo to come</p></div><figcaption>On a walk, Alachua County.</figcaption></figure></div></div>
+  <div class="main"><div class="rich"><p class="lede">The owner walks your shop himself and stays your contact, from the first conversation to the monthly check. No account managers, no handoffs.</p><p>In English or Spanish. Spanish is a first language here, not a translation.</p><p>We built these systems for our own work before offering them to anyone. It starts by watching how your shop actually runs, not by selling software.</p></div>
+  <p class="more"><a class="tl" href="about/">About Lumora</a></p></div>
+</div></section>
+<section class="sec white" id="contact" aria-labelledby="contact-h"><div class="wrap split">
+  <div class="side"><div class="side-in"><h2 id="contact-h">Book a walk</h2><p class="sec-desc">Call or text with your trade and your town. We start with the free <span class="nw">20-minute</span> conversation, and book the walk from there.</p></div></div>
+  <div class="main"><dl class="csheet"><div><dt>Your contact</dt><dd>Franco A. Soto, owner</dd></div><div><dt>Call or text</dt><dd><span class="big ph">[phone]</span></dd></div><div><dt>Email</dt><dd><span class="ph">[franco@lumorafl.com]</span></dd></div><div><dt>Where</dt><dd>Gainesville, serving Alachua County. Farther in Florida by arrangement.</dd></div><div><dt>Language</dt><dd>English or Spanish</dd></div><div><dt>Hours</dt><dd><span class="ph">[hours]</span></dd></div></dl><p class="more"><a class="tl" href="contact/#next">What happens after you reach out</a></p></div>
+</div></section>
 
 </main>
-
-<footer>
+<div class="hem" aria-hidden="true"></div>
+<footer class="foot">
   <div class="wrap">
-    <svg viewBox="0 0 297 72" xmlns="http://www.w3.org/2000/svg" aria-label="Lumora" style="color:#fff"><path d="M107.001 14.4V57.5246H99V14.4H107.001Z" fill="currentColor"/>
-<path d="M138.356 54.6307C135.859 57.0516 132.398 58.2622 127.972 58.2622C123.546 58.2622 120.066 57.0516 117.531 54.6307C115.034 52.1717 113.786 48.7862 113.786 44.4737V26.5997H121.787V44.4737C121.787 46.4407 122.335 48.0106 123.432 49.1834C124.529 50.3561 126.042 50.9424 127.972 50.9424C129.901 50.9424 131.414 50.3561 132.511 49.1834C133.608 48.0106 134.157 46.4407 134.157 44.4737V26.5997H142.157V44.4737C142.157 48.8239 140.89 52.2096 138.356 54.6307Z" fill="currentColor"/>
-<path d="M186.431 25.7486C190.139 25.7486 193.146 26.9023 195.453 29.2099C197.837 31.5175 199.028 34.7328 199.028 38.8562V57.5246H191.028V40.3315C191.028 38.0239 190.46 36.246 189.325 34.9975C188.228 33.7493 186.734 33.125 184.842 33.125C182.8 33.125 181.154 33.8059 179.906 35.1679C178.658 36.4918 178.033 38.2886 178.033 40.5583V57.5246H170.033V40.3882C170.033 38.1185 169.465 36.3406 168.33 35.0544C167.233 33.7682 165.72 33.125 163.791 33.125C161.824 33.125 160.197 33.8059 158.911 35.1679C157.663 36.5297 157.038 38.3455 157.038 40.6152V57.5246H149.038V26.5997H156.868V31.0258C157.738 29.399 159.024 28.1129 160.727 27.167C162.429 26.1835 164.283 25.7107 166.288 25.7486C168.255 25.7486 170.052 26.2214 171.678 27.167C173.343 28.1129 174.572 29.4557 175.367 31.1959C176.501 29.4936 178.052 28.1695 180.019 27.2239C181.986 26.2404 184.124 25.7486 186.431 25.7486Z" fill="currentColor"/>
-<path d="M204.246 42.0338C204.246 37.4566 205.797 33.6168 208.899 30.515C212.039 27.3374 216.011 25.7486 220.815 25.7486C225.619 25.7486 229.591 27.3374 232.731 30.515C235.833 33.6168 237.384 37.4566 237.384 42.0338C237.384 46.6488 235.833 50.5073 232.731 53.6093C229.591 56.749 225.619 58.319 220.815 58.319C216.011 58.319 212.039 56.749 208.899 53.6093C205.797 50.5073 204.246 46.6488 204.246 42.0338ZM214.686 48.3322C216.313 50.0345 218.356 50.8855 220.815 50.8855C223.198 50.8855 225.222 50.0345 226.886 48.3322C228.551 46.5542 229.383 44.4547 229.383 42.0338C229.383 39.6127 228.551 37.5322 226.886 35.7919C225.222 34.0898 223.198 33.2386 220.815 33.2386C218.356 33.2386 216.313 34.0898 214.686 35.7919C213.06 37.4566 212.247 39.5371 212.247 42.0338C212.247 44.4926 213.06 46.5922 214.686 48.3322Z" fill="currentColor"/>
-<path d="M251.018 57.5246H243.019V26.5997H250.678V30.7418C252.533 27.413 255.37 25.7486 259.19 25.7486C260.438 25.7486 261.686 25.9754 262.934 26.4295L262.253 34.0898C260.892 33.6737 259.663 33.4656 258.566 33.4656C256.219 33.4656 254.366 34.26 253.006 35.8488C251.681 37.3997 251.018 39.7262 251.018 42.8282V57.5246Z" fill="currentColor"/>
-<path d="M289.397 30.288V26.5997H297V57.5246H289.397V53.9498C286.75 56.8248 283.457 58.2622 279.523 58.2622C275.059 58.2622 271.39 56.7113 268.514 53.6093C265.639 50.5073 264.202 46.6109 264.202 41.9203C264.202 37.2674 265.658 33.4277 268.572 30.4015C271.486 27.3374 275.136 25.8053 279.523 25.8053C283.382 25.8053 286.673 27.2995 289.397 30.288ZM289.51 42.0338C289.51 39.6127 288.677 37.5132 287.014 35.7353C285.386 33.9953 283.325 33.125 280.829 33.125C278.294 33.125 276.214 33.9953 274.586 35.7353C272.998 37.4755 272.203 39.5748 272.203 42.0338C272.203 44.5303 273.017 46.6488 274.644 48.389C276.269 50.129 278.333 50.999 280.829 50.999C283.325 50.999 285.386 50.129 287.014 48.389C288.677 46.6109 289.51 44.4926 289.51 42.0338Z" fill="currentColor"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M89.9999 8.28699C87.9971 8.38302 85.3838 8.83318 83.4498 9.42839C79.6312 10.6373 76.7474 12.8215 74.6959 15.809C72.7355 18.6642 71.9409 21.7872 71.8372 25.0695C71.6191 31.9772 71.8064 38.8866 71.7091 45.7944C71.6586 49.3941 71.201 52.9601 69.7741 56.3715C66.9128 63.2115 61.6478 68.0973 53.5622 70.5819C51.2395 71.2955 48.8079 71.6496 46.339 71.8404C42.3457 72.1489 38.3686 71.948 34.3807 71.7575C28.9525 71.4988 23.7802 70.2602 18.6214 68.937C17.6832 68.6962 16.7481 68.4467 15.6694 68.1641C16.9799 67.9415 18.1339 67.7595 19.2807 67.5489C25.9048 66.3325 31.1089 63.2889 35.0095 58.583C36 57.388 36.895 56.143 37.5451 54.7346C37.6254 54.4452 37.8933 54.403 38.1097 54.3161C40.1653 53.4925 42.1202 52.5364 43.8754 51.2886C46.1358 49.6814 47.8257 47.7015 49.2008 45.5043C51.2912 42.1625 52.3475 38.5479 53.0537 34.841C53.5824 32.0663 53.8687 29.2649 54.3159 26.4814C54.7386 23.8514 55.2931 21.2477 56.5808 18.8035C57.6084 16.852 58.876 15.0427 60.5846 13.4502C63.1141 11.0929 66.1864 9.48808 69.6682 8.40395C71.2818 7.90153 72.935 7.53681 74.6918 7.38582C75.2517 7.27206 75.8931 7.24593 76.3905 7.18668C76.5285 7.18819 76.6171 7.1706 76.7493 7.13526C77.2666 7.12043 77.7256 7.05517 78.172 7.01856C80.9859 6.92939 83.5405 7.02259 85.9975 7.03718C86.5981 7.0344 86.6479 6.98489 87.2141 7.16919C87.6625 7.29083 89.062 7.90804 89.9999 8.28699Z" fill="#FF323C"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M65.0069 7.06571C59.0615 9.49942 55.3035 13.5095 53.378 18.8342C52.3908 21.5641 52.0529 24.3962 51.6659 27.2191C51.1041 31.3188 50.5269 35.4186 48.9348 39.3469C47.5107 42.8608 45.5006 46.0771 42.2448 48.6255C40.1769 50.2439 37.7886 51.437 35.1933 52.3914C32.3223 53.1645 29.4013 53.516 26.427 53.5002C20.2664 53.4672 14.4449 52.1438 8.817 50.0825C5.77674 48.9692 2.86777 47.6472 0.00352561 46.1761C-0.00927887 46.1686 0.017933 46.1674 0.00455287 46.1701C0.209772 46.0355 0.441959 46.159 0.670942 46.2107C4.1152 46.9847 7.61697 47.3329 11.1695 47.1108C17.7994 46.697 23.1415 44.1966 27.1956 39.7031C29.5958 37.0431 31.0211 33.9974 31.8507 30.7397C32.6735 27.5084 33.4035 24.2595 34.2606 21.0349C35.2357 17.3684 36.7578 13.882 39.2423 10.7405C42.551 6.55718 46.9065 3.49397 52.4126 1.62172C54.6314 0.867244 56.9188 0.405923 59.2798 0.164379C63.7157 -0.289477 68.0503 0.255189 72.3663 1.08097C76.2337 1.82091 79.0988 2.74135 82.7087 4.08048C86.5441 5.56079 85.889 5.06289 83.0796 4.8885C82.5486 4.8556 81.5439 4.78228 81.011 4.79033C75.5461 4.7264 69.3695 5.46096 65.0069 7.06571Z" fill="#FF323C"/></svg>
-    <span data-i18n="footer.line">Lumora Ops is part of Lumora Group LLC. Gainesville, Florida.</span>
+    <div class="foot-grid">
+      <div class="foot-lead">
+        <a class="foot-brand" href="./" aria-label="Lumora, home page"><svg viewBox="0 0 297 72" width="99" height="24" aria-hidden="true" focusable="false"><use href="#lm-word"/><use href="#lm-mark"/></svg></a>
+        <p class="foot-line">It replaces retyping, waiting and forgetting.</p>
+        <p class="foot-about">Shop operations for Gainesville trades and local businesses.</p>
+        <p class="foot-price"><b>The walk: $500, flat.</b> Counts toward the fix if it starts within 30 days.</p>
+        <a class="btn" href="contact/">Book the free conversation</a>
+      </div>
+      <nav class="foot-col c-how" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">How it works</h2><ul><li><a href="how-it-works/#conversation">The free conversation</a></li><li><a href="how-it-works/#walk">The walk</a></li><li><a href="how-it-works/#fix">One fix</a></li><li><a href="how-it-works/#check">The monthly check</a></li><li><a href="how-it-works/#price">What sets the price</a></li><li><a href="how-it-works/#sample">The sample sheet</a></li><li><a href="how-it-works/#faq">Questions owners ask</a></li><li><a href="leak-check/">Leak check</a></li></ul></nav>
+      <nav class="foot-col c-ind" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">Industries</h2><ul><li><a href="industries/plumbing/">Plumbing</a></li><li><a href="industries/ac-and-heating/">AC and heating</a></li><li><a href="industries/electrical/">Electrical</a></li><li><a href="industries/water-damage-and-mold/">Water damage and mold</a></li><li><a href="industries/pest-control/">Pest control</a></li><li><a href="industries/roofing/">Roofing</a></li><li><a href="industries/restaurants-and-bars/">Restaurants and bars</a></li><li><a href="industries/">All industries</a></li></ul></nav>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contact</h2><ul><li>Call or text <span class="ph">[phone]</span></li><li><span class="ph">[franco@lumorafl.com]</span></li><li><span class="ph">[hours]</span></li><li>Gainesville, serving Alachua County. Farther in Florida by arrangement.</li><li>English or Spanish</li></ul></div>
+    </div>
+    <div class="foot-base">
+      <p class="legal">Lumora Ops is part of Lumora Group LLC, a Florida limited liability company. Gainesville, Florida.</p>
+      <ul>
+        <li><a href="about/">About</a></li>
+        <li><a href="articles/">Articles</a></li>
+        <li><a href="privacy/">Privacy</a></li>
+        <li><a href="es/" hreflang="es" lang="es" data-lang="es">También en español</a></li>
+      </ul>
+      <p>© 2026 Lumora Group LLC</p>
+      <p class="credit">Icons: Material Symbols by Google, under the <a href="assets/icons/LICENSE.txt">Apache License 2.0</a>.</p>
+    </div>
   </div>
 </footer>
-
-<script>
-(function(){
-  var ES = {
-    "nav.how":"Cómo funciona",
-    "nav.cost":"La visita",
-    "nav.cta":"Agenda una visita",
-    "hero.h1":"Recorremos tu negocio dos días y te entregamos una hoja con lo que se te está escapando, en dólares.",
-    "hero.lede":"Después arreglamos una sola cosa, dentro de las herramientas que ya pagas. Para oficios y negocios locales en Gainesville, en español o en inglés.",
-    "hero.cta":"Agenda una visita",
-    "hero.link":"Cómo es la visita",
-    "sheet.title":"Hoja de visita",
-    "sheet.sub":"Plomería, 4 camionetas, condado de Alachua",
-    "sheet.stamp":"Ejemplo",
-    "sheet.r1.b":"Llamadas fuera de horario al buzón",
-    "sheet.r1.t":"14 al mes. Se devolvieron 3. Las otras 11 se fueron al siguiente nombre en Google.",
-    "sheet.r1.usd":"$3,700 / mes",
-    "sheet.r2.b":"Presupuestos enviados 48+ horas después",
-    "sheet.r2.t":"9 de 22. Cinco de esos se enfriaron.",
-    "sheet.r2.usd":"$2,100 / mes",
-    "sheet.r3.b":"El mismo trabajo escrito en tres lugares",
-    "sheet.r3.t":"Ticket de papel, calendario, QuickBooks. Unos 40 minutos al día.",
-    "sheet.r3.usd":"$1,300 / mes",
-    "sheet.r4.b":"Reseñas pedidas",
-    "sheet.r4.t":"0 de 61 trabajos terminados. El perfil de Google lleva 12 reseñas desde 2023.",
-    "sheet.r4.usd":"sin precio",
-    "sheet.foot":"Se escapa, antes de cualquier arreglo",
-    "sheet.total":"$7,100 / mes",
-    "sheet.note":"Números ilustrativos. Tu hoja se arma con tu registro de llamadas, tus facturas y tu calendario.",
-    "finds.h2":"Lo que suele encontrar una visita",
-    "finds.1.h":"Llamadas que nadie contesta",
-    "finds.1.p":"Después de las cinco, los sábados, y cada vez que la única persona que contesta está debajo de un lavabo. Una emergencia que cae al buzón es un trabajo que se va con otro.",
-    "finds.2.h":"Presupuestos que salen tarde",
-    "finds.2.p":"La visita fue el martes. El número salió el viernes. Para entonces el cliente ya tenía otros dos.",
-    "finds.3.h":"El mismo trabajo, escrito tres veces",
-    "finds.3.p":"Una vez en el ticket de papel, otra en el calendario, otra en QuickBooks. No es tarea de nadie, así que es tarea del dueño, de noche.",
-    "finds.4.h":"Reseñas que nadie pidió",
-    "finds.4.p":"Sesenta clientes contentos al mes y un perfil de Google que dice doce reseñas desde 2023.",
-    "finds.5.h":"El despacho vive en una sola cabeza",
-    "finds.5.p":"Quién está dónde, qué camioneta tiene la pieza, quién sigue. Cuando esa persona falta, el día se detiene.",
-    "finds.6.h":"Seguimientos que nunca pasan",
-    "finds.6.p":"El mantenimiento que ya toca, el presupuesto que nunca respondieron, el cliente de la primavera pasada. Todo es dinero real y nada está en la lista de nadie.",
-    "how.h2":"Cómo funciona",
-    "how.1.h":"La visita",
-    "how.1.p":"Dos días en tu negocio. Miramos el teléfono, la pizarra, la camioneta, la pila de facturas. Te llevas la hoja: cada fuga con un número al lado, de mayor a menor.",
-    "how.1.price":"$500, fijo",
-    "how.2.h":"Un arreglo",
-    "how.2.p":"El número más grande de la hoja se arregla primero, dentro de lo que ya usas: tu línea de teléfono, Excel, QuickBooks, Jobber, un chat de grupo. El arreglo se cotiza contra ese número, así ves lo que cuesta junto a lo que te cuesta la fuga.",
-    "how.2.price":"Se cotiza desde la hoja",
-    "how.3.h":"Que siga funcionando",
-    "how.3.p":"Una revisión al mes. Si el arreglo sigue funcionando, qué se rompió, cuál es el siguiente número de la hoja. Cancelas el mes que quieras.",
-    "how.3.price":"Mensual, según el negocio",
-    "how.after":"Si prefieres que se haga todo el negocio de una vez, eso es un proyecto completo, definido y cotizado a partir de la hoja. La mayoría de los dueños empieza con un arreglo y ve si aguanta.",
-    "rules.h2":"Reglas que respetamos",
-    "rules.1":"<b>Nada de esto reemplaza a tu gente.</b> Reemplaza el volver a escribir, el esperar y el olvidar. Tus técnicos siguen haciendo el trabajo; solo dejan de hacer el papeleo dos veces.",
-    "rules.2":"<b>Construimos dentro de lo que ya pagas.</b> Si el arreglo necesita una suscripción nueva, sabrás el costo mensual antes de empezar, y por qué perdió la opción gratis.",
-    "rules.3":"<b>Sin cámaras. Sin llamadas grabadas.</b> La ley de Florida exige el consentimiento de todos, y además es una mala forma de tratar a un equipo. Trabajamos con tu registro de llamadas, tus facturas y tu calendario.",
-    "rules.4":"<b>Todo es tuyo.</b> Accesos, documentos, automatizaciones. Si dejamos de trabajar juntos, sigue funcionando sin nosotros.",
-    "rules.5":"<b>Sin llamadas en frío, sin correos en frío.</b> Si estás leyendo esto, alguien te lo pasó o lo encontraste. Es la única forma en que tomamos trabajo.",
-    "who.h2":"Para quién es",
-    "who.t1":"Plomería","who.t2":"Electricidad","who.t3":"Aire y calefacción","who.t4":"Moho y daños por agua","who.t5":"Control de plagas","who.t6":"Techos","who.t7":"Limpieza","who.t8":"Piscinas","who.t9":"Lavado a presión","who.t10":"Talleres mecánicos",
-    "who.p1":"Primero los oficios de emergencia, porque ahí una llamada perdida cuesta más y la cuenta es más clara. Un solo trabajo recuperado fuera de horario suele pagar el mes.",
-    "who.p2":"También food trucks, restaurantes y discotecas: un reporte mensual a partir del export de tu punto de venta, en español o en inglés, sobre qué se vendió, cuándo, y qué noches están muertas. Más las dos o tres automatizaciones que de verdad importan, como el post de ubicación y el pedido de reseña.",
-    "who.p3":"Florida marca el trabajo. La temporada de huracanes, la humedad, las piscinas y los alquileres aparecen todos en la hoja.",
-    "photo.1":"Foto por venir: la parte trasera de una camioneta de trabajo, 6:40 a.m., antes de la primera llamada.",
-    "photo.2":"Foto por venir: Franco en un negocio, con la hoja de visita en la mano.",
-    "about.h2":"Quién está detrás",
-    "about.p1":"Lumora Ops lo dirige Franco Soto desde Gainesville. Creció en Perú, así que el español es lengua materna, no una traducción.",
-    "about.p2":"Llegó aquí construyendo automatización para su propio trabajo primero: sistemas que hacen la tarea mientras él duerme. Lumora Ops es esa misma costumbre apuntada a negocios ajenos, con la diferencia de que empieza mirando cómo funciona el negocio de verdad, no vendiendo software.",
-    "about.p3":"Una sola persona, a propósito. Te atiende quien recorrió tu negocio, siempre.",
-    "contact.h2":"Agenda una visita",
-    "contact.lede":"Manda una nota con tu oficio y tu ciudad. Recibes respuesta en español o en inglés, y una fecha para la visita si encaja.",
-    "contact.cta":"Escríbele a Lumora Ops",
-    "contact.where":"Gainesville y el condado de Alachua. Más lejos en Florida, según se acuerde.",
-    "footer.line":"Lumora Ops es parte de Lumora Group LLC. Gainesville, Florida."
-  };
-  var EN = {};
-  var nodes = document.querySelectorAll("[data-i18n]");
-  nodes.forEach(function(n){ EN[n.getAttribute("data-i18n")] = n.innerHTML; });
-  var mail = document.getElementById("mailBtn");
-  var subj = {en:"Walk request", es:"Solicitud de visita"};
-  var titles = {en:"Lumora Ops", es:"Lumora Ops"};
-
-  function setLang(l){
-    var dict = l === "es" ? ES : EN;
-    nodes.forEach(function(n){
-      var k = n.getAttribute("data-i18n");
-      if (dict[k] != null) n.innerHTML = dict[k];
-    });
-    document.documentElement.lang = l;
-    document.title = titles[l];
-    if (mail) mail.href = "mailto:cottofranco@gmail.com?subject=" + encodeURIComponent(subj[l]);
-    document.querySelectorAll(".lang button").forEach(function(b){
-      b.setAttribute("aria-pressed", b.getAttribute("data-lang") === l ? "true" : "false");
-    });
-    try { localStorage.setItem("lumora-lang", l); } catch(e){}
-  }
-  document.querySelectorAll(".lang button").forEach(function(b){
-    b.addEventListener("click", function(){ setLang(b.getAttribute("data-lang")); });
-  });
-  var initial = "en";
-  try {
-    var q = new URLSearchParams(location.search).get("lang");
-    var saved = localStorage.getItem("lumora-lang");
-    initial = q || saved || ((navigator.language||"").toLowerCase().indexOf("es") === 0 ? "es" : "en");
-  } catch(e){}
-  if (initial !== "en") setLang(initial);
-})();
-</script>
+<script src="assets/site.js?v=c0cfecef" defer></script>
 </body>
 </html>

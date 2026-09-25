@@ -1,0 +1,11 @@
+Lumora icons: Material Symbols by Google
+
+The icons in this folder are Google's Material Symbols, Sharp, weight 300 (the red drop is water_drop, filled),
+from the npm package @material-symbols/svg-300 version 0.47.5 and from Google's repository
+https://github.com/google/material-design-icons. They are used under the Apache License, Version 2.0, a copy of
+which is in LICENSE.txt beside this file.
+
+Changed by Lumora Group LLC: each glyph is placed on a 48- or 24-unit box and colored, and each of the six leak
+icons adds the water_drop glyph in red at its lower right. The glyph outlines are Google's, unchanged.
+
+Keep LICENSE.txt and this NOTICE.txt with these files whenever you pass them on.

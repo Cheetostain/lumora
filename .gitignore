@@ -1,0 +1,8 @@
+# Review notes and screenshots; never published (.nojekyll would serve underscore folders)
+_preview/
+
+# The generator and the copy sources: builder notes, gates and research references, not for the
+# public repo or the live site (.nojekyll would serve them at lumorafl.com/_build/). Run
+# python _build/build.py locally and commit only the pages it writes. To version the generator,
+# keep it in a private repo, or delete this line knowing GitHub and the site would show it.
+_build/
