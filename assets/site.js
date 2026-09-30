@@ -1,4 +1,4 @@
-/* Lumora Ops, lumorafl.com. Small helpers shared by every page. Nothing here calls the network.
+/* Lumora, lumorafl.com. Small helpers shared by every page. Nothing here calls the network.
    1. The phone menu closes on Escape, on a link and on a tap outside it.
    2. The language switch remembers the choice in this browser only ("lumora-lang"), so the
       home page can open in that language next time. That is the one value the site stores. */
