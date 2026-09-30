@@ -838,8 +838,9 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
 .feed .h i{display:inline-block;width:1.8cqw;height:1.8cqw;border-radius:50%;background:var(--signal);margin-right:1.2cqw}
 .feed .notes b{display:block;font-size:3.2cqw;font-weight:600;line-height:1.2;color:#fff;margin-top:.6cqw}
 .feed .notes p{font-size:2.8cqw;line-height:1.3;color:var(--on-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-/* About, One bird: the master mark, never redrawn. On entering the screen it sweeps in from the tail (the body sweeps into
-   the tail), then drifts a few pixels, the way a perched bird shifts. Transforms and a clip only; the shape is untouched. */
-.about-mark.fly{animation:mark-in .9s cubic-bezier(.3,.7,.2,1) both,mark-drift 6s ease-in-out .9s infinite}
-@keyframes mark-in{from{clip-path:inset(0 100% 0 0);transform:translate(-14px,10px) rotate(6deg)}to{clip-path:inset(0);transform:none}}
-@keyframes mark-drift{0%,100%{transform:none}50%{transform:translateY(-5px) rotate(-2deg)}}
+/* About, One bird: the perched drawing on the Bone counter (Book 5.5). On entering the screen the branch grows in from the
+   left, where it runs off the frame, and the bird lands with it. A clip only; the drawing is untouched. */
+.bird-box{background:var(--bone) var(--grain);overflow:hidden}
+.bird-box img{display:block;width:100%;height:auto}
+.bird-fig.in .bird-box img{animation:bird-in 1.1s cubic-bezier(.3,.7,.2,1) both}
+@keyframes bird-in{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}

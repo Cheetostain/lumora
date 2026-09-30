@@ -59,8 +59,8 @@
       if (en[0].isIntersecting) { t0 = 0; raf = requestAnimationFrame(tick); } else { cancelAnimationFrame(raf); reset(); }
     }, { threshold: 0.3 }).observe(f);
   }
-  var m = document.querySelector(".about-mark");
+  var m = document.querySelector(".bird-fig");
   if (m && "IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { m.classList.add("fly"); o.disconnect(); } }, { threshold: 0.6 }).observe(m);
+    new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { m.classList.add("in"); o.disconnect(); } }, { threshold: 0.5 }).observe(m);
   }
 })();
