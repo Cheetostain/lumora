@@ -27,4 +27,14 @@
     if (!a) return;
     try { localStorage.setItem("lumora-lang", a.getAttribute("data-lang")); } catch (err) {}
   });
+  document.querySelectorAll(".demo video").forEach(function (v) {
+    var b = v.parentNode.querySelector(".demo-ctl");
+    function set(p) { b.setAttribute("aria-label", b.getAttribute(p ? "data-pause" : "data-play")); b.className = "demo-ctl" + (p ? "" : " paused"); }
+    function go() { v.play().then(function () { set(1); }, function () { set(0); }); }
+    function stop() { v.pause(); set(0); }
+    b.onclick = function () { v.dataset.u = 1; if (v.paused) go(); else stop(); };
+    if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      new IntersectionObserver(function (e) { if (!v.dataset.u) { if (e[0].isIntersecting) go(); else stop(); } }, { threshold: 0.4 }).observe(v);
+    } else set(0);
+  });
 })();
