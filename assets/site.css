@@ -821,3 +821,9 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
 .demo-ctl.paused::before{left:19px;top:14px;width:0;height:0;background:none;box-shadow:none;border-left:16px solid var(--bone);border-top:10px solid transparent;border-bottom:10px solid transparent}
 .demo-ctl:focus-visible{outline:3px solid var(--signal);outline-offset:3px}
 .demo-wide{max-width:600px;margin:40px auto 0}.demo-wide .demo-box{margin-bottom:14px}
+.demo-pair{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:1000px;margin:40px auto 0}.demo-pair .demo-box{margin-bottom:14px}
+@media (max-width:760px){.demo-pair{grid-template-columns:1fr;gap:34px}}
+.demo-still{margin:26px 0 0;max-width:620px}.demo-still img{width:100%;height:auto;border:1px solid var(--rule)}
+.peek{margin-top:22px;max-width:620px}.peek summary{cursor:pointer;font-weight:600;color:var(--ink);text-decoration:underline;text-underline-offset:3px;width:max-content}
+.peek pre{margin-top:12px;background:#000;color:var(--on-ink);padding:16px 18px;overflow:auto;font:13px/1.6 Consolas,"Courier New",monospace;max-height:340px}
+.peek .fine{margin-top:8px}
