@@ -840,7 +840,13 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
 .feed .notes p{font-size:2.8cqw;line-height:1.3;color:var(--on-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* About, One bird: the perched drawing on the Bone counter (Book 5.5). On entering the screen the branch grows in from the
    left, where it runs off the frame, and the bird lands with it. A clip only; the drawing is untouched. */
-.bird-box{background:var(--bone) var(--grain);overflow:hidden}
+.bird-box{overflow:hidden}
 .bird-box img{display:block;width:100%;height:auto}
 .bird-fig.in .bird-box img{animation:bird-in 1.1s cubic-bezier(.3,.7,.2,1) both}
 @keyframes bird-in{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}
+/* About, One bird: title, drawing and caption centred in their column; the words sit vertically centred beside them */
+#bird .split{align-items:center}
+#bird .side-in{text-align:center}
+#bird .bird-fig{margin-left:auto;margin-right:auto}
+#bird .bird-fig figcaption{margin-left:auto;margin-right:auto}
+#bird .side .x-n{justify-self:center;margin-left:auto;margin-right:auto}
