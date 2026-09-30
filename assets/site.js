@@ -61,6 +61,15 @@
   }
   var m = document.querySelector(".bird-fig");
   if (m && "IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { m.classList.add("in"); o.disconnect(); } }, { threshold: 0.5 }).observe(m);
+    var busy, hop = function () {
+      if (busy) return;
+      busy = 1; m.classList.remove("hop"); void m.offsetWidth; m.classList.add("hop");
+      setTimeout(function () { busy = 0; }, 3300);
+    };
+    new IntersectionObserver(function (e, o) {
+      if (e[0].isIntersecting) { m.classList.add("in"); setTimeout(hop, 1300); o.disconnect(); }
+    }, { threshold: 0.5 }).observe(m);
+    m.addEventListener("mouseenter", hop);
+    m.addEventListener("click", hop);
   }
 })();
