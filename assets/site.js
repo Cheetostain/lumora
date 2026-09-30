@@ -37,4 +37,26 @@
       new IntersectionObserver(function (e) { if (!v.dataset.u) { if (e[0].isIntersecting) go(); else stop(); } }, { threshold: 0.4 }).observe(v);
     } else set(0);
   });
+  var f = document.querySelector("[data-feed]");
+  if (f && "IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var L = [].slice.call(f.querySelectorAll(".notes li")), C = f.querySelector(".clock"), raf, t0,
+      A = [1.2, 4.4, 6.2, 8, 11.4], K = ["11:48", "3:02", "3:04", "3:06", "6:41"],
+      e = function (x) { x = x < 0 ? 0 : x > 1 ? 1 : x; return x * x * (3 - 2 * x); },
+      reset = function () { L.forEach(function (li) { li.style.top = li.style.opacity = ""; }); C.textContent = "6:41"; },
+      draw = function (t) {
+        var n = 0, fade = 1 - e((t - 16.4) / 0.8);
+        A.forEach(function (a) { if (t >= a) n++; });
+        C.textContent = n ? K[n - 1] : "11:47";
+        L.forEach(function (li, i) {
+          var s = 0, g = e((t - A[i]) / 0.5);
+          for (var j = i + 1; j < A.length; j++) s += e((t - A[j]) / 0.5);
+          li.style.top = (s * 15.4 - (1 - g) * 10) + "cqw";
+          li.style.opacity = i < n ? Math.min(g, fade) : 0;
+        });
+      },
+      tick = function (now) { t0 = t0 || now; draw(((now - t0) / 1000) % 18); raf = requestAnimationFrame(tick); };
+    new IntersectionObserver(function (en) {
+      if (en[0].isIntersecting) { t0 = 0; raf = requestAnimationFrame(tick); } else { cancelAnimationFrame(raf); reset(); }
+    }, { threshold: 0.3 }).observe(f);
+  }
 })();
