@@ -842,7 +842,7 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
    from the left, where it runs off the frame; Cardino then hops along it, and hops again on hover or tap. Transforms and a clip
    only; the drawing is untouched. The hop goes left, away from the note, and back; the branch slopes about 3%, so the bird
    sinks a hair as it goes left. */
-.bird-box{position:relative;overflow-x:clip;overflow-y:visible}   /* the hop lifts the crest above the box: clip the sides (the branch runs off the left), never the top */
+.bird-box{position:relative;overflow:hidden}
 .bird-box img{display:block;width:100%;height:auto}
 .bird-box .b-bird{position:absolute;left:0;top:0;height:100%;transform-origin:55% 92%}
 .bird-fig.in .bird-box img{animation:bird-in 1.1s cubic-bezier(.3,.7,.2,1) both}
