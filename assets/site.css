@@ -178,7 +178,7 @@ a.tel,a.mail{color:var(--ink);text-decoration:underline;text-decoration-color:va
   .split>.side,.split>.main{grid-column:1/-1}
   /* on a phone the side column opens up, so a photo slot follows the section's text instead of leading it */
   .split>.side,.side-in{display:contents}
-  .split>.side h2,.split>.side .sec-desc,.split>.side .price-tag,.split>.side .legend,.split>.side .about-mark,.split>.side .x-n{grid-column:1/-1}
+  .split>.side h2,.split>.side .sec-desc,.split>.side .price-tag,.split>.side .legend,.split>.side .x-n{grid-column:1/-1}
   .split>.side .x-n{margin-bottom:-18px;justify-self:start}
   .split>.side h2{margin-bottom:0}
   .split>.side .sec-desc,.split>.side .price-tag{margin:-18px 0 0}
@@ -395,7 +395,6 @@ a.sheet-card:hover{border-color:var(--ink)}
 @media (max-width:760px){.rules-grid{grid-template-columns:1fr}}
 
 /* a slot kept for proof that does not exist yet */
-.reserved{border:1px dashed var(--muted);padding:22px 24px;max-width:640px;font-size:16.5px;color:var(--body)}
 
 /* how it works: at a glance, the book's timeline (2.1) with its pictograms, filled red squares where money changes hands */
 .glance{position:relative;border-top:1px solid var(--ink)}
@@ -498,8 +497,6 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
 @media (max-width:900px){.teaser-copy,.teaser-math{grid-column:1/-1}.teaser-math{max-width:560px}}
 
 /* about: the mark beside the words that describe it */
-.about-mark{width:clamp(96px,10vw,132px);height:auto;margin-top:26px}
-@media (max-width:900px){.about-mark{margin-top:-8px;width:88px}}
 
 /* industry pages */
 .ind-body{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);row-gap:48px;padding:var(--sec) 0}
@@ -820,7 +817,6 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
 .demo-ctl::before{content:"";position:absolute;left:17px;top:15px;width:5px;height:18px;background:var(--bone);box-shadow:9px 0 var(--bone)}
 .demo-ctl.paused::before{left:19px;top:14px;width:0;height:0;background:none;box-shadow:none;border-left:16px solid var(--bone);border-top:10px solid transparent;border-bottom:10px solid transparent}
 .demo-ctl:focus-visible{outline:3px solid var(--signal);outline-offset:3px}
-.demo-wide{max-width:600px;margin:40px auto 0}.demo-wide .demo-box{margin-bottom:14px}
 .demo-pair{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:1000px;margin:40px auto 0}.demo-pair .demo-box{margin-bottom:14px}
 @media (max-width:760px){.demo-pair{grid-template-columns:1fr;gap:34px}}
 .demo-still{margin:26px 0 0;max-width:620px}.demo-still img{width:100%;height:auto;border:1px solid var(--rule)}
@@ -873,3 +869,12 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
 #bird .bird-fig{margin-left:auto;margin-right:auto}
 #bird .bird-fig figcaption{margin-left:auto;margin-right:auto}
 #bird .side .x-n{justify-self:center;margin-left:auto;margin-right:auto}
+/* Home hero, 2026-10-01: who it is for on top, the button bigger (the page's one job), the phone beside it, and the
+   sample sheet opening with its total so a phone sees the dollars on the first screen. The button stays Ink: red means
+   money, the mark or a flag, and the red total sits right below it. */
+.eyebrow{font-size:15px;font-weight:600;line-height:1.4;color:var(--muted);margin-bottom:16px;max-width:34em}
+.btn-hero{min-height:58px;padding:0 32px;font-size:17.5px}
+@media (max-width:640px){.hero .actions{flex-direction:column;align-items:stretch;gap:14px}.btn-hero{width:100%}.hero .actions .tl{align-self:flex-start}}
+.sheet-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:-4px 0 18px;padding-bottom:14px;border-bottom:1px solid var(--rule);font-weight:600;color:var(--ink)}
+.sheet-top b{color:var(--signal-ink);font-size:24px;white-space:nowrap}
+.btn .nw{display:contents}
