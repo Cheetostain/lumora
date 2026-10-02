@@ -879,3 +879,4 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
 .sheet-top b{color:var(--signal-ink);font-size:24px;white-space:nowrap}
 .btn .nw{display:contents}
 .hero h1{font-size:clamp(36px,4.3vw,56px)}
+@media (max-width:640px){.hero h1{margin-bottom:16px}.hero .lede{margin-bottom:22px}.eyebrow{margin-bottom:12px}.price-line{margin-top:16px}}
