@@ -874,9 +874,10 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
    money, the mark or a flag, and the red total sits right below it. */
 .eyebrow{font-size:15px;font-weight:600;line-height:1.4;color:var(--muted);margin-bottom:16px;max-width:34em}
 .btn-hero{min-height:58px;padding:0 32px;font-size:17.5px}
-@media (max-width:640px){.hero .actions{flex-direction:column;align-items:stretch;gap:14px}.btn-hero{width:100%}.hero .actions .tl{align-self:flex-start}}
+@media (max-width:640px){.hero .actions{flex-direction:column;align-items:stretch;gap:14px}.btn-hero{width:100%}}
 .sheet-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:-4px 0 18px;padding-bottom:14px;border-bottom:1px solid var(--rule);font-weight:600;color:var(--ink)}
 .sheet-top b{color:var(--signal-ink);font-size:24px;white-space:nowrap}
 .btn .nw{display:contents}
 .hero h1{font-size:clamp(36px,4.3vw,56px)}
 @media (max-width:640px){.hero h1{margin-bottom:16px}.hero .lede{margin-bottom:22px}.eyebrow{margin-bottom:12px}.price-line{margin-top:16px}}
+.cta-note{margin-top:12px;font-size:14.5px;line-height:1.5;color:var(--muted)}.cta-note .tl{color:var(--ink);white-space:nowrap}
