@@ -1,11 +1,6 @@
-/* Lumora, lumorafl.com. One stylesheet for every page.
-   Brand v2 (branding/guidelines-v2): color 6.1 and 6.2, type 6.3, grounds 4.3, the bird 5.5, pattern, icons and
-   photos 7.1 to 7.3, the walk sheet 8.1. Red means money, the mark or a flag, and nothing else is red (6.1).
-   One family, Familjen Grotesk (6.3), served from this site (SIL OFL 1.1, fonts/OFL.txt).
-   The site is built like the walk sheet (a title, a muted descriptor, an Ink rule, ruled rows) and, since 2026-09-27,
-   in direction A, "On the counter" (design-research/APPLIED-A.html): every page opens on the Bone counter, real shop
-   objects drawn on it stand in the photo slots until the photos exist, paper lies on it with a lift, sections carry
-   their numbers, one Ink band a page. Bone with its grain, Flight lines at the hem, the leak icons. */
+/* Lumora, lumorafl.com. One stylesheet for every page. Brand v2 (branding/guidelines-v2): color 6.1 and 6.2, type 6.3,
+   grounds 4.3, the bird 5.5, icons and photos 7.1 to 7.3, the walk sheet 8.1. Red means money, the mark or a flag (6.1).
+   Familjen Grotesk, served from this site (SIL OFL 1.1, fonts/OFL.txt). Direction A, "On the counter": APPLIED-A.html. */
 
 @font-face{font-family:"Familjen Grotesk";font-style:normal;font-weight:400;font-display:swap;src:url("fonts/FamiljenGrotesk-Regular.woff2") format("woff2")}
 @font-face{font-family:"Familjen Grotesk";font-style:normal;font-weight:500;font-display:swap;src:url("fonts/FamiljenGrotesk-Medium.woff2") format("woff2")}
@@ -804,7 +799,7 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
 }
 
 @media print{
-  .util,.bar,.skip,.menu,.foot .btn,.calc-mini,.hem{display:none !important}
+  .util,.bar,.skip,.menu,.foot .btn,.calc-mini,.hem,.callbar{display:none !important}
   .op-ink{background:#FFFFFF;--ink:#000000;--body:#2B2B29;--muted:#6E6D66;--rule:#D8D7D0;color:#2B2B29}
   .hero-sheet::before{display:none}
   .sec,.cta{padding:28px 0}
@@ -881,3 +876,5 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
 .hero h1{font-size:clamp(36px,4.3vw,56px)}
 @media (max-width:640px){.hero h1{margin-bottom:16px}.hero .lede{margin-bottom:22px}.eyebrow{margin-bottom:12px}.price-line{margin-top:16px}}
 .cta-note{margin-top:12px;font-size:14.5px;line-height:1.5;color:var(--muted)}.cta-note .tl{color:var(--ink);white-space:nowrap}
+.callbar{display:none}@media (max-width:700px){.callbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--ink);padding-bottom:env(safe-area-inset-bottom)}.callbar a{flex:1;padding:15px 0;text-align:center;color:var(--paper);font-weight:600;text-decoration:none}.callbar a+a{border-left:1px solid var(--body)}body:has(.callbar){padding-bottom:52px}}
+.ph-main .actions{margin-top:20px}

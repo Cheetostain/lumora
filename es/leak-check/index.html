@@ -26,7 +26,7 @@
 <link rel="icon" href="../../assets/mark.svg" type="image/svg+xml">
 <link rel="preload" href="../../assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../../assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/site.css?v=9b5945aa">
+<link rel="stylesheet" href="../../assets/site.css?v=b9fc018d">
 </head>
 <body>
 <a class="skip" href="#main">Saltar al contenido</a>
@@ -69,11 +69,11 @@
   <p class="help" id="h-rang">Cuéntelas en su historial de llamadas si puede. Si calcula a ojo, quédese corto.</p><p class="err" id="e-rang" hidden></p>
 </div><div class="field">
   <label for="f-back">De esas, cuántas devuelve<span class="tag" id="t-back">Ejemplo</span></label>
-  <input id="f-back" name="back" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="2" aria-describedby="h-back e-back" required>
+  <input id="f-back" name="back" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="3" aria-describedby="h-back e-back" required>
   <p class="help" id="h-back">Las llamadas que usted devolvió. Si no está seguro, calcule a ojo.</p><p class="err" id="e-back" hidden></p>
 </div><div class="field">
   <label for="f-book">Porcentaje que se habría convertido en trabajo (%)<span class="tag" id="t-book">Ejemplo</span></label>
-  <input id="f-book" name="book" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="30%" aria-describedby="h-book e-book" required>
+  <input id="f-book" name="book" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="40%" aria-describedby="h-book e-book" required>
   <p class="help" id="h-book">De cada 100 llamadas que nadie devolvió, ¿cuántas se habrían convertido en un trabajo? Escriba un porcentaje: 3 de cada 10 es 30%. ¿No está seguro? Un estudio de más de 3,000 empresas contratistas encontró que convertían en trabajo el 42 por ciento de las llamadas en promedio, y el 24 por ciento en los negocios con menos de 5 técnicos <span class="src">(ServiceTitan, 2022, datos de proveedor, EE. UU. y Canadá)</span>.</p><p class="err" id="e-book" hidden></p>
 </div><div class="field">
   <label for="f-profit">Ganancia típica por trabajo<span class="tag" id="t-profit">Ejemplo</span></label>
@@ -115,7 +115,7 @@
       <p class="sr-only" aria-live="polite" id="r-live"></p>
     </section>
   </div>
-  <div class="nojs" id="leak-nojs"><p>Con los números de ejemplo: 4 llamadas por semana que nadie devolvió × 52 ÷ 12 = 17.3 al mes. × 30% = 5.2 trabajos. × $150 = $780 al mes. Haga los mismos pasos con sus propios números.</p></div>
+  <div class="nojs" id="leak-nojs"><p>Con los números de ejemplo: 3 llamadas por semana que nadie devolvió × 52 ÷ 12 = 13.0 al mes. × 40% = 5.2 trabajos. × $150 = $780 al mes. Haga los mismos pasos con sus propios números.</p></div>
 </div></section>
 <section class="sec white" id="how" aria-labelledby="how-h"><div class="wrap split">
   <div class="side"><div class="side-in"><h2 id="how-h">Cómo contamos</h2></div></div>
@@ -158,11 +158,12 @@
     </div>
   </div>
 </footer>
+
 <script src="../../assets/site.js?v=1b82a6ca" defer></script>
 <script>
 (function(){
   "use strict";
-  var L = {"examples": {"calls": "40", "rang": "6", "back": "2", "book": "30%", "profit": "$150", "quotes": "2", "qprofit": "$400", "minutes": "30", "days": "22", "rate": "$25"}, "skipped": "No se incluyó: esta sección está vacía.", "empty": "Ponga un número en cada casilla de llamadas perdidas para ver su cálculo.", "total": "Unos {TOTAL} al mes", "sms": "Hola, Franco. Hice la calculadora de fugas en su página: {TOTAL}. ¿Cuándo podemos hablar por teléfono?", "err": {"neg": "Use un número de 0 o más.", "rang": "Las llamadas que nadie contesta no pueden ser más que las llamadas por semana.", "back": "Las llamadas que devuelve no pueden ser más que las que nadie contestó.", "pct": "Use un porcentaje de 0 a 100."}, "calls": {"label": "Llamadas perdidas", "pairs": [["{NOTBACK} por semana que nadie devolvió × 52 ÷ 12", "{CALLSMONTH} al mes"], ["× {BOOK}% que se habría convertido en trabajo", "{JOBS} trabajos"], ["× {PROFIT} de ganancia por trabajo", "{CALLSUSD} al mes"]]}, "quotes": {"label": "Cotizaciones", "pairs": [["{QUOTES} al mes que se enfriaron × {QPROFIT} de ganancia por trabajo", "{QUOTESUSD} al mes"]]}, "retype": {"label": "Volver a escribir", "pairs": [["{MINUTES} minutos al día × {DAYS} días ÷ 60", "{HOURS} horas"], ["× {RATE} la hora", "{RETYPEUSD} al mes"]]}};
+  var L = {"examples": {"calls": "40", "rang": "6", "back": "3", "book": "40%", "profit": "$150", "quotes": "2", "qprofit": "$400", "minutes": "30", "days": "22", "rate": "$25"}, "skipped": "No se incluyó: esta sección está vacía.", "empty": "Ponga un número en cada casilla de llamadas perdidas para ver su cálculo.", "total": "Unos {TOTAL} al mes", "sms": "Hola, Franco. Hice la calculadora de fugas en su página: {TOTAL}. ¿Cuándo podemos hablar por teléfono?", "err": {"neg": "Use un número de 0 o más.", "rang": "Las llamadas que nadie contesta no pueden ser más que las llamadas por semana.", "back": "Las llamadas que devuelve no pueden ser más que las que nadie contestó.", "pct": "Use un porcentaje de 0 a 100."}, "calls": {"label": "Llamadas perdidas", "pairs": [["{NOTBACK} por semana que nadie devolvió × 52 ÷ 12", "{CALLSMONTH} al mes"], ["× {BOOK}% que se habría convertido en trabajo", "{JOBS} trabajos"], ["× {PROFIT} de ganancia por trabajo", "{CALLSUSD} al mes"]]}, "quotes": {"label": "Cotizaciones", "pairs": [["{QUOTES} al mes que se enfriaron × {QPROFIT} de ganancia por trabajo", "{QUOTESUSD} al mes"]]}, "retype": {"label": "Volver a escribir", "pairs": [["{MINUTES} minutos al día × {DAYS} días ÷ 60", "{HOURS} horas"], ["× {RATE} la hora", "{RETYPEUSD} al mes"]]}};
   var calc = document.getElementById("calc"), nojs = document.getElementById("leak-nojs");
   var form = document.getElementById("leak-form");
   if (!calc || !form) return;

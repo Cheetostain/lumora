@@ -26,7 +26,7 @@
 <link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
 <link rel="preload" href="../assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/site.css?v=9b5945aa">
+<link rel="stylesheet" href="../assets/site.css?v=b9fc018d">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -69,11 +69,11 @@
   <p class="help" id="h-rang">Count them in your call history if you can. If you guess, guess low.</p><p class="err" id="e-rang" hidden></p>
 </div><div class="field">
   <label for="f-back">Of those, how many you call back<span class="tag" id="t-back">Example</span></label>
-  <input id="f-back" name="back" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="2" aria-describedby="h-back e-back" required>
+  <input id="f-back" name="back" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="3" aria-describedby="h-back e-back" required>
   <p class="help" id="h-back">Calls you returned. If you are not sure, guess.</p><p class="err" id="e-back" hidden></p>
 </div><div class="field">
   <label for="f-book">Share that would have booked a job (%)<span class="tag" id="t-book">Example</span></label>
-  <input id="f-book" name="book" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="30%" aria-describedby="h-book e-book" required>
+  <input id="f-book" name="book" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="40%" aria-describedby="h-book e-book" required>
   <p class="help" id="h-book">Out of every 100 calls nobody returned, how many would have become a job? Type a percent: 3 in 10 is 30%. Not sure? A study of more than 3,000 trade businesses found they booked 42 percent of calls on average, and 24 percent at shops with fewer than 5 technicians <span class="src">(ServiceTitan, 2022, vendor data, US and Canada)</span>.</p><p class="err" id="e-book" hidden></p>
 </div><div class="field">
   <label for="f-profit">Typical profit per job<span class="tag" id="t-profit">Example</span></label>
@@ -115,7 +115,7 @@
       <p class="sr-only" aria-live="polite" id="r-live"></p>
     </section>
   </div>
-  <div class="nojs" id="leak-nojs"><p>With the example numbers: 4 calls a week nobody returned × 52 ÷ 12 = 17.3 a month. × 30% = 5.2 jobs. × $150 = $780 a month. Run the same steps with your own numbers.</p></div>
+  <div class="nojs" id="leak-nojs"><p>With the example numbers: 3 calls a week nobody returned × 52 ÷ 12 = 13.0 a month. × 40% = 5.2 jobs. × $150 = $780 a month. Run the same steps with your own numbers.</p></div>
 </div></section>
 <section class="sec white" id="how" aria-labelledby="how-h"><div class="wrap split">
   <div class="side"><div class="side-in"><h2 id="how-h">How we count</h2></div></div>
@@ -158,11 +158,12 @@
     </div>
   </div>
 </footer>
+
 <script src="../assets/site.js?v=1b82a6ca" defer></script>
 <script>
 (function(){
   "use strict";
-  var L = {"examples": {"calls": "40", "rang": "6", "back": "2", "book": "30%", "profit": "$150", "quotes": "2", "qprofit": "$400", "minutes": "30", "days": "22", "rate": "$25"}, "skipped": "Left out: this line is not filled in.", "empty": "Put a number in each missed-call box to see your estimate.", "total": "About {TOTAL} a month", "sms": "Hi Franco, I ran the leak check on your site: {TOTAL}. When is a good time for the free call?", "err": {"neg": "Use a number of 0 or more.", "rang": "Calls that ring out cannot be more than calls a week.", "back": "Calls you call back cannot be more than the calls that rang out.", "pct": "Use a share from 0 to 100."}, "calls": {"label": "Missed calls", "pairs": [["{NOTBACK} a week nobody returned × 52 ÷ 12", "{CALLSMONTH} a month"], ["× {BOOK}% that would have booked", "{JOBS} jobs"], ["× {PROFIT} profit a job", "{CALLSUSD} a month"]]}, "quotes": {"label": "Quotes", "pairs": [["{QUOTES} a month that went cold × {QPROFIT} profit a job", "{QUOTESUSD} a month"]]}, "retype": {"label": "Retyping", "pairs": [["{MINUTES} minutes a day × {DAYS} days ÷ 60", "{HOURS} hours"], ["× {RATE} an hour", "{RETYPEUSD} a month"]]}};
+  var L = {"examples": {"calls": "40", "rang": "6", "back": "3", "book": "40%", "profit": "$150", "quotes": "2", "qprofit": "$400", "minutes": "30", "days": "22", "rate": "$25"}, "skipped": "Left out: this line is not filled in.", "empty": "Put a number in each missed-call box to see your estimate.", "total": "About {TOTAL} a month", "sms": "Hi Franco, I ran the leak check on your site: {TOTAL}. When is a good time for the free call?", "err": {"neg": "Use a number of 0 or more.", "rang": "Calls that ring out cannot be more than calls a week.", "back": "Calls you call back cannot be more than the calls that rang out.", "pct": "Use a share from 0 to 100."}, "calls": {"label": "Missed calls", "pairs": [["{NOTBACK} a week nobody returned × 52 ÷ 12", "{CALLSMONTH} a month"], ["× {BOOK}% that would have booked", "{JOBS} jobs"], ["× {PROFIT} profit a job", "{CALLSUSD} a month"]]}, "quotes": {"label": "Quotes", "pairs": [["{QUOTES} a month that went cold × {QPROFIT} profit a job", "{QUOTESUSD} a month"]]}, "retype": {"label": "Retyping", "pairs": [["{MINUTES} minutes a day × {DAYS} days ÷ 60", "{HOURS} hours"], ["× {RATE} an hour", "{RETYPEUSD} a month"]]}};
   var calc = document.getElementById("calc"), nojs = document.getElementById("leak-nojs");
   var form = document.getElementById("leak-form");
   if (!calc || !form) return;
