@@ -759,3 +759,11 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
 .hl{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
 .hv{font-weight:700;color:var(--signal-ink);white-space:nowrap;font-variant-numeric:tabular-nums}
 .cbtns{display:grid;gap:12px;margin-bottom:24px}
+.auto{list-style:none;margin:8px 0 0;padding:0;border-top:1px solid var(--rule)}
+.auto li{display:grid;gap:4px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.auto .b{color:var(--muted);font-size:15px}
+.auto .a{color:var(--ink);font-weight:500}
+.auto .a::before{content:"\2192\00a0"}
+@media (min-width:900px){.auto{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}}
+.sheet .tb{margin:10px 0 0;font-size:14.5px;line-height:1.45;color:var(--body)}
+.sheet .tb b{color:var(--ink)}
