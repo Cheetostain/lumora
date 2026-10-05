@@ -215,7 +215,7 @@ a.tel,a.mail{color:var(--ink);text-decoration:underline;text-decoration-color:va
 
 /* ---------------------------------------------------------------- home: hero, the sheet on the Bone desk */
 .hero,.hi{--hp:clamp(40px,6vw,88px);position:relative;overflow:hidden;padding:var(--hp) 0}
-.hero-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);row-gap:48px;align-items:center}
+.hero-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);row-gap:48px;align-items:start}
 .hero-copy{grid-column:1/span 6;padding-right:clamp(0px,1.6vw,24px)}
 .hero-sheet{grid-column:7/span 6;position:relative;z-index:0;align-self:stretch;display:flex;flex-direction:column;justify-content:center;padding-left:clamp(0px,2.8vw,40px)}
 /* the desk: Bone and its grain from the sheet's column to the page's right edge, the full height of the hero */
@@ -878,3 +878,4 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
 .cta-note{margin-top:12px;font-size:14.5px;line-height:1.5;color:var(--muted)}.cta-note .tl{color:var(--ink);white-space:nowrap}
 .callbar{display:none}@media (max-width:700px){.callbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--ink);padding-bottom:env(safe-area-inset-bottom)}.callbar a{flex:1;padding:15px 0;text-align:center;color:var(--paper);font-weight:600;text-decoration:none}.callbar a+a{border-left:1px solid var(--body)}body:has(.callbar){padding-bottom:52px}}
 .ph-main .actions{margin-top:20px}
+.fx{color:var(--ink);font-weight:500}
