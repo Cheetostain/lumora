@@ -1,0 +1,721 @@
+/* Lumora design system, "Field notebook" (concept B) with grafts from A and C. Written 2026-10-07.
+   Read SYSTEM.md first. Fixed on every page: Familjen Grotesk, paper / bone / ink, one red (money, the mark, the pen),
+   the walk page device, the pencil and the red pen, Cardino, the business voice. Varied on purpose, per page: medium,
+   ground, fidelity, scale, width, density.
+   Rules built into this file:
+   - The still page is complete. Every movement sits inside prefers-reduced-motion: no-preference, and hidden start
+     states apply only under html.js (added by an inline script in <head>).
+   - Hover effects sit inside (hover:hover) and (pointer:fine); focus gets the same state plus a 3px ring.
+   - Pictures sit in .pic (a container-query wrapper), so their text never shrinks under 12px in a narrow column.
+   - Red is text only for money (--red), strokes only for the pen (--pen). Actions are always ink. */
+
+/* ======================================================================= 0. fonts */
+@font-face{font-family:"Familjen Grotesk";src:url(assets/fonts/FamiljenGrotesk-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Familjen Grotesk";src:url(assets/fonts/FamiljenGrotesk-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Familjen Grotesk";src:url(assets/fonts/FamiljenGrotesk-SemiBold.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Familjen Grotesk";src:url(assets/fonts/FamiljenGrotesk-Italic.woff2) format("woff2");font-weight:400 600;font-style:italic;font-display:swap}
+
+/* ======================================================================= 1. tokens */
+:root{
+  /* grounds */
+  --paper:#F6F5F2; --sheet:#FFFEFB; --bone:#E9E4D8; --bone-2:#DDD5C3;
+  /* ink and the two writing tools */
+  --ink:#111110;          /* headings and every action. 17.3:1 on paper */
+  --body:#2B2B29;         /* running text. 13.0:1 paper, 11.2:1 bone */
+  --muted:#5F5D56;        /* captions, second tone of headings. 6.0:1 paper, 5.2:1 bone */
+  --pencil:#4F4C45;       /* what we saw: notes, pencil circles, stop tabs, Sample stamps. 7.9:1 paper, 6.8:1 bone */
+  --red:#C81E28;          /* money as TEXT. 5.3:1 paper, 5.7:1 sheet; on bone only at 24px+ (4.5:1) */
+  --pen:#E3242E;          /* the red pen as STROKES: ring, underline, arrow (non-text, 3:1+) */
+  --mark:#FF323C;         /* the logo mark only */
+  /* the one dark band */
+  --night:#141412; --on-night:#E9E4D8; --muted-night:#A7A194; --red-night:#FF5A60; /* 14.5 / 7.2 / 6.1 :1 */
+  /* objects from the walk: only on those objects, never on text or buttons */
+  --board:#B39066; --board-edge:#8E6F4B; --clamp:#A4A7AC; --tape:#E6DCBC;
+  /* structure */
+  --rule:#D8D5CC; --rule-bone:#C9C1AF; --ruled:rgba(17,17,16,.06); --margin:rgba(79,76,69,.38);
+  --lift:0 1px 1px rgba(0,0,0,.12),0 10px 24px rgba(58,47,28,.14);
+  --lift-hi:0 2px 2px rgba(0,0,0,.12),0 20px 40px rgba(58,47,28,.22);
+  --grain:url(assets/grain.webp);
+  /* type */
+  --font:"Familjen Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --sys:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;  /* inside real screens */
+  --xls:"Aptos","Calibri","Segoe UI",var(--sys);                                                     /* spreadsheets */
+  --printer:ui-monospace,"Cascadia Mono",Consolas,"Courier New",monospace;                           /* counter tickets only */
+  /* grid and spacing: two spacing tokens, not one */
+  --w:1200px; --w-wide:1320px; --w-read:720px; --g:16px;
+  --gap-in:clamp(20px,2.6vw,32px); --gap-between:clamp(72px,9vw,128px);
+  --hdr-h:64px; --bar-h:56px;
+  /* motion (playbook 2.2). Nothing over 700ms except the pen and the night loop. Exits shorter than entrances. */
+  --t-press:90ms; --t-hover:150ms; --t-small:220ms; --t-enter:320ms; --t-exit:200ms; --t-chart:500ms; --t-draw:800ms;
+  --ease-out:cubic-bezier(.33,1,.68,1); --ease-move:cubic-bezier(.2,0,0,1); --ease-in:cubic-bezier(.3,0,1,1);
+}
+@media (min-width:700px){:root{--g:32px}}
+
+/* ======================================================================= 2. base */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;
+  /* WCAG 2.4.11: a focused or jumped-to element never hides under the sticky header or the phone call bar */
+  scroll-padding-top:calc(var(--hdr-h) + 16px);scroll-padding-bottom:calc(var(--bar-h) + 16px)}
+@media (min-width:900px){html{scroll-padding-bottom:16px}}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--paper);color:var(--body);font:400 17px/1.55 var(--font);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,svg{display:block;max-width:100%}
+[hidden]{display:none!important}
+a{color:inherit}
+p,figure,blockquote,dl,dd,h1,h2,h3,h4{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+b,strong{font-weight:600;color:var(--ink)}
+button{font:inherit;color:inherit}
+h1,h2,h3{color:var(--ink);font-weight:600;letter-spacing:-.018em;line-height:1.1;text-wrap:balance}
+p,li,dd{text-wrap:pretty}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px;border-radius:2px}
+[data-ground=night] :focus-visible,.on-night :focus-visible{outline-color:var(--on-night)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-80px;z-index:99;background:var(--ink);color:#fff;padding:12px 16px;text-decoration:none;border-radius:4px}
+.skip:focus{top:8px}
+
+/* ======================================================================= 3. type roles (not sizes) */
+.t-display{font-size:clamp(68px,12vw,176px);font-weight:500;line-height:.92;letter-spacing:-.04em;color:var(--red)}   /* one per page: money */
+.t-close{font-size:clamp(52px,8.6vw,124px);font-weight:600;line-height:.95;letter-spacing:-.035em;color:var(--ink)}   /* the closing line, bigger than the H1 */
+h1,.t-h1{font-size:clamp(38px,5.2vw,66px);line-height:1.03;letter-spacing:-.026em}
+h2,.t-h2{font-size:clamp(30px,3.5vw,44px)}
+h3,.t-sub{font-size:clamp(21px,2vw,26px);line-height:1.18;letter-spacing:-.01em}
+.t-lede{font-size:clamp(18px,1.6vw,20px);line-height:1.5}
+.t-body{font-size:17px}
+.t-small{font-size:15px;line-height:1.45}           /* the floor for key text at 390px */
+.t-label{font-size:15px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--pencil)}
+.two>span{color:var(--muted)}                         /* two-tone heading: claim in ink, explanation in muted, same size */
+[data-ground=night] .two,[data-ground=night] h2{color:#fff}
+[data-ground=night] .two>span{color:var(--muted-night)}
+.red{color:var(--red)}
+[data-ground=night] .red{color:var(--red-night)}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+
+/* ======================================================================= 4. grid, arrangements, grounds */
+.wrap{width:min(var(--w),100% - 2*var(--g));margin-inline:auto}
+.wrap-wide{width:min(var(--w-wide),100% - 2*var(--g));margin-inline:auto}
+.wrap-read{width:min(var(--w-read),100% - 2*var(--g));margin-inline:auto}
+.band{padding-block:var(--gap-between);position:relative}
+.band-tight{padding-block:calc(var(--gap-between)*.6)}
+.stack>*+*{margin-top:var(--gap-in)}
+/* four named arrangements; break the grid once per page with the most important picture (.ar-break) */
+.ar-split{display:grid;gap:36px}
+.ar-label{display:grid;gap:20px}
+.ar-tiles{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.ar-bleed{width:100%}
+@media (min-width:900px){
+  .ar-split{grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:56px;align-items:start}
+  .ar-split.flip>:first-child{order:2}
+  .ar-label{grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:48px}
+  .ar-break{margin-right:calc((100vw - min(var(--w),100vw - 2*var(--g)))/-2 + 16px)}
+}
+/* grounds: one attribute styles the band and feeds the beat lint (system.js Lumora.lint) */
+[data-ground=paper]{background:var(--paper)}
+[data-ground=sheet]{background:var(--sheet)}
+[data-ground=bone]{background:var(--grain) 0 0/160px 160px,var(--bone)}
+[data-ground=ruled]{background:repeating-linear-gradient(to bottom,transparent 0 31px,var(--ruled) 31px 32px),var(--paper)}
+[data-ground=graph]{background:linear-gradient(var(--ruled) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,var(--ruled) 1px,transparent 1px) 0 0/24px 24px,var(--paper)}
+[data-ground=night]{background:radial-gradient(rgba(233,228,216,.05) 1px,transparent 1.2px) 0 0/5px 5px,var(--night);color:var(--on-night)}
+[data-ground=night] b{color:#fff}
+/* the perforated seam: a row of punched holes where one band tears from the next (2 or 3 per page) */
+.seam{position:relative}
+.seam::before{content:"";position:absolute;left:0;right:0;top:-6px;height:12px;z-index:2;pointer-events:none;
+  background:radial-gradient(circle,var(--hole,var(--paper)) 3.2px,transparent 3.8px) 0 50%/16px 12px repeat-x}
+
+/* ======================================================================= 5. header, nav, phone call bar */
+.util{display:none;border-bottom:1px solid var(--rule);font-size:15px;color:var(--muted)}
+.util-in{display:flex;justify-content:space-between;align-items:center;min-height:40px;gap:16px}
+.util-r{display:flex;align-items:center;gap:16px;color:var(--body)}
+.lang{display:inline-flex;border:1px solid var(--rule);border-radius:999px;padding:2px}
+.lang a{min-width:44px;min-height:36px;display:grid;place-items:center;border-radius:999px;font-size:15px;font-weight:600;text-decoration:none;color:var(--body)}
+.lang a[aria-current]{background:var(--ink);color:#fff}
+.hdr{position:sticky;top:0;z-index:40;background:rgba(246,245,242,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.hdr-in{display:flex;align-items:center;gap:12px;min-height:var(--hdr-h)}
+.brand img{width:104px;height:auto}
+.nav{position:absolute;top:100%;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--rule);display:none}
+.nav.open{display:block}
+.nav ul{display:grid;padding:8px var(--g) 18px}
+.nav a{display:block;padding:12px 0;font-size:19px;text-decoration:none}
+.menu-b{margin-left:auto;min-height:44px;padding:0 16px;border:1.5px solid var(--ink);border-radius:999px;background:none;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer}
+.hdr-tel,.hdr .btn{display:none}
+@media (min-width:900px){
+  .util{display:block}
+  .brand img{width:124px}
+  .menu-b,.hdr .lang{display:none}
+  .nav{position:static;display:block;margin-left:auto;background:none;border:0}
+  .nav ul{display:flex;gap:24px;padding:0}
+  .nav a{font-size:16px;padding:6px 0}
+  /* the number stays readable in the sticky header on desktop (conversion graft from C) */
+  .hdr-tel{display:inline-block;font-weight:600;font-size:16px;color:var(--ink);white-space:nowrap}
+  .hdr .btn{display:inline-flex}
+}
+.callbar{position:fixed;left:0;right:0;bottom:0;z-index:45;display:grid;grid-template-columns:1fr 1fr;background:var(--ink);padding-bottom:env(safe-area-inset-bottom)}
+.callbar a{min-height:var(--bar-h);display:grid;place-items:center;color:#fff;font-weight:600;font-size:17px;text-decoration:none}
+.callbar a+a{border-left:1px solid rgba(255,255,255,.25)}
+.callbar a:focus-visible{outline-color:#fff;outline-offset:-5px}
+body:has(.callbar){padding-bottom:var(--bar-h)}
+@media (min-width:900px){.callbar{display:none}body:has(.callbar){padding-bottom:0}}
+
+/* ======================================================================= 6. links, buttons, the call block */
+/* job: signifier. A real underline at rest; hover or focus swaps it for a red pen stroke drawn left to right. */
+.u{color:inherit;text-decoration:underline;text-decoration-color:var(--muted);text-decoration-thickness:1px;text-underline-offset:4px;
+  background:linear-gradient(var(--pen),var(--pen)) 0 100%/0 2px no-repeat;padding-bottom:2px}
+.u:focus-visible{background-size:100% 2px;text-decoration-color:transparent}
+@media (hover:hover) and (pointer:fine){.u:hover{background-size:100% 2px;text-decoration-color:transparent}}
+[data-ground=night] .u{text-decoration-color:var(--muted-night)}
+@media (prefers-reduced-motion:no-preference){.u{transition:background-size var(--t-small) var(--ease-out),text-decoration-color var(--t-hover)}}
+/* job: feedback. Ink is the colour of every action; hover wipes paper in so the state change is plain. */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:10px 26px;border-radius:999px;border:2px solid var(--ink);
+  background:linear-gradient(var(--paper),var(--paper)) 0 0/0 100% no-repeat,var(--ink);color:#fff;font-weight:600;font-size:17px;line-height:1.2;text-decoration:none;text-align:center;cursor:pointer}
+.btn-o{background:linear-gradient(var(--ink),var(--ink)) 0 0/0 100% no-repeat,transparent;color:var(--ink)}
+.btn-sm{min-height:44px;padding:6px 18px;font-size:15px}
+.btn-lg{min-height:58px;padding:12px 32px;font-size:19px}
+.btn:focus-visible{background-size:100% 100%;color:var(--ink)}.btn-o:focus-visible{color:#fff}
+@media (hover:hover) and (pointer:fine){.btn:hover{background-size:100% 100%;color:var(--ink)}.btn-o:hover{color:#fff}}
+.btn:active{transform:scale(.98)}
+[data-ground=night] .btn{border-color:var(--on-night);background:linear-gradient(var(--night),var(--night)) 0 0/0 100% no-repeat,var(--on-night);color:var(--night)}
+[data-ground=night] .btn:focus-visible{color:var(--on-night)}
+@media (hover:hover) and (pointer:fine){[data-ground=night] .btn:hover{color:var(--on-night)}}
+@media (prefers-reduced-motion:no-preference){.btn{transition:background-size var(--t-small) var(--ease-out),color var(--t-small) var(--ease-out),transform var(--t-press)}}
+/* the call block: button + the number as readable, tappable text + reply time (+ money back where booking happens) */
+.cta{display:grid;gap:10px;justify-items:start}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+.cta-tel{font-size:21px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;background:linear-gradient(var(--pen),var(--pen)) 0 100%/0 2px no-repeat;padding-bottom:2px}
+.cta-tel:focus-visible{background-size:100% 2px}
+@media (hover:hover) and (pointer:fine){.cta-tel:hover{background-size:100% 2px}}
+@media (prefers-reduced-motion:no-preference){.cta-tel{transition:background-size var(--t-small) var(--ease-out)}}
+[data-ground=night] .cta-tel{color:#fff}
+.cta-note,.reply{font-size:15px;max-width:36em}
+.reply{color:var(--muted)}
+[data-ground=night] .reply{color:var(--muted-night)}
+.price{font-size:16px;max-width:36em}
+.mb{font-size:16px;max-width:36em}                       /* the money-back sentence, word for word everywhere */
+.mb-box{border-top:2px solid var(--ink);padding-top:12px;max-width:34em}
+.mb-box h3{font-size:19px;margin-bottom:4px}
+[data-ground=night] .mb-box{border-color:var(--on-night)}
+/* the inline call pair after a money beat (conversion must-fix): the action is never more than one screen away */
+.cta-inline{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:var(--gap-in);padding-top:18px;border-top:1px solid var(--rule)}
+[data-ground=night] .cta-inline{border-color:rgba(233,228,216,.2)}
+.cta-inline .mb{flex-basis:100%;font-size:15px}
+
+/* ======================================================================= 7. labels and stamps */
+.stamp{display:inline-block;border:1.6px solid var(--pencil);color:var(--pencil);font-weight:600;font-size:15px;line-height:1.3;padding:1px 9px;border-radius:3px;transform:rotate(-4deg);letter-spacing:.04em;white-space:nowrap}
+.pic:has(>.samp){padding-bottom:28px}
+.samp{position:absolute;right:10px;bottom:0;z-index:3;font:600 12px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;color:var(--pencil);background:rgba(255,254,251,.92);padding:5px 7px;border-radius:2px}
+[data-ground=night] .stamp{border-color:var(--on-night);color:var(--on-night)}
+.kicker{font-size:15px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--pencil);margin-bottom:12px}
+[data-ground=night] .kicker{color:var(--muted-night)}
+.cap{font-size:15px;color:var(--muted);margin-top:14px}
+[data-ground=night] .cap{color:var(--muted-night)}
+
+/* ======================================================================= 8. THE SIGNATURE: the walk page, the pencil, the red pen */
+/* a page torn from the pad: perforation row on top, soft paper shadow, laid on the desk */
+.page{position:relative;background:var(--sheet);box-shadow:var(--lift);border-radius:2px;padding:34px 18px 24px}
+.page::before{content:"";position:absolute;left:0;right:0;top:0;height:11px;border-bottom:1px dashed rgba(17,17,16,.12);
+  background:radial-gradient(circle at 7px 5px,var(--hole,var(--bone)) 2.6px,transparent 3.2px) 0 0/14px 11px repeat-x}
+@media (min-width:760px){.page{padding:44px 40px 34px}}
+/* the stop tab: a pencil-circled number and a small-caps label; a pencil tick lands once the stop is passed */
+.tab{display:inline-flex;align-items:center;gap:12px;font-size:15px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--pencil);margin-bottom:10px}
+.tab-n{position:relative;flex:none;width:36px;height:36px;display:grid;place-items:center;font-size:17px;letter-spacing:0;color:var(--ink);font-weight:600}
+.tab-n::before{content:"";position:absolute;inset:0;border:1.6px solid var(--pencil);border-radius:52% 48% 50% 46%/48% 52% 46% 54%;transform:rotate(-8deg)}
+.tab-n::after{content:"";position:absolute;right:-13px;top:-6px;width:16px;height:9px;border-left:2.4px solid var(--ink);border-bottom:2.4px solid var(--ink);transform:rotate(-48deg) scale(0);transform-origin:left bottom;opacity:0}
+.passed .tab-n::after,html:not(.js) .tab-n::after,.tab-n.ticked::after{transform:rotate(-48deg) scale(1);opacity:1}
+/* the pencil: what we saw. Familjen's own italic, graphite, a degree off the line */
+.pencil{font-style:italic;font-weight:500;color:var(--pencil);font-size:19px;line-height:1.35;transform:rotate(-1deg);transform-origin:left}
+.pc{position:relative}                                    /* pencil circle around evidence (an observation, never money) */
+.pc::after{content:"";position:absolute;inset:-3px -8px;border:2px solid var(--pencil);border-radius:48% 52% 46% 54%/56% 44% 56% 44%;transform:rotate(-1.5deg);pointer-events:none}
+/* the red pen: money only. One ring per page, underlines under money figures, its last mark an arrow to Call */
+.pen-ring,.pen-under,.pen-arrow{max-width:none;fill:none;stroke:var(--pen);stroke-linecap:round;stroke-linejoin:round;overflow:visible;pointer-events:none}
+/* no vector-effect on pen marks: with non-scaling-stroke the dash used to draw them breaks into pieces (B's two-segment underline) */
+.pen-ring{position:absolute;left:-12px;top:-11px;width:calc(100% + 24px);height:calc(100% + 22px);stroke-width:2.4px}
+.pen-under{position:absolute;left:-3px;bottom:-9px;width:calc(100% + 6px);height:10px;stroke-width:2.6px}
+.pen-arrow{width:96px;height:64px;stroke-width:3px;flex:none}
+.money{position:relative;display:inline-block;white-space:nowrap}  /* wrap a figure that carries a pen mark */
+
+/* ======================================================================= 9. HERO (phone order: words, call block, recognition strip, picker, sheet) */
+.hero{padding:28px 0 56px}
+.hero-g{display:grid;gap:22px;grid-template-areas:"copy" "act" "strip" "tool"}
+.hero-copy{grid-area:copy}.hero-act{grid-area:act}.hero-strip{grid-area:strip}.hero-tool{grid-area:tool}
+.eyebrow{font-size:15px;color:var(--muted);max-width:36em;margin-bottom:12px}
+.hero h1{max-width:12em}
+.hero .t-lede{margin-top:16px;max-width:34em}
+@media (min-width:900px){
+  .hero{padding:40px 0 64px}
+  .hero-g{grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);column-gap:56px;row-gap:28px;grid-template-areas:"copy tool" "act tool";grid-template-rows:auto 1fr;align-items:start}
+  .hero .hero-strip{display:none}
+}
+/* recognition strip: the trade, the top leak, its figure and its math, above the phone fold (R1) */
+.strip{position:relative;display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:14px 16px 14px 18px;background:var(--sheet);box-shadow:var(--lift);border-left:3px solid var(--pencil);text-decoration:none;color:inherit}
+.strip-k{font-size:15px;font-weight:600;color:var(--muted)}
+.strip .stamp{grid-column:2;grid-row:1;justify-self:end;align-self:start}
+.strip-b{grid-column:1/-1;font-weight:600;color:var(--ink);font-size:17px;line-height:1.3}
+.strip-usd{grid-column:1/-1;font-size:30px;font-weight:600;color:var(--red);line-height:1.1}
+.strip-f{grid-column:1/-1;font-size:15px;color:var(--muted)}
+a.strip:active{transform:scale(.99)}                       /* job: feedback. A tap on the strip jumps to the full sheet */
+a.strip:focus-visible{outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){a.strip{transition:transform var(--t-press)}}
+
+/* ======================================================================= 10. the trade picker (the page as a tool) */
+.picker{margin-bottom:14px}
+.picker-q{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;min-height:44px;padding:0 15px;border:1.5px solid rgba(17,17,16,.3);border-radius:999px;background:var(--sheet);font-size:15px;font-weight:600;color:var(--ink);text-decoration:none;cursor:pointer}
+.chip[aria-checked=true],.chip[aria-current=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+@media (hover:hover) and (pointer:fine){.chip:not([aria-checked=true]):hover{border-color:var(--ink)}}
+.chip:active{transform:scale(.97)}
+@media (prefers-reduced-motion:no-preference){.chip{transition:background-color var(--t-hover),color var(--t-hover),border-color var(--t-hover),transform var(--t-press)}}
+.picker-sel{display:none}
+.picker-sel select{width:100%;min-height:52px;border:1.5px solid var(--ink);border-radius:12px;padding:0 44px 0 16px;font:500 17px var(--font);color:var(--ink);-webkit-appearance:none;appearance:none;
+  background:var(--sheet) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23111110' stroke-width='1.8'/%3E%3C/svg%3E") right 16px center/12px no-repeat}
+/* phones get the native select (the most legible picker); no-JS keeps the chips as plain links */
+@media (max-width:699px){html.js .picker .chips{display:none}html.js .picker-sel{display:block}}
+.your{display:inline-block;margin-left:10px;font-size:15px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;border:1.5px solid currentColor;border-radius:3px;padding:0 6px;line-height:20px;vertical-align:middle}
+
+/* ======================================================================= 11. the walk sheet on the clipboard */
+.clip{margin:0}
+.board{position:relative;border-radius:12px;padding:40px 12px 12px;background:linear-gradient(170deg,var(--board),#A9865C);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 1px 0 var(--board-edge),0 14px 30px rgba(58,47,28,.2)}
+.clamp{position:absolute;left:50%;top:-10px;width:40%;max-width:170px;height:38px;transform:translateX(-50%);background:var(--clamp);border-radius:9px 9px 6px 6px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.14),0 2px 4px rgba(0,0,0,.18)}
+.clamp i{position:absolute;left:50%;top:9px;width:36%;height:10px;transform:translateX(-50%);border-radius:5px;background:#7c7f84}
+.sheet{position:relative;background:var(--sheet);padding:20px 16px 16px;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.16)}
+.sh-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.sh-title{display:block;font-size:21px;font-weight:600;color:var(--ink)}
+.sh-sub{display:block;font-size:15px;color:var(--muted)}
+.sh-cols{display:flex;justify-content:space-between;font-size:15px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--rule)}
+.sh-rows li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.sh-l b{display:block;font-size:17px;line-height:1.3}
+.sh-l small{display:block;font-size:15px;color:var(--muted);margin-top:4px;line-height:1.4}
+.sh-usd{position:relative;align-self:start;font-weight:600;font-size:19px;color:var(--red);white-space:nowrap}
+.sh-usd .pen-ring{left:-10px;width:calc(100% + 18px)}           /* stays inside the sheet at 390 (judge must-fix) */
+.sh-total{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;align-items:baseline;padding-top:12px;margin-top:-1px;border-top:2px solid var(--ink);font-weight:600;color:var(--ink)}
+.sh-total b{font-size:24px}
+.sh-time{font-size:15px;margin-top:8px}
+.sh-note{font-size:15px;color:var(--muted);margin-top:10px}
+@media (min-width:600px){.board{padding:46px 18px 18px}.sheet{padding:24px 24px 18px}}
+
+/* ======================================================================= 12. facts you can check */
+.facts{border-block:1px solid var(--ink);background:var(--paper)}
+.facts-in{display:grid;gap:8px;padding-block:14px}
+.facts-k{font-size:15px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.facts ul{display:grid;gap:6px;font-size:15px;font-weight:500;color:var(--ink)}
+.facts li::before{content:"";display:inline-block;width:10px;height:6px;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(-48deg) translateY(-3px);margin-right:10px}
+@media (min-width:900px){.facts ul{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:20px}}
+
+/* ======================================================================= 13. the walk: floor plan, stops, tally */
+.plan{position:relative;background:var(--sheet);box-shadow:var(--lift);padding:14px;border-radius:2px;max-width:820px}
+.plan-art{position:relative}
+.plan svg{width:100%;height:auto}
+.pl-wall{fill:none;stroke:var(--ink);stroke-width:6;stroke-linecap:square}
+.pl-thin{fill:none;stroke:var(--ink);stroke-width:1.6}
+/* room labels are HTML over the drawing so they stay 13px+ at any width (svg text shrank to 9px at 390) */
+.plan-labs span{position:absolute;left:var(--x);top:var(--y);transform:translateY(-100%);font:italic 500 clamp(13px,2.6vw,20px)/1 var(--font);color:var(--pencil);white-space:nowrap}
+.pl-route{fill:none;stroke:var(--pencil);stroke-width:2.6;stroke-dasharray:2 9;stroke-linecap:round}
+/* stop links are HTML over the drawing (not links inside an svg role=img): 44px hit circles, number inverts on focus */
+.plan-stops a{position:absolute;left:var(--x);top:var(--y);width:44px;height:44px;margin:-22px 0 0 -22px;display:grid;place-items:center;border-radius:50%;text-decoration:none}
+.plan-stops a span{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:var(--sheet);border:2px solid var(--ink);font-weight:600;font-size:16px;color:var(--ink)}
+.plan-stops a:focus-visible{outline-offset:0}
+.plan-stops a:focus-visible span,.plan-stops a:active span{background:var(--ink);color:#fff}
+@media (hover:hover) and (pointer:fine){.plan-stops a:hover span{background:var(--ink);color:#fff}}
+.walk-grid{display:grid;gap:28px;margin-top:40px}
+@media (min-width:1080px){.walk-grid{grid-template-columns:270px minmax(0,1fr);gap:40px;align-items:start}}
+.stops{display:grid;gap:clamp(40px,6vw,80px)}
+.stop h3{margin:6px 0 20px}
+.stop-body{display:grid;gap:24px}
+.stop-notes{display:grid;gap:14px;align-content:start}
+.find{display:grid;gap:6px;margin-top:4px}
+.find-usd{justify-self:start;font-size:clamp(30px,3.4vw,40px);font-weight:600;color:var(--red);line-height:1.05}
+.find-f{font-size:15px;color:var(--muted)}
+.fixline{font-size:17px}
+@media (min-width:760px){
+  .stop-body{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:36px;align-items:start}
+  .stop:nth-child(even) .stop-body{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
+  .stop:nth-child(even) .stop-notes{order:-1}
+  .stop-body.wide{grid-template-columns:1fr}
+  .stop-body.wide .stop-notes{order:0;grid-template-columns:1fr 1fr;column-gap:40px}
+}
+/* the tally: a slim sticky line inside the walk only (phone), a rail sheet beside the stops (desktop).
+   Worked out from scroll position, so a jump or a fast scroll never shows a wrong "so far". */
+.tally{position:sticky;top:var(--hdr-h);z-index:5;margin:0 calc(var(--g)*-1)}
+.tally-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--ink);color:var(--on-night);padding:10px var(--g);font-size:15px;min-height:48px}
+.tally-bar b{color:#fff}
+.tally-card{display:none}
+@media (min-width:1080px){
+  .tally{top:calc(var(--hdr-h) + 24px);margin:0}
+  .tally-bar{display:none}
+  .tally-card{display:block;background:var(--sheet);box-shadow:var(--lift);padding:20px 18px;border-top:4px solid var(--ink)}
+  .tally-h{display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:19px;color:var(--ink)}
+  .tally-sub{font-size:15px;color:var(--muted);margin:2px 0 10px}
+  .tally li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:15px}
+  .tally li b{color:var(--red);white-space:nowrap}
+  .tally-tot{display:flex;justify-content:space-between;padding-top:10px;font-weight:600;color:var(--ink)}
+  .tally-tot b{font-size:22px}
+  html.js .tally li:not(.on) b{opacity:0}
+  html.js .tally li:not(.on) span{color:var(--muted)}
+}
+@media (prefers-reduced-motion:no-preference){.tally li b{transition:opacity var(--t-enter) var(--ease-out)}}
+
+/* ======================================================================= 14. ghost to real ("as we find it" / "fixed") */
+/* Two stacked layers in one figure. The default (no JS, reduced motion) is the fixed, real state. The ghost is only
+   ever the "before" of the same object, never a standalone wireframe. */
+.g2r{position:relative;display:grid;align-items:center;justify-items:center}
+.g2r>.after,.g2r>.before{width:100%}
+.g2r>.before,.g2r>.after{grid-area:1/1;min-width:0}
+.g2r>.before{display:flex;align-items:center;justify-content:center}
+.g2r[data-state=after]>.before,.g2r[data-state=before]>.after{opacity:0;visibility:hidden}
+.g2r[data-state=before]>.after{transform:translateY(10px) scale(.98)}
+@media (prefers-reduced-motion:no-preference){
+  .g2r>.after{transition:opacity 460ms var(--ease-out),transform 460ms var(--ease-out),visibility 460ms}
+  .g2r>.before{transition:opacity var(--t-exit) var(--ease-in),visibility var(--t-exit)}
+  .g2r[data-state=before]>.after{transition-duration:var(--t-exit);transition-timing-function:var(--ease-in)}
+  .g2r[data-state=before]>.before{transition:opacity var(--t-enter) var(--ease-out),visibility var(--t-enter)}
+  .ghost.draw .gs{stroke-dasharray:1 1;animation:draw var(--t-draw) var(--ease-out) both}
+}
+/* button.flip only: .flip alone is also the .ar-split modifier, and an unscoped rule drew a pill border round a whole section and hid it with JS off */
+button.flip{justify-self:start;min-height:44px;padding:0 18px;border-radius:999px;border:1.5px solid var(--ink);background:var(--sheet);font-weight:600;font-size:15px;color:var(--ink);cursor:pointer}
+button.flip[aria-pressed=true]{background:var(--ink);color:#fff}
+button.flip:active{transform:scale(.97)}
+html:not(.js) button.flip{display:none}
+.seg{justify-self:start;align-self:start;display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;padding:3px;background:var(--sheet)}
+.seg button{min-height:42px;padding:0 16px;border:0;border-radius:999px;background:none;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--ink);color:#fff}
+.seg button:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.seg button[aria-pressed=false]:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}}
+/* job: feedback. The switch follows the picture: the pressed side fills with ink as the layers cross-fade */
+@media (prefers-reduced-motion:no-preference){.seg button{transition:background-color var(--t-small) var(--ease-out),color var(--t-small) var(--ease-out),box-shadow var(--t-hover),transform var(--t-press)}}
+html:not(.js) .seg{display:none}
+/* ink ghosts: thin graphite lines, the shop's own scribbles */
+.ghost svg{width:100%;height:auto;max-height:380px;overflow:visible}
+.gs{fill:none;stroke:#7E786C;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.gs.f{fill:rgba(255,255,255,.35)}.gs.pf{fill:#EFEADF}.gs.l{stroke-width:1.2;opacity:.75}
+.gt{fill:#5C574D;font-family:var(--font);font-weight:500}
+.gt.h{font-weight:600;fill:#4A463E}
+
+/* ======================================================================= 15. pictures: the container-query wrapper and the real-screens kit */
+/* Every picture sits in .pic. Sizes inside use cqi with a 12px floor, so a picture in a narrow column never shrinks
+   its text below 12px (the Oct 6 carry-over). Inside pictures the software keeps its own look and type. */
+.pic{container-type:inline-size;position:relative;min-width:0}
+.pic-c{display:grid;justify-items:center}
+/* the phone: a live HTML screen (Recents, a text thread) */
+.scr-phone{width:min(300px,100%);aspect-ratio:9/16.5;background:#1b1b1d;border-radius:44px;padding:10px;box-shadow:var(--lift-hi);font-family:var(--sys);color:#000;margin-inline:auto}
+.scr-phone.tilt{transform:rotate(-2deg)}
+.ph{position:relative;height:100%;background:#fff;border-radius:35px;overflow:hidden}
+.ph-sb{display:flex;justify-content:space-between;padding:14px 24px 6px;font-size:14px;font-weight:600}
+.ph-sb i{width:26px;height:11px;border:1.5px solid #111;border-radius:3px}
+.ph-body{padding:0 16px}
+.ph-seg{display:flex;margin:4px auto 10px;background:#eeeef0;border-radius:8px;padding:2px;width:150px;font-size:13px}
+.ph-seg span{flex:1;text-align:center;padding:4px 0;border-radius:6px}.ph-seg .on{background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.ph-h{font-size:28px;font-weight:700;margin:0 0 6px}
+.ph-list li{display:grid;grid-template-columns:1fr auto;padding:8px 0;border-bottom:.5px solid #d1d1d6;font-size:15px}
+.ph-list b{font-weight:600;color:#000}.ph-list small{grid-row:2;color:#6c6c70;font-size:13px}
+.ph-list time{grid-row:1/3;grid-column:2;align-self:center;color:#6c6c70;font-size:14px}
+.ph-list .miss b{color:#c4001a}
+.ph-who{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 10px 10px;border-bottom:1px solid #e5e5ea;background:#f7f7f9;font-size:13px;font-weight:600}
+.ph-who i{width:36px;height:36px;border-radius:50%;background:linear-gradient(#a8adb7,#868b95)}
+.thread{display:flex;flex-direction:column;gap:7px;padding:12px 12px;font-size:15px;line-height:1.3}
+.bub{max-width:84%;padding:8px 12px;border-radius:18px}
+.bub.in{align-self:flex-start;background:#e9e9eb;border-bottom-left-radius:5px}
+.bub.out{align-self:flex-end;background:#0a63d1;color:#fff;border-bottom-right-radius:5px}
+.sys{align-self:center;font-size:12px;color:#5f5f66;text-align:center}
+.sys.k{font-weight:600;color:#1b5e2c;background:#e3f1e6;border-radius:8px;padding:3px 8px}
+/* a window (Mac chrome is allowed: Franco asked for it, 2026-10-06), a spreadsheet grid, paper, a counter ticket, a clipboard doc */
+.scr-win{background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--lift-hi);font-family:var(--sys);color:#1d1d1f}
+.win-tb{display:flex;align-items:center;gap:7px;height:32px;padding:0 12px;background:linear-gradient(#f1f1f1,#e4e4e4);border-bottom:1px solid #d0d0d0}
+.win-tb i{width:12px;height:12px;border-radius:50%;background:#ec6a5e}.win-tb i+i{background:#f4bf4f}.win-tb i+i+i{background:#61c554}
+.win-tb span{flex:1;text-align:center;margin-right:46px;font-size:13px;font-weight:600;color:#3a3a3a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.win-b{padding:12px}
+.xl{font-family:var(--xls);color:#1f1f1f;background:#fff}
+.xl-fx{display:flex;gap:8px;align-items:center;font-size:13px;padding:6px 8px;border-bottom:1px solid #d6d6d6;background:#fafafa;white-space:nowrap;overflow:hidden}
+.xl-fx b{color:#666;font-weight:600;font-style:italic;font-family:Georgia,serif}
+.xl-fx span{overflow:hidden;text-overflow:ellipsis}
+.xl table{width:100%;border-collapse:collapse;font-size:max(12px,min(3.4cqi,14px));font-variant-numeric:tabular-nums}
+.xl td,.xl th{border:1px solid #dcdcdc;padding:6px 7px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:0}
+.xl .cl td,.xl td:first-child{background:#f3f3f3;color:#666;text-align:center;font-size:12px;width:30px}
+.xl th{font-weight:700;background:#fafafa}
+.xl tr.on td:not(:first-child){background:#e9f5ec}
+.xl tr.on td:first-child{background:#dedede;color:#111;font-weight:700}
+@container (max-width:420px){.xl .hm{display:none}}
+.doc{background:#fff;box-shadow:var(--lift);padding:18px;font-family:var(--sys);color:#1d1d1f}
+.doc.tilt-l{transform:rotate(-1.2deg)}.doc.tilt-r{transform:rotate(.8deg)}
+.doc-h{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:1.5px solid #1d1d1f;padding-bottom:8px}
+.doc-h b{font-size:15px;color:#1d1d1f;letter-spacing:.02em}.doc-h span{font-size:13px;color:#555}
+.doc-to{font-size:13px;color:#555;margin:8px 0}
+.doc-li li{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid #e5e5e5;font-size:14px}
+.doc-li li span:last-child{white-space:nowrap}
+.doc-li li.new{background:#eef6ee}
+.doc-tot{display:flex;justify-content:space-between;font-weight:700;font-size:16px;padding-top:8px}
+.ok,.chip-ok{display:inline-block;margin-top:8px;font-size:13px;font-weight:600;color:#1b5e2c;background:#e3f1e6;padding:4px 9px;border-radius:6px}
+.wt{background:#fbefd2;color:#6b4800}.gy{background:#ececec;color:#3a3a3a}
+.st{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.ticket{position:relative;background:#fff;padding:16px 16px 18px;font:500 13px/1.45 var(--printer);color:#222;box-shadow:var(--lift);transform:rotate(-1.4deg);max-width:340px}
+.ticket::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:6px;background:radial-gradient(circle at 6px 0,#fff 5px,transparent 5.5px) 0 0/12px 6px repeat-x}
+.tk-co{font-weight:700;font-size:14px;text-align:center;margin-bottom:8px}.tk-co small{display:block;font-weight:500;font-size:12px}
+.tk-no{display:flex;justify-content:space-between;gap:8px;font-size:12px;border-top:1px dashed #999;padding-top:4px;margin-top:4px}
+.ticket table{width:100%;border-collapse:collapse;margin:8px 0;font-size:13px}
+.ticket th{font-weight:700;text-align:left;border-bottom:1px dashed #999;font-size:12px}
+.ticket td{padding:3px 4px 3px 0;vertical-align:top}.ticket .r{text-align:right}
+.tk-sum{display:flex;justify-content:space-between;font-size:12px}.tk-tot{font-weight:700;border-top:1px dashed #999;padding-top:3px;margin-top:3px}
+.doc-clip{position:relative;width:min(100%,320px);border-radius:14px;background:linear-gradient(170deg,var(--board),#A9865C);padding:40px 12px 12px;box-shadow:var(--lift-hi);margin-inline:auto}
+.doc-clip .clamp{width:96px}
+.doc-clip .doc{box-shadow:0 1px 2px rgba(0,0,0,.16);min-height:280px}
+.dt{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.dt th{font-size:12px;font-weight:600;color:#55555a;text-align:left;padding:0 6px 6px 0;border-bottom:1px solid #ddd}
+.dt td{padding:8px 6px 8px 0;border-bottom:1px solid #ececec;vertical-align:top;line-height:1.3}
+.dt td:last-child,.dt th:last-child{text-align:right;padding-right:0}
+.dt tr.n td{background:#e9f5ec}
+.dtot{display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid #111;margin-top:8px;padding-top:8px;font-size:15px;font-weight:700}
+.dfoot,.dmeta{font-size:12px;color:#55555a;margin-top:6px;line-height:1.35}
+.dhead b{display:block;font-size:16px;font-weight:700;color:#111}
+/* the whiteboard: live HTML hand lettering (not an svg), so the words stay 12px+ at 390; 3 days on narrow screens */
+.wb{position:relative;background:#cfd2d6;border:2px solid var(--ink);border-radius:8px;padding:8px;box-shadow:var(--lift)}
+.wb-in{position:relative;background:#fbfbf9;border:1.4px solid var(--ink);border-radius:4px;padding:14px 14px 40px;font-family:var(--font);font-style:italic;color:var(--ink)}
+.wb-t{font-style:normal;font-weight:600;letter-spacing:.06em;font-size:max(15px,min(4.6cqi,24px));margin-bottom:8px}
+.wb-days{display:grid;grid-template-columns:repeat(5,1fr);border-top:2px solid var(--ink)}
+.wb-day{padding:8px 8px 0;border-left:2px solid var(--ink);min-height:150px}
+.wb-day:first-child{border-left:0}
+.wb-day>b{display:block;font-style:normal;font-weight:600;font-size:max(14px,min(3.6cqi,19px));margin-bottom:6px}
+.wb-day p{font-weight:500;font-size:max(15px,min(3.8cqi,21px));line-height:1.15;margin-bottom:10px}
+.wb-day small{display:block;font-size:max(13px,min(3.2cqi,17px));color:var(--pencil)}
+.wb-late{font-weight:600}
+.wb-day p.pc{display:inline-block;padding:2px 6px;margin-left:-4px}
+.wb-arrow{position:absolute;left:0;right:0;bottom:4px;height:64px;width:100%;fill:none;stroke:var(--pencil);stroke-width:2.6;stroke-linecap:round}
+.wb-arrow.narrow{display:none}
+.wb-tray{height:10px;margin:8px 12% 0;border-radius:5px;background:var(--ink)}
+@container (max-width:460px){.wb-days{grid-template-columns:repeat(3,1fr)}.wb-day.wide-only{display:none}.wb-arrow.wide{display:none}.wb-arrow.narrow{display:block}}
+/* the lock screen (night band) */
+.scr-lock{position:relative;width:min(300px,100%);aspect-ratio:300/640;border-radius:48px;border:10px solid #1d1d1d;box-shadow:0 0 0 1.5px #3a3a3a,0 30px 60px rgba(0,0,0,.5);
+  background:linear-gradient(165deg,#34465e 0%,#1b2433 50%,#3d3029 100%);overflow:hidden;font-family:var(--sys);color:#fff;margin-inline:auto}
+.lk-sb{display:flex;justify-content:space-between;padding:14px 26px 0;font-size:14px;font-weight:600}
+.lk-sb i{width:30px;height:12px;border-radius:3px;border:1.5px solid #fff}
+.lk-d{text-align:center;font-size:16px;font-weight:500;margin-top:16px}
+.lk-t{text-align:center;font-size:60px;font-weight:300;line-height:1}
+.nts{position:absolute;left:8px;right:8px;bottom:26px;display:flex;flex-direction:column;gap:6px}
+.nt{display:grid;grid-template-columns:28px minmax(0,1fr);gap:9px;align-items:start;background:rgba(244,244,247,.92);color:#111;border-radius:16px;padding:8px 10px;font-size:13px;line-height:1.25}
+.nt .ap{width:28px;height:28px;border-radius:8px;background:#2f9e4b;display:grid;place-items:center;color:#fff;font-size:15px;font-weight:700}
+.nt .nr{display:flex;justify-content:space-between;gap:8px}.nt .nr b{color:#111}.nt .nr span{font-size:12px;color:#55555a;white-space:nowrap}
+.nt .fx{display:none;margin-top:3px;font-size:12px;font-weight:600;color:#1b5e2c;background:#dff0e3;border-radius:6px;padding:2px 7px;width:max-content;max-width:100%}
+.nt.cb{display:none;background:#fff}.nt.cb .ap{background:#0a63d1}
+.fixed .nt .fx{display:block}.fixed .nt.cb{display:grid}.fixed .lk-t{opacity:0}
+.lk-home{position:absolute;left:50%;bottom:8px;width:110px;height:5px;margin-left:-55px;border-radius:3px;background:#fff;opacity:.9}
+
+/* ======================================================================= 16. the one big money figure, with its arithmetic */
+.bigfig{display:grid;gap:22px}
+.big{line-height:.9}
+.big small{display:block;font-size:clamp(20px,2.2vw,28px);font-weight:500;color:var(--body);margin:6px 0}
+.eq{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;font-weight:600;color:var(--ink);font-size:19px}
+.eq small{font-weight:400;color:var(--muted);font-size:15px}
+.eq i{font-style:normal;color:var(--muted)}
+.eq .r{color:var(--red)}
+@media (min-width:1000px){.bigfig{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:end;column-gap:56px}}
+
+/* ======================================================================= 17. the night band: lock screen loop, pause, tapes, morning list */
+.night-g{display:grid;gap:40px}
+@media (min-width:900px){.night-g{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:56px;align-items:center}}
+.night-figs{display:grid;gap:24px;justify-items:center}
+@media (min-width:1100px){.night-g{grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr)}.night-figs{grid-template-columns:300px minmax(0,1fr);align-items:center}}
+.night-figs>.pic{width:min(300px,100%)}  /* a .pic needs a definite width: container-type collapses an auto-sized box to 0 */
+.loop-ctl{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:24px}
+.phase{display:inline-flex;border:1px solid #3a3833;border-radius:999px;padding:3px;font-size:15px;font-weight:600}
+.phase span{padding:6px 14px;border-radius:999px;color:var(--muted-night)}
+[data-loop]:not(.fixed) .ph-a,[data-loop].fixed .ph-b{background:var(--on-night);color:var(--night)}
+/* the pause control: visible, labelled, 44px, aria-pressed. Required on any loop over 5 s (WCAG 2.2.2) */
+.pause{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 18px 0 14px;border:1.5px solid currentColor;border-radius:999px;background:none;font-weight:600;font-size:15px;cursor:pointer}
+.pause .pi{width:12px;height:14px;border-left:4px solid currentColor;border-right:4px solid currentColor}
+.pause[aria-pressed=true] .pi{width:0;height:0;border:0;border-left:12px solid currentColor;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.pause:active{transform:scale(.98)}
+@media (hover:hover) and (pointer:fine){.pause:hover{background:var(--on-night);color:var(--night)}}
+html:not(.js) .pause{display:none}
+.tapes{display:flex;flex-wrap:wrap;gap:14px 18px;margin-bottom:40px}
+.tapes li{background:var(--tape);color:var(--ink);font-weight:600;font-size:16px;padding:10px 16px;transform:rotate(var(--r,-1deg));
+  clip-path:polygon(1% 4%,99% 0,100% 30%,98.5% 62%,100% 100%,0 97%,1.5% 66%,0 34%)}
+/* the morning list: the "after" of the night, a printed list of what is waiting at 6:30 AM */
+.morning{background:var(--sheet);color:var(--body);box-shadow:var(--lift);padding:18px 18px 14px;border-top:4px solid var(--ink);max-width:420px;width:100%;position:relative}
+.mo-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.mo-h b{font-size:17px;color:var(--ink)}.mo-h span{font-size:13px;color:var(--muted);white-space:nowrap}
+.mo-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:9px 0;border-bottom:1px solid var(--rule)}
+.mo-row .l{font-size:15px;font-weight:600;color:var(--ink)}
+.mo-row .v{font-size:15px;font-weight:600;color:var(--ink);text-align:right}
+.mo-row .d{grid-column:1/-1;font-size:13px;color:var(--muted)}
+.mo-row.flag .v{color:var(--red)}
+.mo-foot{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--muted);padding-top:8px}
+.slept{margin-top:14px}
+@media (max-width:899px){.slept{display:none}.tapes{gap:10px 12px;margin-bottom:28px}.tapes li{font-size:15px;padding:8px 12px}}  /* phones: the morning list carries the night log; keeps the band short */
+.slept li{display:grid;grid-template-columns:72px 1fr;gap:10px;padding:5px 0;font-size:15px;border-top:1px solid rgba(233,228,216,.16)}
+.slept time{color:var(--muted-night);font-weight:600}
+@media (prefers-reduced-motion:no-preference){
+  html.js [data-loop].run .nt{opacity:0;transform:translateY(-10px);transition:opacity var(--t-enter) var(--ease-out),transform var(--t-enter) var(--ease-out)}
+  html.js [data-loop].run .nt.on{opacity:1;transform:none}
+  /* the morning list arrives with the fix: rows hidden (not dimmed, so nothing shows at low contrast) until then */
+  html.js [data-loop].run .morning{transition:opacity var(--t-enter) var(--ease-out),transform var(--t-enter) var(--ease-out),visibility var(--t-enter)}
+  html.js [data-loop].run:not(.fixed) .morning{opacity:0;visibility:hidden;transform:translateY(12px);transition-duration:var(--t-exit)}
+  .lk-t{transition:opacity var(--t-enter) var(--ease-out)}
+}
+
+/* ======================================================================= 18. rules we keep: a ruled pad sheet, ink ticks */
+.pad{max-width:820px;margin-inline:auto;background:var(--sheet);box-shadow:var(--lift);border-radius:3px}
+.pad-bind{height:18px;background:var(--body);border-radius:3px 3px 0 0}
+.pad-perf{height:12px;background:radial-gradient(circle,var(--hole,var(--paper)) 2.7px,transparent 3.3px) 3px 50%/13px 12px repeat-x,var(--sheet)}
+.pad-b{position:relative;padding:18px 18px 30px 58px;
+  background:linear-gradient(90deg,transparent 40px,var(--margin) 40px 41.5px,transparent 41.5px),repeating-linear-gradient(to bottom,transparent 0 35px,var(--ruled) 35px 36px);background-position:0 0,0 35px}
+.pad-b h2{line-height:72px;margin-bottom:26px}
+.pad li{position:relative;font-size:17px;line-height:36px;margin-bottom:36px}
+.pad li:last-child{margin-bottom:0}
+.tick{position:absolute;left:-48px;top:7px;width:24px;height:20px;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.honest{margin-top:36px;font-style:italic;font-size:19px;line-height:36px;color:var(--ink)}
+@media (min-width:700px){.pad-b{padding:18px 48px 36px 96px;background:linear-gradient(90deg,transparent 70px,var(--margin) 70px 71.5px,transparent 71.5px),repeating-linear-gradient(to bottom,transparent 0 35px,var(--ruled) 35px 36px);background-position:0 0,0 35px}.tick{left:-62px;width:26px}}
+
+/* ======================================================================= 19. step tickets (How it works): index cards torn from the pad */
+.tickets{display:grid;gap:22px}
+@media (min-width:700px){.tickets{grid-template-columns:1fr 1fr}}
+@media (min-width:1100px){.tickets{grid-template-columns:repeat(4,1fr)}}
+.ticket-c{position:relative;background:var(--sheet);box-shadow:var(--lift);padding:30px 20px 22px;transform:rotate(var(--r,0deg));
+  background-image:repeating-linear-gradient(transparent 0 27px,var(--ruled) 27px 28px);background-position:0 96px;background-repeat:no-repeat;background-size:100% calc(100% - 96px)}
+.ticket-c::before{content:"";position:absolute;left:0;right:0;top:0;height:11px;border-bottom:1px dashed rgba(17,17,16,.12);background:radial-gradient(circle at 7px 5px,var(--hole,var(--bone)) 2.6px,transparent 3.2px) 0 0/14px 11px repeat-x}
+.ticket-c h3{margin:2px 0 8px}
+.ticket-c p{font-size:16px}
+.ticket-c .t-small{margin-top:10px;color:var(--muted)}
+.tickets>li:nth-child(1){--r:-1deg}.tickets>li:nth-child(2){--r:.8deg}.tickets>li:nth-child(3){--r:-.6deg}.tickets>li:nth-child(4){--r:1deg}
+@media (max-width:699px){.tickets>li{--r:0deg!important}}
+@media (hover:hover) and (pointer:fine){.ticket-c:hover{transform:rotate(0) translateY(-4px)}}
+@media (prefers-reduced-motion:no-preference){.ticket-c{transition:transform var(--t-small) var(--ease-out)}}
+
+/* ======================================================================= 20. the notebook index (trades), with the trade's drawing pinned beside it */
+.idx-g{display:grid;gap:28px}
+@media (min-width:900px){.idx-g{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:start}}
+.idx a{position:relative;isolation:isolate;display:grid;gap:2px;padding:14px 10px;margin:0 -10px;text-decoration:none;border-bottom:1px solid var(--rule)}
+.idx a::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--ink);transform:scaleY(0);transform-origin:bottom}
+.idx b{font-size:21px}
+.idx .dots{display:none}
+.idx-p{font-size:16px;color:var(--body)}
+/* job: signifier and feedback. The row fills with ink from the bottom; the drawing beside it changes to that trade */
+.idx a:focus-visible::before,.idx a.pv::before,.idx a:active::before{transform:scaleY(1)}
+.idx a:focus-visible b,.idx a:focus-visible .idx-p,.idx a.pv b,.idx a.pv .idx-p{color:#fff}
+.idx a:focus-visible{outline-offset:-4px;outline-color:#fff}
+@media (prefers-reduced-motion:no-preference){.idx a::before{transition:transform var(--t-small) var(--ease-out)}.idx b,.idx-p{transition:color var(--t-hover)}}
+@media (min-width:900px){.idx a{grid-template-columns:auto 1fr minmax(0,24em);align-items:baseline;gap:12px}.idx .dots{display:block;border-bottom:2px dotted rgba(17,17,16,.35);transform:translateY(-4px)}.idx a.pv .dots{border-color:rgba(255,255,255,.5)}}
+/* a pinned print: tape at a corner, a few degrees off; holds a drawing now, a photo once Franco's shoot exists */
+.print{position:relative;background:var(--sheet);padding:12px 12px 14px;box-shadow:var(--lift);transform:rotate(1.2deg);max-width:460px}
+.print::before{content:"";position:absolute;left:18px;top:-12px;width:86px;height:26px;background:var(--tape);opacity:.92;transform:rotate(-6deg);clip-path:polygon(2% 8%,98% 0,100% 92%,0 100%)}
+.print-s{position:relative;aspect-ratio:600/520;background:var(--grain) 0 0/160px 160px,var(--bone)}
+.print-s img{position:absolute;inset:6%;width:88%;height:88%;object-fit:contain;opacity:0}
+.print-s img.on{opacity:1}
+@media (prefers-reduced-motion:no-preference){.print-s img{transition:opacity var(--t-enter) var(--ease-out)}}
+.print figcaption{font-size:15px;color:var(--muted);margin-top:10px}
+@media (min-width:900px){.idx-fig{position:sticky;top:calc(var(--hdr-h) + 32px)}}
+
+/* ======================================================================= 21. the leak check, started on the page */
+.leak{display:grid;gap:28px}
+@media (min-width:900px){.leak{grid-template-columns:1fr 1fr;gap:56px;align-items:start}}
+.calc{background:var(--sheet);box-shadow:var(--lift);padding:24px 20px;display:grid;gap:16px;border-radius:2px;
+  background-image:linear-gradient(var(--ruled) 1px,transparent 1px),linear-gradient(90deg,var(--ruled) 1px,transparent 1px);background-size:24px 24px}
+.lf{display:grid;gap:8px}
+.lf label{font-weight:600;color:var(--ink);font-size:17px}
+.lf-h{font-size:15px;color:var(--muted)}
+.step{display:flex;align-items:center;gap:10px}
+.stepb{width:52px;height:52px;border-radius:50%;border:2px solid var(--ink);background:var(--sheet);font:600 26px/1 var(--font);color:var(--ink);cursor:pointer}
+.stepb:active{transform:scale(.95);background:var(--bone)}
+.step input,.lf input{width:110px;height:56px;text-align:center;font:600 26px var(--font);border:2px solid var(--ink);border-radius:8px;background:var(--sheet);color:var(--ink)}
+.lf-err{font-size:15px;font-weight:600;color:var(--ink);min-height:0}
+.lf-err:not(:empty){padding:8px 12px;border-left:4px solid var(--ink);background:var(--bone)}
+.out-usd{display:inline-block;font-size:clamp(48px,6vw,72px);font-weight:500;color:var(--red);letter-spacing:-.02em;line-height:1}
+.out small{font-size:19px;color:var(--body)}
+.dots{display:flex;flex-wrap:wrap;gap:6px;max-width:420px}
+.dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--pencil)}
+.dot.job{background:var(--pencil)}
+.dot.part{background:linear-gradient(90deg,var(--pencil) var(--p),transparent var(--p))}
+.dots-key{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:15px;color:var(--muted)}
+.dots-key i{display:inline-block;width:12px;height:12px;border-radius:50%;border:2px solid var(--pencil);margin-right:6px;vertical-align:-1px}
+.dots-key i.j{background:var(--pencil)}
+.leak-math{font-size:15px;color:var(--body)}
+@media (prefers-reduced-motion:no-preference){.out-usd.roll{animation:roll var(--t-chart) var(--ease-out)}}
+
+/* ======================================================================= 22. sentence with small pictures in it (type-only rest beat) */
+.say{font-size:clamp(26px,3.6vw,46px);line-height:1.25;color:var(--ink);font-weight:500;max-width:22em;letter-spacing:-.015em}
+.say-after{margin-top:24px;font-size:clamp(21px,2.4vw,30px);font-weight:400;color:var(--body);max-width:34em}
+.inpic{display:inline-grid;place-items:center;width:1.25em;height:1.05em;vertical-align:-.12em;border:2px solid var(--ink);border-radius:8px;background:var(--sheet)}
+.inpic svg{width:.7em;height:.7em;fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round}
+.inpic.es{font-size:.5em;font-weight:700;width:2.4em;height:2em;vertical-align:.3em;border-radius:6px}
+
+/* ======================================================================= 23. one contact, the close, the towns strip */
+.contact-card{position:relative;background:var(--sheet);box-shadow:var(--lift);padding:40px 20px 24px}
+.contact-card .cardino{position:absolute;right:16px;top:-60px;width:120px;height:auto}
+.signed{font-size:18px;line-height:1.55;padding-left:16px;border-left:2px solid var(--ink);color:var(--ink)}
+.signed+figcaption,.signed-by{margin-top:10px;font-size:15px;color:var(--muted)}
+.cblock{margin-top:18px}
+.cblock div{display:grid;gap:2px;padding:12px 0;border-bottom:1px solid var(--rule)}
+.cblock dt{font-size:15px;font-weight:600;color:var(--muted)}
+.cblock dd{font-size:17px;color:var(--ink)}
+.cblock .big-tel{font-size:26px;font-weight:600;text-decoration:none}
+@media (min-width:700px){.contact-card{padding:44px 32px 28px}.contact-card .cardino{width:148px;top:-74px;right:28px}.cblock div{grid-template-columns:160px 1fr;align-items:baseline}}
+.close-h{margin:10px 0 18px}
+.close-act{display:grid;gap:14px;justify-items:start}
+/* the pen's last mark points at the button it sits beside (A's arrow pointed at empty space) */
+.arrow-to{display:flex;align-items:center;gap:6px}
+.arrow-to .pen-arrow{width:72px;height:48px;margin-left:-8px}
+@media (max-width:699px){.arrow-to .pen-arrow{display:none}}
+.towns{position:relative;display:grid;gap:20px;align-items:center}
+@media (min-width:800px){.towns{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}}
+.county{position:relative;max-width:420px;width:100%}
+.county img{width:100%;height:auto}
+.county .tw{position:absolute;left:var(--x);top:var(--y);transform:translate(-4px,-50%);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap}
+.county .tw::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink);flex:none}
+.county .tw.l{flex-direction:row-reverse;transform:translate(calc(-100% + 4px),-50%)}
+.county .tw.big{font-size:15px}
+.county .tw.big::before{width:12px;height:12px;background:var(--sheet);border:3px solid var(--ink)}
+.town-list{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:17px;color:var(--ink);font-weight:500}
+
+/* ======================================================================= 24. tabs ("Pick your tool"), footnotes, after-you-book list */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.tabs [role=tab]{min-height:44px;padding:0 16px;border:1.5px solid rgba(17,17,16,.3);border-radius:999px;background:var(--sheet);font-weight:600;font-size:15px;color:var(--ink);cursor:pointer}
+.tabs [role=tab][aria-selected=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+/* job: feedback. Same vocabulary as the chips: the border turns ink on hover, a press scales to .98 (tabs had no hover) */
+@media (hover:hover) and (pointer:fine){.tabs [role=tab]:not([aria-selected=true]):hover{border-color:var(--ink)}}
+.tabs [role=tab]:active{transform:scale(.98)}
+@media (prefers-reduced-motion:no-preference){.tabs [role=tab]{transition:background-color var(--t-hover),color var(--t-hover),border-color var(--t-hover),transform var(--t-press)}}
+.fn{font-size:13px;vertical-align:super;line-height:0;text-decoration:none;font-weight:600;padding:0 2px}
+.sources{font-size:15px;color:var(--muted)}
+.sources li{padding:6px 0;border-top:1px solid var(--rule)}
+.sources li:target{background:var(--bone)}
+.booked{display:grid}
+.booked li{display:grid;grid-template-columns:44px 1fr;gap:4px 14px;padding:14px 0;border-top:1px solid var(--rule)}
+.booked .bn{grid-row:1/3;width:36px;height:36px;display:grid;place-items:center;font-weight:600;position:relative}
+.booked .bn::before{content:"";position:absolute;inset:0;border:1.6px solid var(--pencil);border-radius:52% 48% 50% 46%/48% 52% 46% 54%;transform:rotate(-8deg)}
+.booked b{font-size:17px}.booked p{font-size:15px;color:var(--muted)}
+
+/* ======================================================================= 25. footer */
+.foot{border-top:1px solid var(--ink);padding:32px 0 40px;font-size:15px;color:var(--muted)}
+.foot-g{display:grid;gap:12px}
+.foot-n{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--body)}
+.foot-n a{min-height:44px;display:inline-flex;align-items:center}
+
+/* ======================================================================= 26. motion (everything below is extra; the still page above is complete) */
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes write{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes roll{from{opacity:.2;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:no-preference){
+  /* job: one-time focus. 16px rise + fade, once at 20% in view. Never on the H1, the number or the main button. */
+  html.js .rv{opacity:0;transform:translateY(16px)}
+  html.js .rv.in{opacity:1;transform:var(--rest,none);transition:opacity var(--t-enter) var(--ease-out),transform var(--t-enter) var(--ease-out);transition-delay:calc(var(--i,0)*50ms)}
+  html.js .tickets .rv.in{--rest:rotate(var(--r,0deg))}
+  /* job: show our work. The walk sheet writes itself once: rows 420ms apart, the total, then the pen rings the biggest leak */
+  /* keyed on [data-fill] under html.js, not on a class JS adds later, so the prerendered rows never show and then vanish;
+     .swap and .still end it, .wait (phone, sheet below the fold) holds the first frame until the sheet is in view */
+  html.js .sheet[data-fill]:not(.swap):not(.still) .sh-rows li>*{animation:write 380ms var(--ease-out) both;animation-delay:calc(var(--i)*420ms + 200ms)}
+  html.js .sheet[data-fill]:not(.swap):not(.still) .sh-rows li .sh-usd{animation-delay:calc(var(--i)*420ms + 460ms)}
+  html.js .sheet[data-fill]:not(.swap):not(.still) :is(.sh-total,.sh-time){animation:write 380ms var(--ease-out) both;animation-delay:1500ms}
+  html.js .sheet[data-fill]:not(.swap):not(.still) .pen-ring path{stroke-dasharray:1 1;animation:draw var(--t-draw) var(--ease-move) both;animation-delay:1950ms}
+  html.js .sheet[data-fill].wait *{animation-play-state:paused!important}   /* !important: the animation shorthand above resets play-state */
+  /* job: cause and effect. A trade swap: the sheet rises 220ms and the pen redraws its ring */
+  .sheet.swap{animation:rise var(--t-small) var(--ease-out)}
+  .sheet.swap .pen-ring path{stroke-dasharray:1 1;animation:draw 600ms var(--ease-move) 150ms both}
+  .swapping{animation:rise var(--t-small) var(--ease-out)}
+  /* job: one-time focus. Pen underlines, arrows and ticks draw when they come into view (150ms anticipation) */
+  html.js [data-draw] path{stroke-dasharray:1 1;stroke-dashoffset:1}
+  html.js [data-draw].drawn path{animation:draw 700ms var(--ease-move) 150ms both}
+  html.js [data-draw].drawn path+path{animation-delay:750ms;animation-duration:250ms}
+  html.js .plan:not(.drawn) .pl-route{opacity:0}
+  html.js .plan.drawn .pl-route{animation:fadein 900ms var(--ease-out) both}
+  /* job: state change. The pencil tick on a stop tab once its money line has been passed */
+  .tab-n::after{transition:transform var(--t-small) var(--ease-out) 120ms,opacity var(--t-small)}
+}

@@ -1,0 +1,204 @@
+/* Lumora prototypes, group trades-3: Restaurants and bars, Property managers, Contact, Leak check.
+   Page parts built on ../../system/system.css. Every picture text keeps the 12px floor (container queries on .pic or
+   on each doc), key text outside pictures stays 15px+ at 390. Red stays money; pencil stays observation. */
+
+/* ======================================================================= shared */
+.lede-s{margin-top:14px;max-width:40em}
+.stack-s>*+*{margin-top:16px}
+.hw{font-family:var(--font);font-style:italic;font-weight:500;color:#23407a}   /* the shop's own ballpoint, inside pictures only */
+.find.solo{margin-top:22px}
+.honest-s{margin-top:18px;font-style:italic;font-size:17px;color:var(--ink)}
+.note-s{font-size:15px;color:var(--muted)}
+/* a document pair in one picture: each doc is its own container, so its columns drop by its own width */
+.pair-g{display:grid;gap:26px;padding-top:12px}
+.pair-g>*{container-type:inline-size;min-width:0}
+@container (min-width:640px){.pair-g{grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:22px;align-items:start}.pair-g>:last-child{margin-top:64px}}
+
+/* ======================================================================= restaurant: the posted schedule (stop 1, as we find it) */
+.sched{position:relative;width:100%;background:#fff;box-shadow:var(--lift);padding:16px 14px 14px;font-family:var(--sys);color:#1d1d1f;transform:rotate(-1deg)}
+.sched::before{content:"";position:absolute;left:50%;top:-11px;width:76px;height:22px;margin-left:-38px;background:var(--tape);transform:rotate(3deg);clip-path:polygon(2% 8%,98% 0,100% 92%,0 100%)}
+.sc-h{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:2px 10px;border-bottom:1.5px solid #1d1d1f;padding-bottom:6px}
+.sc-h b{font-size:max(13px,min(3.4cqi,16px));letter-spacing:.04em;color:#1d1d1f}
+.sc-h span{font-size:12px;color:#555}
+.sched table{width:100%;border-collapse:collapse;font-size:max(13px,min(3.6cqi,16px));font-variant-numeric:tabular-nums;margin-top:4px}
+.sched th,.sched td{padding:7px 4px;text-align:center;border-bottom:1px solid #e3e3e3}
+.sched th{font-weight:700;color:#1d1d1f}
+.sched tbody th{text-align:left;font-weight:600;color:#333}
+.sched th .pc{display:inline-block;padding:0 6px}
+.sched .last td,.sched .last th{border-bottom:0;padding-top:12px;font-size:max(14px,min(3.8cqi,17px))}
+.sched .last th{font-family:var(--font);font-style:italic;font-weight:500;color:#23407a}
+@container (max-width:460px){.sched .x{display:none}}
+
+/* ======================================================================= property managers: the deposit calendar (stop 1, as we find it) */
+.cal{width:100%;background:#fff;box-shadow:var(--lift);padding:14px 12px 12px;font-family:var(--sys);color:#1d1d1f}
+.cal-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-bottom:2px solid #1d1d1f;padding-bottom:6px}
+.cal-h b{font-size:max(17px,min(5cqi,24px));letter-spacing:.08em}
+.cal-h span{font-size:12px;color:#555}
+.cal-g{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-top:8px;border-left:1px solid #cfcfcf;border-top:1px solid #cfcfcf}
+.cal-g>span{position:relative;border-right:1px solid #cfcfcf;border-bottom:1px solid #cfcfcf;min-height:max(48px,11cqi);padding:3px 4px;font-size:12px;line-height:1.2}
+.cal-g .dw{min-height:0;text-align:center;font-weight:700;background:#f2f2f2}
+.cal-g .o{color:#6f6f6f;background:#fafafa}
+.cal-g i{display:block;font-style:normal;font-weight:600;font-size:max(12px,min(3cqi,14px))}
+.cal-g em{display:block;margin-top:2px;font-family:var(--font);font-style:italic;font-weight:500;color:#23407a;font-size:max(12px,min(2.8cqi,14px));overflow-wrap:anywhere}
+.cal-g .d30 i{display:inline-block;padding:0 4px}
+@container (max-width:460px){.cal-g .w2,.cal-g .w4{display:none}}
+
+/* ======================================================================= restaurant: also on the walk */
+.also{margin-top:clamp(44px,6vw,72px)}
+.also h3{margin-bottom:16px}
+.also ul{display:grid;gap:18px}
+.also li{border-top:2px solid var(--ink);padding-top:12px;font-size:16px}
+.also li b{display:block;font-size:19px;margin-bottom:4px}
+@media (min-width:900px){.also ul{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}}
+
+/* ======================================================================= the end-of-day printout (restaurant ink band) */
+.rcpt{margin-inline:auto;transform:rotate(1.2deg);max-width:280px}
+.rcpt .tk-sum{font-size:13px;padding:2px 0}
+.rcpt .tk-sp{margin-top:6px;border-top:1px dashed #999;padding-top:6px}
+.night-figs>.pic.rcpt-pic{width:min(300px,100%)}
+@media (max-width:899px){.rcpt-pic{display:none}}   /* phones: the morning list carries the night; keeps the band short */
+
+/* ======================================================================= restaurant: the broadline driver copy and the credit email */
+.inv{position:relative;background:#fff;box-shadow:var(--lift);padding:14px 14px 16px;font-family:var(--sys);color:#222;transform:rotate(-.7deg)}
+.inv-h{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;border-bottom:2px solid #222;padding-bottom:6px}
+.inv-h b{font-size:max(13px,min(3.4cqi,16px));letter-spacing:.05em}
+.inv-h span{font-size:12px;font-weight:700;letter-spacing:.08em;border:1.5px solid #222;padding:1px 6px}
+.inv-m{display:flex;flex-wrap:wrap;gap:2px 14px;font-size:12px;color:#444;padding:6px 0;border-bottom:1px solid #ccc}
+.inv table{width:100%;border-collapse:collapse;font-size:max(12px,min(2.6cqi,13px));margin-top:4px;font-variant-numeric:tabular-nums}
+.inv th{font-size:12px;text-align:left;color:#555;font-weight:700;border-bottom:1px solid #999;padding:5px 6px 5px 0}
+.inv td{padding:6px 6px 6px 0;border-bottom:1px solid #e6e6e6;vertical-align:top}
+.inv .r{text-align:right;white-space:nowrap}
+.inv .c{white-space:nowrap}
+.inv td .pc{display:inline-block;padding:0 4px}
+.inv-t{display:flex;justify-content:space-between;font-weight:700;font-size:13px;padding-top:7px}
+.inv-sig{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:12px;color:#444;margin-top:8px;border-top:1px solid #ccc;padding-top:6px}
+.inv-sig .hw{font-size:16px}
+@container (max-width:520px){.inv .hm{display:none}}
+.mail .win-b{padding:4px 14px 14px}
+.ml{display:flex;gap:10px;font-size:13px;border-bottom:1px solid #e5e5e5;padding:7px 0}
+.ml span{color:#6c6c70;width:58px;flex:none}
+.ml-b{display:grid;gap:9px;font-size:14px;line-height:1.45;padding:12px 0 4px}
+
+/* ======================================================================= property managers: move-out inspection and the claim notice */
+.insp{min-height:0}
+.insp .dmeta .pc{display:inline-block;padding:0 4px;margin-top:4px}
+.ltr{background:#fff;box-shadow:var(--lift);padding:18px 18px 16px;font-family:Georgia,"Times New Roman",serif;color:#1d1d1f;font-size:max(13px,min(3.4cqi,15px));line-height:1.45;transform:rotate(.7deg)}
+.ltr-h{display:flex;justify-content:space-between;flex-wrap:wrap;gap:2px 10px;font-family:var(--sys);font-weight:700;font-size:13px;letter-spacing:.02em;border-bottom:1.5px solid #1d1d1f;padding-bottom:6px;margin-bottom:10px}
+.ltr-h span{font-weight:400;color:#555}
+.ltr p+p{margin-top:8px}
+.ltr .dt{font-family:var(--sys);margin-top:12px}
+
+/* ======================================================================= contact */
+.c-hero{padding:32px 0 72px}
+.c-hero h1{font-size:clamp(52px,8.4vw,112px);line-height:.95;letter-spacing:-.035em;margin:4px 0 20px;max-width:none}
+.c-hero .cta{margin-top:26px}
+.c-tel{font-size:clamp(30px,3.6vw,40px)!important}
+.c-es{margin-top:18px;font-size:17px}
+.c-hero .page{align-self:start}
+@media (min-width:900px){.c-hero{padding:56px 0 96px}.c-hero .ar-split{align-items:center}}
+.next-fig{display:grid;gap:12px;justify-items:center}
+.next-fig .pic{width:min(320px,100%)}
+.card-g{display:grid;gap:56px}
+@media (min-width:900px){.card-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:start}}
+.card-g .contact-card{margin-top:64px}
+@media (min-width:900px){.card-g .contact-card{margin-top:40px}}
+.side-list>*+*{margin-top:28px}
+.side-list h3{font-size:21px;margin-bottom:6px}
+
+/* ======================================================================= leak check */
+.lk{padding:28px 0 80px}
+.lk h1{max-width:13em}
+.lk-priv{margin-top:14px;font-size:16px;font-weight:600;color:var(--ink);display:flex;gap:10px;align-items:baseline}
+.lk-priv::before{content:"";flex:none;width:10px;height:6px;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(-48deg) translateY(-3px)}
+.lk-g{display:grid;gap:28px;margin-top:28px}
+@media (min-width:900px){.lk{padding:44px 0 96px}.lk-g{grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:48px;align-items:start}.lk-out{position:sticky;top:calc(var(--hdr-h) + 24px)}}
+.lk-form{gap:0;padding:0 18px 24px}
+@media (min-width:600px){.lk-form{padding:0 28px 28px}}
+.lk-ex{font-size:15px;color:var(--body);padding:18px 0 4px}
+.lk-form fieldset{border:0;margin:0;padding:22px 0 0;min-width:0}
+.lk-form fieldset+fieldset{margin-top:26px;border-top:2px solid var(--ink)}
+.lk-form legend{float:left;width:100%;font-size:21px;font-weight:600;color:var(--ink);padding:0;margin-bottom:16px}
+.lk-form legend span{font-weight:400;color:var(--muted)}
+.lk-form .lf{clear:both;margin-bottom:20px}
+.lk-form .lf:last-child{margin-bottom:0}
+.lf label{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.ex{font-size:15px;font-weight:600;color:var(--pencil);border:1.4px solid var(--pencil);border-radius:3px;padding:0 6px;line-height:22px}
+.unit{display:flex;align-items:center;gap:8px;font:600 24px var(--font);color:var(--ink)}
+.lk-form input{width:120px}
+html:not(.js) .stepb,html:not(.js) .lk-btns{display:none}
+.lk-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;padding-top:20px;border-top:1px solid var(--rule)}
+.lk-err{margin-top:16px}
+/* phones: the estimate rides along in a slim ink bar while the form is on screen */
+.lk-bar{display:none}
+@media (max-width:899px){
+  html{scroll-padding-top:calc(var(--hdr-h) + 72px)}
+  html.js .lk-bar.tally{display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:var(--hdr-h);z-index:6;margin:0 -18px;padding:10px 18px;min-height:52px;background:var(--ink);color:var(--on-night);font-size:15px}
+  .lk-bar b{color:#fff;font-size:17px;white-space:nowrap}
+}
+.lk-sheet{background:var(--sheet);box-shadow:var(--lift);border-top:4px solid var(--ink);padding:18px 18px 18px}
+@media (min-width:600px){.lk-sheet{padding:22px 26px}}
+.lk-sh-h{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:16px}
+.lk-sh-h b{font-size:21px;color:var(--ink)}
+.lk-total{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;margin:4px 0 18px}
+.lk-about{font-size:clamp(21px,2vw,26px);font-weight:600;color:var(--ink)}
+.lk-total .out-usd{padding:0 4px}
+.lk-total small{font-size:19px;color:var(--body)}
+.lk-empty{font-size:17px;font-weight:600;color:var(--ink);padding:10px 0 18px}
+.lk-lines{margin-top:16px}
+.lk-lines li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:11px 0;border-top:1px solid var(--rule);font-size:15px;line-height:1.45}
+.lk-lines li b{display:block;color:var(--ink)}
+.lk-lines .v{font-size:19px;font-weight:600;color:var(--ink);white-space:nowrap}
+.lk-lines .off{color:var(--muted)}
+.lk-out .cta-row{margin-top:20px}
+.lk-out .t-small{margin-top:12px}
+/* where to find your numbers */
+.find-g{display:grid;gap:40px;margin-top:36px}
+@media (min-width:900px){.find-g{grid-template-columns:repeat(3,minmax(0,1fr));gap:36px}}
+.find-g figure{display:grid;gap:16px;align-content:start}
+.find-g .pic{min-height:0}
+.find-g figcaption{font-size:16px}
+.find-g figcaption b{display:block;font-size:19px;margin-bottom:2px}
+.scr-phone.crop{aspect-ratio:auto;height:330px;padding-bottom:0;border-radius:44px 44px 0 0}
+.scr-phone.crop .ph{border-radius:35px 35px 0 0}
+.slips{position:relative;display:grid;gap:10px;padding:8px 6px}
+.slip{background:#fff;box-shadow:var(--lift);padding:10px 12px;font-size:13px;color:#1d1d1f;font-family:var(--sys);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px}
+.slip b{font-size:12px;letter-spacing:.06em;color:#55555a;grid-column:1/-1;text-transform:uppercase}
+.slip:nth-child(1){transform:rotate(-1.5deg)}.slip:nth-child(2){transform:rotate(1deg);margin-left:12px}.slip:nth-child(3){transform:rotate(-.6deg)}
+.slip.ppr{font-family:var(--font);font-style:italic;font-weight:500;color:#23407a;font-size:15px}
+/* how we count */
+.how-g{display:grid;gap:40px}
+@media (min-width:900px){.how-g{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:start}}
+.how-steps{display:grid;margin-top:20px;counter-reset:s}
+.how-steps li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:start;padding:14px 0;border-top:1px solid var(--rule);font-size:17px}
+.how-steps li::before{counter-increment:s;content:counter(s);width:36px;height:36px;display:grid;place-items:center;font-weight:600;color:var(--ink);border:1.6px solid var(--pencil);border-radius:52% 48% 50% 46%/48% 52% 46% 54%;transform:rotate(-8deg)}
+.keynum{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.keynum div{border-top:4px solid var(--ink);padding-top:12px}
+.keynum b{display:block;font-size:clamp(48px,5vw,68px);line-height:1;font-weight:500;letter-spacing:-.03em}
+.keynum p{font-size:15px;margin-top:8px}
+.keynum small{display:block;font-size:15px;color:var(--muted);margin-top:6px}
+.why>*+*{margin-top:22px}
+.why h3{font-size:21px;margin-bottom:4px}
+.say-sm{font-size:clamp(24px,3vw,38px)}
+
+@media (min-width:1100px){.night-figs.one{grid-template-columns:minmax(0,420px);justify-content:center}}
+
+/* ======================================================================= phone length (budget: trade pages at or under 10,000px at 390)
+   The index is navigation on a phone: names only, two columns, no pinned drawing (the drawing is a desktop rest).
+   The close's contact page drops the two rows the call block right above it already shows (number, reply time). */
+@media (max-width:699px){
+  .idx-fig{display:none}
+  .idx-g .idx{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:14px}
+  .idx-g .idx-p{display:none}
+  .idx-g .idx a{min-height:52px;align-content:center;padding:10px 6px;margin:0}
+  .idx-g .idx b{font-size:17px;line-height:1.25}
+  .cblock.trim>div:nth-child(2),.cblock.trim>div:nth-child(5){display:none}
+  .also ul{gap:14px}
+  .also li{padding-top:10px}
+  .also li b{font-size:18px}
+}
+/* leak check: the pen ring sits 12px outside the figure; give it that room so it never crosses "About" */
+.lk-total .out-usd{margin:0 8px 0 10px}
+/* breadcrumb on trade pages, same as pages/trades-1: an owner landing from a search sees where he is */
+.crumb{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;font-size:15px;color:var(--muted);margin-bottom:12px}
+.crumb a{color:var(--body)}
+.crumb span[aria-hidden]{color:var(--rule-bone)}

@@ -1,0 +1,136 @@
+/* Home only. Everything else comes from ../../system/system.css. */
+
+/* hero: the recognition list leads the lede in ink, so an owner reads his own week first */
+.hm-recog{color:var(--ink);font-weight:500}
+.hm-how{margin-top:4px;font-size:16px}
+/* the call block splits in two so the recognition strip reaches the first phone screen (R1): button, number and reply
+   time first, then the strip, then the free-call note, the price and money back. Desktop keeps them together. */
+.hero-terms{grid-area:terms;display:grid;gap:10px;justify-items:start}
+.hero .hero-g{grid-template-areas:"copy" "act" "strip" "terms" "tool"}
+.hero .hero-act .cta{gap:10px}
+@media (min-width:900px){
+  .hero .hero-g{grid-template-areas:"copy tool" "act tool" "terms tool";grid-template-rows:auto auto 1fr}
+  .hero-terms{margin-top:-12px}
+}
+
+/* walk intro */
+.hm-walk-h{max-width:22em}
+.hm-walk-p{margin-top:14px;max-width:40em}
+
+/* "also on the walk": the finds the sample does not price, as one pencil line on the desk */
+.hm-also{margin-top:clamp(40px,5vw,64px);padding-top:18px;border-top:1px solid var(--rule-bone);font-size:17px;max-width:62em}
+.hm-also .t-label{display:block;margin-bottom:6px}
+
+/* how it works: heading and the deep link on one line on desktop */
+.hm-how-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px 32px}
+.hm-how-h h2{max-width:20em}
+
+/* index */
+.hm-idx-p{margin-bottom:14px;max-width:34em}
+.hm-also-trades{margin-top:18px}
+
+/* leak check: the working calculator from 700px; on a phone a short invitation to the full leak check page,
+   with its three questions shown as blanks on a sheet (four fields of typing is a desk job, not a phone one) */
+.hm-leak-t{display:none}
+.hm-blank{margin-top:20px;background:var(--sheet);box-shadow:var(--lift);padding:8px 18px}
+.hm-blank p{display:grid;grid-template-columns:minmax(0,1fr) 64px auto;align-items:end;gap:10px;padding:12px 0;border-bottom:1px solid var(--rule);font-weight:600;color:var(--ink)}
+.hm-blank p:last-child{border-bottom:0}
+.hm-blank i{height:26px;border-bottom:2px solid var(--pencil)}
+.hm-blank small{font-size:15px;font-weight:400;color:var(--muted)}
+@media (max-width:699px){.hm-leak-t{display:block}.hm-leak-full{display:none}}
+
+/* close: one contact card holds the signed words and the contact block */
+.hm-cc-k{margin-bottom:12px}
+.hm-contact .cblock{margin-top:22px;padding-top:18px;border-top:1px solid var(--rule)}
+.hm-about{margin-top:16px}
+
+/* ===== phone length budget (Home at or under 12,000px at 390). Each cut keeps the content; it removes air or repeats. */
+@media (max-width:699px){
+  .hm-how{display:none}                                   /* the walk starts right below; the link only repeats it */
+  .stop .scr-phone{width:min(244px,100%)}                 /* 9:16.5 phone frames are the tallest pictures on the page */
+  .stop .ghost svg{max-height:330px}                       /* 18px drawing text x 330/460 = 12.9px, over the 12px picture floor */
+  .stop h3{margin-bottom:14px}
+  .stop-body{gap:18px}
+  .night-figs>.pic,.night-figs .scr-lock{width:min(250px,100%)}
+  .night-g{gap:28px}
+  .tapes{margin-bottom:22px}
+  .pad-b{background:linear-gradient(90deg,transparent 40px,var(--margin) 40px 41.5px,transparent 41.5px)}  /* phone: margin rule only; 36px ruled lines cost ~400px */
+  .pad-b h2{line-height:1.15;margin-bottom:18px}
+  .pad li{line-height:1.5;margin-bottom:18px}
+  .honest{line-height:1.5;margin-top:22px}
+  .tick{top:3px}
+  .print{display:none}                                    /* the trade drawing previews on hover; the picker at the top already shows the trade */
+  .calc{gap:14px}
+  .hm-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}
+    .bigfig .stack>*+*{margin-top:14px}
+  .tapes{display:none}
+  .cblock .hm-cb-tel{display:none}                                /* the close's own button carries the number right above */
+  .bigfig [data-f=time]{display:none}                     /* same line sits on the hero sheet */
+  .morning .mo-row .d{display:none}                       /* row details; the label and figure carry each row */                                    /* all four facts already sit in the hero, the facts strip and the tickets */
+  #sheet-cap{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}  /* the sheet's own note says the same; kept for screen readers */
+  .ticket-c{padding:26px 18px 18px}
+  .hm-idx-p{display:none}                                 /* why emergency trades come first: kept on desktop, cut for length here */
+  main>.band{padding-block:44px}                          /* system minimum is 72px; on a phone every band changes ground (paper, bone, ink, graph), so 44px a side still reads as a break and saves ~450px */
+  .hm-also{display:none}                                  /* the three unpriced finds: desktop only, the least needed line for length */
+  .hm-next{display:none}
+  .morning .mo-row:nth-of-type(n+5){display:none}         /* phone: the three money rows of the morning list */
+  .tickets{gap:16px}
+  .ticket-c h3{margin-bottom:4px}
+  .stop.page{padding-bottom:20px}
+  .walk-grid{margin-top:24px}
+  .stop .scr-phone{width:min(236px,100%)}
+  .night-figs>.pic,.night-figs .scr-lock{width:min(236px,100%)}
+  .close-h{margin:4px 0 12px}
+  .hero{padding-bottom:40px}
+  .facts ul{grid-template-columns:1fr 1fr;column-gap:12px}
+  .facts li:first-child,.facts li:last-child{grid-column:1/-1}
+  .pad li{margin-bottom:14px}
+  .night-figs>.pic,.night-figs .scr-lock{width:min(280px,100%)}   /* narrower than 280 and the six finished notifications climb over the status bar */
+  .cblock .hm-cb-lang{display:none}                               /* the signed words right above already say English and Spanish */
+  .hm-contact{margin-top:12px}
+  .contact-card .cardino{width:100px;top:-50px}
+}
+
+/* step tickets: the system's ruled lines start at a fixed 96px, so they cut through the text whenever a title wraps.
+   Here each paragraph carries its own lines, so the text always sits on them. */
+.ticket-c{background-image:none}
+.ticket-c p{line-height:28px;background:repeating-linear-gradient(transparent 0 27px,var(--ruled) 27px 28px)}
+
+/* back at the desk: the equation as an adding-machine tape. Each leak on its own line, the total under a rule, so the
+   sum reads top to bottom at any width instead of wrapping mid-equation */
+.bigfig .eq{display:grid;gap:0;max-width:30em;font-size:19px}
+.bigfig .eq i{display:none}
+.bigfig .eq span{display:flex;flex-direction:row-reverse;justify-content:space-between;align-items:baseline;gap:16px;padding:7px 0;border-bottom:1px dashed var(--rule)}
+.bigfig .eq small{text-align:left}
+.bigfig .eq span.r{border-bottom:0;border-top:2px solid var(--ink);margin-top:-1px;padding-top:9px}
+.bigfig .eq span.r small{color:var(--body)}
+/* job: show our work. The tape prints one line every 160ms, then the total under its rule (home.js adds .tape in view) */
+@media (prefers-reduced-motion:no-preference){
+  html.js .bigfig .eq.tape-wait span{opacity:0}
+  .bigfig .eq.tape span{animation:write 320ms var(--ease-out) both}
+  .bigfig .eq.tape span:nth-of-type(2){animation-delay:160ms}
+  .bigfig .eq.tape span:nth-of-type(3){animation-delay:320ms}
+  .bigfig .eq.tape span.r{animation-delay:680ms}          /* every sample trade has 3 rows; the total waits a beat after them */
+}
+
+/* trade index on a phone: the trade he picked keeps its full row and its line; the other seven become a two-column
+   grid of names (each still a link to its page). The picker at the top is where he compares trades on a phone. */
+@media (max-width:699px){
+  @supports selector(:has(a)){
+    .idx{display:grid;grid-template-columns:1fr 1fr;column-gap:16px}
+    .idx li:has(.your){grid-column:1/-1;order:-1}
+    .idx li:not(:has(.your)) .idx-p{display:none}
+    .idx li{display:grid}
+    .idx li:not(:has(.your)) a{min-height:52px;align-content:center;padding-block:8px}
+    .idx li:not(:has(.your)) b{font-size:17px}
+  }
+}
+
+/* leak check: the two percentage and dollar boxes side by side at every width, so the form stays shorter than the estimate */
+.hm-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}
+.hm-pair .lf input{width:100%}
+
+/* the tape's labels lead each line, so they start with a capital; the total line names itself */
+.bigfig .eq small::first-letter{text-transform:uppercase}
+.bigfig .eq span.r small::before{content:"Total, "}
+@media (max-width:699px){.ticket-c p{line-height:26px;background:repeating-linear-gradient(transparent 0 25px,var(--ruled) 25px 26px)}}  /* phone: 2px less per ruled line, for the length budget */
