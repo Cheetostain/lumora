@@ -1,7 +1,8 @@
 /* Lumora, lumorafl.com. Small helpers shared by every page. Nothing here calls the network.
    1. The phone menu closes on Escape, on a link and on a tap outside it.
    2. The language switch remembers the choice in this browser only ("lumora-lang"), so the
-      home page can open in that language next time. That is the one value the site stores. */
+      home page can open in that language next time. The overnight phone remembers a pause
+      ("lumora-feed"). Those are the two values the site stores (privacy page, section 1). */
 (function () {
   "use strict";
 
@@ -39,10 +40,10 @@
   });
   var f = document.querySelector("[data-feed]");
   if (f && "IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    var L = [].slice.call(f.querySelectorAll(".notes li")), C = f.querySelector(".clock"), raf, t0,
+    var L = [].slice.call(f.querySelectorAll(".notes li")), C = f.querySelector(".clock"), B = f.querySelector(".demo-ctl"), raf, t0, on, P, el = 0,
       A = [1.2, 4.4, 6.2, 8, 11.4], K = ["11:48", "3:02", "3:04", "3:06", "6:41"],
       e = function (x) { x = x < 0 ? 0 : x > 1 ? 1 : x; return x * x * (3 - 2 * x); },
-      reset = function () { L.forEach(function (li) { li.style.top = li.style.opacity = ""; }); C.textContent = "6:41"; },
+      reset = function () { el = 0; L.forEach(function (li) { li.style.top = li.style.opacity = ""; }); C.textContent = "6:41"; },
       draw = function (t) {
         var n = 0, fade = 1 - e((t - 16.4) / 0.8);
         A.forEach(function (a) { if (t >= a) n++; });
@@ -50,15 +51,20 @@
         L.forEach(function (li, i) {
           var s = 0, g = e((t - A[i]) / 0.5);
           for (var j = i + 1; j < A.length; j++) s += e((t - A[j]) / 0.5);
-          li.style.top = (s * 15.4 - (1 - g) * 10) + "cqw";
+          li.style.top = "calc(var(--st)*" + s + " - " + (1 - g) * 10 + "cqw)";
           li.style.opacity = i < n ? Math.min(g, fade) : 0;
         });
       },
-      tick = function (now) { t0 = t0 || now; draw(((now - t0) / 1000) % 18); raf = requestAnimationFrame(tick); };
-    new IntersectionObserver(function (en) {
-      if (en[0].isIntersecting) { t0 = 0; raf = requestAnimationFrame(tick); } else { cancelAnimationFrame(raf); reset(); }
-    }, { threshold: 0.3 }).observe(f);
+      tick = function (now) { t0 = t0 || now - el * 1e3; el = (now - t0) / 1e3 % 18; draw(el); raf = requestAnimationFrame(tick); },
+      go = function () { cancelAnimationFrame(raf); t0 = 0; if (on && !P) raf = requestAnimationFrame(tick); B.setAttribute("aria-pressed", !!P); B.className = "demo-ctl" + (P ? " paused" : ""); };
+    try { P = localStorage.getItem("lumora-feed") == "1"; } catch (x) {}
+    B.hidden = false;
+    B.onclick = function () { P = !P; try { localStorage.setItem("lumora-feed", P ? 1 : 0); } catch (x) {} go(); };
+    new IntersectionObserver(function (en) { on = en[0].isIntersecting; if (!on && !P) reset(); go(); }, { threshold: 0.3 }).observe(f);
   }
+  // state change: the trade sheet stays sticky only while it fits under the bar (site.css .tsheet.tall)
+  var ts = document.querySelector(".tsheet"), fit = function () { ts.classList.toggle("tall", ts.offsetHeight > innerHeight - 88); };
+  if (ts) { fit(); addEventListener("resize", fit); addEventListener("load", fit); }
   var m = document.querySelector(".bird-fig");
   if (m && "IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
     var busy, hop = function () {
