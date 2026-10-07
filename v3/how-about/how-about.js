@@ -25,8 +25,9 @@
   // job: show our work. Every sequence must END where the reader is looking (most end beats sit at the bottom of their
   // block). A block that fits the screen starts once its bottom is in view (not "all of it": a block nearly a screen tall
   // is fully in view for only a few pixels, and one flick skips that). A taller block (the full sheet, At a glance on a
-  // laptop) starts once it covers 60% of the screen or its first item is in view, and then each of its items (.seq children, [data-beat]) writes
-  // itself when that item's bottom is in view; items that come in together keep their stagger (--i = order in the batch).
+  // laptop) starts once it covers 60% of the screen or its first item is in view, and then each of its items (.seq
+  // children, [data-beat]) writes itself when that item's bottom is in view (or 80px of it, once scrolling stops);
+  // items that come in together keep their stagger (--i = order in the batch).
   // While the page is scrolling, a started sequence pauses when less than half of it is on screen, so a skimming reader
   // never has the last beat play where nobody sees it; once scrolling stops (200ms), any part on screen plays on, so a
   // reader who stops at a half-visible block never looks at a frozen one. Nothing loops; once finished, it is let go.
@@ -51,9 +52,13 @@
       if (r.height <= H) return bottomIn(h.el, bd);
       // taller: 60% of the screen, or its first item is in view (a reader resting with the top of the sheet low on the
       // screen must not look at blank rows)
-      return Math.min(r.bottom, bd[1]) - Math.max(r.top, bd[0]) >= 0.6 * H || (h.items.length > 0 && bottomIn(h.items[0].el, bd));
+      return Math.min(r.bottom, bd[1]) - Math.max(r.top, bd[0]) >= 0.6 * H || (h.items.length > 0 && itemReady(h.items[0].el, bd));
     }
     var idle = true, timer;
+    function itemReady(el, bd) {        // its bottom is in view, or scrolling has stopped with a good part of it showing
+      var r = el.getBoundingClientRect();
+      return bottomIn(el, bd) || (idle && r.top >= bd[0] && bd[1] - r.top >= Math.min(80, r.height / 2));
+    }
     function seen(el, bd) {             // scrolling: half of it on screen (half the screen, if taller); stopped: any of it
       var r = el.getBoundingClientRect(), v = Math.min(r.bottom, bd[1]) - Math.max(r.top, bd[0]);
       return idle ? v > 0 : v >= 0.5 * Math.min(r.height, bd[1] - bd[0]);
@@ -67,7 +72,7 @@
         if (!h.go) return true;
         var k = 0;
         h.items.forEach(function (it) {
-          if (!it.go && bottomIn(it.el, bd)) { it.go = true; it.el.style.setProperty('--i', k++); }
+          if (!it.go && itemReady(it.el, bd)) { it.go = true; it.el.style.setProperty('--i', k++); }
           it.el.classList.toggle('wait', !it.go || !seen(it.el, bd));
         });
         h.el.classList.toggle('wait', !seen(h.el, bd));

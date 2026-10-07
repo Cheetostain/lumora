@@ -161,7 +161,7 @@
 
   // job: one-time focus. In each walk stop the pencil circles the evidence on the shop's own paper (the 6 on the
   // equipment log, the blank "Called" line, "28.5 squares") while the stop is still as we find it, before the fix lands.
-  // The system turns a stop real once it is 55% in view for 600ms; the circle starts at 30%, so it is drawn by then.
+  // The system turns a stop real once it has been fully in view for 2.5 s; the circle starts at 30%, so it is drawn by then.
   function circles() {
     if (still || !io) return;
     $$('[data-bind=walk] [data-g2r]').forEach(function (g) {
