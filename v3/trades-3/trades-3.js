@@ -3,7 +3,9 @@
       object (the restaurant's posted schedule, the property manager's wall calendar) where the system would draw a
       generic ink ghost. Same convention as pages/trades-1, so every trade page works one way. build.py prerenders it.
    2. Leak check: the full calculator from content-en.md section 4. Nothing leaves the browser: no fetch, no storage,
-      no form action; Enter never submits. Only the owner's own input moves the figure. */
+      no form action; Enter never submits. Only the owner's own input moves the figure.
+   3. One-shot pictures (after close, the document pair, the text thread, the owner's own records): each plays once in
+      view, under 5 s, so no pause control. Styles at the end of trades-3.css. Frame strips: python frames.py */
 (function () {
   'use strict';
   var L = window.Lumora || {}, still = !!L.still;
@@ -24,6 +26,54 @@
   apply();
   document.addEventListener('lumora:trade', apply);
 
+  /* ================================================================ 3. one-shot pictures: each plays once, when it is in view
+     No loop, so no pause control. Only pictures below the fold at load get a hidden first frame (.t3-wait), so nothing
+     on screen ever blinks out; under reduced motion or ?still nothing is hidden and nothing moves (L.still).
+     Keyframes use the separate translate/scale properties, so each paper object keeps its own tilt. */
+  function seq(items, start, step, kind, dur) {   // marks items to play in turn; returns when the last one ends
+    var t = start;
+    items.forEach(function (el, i) {
+      t = start + i * step; el.classList.add('t3s');
+      el.style.setProperty('--k', 't3-' + kind); el.style.setProperty('--d', t + 'ms'); el.style.setProperty('--u', dur + 'ms');
+    });
+    return items.length ? t + dur : start;
+  }
+  function pencil(items, start) { items.forEach(function (el) { el.classList.add('t3p'); el.style.setProperty('--d', start + 'ms'); }); }
+  var ONCE = {
+    // job: show our work. After close, the end-of-day printout feeds out line by line, then the 6:30 list lands row by row
+    '.night-figs': function (el) {
+      var r = el.querySelector('.rcpt'), t = r && r.offsetParent ? seq($$(':scope > *', r), 0, 90, 'feed', 220) + 120 : 0;
+      t = seq($$('.morning', el), t, 0, 'in', 320);
+      seq($$('.mo-row', el), t - 80, 140, 'write', 320);
+    },
+    // job: show our work. The overnight log ticks in, one entry at a time (desktop; phones drop the log)
+    '.slept': function (el) { seq($$(':scope > li', el), 200, 160, 'write', 320); },
+    // job: state change. The pencil circles what we found on the paper as we find it, then the fix slides in beside it
+    // On a phone the pair stacks and the fix sits below the fold, so each half waits for its own moment in view.
+    '.pair-g': function (el) {
+      var a = el.firstElementChild, b = el.lastElementChild;
+      pencil($$('.pc', a), 150);
+      if (el.clientWidth >= 640) { seq([b], 650, 0, 'in', 320); return; }
+      seq([b.firstElementChild], 150, 0, 'in', 320); return [a, b];
+    },
+    // job: cause and effect. The text thread plays once: his text, our reply, his answer, the booked time
+    '.thread': function (el) { seq($$(':scope > *', el), 0, 520, 'in', 320); },
+    // job: one-time focus. Each record fills in once: the missed calls, the cold quotes, the same job typed three times
+    '.find-g .pic': function (el) { seq($$('.ph-list li, tr.n, .slip', el), 120, 160, el.querySelector('.slip') ? 'in' : 'write', 320); }
+  };
+  var onceIO = !still && 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting || (e.intersectionRatio < 0.35 && e.intersectionRect.height < innerHeight * 0.4)) return;
+      onceIO.unobserve(e.target); e.target.classList.add('t3-go');
+    });
+  }, { threshold: [0, 0.35, 0.6] }) : null;
+  Object.keys(ONCE).forEach(function (sel) {
+    $$(sel).forEach(function (el) {
+      if (!onceIO || el.getBoundingClientRect().top < innerHeight * 0.85) return;   // in view at load: shown finished
+      (ONCE[sel](el) || [el]).forEach(function (t) { t.classList.add('t3-wait'); onceIO.observe(t); });   // a handler may split its picture into parts
+    });
+  });
+
   /* ================================================================ 2. the leak check */
   var form = document.getElementById('lk'); if (!form) return;
   var F = ['calls', 'rang', 'back', 'book', 'profit', 'quotes', 'qprofit', 'minutes', 'days', 'rate'];
@@ -36,7 +86,23 @@
   var one = function (n) { return (Math.round(n * 10) / 10).toFixed(1); };
   var plain = function (n) { return String(+n.toFixed(2)); };
   var SMS = 'sms:+13522260681?&body=';
-  var shown = null, liveT = 0, firstRun = true;
+  var shown = null, liveT = 0, firstRun = true, prevDots = { n: 0, full: 0 }, lastErr = '';
+  var NAMES = { calls: 'Calls a week', rang: 'Calls that ring out', back: 'Calls you call back', book: 'Share that would have booked',
+    profit: 'Profit per job', quotes: 'Quotes that went cold', qprofit: 'Profit on a quoted job', minutes: 'Minutes a day', days: 'Workdays a month', rate: 'Hourly cost' };
+  // each box gets its own error line, right under it, tied to it with aria-describedby (a phone never has to hunt for it)
+  F.forEach(function (n) {
+    var el = inp(n), lf = el.closest('.lf'), e = document.createElement('p');
+    e.className = 'lf-err'; e.id = 'e-' + n; lf.insertBefore(e, lf.querySelector('.lf-h'));
+  });
+  function mark(bad, msg) {
+    F.forEach(function (n) {
+      var el = inp(n), e = document.getElementById('e-' + n), on = n === bad;
+      e.textContent = on ? msg : '';
+      var ids = (el.getAttribute('aria-describedby') || '').split(' ').filter(function (x) { return x && x !== e.id; });
+      if (on) { el.setAttribute('aria-invalid', 'true'); ids.unshift(e.id); } else el.removeAttribute('aria-invalid');
+      if (ids.length) el.setAttribute('aria-describedby', ids.join(' ')); else el.removeAttribute('aria-describedby');
+    });
+  }
 
   function line(key, label, text, value, off) {
     var li = o(key); if (!li) return;
@@ -53,17 +119,20 @@
 
   function calc() {
     var v = {}; F.forEach(function (n) { v[n] = num(inp(n).value); });
-    var err = '';
-    F.forEach(function (n) { if (!err && (inp(n).value.trim() !== '' && (isNaN(v[n]) || v[n] < 0))) err = 'Use a number of 0 or more.'; });
-    if (!err && !isNaN(v.calls) && !isNaN(v.rang) && v.rang > v.calls) err = 'Calls that ring out cannot be more than calls a week.';
-    if (!err && !isNaN(v.rang) && !isNaN(v.back) && v.back > v.rang) err = 'Calls you call back cannot be more than the calls that rang out.';
-    if (!err && !isNaN(v.book) && v.book > 100) err = 'Use a share from 0 to 100.';
-    o('err').textContent = err;
+    var err = '', bad = null, short = '';
+    F.forEach(function (n) { if (!err && (inp(n).value.trim() !== '' && (isNaN(v[n]) || v[n] < 0))) { err = 'Use a number of 0 or more.'; bad = n; short = NAMES[n] + ' needs a number'; } });
+    if (!err && !isNaN(v.calls) && !isNaN(v.rang) && v.rang > v.calls) { err = 'Calls that ring out cannot be more than calls a week.'; bad = 'rang'; short = 'rang out is more than calls a week'; }
+    if (!err && !isNaN(v.rang) && !isNaN(v.back) && v.back > v.rang) { err = 'Calls you call back cannot be more than the calls that rang out.'; bad = 'back'; short = 'calls returned is more than calls missed'; }
+    if (!err && !isNaN(v.book) && v.book > 100) { err = 'Use a share from 0 to 100.'; bad = 'book'; short = 'the share goes from 0 to 100'; }
+    mark(bad, err); lastErr = err;
     var missing = REQ.some(function (n) { return isNaN(v[n]); });
     var ok = !err && !missing;
     o('result').hidden = !ok; o('empty').hidden = ok;
+    // the phone bar says what is really wrong; "Example" while the example numbers are untouched (the Sample stamp shows)
+    o('bar').parentNode.classList.toggle('bad', !!err);
+    o('barl').textContent = err ? 'Check the boxes:' : o('stamp').hidden ? 'Your estimate' : 'Example';
     if (!ok) {
-      o('bar').textContent = 'Fill in the missed-call boxes';
+      o('bar').textContent = err ? short : 'Fill in the missed-call boxes';
       o('sms').href = SMS + encodeURIComponent('Hi, I saw your website. When is a good time for the free call?');
       return null;
     }
@@ -82,20 +151,30 @@
     else line('l-retype', 'Retyping', 'Left out: this line is not filled in.', '', true);
 
     // one dot per call nobody returned in a month; filled = would have booked (the page's one abstract format)
-    var dots = o('dots'), n = Math.min(Math.round(month), 60), full = Math.floor(jobs), part = jobs - full, h = '';
-    for (var i = 0; i < n; i++) { var c = i < full ? 'dot job' : (i === full && part > 0.05 ? 'dot part' : 'dot'); h += '<span class="' + c + '"' + (c === 'dot part' ? ' style="--p:' + Math.round(part * 100) + '%"' : '') + '></span>'; }
+    // job: cause and effect. Only dots his change added or filled pop in (220ms, 30ms apart); the rest stay put
+    var dots = o('dots'), n = Math.min(Math.round(month), 60), full = Math.floor(jobs), part = jobs - full, h = '', k = 0;
+    for (var i = 0; i < n; i++) {
+      var c = i < full ? 'dot job' : (i === full && part > 0.05 ? 'dot part' : 'dot');
+      var fresh = !firstRun && !still && (i >= prevDots.n || (i < full && i >= prevDots.full));
+      var st = (c === 'dot part' ? '--p:' + Math.round(part * 100) + '%;' : '') + (fresh ? '--d:' + Math.min(k++, 10) * 30 + 'ms' : '');
+      h += '<span class="' + c + (fresh ? ' new' : '') + '"' + (st ? ' style="' + st + '"' : '') + '></span>';
+    }
+    prevDots = { n: n, full: full };
     dots.innerHTML = h; dots.setAttribute('aria-label', one(month) + ' calls a month nobody returned; about ' + one(jobs) + ' of them would have booked a job.');
 
     var words = 'About ' + usd(round10) + ' a month';
+    var bar = o('bar'), moved = !firstRun && round10 !== shown;
     roll(o('total'), firstRun ? null : shown, round10); shown = round10; firstRun = false;
-    o('bar').textContent = words;
+    bar.textContent = words;
+    // job: cause and effect. On a phone the sticky bar is the figure he can see while he types: it nudges when it changes
+    if (moved && !still) { bar.classList.remove('bump'); void bar.offsetWidth; bar.classList.add('bump'); }
     o('sms').href = SMS + encodeURIComponent('Hi, I ran the leak check on your site: about ' + usd(round10) + ' a month. When is a good time for the free call?');
     return words;
   }
 
   function announce(words) {           // one polite announcement once the owner stops typing, not one per keystroke
     clearTimeout(liveT);
-    liveT = setTimeout(function () { o('live').textContent = words ? 'Your estimate: ' + words + '.' :o('err').textContent || 'Put a number in each missed-call box to see your estimate.'; }, 700);
+    liveT = setTimeout(function () { o('live').textContent = words ? 'Your estimate: ' + words + '.' : lastErr || 'Put a number in each missed-call box to see your estimate.'; }, 700);
   }
   function edited(n) {
     var tag = $('[data-ex="' + n + '"]'); if (tag) tag.hidden = true;

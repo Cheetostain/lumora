@@ -53,6 +53,7 @@
 /* roofing flips the night band so the phone leads (variety between sibling pages) */
 @media (min-width:900px){.t2-flip{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}.t2-flip>:first-child{order:2}}
 @media (min-width:1100px){.t2-flip{grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr)}}  /* the figures keep the wide track when they lead */
+@media (min-width:900px){.t2-flip{align-items:start}.t2-flip .night-figs{align-items:start}}  /* the lock screen starts level with the kicker: centred, it left ~180px of empty dark above it */
 
 /* ---------------------------------------------------------------- the one-job find: a document pair, never inside a monthly total */
 .t2-pair{display:grid;gap:28px;margin-top:36px}
@@ -64,6 +65,13 @@
 .t2-once{font-size:15px;color:var(--muted)}
 
 /* ---------------------------------------------------------------- trade-page index: on phones the names only, no pinned print */
+/* desktop: a fixed name column. With an auto column the longest name (and the badge) pushed its own description right,
+   so three rows started at three different x. The dot leader goes; the badge moves under the name. */
+@media (min-width:900px){
+  .t2-idx .idx a{grid-template-columns:240px minmax(0,1fr);gap:16px}
+  .t2-idx .idx .dots{display:none}
+  .t2-idx .idx .your{display:table;margin:6px 0 0}
+}
 @media (max-width:699px){
   .t2-idx .print{display:none}
   /* this page's trade keeps its row and its line; the other seven become a two-column grid of names (still links) */
@@ -98,15 +106,29 @@
   .pdf-lines{display:none}
   #sheet-cap{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}  /* the sheet's own note says the same; kept for screen readers */
   .t2-also{display:none}                         /* the four extra trades: desktop only */
+  #find .cta-inline .mb{display:none}             /* money back is in the hero and the close, and the call bar is always on screen */
   #night .season{display:none}                   /* hurricane season needs no chart for a water or roofing owner; desktop keeps it */
-  #night .morning .mo-row:nth-of-type(n+5){display:none}  /* missed calls: the lock screen right above shows them */
+  #night .morning .mo-row:nth-last-child(2){display:none}  /* only the last row, missed calls: the lock screen right above shows them
+     (the list's aria-label keeps it: true, and screen readers get no lock screen picture to read it from). nth-of-type(n+5)
+     also hid the row before it, because .mo-h is a div too */
+  #morning .mo-row.flag{grid-template-columns:1fr}#morning .mo-row.flag .v{text-align:left}  /* pest's first row: its long value goes on its own line under the label (it squeezed the label to 3 lines) */
+  .t2o.wb .wb-day{min-height:0}                 /* the crew board: as tall as its notes, not half empty under three short columns */
+  .t2-cards{padding-top:44px}.cd.back{height:96px}.cd.back.b2{top:16px}
 }
 .t2-also{margin-top:16px;font-size:15px;color:var(--muted)}
+
+@container (max-width:420px){.stop .xl table{table-layout:fixed}.stop .xl tr>:first-child{width:32px}.stop .xl td,.stop .xl th{white-space:normal;overflow-wrap:anywhere;max-width:none}}
 
 /* ---------------------------------------------------------------- close */
 .t2-honest{margin-top:16px;font-style:italic;font-size:17px;color:var(--ink)}
 
 /* ================================================================ PICTURES: the trades' own documents */
+
+/* the crew board (roofing) on the system whiteboard: no arrow, so no 40px arrow room; the ring stays inside its column */
+.t2o.wb .wb-in{padding-bottom:16px}
+.t2o.wb .wb-day{min-height:118px}
+.t2o .wb-day p.pc{display:block;width:fit-content;max-width:calc(100% - 8px);margin:6px 0 8px 1px;padding:5px 9px}
+.t2o .wb-day p.pc::after{inset:-2px;border-radius:22px 28px 24px 30px/26px 22px 28px 24px}  /* a loose loop: an ellipse cut the corners of the two-line note */
 
 /* a printed form on the clipboard (equipment log, route sheet) */
 .t2-form{background:#fff;padding:14px 14px 16px;box-shadow:0 1px 2px rgba(0,0,0,.16);min-height:280px}
@@ -121,8 +143,21 @@
 .t2-form td .hw,.t2-form td.hw{font-size:var(--fs-m)}
 .t2-form .ck{text-align:center}
 
+/* the route sheet and the retyping (pest stop 3) */
+.t2-retype{position:relative;width:min(100%,420px);margin:0 auto}
+.t2-retype .doc-clip{width:min(86%,310px);margin:0;transform:rotate(-1.2deg)}
+.t2-retype .t2-form{min-height:0}
+.rt-sticky{right:0;top:18px;width:min(38%,150px)}
+.rt-scr{position:relative;z-index:2;width:min(82%,300px);margin:-26px 0 0 auto}  /* overlaps the clipboard's foot, not row 7732: the same account must show on both */
+.rt-scr .win-b{display:grid;gap:7px;padding:12px 14px 14px}
+.rt-f{display:grid;grid-template-columns:5.6em minmax(0,1fr);align-items:center;gap:8px;font-size:var(--fs-s)}
+.rt-f>span:first-child{color:#555}
+.rt-f .in{min-height:1.9em;border:1px solid #c7c7cc;border-radius:5px;padding:3px 7px;color:#1d1d1f;background:#fff;display:flex;align-items:center}
+.rt-f .pc{padding:2px 8px;margin-left:-6px}.t2o .rt-f .pc::after{inset:-3px -4px;border-radius:22px 28px 24px 30px/26px 22px 28px 24px}
+.rt-f .caret{display:inline-block;width:1.5px;height:1.1em;background:#1d1d1f;margin-left:1px;vertical-align:-.15em}
+
 /* the manila claim folder */
-.t2-folder{position:relative;width:min(100%,390px);margin:18px auto 26px;padding-top:34px}
+.t2-folder{position:relative;width:min(100%,390px);margin:18px auto 48px;padding-top:34px}
 .fo-paper{position:absolute;left:7%;right:10%;top:0;height:70%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.22);transform:rotate(-3deg);padding:8px 12px}
 .fo-paper p{font-size:var(--fs-s);color:#555;border-bottom:1px solid #e3e3e3;padding:3px 0}
 .fo-front{position:relative;background:linear-gradient(175deg,#ecd09a,#e2c184);border-radius:3px 5px 6px 6px;padding:30px 18px 20px;box-shadow:var(--lift);color:#3a2c12}
@@ -132,7 +167,7 @@
 .fo-front dl div{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:10px;padding:7px 0;border-bottom:1px solid rgba(58,44,18,.25)}
 .fo-front dt{font-size:var(--fs-s);font-weight:600;color:#4b3a18}
 .fo-front dd{font-size:var(--fs-m);min-width:5.5em;text-align:right}
-.t2-folder .t2-sticky{right:-6px;bottom:-22px;width:min(46%,170px)}
+.t2-folder .t2-sticky{right:-6px;bottom:-44px;width:min(46%,170px)}   /* hangs below the folder so the pencil circle on the blank "Deductible billed" line stays in sight */
 
 /* a PDF open on the office computer */
 .t2-pdf .win-b{background:#e4e4e7;padding:12px}
@@ -150,16 +185,18 @@
 /* the renewal card file (pest) */
 .t2-cards{position:relative;width:min(100%,400px);margin:10px auto 8px;padding-top:58px}
 .cd{position:relative;background:#fffef9;border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.22),0 6px 14px rgba(58,47,28,.12);padding:12px 14px 14px;
-  background-image:repeating-linear-gradient(transparent 0 calc(2em - 1px),#c9d7ea calc(2em - 1px) 2em);background-position:0 2.7em;background-repeat:no-repeat;background-size:100% calc(100% - 2.7em)}
+}
 .cd-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-bottom:1.5px solid #8aa2c4;padding-bottom:4px;min-height:2em}
 .cd-h b{font-size:var(--fs-m);letter-spacing:.03em;color:#1d1d1f}
 .cd-h span{font-size:var(--fs-s);color:#555}
-.cd p{font-size:var(--fs-m);line-height:2em;min-height:2em}
+.cd p{font-size:var(--fs-m);line-height:1.3;padding:.45em 0 .3em;min-height:2em;border-bottom:1px solid #c9d7ea}  /* each row sits on its own rule */
+.cd p .pc{margin-left:8px;vertical-align:-.15em}.t2o .cd p .pc::after{inset:-3px -5px}  /* the Called ring starts after the label, clear of its d */
 .cd p small{font-family:var(--sys);font-style:normal;font-size:var(--fs-s);color:#555;margin-right:6px}
 .cd.back{position:absolute;left:5%;right:-1%;top:0;transform:rotate(2.2deg);height:120px}
 .cd.back.b2{left:-1%;right:5%;top:22px;transform:rotate(-1.6deg)}
+.cd.back:not(.b2) .cd-h span{visibility:hidden}  /* the back card's number sits behind Taylor's card; half of it peeking past the edge read as a slip */
 .cd.front{transform:rotate(-.8deg)}
-.cd-tab{position:absolute;right:16%;top:-34px;background:#d9c7a3;border-radius:6px 6px 0 0;padding:4px 14px;font:700 var(--fs-s)/1.4 var(--sys);color:#3a2c12;letter-spacing:.08em}
+.cd-tab{position:absolute;left:44%;top:-34px;background:#d9c7a3;border-radius:6px 6px 0 0;padding:4px 14px;font:700 var(--fs-s)/1.4 var(--sys);color:#3a2c12;letter-spacing:.08em}
 
 /* a green-bar printout (pest: the declined autopay report) */
 .t2-gb{position:relative;width:min(100%,470px);margin:6px auto;background:#fff;box-shadow:var(--lift);padding:12px 24px 14px;font:500 var(--fs-s)/1.45 var(--printer);color:#222}
@@ -187,8 +224,8 @@
 .t2-letter td.r{text-align:right;white-space:nowrap;padding-left:10px}
 .t2-letter tr.tot td{font-weight:700;border-top:1.5px solid #1d1d1f;border-bottom:0}
 .lt-fine{margin-top:12px;font-size:var(--fs-s);line-height:1.45;color:#333}
-.lt-fine .pc{display:inline;padding:0}
-.lt-fine .pc::after{inset:-5px -6px}
+.t2o .lt-fine.pc{display:block;padding:6px 12px 7px;margin-inline:-12px}
+.t2o .lt-fine.pc::after{inset:-2px -3px;border-radius:26px 34px 28px 36px/34px 26px 36px 28px}  /* a loose loop round the whole sentence: on a wrapped inline span the circle collapsed to a sliver */
 
 /* the roof measurement report */
 .t2-meas{width:min(100%,470px);margin:4px auto;background:#fff;box-shadow:var(--lift);padding:14px 16px 16px}
@@ -196,8 +233,14 @@
 .ms-h b{font-size:var(--fs-m);letter-spacing:.04em}
 .ms-h span{font-size:var(--fs-s);color:#555}
 .ms-g{display:grid;gap:12px;margin-top:12px}
-@container (min-width:300px){.ms-g{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:center}}
-.ms-g svg{width:100%;height:auto}
+.ms-pl{width:min(100%,320px);margin-inline:auto}  /* the plan always gets its own row: beside the totals it was ~180px wide and its edge labels crowded the lines */
+.ms-dl{display:grid;grid-template-columns:1fr 1fr;column-gap:16px}
+.ms-pl{position:relative;padding-bottom:4px}
+.ms-g svg{display:block;width:100%;height:auto}
+.ms-tk,.ms-arr{fill:none;stroke:#1d1d1f;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.ms-lb{position:absolute;transform:translate(-50%,-50%);font-size:var(--fs-s);font-weight:600;line-height:1;color:#1d1d1f;background:#fff;padding:1px 3px;white-space:nowrap}
+.ms-lb.ms-in{background:none}
+.ms-lb.ms-l{transform:translate(0,-50%)}
 .ms-roof{fill:#f4f4f6;stroke:#1d1d1f;stroke-width:2;stroke-linejoin:round}
 .ms-line{fill:none;stroke:#1d1d1f;stroke-width:1.6}
 .ms-dim{fill:none;stroke:#8a8a90;stroke-width:1;stroke-dasharray:3 3}
@@ -224,7 +267,8 @@
 .ck-li li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;align-items:start;padding:6px 0;border-bottom:1px solid #ececec;font-size:var(--fs-s)}
 .ck-li .bx{width:16px;height:16px;border:1.5px solid #555;border-radius:2px;margin-top:1px;display:grid;place-items:center;font:700 15px/1 var(--font);color:#1f3a7a}
 .ck-li .miss{color:#1d1d1f;font-weight:600}
-.ck-li .pc{display:inline-block;padding:1px 9px;margin-left:-6px}
+.ck-li .pc{display:inline-block;padding:3px 10px 4px}
+.t2o .ck-li .pc::after{inset:-3px -5px;border-radius:26px 34px 28px 36px/34px 26px 36px 28px}  /* a loose loop like .lt-fine.pc: the tight ring crossed the C and the d; it starts 5px left of the text column, clear of the 8px gap to the box */
 .ck-li small{display:block;font-family:var(--font);font-style:italic;font-weight:500;font-size:var(--fs-m);color:var(--pencil)}
 
 /* the state's WDO report form (pest) */
@@ -266,4 +310,29 @@
 .cal b{display:block;font-size:var(--fs-m)}
 .cal .now{background:#fbefd2;border-color:#d9b867}
 .cal .end{border:2px solid #1d1d1f}
+.t2o .cal .pc::after{inset:-4px -2px;border-radius:16px 20px 15px 19px/19px 15px 20px 16px}  /* round the whole cell, text clear, no spill onto Tue or Thu */
 .cal-k{margin-top:6px;font-size:var(--fs-s);color:#555}
+
+/* ---------------------------------------------------------------- motion (SYSTEM.md section 9)
+   Extra only: the still page above is complete. .t2-seq is added by trades-2.js, and only when motion is allowed, so
+   every first frame here exists only then; .wait holds a sequence on its first frame until it is seen. Only transform,
+   opacity and the mask angle of a pencil circle move. Nothing loops. */
+@property --pa{syntax:"<angle>";inherits:false;initial-value:360deg}   /* the pencil circle's drawn arc; 360deg = whole */
+@keyframes t2circle{from{--pa:0deg}to{--pa:360deg}}
+@keyframes t2mark{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+@keyframes t2grow{from{transform:scaleX(0)}to{transform:none}}
+@media (prefers-reduced-motion:no-preference){
+  /* job: one-time focus. The pencil goes round what we saw, from about ten o'clock, the way a hand circles a line on a form */
+  html.js .t2-seq .pc::after{-webkit-mask:conic-gradient(from -70deg,#000 var(--pa),transparent 0);mask:conic-gradient(from -70deg,#000 var(--pa),transparent 0);
+    animation:t2circle 560ms var(--ease-move) both;animation-delay:var(--pc-at,150ms)}
+  html.js .t2-seq.wait *,html.js .t2-seq.wait *::after{animation-play-state:paused!important}   /* !important: the shorthands reset play-state */
+  /* job: show our work. The find: two papers land (the second 140ms later), then their marks one by one, then the circle */
+  html.js #find .t2-seq>*{animation:rise var(--t-enter) var(--ease-out) both}
+  html.js #find .t2-seq>:nth-child(2){animation-delay:140ms}
+  html.js #find .t2-seq .t2-mk{display:block;animation:t2mark var(--t-small) var(--ease-out) both;animation-delay:calc(420ms + var(--i)*110ms)}
+  html.js #find .t2-seq .cal div{animation:rise var(--t-small) var(--ease-out) both;animation-delay:calc(420ms + var(--i)*110ms)}
+  /* job: show our work. The season bar grows from its first month (500ms, the chart duration), a second row 160ms later */
+  html.js .season.t2-seq .ss-row i{transform-origin:0 50%;animation:t2grow 500ms var(--ease-move) both;animation-delay:calc(150ms + var(--i,0)*160ms)}
+  /* job: show our work. Pest's Monday list prints a row at a time (110ms apart). The footer, with its Sample label, never hides */
+  html.js .morning.t2-seq .mo-row{animation:write 320ms var(--ease-out) both;animation-delay:calc(200ms + var(--i,0)*110ms)}
+}

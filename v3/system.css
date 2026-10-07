@@ -4,7 +4,8 @@
    ground, fidelity, scale, width, density.
    Rules built into this file:
    - The still page is complete. Every movement sits inside prefers-reduced-motion: no-preference, and hidden start
-     states apply only under html.js (added by an inline script in <head>).
+     states apply only under html.js (added by an inline script in <head>) and only on screen (@media screen and ...),
+     so a printed or saved-as-PDF page never shows a blank first frame.
    - Hover effects sit inside (hover:hover) and (pointer:fine); focus gets the same state plus a 3px ring.
    - Pictures sit in .pic (a container-query wrapper), so their text never shrinks under 12px in a narrow column.
    - Red is text only for money (--red), strokes only for the pen (--pen). Actions are always ink. */
@@ -541,7 +542,7 @@ html:not(.js) .pause{display:none}
 @media (max-width:899px){.slept{display:none}.tapes{gap:10px 12px;margin-bottom:28px}.tapes li{font-size:15px;padding:8px 12px}}  /* phones: the morning list carries the night log; keeps the band short */
 .slept li{display:grid;grid-template-columns:72px 1fr;gap:10px;padding:5px 0;font-size:15px;border-top:1px solid rgba(233,228,216,.16)}
 .slept time{color:var(--muted-night);font-weight:600}
-@media (prefers-reduced-motion:no-preference){
+@media screen and (prefers-reduced-motion:no-preference){   /* screen: print and Save as PDF show the finished frame, never a hidden first one (how-about fix, 2026-10-07) */
   html.js [data-loop].run .nt{opacity:0;transform:translateY(-10px);transition:opacity var(--t-enter) var(--ease-out),transform var(--t-enter) var(--ease-out)}
   html.js [data-loop].run .nt.on{opacity:1;transform:none}
   /* the morning list arrives with the fix: rows hidden (not dimmed, so nothing shows at low contrast) until then */
@@ -693,11 +694,13 @@ html:not(.js) .pause{display:none}
 @keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
 @keyframes roll{from{opacity:.2;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
-@media (prefers-reduced-motion:no-preference){
+@media screen and (prefers-reduced-motion:no-preference){   /* screen: print and Save as PDF show the finished frame, never a hidden first one (how-about fix, 2026-10-07) */
   /* job: one-time focus. 16px rise + fade, once at 20% in view. Never on the H1, the number or the main button. */
   html.js .rv{opacity:0;transform:translateY(16px)}
   html.js .rv.in{opacity:1;transform:var(--rest,none);transition:opacity var(--t-enter) var(--ease-out),transform var(--t-enter) var(--ease-out);transition-delay:calc(var(--i,0)*50ms)}
   html.js .tickets .rv.in{--rest:rotate(var(--r,0deg))}
+  /* a revealed ticket still lifts on hover: .rv.in outranks .ticket-c:hover (section 17), so restate it here (trades-1 fix, 2026-10-07; motion.py checks it) */
+  @media (hover:hover) and (pointer:fine){html.js .ticket-c.rv.in:hover{transform:rotate(0) translateY(-4px);transition-delay:0s}}
   /* job: show our work. The walk sheet writes itself once: rows 420ms apart, the total, then the pen rings the biggest leak */
   /* keyed on [data-fill] under html.js, not on a class JS adds later, so the prerendered rows never show and then vanish;
      .swap and .still end it, .wait (phone, sheet below the fold) holds the first frame until the sheet is in view */
@@ -712,6 +715,7 @@ html:not(.js) .pause{display:none}
   .swapping{animation:rise var(--t-small) var(--ease-out)}
   /* job: one-time focus. Pen underlines, arrows and ticks draw when they come into view (150ms anticipation) */
   html.js [data-draw] path{stroke-dasharray:1 1;stroke-dashoffset:1}
+  html.js [data-draw]:not(.drawn) path{visibility:hidden}   /* an undrawn stroke with a round cap still paints a red dot (a waiting walk stop's money line); hide it until it draws (trades-1 fix, 2026-10-07) */
   html.js [data-draw].drawn path{animation:draw 700ms var(--ease-move) 150ms both}
   html.js [data-draw].drawn path+path{animation-delay:750ms;animation-duration:250ms}
   html.js .plan:not(.drawn) .pl-route{opacity:0}

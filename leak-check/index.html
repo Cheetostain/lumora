@@ -25,12 +25,12 @@
 <link rel="icon" href="/v3/assets/mark.svg">
 <link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v3/system.css?v=f9c930e4">
-<link rel="stylesheet" href="/v3/trades-3/trades-3.css?v=f9c930e4">
+<link rel="stylesheet" href="/v3/system.css?v=8c2d1e88">
+<link rel="stylesheet" href="/v3/trades-3/trades-3.css?v=8c2d1e88">
 <script>document.documentElement.classList.add('js')</script>
-<script src="/v3/trades.js?v=f9c930e4" defer></script>
-<script src="/v3/system.js?v=f9c930e4" defer></script>
-<script src="/v3/trades-3/trades-3.js?v=f9c930e4" defer></script>
+<script src="/v3/trades.js?v=8c2d1e88" defer></script>
+<script src="/v3/system.js?v=8c2d1e88" defer></script>
+<script src="/v3/trades-3/trades-3.js?v=8c2d1e88" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -72,7 +72,7 @@
     <p class="lk-priv">This runs on your phone or computer. Nothing you type is sent to us or saved.</p>
     <div class="lk-g">
       <form class="calc lk-form" id="lk" novalidate autocomplete="off" aria-describedby="lk-ex">
-        <div class="lk-bar tally" aria-hidden="true"><span>Your estimate</span><b data-o="bar">About $1,860 a month</b></div>
+        <div class="lk-bar tally" aria-hidden="true"><span data-o="barl">Example</span><b data-o="bar">About $1,860 a month</b></div>
         <p class="lk-ex" id="lk-ex">The numbers already in the boxes are examples, not yours. Change them.</p>
         <fieldset>
           <legend>Missed calls</legend>
@@ -112,8 +112,7 @@
             <div class="unit"><input id="lk-rate" name="rate" inputmode="decimal" value="$25" aria-describedby="h-rate"></div>
             <p class="lf-h" id="h-rate">If it is you, at night, count it only if it takes time you would otherwise bill. If not, leave this line out: those are hours, not dollars.</p></div>
         </fieldset>
-        <p class="lf-err lk-err" data-o="err" role="alert"></p>
-        <div class="lk-btns"><button type="button" class="btn btn-o btn-sm" data-act="reset">Put the example numbers back</button><button type="button" class="btn btn-o btn-sm" data-act="clear">Clear all</button></div>
+                <div class="lk-btns"><button type="button" class="btn btn-o btn-sm" data-act="reset">Put the example numbers back</button><button type="button" class="btn btn-o btn-sm" data-act="clear">Clear all</button></div>
       </form>
 
       <div class="lk-out">
@@ -198,11 +197,11 @@
     <div>
       <h2>How we count</h2>
       <ol class="how-steps">
-        <li><p>Calls that rang out, minus the ones you called back, are the calls nobody returned.</p></li>
-        <li><p>A week times 52, divided by 12, gives a month.</p></li>
-        <li><p>Times the share that would have booked gives the jobs lost.</p></li>
-        <li><p>Times what you keep on a job gives the profit lost.</p></li>
-        <li><p>Quotes and retyping, if you fill them in, are added on top.</p></li>
+        <li class="rv"><p>Calls that rang out, minus the ones you called back, are the calls nobody returned.</p></li>
+        <li class="rv"><p>A week times 52, divided by 12, gives a month.</p></li>
+        <li class="rv"><p>Times the share that would have booked gives the jobs lost.</p></li>
+        <li class="rv"><p>Times what you keep on a job gives the profit lost.</p></li>
+        <li class="rv"><p>Quotes and retyping, if you fill them in, are added on top.</p></li>
       </ol>
       <p class="say say-sm" style="margin-top:48px">Not counted here: reviews <span class="inpic" role="img" aria-label="star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z"/></svg></span>, past customers nobody called back <span class="inpic" role="img" aria-label="phone"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M10.5 18.5h3"/></svg></span> and texts in one language <span class="inpic es" role="img" aria-label="Spanish">ES</span>.</p>
       <p class="say-after">The walk looks at those too.</p>
@@ -228,7 +227,7 @@
       <p class="t-lede">A free call, up to 20 minutes. We look your shop up on Google first and bring one number from it.</p>
       <div class="close-act" style="margin-top:24px">
         <div class="arrow-to"><a class="btn btn-lg" href="tel:+13522260681">Call (352) 226-0681</a><svg class="pen-arrow" viewBox="0 0 96 64" aria-hidden="true" data-draw style="order:-1"><path pathLength="1" d="M4 8C34 4 62 18 84 40"/><path pathLength="1" d="M70 40L86 42 82 26"/></svg></div>
-        <p><a class="u" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
+        <a class="btn btn-o btn-sm" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
         <p class="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</p>
         <div class="mb-box"><h3>Money back</h3><p class="mb"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <span class="red">every dollar back</span>. You keep the sheet.</p></div>
       </div>
@@ -237,6 +236,7 @@
       <dl class="cblock trim" style="margin-top:0">
         <div><dt>Owner</dt><dd>Franco A. Soto, owner</dd></div>
         <div><dt>Call or text</dt><dd><a class="u big-tel" href="tel:+13522260681">(352) 226-0681</a></dd></div>
+        <div><dt>Email</dt><dd><a class="u" href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></dd></div>
         <div><dt>Where</dt><dd>Gainesville, serving Alachua County. Farther in Florida by arrangement.</dd></div>
         <div><dt>Language</dt><dd>English or Spanish</dd></div>
         <div><dt>When we answer</dt><dd>Same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</dd></div>
@@ -251,7 +251,7 @@
   <div class="wrap foot-g">
     <img src="/v3/assets/logo.svg" alt="Lumora" width="104" height="25">
     <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/">Leak check</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/articles/">Articles</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
-    <p>Lumora Group LLC, a Florida company. Gainesville, serving Alachua County. Every shop, name and number marked Sample is illustrative, not a client. Prototype, not the live site.</p>
+    <p>Lumora Group LLC, a Florida company. Gainesville, serving Alachua County. Every shop, name and number marked Sample is illustrative, not a client.</p>
   </div>
 </footer>
 

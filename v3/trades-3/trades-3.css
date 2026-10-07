@@ -104,6 +104,10 @@
 @media (min-width:900px){.card-g .contact-card{margin-top:40px}}
 .side-list>*+*{margin-top:28px}
 .side-list h3{font-size:21px;margin-bottom:6px}
+/* county map: Gainesville sits above its dot (.t) and Micanopy left of its dot (.l), so no label crosses a lake or Newberry
+   at any width; a paper halo keeps each one legible on the outline */
+.county .tw.t{flex-direction:column-reverse;gap:4px;transform:translate(-50%,calc(-100% + 9px))}
+.county .tw{text-shadow:0 0 3px var(--paper),0 0 3px var(--paper),0 0 2px var(--paper)}
 
 /* ======================================================================= leak check */
 .lk{padding:28px 0 80px}
@@ -127,13 +131,15 @@
 .lk-form input{width:120px}
 html:not(.js) .stepb,html:not(.js) .lk-btns{display:none}
 .lk-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;padding-top:20px;border-top:1px solid var(--rule)}
-.lk-err{margin-top:16px}
+.lf .lf-err:not(:empty){margin-top:8px}   /* each error sits under the box that caused it */
+.lf input[aria-invalid="true"]{border-width:3px;background:var(--tape)}   /* ink, not red: red stays money */
 /* phones: the estimate rides along in a slim ink bar while the form is on screen */
 .lk-bar{display:none}
 @media (max-width:899px){
   html{scroll-padding-top:calc(var(--hdr-h) + 72px)}
   html.js .lk-bar.tally{display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:var(--hdr-h);z-index:6;margin:0 -18px;padding:10px 18px;min-height:52px;background:var(--ink);color:var(--on-night);font-size:15px}
   .lk-bar b{color:#fff;font-size:17px;white-space:nowrap}
+  .lk-bar.bad b{white-space:normal;text-align:right;font-size:15px}   /* an error message may wrap; it never hides */
 }
 .lk-sheet{background:var(--sheet);box-shadow:var(--lift);border-top:4px solid var(--ink);padding:18px 18px 18px}
 @media (min-width:600px){.lk-sheet{padding:22px 26px}}
@@ -191,7 +197,14 @@ html:not(.js) .stepb,html:not(.js) .lk-btns{display:none}
   .idx-g .idx-p{display:none}
   .idx-g .idx a{min-height:52px;align-content:center;padding:10px 6px;margin:0}
   .idx-g .idx b{font-size:17px;line-height:1.25}
-  .cblock.trim>div:nth-child(2),.cblock.trim>div:nth-child(5){display:none}
+  .cblock.trim>div:nth-child(2),.cblock.trim>div:nth-child(4),.cblock.trim>div:nth-child(5),.cblock.trim>div:nth-child(6){display:none}
+     /* phones keep Owner and Email: number and reply time sit in the call block above, town and language in the facts strip.
+        Email stays because the money-back promise says "text or email" */
+  .hero-tool .cap{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}   /* still the sheet's name for a screen reader; the Sample stamp says it on screen */
+  .hero-strip{display:none}                      /* the sheet right below shows the same first row */
+  .tapes li:nth-child(2),.tapes li:nth-child(3){display:none}   /* two tapes on a phone: the free call and money back */
+  #desk .cta-inline,#night .cta-inline{display:none}   /* the call bar is on screen the whole way down; the close keeps its buttons */
+  body[data-trade-lock]{--gap-between:56px}      /* trade pages only: 72px between nine bands was ~300px of air on a phone */
   .also ul{gap:14px}
   .also li{padding-top:10px}
   .also li b{font-size:18px}
@@ -202,3 +215,22 @@ html:not(.js) .stepb,html:not(.js) .lk-btns{display:none}
 .crumb{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;font-size:15px;color:var(--muted);margin-bottom:12px}
 .crumb a{color:var(--body)}
 .crumb span[aria-hidden]{color:var(--rule-bone)}
+
+/* ======================================================================= motion (the still page above is complete)
+   trades-3.js marks each one-shot picture below the fold .t3-wait and its parts .t3s (with --k keyframe, --d delay,
+   --u duration) or .t3p (a pencil circle); .t3-go plays them once. Keyframes move translate/scale, not transform, so
+   the printout, the slips and the letter keep their own tilt. Nothing here runs under reduced motion. */
+@keyframes t3-in{from{opacity:0;translate:0 12px}to{opacity:1;translate:0 0}}
+@keyframes t3-feed{from{opacity:0;translate:0 -6px}to{opacity:1;translate:0 0}}
+@keyframes t3-write{from{opacity:0;translate:-8px 0}to{opacity:1;translate:0 0}}
+@keyframes t3-pencil{from{opacity:0;scale:1.18}to{opacity:1;scale:1}}
+@keyframes t3-pop{from{opacity:0;scale:.4}to{opacity:1;scale:1}}
+@keyframes t3-bump{from{opacity:.35;translate:0 6px}to{opacity:1;translate:0 0}}
+@media (prefers-reduced-motion:no-preference){
+  html.js .t3-wait:not(.t3-go) .t3s,html.js .t3-wait:not(.t3-go) .t3p::after{opacity:0}
+  html.js .t3-go .t3s{animation:var(--k) var(--u,320ms) var(--ease-out) var(--d,0ms) both}
+  html.js .t3-go .t3p::after{animation:t3-pencil var(--t-enter) var(--ease-out) var(--d,0ms) both}
+  /* job: cause and effect. Leak check: dots his change added or filled pop in; the phone estimate bar nudges */
+  .dots .dot.new{animation:t3-pop var(--t-small) var(--ease-out) var(--d,0ms) both}
+  .lk-bar b.bump{animation:t3-bump var(--t-small) var(--ease-out)}
+}

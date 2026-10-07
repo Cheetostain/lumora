@@ -47,26 +47,23 @@
 /* ===== phone length budget (Home at or under 12,000px at 390). Each cut keeps the content; it removes air or repeats. */
 @media (max-width:699px){
   .hm-how{display:none}                                   /* the walk starts right below; the link only repeats it */
-  .stop .scr-phone{width:min(244px,100%)}                 /* 9:16.5 phone frames are the tallest pictures on the page */
-  .stop .ghost svg{max-height:330px}                       /* 18px drawing text x 330/460 = 12.9px, over the 12px picture floor */
+  .stop .scr-phone{width:min(236px,100%)}                 /* 9:16.5 phone frames are the tallest pictures on the page */
+  .stop .ghost svg{max-height:372px}                       /* the smallest drawing text is 15px (screen drawings): 15 x 372/460 = 12.1px, over the 12px picture floor */
   .stop h3{margin-bottom:14px}
   .stop-body{gap:18px}
-  .night-figs>.pic,.night-figs .scr-lock{width:min(250px,100%)}
-  .night-g{gap:28px}
-  .tapes{margin-bottom:22px}
+  .night-figs>.pic,.night-figs .scr-lock{width:min(280px,100%)}   /* narrower than 280 and the six finished notifications climb over the status bar */
   .pad-b{background:linear-gradient(90deg,transparent 40px,var(--margin) 40px 41.5px,transparent 41.5px)}  /* phone: margin rule only; 36px ruled lines cost ~400px */
   .pad-b h2{line-height:1.15;margin-bottom:18px}
-  .pad li{line-height:1.5;margin-bottom:18px}
+  .pad li{line-height:1.5;margin-bottom:14px}
   .honest{line-height:1.5;margin-top:22px}
   .tick{top:3px}
   .print{display:none}                                    /* the trade drawing previews on hover; the picker at the top already shows the trade */
   .calc{gap:14px}
-  .hm-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}
-    .bigfig .stack>*+*{margin-top:14px}
-  .tapes{display:none}
+  .bigfig .stack>*+*{margin-top:14px}
+  .tapes{display:none}                                    /* all four facts already sit in the hero, the facts strip and the tickets */
   .cblock .hm-cb-tel{display:none}                                /* the close's own button carries the number right above */
   .bigfig [data-f=time]{display:none}                     /* same line sits on the hero sheet */
-  .morning .mo-row .d{display:none}                       /* row details; the label and figure carry each row */                                    /* all four facts already sit in the hero, the facts strip and the tickets */
+  .morning .mo-row .d{display:none}                       /* row details; the label and figure carry each row */
   #sheet-cap{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}  /* the sheet's own note says the same; kept for screen readers */
   .ticket-c{padding:26px 18px 18px}
   .hm-idx-p{display:none}                                 /* why emergency trades come first: kept on desktop, cut for length here */
@@ -78,14 +75,10 @@
   .ticket-c h3{margin-bottom:4px}
   .stop.page{padding-bottom:20px}
   .walk-grid{margin-top:24px}
-  .stop .scr-phone{width:min(236px,100%)}
-  .night-figs>.pic,.night-figs .scr-lock{width:min(236px,100%)}
   .close-h{margin:4px 0 12px}
   .hero{padding-bottom:40px}
   .facts ul{grid-template-columns:1fr 1fr;column-gap:12px}
   .facts li:first-child,.facts li:last-child{grid-column:1/-1}
-  .pad li{margin-bottom:14px}
-  .night-figs>.pic,.night-figs .scr-lock{width:min(280px,100%)}   /* narrower than 280 and the six finished notifications climb over the status bar */
   .cblock .hm-cb-lang{display:none}                               /* the signed words right above already say English and Spanish */
   .hm-contact{margin-top:12px}
   .contact-card .cardino{width:100px;top:-50px}
@@ -132,5 +125,39 @@
 
 /* the tape's labels lead each line, so they start with a capital; the total line names itself */
 .bigfig .eq small::first-letter{text-transform:uppercase}
-.bigfig .eq span.r small::before{content:"Total, "}
+/* the total line says "Total"; "a month" stays with the big figure beside it (the small text is kept for screen readers) */
+.bigfig .eq span.r small{visibility:hidden}
+.bigfig .eq span.r small::before{content:"Total";visibility:visible}
+/* desktop: the big figure lines up with the top of the tape, not the bottom of its column */
+@media (min-width:1000px){.bigfig{align-items:start}}
+
+/* "Or send a text" on its own line (not inside a sentence): a 44px tall tap area without moving the layout (WCAG 2.5.8) */
+.cta-inline>a.u[href^="sms:"],.close-act>a.u[href^="sms:"]{display:inline-block;padding-block:12px;margin-block:-12px}
+
+/* hero sheet: "Plumbing, 2 trucks, / Alachua County" breaks evenly instead of leaving one word alone */
+.sh-sub{text-wrap:balance}
+
+/* stop 3 spreadsheet: the customer and the work show in full (wrapping), not cut to "Garcia, M..." (phone) or
+   "Water heater, 50..." (desktop). The highlighted row is the point of the picture. */
+.stop .xl td,.stop .xl th{white-space:normal;text-overflow:clip;max-width:none}   /* columns size to their content, so the job and row numbers stay narrow */
+/* stop 2 on a phone: the 236px phone holds the thread up to the callback list; the booked reply shows from 700px */
+@media (max-width:699px){.stop .thread p:nth-child(n+6){display:none}}
+
+/* night band. The log is the fix's work, so it shows with the fix, like the morning list (space kept: no jump) */
+@media (prefers-reduced-motion:no-preference){
+  html.js [data-loop].run .slept{transition:opacity var(--t-enter) var(--ease-out),visibility var(--t-enter)}
+  html.js [data-loop].run:not(.fixed) .slept{opacity:0;visibility:hidden;transition-duration:var(--t-exit)}
+}
+/* phone: the pause sits right above the lock screen it controls, and the morning list takes no space until the fix
+   lands (it was a 255px black gap for 6 s of every 10). The copy column dissolves so its parts can be ordered. */
+@media (max-width:899px){
+  .night-g{row-gap:0}
+  .night-g>div:first-child{display:contents}
+  .night-g .loop-ctl{order:1;margin-top:22px}
+  .night-figs{order:2;margin-top:16px}
+  .night-g>div>.cta-inline{order:3;margin-top:28px}
+  html.js [data-loop].run:not(.fixed) .morning{display:none}
+  .night-figs .nt{padding-block:6px}                      /* six finished notifications stay under the lock screen's date at 280px */
+  @media (prefers-reduced-motion:no-preference){@starting-style{html.js [data-loop].run.fixed .morning{opacity:0;transform:translateY(12px)}}}
+}
 @media (max-width:699px){.ticket-c p{line-height:26px;background:repeating-linear-gradient(transparent 0 25px,var(--ruled) 25px 26px)}}  /* phone: 2px less per ruled line, for the length budget */

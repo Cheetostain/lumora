@@ -1,6 +1,7 @@
 /* How it works + About: page-specific parts, built on system/system.css (read SYSTEM.md first).
    Only what the system does not already have. Same tokens, same type roles, same motion rules:
-   the still page is complete, and every movement sits inside prefers-reduced-motion: no-preference. */
+   the still page is complete, and every movement sits inside screen and (prefers-reduced-motion: no-preference)
+   (screen: printed or saved as PDF, every sequence shows finished, never its blank first frame). */
 
 /* ===================================================================== shared */
 .kick-h{font-size:15px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--pencil);margin-bottom:14px}
@@ -74,11 +75,14 @@
 .wstops{display:grid;gap:0;counter-reset:ws}
 .wstops li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:2px 12px;padding:14px 0;border-top:1px solid var(--rule-bone)}
 .wstops li:last-child{border-bottom:1px solid var(--rule-bone)}
-/* the line a plan stop points at lights up: on hover or focus of either (.hl, how-about.js), or once a tap lands on it */
+/* the line a plan stop points at lights up: on hover or focus of either (.hl, how-about.js), or once picked by a click or
+   tap (.pick; :target without JS). Pointing at another stop hides the pick, so one line shows as selected, never two. */
 .wstops li{position:relative;isolation:isolate}
 .wstops li::before{content:"";position:absolute;inset:0 -12px;z-index:-1;background:var(--sheet);opacity:0;pointer-events:none}
-.wstops li.hl::before,.wstops li:target::before{opacity:1}
-.plan-stops a.hl span{background:var(--ink);color:#fff}
+.wstops li.hl::before,.wstops li.pick::before,html:not(.js) .wstops li:target::before{opacity:1}
+.plan-stops a:is(.hl,.pick) span{background:var(--ink);color:#fff}
+.walk2:has(.hl) .wstops li.pick:not(.hl)::before{opacity:0}
+.walk2:has(.hl) .plan-stops a.pick:not(.hl) span{background:var(--sheet);color:var(--ink)}
 .wstops .tab-n{grid-row:1/3}
 .wstops b{font-size:19px;line-height:1.25}
 .wstops b small{font-size:15px;font-weight:500;color:var(--muted)}
@@ -392,11 +396,13 @@
 /* the walk route is revealed through a mask, so the dotted pencil line keeps its dots while it is drawn */
 .pl-route-m{fill:none;stroke:#fff;stroke-width:12;stroke-linecap:round}
 .pair .ticket{--rot:-1.4deg}.pair .inv{--rot:.9deg}
-@media (prefers-reduced-motion:no-preference){
-  [data-once].wait,[data-once].wait *,[data-once].wait *::before,[data-once].wait *::after{animation-play-state:paused!important}
+@media screen and (prefers-reduced-motion:no-preference){
+  /* .wait: on the block, or (a block taller than the screen) on one of its items until that item is in view */
+  [data-once].wait,[data-once] .wait,:is([data-once].wait,[data-once] .wait) *,:is([data-once].wait,[data-once] .wait) *::before,:is([data-once].wait,[data-once] .wait) *::after{animation-play-state:paused!important}
 
   /* HOW IT WORKS 1. job: show our work. At a glance writes itself once: the rail runs down, the steps land 110ms apart,
-     and the paid steps stamp their filled square as they land (about 1.2 s; on load on desktop, in view on a phone) */
+     and the paid steps stamp their filled square as they land (about 1.2 s). Taller than a laptop screen (.tall), so each
+     step lands when it is in view: on load the steps on screen, the last ones as the reader scrolls to them */
   html.js .glance[data-once]:not(.still) .gl::before{transform-origin:top;animation:ha-grow 1000ms var(--ease-move) 200ms both}
   html.js .glance[data-once]:not(.still) .gl>li{animation:write 380ms var(--ease-out) both;animation-delay:calc(var(--i,0)*110ms + 200ms)}
   html.js .glance[data-once]:not(.still) .gl>li.paid .gl-ico{animation:ha-pop var(--t-small) var(--ease-out) both;animation-delay:calc(var(--i,0)*110ms + 440ms)}
@@ -405,10 +411,12 @@
   html.js .s1-pic[data-once]:not(.still) .pc::after{animation:ha-stamp var(--t-enter) var(--ease-out) 500ms both}
   html.js .s1-pic[data-once]:not(.still) .pencil{animation:ha-in var(--t-enter) var(--ease-out) 850ms both}
 
-  /* 3. job: show our work. The route is drawn from the door (2 s); each stop number lands as the line reaches it
+  /* 3. job: show our work. The route is drawn from the door (1.4 s); each stop number lands as the line reaches it
      (--at, worked out in how-about.js). Replaces the system's plain fade for this plan. */
   html.js #plan .pl-route{opacity:1;animation:none}
-  html.js #plan[data-once]:not(.still) .pl-route-m{stroke-dasharray:1 1;animation:draw 2000ms var(--ease-move) 200ms both}
+  /* a route drawn at a hand's steady pace: a soft start and end with an even middle, not a UI easing; --ease-move
+     raced through stops 1 to 3 in under a second and then crawled 1.3 s to stop 4 */
+  html.js #plan[data-once]:not(.still) .pl-route-m{stroke-dasharray:1 1;animation:draw 1400ms cubic-bezier(.45,0,.55,1) 200ms both}
   html.js #plan[data-once]:not(.still) .plan-stops a span{animation:ha-pop var(--t-small) var(--ease-out) both;animation-delay:var(--at,200ms)}
   .plan-stops a span{transition:background-color var(--t-hover),color var(--t-hover)}
   .wstops li::before{transition:opacity var(--t-hover) var(--ease-out)}
@@ -427,6 +435,11 @@
   html.js .fs .sheet[data-once]:not(.still) .fs-rows>li{animation:write 380ms var(--ease-out) both;animation-delay:calc(var(--i,0)*170ms + 200ms)}
   html.js .fs .sheet[data-once]:not(.still) .sh-total{animation:write 380ms var(--ease-out) 1450ms both}
   html.js .fs .sheet[data-once]:not(.still) .pen-ring path{stroke-dasharray:1 1;animation:draw var(--t-draw) var(--ease-move) 1900ms both}
+  /* taller than the screen (a phone, most laptops): each row writes as it comes into view, the ring starts as row 1
+     finishes writing (row 1 is always first in its batch), and the total writes when it is in view (rows of one batch
+     keep the 170ms stagger). The ring done 1.25 s after row 1 shows, not 2.7 s, so a reader still scrolling sees it */
+  html.js .fs .sheet[data-once].tall:not(.still) .sh-total{animation-delay:calc(var(--i,0)*170ms + 200ms)}
+  html.js .fs .sheet[data-once].tall:not(.still) .pen-ring path{animation-delay:450ms}
 
   /* 9. job: state change. An opened answer settles in; the chevron turns with it */
   .faq details[open] .ans,.more[open]>div{animation:ha-open var(--t-small) var(--ease-out)}
@@ -434,7 +447,9 @@
   .faq summary::after{transition:background-color var(--t-hover),color var(--t-hover)}
   .jump a{transition:border-color var(--t-hover),transform var(--t-press)}
 
-  /* ABOUT 2. job: one-time focus. After the four pages land, the pencil circles the same number on each, in order */
+  /* ABOUT 2. job: one-time focus. The four pages land 120ms apart, then the pencil circles the same number on each,
+     in order. The pages are laid down here, not by the system's .rv, so a circle never draws on a page not there yet */
+  html.js .fourdocs[data-once]:not(.still) .fd{--rot:var(--r,0deg);animation:ha-paper var(--t-enter) var(--ease-out) both;animation-delay:calc(var(--i,0)*120ms)}
   html.js .fourdocs[data-once]:not(.still) .fd-foot .pc::after{animation:ha-stamp var(--t-enter) var(--ease-out) both;animation-delay:calc(var(--i,0)*180ms + 700ms)}
 
   /* 3. job: show our work. One job is followed step by step, then the pencil circles the late quote's date */

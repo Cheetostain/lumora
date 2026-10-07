@@ -200,8 +200,9 @@
       var PH = '<svg viewBox="0 0 16 16" width="17" height="17"><path fill="#fff" d="M3.6 6.7a8 8 0 0 0 5.7 5.7l1.4-1.4c.2-.2.5-.3.7-.2.7.3 1.5.4 2.3.4.4 0 .7.3.7.7v2.2c0 .4-.3.7-.7.7A11.5 11.5 0 0 1 2 3.1c0-.4.3-.7.7-.7h2.2c.4 0 .7.3.7.7 0 .8.1 1.6.4 2.3.1.2 0 .5-.2.7z"/></svg>',
         MS = '<svg viewBox="0 0 16 16" width="17" height="17"><path fill="#fff" d="M8 2.2c3.6 0 6.4 2.3 6.4 5.2S11.6 12.6 8 12.6c-.7 0-1.3-.1-1.9-.2L3 14l.8-2.7C2.4 10.4 1.6 9 1.6 7.4 1.6 4.5 4.4 2.2 8 2.2z"/></svg>',
         LS = '<svg viewBox="0 0 16 16" width="17" height="17"><path fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" d="M5.5 4.5h7M5.5 8h7M5.5 11.5h7M2.8 4.5h.4M2.8 8h.4M2.8 11.5h.4"/></svg>';
-      var N = [['cb', LS, 'Callback list · 7:30 AM', '', '2 callers, both texted back within a minute.', ''],
-        ['', PH, 'Missed Call', '6:38 AM', '(352) 555-0148', 'On the callback list'],
+      // one night, told the same way in every place: these numbers and times match each trade's morning log in trades.js
+      var N = [['cb', LS, 'Callback list for 7:30', '', '2 callers, both texted back within a minute.', ''],
+        ['', PH, 'Missed Call', '6:38 AM', '(352) 555-0148', 'Texted back · 6:39 AM'],
         ['', MS, '(352) 555-0148', '3:06 AM', t.night, 'On the callback list'],
         ['', PH, 'New Voicemail', '3:04 AM', '(352) 555-0148 · 0:41', 'On the callback list'],
         ['', PH, 'Missed Call', '3:02 AM', '(352) 555-0148', 'Texted back · 3:03 AM'],
@@ -217,17 +218,21 @@
       if (list) {
         list.innerHTML = '<div class="mo-h"><b>Morning list · ' + esc(t.shop) + '</b><span>' + esc(m.at) + '</span></div>' +
           m.lines.map(function (l, i) { return '<div class="mo-row' + (l[3] ? ' flag' : '') + '" style="--i:' + Math.min(i, 5) + '"><span class="l">' + esc(l[0]) + '</span><span class="v">' + esc(l[1]) + '</span>' + (l[2] ? '<span class="d">' + esc(l[2]) + '</span>' : '') + '</div>'; }).join('') +
-          '<div class="mo-foot"><span>From your own job list, invoices and call log</span><span>Sample</span></div>';
+          '<div class="mo-foot"><span>' + esc(m.src || 'From your own job list, invoices and call log') + '</span><span>Sample</span></div>';   // m.src: each trade names its own records
         list.setAttribute('role', 'img');
         list.setAttribute('aria-label', 'Sample morning list for ' + t.shop + ': ' + m.lines.map(function (l) { return l[0] + ', ' + l[1]; }).join('; ') + '.');
       }
+      // a lock screen that opts in (data-f="date") shows the morning list's own day, so the two never disagree
+      var day = el.querySelector('.lk-d[data-f="date"]'), md = /(\w{3}), (\w{3}) (\d+)/.exec(m.at), W = { Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday' },
+        MO = { Jan: 'January', Feb: 'February', Mar: 'March', Apr: 'April', Jun: 'June', Jul: 'July', Aug: 'August', Sep: 'September', Oct: 'October', Nov: 'November', Dec: 'December' };
+      if (day && md) day.textContent = (W[md[1]] || md[1]) + ', ' + (MO[md[2]] || md[2]) + ' ' + md[3];
       var log = el.querySelector('[data-f="log"]');
       if (log) log.innerHTML = m.log.map(function (l) { return '<li><time>' + esc(l[0]) + '</time><span>' + esc(l[1]) + '</span></li>'; }).join('');
     },
     idx: function (el, t, animate, key) {
       $$('a[data-t]', el).forEach(function (a) {
         var tag = a.querySelector('.your'); if (tag) tag.remove();
-        if (a.dataset.t === key) { var b = a.querySelector('b'); if (b) b.insertAdjacentHTML('beforeend', '<span class="your">Your trade</span>'); }
+        if (a.dataset.t === key && L.picked) { /* never "Your trade" on a guess: only once chosen, or on that trade's own page */ var b = a.querySelector('b'); if (b) b.insertAdjacentHTML('beforeend', '<span class="your">Your trade</span>'); }
       });
       showFig(el, key, false);
     }
@@ -245,7 +250,8 @@
   function setTrade(key, animate) {
     if (!D[key]) return;
     var changed = key !== L.trade; L.trade = key;
-    store.set('lumora.trade', key);                   // carried onto the trade pages
+    if (animate) L.picked = true;                     // a chip, the select or arrow keys: the visitor chose
+    if (L.picked) store.set('lumora.trade', key);     // carried onto the trade pages; a page's default is never stored as a choice
     $$('[data-picker]').forEach(function (p) {
       $$('.chip', p).forEach(function (c) { var on = c.dataset.t === key; c.setAttribute('aria-checked', on ? 'true' : 'false'); c.removeAttribute('aria-current'); c.tabIndex = on ? 0 : -1; });
       var sel = p.querySelector('select'); if (sel) sel.value = key;
@@ -291,18 +297,22 @@
     if (state === 'after') $$('[data-draw]', g.closest('.stop, [data-g2r-scope]') || g).forEach(function (p) { p.removeAttribute('data-wait'); draw(p, 380); });
   }
   // job: state change. The shop as we find it is the recognition moment, so it gets time on screen: the fix lands once
-  // the picture is 55% in view (or fills half the screen) and has stayed there 600ms. Scroll past fast and it waits.
+  // the picture is fully in view (or fills most of the screen) and has stayed there 2.5 s. Scroll past fast and it waits.
+  // (Was 55% and 600ms: the trade's own object showed for ~1.3 s, still in the bottom half, and most owners never read it.)
   var g2rIO = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
-    es.forEach(function (e) { var g = e.target; clearTimeout(g._g2r);
-      if (!e.isIntersecting || (e.intersectionRatio < 0.55 && e.intersectionRect.height < innerHeight * 0.5)) return;
-      g._g2r = setTimeout(function () { g2rIO.unobserve(g); if (!g.dataset.touched) setG2R(g, 'after'); }, 600); });
-  }, { threshold: [0, 0.3, 0.55, 0.8] }) : null;
+    es.forEach(function (e) { var g = e.target;
+      if (!e.isIntersecting || (e.intersectionRatio < 0.95 && e.intersectionRect.height < innerHeight * 0.75)) { clearTimeout(g._g2r); g._g2r = 0; return; }
+      if (g._g2r) return;   // still in view, only crossed another threshold (0.95 to 1): keep the clock running, don't restart it
+      g._g2r = setTimeout(function () { g2rIO.unobserve(g); if (!g.dataset.touched) setG2R(g, 'after'); }, 2500); });
+  }, { threshold: [0, 0.3, 0.55, 0.8, 0.95, 1] }) : null;
   function initG2R(scope, redraw) {
     $$('[data-g2r]', scope).forEach(function (g) {
       if (g.dataset.ready) return; g.dataset.ready = '1';
       var sc = g.closest('.stop, [data-g2r-scope]') || g.parentNode;
       $$('[data-show]', sc).forEach(function (b) { b.addEventListener('click', function () { g.dataset.touched = '1'; setG2R(g, b.dataset.show); }); });
-      g.addEventListener('pointerenter', function () { if (fine.matches && g.dataset.state === 'before') setG2R(g, 'after'); });  // job: signifier. Hover a ghost and it comes to life
+      // job: signifier. Hover a ghost and it comes to life, unless the owner chose "As we find it" himself: then the
+      // cursor reaching the paper to read it must not undo his choice (trades-2 review, 2026-10-07)
+      g.addEventListener('pointerenter', function () { if (fine.matches && g.dataset.state === 'before' && !g.dataset.touched) setG2R(g, 'after'); });
       if (redraw && !still) $$('.ghost', g).forEach(function (x) { x.classList.add('draw'); });
       // the still default is the fixed state; with motion allowed, figures below the fold start as found and turn real in view
       if (!still && g2rIO && g.getBoundingClientRect().top > innerHeight * 0.8) { setG2R(g, 'before'); g2rIO.observe(g); $$('[data-draw]', g.closest('.stop, [data-g2r-scope]') || g).forEach(function (p) { p.setAttribute('data-wait', ''); }); }
@@ -330,8 +340,9 @@
         if (tper) tper.textContent = n ? (t.per === 'yr' ? 'A year' : 'A month') + (all ? '' : ', so far') : 'Adds up as you scroll';
         var bs = walk.querySelector('[data-f="bar-stop"]'), bu = walk.querySelector('[data-f="bar-usd"]');
         var next = stops[Math.min(n, stops.length - 1)];
-        if (bs) bs.textContent = all ? 'Walk done, ' + n + ' of ' + n + ' stops' : 'Stop ' + Math.min(n + 1, stops.length) + ' of ' + stops.length + ' · ' + (next ? next.dataset.place : '');
-        if (bu) bu.textContent = n ? money(sum) + ' ' + perWord(t) + (all ? '' : ' so far') : t.shop + ' · Sample';  // never "$0 so far"
+        // one line on a phone at the start, and it names the NEXT stop (the counted one can still be on screen)
+        if (bs) bs.textContent = all ? 'Walk done, ' + n + ' of ' + n + ' stops' : n ? 'Next: ' + (next ? next.dataset.place : '') : 'The walk, ' + stops.length + ' stops';
+        if (bu) bu.textContent = n ? money(sum) + ' ' + perWord(t) + (all ? '' : ' so far') : 'Sample shop';  // never "$0 so far"
       });
     }
   };
@@ -506,6 +517,8 @@
   initPickers();
   var start = [qs.get('trade'), locked ? null : store.get('lumora.trade'), document.body.dataset.trade, 'plumbing'].filter(function (k) { return k && D[k]; })[0];
   if (locked) start = document.body.dataset.trade;
+  // a choice already made: this trade's own page, ?trade= or a pick stored on an earlier page (trades-1 fix, 2026-10-07)
+  L.picked = locked || !!(qs.get('trade') && D[qs.get('trade')]) || !!(store.get('lumora.trade') && D[store.get('lumora.trade')]);
   $$('[data-loop]').forEach(function (el) { loops.push(new Loop(el)); });
   if (start) setTrade(start, false);
   initG2R(document, false);

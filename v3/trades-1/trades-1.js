@@ -39,6 +39,12 @@
       }
     }
     var L = window.Lumora, D = window.LUMORA_TRADES;
+    // Industries: until the visitor picks, the hero strip says whose sample it is, so no owner is told his trade is plumbing
+    var stamp = !document.body.hasAttribute('data-trade-lock') && document.querySelector('.hero-strip .stamp');
+    if (stamp && L && D && D[L.trade]) {
+      var nm0 = D[L.trade].name.toLowerCase().replace(/^ac/, 'AC');
+      stamp.textContent = L.picked ? 'Sample' : 'Sample: ' + (/^[aeiou]/i.test(nm0) ? 'an ' : 'a ') + nm0 + ' shop';
+    }
     if (L && D && L.trade) {
       var links = document.querySelectorAll('[data-trade-link]');
       for (var j = 0; j < links.length; j++) {
@@ -50,4 +56,33 @@
   }
   apply();
   document.addEventListener('lumora:trade', apply);
+})();
+
+/* Motion pass (2026-10-07). One-shot parts land once they are in view; trades-1.css holds the timings and the still
+   default. Under ?still or reduced motion every part gets .in at once, so nothing waits. */
+(function () {
+  'use strict';
+  var still = /[?&]still\b/.test(location.search) || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var io = !still && 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); e.target.classList.add('in'); } });
+  }, { threshold: 0.35 }) : null;
+  // a pencil circle inside two papers, a reveal or the calendar lands with that part (.in .pc), so only lone ones are watched
+  function arm() {
+    var els = document.querySelectorAll('[data-land], .cal, .pc');
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (el.hasAttribute('data-armed') || (el.classList.contains('pc') && el.parentNode.closest('[data-land], .cal, .rv'))) continue;
+      el.setAttribute('data-armed', '');
+      if (io) io.observe(el); else el.classList.add('in');
+    }
+  }
+  arm();
+  document.addEventListener('lumora:trade', arm);                   // a trade change redraws the walk stops and their circles
+  // job: state change. "As we find it" tapped or clicked: the circle lands again on the evidence as the old state returns
+  document.addEventListener('click', function (e) {
+    var b = !still && e.target.closest && e.target.closest('[data-show="before"]'), sc = b && b.closest('.stop, [data-g2r-scope]');
+    if (!sc) return;
+    var pcs = sc.querySelectorAll('.before .pc');
+    for (var i = 0; i < pcs.length; i++) { pcs[i].classList.remove('in'); void pcs[i].offsetWidth; pcs[i].classList.add('in'); }
+  });
 })();
