@@ -21,7 +21,8 @@
   /* grounds */
   --paper:#F6F5F2; --sheet:#FFFEFB; --bone:#E9E4D8; --bone-2:#DDD5C3;
   /* ink and the two writing tools */
-  --ink:#111110;          /* headings and every action. 17.3:1 on paper */
+  --ink:#111110; --ink-hover:#4A4843;  /* button hover: the fill lightens one step, white text 9.1:1 (claim interaction-a; Franco may pick #383734) */
+  --ink-x:#111110;          /* headings and every action. 17.3:1 on paper */
   --body:#2B2B29;         /* running text. 13.0:1 paper, 11.2:1 bone */
   --muted:#5F5D56;        /* captions, second tone of headings. 6.0:1 paper, 5.2:1 bone */
   --pencil:#4F4C45;       /* what we saw: notes, pencil circles, stop tabs, Sample stamps. 7.9:1 paper, 6.8:1 bone */
@@ -165,27 +166,27 @@ body:has(.callbar){padding-bottom:var(--bar-h)}
 .u:focus-visible{background-size:100% 2px;text-decoration-color:transparent}
 @media (hover:hover) and (pointer:fine){.u:hover{background-size:100% 2px;text-decoration-color:transparent}}
 [data-ground=night] .u{text-decoration-color:var(--muted-night)}
-@media (prefers-reduced-motion:no-preference){.u{transition:background-size var(--t-small) var(--ease-out),text-decoration-color var(--t-hover)}}
-/* job: feedback. Ink is the colour of every action; hover wipes paper in so the state change is plain. */
+@media (prefers-reduced-motion:no-preference){.u{transition:background-size var(--t-press) var(--ease-out),text-decoration-color var(--t-press)}.u:hover,.u:focus-visible{transition-duration:var(--t-hover)}}   /* 150 ms in, 90 ms out (claim interaction-b) */
+/* job: feedback. Ink is the colour of every action; hover lightens the fill one step and the label never changes (claim interaction-a, 2026-10-08: the old paper wipe made buttons look disabled). */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:10px 26px;border-radius:999px;border:2px solid var(--ink);
-  background:linear-gradient(var(--paper),var(--paper)) 0 0/0 100% no-repeat,var(--ink);color:#fff;font-weight:600;font-size:17px;line-height:1.2;text-decoration:none;text-align:center;cursor:pointer}
-.btn-o{background:linear-gradient(var(--ink),var(--ink)) 0 0/0 100% no-repeat,transparent;color:var(--ink)}
+  background:var(--ink);color:#fff;font-weight:600;font-size:17px;line-height:1.2;text-decoration:none;text-align:center;cursor:pointer}
+.btn-o{background:transparent;color:var(--ink)}
 .btn-sm{min-height:44px;padding:6px 18px;font-size:15px}
 .btn-lg{min-height:58px;padding:12px 32px;font-size:19px}
-.btn:focus-visible{background-size:100% 100%;color:var(--ink)}.btn-o:focus-visible{color:#fff}
-@media (hover:hover) and (pointer:fine){.btn:hover{background-size:100% 100%;color:var(--ink)}.btn-o:hover{color:#fff}}
+.btn:focus-visible{background:var(--ink-hover);border-color:var(--ink-hover)}.btn-o:focus-visible{background:rgba(17,17,16,.08);border-color:var(--ink)}
+@media (hover:hover) and (pointer:fine){.btn:hover{background:var(--ink-hover);border-color:var(--ink-hover)}.btn-o:hover{background:rgba(17,17,16,.08);border-color:var(--ink)}}
 .btn:active{transform:scale(.98)}
-[data-ground=night] .btn{border-color:var(--on-night);background:linear-gradient(var(--night),var(--night)) 0 0/0 100% no-repeat,var(--on-night);color:var(--night)}
-[data-ground=night] .btn:focus-visible{color:var(--on-night)}
-@media (hover:hover) and (pointer:fine){[data-ground=night] .btn:hover{color:var(--on-night)}}
-@media (prefers-reduced-motion:no-preference){.btn{transition:background-size var(--t-small) var(--ease-out),color var(--t-small) var(--ease-out),transform var(--t-press)}}
+[data-ground=night] .btn{border-color:var(--on-night);background:var(--on-night);color:var(--night)}
+[data-ground=night] .btn:focus-visible{background:var(--sheet);border-color:var(--sheet)}
+@media (hover:hover) and (pointer:fine){[data-ground=night] .btn:hover{background:var(--sheet);border-color:var(--sheet)}}
+@media (prefers-reduced-motion:no-preference){.btn{transition:background-color var(--t-hover) var(--ease-out),border-color var(--t-hover) var(--ease-out),transform var(--t-press)}}
 /* the call block: button + the number as readable, tappable text + reply time (+ money back where booking happens) */
 .cta{display:grid;gap:10px;justify-items:start}
 .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
 .cta-tel{font-size:21px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;background:linear-gradient(var(--pen),var(--pen)) 0 100%/0 2px no-repeat;padding-bottom:2px}
 .cta-tel:focus-visible{background-size:100% 2px}
 @media (hover:hover) and (pointer:fine){.cta-tel:hover{background-size:100% 2px}}
-@media (prefers-reduced-motion:no-preference){.cta-tel{transition:background-size var(--t-small) var(--ease-out)}}
+@media (prefers-reduced-motion:no-preference){.cta-tel{transition:background-size var(--t-press) var(--ease-out)}.cta-tel:hover,.cta-tel:focus-visible{transition-duration:var(--t-hover)}}
 [data-ground=night] .cta-tel{color:#fff}
 .cta-note,.reply{font-size:15px;max-width:36em}
 .reply{color:var(--muted)}
@@ -220,8 +221,7 @@ body:has(.callbar){padding-bottom:var(--bar-h)}
 .tab{display:inline-flex;align-items:center;gap:12px;font-size:15px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--pencil);margin-bottom:10px}
 .tab-n{position:relative;flex:none;width:36px;height:36px;display:grid;place-items:center;font-size:17px;letter-spacing:0;color:var(--ink);font-weight:600}
 .tab-n::before{content:"";position:absolute;inset:0;border:1.6px solid var(--pencil);border-radius:52% 48% 50% 46%/48% 52% 46% 54%;transform:rotate(-8deg)}
-.tab-n::after{content:"";position:absolute;right:-13px;top:-6px;width:16px;height:9px;border-left:2.4px solid var(--ink);border-bottom:2.4px solid var(--ink);transform:rotate(-48deg) scale(0);transform-origin:left bottom;opacity:0}
-.passed .tab-n::after,html:not(.js) .tab-n::after,.tab-n.ticked::after{transform:rotate(-48deg) scale(1);opacity:1}
+/* the stop tick was removed 2026-10-08 (claim craft-e: it sat outside the circle and read as a misaligned icon) */
 /* the pencil: what we saw. Familjen's own italic, graphite, a degree off the line */
 .pencil{font-style:italic;font-weight:500;color:var(--pencil);font-size:19px;line-height:1.35;transform:rotate(-1deg);transform-origin:left}
 .pc{position:relative}                                    /* pencil circle around evidence (an observation, never money) */
@@ -382,7 +382,7 @@ html:not(.js) button.flip{display:none}
 .seg button:active{transform:scale(.97)}
 @media (hover:hover) and (pointer:fine){.seg button[aria-pressed=false]:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}}
 /* job: feedback. The switch follows the picture: the pressed side fills with ink as the layers cross-fade */
-@media (prefers-reduced-motion:no-preference){.seg button{transition:background-color var(--t-small) var(--ease-out),color var(--t-small) var(--ease-out),box-shadow var(--t-hover),transform var(--t-press)}}
+@media (prefers-reduced-motion:no-preference){.seg button{transition:background-color var(--t-hover) var(--ease-out),color var(--t-hover) var(--ease-out),box-shadow var(--t-hover),transform var(--t-press)}}
 html:not(.js) .seg{display:none}
 /* ink ghosts: thin graphite lines, the shop's own scribbles */
 .ghost svg{width:100%;height:auto;max-height:380px;overflow:visible}
@@ -591,7 +591,7 @@ html:not(.js) .pause{display:none}
 .idx a:focus-visible::before,.idx a.pv::before,.idx a:active::before{transform:scaleY(1)}
 .idx a:focus-visible b,.idx a:focus-visible .idx-p,.idx a.pv b,.idx a.pv .idx-p{color:#fff}
 .idx a:focus-visible{outline-offset:-4px;outline-color:#fff}
-@media (prefers-reduced-motion:no-preference){.idx a::before{transition:transform var(--t-small) var(--ease-out)}.idx b,.idx-p{transition:color var(--t-hover)}}
+@media (prefers-reduced-motion:no-preference){.idx a::before{transition:transform var(--t-hover) var(--ease-out)}.idx b,.idx-p{transition:color var(--t-hover)}}
 @media (min-width:900px){.idx a{grid-template-columns:auto 1fr minmax(0,24em);align-items:baseline;gap:12px}.idx .dots{display:block;border-bottom:2px dotted rgba(17,17,16,.35);transform:translateY(-4px)}.idx a.pv .dots{border-color:rgba(255,255,255,.5)}}
 /* a pinned print: tape at a corner, a few degrees off; holds a drawing now, a photo once Franco's shoot exists */
 .print{position:relative;background:var(--sheet);padding:12px 12px 14px;box-shadow:var(--lift);transform:rotate(1.2deg);max-width:460px}
@@ -720,6 +720,4 @@ html:not(.js) .pause{display:none}
   html.js [data-draw].drawn path+path{animation-delay:750ms;animation-duration:250ms}
   html.js .plan:not(.drawn) .pl-route{opacity:0}
   html.js .plan.drawn .pl-route{animation:fadein 900ms var(--ease-out) both}
-  /* job: state change. The pencil tick on a stop tab once its money line has been passed */
-  .tab-n::after{transition:transform var(--t-small) var(--ease-out) 120ms,opacity var(--t-small)}
 }
