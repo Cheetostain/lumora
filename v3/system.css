@@ -21,7 +21,7 @@
   /* grounds */
   --paper:#F6F5F2; --sheet:#FFFEFB; --bone:#E9E4D8; --bone-2:#DDD5C3;
   /* ink and the two writing tools */
-  --ink:#111110; --ink-hover:#4A4843;  /* button hover: the fill lightens one step, white text 9.1:1 (claim interaction-a; Franco may pick #383734) */
+  --ink:#111110; --ink-hover:#383734;  /* button hover: the fill lightens one subtle step, white text about 12:1 (claim interaction-a; Franco picked B, 2026-10-08) */
   --ink-x:#111110;          /* headings and every action. 17.3:1 on paper */
   --body:#2B2B29;         /* running text. 13.0:1 paper, 11.2:1 bone */
   --muted:#5F5D56;        /* captions, second tone of headings. 6.0:1 paper, 5.2:1 bone */
