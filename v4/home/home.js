@@ -7,9 +7,17 @@
     return m[1] ? m[1] + '-' + m[2] + ' ' + kind : kind;
   }
   // the tally no longer counts dollars (R9) and is not shown on phones, so the intro promises the end total, not a running sum
+  // The Spanish Home (index.es.html, 2026-10-10) says it in Spanish, from the trade's Spanish short line ("Plomería, 2 camionetas")
+  var ES = /^es\b/i.test(document.documentElement.getAttribute('lang') || '');
+  function sizeEs(t) {                     // "un negocio de ejemplo con 2 camionetas"; "una administradora de propiedades de ejemplo con 212 unidades"
+    var m = /, (\d+ .+)$/.exec(t.short) || [], kind = t.per === 'yr' ? 'una administradora de propiedades' : /^Restaurante/.test(t.short) ? 'un restaurante y bar' : 'un negocio';
+    return kind + ' de ejemplo' + (m[1] ? ' con ' + m[1] : '');
+  }
   function intro(key, t) {
     var p = document.querySelector('[data-walk-intro]'); if (!p || !t || !t.rows) return;
     var pairs = t.rows.some(function (r) { return r.pair; });
+    if (ES) { p.textContent = t.shop + ' es ' + sizeEs(t) + '. ' + (pairs ? 'En cada parada se ve la misma pantalla antes y después del arreglo, y la visita termina con el total de la hoja.'
+      : 'En cada parada se ve el arreglo en la pantalla del propio negocio, y la visita termina con el total de la hoja.'); return; }
     p.textContent = t.shop + ' is a sample ' + size(t) + '. ' + (pairs ? 'Each stop shows the same screen before and after the fix, and the walk ends on the sheet\'s total.'
       : 'Each stop shows the fix on the shop\'s own screen, and the walk ends on the sheet\'s total.');
   }
@@ -32,7 +40,7 @@
   function variants() {
     var q = new URLSearchParams(location.search), n4 = document.querySelector('.n4');
     if (n4 && /^[bc]$/.test(q.get('n4') || '')) n4.setAttribute('data-layout', q.get('n4'));
-    var h = n4 && n4.querySelector('h2'); if (h && q.get('n4h') === '2') h.textContent = 'Office work done before you wake up.';
+    var h = n4 && n4.querySelector('h2'); if (h && q.get('n4h') === '2') h.textContent = ES ? 'El trabajo de oficina, hecho antes de que usted se levante.' : 'Office work done before you wake up.';
   }
   function start() {
     if (!window.Lumora) return;

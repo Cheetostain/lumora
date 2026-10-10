@@ -46,8 +46,8 @@
   var esc = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); };
   var money = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
   var total = function (t) { return t.rows.reduce(function (a, r) { return a + r.usd; }, 0); };
-  var perWord = function (t) { return t.per === 'yr' ? 'a year' : 'a month'; };
-  var perShort = function (t) { return t.per === 'yr' ? ' a year' : ' a month'; };   // one way to say it on every v4 page ("/ mo" retired, review 2026-10-10)
+  var perWord = function (t) { return t.per === 'yr' ? tr('a year', 'al año') : tr('a month', 'al mes'); };
+  var perShort = function (t) { return ' ' + perWord(t); };   // one way to say it on every v4 page ("/ mo" retired, review 2026-10-10)
   var store = {
     get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
     set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage blocked: the page still works */ } }
@@ -158,7 +158,7 @@
     if (R.frame === 'phone') {
       // R4: the text right after a missed call is an SMS text-back, so it shows green (.sms), never blue
       var th = '<div class="ph-who"><i></i>' + esc(R.who) + '</div><div class="thread">' + R.msgs.map(function (m, i) {
-        var tb = m[0] === 'out' && i > 0 && /^Missed call/.test(R.msgs[i - 1][1]);
+        var tb = m[0] === 'out' && i > 0 && /^(Missed call|Llamada perdida)/.test(R.msgs[i - 1][1]);
         return '<p class="' + (m[0] === 'sys' ? 'sys' + (i === R.msgs.length - 1 ? ' k' : '') : 'bub ' + m[0] + (tb ? ' sms' : '')) + '">' + esc(m[1]) + '</p>'; }).join('') + '</div>';
       return v4 ? ph4(th, R.clock || '9:41') : '<div class="scr-phone"><div class="ph"><div class="ph-sb"><span>9:41</span><i></i></div>' + th + '</div></div>';
     }
@@ -167,8 +167,8 @@
     return '<div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>' + esc(R.title) + '</span></div><div class="win-b">' + docBody(R, false) + '</div></div>';
   }
   function altAfter(R) {
-    return R.frame === 'phone' ? 'Sample, fixed: a text thread on the shop phone with ' + R.who + '. ' + R.msgs.map(function (m) { return m[1]; }).join('. ') + '.'
-      : 'Sample, fixed: ' + R.title + (R.meta ? ', ' + R.meta : '') + '. ' + (R.badge ? R.badge[1] + '.' : '') + (R.total ? ' ' + R.total[0] + ' ' + R.total[1] + '.' : '');
+    return R.frame === 'phone' ? tr('Sample, fixed: a text thread on the shop phone with ', 'Ejemplo, con el arreglo: la conversación en el teléfono del negocio con el ') + R.who + '. ' + R.msgs.map(function (m) { return m[1]; }).join('. ') + '.'
+      : tr('Sample, fixed: ', 'Ejemplo, con el arreglo: ') + R.title + (R.meta ? ', ' + R.meta : '') + '. ' + (R.badge ? R.badge[1] + '.' : '') + (R.total ? ' ' + R.total[0] + ' ' + R.total[1] + '.' : '');
   }
   function altBefore(row) {
     if (row.before.kind === 'whiteboard') return 'Sample, as we find it: the office whiteboard. Garcia\'s water heater visit is under Tuesday; "Quote Garcia" is under Friday, with an arrow back to Tuesday.';
@@ -232,7 +232,7 @@
     // the software's own furniture, present in both states so the frame never has an empty band (design review 2026-10-10):
     // a spreadsheet's formula bar (the selected cell, then "fx") and its sheet tabs with "Ready"; an app list's status line
     var fx = P.fx ? '<div class="xl-fx"><span class="fx-c">' + esc(P.fx.cell) + '</span><b>fx</b>' + was2({ was: P.fx.was, now: P.fx.now }) + '</div>' : '';
-    var tabs = P.tabs ? '<div class="xl-tabs">' + P.tabs.map(function (t, i) { return '<span' + (i ? '' : ' class="on"') + '>' + esc(t) + '</span>'; }).join('') + '<em>Ready</em></div>' : '';
+    var tabs = P.tabs ? '<div class="xl-tabs">' + P.tabs.map(function (t, i) { return '<span' + (i ? '' : ' class="on"') + '>' + esc(t) + '</span>'; }).join('') + '<em>' + tr('Ready', 'Listo') + '</em></div>' : '';
     var status = P.status ? '<p class="win-st">' + was2(P.status) + '</p>' : '';
     return '<div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>' + esc(P.title) + '</span></div><div class="win-b">' + (P.xls ? '<div class="xl">' + fx + '<table>' + head + body + '</table>' + tabs + '</div>' : '<div class="ptbl"><table>' + head + body + '</table></div>') + status + badge + '</div></div>';
   }
@@ -244,15 +244,15 @@
     sheet: function (el, t, animate) {
       var f = function (k) { return el.querySelector('[data-f="' + k + '"]'); };
       if (f('sub')) f('sub').textContent = t.sub;
-      if (f('per')) f('per').textContent = t.per === 'yr' ? 'A year' : 'A month';
+      if (f('per')) f('per').textContent = t.per === 'yr' ? tr('A year', 'Al año') : tr('A month', 'Al mes');
       var ringOn = el.hasAttribute('data-ring'), short = el.hasAttribute('data-short');   // data-short (v4, R9): the row's one short formula
       if (f('rows')) f('rows').innerHTML = t.rows.map(function (r, i) {
         return '<li style="--i:' + i + '" data-task="' + (TASK[r.icon] || r.icon) + '"><div class="sh-l"><b>' + esc(r.b) + '</b><small>' + esc(short && r.fs ? r.fs : r.f) + '</small></div><span class="sh-usd">' + money(r.usd) + (i === 0 && ringOn ? RING_SVG : '') + '</span></li>'; }).join('');
       if (f('total')) f('total').textContent = money(total(t)) + perShort(t);
       // one short line for screen readers when the owner picks another trade (the sheet itself is not a live region: a pick
       // used to read out about 50 changed words). Empty on load, so nothing is announced before he chooses.
-      if (f('live') && animate) f('live').textContent = 'Sample shop: ' + t.name + ', ' + money(total(t)) + ' ' + perWord(t) + ' lost before any fix.';
-      var tm = f('time'); if (tm) { tm.hidden = !t.time; if (t.time) tm.innerHTML = 'Time back for you or your office: <b>' + esc(t.time) + '</b>'; }
+      if (f('live') && animate) f('live').textContent = tr('Sample shop: ', 'Negocio de ejemplo: ') + t.name + ', ' + money(total(t)) + ' ' + perWord(t) + tr(' lost before any fix.', ' que se pierden antes de cualquier arreglo.');
+      var tm = f('time'); if (tm) { tm.hidden = !t.time; if (t.time) tm.innerHTML = tr('Time back for you or your office: ', 'Tiempo que recuperan usted o su oficina: ') + '<b>' + esc(t.time) + '</b>'; }
       $$('.pen-ring', el).forEach(ring);
       if (animate && !still) { el.classList.remove('writing', 'swap'); void el.offsetWidth; el.classList.add('swap'); } // job: cause and effect
     },
@@ -268,7 +268,7 @@
       rollTo(f('n'), shown.big, sum, money); shown.big = sum;
       if (f('per')) f('per').textContent = perWord(t);
       if (f('sub')) f('sub').textContent = t.sub;
-      if (f('time')) { f('time').hidden = !t.time; if (t.time) f('time').innerHTML = 'Time back for you or your office: <b>' + esc(t.time) + '</b>.'; }
+      if (f('time')) { f('time').hidden = !t.time; if (t.time) f('time').innerHTML = tr('Time back for you or your office: ', 'Tiempo que recuperan usted o su oficina: ') + '<b>' + esc(t.time) + '</b>.'; }
       if (f('eq')) f('eq').innerHTML = t.rows.map(function (r, i) { return (i ? '<i>+</i>' : '') + '<span>' + money(r.usd) + ' <small>' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1)) + '</small></span>'; }).join('') +
         '<i>=</i><span class="r">' + money(sum) + ' <small>' + perWord(t) + '</small></span>';
       $$('.pen-ring', el).forEach(function (s) { requestAnimationFrame(function () { ring(s); }); });
@@ -350,20 +350,24 @@
       // screen's ticking date say so ("Sun night to Mon, Oct 5"; review 2026-10-10: a 9:40 PM row under "Mon, Oct 5" was Sunday)
       var d0 = new Date(N.date + ', 2026'), d1 = new Date(d0.getTime() - 864e5), lg = function (d) { return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }); };
       var eve = isNaN(d1) ? N.date : lg(d1), pm = N.rows.some(function (r) { return / PM$/.test(r[0]); });
-      var head = N.date.replace(/^(\w{3})\w*, (\w{3})\w* (\d+)$/, '$1, $2 $3'), logDate = pm ? eve.slice(0, 3) + ' night to ' + head : head;
-      var lock = '';
+      var head = N.date.replace(/^(\w{3})\w*, (\w{3})\w* (\d+)$/, '$1, $2 $3'), logDate = pm ? eve.slice(0, 3) + ' night to ' + head : head, day = N.date;
+      if (ES && !isNaN(d1)) {   // "lunes, 5 de octubre", as a Spanish lock screen writes it; the log: "Noche del domingo al lunes 5 de octubre"
+        var dl = function (d) { return DIAS[d.getDay()] + ', ' + d.getDate() + ' de ' + MESES[d.getMonth()]; }, d5 = DIAS[d0.getDay()] + ' ' + d0.getDate() + ' de ' + MESES[d0.getMonth()];
+        day = dl(d0); eve = dl(d1); logDate = pm ? 'Noche del ' + DIAS[d1.getDay()] + ' al ' + d5 : d5.charAt(0).toUpperCase() + d5.slice(1);
+      }
+      var lock = '', SAMP = '<span class="samp">' + tr('Sample', 'Ejemplo') + '</span>';
       if (N.lock) {
         var nts = N.nts.map(function (x, i) { return { x: x, i: i }; }).sort(function (a, b) { return key(b.x.at) - key(a.x.at); });   // newest on top, as a phone shows them
         // data-day / data-eve: the loop ticks the big clock through the night (9:40 ... 6:41) and the date line with it
-        lock = '<div class="pic n4-phone"><div class="lk4 crop-m" data-day="' + esc(N.date) + '" data-eve="' + esc(eve) + '" role="img" aria-label="' + esc('Sample: the shop phone\'s lock screen at 6:41 a.m., ' + N.date + '. ' +
-          nts.map(function (o) { return o.x.t + ', ' + o.x.at + ': ' + o.x.p + (o.x.fx ? '. ' + o.x.fx : ''); }).join('. ') + '.') + '">' +
-          ph4('<p class="lk4-d" aria-hidden="true">' + esc(N.date) + '</p><p class="lk4-t" aria-hidden="true">6:41</p><div class="lk4-nts" aria-hidden="true">' + nts.map(function (o) {
-            var x = o.x; return '<div class="lk4-nt" data-n="' + nNt[o.i] + '" data-t="' + esc(x.at) + '" data-task="' + x.task + '"><span class="ap ap-' + x.app.toLowerCase() + '">' + (APPS[x.app] || APPS.List) + '</span><div><p class="nr"><b>' + esc(x.t) + '</b><span>' + esc(x.at) + '</span></p><p>' + esc(x.p) + '</p>' +
-              (x.fx ? '<span class="fx">↩ ' + esc(x.fx) + '</span>' : '') + '</div></div>'; }).join('') + '</div>', '', true) + '</div><span class="samp">Sample</span></div>';
+        lock = '<div class="pic n4-phone"><div class="lk4 crop-m" data-day="' + esc(day) + '" data-eve="' + esc(eve) + '" role="img" aria-label="' + esc(tr('Sample: the shop phone\'s lock screen at 6:41 a.m., ', 'Ejemplo: la pantalla de bloqueo del teléfono del negocio a las 6:41 a. m., ') + day + '. ' +
+          nts.map(function (o) { return o.x.t + ', ' + hora(o.x.at) + ': ' + o.x.p + (o.x.fx ? '. ' + o.x.fx : ''); }).join('. ') + '.') + '">' +
+          ph4('<p class="lk4-d" aria-hidden="true">' + esc(day) + '</p><p class="lk4-t" aria-hidden="true">6:41</p><div class="lk4-nts" aria-hidden="true">' + nts.map(function (o) {
+            var x = o.x; return '<div class="lk4-nt" data-n="' + nNt[o.i] + '" data-t="' + esc(x.at) + '" data-task="' + x.task + '"><span class="ap ap-' + x.app.toLowerCase() + '">' + (APPS[x.app] || APPS.List) + '</span><div><p class="nr"><b>' + esc(x.t) + '</b><span>' + esc(hora(x.at)) + '</span></p><p>' + esc(x.p) + '</p>' +
+              (x.fx ? '<span class="fx">↩ ' + esc(x.fx) + '</span>' : '') + '</div></div>'; }).join('') + '</div>', '', true) + '</div>' + SAMP + '</div>';
       }
       figs.innerHTML = lock + '<div class="pic n4-paper"><div class="np"><div class="np-h"><b>' + esc(N.paper + ', ' + t.shop) + '</b><span>' + esc(logDate) + '</span></div><ol class="np-rows">' +
-        N.rows.map(function (r, i) { return '<li data-n="' + nRow[i] + '" data-t="' + esc(r[0]) + '" data-task="' + r[2] + '"><time>' + esc(r[0]) + '</time><span>' + esc(r[1]) + '</span></li>'; }).join('') +
-        '</ol><p class="np-foot">' + esc((t.morning && t.morning.src) || 'From your own job list, invoices, bills and email') + '</p></div><span class="samp">Sample</span></div>';
+        N.rows.map(function (r, i) { return '<li data-n="' + nRow[i] + '" data-t="' + esc(r[0]) + '" data-task="' + r[2] + '"><time>' + esc(hora(r[0])) + '</time><span>' + esc(r[1]) + '</span></li>'; }).join('') +
+        '</ol><p class="np-foot">' + esc((t.morning && t.morning.src) || tr('From your own job list, invoices, bills and email', 'De su lista de trabajos, sus facturas, las facturas de proveedores y su correo')) + '</p></div>' + SAMP + '</div>';
       figs.classList.toggle('nolock', !N.lock);
       loops.forEach(function (lp) { if (lp.el === el || el.contains(lp.el) || lp.el.contains(el)) lp.reset(); });
       fitCrops();
@@ -403,10 +407,10 @@
       // a plain line under it: a walk goes room by room, and a calls row never becomes a heading (R1; review 2026-10-10)
       // the Before / After buttons sit under the picture they switch, beside its Sample label
       return '<li class="stop page" id="stop-' + n + '" data-usd="' + r.usd + '" data-place="' + esc(place) + '" data-task="' + task + '">' +
-        '<div class="stop-h"><span class="tab-n">' + n + '</span><div class="stop-t"><h3><span class="sr">Stop ' + n + ': </span>' + esc(place) + '</h3><p class="stop-leak">' + esc(r.b) + '</p></div></div>' +
+        '<div class="stop-h"><span class="tab-n">' + n + '</span><div class="stop-t"><h3><span class="sr">' + tr('Stop ', 'Parada ') + n + ': </span>' + esc(place) + '</h3><p class="stop-leak">' + esc(r.b) + '</p></div></div>' +
         '<div class="stop-body"><div class="pic' + (P ? ' has-seg' : '') + '"' + (task === 'calls' ? ' data-pic="calls"' : '') + '>' + pic +
-        (P ? '<div class="seg" role="group" aria-label="Show stop ' + n + '"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button></div>' : '') +
-        '<span class="samp">Sample</span></div>' +
+        (P ? '<div class="seg" role="group" aria-label="' + tr('Show stop ', 'Mostrar la parada ') + n + '"><button type="button" data-show="before" aria-pressed="false">' + tr('Before', 'Antes') + '</button><button type="button" data-show="after" aria-pressed="true">' + tr('After', 'Después') + '</button></div>' : '') +
+        '<span class="samp">' + tr('Sample', 'Ejemplo') + '</span></div>' +
         '<div class="stop-notes"><p class="pencil">' + esc(r.note) + '</p>' +
         '<p class="find"><span class="find-usd money">' + money(r.usd) + ' ' + perWord(t) + UNDER_SVG + '</span><span class="find-f">' + esc(r.fs || r.f) + '</span></p>' +
         // no "Fix:" line on v4 stops: the After picture shows the fix in the shop's own screen, and the line only repeated it (R9)
@@ -521,9 +525,10 @@
         if (walk.getAttribute('data-walk') === 'pairs') {   // v4 (R9): progress only, no dollar figures; the walk's one total line follows the stops
           var nx = stops[Math.min(n, stops.length - 1)], lc = function (s) { return s.charAt(0).toLowerCase() + s.slice(1); };
           var pg = walk.querySelector('[data-tally] [data-f="tprog"]'), b1 = walk.querySelector('[data-f="bar-stop"]'), b2 = walk.querySelector('[data-f="bar-n"]');
-          if (pg) pg.textContent = all ? 'Walk done, ' + n + ' of ' + n + ' stops' : n ? n + ' of ' + stops.length + ' stops' : stops.length + ' stops on this walk';
-          if (b1) b1.textContent = all ? 'Walk done' : n ? 'Next: ' + lc(nx ? nx.dataset.place : '') : 'The walk, ' + stops.length + ' stops';
-          if (b2) b2.textContent = n ? n + ' of ' + stops.length : 'Sample shop';
+          var of = tr(' of ', ' de '), st = tr(' stops', ' paradas');
+          if (pg) pg.textContent = all ? tr('Walk done, ', 'Visita terminada, ') + n + of + n + st : n ? n + of + stops.length + st : stops.length + tr(' stops on this walk', ' paradas en esta visita');
+          if (b1) b1.textContent = all ? tr('Walk done', 'Visita terminada') : n ? tr('Next: ', 'Sigue: ') + lc(nx ? nx.dataset.place : '') : tr('The walk, ', 'La visita, ') + stops.length + st;
+          if (b2) b2.textContent = n ? n + of + stops.length : tr('Sample shop', 'Negocio de ejemplo');
           return;
         }
         var tot = walk.querySelector('[data-tally] [data-f="tot"]'), tper = walk.querySelector('[data-tally] [data-f="tper"]');
@@ -570,8 +575,8 @@
     // as "Play again", so keyboard focus never drops to the page (phone-access review 2026-10-10)
     function label(mode) {
       if (!btn) return;
-      var vis = { pause: 'Pause', play: 'Play', again: 'Play again' }[mode], lab = btn.querySelector('.pt');
-      btn.setAttribute('aria-label', { pause: 'Pause animation', play: 'Play animation', again: 'Play again' }[mode]);
+      var vis = (ES ? { pause: 'Pausa', play: 'Reproducir', again: 'Ver otra vez' } : { pause: 'Pause', play: 'Play', again: 'Play again' })[mode], lab = btn.querySelector('.pt');
+      btn.setAttribute('aria-label', (ES ? { pause: 'Pausar la animación', play: 'Reproducir la animación', again: 'Ver otra vez' } : { pause: 'Pause animation', play: 'Play animation', again: 'Play again' })[mode]);
       btn.classList.toggle('is-paused', mode !== 'pause'); if (lab) lab.textContent = vis;
     }
     function next() {                                   // job: cause and effect. The night's work lands line by line, in clock order
@@ -663,7 +668,7 @@
   /* ================================================================ header menu */
   function initMenu() {
     var b = $('.menu-b'), nav = $('#nav'); if (!b || !nav) return;
-    var set = function (o) { nav.classList.toggle('open', o); b.setAttribute('aria-expanded', o ? 'true' : 'false'); b.textContent = o ? 'Close' : 'Menu'; };
+    var set = function (o) { nav.classList.toggle('open', o); b.setAttribute('aria-expanded', o ? 'true' : 'false'); b.textContent = o ? tr('Close', 'Cerrar') : tr('Menu', 'Menú'); };
     b.addEventListener('click', function () { set(!nav.classList.contains('open')); });
     nav.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && nav.classList.contains('open')) { set(false); b.focus(); } });
@@ -686,25 +691,25 @@
     if (Object.keys(tasks).length < 6) E.push('R1: ' + Object.keys(tasks).length + ' kinds of task in view (6 at least).');
     $$('ul,ol,.lk4-nts').forEach(function (l) { var c = $$(':scope > [data-task="calls"]', l).filter(vis).length; if (c > 1) E.push('R1: a list or stack with ' + c + ' calls.'); });
     var cp = shown('[data-pic="calls"]').length; if (cp > 1) E.push('R1: ' + cp + ' calls pictures (one per page).');
-    shown('h1,h2,h3').forEach(function (h) { if (/missed call|voicemail|text ?back|rang out|ring out|calls after hours|after-hours call|calls that ring/i.test(h.innerText)) E.push('R1: call words in a heading: ' + h.innerText.slice(0, 50)); });
-    // R4: nothing incoming stamped 11 p.m. to 5 a.m.; a text-back is a green SMS bubble
-    shown('.lk4-nt, [data-task="calls"], .bub.in').forEach(function (x) { if (/\b(11:\d\d ?PM|12:\d\d ?AM|[1-4]:\d\d ?AM)\b/i.test(x.innerText)) E.push('R4: something incoming between 11 p.m. and 5 a.m.: ' + x.innerText.slice(0, 50)); });
-    $$('.thread .sys').forEach(function (s) { var b = s.nextElementSibling; if (/^Missed call/.test(s.textContent) && b && b.classList.contains('out') && !b.classList.contains('sms')) E.push('R4: a text-back in a blue bubble.'); });
+    shown('h1,h2,h3').forEach(function (h) { if (/missed call|voicemail|text ?back|rang out|ring out|calls after hours|after-hours call|calls that ring|llamadas? perdidas?|buz[oó]n de voz|mensaje de voz|fuera de horario/i.test(h.innerText)) E.push('R1: call words in a heading: ' + h.innerText.slice(0, 50)); });
+    // R4: nothing incoming stamped 11 p.m. to 5 a.m.; a text-back is a green SMS bubble (Spanish pages write "11:48 p. m.")
+    shown('.lk4-nt, [data-task="calls"], .bub.in').forEach(function (x) { if (/\b(11:\d\d ?(?:PM\b|p\. ?m\.)|12:\d\d ?(?:AM\b|a\. ?m\.)|[1-4]:\d\d ?(?:AM\b|a\. ?m\.))/i.test(x.innerText)) E.push('R4: something incoming between 11 p.m. and 5 a.m.: ' + x.innerText.slice(0, 50)); });
+    $$('.thread .sys').forEach(function (s) { var b = s.nextElementSibling; if (/^(Missed call|Llamada perdida)/.test(s.textContent) && b && b.classList.contains('out') && !b.classList.contains('sms')) E.push('R4: a text-back in a blue bubble.'); });
     // R2: What we automate, second, at least 6 rows; no link to the full list until that page is live
     var auto = document.getElementById('automate'); if (!auto || shown('[data-task]', auto).length < 6) E.push('R2: What we automate is missing or has under 6 rows.');
-    if (/see the full list/i.test(text)) E.push('R2: a "See the full list" link before that page is live.');
+    if (/see the full list|vea la lista completa/i.test(text)) E.push('R2: a "See the full list" link before that page is live.');
     // R5: the night band's headline has no call word, and its lock screen clock never hides
-    shown('[data-ground=night] h2').forEach(function (h) { if (/\bcalls?\b|voicemail|missed|\bring/i.test(h.innerText)) E.push('R5: a call word in the night band headline.'); });
+    shown('[data-ground=night] h2').forEach(function (h) { if (/\bcalls?\b|voicemail|missed|\bring|llamad|buz[oó]n|perdid/i.test(h.innerText)) E.push('R5: a call word in the night band headline.'); });
     $$('.lk4').forEach(function (k) { var c = k.querySelector('.lk4-t'); if (!c || !vis(c) || +getComputedStyle(c).opacity < 0.9) E.push('R5: the lock screen clock is hidden.'); });
     // R7: one label pair, Before / After; every pair keeps a pencil trace
     if (/as we find it|with the fix/i.test(text)) E.push('R7: an old Before / After label ("As we find it" or "With the fix").');
-    shown('button').forEach(function (b) { if (/^\s*fixed\s*$/i.test(b.innerText)) E.push('R7: a "Fixed" switch.'); });
+    shown('button').forEach(function (b) { if (/^\s*(fixed|arreglado)\s*$/i.test(b.innerText)) E.push('R7: a "Fixed" switch.'); });
     $$('[data-pair]').forEach(function (p) { if (!p.querySelector('.chg.tr, .pc')) E.push('R7: a Before / After picture with no pencil trace.'); });
     // R8: no drawings, straight stamps, exactly one Sample label per picture, slots in one of the 3 shapes
     if (shown('.ghost').length) E.push('R8: an ink ghost drawing.');
     if ($$('img').some(function (i) { return /\/figs\//.test(i.getAttribute('src') || ''); })) E.push('R8: a trade drawing.');
     shown('.stamp,.samp').forEach(function (s) { var tf = getComputedStyle(s).transform; if (tf && tf !== 'none' && tf !== 'matrix(1, 0, 0, 1, 0, 0)') E.push('R8: a tilted Sample stamp.'); });
-    shown('.pic').forEach(function (p) { var n = $$('.samp,.stamp', p).filter(function (s) { return vis(s) && /^sample$/i.test(s.textContent.trim()); }).length;
+    shown('.pic').forEach(function (p) { var n = $$('.samp,.stamp', p).filter(function (s) { return vis(s) && /^(sample|ejemplo)$/i.test(s.textContent.trim()); }).length;
       if (n !== 1) E.push('R8: a picture with ' + n + ' Sample labels (' + (p.className || p.id) + ').'); });
     $$('.slot').forEach(function (s) { if (['16:9', '1:1', '4:5'].indexOf(s.dataset.shape) < 0) E.push('R8: a picture slot that is not 16:9, 1:1 or 4:5.'); });
     // R9: no dollar figure more than twice, 16 or fewer, counted per width; the phone-only top-leak strip is the named exception
@@ -717,23 +722,27 @@
     // R13: all eight trade links visible on a phone, outside any menu
     if (innerWidth <= 430) { var tl = shown('[data-trades] a').filter(function (a) { return /\/industries\/[^/]+\/$/.test(a.getAttribute('href') || ''); }).length; if (tl < 8) E.push('R13: ' + tl + ' of 8 trade links visible on a phone.'); }
     // R14: no "AI" in the hero, one two-tone heading at most, no "word · word" label outside the pictures
-    var hero = document.querySelector('.hero'); if (hero && /\bAI\b/.test(hero.innerText)) E.push('R14: "AI" in the hero.');
+    var hero = document.querySelector('.hero'); if (hero && /\b(AI|IA)\b/.test(hero.innerText)) E.push('R14: "AI" in the hero.');
     var two = $$('.two').filter(function (h) { return vis(h) && h.querySelector('span'); }).length; if (two > 1) E.push('R14: ' + two + ' two-tone headings (one at most).');
     texts(function (s, pe) { if (!pe.closest('.pic,.clip,.np,.ph4,.scr-win,.tally') && /\S · \S/.test(s)) E.push('R14: a "word · word" label: ' + s.trim().slice(0, 40)); });
-    if (/data\s+entry/i.test(text)) E.push('R2: the retired category phrase (Franco: never on the site) is on the page.');   // the phrase itself stays out of this file: propagation_lint bans it under site/
+    if (/data\s+entry|(?:entrada|captura|ingreso)\s+de\s+datos/i.test(text)) E.push('R2: the retired category phrase (Franco: never on the site) is on the page.');   // the phrase itself stays out of this file: propagation_lint bans it under site/
     // ---- added with the Home review fixes (2026-10-10), so what the reviewers caught by eye cannot come back
     // R4: every text-back is the RULES.md script word for word, and the time it promises is the callback list's own time
+    // the Spanish script (RULES.md, the same rule) on a Spanish page: "Hola, le escribe ... / Reply STOP to stop texts."
     var SCRIPT = /^Hi, this is .+?\. Sorry we missed your call\. Someone will call you back .+?\. If texting is easier, reply here\. Reply STOP to stop texts\. \/ Responda STOP \(o ALTO\) para no recibir mensajes\.$/;
-    var hm = function (s) { var m = /(\d{1,2}):?(\d\d)?\s*([ap])\.?m\b/i.exec(s || ''); return m ? (+m[1]) + ':' + (m[2] || '00') + ' ' + m[3].toUpperCase() + 'M' : null; };
+    var SCRIPT_ES = /^Hola, le escribe .+?\. Disculpe que no pudimos contestar\. Le devolveremos la llamada .+?\. Si le es más fácil, responda por aquí\. Responda STOP \(o ALTO\) para no recibir mensajes\. \/ Reply STOP to stop texts\.$/;
+    var hm = function (s) { var m = /(\d{1,2}):?(\d\d)?\s*([ap])\.?\s?m\b/i.exec(s || ''); return m ? (+m[1]) + ':' + (m[2] || '00') + ' ' + m[3].toUpperCase() + 'M' : null; };
     $$('.thread').forEach(function (th) {
-      var tb = th.querySelector('.bub.sms') || $$('.bub.out', th).filter(function (b) { var p = b.previousElementSibling; return p && /^Missed call/.test(p.textContent); })[0]; if (!tb) return;
-      var s = tb.textContent.trim(); if (!SCRIPT.test(s)) E.push('R4: a text-back off the RULES.md script: ' + s.slice(0, 60));
-      var said = hm((/call you back by ([^.]*?(?:[ap]\.m\.)[^.]*)/i.exec(s) || [])[1]), list = $$('.sys', th).filter(function (x) { return /callback list/i.test(x.textContent); })[0];
+      var tb = th.querySelector('.bub.sms') || $$('.bub.out', th).filter(function (b) { var p = b.previousElementSibling; return p && /^(Missed call|Llamada perdida)/.test(p.textContent); })[0]; if (!tb) return;
+      var s = tb.textContent.trim(); if (!SCRIPT.test(s) && !SCRIPT_ES.test(s)) E.push('R4: a text-back off the RULES.md script: ' + s.slice(0, 60));
+      var said = hm((/call you back by ([^.]*?(?:[ap]\.m\.)[^.]*)|devolveremos la llamada ([^.]*?[ap]\. ?m\.)/i.exec(s) || []).slice(1).join('')),
+        list = $$('.sys', th).filter(function (x) { return /callback list|lista para devolver llamadas/i.test(x.textContent); })[0];
       if (said && list && said !== hm(list.textContent)) E.push('R4: the text-back promises ' + said + ' but the callback list says ' + hm(list.textContent) + '.');
     });
-    // money back names the walk fee (hard rule 2026-10-10); "every dollar back" read as the fix money too, right after the price sentence
-    if (/every dollar back/i.test(text)) E.push('Money back: "every dollar back" is retired; the line says "the walk fee".');
-    shown('.mb').forEach(function (m) { if (!/the walk fee/i.test(m.innerText)) E.push('Money back: a money-back line without "the walk fee": ' + m.innerText.slice(0, 50)); });
+    // money back names the walk fee (hard rule 2026-10-10); "every dollar back" read as the fix money too, right after the price sentence.
+    // Spanish: "lo que pagó por la visita", never "todo su dinero" (the old Spanish line) and never a figure
+    if (/every dollar back|todo su dinero/i.test(text)) E.push('Money back: "every dollar back" is retired; the line says "the walk fee".');
+    shown('.mb').forEach(function (m) { if (!/the walk fee|lo que pagó por la visita/i.test(m.innerText)) E.push('Money back: a money-back line without "the walk fee": ' + m.innerText.slice(0, 50)); });
     // R6: one phone component (the drawn frame with its camera island), never rotated, one width on a computer, .491 wide to tall
     if (shown('.scr-phone, .scr-lock').length) E.push('R6: an old phone style (.scr-phone or .scr-lock) on a v4 page.');
     var phs = shown('.ph4'), widths = {};
@@ -750,7 +759,7 @@
         if (r.top - ty < b.bottom && r.bottom - ty > b.bottom - 24) E.push('Crop: "' + x.textContent.trim().slice(0, 30) + '" sits in a cropped phone\'s fade.'); }); });
     // sample data: two pictures of the same spreadsheet agree, row by row (review: rows 975 to 977 skipped jobs 4522 and 4523)
     var files = {};
-    shown('.scr-win').forEach(function (w) { var tt = w.querySelector('.win-tb span'), heads = $$('th', w).map(function (h) { return h.textContent.trim(); }); if (!tt || !/\.xlsx$/.test(tt.textContent) || heads[0] !== 'Job') return;
+    shown('.scr-win').forEach(function (w) { var tt = w.querySelector('.win-tb span'), heads = $$('th', w).map(function (h) { return h.textContent.trim(); }); if (!tt || !/\.xlsx$/.test(tt.textContent) || ['Job', 'Trabajo'].indexOf(heads[0]) < 0) return;
       var last = 0, f = files[tt.textContent] = files[tt.textContent] || {};
       $$('tr', w).forEach(function (tr) { var td = tr.querySelectorAll('td'); if (td.length < 2 || !/^\d+$/.test(td[0].textContent.trim())) return; var rn = td[0].textContent.trim(), job = +td[1].textContent.trim();
         if (f[rn] && f[rn] !== job) B.push('Sample: ' + tt.textContent + ' row ' + rn + ' is job ' + f[rn] + ' in one picture and ' + job + ' in another.');
@@ -762,6 +771,20 @@
         var fs = parseFloat(getComputedStyle(pe).fontSize); if (!SCALE.some(function (v) { return Math.abs(v - fs) < 0.6; })) odd[Math.round(fs * 10) / 10 + 'px'] = s.trim().slice(0, 24); });
       Object.keys(odd).forEach(function (k) { E.push('Type: ' + k + ' is off the scale (15, 17, 20, 24, 32, 44, 64): "' + odd[k] + '"'); });
     }
+    if (ES) lintES(E, text);
+  }
+  // Spanish pages (2026-10-10): the picked trade's Spanish is complete, its figures, times, dates and numbers are the English
+  // data's (digit groups compared field by field), and none of this file's English words show
+  function lintES(E, text) {
+    var k = L.trade, en = EN[k], es = D[k]; if (!en || !es) return;
+    ESMISS.filter(function (m) { return m.split(/[ :]/)[0] === k; }).forEach(function (m) { E.push('Spanish: missing in trades-src-es.json or sheets.json: ' + m); });
+    var dg = function (o) { return (JSON.stringify(o == null ? '' : o).match(/\d+/g) || []).sort().join(' '); };
+    var same = function (what, a, b) { if (b != null && dg(a) !== dg(b)) E.push('Spanish: ' + k + ' ' + what + ' has other numbers than the English (' + dg(a) + ' / ' + dg(b) + ').'); };
+    en.rows.forEach(function (r, i) { var x = es.rows[i]; same(r.id + ' note', r.note, x.note); same(r.id + ' picture', r.pair || r.after, x.pair || x.after); same(r.id + ' row', [r.b, r.fs], [x.b, x.fs]); });
+    if (en.night4) { en.night4.rows.forEach(function (r, i) { same('night row ' + (i + 1), r[1], es.night4.rows[i][1]); });
+      en.night4.nts.forEach(function (x, i) { same('notification ' + (i + 1), [x.t, x.p], [es.night4.nts[i].t, es.night4.nts[i].p]); }); }
+    var left = (text.match(/\b(?:Sample|Before|After|Walk done|a month|a year|Time back|Pause|Play again|Ready)\b|\bNext:|\bStop \d/g) || []);
+    if (left.length) E.push('Spanish: English words on the page: ' + left.slice(0, 6).join(', '));
   }
 
   /* ================================================================ lint: the variety and trust rules, checkable */
@@ -793,7 +816,7 @@
       if (abstract > 1) E.push(abstract + ' abstract formats (one per page at most).');
     }
     $$('[data-loop]').forEach(function (l) { if (!l.querySelector('.pause')) E.push('A loop has no pause button.'); });
-    $$('.pic, .sheet, .morning').forEach(function (p) { if (!/sample/i.test(p.innerText + (p.getAttribute('aria-label') || ''))) W.push('Picture without a visible "Sample" label: ' + (p.id || p.className)); });
+    $$('.pic, .sheet, .morning').forEach(function (p) { if (!/sample|ejemplo/i.test(p.innerText + (p.getAttribute('aria-label') || ''))) W.push('Picture without a visible "Sample" label: ' + (p.id || p.className)); });
     $$('a[href^="sms:"]').forEach(function (a) { if (!/body=/.test(a.getAttribute('href'))) W.push('sms: link without a prefilled body.'); });
     // type floors at the current width: 12px inside pictures always; 15px for key text outside pictures on phones
     if (innerWidth <= 430) {

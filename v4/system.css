@@ -386,11 +386,12 @@ button.flip{justify-self:start;min-height:44px;padding:0 18px;border-radius:999p
 button.flip[aria-pressed=true]{background:var(--ink);color:#fff}
 button.flip:active{transform:scale(.97)}
 html:not(.js) button.flip{display:none}
-.seg{justify-self:start;align-self:start;display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;padding:3px;background:var(--sheet)}
+.seg{justify-self:start;align-self:start;display:inline-flex;gap:4px;border:1.5px solid var(--ink);border-radius:999px;padding:3px;background:var(--sheet)}
 .seg button{min-height:44px;padding:0 16px;border:0;border-radius:999px;background:none;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer}
 .seg button[aria-pressed=true]{background:var(--ink);color:#fff}
 .seg button:active{transform:scale(.97)}
-@media (hover:hover) and (pointer:fine){.seg button[aria-pressed=false]:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}}
+/* hover is a soft fill, never a ring: a ring touched the pressed pill and read as one shape (Franco 2026-10-10); 4px gap between them */
+@media (hover:hover) and (pointer:fine){.seg button[aria-pressed=false]:hover{background:rgba(17,17,16,.08)}}
 /* job: feedback. The switch follows the picture: the pressed side fills with ink as the layers cross-fade */
 @media (prefers-reduced-motion:no-preference){.seg button{transition:background-color var(--t-hover) var(--ease-out),color var(--t-hover) var(--ease-out),box-shadow var(--t-hover),transform var(--t-press)}}
 html:not(.js) .seg{display:none}
