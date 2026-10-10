@@ -176,7 +176,7 @@ html.js .hm4-hero .sh-pick{display:block;padding:12px 0 4px}
 .close-h{margin:0 0 24px;font-size:clamp(44px,5.4vw,64px)}   /* one step above nothing: the same top step as the H1, no longer 1.7 times it */
 .close-act{gap:12px}
 .close-act .arrow-to{position:relative;display:inline-flex;width:max-content}
-.close-act .arrow-to .pen-arrow{position:absolute;left:100%;top:-14px;width:84px;height:56px;margin-left:10px;transform:scaleX(-1)}   /* from the right, curling into the button's side */
+.close-act .arrow-to .pen-arrow{position:absolute;left:100%;top:-26px;width:110px;height:84px;margin-left:8px}   /* Franco 2026-10-10: it comes down from the heading's words and lands level with the button's middle */
 .c4-tel{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 20px;font-size:17px}
 .c4-hours{margin-top:30px;border-top:1px solid var(--rule)}
 .c4-hours div{display:grid;gap:2px;padding:11px 0;border-bottom:1px solid var(--rule)}
@@ -231,7 +231,6 @@ html.js .hm4-hero .sh-pick{display:block;padding:12px 0 4px}
   .stop .ph4 .thread{font-size:13px}
   .stop-body{gap:16px}
   .walk-grid{margin-top:22px}
-  .contact-card .cardino{width:100px;top:-50px}
   .c4-card{margin-top:28px}
   .np-rows li{padding-block:6px}
   .n4 .crop-m{--crop-h:318px}
@@ -239,3 +238,8 @@ html.js .hm4-hero .sh-pick{display:block;padding:12px 0 4px}
   .np-rows li{font-size:15px}
   .walk-total b{font-size:32px}
 }
+
+/* Cardino perches on the contact card (Franco 2026-10-10: he floated above it). The perch drawing is cropped to the bird, so
+   bottom:100% puts his feet on the card's top edge at any size; 2px down so he stands on it. Overrides system.css's top offsets. */
+.contact-card .cardino{top:auto;bottom:100%;margin-bottom:-2px;width:58px;right:36px}
+@media (min-width:700px){.contact-card .cardino{top:auto;width:74px;right:56px}}

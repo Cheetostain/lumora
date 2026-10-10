@@ -7,6 +7,37 @@
   'use strict';
   var D = window.LUMORA_TRADES || {}, ORDER = window.LUMORA_ORDER || Object.keys(D);
   var root = document.documentElement; root.classList.add('js');
+  // Spanish pages (<html lang="es">; the Spanish Home first, 2026-10-10): each trade's es block in trades.js (sheets.json and
+  // trades-src-es.json) replaces its words, while times, dates, figures and structure stay the English data's. tr() gives the
+  // page's own words for what this file writes itself. EN keeps the English data for lint()'s Spanish checks.
+  var ES = /^es\b/i.test(root.getAttribute('lang') || ''), EN = {}, ESMISS = [];
+  var tr = function (en, es) { return ES ? es : en; };
+  if (ES) ORDER.forEach(function (k) { if (D[k]) { EN[k] = D[k]; D[k] = localize(k, D[k]); } });
+  function localize(k, t) {            // anything missing stays English and is listed for lint()
+    var e = t.es, o = {}, q, n = t.night4; if (!e) { ESMISS.push(k + ': no Spanish block'); return t; }
+    for (q in t) if (q !== 'es') o[q] = t[q];
+    ['name', 'href', 'sub', 'short', 'time'].forEach(function (f) { if (e[f] != null) o[f] = e[f]; else if (t[f] != null) ESMISS.push(k + ': ' + f); });
+    o.rows = t.rows.map(function (r) {
+      var y = (e.rows || {})[r.id] || {}, x = {};
+      for (q in r) x[q] = r[q]; for (q in y) x[q] = y[q];
+      (r.pair ? ['b', 'fs', 'note', 'pair'] : ['b', 'fs', 'note', 'place', 'after']).forEach(function (f) { if (!y[f]) ESMISS.push(k + ' ' + r.id + ': ' + f); });
+      return x;
+    });
+    if (n) {
+      var s = e.night4 || {}; o.night4 = {}; for (q in n) o.night4[q] = n[q];
+      o.night4.paper = s.paper || n.paper;
+      o.night4.rows = n.rows.map(function (r, i) { return [r[0], (s.rows || [])[i] || r[1], r[2]]; });
+      o.night4.nts = n.nts.map(function (x, i) { var y = (s.nts || [])[i] || {}, z = {}; for (q in x) z[q] = x[q]; ['t', 'p', 'fx'].forEach(function (f) { if (y[f]) z[f] = y[f]; }); return z; });
+      if (!s.paper || (s.rows || []).length !== n.rows.length || (s.nts || []).length !== n.nts.length) ESMISS.push(k + ': night4');
+    }
+    o.morning = e.src ? { src: e.src } : null;   // the night log's foot names each trade's own records
+    if (t.morning && t.morning.src && !e.src) ESMISS.push(k + ': src');
+    return o;
+  }
+  var DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+    MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  // a clock time as the page writes it: "6:30 AM", or on a Spanish page "6:30 a. m." (ES-VOICE); data-t keeps the English form
+  var hora = function (s) { return ES ? String(s).replace(/\b(\d{1,2}:\d\d) ?([AP])M\b/g, function (m, h, a) { return h + ' ' + a.toLowerCase() + '. m.'; }) : s; };
   var qs = new URLSearchParams(location.search);
   var still = qs.has('still') || matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = matchMedia('(hover: hover) and (pointer: fine)');
