@@ -1,0 +1,824 @@
+/* Lumora design system: behaviour. Plain JS, no library. Load after trades.js, with defer.
+   Every motion names its job in a comment (feedback, state change, cause and effect, show our work, one-time focus).
+   The page is complete without this file: chips are links, sheets are prerendered, ghost-to-real figures show the fixed
+   state, the night band shows its finished frame, the tally shows the full sheet.
+   Public API on window.Lumora: trade, trades, money(n), setTrade(key), on(fn), draw(el), ring(svg), lint(). */
+(function () {
+  'use strict';
+  var D = window.LUMORA_TRADES || {}, ORDER = window.LUMORA_ORDER || Object.keys(D);
+  var root = document.documentElement; root.classList.add('js');
+  var qs = new URLSearchParams(location.search);
+  var still = qs.has('still') || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = matchMedia('(hover: hover) and (pointer: fine)');
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); };
+  var money = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+  var total = function (t) { return t.rows.reduce(function (a, r) { return a + r.usd; }, 0); };
+  var perWord = function (t) { return t.per === 'yr' ? 'a year' : 'a month'; };
+  var perShort = function (t) { return t.per === 'yr' ? ' a year' : ' a month'; };   // one way to say it on every v4 page ("/ mo" retired, review 2026-10-10)
+  var store = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage blocked: the page still works */ } }
+  };
+  var listeners = [];
+  var L = window.Lumora = { still: still, trades: D, money: money, trade: null,
+    on: function (fn) { listeners.push(fn); } };
+
+  /* ================================================================ the red pen */
+  // The ring is redrawn in real pixels (Catmull-Rom through hand-drawn points) so the stroke never stretches.
+  var RING = [[14.2,22.4],[18.1,17.3],[23,12.7],[28.7,8.9],[35,6.2],[41.9,4.7],[48.8,4.4],[55.7,5.4],[62.1,7.3],[68.1,10],[73.7,13.3],[78.7,17.1],[83.4,21.2],[87.7,25.7],[91.6,30.6],[94.9,36.1],[97.4,42],[98.9,48.4],[99.2,54.9],[98,61.5],[95.6,67.7],[92,73.3],[87.4,78.2],[82.1,82.3],[76.4,85.7],[70.4,88.4],[64.3,90.5],[58,92.2],[51.6,93.3],[44.9,93.8],[38.1,93.6],[31.3,92.4],[24.7,90.1],[18.6,86.7],[13.4,82.2],[9.1,76.9],[6.1,71],[4.2,64.7],[3.3,58.3],[3.3,52],[4,45.8],[5.3,39.8],[7.1,33.9],[9.6,28],[12.7,22.4],[16.7,17.1],[21.5,12.3],[27.3,8.3],[33.7,5.3]];
+  function ring(svg) {
+    if (!svg) return;
+    var w = svg.clientWidth || svg.getBoundingClientRect().width, h = svg.clientHeight || svg.getBoundingClientRect().height;
+    if (!w || !h) return;
+    w = Math.round(w); h = Math.round(h);
+    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h); svg.removeAttribute('preserveAspectRatio');
+    var P = RING.map(function (p) { return [p[0] / 102 * w, p[1] / 98 * h]; }), f = function (n) { return n.toFixed(1); };
+    var d = 'M' + f(P[0][0]) + ' ' + f(P[0][1]);
+    for (var i = 0; i < P.length - 1; i++) {
+      var a = P[i - 1] || P[i], b = P[i], c = P[i + 1], e = P[i + 2] || c;
+      d += 'C' + f(b[0] + (c[0] - a[0]) / 6) + ' ' + f(b[1] + (c[1] - a[1]) / 6) + ' ' + f(c[0] - (e[0] - b[0]) / 6) + ' ' + f(c[1] - (e[1] - b[1]) / 6) + ' ' + f(c[0]) + ' ' + f(c[1]);
+    }
+    var p = svg.querySelector('path') || svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
+    p.setAttribute('pathLength', '1'); p.setAttribute('d', d);
+  }
+  var RING_SVG = '<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg>';
+  var UNDER_SVG = '<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw><path pathLength="1" d="M2 6C28 2 60 9 98 4"/></svg>';
+  function draw(el, delay) {          // job: one-time focus. (Re)start a pen stroke.
+    if (!el) return; el.classList.remove('drawn');
+    if (still) { el.classList.add('drawn'); return; }
+    void el.getBoundingClientRect();
+    setTimeout(function () { el.classList.add('drawn'); }, delay || 0);
+  }
+  function rollTo(el, from, to, fmt) { // job: cause and effect. A number moves only when the owner's own choice changed it.
+    if (!el) return;
+    if (still || from === to || from == null) { el.textContent = fmt(to); return; }
+    var t0 = performance.now();
+    (function step(now) { var k = Math.min(1, (now - t0) / 500), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = fmt(from + (to - from) * e); if (k < 1) requestAnimationFrame(step); })(t0);
+  }
+  L.ring = ring; L.draw = draw;
+
+  /* ================================================================ pictures: before (as we find it) and after (fixed) */
+  var txt = function (x, y, s, size, cls, anchor) {
+    var parts = String(s).split('|');
+    return '<text class="gt ' + (cls || '') + '" x="' + x + '" y="' + y + '" font-size="' + size + '" text-anchor="' + (anchor || 'start') + '">' + esc(parts[0]) +
+      (parts[1] ? '<tspan x="' + x + '" dy="' + (size * 1.3).toFixed(1) + '" font-weight="500">' + esc(parts[1]) + '</tspan>' : '') + '</text>';
+  };
+  var scrib = function (x, y, ws) { return ws.map(function (w, i) { return '<path class="gs l" pathLength="1" d="M' + x + ' ' + (y + i * 26) + ' q ' + (w / 4) + ' -3 ' + (w / 2) + ' 0 t ' + (w / 2) + ' 0"/>'; }).join(''); };
+  function ghostSVG(kind, g) {        // the shop as we find it, drawn in thin graphite ink
+    var s = '';
+    if (kind === 'phone') {
+      s = '<rect class="gs f" pathLength="1" x="40" y="10" width="220" height="440" rx="36"/><rect class="gs l" pathLength="1" x="51" y="21" width="198" height="418" rx="28"/>' + txt(150, 84, 'Shop line', 17, 'h', 'middle');
+      g.forEach(function (v, i) { var y = 108 + i * 78; s += '<rect class="gs" pathLength="1" x="62" y="' + y + '" width="176" height="64" rx="12"/>' + txt(78, y + 27, v, 17, 'h'); });
+    } else if (kind === 'clip') {
+      s = '<rect class="gs f" pathLength="1" x="30" y="22" width="240" height="420" rx="14"/><rect class="gs f" pathLength="1" x="104" y="8" width="92" height="34" rx="8"/><rect class="gs" pathLength="1" x="46" y="54" width="208" height="372" rx="2"/>' +
+        txt(64, 94, g[0], 20, 'h') + '<path class="gs" pathLength="1" d="M64 108h172"/>' + txt(64, 146, g[1], 18) + txt(64, 214, g[2], 18) + scrib(64, 290, [150, 120, 160, 90]);
+    } else if (kind === 'pile') {
+      [[48, 64, -7, g[0]], [82, 132, 5, g[1]], [58, 204, -2, g[2]]].forEach(function (q) {
+        s += '<g transform="rotate(' + q[2] + ' ' + (q[0] + 92) + ' ' + (q[1] + 115) + ')"><rect class="gs f pf" pathLength="1" x="' + q[0] + '" y="' + q[1] + '" width="186" height="226" rx="2"/>' + txt(q[0] + 18, q[1] + 34, q[3], 18, 'h') + scrib(q[0] + 18, q[1] + 100, [130, 100, 140]) + '</g>'; });
+    } else {
+      s = '<rect class="gs f" pathLength="1" x="10" y="92" width="280" height="262" rx="10"/><path class="gs" pathLength="1" d="M10 124h280"/>' + txt(150, 114, g[0], 15, 'h', 'middle') +
+        '<path class="gs l" pathLength="1" d="M150 124v230M10 164h280M10 244h280M10 304h280"/>' + txt(24, 194, g[1], 16) + txt(24, 272, g[2], 16) + scrib(164, 196, [96]) + scrib(164, 276, [80]) +
+        '<path class="gs l" pathLength="1" d="M120 354l-14 50h88l-14-50M92 404h116"/>';
+    }
+    return '<div class="ghost"><svg viewBox="0 0 300 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' + s + '</svg></div>';
+  }
+  function whiteboardHTML() {          // plumbing stop: the office whiteboard, live HTML so it stays readable on a phone
+    return '<div class="wb"><div class="wb-in"><p class="wb-t">THIS WEEK</p><div class="wb-days">' +
+      '<div class="wb-day wide-only"><b>MON</b><p>Smith<small>leak, sink</small></p><p>Brown<small>toilet</small></p></div>' +
+      '<div class="wb-day"><b>TUE</b><p>Garcia<small>water heater visit</small></p></div>' +
+      '<div class="wb-day wide-only"><b>WED</b><p>Miller<small>pressure</small></p></div>' +
+      '<div class="wb-day"><b>THU</b><p>Wilson<small>drain</small></p></div>' +
+      '<div class="wb-day"><b>FRI</b><p class="wb-late pc">Quote Garcia</p></div></div>' +
+      '<svg class="wb-arrow wide" viewBox="0 0 500 64" preserveAspectRatio="none" aria-hidden="true"><path d="M440 6C420 60 200 62 150 14M140 26l10-14 14 10" vector-effect="non-scaling-stroke"/></svg>' +
+      '<svg class="wb-arrow narrow" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true"><path d="M250 6C230 60 90 62 50 14M40 26l10-14 14 10" vector-effect="non-scaling-stroke"/></svg>' +
+      '</div><div class="wb-tray"></div></div>';
+  }
+  function recentsHTML() {             // plumbing stop: the shop phone, the missed call circled in pencil
+    return '<div class="scr-phone tilt"><div class="ph"><div class="ph-sb"><span>6:58</span><i></i></div><div class="ph-body">' +
+      '<div class="ph-seg"><span class="on">All</span><span>Missed</span></div><p class="ph-h">Recents</p><ul class="ph-list">' +
+      '<li><b>Dave, truck 1</b><small>mobile</small><time>6:41 PM</time></li>' +
+      '<li class="miss pc"><b>(352) 555-0131 (2)</b><small>Gainesville, FL</small><time>6:12 PM</time></li>' +
+      '<li><b>Supply counter</b><small>work</small><time>3:22 PM</time></li>' +
+      '<li><b>Maria Garcia</b><small>mobile</small><time>11:48 AM</time></li>' +
+      '<li><b>John Smith</b><small>mobile</small><time>9:30 AM</time></li></ul></div></div></div>';
+  }
+  var chip = function (c) { return typeof c === 'object' ? '<span class="st ' + (c.chip === 'nt' ? 'gy' : c.chip) + '">' + esc(c.t) + '</span>' : esc(c); };
+  function table(R) {
+    if (R.xls) {
+      var letters = 'ABCDEFG'.slice(0, R.cols.length).split('');
+      return '<table><tr class="cl"><td></td>' + letters.map(function (l, i) { return '<td' + (i > 2 ? ' class="hm"' : '') + '>' + l + '</td>'; }).join('') + '</tr><tr><td>1</td>' +
+        R.cols.map(function (c, i) { return '<th' + (i > 2 ? ' class="hm"' : '') + '>' + esc(c) + '</th>'; }).join('') + '</tr>' +
+        R.rows.map(function (r) { var c = r.c || r; return '<tr' + (r.n ? ' class="on"' : '') + '>' + c.map(function (v, i) { return '<td' + (i > 3 ? ' class="hm"' : '') + '>' + chip(v) + '</td>'; }).join('') + '</tr>'; }).join('') + '</table>';
+    }
+    var head = R.cols ? '<tr>' + R.cols.map(function (c) { return '<th>' + esc(c) + '</th>'; }).join('') + '</tr>' : '';
+    return '<table class="dt">' + head + R.rows.map(function (r) { var c = r.c || r; return '<tr' + (r.n ? ' class="n"' : '') + '>' + c.map(function (v) { return '<td>' + chip(v) + '</td>'; }).join('') + '</tr>'; }).join('') + '</table>';
+  }
+  function docBody(R, withTitle) {
+    return (withTitle ? '<div class="dhead"><b>' + esc(R.title) + '</b>' + (R.meta ? '<p class="dmeta">' + esc(R.meta) + '</p>' : '') + '</div>' : (R.meta ? '<p class="dmeta" style="margin:0 0 8px">' + esc(R.meta) + '</p>' : '')) +
+      (R.xls ? '<div class="xl">' + table(R) + '</div>' : table(R)) +
+      (R.total ? '<div class="dtot"><span>' + esc(R.total[0]) + '</span><span>' + esc(R.total[1]) + '</span></div>' : '') +
+      (R.badge ? '<span class="ok' + (R.badge[0] === 'ok' ? '' : ' ' + R.badge[0]) + '">' + (R.badge[0] === 'ok' ? '✓ ' : '') + esc(R.badge[1]) + '</span>' : '') +
+      (R.foot ? '<p class="dfoot">' + esc(R.foot) + '</p>' : '');
+  }
+  function realHTML(R, v4) {           // the fix, as the real screen or paper the shop would use (v4: inside the one phone frame, R6)
+    if (R.frame === 'phone') {
+      // R4: the text right after a missed call is an SMS text-back, so it shows green (.sms), never blue
+      var th = '<div class="ph-who"><i></i>' + esc(R.who) + '</div><div class="thread">' + R.msgs.map(function (m, i) {
+        var tb = m[0] === 'out' && i > 0 && /^Missed call/.test(R.msgs[i - 1][1]);
+        return '<p class="' + (m[0] === 'sys' ? 'sys' + (i === R.msgs.length - 1 ? ' k' : '') : 'bub ' + m[0] + (tb ? ' sms' : '')) + '">' + esc(m[1]) + '</p>'; }).join('') + '</div>';
+      return v4 ? ph4(th, R.clock || '9:41') : '<div class="scr-phone"><div class="ph"><div class="ph-sb"><span>9:41</span><i></i></div>' + th + '</div></div>';
+    }
+    if (R.frame === 'clip') return '<div class="doc-clip"><span class="clamp" aria-hidden="true"><i></i></span><div class="doc">' + docBody(R, true) + '</div></div>';
+    if (R.frame === 'paper') return '<div class="doc tilt-r">' + docBody(R, true) + '</div>';
+    return '<div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>' + esc(R.title) + '</span></div><div class="win-b">' + docBody(R, false) + '</div></div>';
+  }
+  function altAfter(R) {
+    return R.frame === 'phone' ? 'Sample, fixed: a text thread on the shop phone with ' + R.who + '. ' + R.msgs.map(function (m) { return m[1]; }).join('. ') + '.'
+      : 'Sample, fixed: ' + R.title + (R.meta ? ', ' + R.meta : '') + '. ' + (R.badge ? R.badge[1] + '.' : '') + (R.total ? ' ' + R.total[0] + ' ' + R.total[1] + '.' : '');
+  }
+  function altBefore(row) {
+    if (row.before.kind === 'whiteboard') return 'Sample, as we find it: the office whiteboard. Garcia\'s water heater visit is under Tuesday; "Quote Garcia" is under Friday, with an arrow back to Tuesday.';
+    if (row.before.kind === 'recents') return 'Sample, as we find it: the shop phone\'s Recents. Two missed calls from (352) 555-0131 at 6:12 PM, circled, and no call back.';
+    return 'Sample, as we find it: drawing of ' + row.place.toLowerCase() + ': ' + row.before.g.map(function (v) { return v.replace('|', ' '); }).join(', ') + '.';
+  }
+  function beforeHTML(row) { return row.before.kind === 'whiteboard' ? whiteboardHTML() : row.before.kind === 'recents' ? recentsHTML() : ghostSVG(row.before.ghost, row.before.g); }
+
+  /* ================================================================ v4 pictures (Home v4, 2026-10-10). Used only by v4 markup:
+     the one phone frame (R6), and the same-object Before / After pair (R7). A pair is ONE frame; only the cells that change
+     carry two layers (.was, .now), both always laid out, so the frame never changes size and nothing goes blank. A cell
+     with tr keeps its old value in the after state, struck in pencil: the trace a still or a printout needs (one pencil
+     mark per picture, R8). Pairs are [data-g2r] elements, so the ghost-to-real trigger, buttons and test hook drive them. */
+  var TASK = { quotes: 'quotes', retyping: 'retyping', calls: 'calls', followups: 'reminders' };   // R1 task tags from sheet icons
+  function SB(white) {                 // iOS status bar icons: signal, wifi, battery
+    var c = white ? '#fff' : '#000';
+    return '<span class="sb-ic"><svg viewBox="0 0 18 12" width="17" height="11"><rect x="0" y="8" width="3" height="4" rx=".7" fill="' + c + '"/><rect x="5" y="5.5" width="3" height="6.5" rx=".7" fill="' + c + '"/><rect x="10" y="3" width="3" height="9" rx=".7" fill="' + c + '"/><rect x="15" y="0" width="3" height="12" rx=".7" fill="' + c + '"/></svg>' +
+      '<svg viewBox="0 0 16 12" width="15" height="11"><path d="M8 2.2c2.4 0 4.6.9 6.3 2.5l1.2-1.3C13.5 1.5 10.9.4 8 .4S2.5 1.5.5 3.4l1.2 1.3C3.4 3.1 5.6 2.2 8 2.2zm0 3.6c1.4 0 2.7.5 3.7 1.4l1.2-1.3C11.6 4.7 9.9 4 8 4s-3.6.7-4.9 1.9l1.2 1.3c1-.9 2.3-1.4 3.7-1.4zm0 3.5c-.6 0-1.2.2-1.6.6L8 11.6l1.6-1.7c-.4-.4-1-.6-1.6-.6z" fill="' + c + '"/></svg>' +
+      '<svg viewBox="0 0 27 12" width="24" height="11"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="' + c + '" stroke-opacity=".45"/><rect x="2" y="2" width="17" height="8" rx="1.8" fill="' + c + '"/><path d="M24 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2z" fill="' + c + '" fill-opacity=".5"/></svg></span>';
+  }
+  // R6: the one phone. The frame is Magic UI's iPhone drawing (MIT License, Copyright (c) Magic UI;
+  // github.com/magicuidesign/magicui, apps/www/registry/magicui/iphone.tsx; licence file checked 2026-10-10), restyled
+  // near-black: body and side buttons, bezel, screen edge, speaker slit, camera island and lens, 433 x 882 (.491 wide to
+  // tall). The screen is live HTML laid over the drawing's screen area in percentages (system.css .ph4-scr), so the
+  // island sits on top of it as on the real phone. No Apple logo, no tilt. A lock screen passes no clock: its big clock
+  // is the time (iOS shows no second time in a lock screen's status bar).
+  var SCR = 'M21.25 75C21.25 44.21 46.21 19.25 77 19.25H355C385.79 19.25 410.75 44.21 410.75 75V807C410.75 837.79 385.79 862.75 355 862.75H77C46.21 862.75 21.25 837.79 21.25 807V75Z';
+  var PH_FRAME = '<svg class="ph4-f" viewBox="0 0 433 882" aria-hidden="true" focusable="false">' +
+    '<path fill="#232326" fill-rule="evenodd" d="M2 73C2 32.68 34.68 0 75 0H357C397.32 0 430 32.68 430 73V809C430 849.32 397.32 882 357 882H75C34.68 882 2 849.32 2 809V73Z' + SCR + '"/>' +
+    '<path fill="#232326" d="M0 171C0 170.45.45 170 1 170H3V204H1C.45 204 0 203.55 0 203V171ZM1 234C1 233.45 1.45 233 2 233H3.5V300H2C1.45 300 1 299.55 1 299V234ZM1 319C1 318.45 1.45 318 2 318H3.5V385H2C1.45 385 1 384.55 1 384V319ZM430 279H432C432.55 279 433 279.45 433 280V384C433 384.55 432.55 385 432 385H430V279Z"/>' +
+    '<path fill="#0a0a0b" fill-rule="evenodd" d="M6 74C6 35.34 37.34 4 76 4H356C394.66 4 426 35.34 426 74V808C426 846.66 394.66 878 356 878H76C37.34 878 6 846.66 6 808V74Z' + SCR + '"/>' +
+    '<path fill="none" stroke="#2c2c30" stroke-width=".5" d="' + SCR + '"/>' +
+    '<path opacity=".5" fill="#3a3a3e" d="M174 5H258V5.5C258 6.6 257.1 7.5 256 7.5H176C174.9 7.5 174 6.6 174 5.5V5Z"/>' +
+    '<path class="ph4-isl" fill="#000" d="M154 48.5C154 38.28 162.28 30 172.5 30H259.5C269.72 30 278 38.28 278 48.5C278 58.72 269.72 67 259.5 67H172.5C162.28 67 154 58.72 154 48.5Z"/>' +
+    '<circle cx="259.5" cy="48.5" r="10.5" fill="#0c0c11"/><circle cx="259.5" cy="48.5" r="5.5" fill="#1b1b24"/></svg>';
+  function ph4(inner, clock, dark) {
+    return '<div class="ph4"><div class="ph4-scr' + (dark ? ' dark' : '') + '"><div class="ph4-sb" aria-hidden="true"><span>' + esc(clock || '') + '</span>' + SB(dark) + '</div>' + inner + '</div>' + PH_FRAME + '</div>';
+  }
+  function cell(v) {
+    if (v && typeof v === 'object') {
+      if ('was' in v || 'now' in v) return '<span class="chg' + (v.tr ? ' tr' : '') + '"><span class="was">' + cell(v.was) + '</span><span class="now">' + cell(v.now) + '</span></span>';
+      if (v.chip) return chip(v);
+      return esc(v.t) + (v.s ? '<small>' + esc(v.s) + '</small>' : '');
+    }
+    return esc(v == null ? '' : v);
+  }
+  // two layers for one spot (the window's status line, the formula bar): the old value, then the new one in its place
+  var was2 = function (v) { return typeof v === 'object' ? '<span class="chg"><span class="was">' + esc(v.was) + '</span><span class="now">' + esc(v.now) + '</span></span>' : esc(v); };
+  function pairHTML(P) {
+    // P.line: the app's own label over the caller (a business phone line shows calls and texts in one thread)
+    if (P.frame === 'phone') return ph4('<div class="ph-who">' + (P.line ? '<small class="ph-line">' + esc(P.line) + '</small>' : '') + '<i></i>' + esc(P.who) + '</div><div class="thread">' + P.msgs.map(function (m) {
+      var o = m[2] || {}, cls = m[0] === 'sys' ? 'sys' + (o.k ? ' k' : '') : 'bub ' + (m[0] === 'sms' ? 'out sms' : m[0]);
+      return '<p class="' + cls + (o.add ? ' add' : '') + (o.pc ? ' pc' : '') + '">' + esc(m[1]) + '</p>'; }).join('') + '</div>', P.clock || '9:41');
+    // hm: a column (or, on a row, the row) the picture crops on a narrow container, as the screens kit does; nw: never wraps
+    var cl = function (i, th) { var c = ((P.hm || []).indexOf(i) > -1 ? 'hm ' : '') + (!th && (P.nw || []).indexOf(i) > -1 ? 'nw' : ''); return c.trim() ? ' class="' + c.trim() + '"' : ''; };
+    var head = (P.xls ? '<tr class="cl"><td></td>' + P.cols.map(function (c, i) { return '<td' + cl(i, 1) + '>' + 'ABCDEFG'.charAt(i) + '</td>'; }).join('') + '</tr>' : '') +
+      '<tr>' + (P.xls ? '<td>1</td>' : '') + P.cols.map(function (c, i) { return '<th' + cl(i, 1) + '>' + esc(c) + '</th>'; }).join('') + '</tr>';
+    var body = P.rows.map(function (r) { var rc = ((r.n ? 'n ' : '') + (r.hm ? 'hm' : '')).trim(); return '<tr' + (rc ? ' class="' + rc + '"' : '') + '>' + (P.xls ? '<td>' + esc(r.r) + '</td>' : '') +
+      r.c.map(function (v, i) { return '<td' + cl(i) + '>' + cell(v) + '</td>'; }).join('') + '</tr>'; }).join('');
+    var badge = P.badge ? '<p class="pair-badge">' + (P.badge.was ? '<span class="was">' + esc(P.badge.was) + '</span>' : '') + (P.badge.now ? '<span class="now ok">✓ ' + esc(P.badge.now) + '</span>' : '') + '</p>' : '';
+    // the software's own furniture, present in both states so the frame never has an empty band (design review 2026-10-10):
+    // a spreadsheet's formula bar (the selected cell, then "fx") and its sheet tabs with "Ready"; an app list's status line
+    var fx = P.fx ? '<div class="xl-fx"><span class="fx-c">' + esc(P.fx.cell) + '</span><b>fx</b>' + was2({ was: P.fx.was, now: P.fx.now }) + '</div>' : '';
+    var tabs = P.tabs ? '<div class="xl-tabs">' + P.tabs.map(function (t, i) { return '<span' + (i ? '' : ' class="on"') + '>' + esc(t) + '</span>'; }).join('') + '<em>Ready</em></div>' : '';
+    var status = P.status ? '<p class="win-st">' + was2(P.status) + '</p>' : '';
+    return '<div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>' + esc(P.title) + '</span></div><div class="win-b">' + (P.xls ? '<div class="xl">' + fx + '<table>' + head + body + '</table>' + tabs + '</div>' : '<div class="ptbl"><table>' + head + body + '</table></div>') + status + badge + '</div></div>';
+  }
+  L.render = { ghost: ghostSVG, real: realHTML, whiteboard: whiteboardHTML, recents: recentsHTML, pair: pairHTML, phone: ph4 };
+
+  /* ================================================================ binders: everything the trade choice rewrites */
+  var shown = {};
+  var BIND = {
+    sheet: function (el, t, animate) {
+      var f = function (k) { return el.querySelector('[data-f="' + k + '"]'); };
+      if (f('sub')) f('sub').textContent = t.sub;
+      if (f('per')) f('per').textContent = t.per === 'yr' ? 'A year' : 'A month';
+      var ringOn = el.hasAttribute('data-ring'), short = el.hasAttribute('data-short');   // data-short (v4, R9): the row's one short formula
+      if (f('rows')) f('rows').innerHTML = t.rows.map(function (r, i) {
+        return '<li style="--i:' + i + '" data-task="' + (TASK[r.icon] || r.icon) + '"><div class="sh-l"><b>' + esc(r.b) + '</b><small>' + esc(short && r.fs ? r.fs : r.f) + '</small></div><span class="sh-usd">' + money(r.usd) + (i === 0 && ringOn ? RING_SVG : '') + '</span></li>'; }).join('');
+      if (f('total')) f('total').textContent = money(total(t)) + perShort(t);
+      // one short line for screen readers when the owner picks another trade (the sheet itself is not a live region: a pick
+      // used to read out about 50 changed words). Empty on load, so nothing is announced before he chooses.
+      if (f('live') && animate) f('live').textContent = 'Sample shop: ' + t.name + ', ' + money(total(t)) + ' ' + perWord(t) + ' lost before any fix.';
+      var tm = f('time'); if (tm) { tm.hidden = !t.time; if (t.time) tm.innerHTML = 'Time back for you or your office: <b>' + esc(t.time) + '</b>'; }
+      $$('.pen-ring', el).forEach(ring);
+      if (animate && !still) { el.classList.remove('writing', 'swap'); void el.offsetWidth; el.classList.add('swap'); } // job: cause and effect
+    },
+    strip: function (el, t) {
+      var s = function (k) { return el.querySelector('[data-s="' + k + '"]'); }, r = t.rows[0];
+      if (s('sub')) s('sub').textContent = t.short; if (s('leak')) s('leak').textContent = r.b;
+      if (s('usd')) s('usd').textContent = money(r.usd) + perShort(t); if (s('f')) s('f').textContent = r.f;
+      if (el.tagName === 'A') el.href = '#' + ($('[data-bind=sheet]') ? $('[data-bind=sheet]').id || 'sheet' : 'sheet');
+    },
+    text: function (el, t) { var v = t[el.getAttribute('data-field')]; if (v != null) el.textContent = v; },
+    bigfig: function (el, t) {
+      var f = function (k) { return el.querySelector('[data-f="' + k + '"]'); }, sum = total(t);
+      rollTo(f('n'), shown.big, sum, money); shown.big = sum;
+      if (f('per')) f('per').textContent = perWord(t);
+      if (f('sub')) f('sub').textContent = t.sub;
+      if (f('time')) { f('time').hidden = !t.time; if (t.time) f('time').innerHTML = 'Time back for you or your office: <b>' + esc(t.time) + '</b>.'; }
+      if (f('eq')) f('eq').innerHTML = t.rows.map(function (r, i) { return (i ? '<i>+</i>' : '') + '<span>' + money(r.usd) + ' <small>' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1)) + '</small></span>'; }).join('') +
+        '<i>=</i><span class="r">' + money(sum) + ' <small>' + perWord(t) + '</small></span>';
+      $$('.pen-ring', el).forEach(function (s) { requestAnimationFrame(function () { ring(s); }); });
+    },
+    walk: function (el, t, animate) {
+      if (el.getAttribute('data-walk') === 'pairs') return walkPairs(el, t, animate);   // v4 (R7): same-object stops
+      var list = el.querySelector('[data-f="stops"]'); if (!list) return;
+      list.innerHTML = t.rows.map(function (r, i) {
+        var id = 'stop-' + (i + 1);
+        return '<li class="stop page" id="' + id + '" data-usd="' + r.usd + '" data-place="' + esc(r.place) + '">' +
+          '<p class="tab"><span class="tab-n">' + (i + 1) + '</span>Stop ' + (i + 1) + ' · ' + esc(r.place) + '</p><h3>' + esc(r.b) + '</h3>' +
+          '<div class="stop-body"><div class="pic"><div class="g2r" data-g2r data-state="after" role="img" aria-label="' + esc(altAfter(r.after)) + '" data-label-before="' + esc(altBefore(r)) + '" data-label-after="' + esc(altAfter(r.after)) + '">' +
+          '<div class="before">' + beforeHTML(r) + '</div><div class="after">' + realHTML(r.after) + '</div></div><span class="samp">Sample</span></div>' +
+          '<div class="stop-notes"><p class="pencil">' + esc(r.note) + '</p>' +
+          '<p class="find"><span class="find-usd money">' + money(r.usd) + ' ' + perWord(t) + UNDER_SVG + '</span><span class="find-f">' + esc(r.f) + '</span></p>' +
+          '<p class="fixline"><b>Fix:</b> ' + esc(r.fix) + '</p>' +
+          '<div class="seg" role="group" aria-label="Show stop ' + (i + 1) + '"><button type="button" data-show="before" aria-pressed="false">As we find it</button><button type="button" data-show="after" aria-pressed="true">Fixed</button></div>' +
+          '</div></div></li>'; }).join('');
+      var tl = el.querySelector('[data-tally]');
+      if (tl) {
+        var ol = tl.querySelector('ol'); if (ol) ol.innerHTML = t.rows.map(function (r, i) { return '<li data-i="' + i + '"><span>' + esc(r.place) + '</span><b>' + money(r.usd) + '</b></li>'; }).join('');
+        var sub = tl.querySelector('[data-f="tsub"]'); if (sub) sub.textContent = t.shop + ', ' + t.short.split(', ').slice(1).join(', ');
+      }
+      var plan = el.querySelector('[data-f="plan-sub"]'); if (plan) plan.textContent = t.shop;
+      initG2R(list, animate); initDraw(list); tally.bind(el, t);
+    },
+    night: function (el, t) {
+      var nts = el.querySelector('.nts'); if (!nts) return;
+      var PH = '<svg viewBox="0 0 16 16" width="17" height="17"><path fill="#fff" d="M3.6 6.7a8 8 0 0 0 5.7 5.7l1.4-1.4c.2-.2.5-.3.7-.2.7.3 1.5.4 2.3.4.4 0 .7.3.7.7v2.2c0 .4-.3.7-.7.7A11.5 11.5 0 0 1 2 3.1c0-.4.3-.7.7-.7h2.2c.4 0 .7.3.7.7 0 .8.1 1.6.4 2.3.1.2 0 .5-.2.7z"/></svg>',
+        MS = '<svg viewBox="0 0 16 16" width="17" height="17"><path fill="#fff" d="M8 2.2c3.6 0 6.4 2.3 6.4 5.2S11.6 12.6 8 12.6c-.7 0-1.3-.1-1.9-.2L3 14l.8-2.7C2.4 10.4 1.6 9 1.6 7.4 1.6 4.5 4.4 2.2 8 2.2z"/></svg>',
+        LS = '<svg viewBox="0 0 16 16" width="17" height="17"><path fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" d="M5.5 4.5h7M5.5 8h7M5.5 11.5h7M2.8 4.5h.4M2.8 8h.4M2.8 11.5h.4"/></svg>';
+      // one night, told the same way in every place: these numbers and times match each trade's morning log in trades.js
+      var N = [['cb', LS, 'Callback list for 7:30', '', '2 callers, both texted back within a minute.', ''],
+        ['', PH, 'Missed Call', '6:38 AM', '(352) 555-0148', 'Texted back · 6:39 AM'],
+        ['', MS, '(352) 555-0148', '3:06 AM', t.night, 'On the callback list'],
+        ['', PH, 'New Voicemail', '3:04 AM', '(352) 555-0148 · 0:41', 'On the callback list'],
+        ['', PH, 'Missed Call', '3:02 AM', '(352) 555-0148', 'Texted back · 3:03 AM'],
+        ['', PH, 'Missed Call', '11:48 PM', '(352) 555-0119', 'Texted back · 11:49 PM']];
+      nts.innerHTML = N.map(function (n) { return '<div class="nt ' + n[0] + '"><span class="ap" aria-hidden="true">' + n[1] + '</span><div><p class="nr"><b>' + esc(n[2]) + '</b>' + (n[3] ? '<span>' + n[3] + '</span>' : '') + '</p><p>' + esc(n[4]) + '</p>' + (n[5] ? '<span class="fx">↩ ' + esc(n[5]) + '</span>' : '') + '</div></div>'; }).join('');
+      var lock = el.querySelector('.scr-lock');
+      if (lock) lock.setAttribute('aria-label', 'Sample: a shop phone\'s lock screen at 6:41 a.m. Missed calls at 11:48 p.m., 3:02 a.m. and 6:38 a.m., a voicemail at 3:04 a.m. and a text at 3:06 a.m. that says "' + t.night + '" With the fix, each caller got a text back within a minute, and a 7:30 a.m. callback list sits on top.');
+      loops.forEach(function (lp) { if (lp.el === el || el.contains(lp.el) || lp.el.contains(el)) lp.reset(); });
+    },
+    morning: function (el, t) {
+      var m = t.morning; if (!m) return;
+      var list = el.querySelector('[data-f="list"]');
+      if (list) {
+        list.innerHTML = '<div class="mo-h"><b>Morning list · ' + esc(t.shop) + '</b><span>' + esc(m.at) + '</span></div>' +
+          m.lines.map(function (l, i) { return '<div class="mo-row' + (l[3] ? ' flag' : '') + '" style="--i:' + Math.min(i, 5) + '"><span class="l">' + esc(l[0]) + '</span><span class="v">' + esc(l[1]) + '</span>' + (l[2] ? '<span class="d">' + esc(l[2]) + '</span>' : '') + '</div>'; }).join('') +
+          '<div class="mo-foot"><span>' + esc(m.src || 'From your own job list, invoices and call log') + '</span><span>Sample</span></div>';   // m.src: each trade names its own records
+        list.setAttribute('role', 'img');
+        list.setAttribute('aria-label', 'Sample morning list for ' + t.shop + ': ' + m.lines.map(function (l) { return l[0] + ', ' + l[1]; }).join('; ') + '.');
+      }
+      // a lock screen that opts in (data-f="date") shows the morning list's own day, so the two never disagree
+      var day = el.querySelector('.lk-d[data-f="date"]'), md = /(\w{3}), (\w{3}) (\d+)/.exec(m.at), W = { Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday' },
+        MO = { Jan: 'January', Feb: 'February', Mar: 'March', Apr: 'April', Jun: 'June', Jul: 'July', Aug: 'August', Sep: 'September', Oct: 'October', Nov: 'November', Dec: 'December' };
+      if (day && md) day.textContent = (W[md[1]] || md[1]) + ', ' + (MO[md[2]] || md[2]) + ' ' + md[3];
+      var log = el.querySelector('[data-f="log"]');
+      if (log) log.innerHTML = m.log.map(function (l) { return '<li><time>' + esc(l[0]) + '</time><span>' + esc(l[1]) + '</span></li>'; }).join('');
+    },
+    idx: function (el, t, animate, key) {
+      $$('a[data-t]', el).forEach(function (a) {
+        var tag = a.querySelector('.your'); if (tag) tag.remove();
+        if (a.dataset.t === key && L.picked) { /* never "Your trade" on a guess: only once chosen, or on that trade's own page */ var b = a.querySelector('b'); if (b) b.insertAdjacentHTML('beforeend', '<span class="your">Your trade</span>'); }
+      });
+      showFig(el, key, false);
+    },
+    // v4 (R5, Home v4 2026-10-10): the night is office work. One lock screen with mixed notifications, one summary and at
+    // most one call, its big clock always showing; the paper night log beside it, every row in place from the start so it
+    // stays visible, filling in row by row. Restaurants and property managers get the log alone (no overnight lock screen).
+    night4: function (el, t) {
+      var N = t.night4, figs = el.querySelector('.n4-figs'); if (!N || !figs) return;
+      var key = function (s) { var m = /(\d+):(\d+) ([AP]M)/.exec(s) || [0, 0, 0, 'AM'], h = (+m[1] % 12) + (m[3] === 'PM' ? 12 : 0); return (h * 60 + +m[2] + 360) % 1440; };   // minutes since 6 p.m.
+      var seq = [], nRow = [], nNt = [];
+      N.rows.forEach(function (r, i) { seq.push({ k: key(r[0]), nt: 0, i: i }); });
+      N.nts.forEach(function (x, i) { seq.push({ k: key(x.at), nt: 1, i: i }); });
+      seq.sort(function (a, b) { return a.k - b.k || a.nt - b.nt; }).forEach(function (s, j) { (s.nt ? nNt : nRow)[s.i] = j; });   // one clock: a log line, then its notification
+      // the evening before the morning: rows stamped p.m. happened the night before N.date, so the log's head and the lock
+      // screen's ticking date say so ("Sun night to Mon, Oct 5"; review 2026-10-10: a 9:40 PM row under "Mon, Oct 5" was Sunday)
+      var d0 = new Date(N.date + ', 2026'), d1 = new Date(d0.getTime() - 864e5), lg = function (d) { return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }); };
+      var eve = isNaN(d1) ? N.date : lg(d1), pm = N.rows.some(function (r) { return / PM$/.test(r[0]); });
+      var head = N.date.replace(/^(\w{3})\w*, (\w{3})\w* (\d+)$/, '$1, $2 $3'), logDate = pm ? eve.slice(0, 3) + ' night to ' + head : head;
+      var lock = '';
+      if (N.lock) {
+        var nts = N.nts.map(function (x, i) { return { x: x, i: i }; }).sort(function (a, b) { return key(b.x.at) - key(a.x.at); });   // newest on top, as a phone shows them
+        // data-day / data-eve: the loop ticks the big clock through the night (9:40 ... 6:41) and the date line with it
+        lock = '<div class="pic n4-phone"><div class="lk4 crop-m" data-day="' + esc(N.date) + '" data-eve="' + esc(eve) + '" role="img" aria-label="' + esc('Sample: the shop phone\'s lock screen at 6:41 a.m., ' + N.date + '. ' +
+          nts.map(function (o) { return o.x.t + ', ' + o.x.at + ': ' + o.x.p + (o.x.fx ? '. ' + o.x.fx : ''); }).join('. ') + '.') + '">' +
+          ph4('<p class="lk4-d" aria-hidden="true">' + esc(N.date) + '</p><p class="lk4-t" aria-hidden="true">6:41</p><div class="lk4-nts" aria-hidden="true">' + nts.map(function (o) {
+            var x = o.x; return '<div class="lk4-nt" data-n="' + nNt[o.i] + '" data-t="' + esc(x.at) + '" data-task="' + x.task + '"><span class="ap ap-' + x.app.toLowerCase() + '">' + (APPS[x.app] || APPS.List) + '</span><div><p class="nr"><b>' + esc(x.t) + '</b><span>' + esc(x.at) + '</span></p><p>' + esc(x.p) + '</p>' +
+              (x.fx ? '<span class="fx">↩ ' + esc(x.fx) + '</span>' : '') + '</div></div>'; }).join('') + '</div>', '', true) + '</div><span class="samp">Sample</span></div>';
+      }
+      figs.innerHTML = lock + '<div class="pic n4-paper"><div class="np"><div class="np-h"><b>' + esc(N.paper + ', ' + t.shop) + '</b><span>' + esc(logDate) + '</span></div><ol class="np-rows">' +
+        N.rows.map(function (r, i) { return '<li data-n="' + nRow[i] + '" data-t="' + esc(r[0]) + '" data-task="' + r[2] + '"><time>' + esc(r[0]) + '</time><span>' + esc(r[1]) + '</span></li>'; }).join('') +
+        '</ol><p class="np-foot">' + esc((t.morning && t.morning.src) || 'From your own job list, invoices, bills and email') + '</p></div><span class="samp">Sample</span></div>';
+      figs.classList.toggle('nolock', !N.lock);
+      loops.forEach(function (lp) { if (lp.el === el || el.contains(lp.el) || lp.el.contains(el)) lp.reset(); });
+      fitCrops();
+    }
+  };
+  // a cropped phone (.crop-m) ends just under its last line (the callback list, the last notification it keeps), so
+  // nothing sits in its 24px fade whatever the trade's words are (Home review 2026-10-10: a fixed crop faded the callback
+  // line to 2:1 and cut the last notification in half). A notification still waiting to land sits 12px low (its slide-in),
+  // so that offset is taken back out. The CSS height stays the no-JS fallback.
+  function fitCrops() {
+    $$('.crop-m').forEach(function (c) {
+      var items = $$('.thread > *, .lk4-nt', c).filter(function (n) { return n.offsetParent; }), last = items[items.length - 1]; if (!last) return;
+      var tf = getComputedStyle(last).transform, ty = tf && tf !== 'none' ? new DOMMatrixReadOnly(tf).m42 : 0;
+      c.style.setProperty('--crop-h', Math.ceil(last.getBoundingClientRect().bottom - ty - c.getBoundingClientRect().top + 26) + 'px');
+    });
+  }
+  L.fitCrops = fitCrops;
+  // white app glyphs for the lock screen's notifications (v4)
+  var APPS = {
+    Phone: '<svg viewBox="0 0 16 16" width="16" height="16"><path fill="#fff" d="M3.6 6.7a8 8 0 0 0 5.7 5.7l1.4-1.4c.2-.2.5-.3.7-.2.7.3 1.5.4 2.3.4.4 0 .7.3.7.7v2.2c0 .4-.3.7-.7.7A11.5 11.5 0 0 1 2 3.1c0-.4.3-.7.7-.7h2.2c.4 0 .7.3.7.7 0 .8.1 1.6.4 2.3.1.2 0 .5-.2.7z"/></svg>',
+    List: '<svg viewBox="0 0 16 16" width="16" height="16"><path fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" d="M5.5 4.5h7M5.5 8h7M5.5 11.5h7M2.8 4.5h.4M2.8 8h.4M2.8 11.5h.4"/></svg>',
+    Files: '<svg viewBox="0 0 16 16" width="16" height="16"><path fill="#fff" d="M1.5 4.2c0-.8.6-1.4 1.4-1.4h3.3l1.5 1.6h5.4c.8 0 1.4.6 1.4 1.4v6.5c0 .8-.6 1.4-1.4 1.4H2.9c-.8 0-1.4-.6-1.4-1.4z"/></svg>',
+    Mail: '<svg viewBox="0 0 16 16" width="16" height="16"><rect x="1.8" y="3.5" width="12.4" height="9" rx="1.6" fill="none" stroke="#fff" stroke-width="1.5"/><path d="M2.4 4.4L8 8.6l5.6-4.2" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>',
+    Calendar: '<svg viewBox="0 0 16 16" width="16" height="16"><rect x="2" y="3" width="12" height="11" rx="1.8" fill="none" stroke="#fff" stroke-width="1.5"/><path d="M2 6.5h12M5.2 1.8v2.6M10.8 1.8v2.6" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>'
+  };
+  // v4 walk (R7, R9): one stop per sheet row; a stop with an approved same-object pair shows it with Before / After buttons,
+  // any other shows just its real screen (the plan's fallback, never a drawing). Each stop ends on its dollar figure and
+  // its one short formula; the tally names the stops and ticks them off, with no figures of its own.
+  function walkPairs(el, t, animate) {
+    var list = el.querySelector('[data-f="stops"]'); if (!list) return;
+    list.innerHTML = t.rows.map(function (r, i) {
+      var P = r.pair, n = i + 1, task = TASK[r.icon] || r.icon, place = (P && P.place) || r.place;
+      var crop = (P ? P.frame : r.after.frame) === 'phone' ? ' crop-m' : '';   // R6 crop option: on a phone only the thread's part of the phone shows
+      var pic = P ? '<div class="pair' + crop + '" data-g2r data-pair data-state="after" role="img" aria-label="' + esc(P.alt.after) + '" data-label-before="' + esc(P.alt.before) + '" data-label-after="' + esc(P.alt.after) + '">' + pairHTML(P) + '</div>'
+        : '<div class="solo' + crop + '" role="img" aria-label="' + esc(altAfter(r.after)) + '">' + realHTML(r.after, true) + '</div>';
+      // the stop's head is its pencil-circled number beside the PLACE in the shop ("The shop phone"), with the leak's name on
+      // a plain line under it: a walk goes room by room, and a calls row never becomes a heading (R1; review 2026-10-10)
+      // the Before / After buttons sit under the picture they switch, beside its Sample label
+      return '<li class="stop page" id="stop-' + n + '" data-usd="' + r.usd + '" data-place="' + esc(place) + '" data-task="' + task + '">' +
+        '<div class="stop-h"><span class="tab-n">' + n + '</span><div class="stop-t"><h3><span class="sr">Stop ' + n + ': </span>' + esc(place) + '</h3><p class="stop-leak">' + esc(r.b) + '</p></div></div>' +
+        '<div class="stop-body"><div class="pic' + (P ? ' has-seg' : '') + '"' + (task === 'calls' ? ' data-pic="calls"' : '') + '>' + pic +
+        (P ? '<div class="seg" role="group" aria-label="Show stop ' + n + '"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button></div>' : '') +
+        '<span class="samp">Sample</span></div>' +
+        '<div class="stop-notes"><p class="pencil">' + esc(r.note) + '</p>' +
+        '<p class="find"><span class="find-usd money">' + money(r.usd) + ' ' + perWord(t) + UNDER_SVG + '</span><span class="find-f">' + esc(r.fs || r.f) + '</span></p>' +
+        // no "Fix:" line on v4 stops: the After picture shows the fix in the shop's own screen, and the line only repeated it (R9)
+        '</div></div></li>'; }).join('');
+    var tl = el.querySelector('[data-tally]');
+    if (tl) {
+      var ol = tl.querySelector('ol'); if (ol) ol.innerHTML = t.rows.map(function (r, i) { return '<li data-i="' + i + '"><span>' + esc((r.pair && r.pair.place) || r.place) + '</span></li>'; }).join('');
+      var sub = tl.querySelector('[data-f="tsub"]'); if (sub) sub.textContent = t.shop + ', ' + t.short.split(', ').slice(1).join(', ');
+    }
+    initG2R(list, animate); initDraw(list); tally.bind(el, t); fitCrops();
+  }
+  function showFig(el, key, preview) {
+    var box = el.querySelector('[data-f="fig"]'); if (!box || !D[key]) return;
+    if (!box.children.length) box.innerHTML = ORDER.map(function (k) { return '<img data-t="' + k + '" src="' + (box.dataset.base || '') + D[k].fig + '" alt="" width="600" height="520" loading="lazy" decoding="async">'; }).join('');
+    $$('img', box).forEach(function (im) { var on = im.dataset.t === key; im.classList.toggle('on', on); im.alt = on ? D[key].figAlt : ''; if (on) im.loading = 'eager'; });
+    var cap = el.querySelector('[data-f="figcap"]'); if (cap) cap.textContent = D[key].figCap;
+    $$('a[data-t]', el).forEach(function (a) { a.classList.toggle('pv', preview && a.dataset.t === key); });
+  }
+
+  /* ================================================================ the trade picker */
+  var locked = document.body.hasAttribute('data-trade-lock');
+  function setTrade(key, animate) {
+    if (!D[key]) return;
+    var changed = key !== L.trade; L.trade = key;
+    if (animate) L.picked = true;                     // a chip, the select or arrow keys: the visitor chose
+    if (L.picked) store.set('lumora.trade', key);     // carried onto the trade pages; a page's default is never stored as a choice
+    $$('[data-picker]').forEach(function (p) {
+      $$('.chip', p).forEach(function (c) { var on = c.dataset.t === key; c.setAttribute('aria-checked', on ? 'true' : 'false'); c.removeAttribute('aria-current'); c.tabIndex = on ? 0 : -1; });
+      var sel = p.querySelector('select'); if (sel) sel.value = key;
+    });
+    var t = D[key];
+    $$('[data-bind]').forEach(function (el) { var fn = BIND[el.getAttribute('data-bind')]; if (fn) fn(el, t, animate && changed, key); });
+    listeners.forEach(function (fn) { fn(key, t, animate && changed); });
+    document.dispatchEvent(new CustomEvent('lumora:trade', { detail: { key: key, trade: t, animate: animate && changed } }));
+  }
+  L.setTrade = function (k) { setTrade(k, true); };
+  function initPickers() {
+    $$('[data-picker]').forEach(function (p) {
+      var group = p.querySelector('.chips'), chips = $$('.chip', p), sel = p.querySelector('select');
+      if (sel && !sel.options.length) sel.innerHTML = ORDER.map(function (k) { return '<option value="' + k + '">' + esc(D[k].name) + '</option>'; }).join('');
+      if (sel) sel.addEventListener('change', function () { setTrade(sel.value, true); });
+      if (!group) return;
+      group.setAttribute('role', 'radiogroup');
+      chips.forEach(function (c, i) {
+        c.setAttribute('role', 'radio');
+        c.addEventListener('click', function (e) { e.preventDefault(); setTrade(c.dataset.t, true); });
+        c.addEventListener('keydown', function (e) {  // radiogroup keys: arrows move and choose, Space chooses
+          var d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+          if (d) { e.preventDefault(); var n = chips[(i + d + chips.length) % chips.length]; n.focus(); setTrade(n.dataset.t, true); }
+          else if (e.key === ' ') { e.preventDefault(); setTrade(c.dataset.t, true); }
+        });
+      });
+    });
+    $$('[data-bind=idx]').forEach(function (el) {
+      el.addEventListener('pointerover', function (e) { var a = e.target.closest('a[data-t]'); if (a && fine.matches) showFig(el, a.dataset.t, true); });
+      el.addEventListener('pointerleave', function () { showFig(el, L.trade, false); });
+      el.addEventListener('focusin', function (e) { var a = e.target.closest('a[data-t]'); if (a) showFig(el, a.dataset.t, true); });
+      el.addEventListener('focusout', function () { showFig(el, L.trade, false); });
+    });
+  }
+
+  /* ================================================================ ghost to real */
+  function setG2R(g, state) {
+    g.dataset.state = state;
+    var lab = g.getAttribute('data-label-' + state); if (lab) g.setAttribute('aria-label', lab);
+    var scope = g.closest('.stop, [data-g2r-scope]') || g.parentNode;
+    $$('[data-show]', scope).forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.show === state ? 'true' : 'false'); });
+    // job: cause and effect. The stop's money underline draws as the fix lands, not before it (it waits; see initG2R)
+    if (state === 'after') $$('[data-draw]', g.closest('.stop, [data-g2r-scope]') || g).forEach(function (p) { p.removeAttribute('data-wait'); draw(p, 380); });
+  }
+  // job: state change. History: 55% and 600ms showed the "before" for ~1.3 s; then 95% held 2.5 s, and a timed owner skim
+  // on a phone (review 2026-10-10, 470px a flick) left every stop on Before the whole way: he saw only the problems.
+  // Now a phone opens on After, which already carries the pencil trace of the old value (R7), and Before is the tap. A
+  // computer keeps the switch on view, sooner: half in view (or filling 60% of the screen) for 0.9 s.
+  var narrow = matchMedia('(max-width: 899px)');
+  var g2rIO = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) { var g = e.target;
+      if (!e.isIntersecting || (e.intersectionRatio < 0.5 && e.intersectionRect.height < innerHeight * 0.6)) { clearTimeout(g._g2r); g._g2r = 0; return; }
+      if (g._g2r) return;   // still in view, only crossed another threshold: keep the clock running, don't restart it
+      g._g2r = setTimeout(function () { g2rIO.unobserve(g); if (!g.dataset.touched) setG2R(g, 'after'); }, 900); });
+  }, { threshold: [0, 0.25, 0.5, 0.75, 1] }) : null;
+  function initG2R(scope, redraw) {
+    $$('[data-g2r]', scope).forEach(function (g) {
+      if (g.dataset.ready) return; g.dataset.ready = '1';
+      var sc = g.closest('.stop, [data-g2r-scope]') || g.parentNode;
+      $$('[data-show]', sc).forEach(function (b) { b.addEventListener('click', function () { g.dataset.touched = '1'; setG2R(g, b.dataset.show); }); });
+      // job: signifier. Hover a ghost and it comes to life, unless the owner chose "As we find it" himself: then the
+      // cursor reaching the paper to read it must not undo his choice (trades-2 review, 2026-10-07)
+      g.addEventListener('pointerenter', function () { if (fine.matches && g.dataset.state === 'before' && !g.dataset.touched) setG2R(g, 'after'); });
+      if (redraw && !still) $$('.ghost', g).forEach(function (x) { x.classList.add('draw'); });
+      // the still default is the fixed state; with motion allowed, figures below the fold start as found and turn real in view
+      if (!still && g2rIO && !narrow.matches && g.getBoundingClientRect().top > innerHeight * 0.8) { setG2R(g, 'before'); g2rIO.observe(g); $$('[data-draw]', g.closest('.stop, [data-g2r-scope]') || g).forEach(function (p) { p.setAttribute('data-wait', ''); }); }
+      else setG2R(g, g.dataset.state || 'after');
+    });
+  }
+
+  /* ================================================================ the walk tally (from scroll position, never from "passed" events) */
+  var tally = {
+    els: [], bind: function (walk, t) {
+      if (!this.els.some(function (x) { return x.walk === walk; })) this.els.push({ walk: walk });
+      this.update();
+    },
+    update: function () {
+      this.els.forEach(function (x) {
+        var t = D[L.trade], walk = x.walk, stops = $$('.stop', walk), line = innerHeight * 0.7, sum = 0, n = 0;
+        stops.forEach(function (s, i) {
+          var f = s.querySelector('.find'), on = !!f && f.getBoundingClientRect().top < line;   // every stop above the line counts, even after a jump
+          s.classList.toggle('passed', on); if (on) { sum += +s.dataset.usd; n = i + 1; }
+          var li = walk.querySelector('[data-tally] li[data-i="' + i + '"]'); if (li) li.classList.toggle('on', on);
+        });
+        var all = n === stops.length && n > 0;
+        if (walk.getAttribute('data-walk') === 'pairs') {   // v4 (R9): progress only, no dollar figures; the walk's one total line follows the stops
+          var nx = stops[Math.min(n, stops.length - 1)], lc = function (s) { return s.charAt(0).toLowerCase() + s.slice(1); };
+          var pg = walk.querySelector('[data-tally] [data-f="tprog"]'), b1 = walk.querySelector('[data-f="bar-stop"]'), b2 = walk.querySelector('[data-f="bar-n"]');
+          if (pg) pg.textContent = all ? 'Walk done, ' + n + ' of ' + n + ' stops' : n ? n + ' of ' + stops.length + ' stops' : stops.length + ' stops on this walk';
+          if (b1) b1.textContent = all ? 'Walk done' : n ? 'Next: ' + lc(nx ? nx.dataset.place : '') : 'The walk, ' + stops.length + ' stops';
+          if (b2) b2.textContent = n ? n + ' of ' + stops.length : 'Sample shop';
+          return;
+        }
+        var tot = walk.querySelector('[data-tally] [data-f="tot"]'), tper = walk.querySelector('[data-tally] [data-f="tper"]');
+        if (tot) tot.textContent = n ? money(sum) : '';                                     // never "$0": empty until a stop counts
+        if (tper) tper.textContent = n ? (t.per === 'yr' ? 'A year' : 'A month') + (all ? '' : ', so far') : 'Adds up as you scroll';
+        var bs = walk.querySelector('[data-f="bar-stop"]'), bu = walk.querySelector('[data-f="bar-usd"]');
+        var next = stops[Math.min(n, stops.length - 1)];
+        // one line on a phone at the start, and it names the NEXT stop (the counted one can still be on screen)
+        if (bs) bs.textContent = all ? 'Walk done, ' + n + ' of ' + n + ' stops' : n ? 'Next: ' + (next ? next.dataset.place : '') : 'The walk, ' + stops.length + ' stops';
+        if (bu) bu.textContent = n ? money(sum) + ' ' + perWord(t) + (all ? '' : ' so far') : 'Sample shop';  // never "$0 so far"
+      });
+    }
+  };
+  var tick = 0;
+  addEventListener('scroll', function () { if (tick) return; tick = requestAnimationFrame(function () { tick = 0; tally.update(); }); }, { passive: true });
+  addEventListener('resize', function () { clearTimeout(L._rz); L._rz = setTimeout(function () { $$('.pen-ring').forEach(ring); tally.update(); fitCrops(); }, 150); });
+
+  /* ================================================================ loops: the night band (pause control, off-screen pause) */
+  var loops = [];
+  function Loop(el) {
+    var self = this, btn = el.querySelector('.pause'), timer = 0, user = false, seen = false, plays = 0;
+    self.el = el;
+    // v4 [data-steps]: every [data-n] item (log rows and notifications) lands in its own clock order; else the v3 calls, oldest first.
+    // v4 never opens on an empty frame (review 2026-10-10: a blank paper and a bare lock screen read as unfinished): each
+    // play starts with the first row in, the rows still to come stay on the paper dimmed (CSS) and ink in one by one, and
+    // the lock screen's big clock and date tick with the night (9:40 ... 6:38), ending on 6:41.
+    var steps = el.hasAttribute('data-steps'), ITEM = steps ? '[data-n]' : '.nt', first = steps ? 0 : -1, step = first;
+    var items = function () { return steps ? $$('[data-n]', el).sort(function (a, b) { return a.dataset.n - b.dataset.n; }) : $$('.nt:not(.cb)', el).reverse(); };
+    function tick(it) {
+      var lk = el.querySelector('.lk4'), clk = lk && lk.querySelector('.lk4-t'), day = lk && lk.querySelector('.lk4-d'); if (!clk) return;
+      var cur = el.classList.contains('run') && !still && step < it.length ? it[Math.max(step, 0)] : null, m = cur && /^(\d+:\d\d) ([AP]M)$/.exec(cur.dataset.t || '');
+      clk.textContent = m ? m[1] : '6:41';
+      if (day) day.textContent = m && m[2] === 'PM' ? lk.dataset.eve : lk.dataset.day;
+    }
+    function frame() {
+      var it = items();
+      if (still || !el.classList.contains('run')) { $$(ITEM, el).forEach(function (n) { n.classList.add('on'); }); el.classList.add('fixed'); if (steps) tick(it); return; }
+      it.forEach(function (n, i) { n.classList.toggle('on', i <= step); });
+      var cb = steps ? null : el.querySelector('.nt.cb'); if (cb) cb.classList.toggle('on', step >= it.length);
+      el.classList.toggle('fixed', step >= it.length);
+      if (steps) tick(it);
+    }
+    // the control: one pattern, the label swaps (no aria-pressed beside a swapping label); when the 3 plays end it stays,
+    // as "Play again", so keyboard focus never drops to the page (phone-access review 2026-10-10)
+    function label(mode) {
+      if (!btn) return;
+      var vis = { pause: 'Pause', play: 'Play', again: 'Play again' }[mode], lab = btn.querySelector('.pt');
+      btn.setAttribute('aria-label', { pause: 'Pause animation', play: 'Play animation', again: 'Play again' }[mode]);
+      btn.classList.toggle('is-paused', mode !== 'pause'); if (lab) lab.textContent = vis;
+    }
+    function next() {                                   // job: cause and effect. The night's work lands line by line, in clock order
+      clearTimeout(timer);
+      var n = items().length;
+      if (step >= n) { plays++; if (plays >= 3) { el.classList.remove('run'); frame(); label('again'); return; } step = first; } else step++;
+      frame();
+      timer = setTimeout(next, step === first ? (steps ? 1100 : 700) : step < n - 1 ? (steps ? 650 : 850) : step === n - 1 ? 1600 : 4400);   // about 10 to 13 s a play; stops on the finished frame after 3
+    }
+    function running() { return el.classList.contains('run') && !user && seen && !document.hidden; }
+    function sync() { clearTimeout(timer); if (running()) timer = setTimeout(next, 600); }
+    self.reset = function () { step = first; frame(); sync(); };
+    if (still) { if (btn) btn.hidden = true; frame(); return; }
+    el.classList.add('run'); frame();
+    if (btn) btn.addEventListener('click', function () {
+      if (!el.classList.contains('run')) { plays = 0; user = false; el.classList.add('run'); step = first; frame(); label('pause'); sync(); return; }
+      user = !user; label(user ? 'play' : 'pause');
+      sync();
+    });
+    label('pause');
+    document.addEventListener('visibilitychange', sync);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { seen = es[0].isIntersecting; sync(); }, { threshold: 0.25 }).observe(el);
+  }
+
+  /* ================================================================ the leak check (only his own input moves the figure) */
+  function initLeak(form) {
+    var num = function (v) { v = String(v).replace(/[$,%\s]/g, ''); return v === '' ? NaN : +v; };
+    var g = function (n) { return form.querySelector('[name="' + n + '"]'); };
+    var scope = form.closest('[data-leak-scope], section') || document;
+    var out = function (k) { return form.querySelector('[data-f="' + k + '"]') || scope.querySelector('[data-f="' + k + '"]') || document.createElement('span'); };
+    var last = null;
+    function calc(animate) {
+      var rang = num(g('rang').value), back = num(g('back').value), book = num(g('book').value), profit = num(g('profit').value), err = '';
+      if ([rang, back, book, profit].some(function (x) { return isNaN(x) || x < 0; })) err = 'Use a number of 0 or more in each box.';
+      else if (back > rang) err = 'Calls you call back cannot be more than the calls that rang out.';
+      else if (book > 100) err = 'Use a share from 0 to 100.';
+      out('err').textContent = err;
+      if (err) { out('math').textContent = 'Put a number in each box to see your estimate.'; return; }
+      var notBack = rang - back, month = notBack * 52 / 12, jobs = month * book / 100, usd = Math.round(jobs * profit / 10) * 10;
+      out('math').textContent = notBack + ' call' + (notBack === 1 ? '' : 's') + ' a week nobody returned × 52 ÷ 12 = ' + month.toFixed(1) + ' a month. × ' + book + '% = ' + jobs.toFixed(1) + ' jobs. × ' + money(profit) + ' = ' + money(usd) + ' a month.';
+      var dots = out('dots');
+      if (dots) {
+        var n = Math.min(Math.round(month), 60), full = Math.floor(jobs), part = jobs - full, h = '';
+        for (var i = 0; i < n; i++) { var c = i < full ? 'dot job' : (i === full && part > 0.05 ? 'dot part' : 'dot'); h += '<span class="' + c + '"' + (c === 'dot part' ? ' style="--p:' + Math.round(part * 100) + '%"' : '') + '></span>'; }
+        dots.innerHTML = h; dots.setAttribute('aria-label', month.toFixed(1) + ' calls a month nobody returned; about ' + jobs.toFixed(1) + ' of them would have booked.');
+      }
+      var el = out('usd'); rollTo(el, animate ? last : null, usd, money); last = usd;
+      if (animate && !still && el) { el.classList.remove('roll'); void el.offsetWidth; el.classList.add('roll'); }
+    }
+    $$('[data-step]', form).forEach(function (b) { b.addEventListener('click', function () { var i = g(b.dataset.for), v = num(i.value); i.value = Math.max(0, (isNaN(v) ? 0 : v) + +b.dataset.step); calc(true); }); });
+    var t; $$('input', form).forEach(function (i) { i.addEventListener('input', function () { clearTimeout(t); t = setTimeout(function () { calc(true); }, 250); }); });
+    form.addEventListener('submit', function (e) { e.preventDefault(); calc(true); });
+    calc(false);
+  }
+
+  /* ================================================================ tabs ("Pick your tool") */
+  function initTabs(box) {
+    var tabs = $$('[role=tab]', box);
+    function sel(tab, focus) {
+      tabs.forEach(function (t) { var on = t === tab; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1;
+        var p = document.getElementById(t.getAttribute('aria-controls')); if (p) p.hidden = !on; });
+      if (focus) tab.focus();
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { sel(t); });
+      t.addEventListener('keydown', function (e) { var d = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (d) { e.preventDefault(); sel(tabs[(i + d + tabs.length) % tabs.length], true); } });
+    });
+    sel(tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || tabs[0]);
+  }
+
+  /* ================================================================ reveals and pen draws on view */
+  var seeIO = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (!e.isIntersecting) return; var t = e.target; seeIO.unobserve(t);
+      if (t.classList.contains('rv')) t.classList.add('in');
+      if (t.hasAttribute('data-draw')) draw(t, 0);
+      if (t.classList.contains('plan')) t.classList.add('drawn');
+      if (t.classList.contains('pen-ring')) { ring(t); draw(t, 120); }
+    });
+  }, { threshold: 0.2 }) : null;
+  function initDraw(scope) {
+    $$('.rv, [data-draw], .plan', scope).forEach(function (el) {
+      if (still || !seeIO) { el.classList.add('in', 'drawn'); return; }
+      if (!el.hasAttribute('data-wait')) seeIO.observe(el);       // data-wait: a ghost-to-real fix draws it instead
+    });
+    // stagger siblings that reveal together: 50ms apart, at most 6
+    $$('.rv', scope).forEach(function (el) { var sib = $$(':scope > .rv', el.parentNode); var i = sib.indexOf(el); if (i > 0 && !el.style.getPropertyValue('--i')) el.style.setProperty('--i', Math.min(i, 5)); });
+  }
+
+  /* ================================================================ header menu */
+  function initMenu() {
+    var b = $('.menu-b'), nav = $('#nav'); if (!b || !nav) return;
+    var set = function (o) { nav.classList.toggle('open', o); b.setAttribute('aria-expanded', o ? 'true' : 'false'); b.textContent = o ? 'Close' : 'Menu'; };
+    b.addEventListener('click', function () { set(!nav.classList.contains('open')); });
+    nav.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && nav.classList.contains('open')) { set(false); b.focus(); } });
+  }
+
+  // test hook (E10): put every Before / After picture in one state, as if the visitor had pressed the button, so check.py can
+  // lint and measure both states (the in-view trigger alone would leave most of them on one)
+  L.showStops = function (state) { $$('[data-g2r]').forEach(function (g) { g.dataset.touched = '1'; setG2R(g, state); }); };
+
+  /* ================================================================ v4 rules (redesign plan R1, R2, R4, R5, R7, R8, R9, R11, R13, R14)
+     Only on pages that opt in with body[data-rules=v4]; the v3 pages were built before these rules. check.py runs lint() at
+     390 and 1440 and, on Home, for every trade in both stop states. The page budgets (R9) bind the page's default view; for
+     the other trades they warn, since those trades' pictures wait on their own owner read (Home 1.5). */
+  function lintV4(E, W, vis, text) {
+    var shown = function (s, r) { return $$(s, r).filter(vis); }, def = L.trade === (document.body.dataset.trade || 'plumbing'), B = def ? E : W;
+    var texts = function (fn) { var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); while (w.nextNode()) { var nd = w.currentNode, pe = nd.parentElement;
+      if (pe && nd.nodeValue.trim() && !pe.closest('.sr,script,style') && vis(pe)) fn(nd.nodeValue, pe); } };
+    // R1: back office leads; calls are one row per list, one call per stack, one calls picture per page, never a heading
+    var tasks = {}; shown('[data-task]').forEach(function (x) { tasks[x.dataset.task] = 1; });
+    if (Object.keys(tasks).length < 6) E.push('R1: ' + Object.keys(tasks).length + ' kinds of task in view (6 at least).');
+    $$('ul,ol,.lk4-nts').forEach(function (l) { var c = $$(':scope > [data-task="calls"]', l).filter(vis).length; if (c > 1) E.push('R1: a list or stack with ' + c + ' calls.'); });
+    var cp = shown('[data-pic="calls"]').length; if (cp > 1) E.push('R1: ' + cp + ' calls pictures (one per page).');
+    shown('h1,h2,h3').forEach(function (h) { if (/missed call|voicemail|text ?back|rang out|ring out|calls after hours|after-hours call|calls that ring/i.test(h.innerText)) E.push('R1: call words in a heading: ' + h.innerText.slice(0, 50)); });
+    // R4: nothing incoming stamped 11 p.m. to 5 a.m.; a text-back is a green SMS bubble
+    shown('.lk4-nt, [data-task="calls"], .bub.in').forEach(function (x) { if (/\b(11:\d\d ?PM|12:\d\d ?AM|[1-4]:\d\d ?AM)\b/i.test(x.innerText)) E.push('R4: something incoming between 11 p.m. and 5 a.m.: ' + x.innerText.slice(0, 50)); });
+    $$('.thread .sys').forEach(function (s) { var b = s.nextElementSibling; if (/^Missed call/.test(s.textContent) && b && b.classList.contains('out') && !b.classList.contains('sms')) E.push('R4: a text-back in a blue bubble.'); });
+    // R2: What we automate, second, at least 6 rows; no link to the full list until that page is live
+    var auto = document.getElementById('automate'); if (!auto || shown('[data-task]', auto).length < 6) E.push('R2: What we automate is missing or has under 6 rows.');
+    if (/see the full list/i.test(text)) E.push('R2: a "See the full list" link before that page is live.');
+    // R5: the night band's headline has no call word, and its lock screen clock never hides
+    shown('[data-ground=night] h2').forEach(function (h) { if (/\bcalls?\b|voicemail|missed|\bring/i.test(h.innerText)) E.push('R5: a call word in the night band headline.'); });
+    $$('.lk4').forEach(function (k) { var c = k.querySelector('.lk4-t'); if (!c || !vis(c) || +getComputedStyle(c).opacity < 0.9) E.push('R5: the lock screen clock is hidden.'); });
+    // R7: one label pair, Before / After; every pair keeps a pencil trace
+    if (/as we find it|with the fix/i.test(text)) E.push('R7: an old Before / After label ("As we find it" or "With the fix").');
+    shown('button').forEach(function (b) { if (/^\s*fixed\s*$/i.test(b.innerText)) E.push('R7: a "Fixed" switch.'); });
+    $$('[data-pair]').forEach(function (p) { if (!p.querySelector('.chg.tr, .pc')) E.push('R7: a Before / After picture with no pencil trace.'); });
+    // R8: no drawings, straight stamps, exactly one Sample label per picture, slots in one of the 3 shapes
+    if (shown('.ghost').length) E.push('R8: an ink ghost drawing.');
+    if ($$('img').some(function (i) { return /\/figs\//.test(i.getAttribute('src') || ''); })) E.push('R8: a trade drawing.');
+    shown('.stamp,.samp').forEach(function (s) { var tf = getComputedStyle(s).transform; if (tf && tf !== 'none' && tf !== 'matrix(1, 0, 0, 1, 0, 0)') E.push('R8: a tilted Sample stamp.'); });
+    shown('.pic').forEach(function (p) { var n = $$('.samp,.stamp', p).filter(function (s) { return vis(s) && /^sample$/i.test(s.textContent.trim()); }).length;
+      if (n !== 1) E.push('R8: a picture with ' + n + ' Sample labels (' + (p.className || p.id) + ').'); });
+    $$('.slot').forEach(function (s) { if (['16:9', '1:1', '4:5'].indexOf(s.dataset.shape) < 0) E.push('R8: a picture slot that is not 16:9, 1:1 or 4:5.'); });
+    // R9: no dollar figure more than twice, 16 or fewer, counted per width; the phone-only top-leak strip is the named exception
+    var seen = {}, total = 0;
+    texts(function (s, pe) { if (pe.closest('.hero-strip')) return; (s.match(/\$\d[\d,]*(?:\.\d+)?/g) || []).forEach(function (m) { var k = m.replace(/\.0+$/, ''); seen[k] = (seen[k] || 0) + 1; total++; }); });
+    Object.keys(seen).forEach(function (k) { if (seen[k] > 2) B.push('R9: ' + k + ' shows ' + seen[k] + ' times (twice at most).'); });
+    if (total > 16) B.push('R9: ' + total + ' dollar figures on the page (16 or fewer).');
+    // R11: the picked chip is never filled black on a computer screen
+    if (innerWidth >= 700) shown('.chip[aria-checked=true]').forEach(function (c) { if (getComputedStyle(c).backgroundColor === 'rgb(17, 17, 16)') E.push('R11: the picked trade chip is filled black.'); });
+    // R13: all eight trade links visible on a phone, outside any menu
+    if (innerWidth <= 430) { var tl = shown('[data-trades] a').filter(function (a) { return /\/industries\/[^/]+\/$/.test(a.getAttribute('href') || ''); }).length; if (tl < 8) E.push('R13: ' + tl + ' of 8 trade links visible on a phone.'); }
+    // R14: no "AI" in the hero, one two-tone heading at most, no "word · word" label outside the pictures
+    var hero = document.querySelector('.hero'); if (hero && /\bAI\b/.test(hero.innerText)) E.push('R14: "AI" in the hero.');
+    var two = $$('.two').filter(function (h) { return vis(h) && h.querySelector('span'); }).length; if (two > 1) E.push('R14: ' + two + ' two-tone headings (one at most).');
+    texts(function (s, pe) { if (!pe.closest('.pic,.clip,.np,.ph4,.scr-win,.tally') && /\S · \S/.test(s)) E.push('R14: a "word · word" label: ' + s.trim().slice(0, 40)); });
+    if (/data\s+entry/i.test(text)) E.push('R2: the retired category phrase (Franco: never on the site) is on the page.');   // the phrase itself stays out of this file: propagation_lint bans it under site/
+    // ---- added with the Home review fixes (2026-10-10), so what the reviewers caught by eye cannot come back
+    // R4: every text-back is the RULES.md script word for word, and the time it promises is the callback list's own time
+    var SCRIPT = /^Hi, this is .+?\. Sorry we missed your call\. Someone will call you back .+?\. If texting is easier, reply here\. Reply STOP to stop texts\. \/ Responda STOP \(o ALTO\) para no recibir mensajes\.$/;
+    var hm = function (s) { var m = /(\d{1,2}):?(\d\d)?\s*([ap])\.?m\b/i.exec(s || ''); return m ? (+m[1]) + ':' + (m[2] || '00') + ' ' + m[3].toUpperCase() + 'M' : null; };
+    $$('.thread').forEach(function (th) {
+      var tb = th.querySelector('.bub.sms') || $$('.bub.out', th).filter(function (b) { var p = b.previousElementSibling; return p && /^Missed call/.test(p.textContent); })[0]; if (!tb) return;
+      var s = tb.textContent.trim(); if (!SCRIPT.test(s)) E.push('R4: a text-back off the RULES.md script: ' + s.slice(0, 60));
+      var said = hm((/call you back by ([^.]*?(?:[ap]\.m\.)[^.]*)/i.exec(s) || [])[1]), list = $$('.sys', th).filter(function (x) { return /callback list/i.test(x.textContent); })[0];
+      if (said && list && said !== hm(list.textContent)) E.push('R4: the text-back promises ' + said + ' but the callback list says ' + hm(list.textContent) + '.');
+    });
+    // money back names the walk fee (hard rule 2026-10-10); "every dollar back" read as the fix money too, right after the price sentence
+    if (/every dollar back/i.test(text)) E.push('Money back: "every dollar back" is retired; the line says "the walk fee".');
+    shown('.mb').forEach(function (m) { if (!/the walk fee/i.test(m.innerText)) E.push('Money back: a money-back line without "the walk fee": ' + m.innerText.slice(0, 50)); });
+    // R6: one phone component (the drawn frame with its camera island), never rotated, one width on a computer, .491 wide to tall
+    if (shown('.scr-phone, .scr-lock').length) E.push('R6: an old phone style (.scr-phone or .scr-lock) on a v4 page.');
+    var phs = shown('.ph4'), widths = {};
+    phs.forEach(function (p) { var r = p.getBoundingClientRect(), tf = getComputedStyle(p).transform;
+      if (!p.querySelector('.ph4-f .ph4-isl')) E.push('R6: a phone without the drawn frame and camera island.');
+      if (Math.abs(p.offsetWidth / p.offsetHeight - 433 / 882) > 0.01) E.push('R6: a phone frame ' + (p.offsetWidth / p.offsetHeight).toFixed(3) + ' wide to tall (0.491).');
+      if (tf && tf !== 'none' && tf !== 'matrix(1, 0, 0, 1, 0, 0)') E.push('R6: a rotated phone.');
+      widths[Math.round(r.width)] = 1; });
+    if (innerWidth >= 900 && Object.keys(widths).length > 1) E.push('R6: phones in ' + Object.keys(widths).join(' and ') + 'px widths (one width).');
+    // a cropped phone (.crop-m) fades only its last 24px, and no text may sit in that fade (review: the callback line was faded to 2:1)
+    shown('.crop-m').forEach(function (c) { if (getComputedStyle(c).overflow !== 'hidden') return; var b = c.getBoundingClientRect();
+      $$('p, span, b, small', c).filter(function (x) { return vis(x) && x.children.length === 0 && x.textContent.trim(); }).forEach(function (x) {
+        var nt = x.closest('.lk4-nt'), tf = nt && getComputedStyle(nt).transform, ty = tf && tf !== 'none' ? new DOMMatrixReadOnly(tf).m42 : 0, r = x.getBoundingClientRect();   // where it lands, not mid slide-in
+        if (r.top - ty < b.bottom && r.bottom - ty > b.bottom - 24) E.push('Crop: "' + x.textContent.trim().slice(0, 30) + '" sits in a cropped phone\'s fade.'); }); });
+    // sample data: two pictures of the same spreadsheet agree, row by row (review: rows 975 to 977 skipped jobs 4522 and 4523)
+    var files = {};
+    shown('.scr-win').forEach(function (w) { var tt = w.querySelector('.win-tb span'), heads = $$('th', w).map(function (h) { return h.textContent.trim(); }); if (!tt || !/\.xlsx$/.test(tt.textContent) || heads[0] !== 'Job') return;
+      var last = 0, f = files[tt.textContent] = files[tt.textContent] || {};
+      $$('tr', w).forEach(function (tr) { var td = tr.querySelectorAll('td'); if (td.length < 2 || !/^\d+$/.test(td[0].textContent.trim())) return; var rn = td[0].textContent.trim(), job = +td[1].textContent.trim();
+        if (f[rn] && f[rn] !== job) B.push('Sample: ' + tt.textContent + ' row ' + rn + ' is job ' + f[rn] + ' in one picture and ' + job + ' in another.');
+        if (job < last) B.push('Sample: ' + tt.textContent + ' job numbers go down at row ' + rn + '.'); f[rn] = job; last = job; }); });
+    // one type scale outside the pictures, measured on a computer where every clamp sits at its top (review: 16 sizes)
+    if (innerWidth >= 1280) {
+      var SCALE = [15, 17, 20, 24, 32, 44, 64], odd = {};
+      texts(function (s, pe) { if (pe.closest('.pic,.clip,.np,.ph4,.scr-win,.slot,.samp,.stamp,.tally,svg,.util,.foot,.skip')) return;
+        var fs = parseFloat(getComputedStyle(pe).fontSize); if (!SCALE.some(function (v) { return Math.abs(v - fs) < 0.6; })) odd[Math.round(fs * 10) / 10 + 'px'] = s.trim().slice(0, 24); });
+      Object.keys(odd).forEach(function (k) { E.push('Type: ' + k + ' is off the scale (15, 17, 20, 24, 32, 44, 64): "' + odd[k] + '"'); });
+    }
+  }
+
+  /* ================================================================ lint: the variety and trust rules, checkable */
+  // Lumora.lint() returns {errors, warnings}. check.py calls it; ?lint in the URL prints it in the console.
+  L.lint = function () {
+    var E = [], W = [], catalog = document.body.hasAttribute('data-catalog');
+    var vis = function (el) { var r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(el).visibility !== 'hidden'; };
+    var text = document.body.innerText;
+    if (/[—–]/.test(text)) E.push('Em or en dash in visible text.');
+    if (/!/.test(text.replace(/<!--[\s\S]*?-->/g, ''))) E.push('Exclamation mark in visible text.');
+    (text.match(/\(352\) \d{3}-\d{4}/g) || []).forEach(function (p) { if (p !== '(352) 226-0681' && !/\(352\) 555-01\d\d/.test(p)) E.push('Phone outside the sample range: ' + p); });
+    if (!catalog) {
+      // the price sentence (shared-text.json "price", bound with data-shared) may appear twice: the hero and step 2 (Oct 8)
+      var prices = $$('[data-shared="price"]').filter(vis).length, p500 = (text.match(/\$500\b/g) || []).length;
+      if (prices > 2) E.push('The price sentence appears ' + prices + ' times (at most twice: the hero and step 2).');
+      if (p500 > prices) E.push('"$500" appears ' + (p500 - prices) + ' time(s) outside the bound price sentence.');
+      var rings = $$('.pen-ring').filter(vis).length; if (rings > 1) E.push(rings + ' pen rings on the page (one per page).');
+      var disp = $$('.t-display').length; if (disp > 1) E.push(disp + ' display money figures (one per page).');
+      var nights = $$('main [data-ground=night]').length; if (nights > 1) E.push(nights + ' ink bands (one per page).');
+      var secs = $$('main > section, main > [data-ground]').filter(function (s) { return s.dataset.ground; });
+      var KEYS = ['ground', 'density', 'width', 'loud'];
+      for (var i = 1; i < secs.length; i++) {
+        var a = secs[i - 1].dataset, b = secs[i].dataset, same = KEYS.filter(function (k) { return a[k] && a[k] === b[k]; });
+        if (same.length > 2) E.push('Neighbouring sections share ' + same.join(', ') + ': ' + (secs[i - 1].id || i - 1) + ' / ' + (secs[i].id || i));
+        if (a.medium && a.medium === b.medium) E.push('Neighbouring sections use the same medium (' + a.medium + '): ' + (secs[i - 1].id || i - 1) + ' / ' + (secs[i].id || i));
+        KEYS.forEach(function (k) { if (!b[k] && i === 1 && !a[k]) W.push('Sections need data-' + k + ' for the beat lint.'); });
+      }
+      var abstract = $$('[data-medium]').filter(function (s) { return /diagram|chart|code/.test(s.dataset.medium); }).length;
+      if (abstract > 1) E.push(abstract + ' abstract formats (one per page at most).');
+    }
+    $$('[data-loop]').forEach(function (l) { if (!l.querySelector('.pause')) E.push('A loop has no pause button.'); });
+    $$('.pic, .sheet, .morning').forEach(function (p) { if (!/sample/i.test(p.innerText + (p.getAttribute('aria-label') || ''))) W.push('Picture without a visible "Sample" label: ' + (p.id || p.className)); });
+    $$('a[href^="sms:"]').forEach(function (a) { if (!/body=/.test(a.getAttribute('href'))) W.push('sms: link without a prefilled body.'); });
+    // type floors at the current width: 12px inside pictures always; 15px for key text outside pictures on phones
+    if (innerWidth <= 430) {
+      var small = [], tiny = [];
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        var n = walker.currentNode, el = n.parentElement; if (!n.nodeValue.trim() || !el || el.closest('.sr,script,style,noscript')) continue;   // aria-hidden text still has to be readable
+        if (!vis(el)) continue;
+        var fs = parseFloat(getComputedStyle(el).fontSize);
+        if (el instanceof SVGElement && el.getScreenCTM) { var m = el.getScreenCTM(); if (m) fs *= Math.hypot(m.a, m.b); }   // svg text: the size it renders at
+        var inPic = el.closest('.pic,.plan,.inpic,.fn,.ghost,.scr-lock,.morning,.wb,.ticket,.doc,.xl,.county,.samp,.slot');   // .slot: review-only placeholder
+        if (fs < 12) tiny.push(n.nodeValue.trim().slice(0, 30) + ' (' + fs + 'px)');
+        else if (fs < 15 && !inPic) small.push(n.nodeValue.trim().slice(0, 30) + ' (' + fs + 'px)');
+      }
+      if (tiny.length) E.push('Text under 12px: ' + tiny.slice(0, 8).join('; '));
+      if (small.length) W.push('Text under 15px outside pictures: ' + small.slice(0, 8).join('; '));
+    }
+    if (!catalog && document.body.dataset.rules === 'v4') lintV4(E, W, vis, text);
+    return { errors: E, warnings: W };
+  };
+
+  /* ================================================================ focus never hides under the sticky header or the call bar (WCAG 2.4.11) */
+  // Browsers do not scroll an element that is already "in view" but sits under a fixed bar; scrollIntoView honours scroll-padding.
+  document.addEventListener('focusin', function (e) {
+    var el = e.target; if (!el || !el.getBoundingClientRect || el.closest('.hdr, .callbar')) return;
+    var r = el.getBoundingClientRect(), hdr = $('.hdr'), bar = $('.callbar');
+    var top = hdr ? hdr.getBoundingClientRect().bottom : 0, bottom = bar && bar.offsetParent ? bar.getBoundingClientRect().top : innerHeight;
+    if (r.top < top || r.bottom > bottom) el.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+  });
+
+  /* ================================================================ start */
+  initMenu();
+  initPickers();
+  var start = [qs.get('trade'), locked ? null : store.get('lumora.trade'), document.body.dataset.trade, 'plumbing'].filter(function (k) { return k && D[k]; })[0];
+  if (locked) start = document.body.dataset.trade;
+  // a choice already made: this trade's own page, ?trade= or a pick stored on an earlier page (trades-1 fix, 2026-10-07)
+  L.picked = locked || !!(qs.get('trade') && D[qs.get('trade')]) || !!(store.get('lumora.trade') && D[store.get('lumora.trade')]);
+  $$('[data-loop]').forEach(function (el) { loops.push(new Loop(el)); });
+  if (start) setTrade(start, false);
+  initG2R(document, false);
+  initDraw(document);
+  $$('[data-leak]').forEach(initLeak);
+  $$('[data-tabs]').forEach(initTabs);
+  // job: show our work, once on load (no loop, so no pause is needed)
+  // The writing is CSS on .sheet[data-fill] (so prerendered rows never flash before it starts). On a phone the sheet
+  // sits below the fold, so it holds its first frame (.wait) until it is a third in view, instead of writing unseen.
+  $$('.sheet[data-fill]').forEach(function (s) {
+    if (still) { s.classList.add('still'); return; }
+    s.classList.add('writing');
+    if (!('IntersectionObserver' in window) || s.getBoundingClientRect().top < innerHeight * 0.8) return;
+    s.classList.add('wait');
+    var io = new IntersectionObserver(function (es) { if (es[0].intersectionRatio < 0.33 && es[0].intersectionRect.height < innerHeight * 0.4) return;
+      io.disconnect(); s.classList.remove('wait'); }, { threshold: [0, 0.33, 0.6] });
+    io.observe(s);
+  });
+  $$('.pen-ring').forEach(ring);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { $$('.pen-ring').forEach(ring); tally.update(); fitCrops(); });
+  if (qs.has('lint')) { var r = L.lint(); console.log('Lumora lint', r); }
+})();
