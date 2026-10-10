@@ -55,7 +55,7 @@
       },
       { // Stop 2 · The payment report
         alt: 'Sample, as we find it: a printed report of declined autopay charges for October 10: Ana Martinez $118.00, card expired; Lisa Brown $118.00, insufficient funds; Tom Anderson $89.00, do not honor. The Retry column is empty, and its heading is circled in pencil.',
-        html: '<div class="t2-gb t2o"><p class="gb-h"><span>BLUESTEM PEST CONTROL</span><span>PAGE 1</span></p><p class="gb-s"><span>DECLINED AUTOPAY</span><span>10/10/26</span></p>' +
+        html: '<div class="t2-gb t2o"><p class="gb-h"><span>KILLDEER PEST CONTROL</span><span>PAGE 1</span></p><p class="gb-s"><span>DECLINED AUTOPAY</span><span>10/10/26</span></p>' +
           '<table><thead><tr><th>CUSTOMER</th><th class="r">AMT</th><th>REASON</th><th class="rt"><span class="pc">RETRY</span></th></tr></thead><tbody>' +
           '<tr><td>MARTINEZ, ANA</td><td class="r">118.00</td><td>CARD EXPIRED</td><td></td></tr>' +
           '<tr><td>BROWN, LISA</td><td class="r">118.00</td><td>NSF</td><td></td></tr>' +

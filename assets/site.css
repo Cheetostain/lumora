@@ -113,7 +113,7 @@ a.tel,a.mail{color:var(--ink);text-decoration:underline;text-decoration-color:va
 @media (max-width:440px){.bar-in{gap:8px}.bar .btn{padding:0 14px}.menu summary{width:40px;padding:0;justify-content:center}
   .menu-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}}
 @media (max-width:374px){.bar .btn-bar{display:none}}
-.stamp{display:inline-block;flex:none;font-size:13px;font-weight:600;line-height:1;letter-spacing:.01em;color:var(--signal-ink);border:1.5px solid var(--signal-ink);border-radius:3px;padding:5px 8px 4px;transform:rotate(-4deg);white-space:nowrap;background:var(--sheet)}
+.stamp{display:inline-block;flex:none;font-size:13px;font-weight:600;line-height:1;letter-spacing:.01em;color:var(--signal-ink);border:1.5px solid var(--signal-ink);border-radius:3px;padding:5px 8px 4px;white-space:nowrap;background:var(--sheet)}
 .tag{display:inline-block;margin-left:8px;font-size:12px;font-weight:500;line-height:1;color:var(--ink);border:1px solid var(--ink);border-radius:3px;padding:3px 6px 2px;vertical-align:2px;white-space:nowrap}
 .photo{margin:0}
 .adf{position:relative;aspect-ratio:3/2;background:var(--bone-dark);overflow:hidden}
@@ -249,7 +249,7 @@ html[lang="es"] .hero h1{font-size:clamp(34px,4.4vw,54px);max-width:14em}
 @media (prefers-reduced-motion:no-preference){
   .sheet.home .stamp{animation:stamp .5s cubic-bezier(.2,.8,.25,1) .25s backwards}
 }
-@keyframes stamp{from{transform:rotate(-4deg) scale(1.28)}to{transform:rotate(-4deg) scale(1)}}
+@keyframes stamp{from{transform:scale(1.28)}to{transform:scale(1)}}
 .sheet.full{padding:28px 28px 22px}
 .sheet.full .saw-c{width:26%;padding-left:16px}
 .sheet.full .eff{width:84px}

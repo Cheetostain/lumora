@@ -25,12 +25,12 @@
 <link rel="icon" href="/v3/assets/mark.svg">
 <link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v3/system.css?v=939ea1e1">
-<link rel="stylesheet" href="/v3/trades-3/trades-3.css?v=939ea1e1">
+<link rel="stylesheet" href="/v3/system.css?v=42e28de7">
+<link rel="stylesheet" href="/v3/trades-3/trades-3.css?v=42e28de7">
 <script>document.documentElement.classList.add('js')</script>
-<script src="/v3/trades.js?v=939ea1e1" defer></script>
-<script src="/v3/system.js?v=939ea1e1" defer></script>
-<script src="/v3/trades-3/trades-3.js?v=939ea1e1" defer></script>
+<script src="/v3/trades.js?v=42e28de7" defer></script>
+<script src="/v3/system.js?v=42e28de7" defer></script>
+<script src="/v3/trades-3/trades-3.js?v=42e28de7" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -72,7 +72,7 @@
     <p class="lk-priv">This runs on your phone or computer. Nothing you type is sent to us or saved.</p>
     <div class="lk-g">
       <form class="calc lk-form" id="lk" novalidate autocomplete="off" aria-describedby="lk-ex">
-        <div class="lk-bar tally" aria-hidden="true"><span data-o="barl">Example</span><b data-o="bar">About $1,860 a month</b></div>
+        <div class="lk-bar tally" aria-hidden="true"><span data-o="barl">Example</span><b data-o="bar">About $1,540 a month</b></div>
         <p class="lk-ex" id="lk-ex">The numbers already in the boxes are examples, not yours. Change them.</p>
         <fieldset>
           <legend>Missed calls</legend>
@@ -86,7 +86,7 @@
             <div class="step"><button type="button" class="stepb" data-step="-1" data-for="back" aria-label="One fewer call returned">−</button><input id="lk-back" name="back" inputmode="decimal" value="3" aria-describedby="h-back"><button type="button" class="stepb" data-step="1" data-for="back" aria-label="One more call returned">+</button></div>
             <p class="lf-h" id="h-back">Calls you returned. If you are not sure, guess.</p></div>
           <div class="lf"><label for="lk-book">Share that would have booked a job (%) <span class="ex" data-ex="book">Example</span></label>
-            <div class="unit"><input id="lk-book" name="book" inputmode="decimal" value="40%" aria-describedby="h-book"></div>
+            <div class="unit"><input id="lk-book" name="book" inputmode="decimal" value="24%" aria-describedby="h-book"></div>
             <p class="lf-h" id="h-book">Out of every 100 calls nobody returned, how many would have become a job? Type a percent: 3 in 10 is 30%. Not sure? A study of more than 3,000 trade businesses found they booked 42 percent of calls on average, and 24 percent at shops with fewer than 5 technicians (ServiceTitan, 2022, vendor data, US and Canada).</p></div>
           <div class="lf"><label for="lk-profit">Typical profit per job <span class="ex" data-ex="profit">Example</span></label>
             <div class="unit"><input id="lk-profit" name="profit" inputmode="decimal" value="$150" aria-describedby="h-profit"></div>
@@ -119,18 +119,18 @@
         <div class="lk-sheet">
           <div class="lk-sh-h"><b>Your estimate</b><span class="stamp" data-o="stamp">Sample</span></div>
           <div data-o="result">
-            <p class="lk-total"><span class="lk-about">About</span><span class="out-usd money" data-o="total">$1,860<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><small>a month</small></p>
-            <div class="dots" data-o="dots" role="img" aria-label="13.0 calls a month nobody returned; about 5.2 of them would have booked a job."><span class="dot job"></span><span class="dot job"></span><span class="dot job"></span><span class="dot job"></span><span class="dot job"></span><span class="dot part" style="--p:20%"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <p class="lk-total"><span class="lk-about">About</span><span class="out-usd money" data-o="total">$1,540<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><small>a month</small></p>
+            <div class="dots" data-o="dots" role="img" aria-label="13.0 calls a month nobody returned; about 3.1 of them would have booked a job."><span class="dot job"></span><span class="dot job"></span><span class="dot job"></span><span class="dot part" style="--p:12%"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
             <p class="dots-key" style="margin-top:10px"><span><i></i>A call nobody returned, in a month</span><span><i class="j"></i>Would have booked a job</span></p>
             <ol class="lk-lines">
-              <li data-o="l-calls"><span><b>Missed calls</b>3 a week nobody returned × 52 ÷ 12 = 13.0 a month. × 40% that would have booked = 5.2 jobs. × $150 profit a job = $780 a month.</span><span class="v">$780</span></li>
+              <li data-o="l-calls"><span><b>Missed calls</b>3 a week nobody returned × 52 ÷ 12 = 13.0 a month. × 24% that would have booked = 3.12 jobs. × $150 profit a job = $468 a month.</span><span class="v">$468</span></li>
               <li data-o="l-quotes"><span><b>Quotes</b>2 a month that went cold × $400 profit a job = $800 a month.</span><span class="v">$800</span></li>
               <li data-o="l-retype"><span><b>Retyping</b>30 minutes a day × 22 days ÷ 60 = 11.0 hours × $25 an hour = $275 a month.</span><span class="v">$275</span></li>
             </ol>
           </div>
           <p class="lk-empty" data-o="empty" hidden>Put a number in each missed-call box to see your estimate.</p>
           <p class="t-small muted">An estimate from your numbers. The walk counts the real ones.</p>
-          <noscript><p class="t-small" style="margin-top:10px">With the example numbers: 3 calls a week nobody returned × 52 ÷ 12 = 13.0 a month. × 40% = 5.2 jobs. × $150 = $780 a month. Run the same steps with your own numbers.</p></noscript>
+          <noscript><p class="t-small" style="margin-top:10px">With the example numbers: 3 calls a week nobody returned × 52 ÷ 12 = 13.0 a month. × 24% = 3.12 jobs. × $150 = $468 a month. Run the same steps with your own numbers.</p></noscript>
         </div>
         <div class="cta-row">
           <a class="btn" href="tel:+13522260681">Call or text us</a>
@@ -149,11 +149,11 @@
     <div class="find-g">
       <figure>
         <div class="pic pic-c">
-          <div class="scr-phone crop" role="img" aria-label="Sample: a phone's Recents list on the Missed tab, with missed calls from (352) 555-0131 twice yesterday, (352) 555-0148 and (352) 555-0119 on Monday, and Maria Garcia on Saturday.">
+          <div class="scr-phone crop" role="img" aria-label="Sample: a phone's Recents list on the Missed tab, with missed calls from (352) 555-0144 twice yesterday, (352) 555-0148 and (352) 555-0119 on Monday, and Maria Garcia on Saturday.">
             <div class="ph"><div class="ph-sb"><span>7:05</span><i></i></div><div class="ph-body">
               <div class="ph-seg"><span>All</span><span class="on">Missed</span></div><p class="ph-h">Recents</p>
               <ul class="ph-list">
-                <li class="miss"><b>(352) 555-0131 (2)</b><small>Gainesville, FL</small><time>Yesterday</time></li>
+                <li class="miss"><b>(352) 555-0144 (2)</b><small>Gainesville, FL</small><time>Yesterday</time></li>
                 <li class="miss"><b>(352) 555-0148</b><small>Newberry, FL</small><time>Monday</time></li>
                 <li class="miss"><b>(352) 555-0119</b><small>Gainesville, FL</small><time>Monday</time></li>
                 <li class="miss"><b>Maria Garcia</b><small>mobile</small><time>Saturday</time></li>

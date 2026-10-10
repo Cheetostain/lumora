@@ -78,7 +78,7 @@
   var form = document.getElementById('lk'); if (!form) return;
   var F = ['calls', 'rang', 'back', 'book', 'profit', 'quotes', 'qprofit', 'minutes', 'days', 'rate'];
   var REQ = ['calls', 'rang', 'back', 'book', 'profit'];
-  var EX = { calls: '40', rang: '6', back: '3', book: '40%', profit: '$150', quotes: '2', qprofit: '$400', minutes: '30', days: '22', rate: '$25' };
+  var EX = { calls: '40', rang: '6', back: '3', book: '24%', profit: '$150', quotes: '2', qprofit: '$400', minutes: '30', days: '22', rate: '$25' };
   var inp = function (n) { return form.querySelector('[name="' + n + '"]'); };
   var o = function (k) { return $('[data-o="' + k + '"]'); };
   var num = function (v) { v = String(v).replace(/[$,%\s]/g, ''); return v === '' ? NaN : +v; };
@@ -143,7 +143,7 @@
     var hasR = hasH && !isNaN(v.rate), retypeUSD = hasR ? hours * v.rate : 0;
     var total = callsUSD + quotesUSD + retypeUSD, round10 = Math.round(total / 10) * 10;
 
-    line('l-calls', 'Missed calls', notBack + ' a week nobody returned × 52 ÷ 12 = ' + one(month) + ' a month. × ' + plain(v.book) + '% that would have booked = ' + one(jobs) + ' jobs. × ' + usd(v.profit) + ' profit a job = ' + usd(callsUSD) + ' a month.', usd(callsUSD));
+    line('l-calls', 'Missed calls', notBack + ' a week nobody returned × 52 ÷ 12 = ' + one(month) + ' a month. × ' + plain(v.book) + '% that would have booked = ' + plain(jobs) + ' jobs. × ' + usd(v.profit) + ' profit a job = ' + usd(callsUSD) + ' a month.', usd(callsUSD));
     if (hasQ) line('l-quotes', 'Quotes', plain(v.quotes) + ' a month that went cold × ' + usd(v.qprofit) + ' profit a job = ' + usd(quotesUSD) + ' a month.', usd(quotesUSD));
     else line('l-quotes', 'Quotes', 'Left out: this line is not filled in.', '', true);
     if (hasR) line('l-retype', 'Retyping', plain(v.minutes) + ' minutes a day × ' + plain(v.days) + ' days ÷ 60 = ' + one(hours) + ' hours × ' + usd(v.rate) + ' an hour = ' + usd(retypeUSD) + ' a month.', usd(retypeUSD));

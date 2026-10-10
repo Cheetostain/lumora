@@ -97,12 +97,12 @@
       '</div><div class="wb-tray"></div></div>';
   }
   function recentsHTML() {             // plumbing stop: the shop phone, the missed call circled in pencil
-    return '<div class="scr-phone tilt"><div class="ph"><div class="ph-sb"><span>6:58</span><i></i></div><div class="ph-body">' +
+    return '<div class="scr-phone tilt"><div class="ph"><div class="ph-sb"><span>3:40</span><i></i></div><div class="ph-body">' +
       '<div class="ph-seg"><span class="on">All</span><span>Missed</span></div><p class="ph-h">Recents</p><ul class="ph-list">' +
-      '<li><b>Dave, truck 1</b><small>mobile</small><time>6:41 PM</time></li>' +
-      '<li class="miss pc"><b>(352) 555-0131 (2)</b><small>Gainesville, FL</small><time>6:12 PM</time></li>' +
-      '<li><b>Supply counter</b><small>work</small><time>3:22 PM</time></li>' +
-      '<li><b>Maria Garcia</b><small>mobile</small><time>11:48 AM</time></li>' +
+      '<li><b>Dave, truck 1</b><small>mobile</small><time>3:22 PM</time></li>' +
+      '<li><b>Supply counter</b><small>work</small><time>1:05 PM</time></li>' +
+      '<li class="miss pc"><b>(352) 555-0153 (2)</b><small>Gainesville, FL</small><time>11:20 AM</time></li>' +
+      '<li><b>Maria Garcia</b><small>mobile</small><time>10:48 AM</time></li>' +
       '<li><b>John Smith</b><small>mobile</small><time>9:30 AM</time></li></ul></div></div></div>';
   }
   var chip = function (c) { return typeof c === 'object' ? '<span class="st ' + (c.chip === 'nt' ? 'gy' : c.chip) + '">' + esc(c.t) + '</span>' : esc(c); };
@@ -136,10 +136,18 @@
   }
   function altBefore(row) {
     if (row.before.kind === 'whiteboard') return 'Sample, as we find it: the office whiteboard. Garcia\'s water heater visit is under Tuesday; "Quote Garcia" is under Friday, with an arrow back to Tuesday.';
-    if (row.before.kind === 'recents') return 'Sample, as we find it: the shop phone\'s Recents. Two missed calls from (352) 555-0131 at 6:12 PM, circled, and no call back.';
-    return 'Sample, as we find it: drawing of ' + row.place.toLowerCase() + ': ' + row.before.g.map(function (v) { return v.replace('|', ' '); }).join(', ') + '.';
+    if (row.before.kind === 'recents') return 'Sample, as we find it: the shop phone\'s Recents. Two missed calls from (352) 555-0153 at 11:20 AM, circled, and no call back.';
+    return 'Sample, as we find it: ' + row.place.toLowerCase() + ': ' + row.before.g.map(function (v) { return v.replace('|', ' '); }).join(', ') + '.';
   }
-  function beforeHTML(row) { return row.before.kind === 'whiteboard' ? whiteboardHTML() : row.before.kind === 'recents' ? recentsHTML() : ghostSVG(row.before.ghost, row.before.g); }
+  function beforeCard(row) {           // C1 (2026-10-09): as we find it, the shop's own papers or screen, no drawing
+    var g = row.before.g, k = row.before.ghost, two = function (v) { var p = String(v).split('|'); return [p[0], p[1] || '']; };
+    if (k === 'phone') return '<div class="scr-phone tilt"><div class="ph"><div class="ph-sb"><span>9:41</span><i></i></div><div class="ph-body"><p class="ph-h">Recents</p><ul class="ph-list">' +
+      g.map(function (v) { var p = two(v); return '<li' + (/^Missed/.test(p[0]) ? ' class="miss"' : '') + '><b>' + esc(p[0]) + '</b><small>Shop line</small><time>' + esc(p[1]) + '</time></li>'; }).join('') + '</ul></div></div></div>';
+    if (k === 'clip') return realHTML({ frame: 'clip', title: g[0], rows: g.slice(1).map(two) });
+    if (k === 'win') return realHTML({ frame: 'win', title: g[0], rows: g.slice(1).map(two) });
+    return realHTML({ frame: 'paper', title: row.place, rows: g.map(two) });
+  }
+  function beforeHTML(row) { return row.before.kind === 'whiteboard' ? whiteboardHTML() : row.before.kind === 'recents' ? recentsHTML() : beforeCard(row); }
   L.render = { ghost: ghostSVG, real: realHTML, whiteboard: whiteboardHTML, recents: recentsHTML };
 
   /* ================================================================ binders: everything the trade choice rewrites */
@@ -202,14 +210,14 @@
         LS = '<svg viewBox="0 0 16 16" width="17" height="17"><path fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" d="M5.5 4.5h7M5.5 8h7M5.5 11.5h7M2.8 4.5h.4M2.8 8h.4M2.8 11.5h.4"/></svg>';
       // one night, told the same way in every place: these numbers and times match each trade's morning log in trades.js
       var N = [['cb', LS, 'Callback list for 7:30', '', '2 callers, both texted back within a minute.', ''],
-        ['', PH, 'Missed Call', '6:38 AM', '(352) 555-0148', 'Texted back · 6:39 AM'],
+        ['', PH, 'Missed Call', '6:38 AM', '(352) 555-0148', 'Already texted at 3:03 AM'],
         ['', MS, '(352) 555-0148', '3:06 AM', t.night, 'On the callback list'],
         ['', PH, 'New Voicemail', '3:04 AM', '(352) 555-0148 · 0:41', 'On the callback list'],
         ['', PH, 'Missed Call', '3:02 AM', '(352) 555-0148', 'Texted back · 3:03 AM'],
         ['', PH, 'Missed Call', '11:48 PM', '(352) 555-0119', 'Texted back · 11:49 PM']];
       nts.innerHTML = N.map(function (n) { return '<div class="nt ' + n[0] + '"><span class="ap" aria-hidden="true">' + n[1] + '</span><div><p class="nr"><b>' + esc(n[2]) + '</b>' + (n[3] ? '<span>' + n[3] + '</span>' : '') + '</p><p>' + esc(n[4]) + '</p>' + (n[5] ? '<span class="fx">↩ ' + esc(n[5]) + '</span>' : '') + '</div></div>'; }).join('');
       var lock = el.querySelector('.scr-lock');
-      if (lock) lock.setAttribute('aria-label', 'Sample: a shop phone\'s lock screen at 6:41 a.m. Missed calls at 11:48 p.m., 3:02 a.m. and 6:38 a.m., a voicemail at 3:04 a.m. and a text at 3:06 a.m. that says "' + t.night + '" With the fix, each caller got a text back within a minute, and a 7:30 a.m. callback list sits on top.');
+      if (lock) lock.setAttribute('aria-label', 'Sample: a shop phone\'s lock screen at 6:41 a.m. Missed calls at 11:48 p.m., 3:02 a.m. and 6:38 a.m., a voicemail at 3:04 a.m. and a text at 3:06 a.m. that says "' + t.night + '" With the fix, each caller got one text back within a minute, and a 7:30 a.m. callback list sits on top.');
       loops.forEach(function (lp) { if (lp.el === el || el.contains(lp.el) || lp.el.contains(el)) lp.reset(); });
     },
     morning: function (el, t) {
@@ -397,8 +405,8 @@
       else if (book > 100) err = 'Use a share from 0 to 100.';
       out('err').textContent = err;
       if (err) { out('math').textContent = 'Put a number in each box to see your estimate.'; return; }
-      var notBack = rang - back, month = notBack * 52 / 12, jobs = month * book / 100, usd = Math.round(jobs * profit / 10) * 10;
-      out('math').textContent = notBack + ' call' + (notBack === 1 ? '' : 's') + ' a week nobody returned × 52 ÷ 12 = ' + month.toFixed(1) + ' a month. × ' + book + '% = ' + jobs.toFixed(1) + ' jobs. × ' + money(profit) + ' = ' + money(usd) + ' a month.';
+      var notBack = rang - back, month = notBack * 52 / 12, jobs = month * book / 100, usd = Math.round(jobs * profit), j2 = String(+jobs.toFixed(2));
+      out('math').textContent = notBack + ' call' + (notBack === 1 ? '' : 's') + ' a week nobody returned × 52 ÷ 12 = ' + month.toFixed(1) + ' a month. × ' + book + '% = ' + j2 + ' jobs. × ' + money(profit) + ' = ' + money(usd) + ' a month.';
       var dots = out('dots');
       if (dots) {
         var n = Math.min(Math.round(month), 60), full = Math.floor(jobs), part = jobs - full, h = '';

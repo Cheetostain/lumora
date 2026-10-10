@@ -388,7 +388,7 @@
    seen, and ends it at once under ?still ([data-once].still). Only transform, opacity and stroke-dashoffset move.
    Nothing loops. Nothing here is the only way to see a thing: hover has a tap or focus twin. */
 @keyframes ha-in{from{opacity:0}to{opacity:1}}
-@keyframes ha-stamp{from{opacity:0;transform:rotate(-1.5deg) scale(.82)}to{opacity:1;transform:rotate(-1.5deg) scale(1)}}
+@keyframes ha-ring{from{opacity:0;transform:rotate(-1.5deg) scale(.82)}to{opacity:1;transform:rotate(-1.5deg) scale(1)}}
 @keyframes ha-pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
 @keyframes ha-paper{from{opacity:0;transform:translateY(14px) rotate(var(--rot,0deg))}to{opacity:1;transform:rotate(var(--rot,0deg))}}
 @keyframes ha-grow{from{transform:scaleY(0)}to{transform:none}}
@@ -408,7 +408,7 @@
   html.js .glance[data-once]:not(.still) .gl>li.paid .gl-ico{animation:ha-pop var(--t-small) var(--ease-out) both;animation-delay:calc(var(--i,0)*110ms + 440ms)}
 
   /* 2. job: one-time focus. The pencil finds the evidence on the listing: "Closes 5 PM" is circled, then the note */
-  html.js .s1-pic[data-once]:not(.still) .pc::after{animation:ha-stamp var(--t-enter) var(--ease-out) 500ms both}
+  html.js .s1-pic[data-once]:not(.still) .pc::after{animation:ha-ring var(--t-enter) var(--ease-out) 500ms both}
   html.js .s1-pic[data-once]:not(.still) .pencil{animation:ha-in var(--t-enter) var(--ease-out) 850ms both}
 
   /* 3. job: show our work. The route is drawn from the door (1.4 s); each stop number lands as the line reaches it
@@ -424,7 +424,7 @@
   /* 4. job: show our work. The two papers are laid down, the pencil circles the valve, then notes it is missing */
   html.js .pair[data-once]:not(.still) :is(.ticket,.inv){animation:ha-paper var(--t-enter) var(--ease-out) both}
   html.js .pair[data-once]:not(.still) .inv{animation-delay:120ms}
-  html.js .pair[data-once]:not(.still) .ticket .pc::after{animation:ha-stamp var(--t-enter) var(--ease-out) 650ms both}
+  html.js .pair[data-once]:not(.still) .ticket .pc::after{animation:ha-ring var(--t-enter) var(--ease-out) 650ms both}
   html.js .pair[data-once]:not(.still) .inv-miss{animation:ha-in var(--t-enter) var(--ease-out) 950ms both}
 
   /* 6. job: cause and effect. The report's bars grow once: the four weeks before, then a beat, then the four after */
@@ -450,11 +450,11 @@
   /* ABOUT 2. job: one-time focus. The four pages land 120ms apart, then the pencil circles the same number on each,
      in order. The pages are laid down here, not by the system's .rv, so a circle never draws on a page not there yet */
   html.js .fourdocs[data-once]:not(.still) .fd{--rot:var(--r,0deg);animation:ha-paper var(--t-enter) var(--ease-out) both;animation-delay:calc(var(--i,0)*120ms)}
-  html.js .fourdocs[data-once]:not(.still) .fd-foot .pc::after{animation:ha-stamp var(--t-enter) var(--ease-out) both;animation-delay:calc(var(--i,0)*180ms + 700ms)}
+  html.js .fourdocs[data-once]:not(.still) .fd-foot .pc::after{animation:ha-ring var(--t-enter) var(--ease-out) both;animation-delay:calc(var(--i,0)*180ms + 700ms)}
 
   /* 3. job: show our work. One job is followed step by step, then the pencil circles the late quote's date */
   html.js .jh[data-once]:not(.still) ol>li{animation:write 380ms var(--ease-out) both;animation-delay:calc(var(--i,0)*150ms + 200ms)}
-  html.js .jh[data-once]:not(.still) time.pc::after{animation:ha-stamp var(--t-enter) var(--ease-out) 1150ms both}
+  html.js .jh[data-once]:not(.still) time.pc::after{animation:ha-ring var(--t-enter) var(--ease-out) 1150ms both}
   html.js .jh[data-once]:not(.still) .jh-gap{animation:ha-in var(--t-enter) var(--ease-out) 1400ms both}
 }
 /* feedback: hover is a fine-pointer extra; focus already gets the ink ring, and a tap gets the pressed state */
