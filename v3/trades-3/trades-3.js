@@ -2,7 +2,7 @@
    1. Trade pages: <template id="before-N" data-label="..."> swaps stop N's "as we find it" layer for the trade's own
       object (the restaurant's posted schedule, the property manager's wall calendar) where the system would draw a
       generic ink ghost. Same convention as pages/trades-1, so every trade page works one way. build.py prerenders it.
-   2. Leak check: the full calculator from content-en.md section 4. Nothing leaves the browser: no fetch, no storage,
+   2. Money check: the full calculator from content-en.md section 4. Nothing leaves the browser: no fetch, no storage,
       no form action; Enter never submits. Only the owner's own input moves the figure.
    3. One-shot pictures (after close, the document pair, the text thread, the owner's own records): each plays once in
       view, under 5 s, so no pause control. Styles at the end of trades-3.css. Frame strips: python frames.py */
@@ -74,7 +74,7 @@
     });
   });
 
-  /* ================================================================ 2. the leak check */
+  /* ================================================================ 2. the money check */
   var form = document.getElementById('lk'); if (!form) return;
   var F = ['calls', 'rang', 'back', 'book', 'profit', 'quotes', 'qprofit', 'minutes', 'days', 'rate'];
   var REQ = ['calls', 'rang', 'back', 'book', 'profit'];
@@ -168,7 +168,7 @@
     bar.textContent = words;
     // job: cause and effect. On a phone the sticky bar is the figure he can see while he types: it nudges when it changes
     if (moved && !still) { bar.classList.remove('bump'); void bar.offsetWidth; bar.classList.add('bump'); }
-    o('sms').href = SMS + encodeURIComponent('Hi, I ran the leak check on your site: about ' + usd(round10) + ' a month. When is a good time for the free call?');
+    o('sms').href = SMS + encodeURIComponent('Hi, I ran the money check on your site: about ' + usd(round10) + ' a month. When is a good time for the free call?');
     return words;
   }
 
