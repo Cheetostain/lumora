@@ -747,7 +747,7 @@
         list = $$('.sys', th).filter(function (x) { return /callback list|lista para devolver llamadas|anotad[oa] para devolver(?:le)? la llamada/i.test(x.textContent); })[0];   // Spanish since the native read of 2026-10-10: "Anotado para devolver la llamada a las 12:30 p. m."
       if (said && list && said !== hm(list.textContent)) E.push('R4: the text-back promises ' + said + ' but the callback list says ' + hm(list.textContent) + '.');
     });
-    // money back names the walk fee (hard rule 2026-10-10); "every dollar back" read as the fix money too, right after the price sentence.
+    // money back names the walk fee (hard rule 2026-10-10); the old line, "every dollar back", read as the fix money too, right after the price sentence.
     // Spanish: "lo que pagó por la visita", never "todo su dinero" (the old Spanish line) and never a figure
     if (/every dollar back|todo su dinero/i.test(text)) E.push('Money back: "every dollar back" is retired; the line says "the walk fee".');
     shown('.mb').forEach(function (m) { if (!/the walk fee|lo que pagó por la visita/i.test(m.innerText)) E.push('Money back: a money-back line without "the walk fee": ' + m.innerText.slice(0, 50)); });
