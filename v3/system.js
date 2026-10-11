@@ -16,7 +16,7 @@
   var money = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
   var total = function (t) { return t.rows.reduce(function (a, r) { return a + r.usd; }, 0); };
   var perWord = function (t) { return t.per === 'yr' ? 'a year' : 'a month'; };
-  var perShort = function (t) { return t.per === 'yr' ? ' / yr' : ' / mo'; };
+  var perShort = function (t) { return t.per === 'yr' ? ' a year' : ' a month'; };   // matches the v4 Home (Franco 2026-10-10: one wording sitewide)
   var store = {
     get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
     set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage blocked: the page still works */ } }

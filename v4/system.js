@@ -36,8 +36,9 @@
   }
   var DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
     MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-  // a clock time as the page writes it: "6:30 AM", or on a Spanish page "6:30 a. m." (ES-VOICE); data-t keeps the English form
-  var hora = function (s) { return ES ? String(s).replace(/\b(\d{1,2}:\d\d) ?([AP])M\b/g, function (m, h, a) { return h + ' ' + a.toLowerCase() + '. m.'; }) : s; };
+  // a clock time as the page writes it: "6:30 AM", or on a Spanish page "6:30 a. m." with no-break spaces, so it never splits
+  // over two lines (ES-VOICE); data-t keeps the English form
+  var hora = function (s) { return ES ? String(s).replace(/\b(\d{1,2}:\d\d) ?([AP])M\b/g, function (m, h, a) { return h + ' ' + a.toLowerCase() + '. m.'; }) : s; };
   var qs = new URLSearchParams(location.search);
   var still = qs.has('still') || matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = matchMedia('(hover: hover) and (pointer: fine)');
@@ -166,9 +167,11 @@
     if (R.frame === 'paper') return '<div class="doc tilt-r">' + docBody(R, true) + '</div>';
     return '<div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>' + esc(R.title) + '</span></div><div class="win-b">' + docBody(R, false) + '</div></div>';
   }
+  // sentences joined with ". ", never ".." after a part that already ends in a period (Spanish "p. m.", "oct."; review 2026-10-10)
+  var sent = function (parts) { return parts.filter(function (s) { return s; }).map(function (s) { s = String(s).trim(); return /[.?]$/.test(s) ? s : s + '.'; }).join(' '); };
   function altAfter(R) {
-    return R.frame === 'phone' ? tr('Sample, fixed: a text thread on the shop phone with ', 'Ejemplo, con el arreglo: la conversación en el teléfono del negocio con el ') + R.who + '. ' + R.msgs.map(function (m) { return m[1]; }).join('. ') + '.'
-      : tr('Sample, fixed: ', 'Ejemplo, con el arreglo: ') + R.title + (R.meta ? ', ' + R.meta : '') + '. ' + (R.badge ? R.badge[1] + '.' : '') + (R.total ? ' ' + R.total[0] + ' ' + R.total[1] + '.' : '');
+    return R.frame === 'phone' ? sent([tr('Sample, fixed: a text thread on the shop phone with ', 'Ejemplo, con el arreglo: la conversación en el teléfono del negocio con el ') + R.who].concat(R.msgs.map(function (m) { return m[1]; })))
+      : sent([tr('Sample, fixed: ', 'Ejemplo, con el arreglo: ') + R.title + (R.meta ? ', ' + R.meta : ''), R.badge && R.badge[1], R.total && R.total[0] + ' ' + R.total[1]]);
   }
   function altBefore(row) {
     if (row.before.kind === 'whiteboard') return 'Sample, as we find it: the office whiteboard. Garcia\'s water heater visit is under Tuesday; "Quote Garcia" is under Friday, with an arrow back to Tuesday.';
@@ -251,8 +254,8 @@
       if (f('total')) f('total').textContent = money(total(t)) + perShort(t);
       // one short line for screen readers when the owner picks another trade (the sheet itself is not a live region: a pick
       // used to read out about 50 changed words). Empty on load, so nothing is announced before he chooses.
-      if (f('live') && animate) f('live').textContent = tr('Sample shop: ', 'Negocio de ejemplo: ') + t.name + ', ' + money(total(t)) + ' ' + perWord(t) + tr(' lost before any fix.', ' que se pierden antes de cualquier arreglo.');
-      var tm = f('time'); if (tm) { tm.hidden = !t.time; if (t.time) tm.innerHTML = tr('Time back for you or your office: ', 'Tiempo que recuperan usted o su oficina: ') + '<b>' + esc(t.time) + '</b>'; }
+      if (f('live') && animate) f('live').textContent = tr('Sample shop: ', 'Negocio de ejemplo: ') + t.name + ', ' + money(total(t)) + ' ' + perWord(t) + tr(' lost before any fix.', ' que pierde hoy, antes de arreglar nada.');
+      var tm = f('time'); if (tm) { tm.hidden = !t.time; if (t.time) tm.innerHTML = tr('Time back for you or your office: ', 'Usted o su oficina se ahorran ') + '<b>' + esc(t.time) + '</b>'; }
       $$('.pen-ring', el).forEach(ring);
       if (animate && !still) { el.classList.remove('writing', 'swap'); void el.offsetWidth; el.classList.add('swap'); } // job: cause and effect
     },
@@ -268,7 +271,7 @@
       rollTo(f('n'), shown.big, sum, money); shown.big = sum;
       if (f('per')) f('per').textContent = perWord(t);
       if (f('sub')) f('sub').textContent = t.sub;
-      if (f('time')) { f('time').hidden = !t.time; if (t.time) f('time').innerHTML = tr('Time back for you or your office: ', 'Tiempo que recuperan usted o su oficina: ') + '<b>' + esc(t.time) + '</b>.'; }
+      if (f('time')) { f('time').hidden = !t.time; if (t.time) f('time').innerHTML = tr('Time back for you or your office: ', 'Usted o su oficina se ahorran ') + '<b>' + esc(t.time) + '</b>.'; }
       if (f('eq')) f('eq').innerHTML = t.rows.map(function (r, i) { return (i ? '<i>+</i>' : '') + '<span>' + money(r.usd) + ' <small>' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1)) + '</small></span>'; }).join('') +
         '<i>=</i><span class="r">' + money(sum) + ' <small>' + perWord(t) + '</small></span>';
       $$('.pen-ring', el).forEach(function (s) { requestAnimationFrame(function () { ring(s); }); });
@@ -351,9 +354,11 @@
       var d0 = new Date(N.date + ', 2026'), d1 = new Date(d0.getTime() - 864e5), lg = function (d) { return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }); };
       var eve = isNaN(d1) ? N.date : lg(d1), pm = N.rows.some(function (r) { return / PM$/.test(r[0]); });
       var head = N.date.replace(/^(\w{3})\w*, (\w{3})\w* (\d+)$/, '$1, $2 $3'), logDate = pm ? eve.slice(0, 3) + ' night to ' + head : head, day = N.date;
-      if (ES && !isNaN(d1)) {   // "lunes, 5 de octubre", as a Spanish lock screen writes it; the log: "Noche del domingo al lunes 5 de octubre"
-        var dl = function (d) { return DIAS[d.getDay()] + ', ' + d.getDate() + ' de ' + MESES[d.getMonth()]; }, d5 = DIAS[d0.getDay()] + ' ' + d0.getDate() + ' de ' + MESES[d0.getMonth()];
-        day = dl(d0); eve = dl(d1); logDate = pm ? 'Noche del ' + DIAS[d1.getDay()] + ' al ' + d5 : d5.charAt(0).toUpperCase() + d5.slice(1);
+      if (ES && !isNaN(d1)) {   // "lunes, 5 de octubre", as a Spanish lock screen writes it; the log, short as the English: "Dom. a lun. 5 de oct."
+        var dl = function (d) { return DIAS[d.getDay()] + ', ' + d.getDate() + ' de ' + MESES[d.getMonth()]; },
+          ab = function (d) { return ['dom.', 'lun.', 'mar.', 'mié.', 'jue.', 'vie.', 'sáb.'][d.getDay()]; },
+          d5 = ab(d0) + ' ' + d0.getDate() + ' de ' + ['ene.', 'feb.', 'mar.', 'abr.', 'may.', 'jun.', 'jul.', 'ago.', 'sept.', 'oct.', 'nov.', 'dic.'][d0.getMonth()];
+        day = dl(d0); eve = dl(d1); logDate = pm ? ab(d1) + ' a ' + d5 : d5; logDate = logDate.charAt(0).toUpperCase() + logDate.slice(1);
       }
       var lock = '', SAMP = '<span class="samp">' + tr('Sample', 'Ejemplo') + '</span>';
       if (N.lock) {
@@ -407,9 +412,9 @@
       // a plain line under it: a walk goes room by room, and a calls row never becomes a heading (R1; review 2026-10-10)
       // the Before / After buttons sit under the picture they switch, beside its Sample label
       return '<li class="stop page" id="stop-' + n + '" data-usd="' + r.usd + '" data-place="' + esc(place) + '" data-task="' + task + '">' +
-        '<div class="stop-h"><span class="tab-n">' + n + '</span><div class="stop-t"><h3><span class="sr">' + tr('Stop ', 'Parada ') + n + ': </span>' + esc(place) + '</h3><p class="stop-leak">' + esc(r.b) + '</p></div></div>' +
+        '<div class="stop-h"><span class="tab-n">' + n + '</span><div class="stop-t"><h3><span class="sr">' + tr('Stop ', 'Paso ') + n + ': </span>' + esc(place) + '</h3><p class="stop-leak">' + esc(r.b) + '</p></div></div>' +
         '<div class="stop-body"><div class="pic' + (P ? ' has-seg' : '') + '"' + (task === 'calls' ? ' data-pic="calls"' : '') + '>' + pic +
-        (P ? '<div class="seg" role="group" aria-label="' + tr('Show stop ', 'Mostrar la parada ') + n + '"><button type="button" data-show="before" aria-pressed="false">' + tr('Before', 'Antes') + '</button><button type="button" data-show="after" aria-pressed="true">' + tr('After', 'Después') + '</button></div>' : '') +
+        (P ? '<div class="seg" role="group" aria-label="' + tr('Show stop ', 'Mostrar el paso ') + n + '"><button type="button" data-show="before" aria-pressed="false">' + tr('Before', 'Antes') + '</button><button type="button" data-show="after" aria-pressed="true">' + tr('After', 'Después') + '</button></div>' : '') +
         '<span class="samp">' + tr('Sample', 'Ejemplo') + '</span></div>' +
         '<div class="stop-notes"><p class="pencil">' + esc(r.note) + '</p>' +
         '<p class="find"><span class="find-usd money">' + money(r.usd) + ' ' + perWord(t) + UNDER_SVG + '</span><span class="find-f">' + esc(r.fs || r.f) + '</span></p>' +
@@ -525,8 +530,8 @@
         if (walk.getAttribute('data-walk') === 'pairs') {   // v4 (R9): progress only, no dollar figures; the walk's one total line follows the stops
           var nx = stops[Math.min(n, stops.length - 1)], lc = function (s) { return s.charAt(0).toLowerCase() + s.slice(1); };
           var pg = walk.querySelector('[data-tally] [data-f="tprog"]'), b1 = walk.querySelector('[data-f="bar-stop"]'), b2 = walk.querySelector('[data-f="bar-n"]');
-          var of = tr(' of ', ' de '), st = tr(' stops', ' paradas');
-          if (pg) pg.textContent = all ? tr('Walk done, ', 'Visita terminada, ') + n + of + n + st : n ? n + of + stops.length + st : stops.length + tr(' stops on this walk', ' paradas en esta visita');
+          var of = tr(' of ', ' de '), st = tr(' stops', ' pasos');   // Spanish "paso": a "parada" is a bus stop (native read 2026-10-10)
+          if (pg) pg.textContent = all ? tr('Walk done, ', 'Visita terminada, ') + n + of + n + st : n ? n + of + stops.length + st : stops.length + tr(' stops on this walk', ' pasos en esta visita');
           if (b1) b1.textContent = all ? tr('Walk done', 'Visita terminada') : n ? tr('Next: ', 'Sigue: ') + lc(nx ? nx.dataset.place : '') : tr('The walk, ', 'La visita, ') + stops.length + st;
           if (b2) b2.textContent = n ? n + of + stops.length : tr('Sample shop', 'Negocio de ejemplo');
           return;
@@ -575,7 +580,7 @@
     // as "Play again", so keyboard focus never drops to the page (phone-access review 2026-10-10)
     function label(mode) {
       if (!btn) return;
-      var vis = (ES ? { pause: 'Pausa', play: 'Reproducir', again: 'Ver otra vez' } : { pause: 'Pause', play: 'Play', again: 'Play again' })[mode], lab = btn.querySelector('.pt');
+      var vis = (ES ? { pause: 'Pausar', play: 'Reproducir', again: 'Ver otra vez' } : { pause: 'Pause', play: 'Play', again: 'Play again' })[mode], lab = btn.querySelector('.pt');
       btn.setAttribute('aria-label', (ES ? { pause: 'Pausar la animación', play: 'Reproducir la animación', again: 'Ver otra vez' } : { pause: 'Pause animation', play: 'Play animation', again: 'Play again' })[mode]);
       btn.classList.toggle('is-paused', mode !== 'pause'); if (lab) lab.textContent = vis;
     }
@@ -594,6 +599,9 @@
     if (btn) btn.addEventListener('click', function () {
       if (!el.classList.contains('run')) { plays = 0; user = false; el.classList.add('run'); step = first; frame(); label('pause'); sync(); return; }
       user = !user; label(user ? 'play' : 'pause');
+      // paused, the night shows finished, every row at full strength, as reduced motion does (phone-access review 2026-10-10: a
+      // pause froze 4 of 7 log rows dimmed); Play starts a fresh play from the first row
+      if (user && steps) { step = items().length; frame(); }
       sync();
     });
     label('pause');
@@ -693,7 +701,7 @@
     var cp = shown('[data-pic="calls"]').length; if (cp > 1) E.push('R1: ' + cp + ' calls pictures (one per page).');
     shown('h1,h2,h3').forEach(function (h) { if (/missed call|voicemail|text ?back|rang out|ring out|calls after hours|after-hours call|calls that ring|llamadas? perdidas?|buz[oó]n de voz|mensaje de voz|fuera de horario/i.test(h.innerText)) E.push('R1: call words in a heading: ' + h.innerText.slice(0, 50)); });
     // R4: nothing incoming stamped 11 p.m. to 5 a.m.; a text-back is a green SMS bubble (Spanish pages write "11:48 p. m.")
-    shown('.lk4-nt, [data-task="calls"], .bub.in').forEach(function (x) { if (/\b(11:\d\d ?(?:PM\b|p\. ?m\.)|12:\d\d ?(?:AM\b|a\. ?m\.)|[1-4]:\d\d ?(?:AM\b|a\. ?m\.))/i.test(x.innerText)) E.push('R4: something incoming between 11 p.m. and 5 a.m.: ' + x.innerText.slice(0, 50)); });
+    shown('.lk4-nt, [data-task="calls"], .bub.in').forEach(function (x) { if (/\b(11:\d\d\s?(?:PM\b|p\.\s?m\.)|12:\d\d\s?(?:AM\b|a\.\s?m\.)|[1-4]:\d\d\s?(?:AM\b|a\.\s?m\.))/i.test(x.innerText)) E.push('R4: something incoming between 11 p.m. and 5 a.m.: ' + x.innerText.slice(0, 50)); });
     $$('.thread .sys').forEach(function (s) { var b = s.nextElementSibling; if (/^(Missed call|Llamada perdida)/.test(s.textContent) && b && b.classList.contains('out') && !b.classList.contains('sms')) E.push('R4: a text-back in a blue bubble.'); });
     // R2: What we automate, second, at least 6 rows; no link to the full list until that page is live
     var auto = document.getElementById('automate'); if (!auto || shown('[data-task]', auto).length < 6) E.push('R2: What we automate is missing or has under 6 rows.');
@@ -735,8 +743,8 @@
     $$('.thread').forEach(function (th) {
       var tb = th.querySelector('.bub.sms') || $$('.bub.out', th).filter(function (b) { var p = b.previousElementSibling; return p && /^(Missed call|Llamada perdida)/.test(p.textContent); })[0]; if (!tb) return;
       var s = tb.textContent.trim(); if (!SCRIPT.test(s) && !SCRIPT_ES.test(s)) E.push('R4: a text-back off the RULES.md script: ' + s.slice(0, 60));
-      var said = hm((/call you back by ([^.]*?(?:[ap]\.m\.)[^.]*)|devolveremos la llamada ([^.]*?[ap]\. ?m\.)/i.exec(s) || []).slice(1).join('')),
-        list = $$('.sys', th).filter(function (x) { return /callback list|lista para devolver llamadas/i.test(x.textContent); })[0];
+      var said = hm((/call you back by ([^.]*?(?:[ap]\.m\.)[^.]*)|devolveremos la llamada ([^.]*?[ap]\.\s?m\.)/i.exec(s) || []).slice(1).join('')),
+        list = $$('.sys', th).filter(function (x) { return /callback list|lista para devolver llamadas|anotad[oa] para devolver(?:le)? la llamada/i.test(x.textContent); })[0];   // Spanish since the native read of 2026-10-10: "Anotado para devolver la llamada a las 12:30 p. m."
       if (said && list && said !== hm(list.textContent)) E.push('R4: the text-back promises ' + said + ' but the callback list says ' + hm(list.textContent) + '.');
     });
     // money back names the walk fee (hard rule 2026-10-10); "every dollar back" read as the fix money too, right after the price sentence.
@@ -785,6 +793,9 @@
       en.night4.nts.forEach(function (x, i) { same('notification ' + (i + 1), [x.t, x.p], [es.night4.nts[i].t, es.night4.nts[i].p]); }); }
     var left = (text.match(/\b(?:Sample|Before|After|Walk done|a month|a year|Time back|Pause|Play again|Ready)\b|\bNext:|\bStop \d/g) || []);
     if (left.length) E.push('Spanish: English words on the page: ' + left.slice(0, 6).join(', '));
+    // lines the native read of 2026-10-10 retired (calques and notary register), so they cannot come back
+    var old = text.match(/arreglamos cómo funciona|negocios de oficios|lista para devolver llamadas|Pérdida antes de cualquier arreglo|Tiempo que recuperan|\bparadas?\b|\bprospectos\b|previo acuerdo|con sede en|Hace más de uno|Puede detenerse|\bGanada\b|dentro de los 7 días siguientes/gi);
+    if (old) E.push('Spanish: a line the native read retired is back: ' + old.slice(0, 4).join(', '));
   }
 
   /* ================================================================ lint: the variety and trust rules, checkable */
@@ -816,6 +827,9 @@
       if (abstract > 1) E.push(abstract + ' abstract formats (one per page at most).');
     }
     $$('[data-loop]').forEach(function (l) { if (!l.querySelector('.pause')) E.push('A loop has no pause button.'); });
+    // WCAG 2.5.3: a pause button's accessible name starts with the words it shows ("Pausa" vs "Pausar la animación" missed it, 2026-10-10)
+    $$('.pause').forEach(function (b) { var v = ((b.querySelector('.pt') || {}).textContent || '').trim(), a = (b.getAttribute('aria-label') || '').trim();
+      if (v && a && a.toLowerCase().indexOf(v.toLowerCase()) !== 0) E.push('A pause button shows "' + v + '" but is named "' + a + '" (the name must start with the visible words).'); });
     $$('.pic, .sheet, .morning').forEach(function (p) { if (!/sample|ejemplo/i.test(p.innerText + (p.getAttribute('aria-label') || ''))) W.push('Picture without a visible "Sample" label: ' + (p.id || p.className)); });
     $$('a[href^="sms:"]').forEach(function (a) { if (!/body=/.test(a.getAttribute('href'))) W.push('sms: link without a prefilled body.'); });
     // type floors at the current width: 12px inside pictures always; 15px for key text outside pictures on phones

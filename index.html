@@ -27,14 +27,14 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=3992c538">
-<link rel="stylesheet" href="/v4/home/home.css?v=3992c538">
+<link rel="stylesheet" href="/v4/system.css?v=dbc2e81a">
+<link rel="stylesheet" href="/v4/home/home.css?v=dbc2e81a">
 <!-- js: the hidden start states apply only with JS. review: picture slots show on this computer, the local check server or
      ?review, never on lumorafl.com (R8: on the live site an empty slot shows nothing). -->
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=3992c538" defer></script>
-<script src="/v4/system.js?v=3992c538" defer></script>
-<script src="/v4/home/home.js?v=3992c538" defer></script>
+<script src="/v4/trades.js?v=dbc2e81a" defer></script>
+<script src="/v4/system.js?v=dbc2e81a" defer></script>
+<script src="/v4/home/home.js?v=dbc2e81a" defer></script>
 </head>
 <body data-trade="plumbing" data-rules="v4">
 <a class="skip" href="#main">Skip to content</a>
@@ -163,40 +163,81 @@
       </ul>
       <p class="auto-close">The computer work behind the work: what your office types, checks, files and chases. On the walk, we find which of these your shop has.</p>
     </div>
-    <!-- picture: a builder's emailed work order read into the shop's own Jobs 2026.xlsx, the same file and columns as walk stop 2
-         (rows 975 to 977 follow its 971 to 974). Replaces the insurer's loss notice, which is restoration paperwork a plumbing
-         shop rarely gets (research/sectors; review 2026-10-10). Only the fields that land in a column are marked. -->
-    <figure class="pic auto-pic">
-      <div class="ap-stack" role="img" aria-label="Sample: a builder's emailed work order, OSB-26-118 from Oak Street Builders, and the shop's own Jobs 2026 spreadsheet. The builder's name and the job site address are read into row 977 as job 4524, marked Read from the PDF; nothing typed.">
-        <div class="scr-win ap-pdf">
-          <div class="win-tb"><i></i><i></i><i></i><span>Work order OSB-26-118.pdf</span></div>
-          <div class="ap-page">
-            <p class="ap-co"><mark>Oak Street Builders</mark></p>
-            <p class="ap-dt">Subcontract work order</p>
-            <dl>
-              <div class="ap-hm"><dt>Work order</dt><dd>OSB-26-118</dd></div>
-              <div><dt>Job site</dt><dd><mark>210 Main St, Unit B</mark></dd></div>
-              <div><dt>Scope</dt><dd>Bath rough-in, 1 bath remodel</dd></div>
-              <div class="ap-hm"><dt>Site contact</dt><dd>Tom Anderson, (352) 555-0136</dd></div>
-              <div class="ap-hm"><dt>Start</dt><dd>Mon, Oct 12</dd></div>
-            </dl>
-          </div>
-        </div>
-        <p class="ap-arrow">Read into your job list</p>
-        <div class="scr-win ap-xl">
-          <div class="win-tb"><i></i><i></i><i></i><span>Jobs 2026.xlsx</span></div>
-          <div class="win-b">
-            <div class="xl"><table>
-              <tr class="cl"><td></td><td>A</td><td>B</td><td class="hm">C</td><td>D</td></tr>
-              <tr><td>1</td><th>Job</th><th>Customer</th><th class="hm">Address</th><th>Entered</th></tr>
-              <tr class="ap-hm"><td>975</td><td>4522</td><td>Johnson, Mike</td><td class="hm">125 Main St</td><td>Typed once</td></tr>
-              <tr><td>976</td><td>4523</td><td>Taylor, Ann</td><td class="hm">125 Oak St</td><td>Typed once</td></tr>
-              <tr class="on"><td>977</td><td>4524</td><td>Oak Street Builders</td><td class="hm">210 Main St, Unit B</td><td>Read from the PDF</td></tr>
-            </table></div>
+    <!-- picture (code demo B, 2026-10-10; replaces the work order PDF and spreadsheet pair, same message: the shop's own papers
+         land in its own tools, now with the code that does it). One window opens on new_jobs.py, the script we write. It runs
+         once in view (home.js): four steps in main(), each lights a plain comment and its call, ticks the line and turns a run
+         log row from Waiting to done. Then the code fades and the run log rises into the owner's own screen, whose footer names
+         the code. Same job as before: Oak Street Builders' work order OSB-26-118 becomes job 4524 in row 977 of Jobs 2026.xlsx
+         (after walk stop 2's rows 971 to 974). Bends SYSTEM.md's no code band, no mono and one abstract format rules: Franco's
+         OK pending (code-demo/COMPARE.html). JS off, reduced motion or ?still: the finished screen. -->
+    <figure class="pic auto-pic bm" data-bm data-medium="code" data-view="screen" data-run="done">
+      <div class="scr-win bm-win">
+        <div class="win-tb"><i></i><i></i><i></i><span class="bm-tt"><b>new_jobs.py</b><b aria-hidden="true">Dunlin Plumbing, today</b></span></div>
+        <div class="bm-body">
+          <pre class="bm-code" tabindex="0" aria-label="Sample: the code we write, new_jobs.py, 43 lines"><code><span class="l"><span class="d">"""Sets up each new work order once.</span></span>
+<span class="l"></span>
+<span class="l"><span class="d">Runs on its own every 10 minutes.</span></span>
+<span class="l"><span class="d">"""</span></span>
+<span class="l"><span class="k">import</span> openpyxl</span>
+<span class="l"><span class="k">import</span> pdfplumber</span>
+<span class="l"></span>
+<span class="l"><span class="k">from</span> shop <span class="k">import</span> Job, crew, gmail, qbo</span>
+<span class="l"></span>
+<span class="l"><span class="n">JOBS</span> = <span class="s">"Jobs 2026.xlsx"</span></span>
+<span class="l"><span class="n">LABEL</span> = <span class="s">"Work orders"</span>  <span class="c"># in Gmail</span></span>
+<span class="l"></span>
+<span class="l"></span>
+<span class="l"><span class="k">def</span> <span class="f">read_work_order</span>(pdf):</span>
+<span class="l">    <span class="c"># Page 1 has every field we need</span></span>
+<span class="l">    <span class="k">with</span> pdfplumber.open(pdf) <span class="k">as</span> doc:</span>
+<span class="l">        text = doc.pages[<span class="n">0</span>].extract_text()</span>
+<span class="l">    <span class="k">return</span> Job.from_work_order(text)</span>
+<span class="l"></span>
+<span class="l"></span>
+<span class="l"><span class="k">def</span> <span class="f">add_job_row</span>(job):</span>
+<span class="l">    <span class="c"># One new row, under the last job</span></span>
+<span class="l">    book = openpyxl.load_workbook(<span class="n">JOBS</span>)</span>
+<span class="l">    book[<span class="s">"Jobs"</span>].append(job.as_row())</span>
+<span class="l">    book.save(<span class="n">JOBS</span>)</span>
+<span class="l"></span>
+<span class="l"></span>
+<span class="l"><span class="k">def</span> <span class="f">main</span>():</span>
+<span class="l">    <span class="k">for</span> pdf <span class="k">in</span> gmail.new_pdfs(<span class="n">LABEL</span>):</span>
+<span class="l">        <span class="c"># What the office used to type</span></span>
+<span class="l">        job = read_work_order(pdf)</span>
+<span class="l">        <span class="c"># Straight into the job list</span></span>
+<span class="l">        add_job_row(job)</span>
+<span class="l">        <span class="c"># The start date, for the crew</span></span>
+<span class="l">        crew.add_to_calendar(job)</span>
+<span class="l">        <span class="c"># Saved in QuickBooks, not sent</span></span>
+<span class="l">        qbo.save_invoice(job, send=<span class="k">False</span>)</span>
+<span class="l">        <span class="c"># So it is never set up twice</span></span>
+<span class="l">        gmail.mark_done(pdf)</span>
+<span class="l"></span>
+<span class="l"></span>
+<span class="l"><span class="k">if</span> __name__ == <span class="s">"__main__"</span>:</span>
+<span class="l">    main()</span></code></pre>
+          <div class="bm-log" role="group" aria-label="Sample: what it did">
+            <p class="bm-lk"><span class="bm-run">Run log · </span>Fri, Oct 9, 2:15 PM<span class="bm-nx">Next check 2:25 PM</span></p>
+            <div class="bm-hl"><p>New job set up. Nobody typed it.</p></div>
+            <ol class="bm-rows">
+              <li class="on"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#1f7a3a"/><path d="M4.6 8.3l2.2 2.2 4.7-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Read work order OSB-26-118.pdf</b><span class="bm-w">Waiting</span><span class="bm-det"><span>Oak Street Builders, bath rough-in</span></span></li>
+              <li class="on"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#1f7a3a"/><path d="M4.6 8.3l2.2 2.2 4.7-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Added job 4524 to Jobs 2026, row 977</b><span class="bm-w">Waiting</span><span class="bm-det"><span>210 Main St, Unit B</span></span></li>
+              <li class="on"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#1f7a3a"/><path d="M4.6 8.3l2.2 2.2 4.7-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>On the crew calendar for Mon, Oct 12</b><span class="bm-w">Waiting</span><span class="bm-det"><span>Site contact Tom Anderson, (352) 555-0136</span></span></li>
+              <li class="on"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#1f7a3a"/><path d="M4.6 8.3l2.2 2.2 4.7-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Invoice saved in QuickBooks, not sent</b><span class="bm-w">Waiting</span><span class="bm-det"><span><span class="bm-okb">OK to send</span></span></span></li>
+            </ol>
+            <p class="bm-foot"><button class="bm-src" type="button">Made by new_jobs.py, 43 lines we wrote</button></p>
           </div>
         </div>
       </div>
-      <span class="samp">Sample</span>
+      <div class="bm-ctl">
+        <div class="seg" role="group" aria-label="Show">
+          <button type="button" data-view="screen" aria-pressed="true">Your screen</button>
+          <button type="button" data-view="code" aria-pressed="false">The code</button>
+        </div>
+        <span class="samp">Sample</span>
+      </div>
+      <figcaption class="bm-cap">We write the code, so nobody types a job twice. Your part is one OK. <button class="bm-again" type="button">Run it again</button></figcaption>
     </figure>
   </div>
 </section>
@@ -325,7 +366,7 @@
       <div class="close-act">
         <div class="arrow-to">
           <a class="btn btn-lg" href="tel:+13522260681">Call or text us</a>
-          <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 4C101 36 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
+          <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
         </div>
         <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
       </div>

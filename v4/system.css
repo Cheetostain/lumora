@@ -386,12 +386,13 @@ button.flip{justify-self:start;min-height:44px;padding:0 18px;border-radius:999p
 button.flip[aria-pressed=true]{background:var(--ink);color:#fff}
 button.flip:active{transform:scale(.97)}
 html:not(.js) button.flip{display:none}
-.seg{justify-self:start;align-self:start;display:inline-flex;gap:4px;border:1.5px solid var(--ink);border-radius:999px;padding:3px;background:var(--sheet)}
+.seg{justify-self:start;align-self:start;display:inline-flex;gap:8px;border:1.5px solid var(--ink);border-radius:999px;padding:4px;background:var(--sheet)}
 .seg button{min-height:44px;padding:0 16px;border:0;border-radius:999px;background:none;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer}
 .seg button[aria-pressed=true]{background:var(--ink);color:#fff}
 .seg button:active{transform:scale(.97)}
-/* hover is a soft fill, never a ring: a ring touched the pressed pill and read as one shape (Franco 2026-10-10); 4px gap between them */
-@media (hover:hover) and (pointer:fine){.seg button[aria-pressed=false]:hover{background:rgba(17,17,16,.08)}}
+/* Franco 2026-10-10: the two pills must never touch. A ring, then a soft fill, both read as one shape beside the filled pressed pill,
+   so hover is no shape at all: the word underlines. 8px between the pills. */
+@media (hover:hover) and (pointer:fine){.seg button[aria-pressed=false]:hover{background:none;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}}
 /* job: feedback. The switch follows the picture: the pressed side fills with ink as the layers cross-fade */
 @media (prefers-reduced-motion:no-preference){.seg button{transition:background-color var(--t-hover) var(--ease-out),color var(--t-hover) var(--ease-out),box-shadow var(--t-hover),transform var(--t-press)}}
 html:not(.js) .seg{display:none}
@@ -536,6 +537,7 @@ html:not(.js) .seg{display:none}
 .pause:active{transform:scale(.98)}
 @media (hover:hover) and (pointer:fine){.pause:hover{background:var(--on-night);color:var(--night)}}
 html:not(.js) .pause{display:none}
+html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the footer carries every link (phone-access review 2026-10-10) */
 .tapes{display:flex;flex-wrap:wrap;gap:14px 18px;margin-bottom:40px}
 .tapes li{background:var(--tape);color:var(--ink);font-weight:600;font-size:16px;padding:10px 16px;transform:rotate(var(--r,-1deg));
   clip-path:polygon(1% 4%,99% 0,100% 30%,98.5% 62%,100% 100%,0 97%,1.5% 66%,0 34%)}
@@ -849,8 +851,9 @@ html:not(.js) .pic.has-seg{padding-bottom:28px}            /* no JS: no buttons,
 .np-foot{font-size:15px;color:var(--muted);padding-top:8px}
 @media screen and (prefers-reduced-motion:no-preference){   /* screen: print and Save as PDF show the finished night */
   /* job: cause and effect. The night lands in clock order: a log line, then its notification */
-  html.js [data-loop][data-steps].run .np-rows [data-n]{transition:opacity var(--t-enter) var(--ease-out)}
-  html.js [data-loop][data-steps].run .np-rows [data-n]:not(.on){opacity:.35}
+  html.js [data-loop][data-steps].run .np-rows [data-n],html.js [data-loop][data-steps].run .np-rows [data-n] time{transition:color var(--t-enter) var(--ease-out)}
+  /* rows still to come wait in muted ink, 6:1 on the sheet (opacity .35 measured 2.05:1, under the 4.5:1 floor; phone-access review 2026-10-10) */
+  html.js [data-loop][data-steps].run .np-rows [data-n]:not(.on),html.js [data-loop][data-steps].run .np-rows [data-n]:not(.on) time{color:var(--muted)}
   html.js [data-loop][data-steps].run .lk4-nt{transition:opacity 200ms var(--ease-out),transform 200ms var(--ease-out)}
   html.js [data-loop][data-steps].run .lk4-nt:not(.on){opacity:0;transform:translateY(12px)}
 }
