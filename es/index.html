@@ -27,8 +27,8 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=a438bb43">
-<link rel="stylesheet" href="/v4/home/home.css?v=a438bb43">
+<link rel="stylesheet" href="/v4/system.css?v=cadcbd6e">
+<link rel="stylesheet" href="/v4/home/home.css?v=cadcbd6e">
 <!-- The header in Spanish: Spanish runs about 23% longer (ES-VOICE), and the six labels wrapped to two lines each at 1280. A label
      never wraps; the row needs 642px at 15px beside the number and "Llámenos o escríbanos", so this page keeps the menu button up
      to 1179px, shows the row at 15px from 1180px to 1279px and at English's 17px from 1280px (measured: it ends 12px short of
@@ -55,9 +55,9 @@
      js: the hidden start states apply only with JS. review: picture slots show on this computer, the local check server or
      ?review, never on lumorafl.com (R8). -->
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=a438bb43" defer></script>
-<script src="/v4/system.js?v=a438bb43" defer></script>
-<script src="/v4/home/home.js?v=a438bb43" defer></script>
+<script src="/v4/trades.js?v=cadcbd6e" defer></script>
+<script src="/v4/system.js?v=cadcbd6e" defer></script>
+<script src="/v4/home/home.js?v=cadcbd6e" defer></script>
 </head>
 <body data-trade="plumbing" data-rules="v4">
 <a class="skip" href="#main">Saltar al contenido</a>
@@ -171,8 +171,12 @@
 </section>
 
 <!-- ============================================================ 2 WHAT WE AUTOMATE: the range in one look, office work first, calls one row, last.
-     The builder's work order stays in English, as a Gainesville builder sends it; the shop's own spreadsheet is in Spanish,
-     the same file and columns as walk stop 2 (rows 975 to 977 follow its 971 to 974). -->
+     The picture is the English Home's code picture (code demo B), ported 2026-10-11: the same new_jobs.py, line for line (43
+     lines; home.js lights lines 30 to 37 in main()), real Python with English names and Spanish comments, as a Florida shop's
+     developer would write them for a Spanish-speaking owner; the shop's own file and sheet are Spanish ("Trabajos 2026.xlsx",
+     sheet "Trabajos", the same file as walk stop 2) and its Gmail label is "Órdenes de trabajo". The run log is the owner's
+     screen in Spanish, same facts as the English: OSB-26-118, job 4524 in row 977, Mon Oct 12, Tom Anderson, the invoice
+     saved and not sent. JS off, reduced motion or ?still: the finished screen. Notes in home.css (:lang(es) .bm). -->
 <section class="band hm4-auto" id="automate" data-ground="sheet" data-density="mid" data-width="split" data-loud="list" data-medium="list">
   <div class="wrap auto-g">
     <div class="auto-copy">
@@ -190,37 +194,74 @@
       </ul>
       <p class="auto-close">Es el trabajo de computadora detrás de cada servicio: lo que su oficina escribe, revisa, archiva y le toca andar reclamando. En la visita vemos cuáles de estos problemas tiene su negocio.</p>
     </div>
-    <figure class="pic auto-pic">
-      <div class="ap-stack" role="img" aria-label="Ejemplo: una orden de trabajo que un constructor mandó por correo, la OSB-26-118 de Oak Street Builders, y la hoja Trabajos 2026 del negocio. El nombre del constructor y la dirección de la obra pasan solos a la fila 977 como trabajo 4524, marcada Sacado del PDF; nadie escribió nada.">
-        <div class="scr-win ap-pdf" lang="en">
-          <div class="win-tb"><i></i><i></i><i></i><span>Work order OSB-26-118.pdf</span></div>
-          <div class="ap-page">
-            <p class="ap-co"><mark>Oak Street Builders</mark></p>
-            <p class="ap-dt">Subcontract work order</p>
-            <dl>
-              <div class="ap-hm"><dt>Work order</dt><dd>OSB-26-118</dd></div>
-              <div><dt>Job site</dt><dd><mark>210 Main St, Unit B</mark></dd></div>
-              <div><dt>Scope</dt><dd>Bath rough-in, 1 bath remodel</dd></div>
-              <div class="ap-hm"><dt>Site contact</dt><dd>Tom Anderson, (352) 555-0136</dd></div>
-              <div class="ap-hm"><dt>Start</dt><dd>Mon, Oct 12</dd></div>
-            </dl>
-          </div>
-        </div>
-        <p class="ap-arrow">Pasa solo a su lista de trabajos</p>
-        <div class="scr-win ap-xl">
-          <div class="win-tb"><i></i><i></i><i></i><span>Trabajos 2026.xlsx</span></div>
-          <div class="win-b">
-            <div class="xl"><table>
-              <tr class="cl"><td></td><td>A</td><td>B</td><td class="hm">C</td><td>D</td></tr>
-              <tr><td>1</td><th>Trabajo</th><th>Cliente</th><th class="hm">Dirección</th><th>Anotado</th></tr>
-              <tr class="ap-hm"><td>975</td><td>4522</td><td>Johnson, Mike</td><td class="hm">125 Main St</td><td>Escrito una vez</td></tr>
-              <tr><td>976</td><td>4523</td><td>Taylor, Ann</td><td class="hm">125 Oak St</td><td>Escrito una vez</td></tr>
-              <tr class="on"><td>977</td><td>4524</td><td>Oak Street Builders</td><td class="hm">210 Main St, Unit B</td><td>Sacado del PDF</td></tr>
-            </table></div>
+    <figure class="pic auto-pic bm" data-bm data-medium="code" data-view="screen" data-run="done">
+      <div class="scr-win bm-win">
+        <div class="win-tb"><i></i><i></i><i></i><span class="bm-tt"><b>new_jobs.py</b><b aria-hidden="true">Dunlin Plumbing, hoy</b></span></div>
+        <div class="bm-body">
+          <pre class="bm-code" tabindex="0" aria-label="Ejemplo: el código que escribimos, new_jobs.py, 43 líneas"><code><span class="l"><span class="d">"""Anota cada orden de trabajo nueva una sola vez.</span></span>
+<span class="l"></span>
+<span class="l"><span class="d">Se ejecuta automáticamente cada 10 minutos.</span></span>
+<span class="l"><span class="d">"""</span></span>
+<span class="l"><span class="k">import</span> openpyxl</span>
+<span class="l"><span class="k">import</span> pdfplumber</span>
+<span class="l"></span>
+<span class="l"><span class="k">from</span> shop <span class="k">import</span> Job, crew, gmail, qbo</span>
+<span class="l"></span>
+<span class="l"><span class="n">JOBS</span> = <span class="s">"Trabajos 2026.xlsx"</span></span>
+<span class="l"><span class="n">LABEL</span> = <span class="s">"Órdenes de trabajo"</span>  <span class="c"># en Gmail</span></span>
+<span class="l"></span>
+<span class="l"></span>
+<span class="l"><span class="k">def</span> <span class="f">read_work_order</span>(pdf):</span>
+<span class="l">    <span class="c"># La página 1 trae todos los datos</span></span>
+<span class="l">    <span class="k">with</span> pdfplumber.open(pdf) <span class="k">as</span> doc:</span>
+<span class="l">        text = doc.pages[<span class="n">0</span>].extract_text()</span>
+<span class="l">    <span class="k">return</span> Job.from_work_order(text)</span>
+<span class="l"></span>
+<span class="l"></span>
+<span class="l"><span class="k">def</span> <span class="f">add_job_row</span>(job):</span>
+<span class="l">    <span class="c"># Una fila nueva, bajo el último trabajo</span></span>
+<span class="l">    book = openpyxl.load_workbook(<span class="n">JOBS</span>)</span>
+<span class="l">    book[<span class="s">"Trabajos"</span>].append(job.as_row())</span>
+<span class="l">    book.save(<span class="n">JOBS</span>)</span>
+<span class="l"></span>
+<span class="l"></span>
+<span class="l"><span class="k">def</span> <span class="f">main</span>():</span>
+<span class="l">    <span class="k">for</span> pdf <span class="k">in</span> gmail.new_pdfs(<span class="n">LABEL</span>):</span>
+<span class="l">        <span class="c"># Lo que antes se pasaba a mano</span></span>
+<span class="l">        job = read_work_order(pdf)</span>
+<span class="l">        <span class="c"># Directo a la lista de trabajos</span></span>
+<span class="l">        add_job_row(job)</span>
+<span class="l">        <span class="c"># Fecha de inicio, para el equipo</span></span>
+<span class="l">        crew.add_to_calendar(job)</span>
+<span class="l">        <span class="c"># Factura en QuickBooks, sin enviar</span></span>
+<span class="l">        qbo.save_invoice(job, send=<span class="k">False</span>)</span>
+<span class="l">        <span class="c"># Así nunca se anota dos veces</span></span>
+<span class="l">        gmail.mark_done(pdf)</span>
+<span class="l"></span>
+<span class="l"></span>
+<span class="l"><span class="k">if</span> __name__ == <span class="s">"__main__"</span>:</span>
+<span class="l">    main()</span></code></pre>
+          <div class="bm-log" role="group" aria-label="Ejemplo: lo que hizo">
+            <p class="bm-lk"><span class="bm-run">Registro · </span>vie. 9 de oct., 2:15&nbsp;p.&nbsp;m.<span class="bm-nx">Revisa cada 10&nbsp;min</span></p>
+            <div class="bm-hl"><p>Trabajo nuevo. Nadie lo escribió.</p></div>
+            <ol class="bm-rows">
+              <li class="on"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#1f7a3a"/><path d="M4.6 8.3l2.2 2.2 4.7-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Se leyó la orden OSB-26-118.pdf</b><span class="bm-w">Pendiente</span><span class="bm-det"><span>Oak Street Builders, remodelación de baño</span></span></li>
+              <li class="on"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#1f7a3a"/><path d="M4.6 8.3l2.2 2.2 4.7-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Se anotó en Trabajos 2026, fila 977</b><span class="bm-w">Pendiente</span><span class="bm-det"><span>Trabajo 4524, 210 Main St, Unit B</span></span></li>
+              <li class="on"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#1f7a3a"/><path d="M4.6 8.3l2.2 2.2 4.7-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Calendario del equipo: <span class="nw">lun. 12 de oct.</span></b><span class="bm-w">Pendiente</span><span class="bm-det"><span>En la obra: Tom Anderson, <span class="nw">(352) 555-0136</span></span></span></li>
+              <li class="on"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#1f7a3a"/><path d="M4.6 8.3l2.2 2.2 4.7-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Factura en QuickBooks, sin enviar</b><span class="bm-w">Pendiente</span><span class="bm-det"><span><span class="bm-okb">Aprobar y enviar</span></span></span></li>
+            </ol>
+            <p class="bm-foot"><button class="bm-src" type="button">Hecho con new_jobs.py, 43 líneas que escribimos</button></p>
           </div>
         </div>
       </div>
-      <span class="samp">Ejemplo</span>
+      <div class="bm-ctl">
+        <div class="seg" role="group" aria-label="Mostrar">
+          <button type="button" data-view="screen" aria-pressed="true">Su pantalla</button>
+          <button type="button" data-view="code" aria-pressed="false">El código</button>
+        </div>
+        <span class="samp">Ejemplo</span>
+      </div>
+      <figcaption class="bm-cap">Escribimos el código para que nadie anote un trabajo dos veces. Usted solo da el visto&nbsp;bueno. <button class="bm-again" type="button">Verlo otra vez</button></figcaption>
     </figure>
   </div>
 </section>

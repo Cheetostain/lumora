@@ -13,31 +13,31 @@
   var BEFORE = {
     water: [
       { // Stop 1 · The equipment log
-        alt: 'Sample, as we find it: the equipment log on a clipboard for job 26-0412, Maria Garcia, claim 900127. Dehumidifier DH-01 and air movers AM-03 and AM-04 were set October 5 and pulled October 11: 6 days each. The 6 is circled in pencil.',
+        alt: 'Sample, as we find it: the equipment log on a clipboard for job 26-0412, Maria Garcia, claim 900127. Dehumidifier DH-01 and air movers AM-03 and AM-04 were set September 30 and pulled October 6: 6 days each. The 6 is circled in pencil.',
         html: '<div class="doc-clip t2o"><span class="clamp" aria-hidden="true"><i></i></span><div class="t2-form">' +
           '<div class="f-h"><b>EQUIPMENT LOG</b><span>Job <span class="hw">26-0412</span></span></div>' +
           '<p class="f-m">Customer <span class="hw">Garcia, Maria</span><br>Claim <span class="hw">900127</span> · Kitchen, Cat 1</p>' +
           '<table><tr><th>Unit</th><th>Set</th><th>Pulled</th><th class="ck">Days</th></tr>' +
-          '<tr><td>DH-01</td><td class="hw">10/5</td><td class="hw">10/11</td><td class="ck"><span class="hw pc">6</span></td></tr>' +
-          '<tr><td>AM-03</td><td class="hw">10/5</td><td class="hw">10/11</td><td class="ck hw">6</td></tr>' +
-          '<tr><td>AM-04</td><td class="hw">10/5</td><td class="hw">10/11</td><td class="ck hw">6</td></tr>' +
+          '<tr><td>DH-01</td><td class="hw">9/30</td><td class="hw">10/6</td><td class="ck"><span class="hw pc">6</span></td></tr>' +
+          '<tr><td>AM-03</td><td class="hw">9/30</td><td class="hw">10/6</td><td class="ck hw">6</td></tr>' +
+          '<tr><td>AM-04</td><td class="hw">9/30</td><td class="hw">10/6</td><td class="ck hw">6</td></tr>' +
           '<tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr></table></div></div>'
       },
       { // Stop 2 · The claim file
-        alt: 'Sample, as we find it: the manila claim folder for job 26-0412, Maria Garcia, claim 900127. The carrier\'s check, $211.00, is written in, and the deductible, $1,000.00. The line "Deductible billed" is blank and circled in pencil. A sticky note asks: billed? ask Linda.',
-        html: '<div class="t2-folder t2o"><div class="fo-paper" aria-hidden="true"><p>Work authorization, signed 10/5</p><p>Estimate SMW-26-0412</p><p>Photos, 38</p></div>' +
+        alt: 'Sample, as we find it: the manila claim folder for job 26-0412, Maria Garcia, claim 900127. The carrier\'s check, $506.00, is written in, and the deductible, $1,000.00. The line "Deductible billed" is blank and circled in pencil. A sticky note asks: billed? ask Linda.',
+        html: '<div class="t2-folder t2o"><div class="fo-paper" aria-hidden="true"><p>Work authorization, signed 9/30</p><p>Estimate GMW-26-0412</p><p>Photos, 38</p></div>' +
           '<div class="fo-front"><span class="fo-tab"><b>26-0412-WTR · GARCIA, M.</b></span><dl>' +
           '<div><dt>Claim</dt><dd class="hw">900127</dd></div>' +
-          '<div><dt>Carrier check</dt><dd class="hw">$211.00 rec\'d 10/30</dd></div>' +
+          '<div><dt>Carrier check</dt><dd class="hw">$506.00 rec\'d 10/9</dd></div>' +
           '<div><dt>Deductible</dt><dd class="hw">$1,000.00</dd></div>' +
           '<div><dt>Deductible billed</dt><dd><span class="pc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></dd></div></dl></div>' +
           '<p class="t2-sticky"><span class="hw mk">Ded. billed??<br>ask Linda</span></p></div>'
       },
       { // Stop 3 · The office computer
-        alt: 'Sample, as we find it: the insurer\'s 6-page PDF open on the office computer, page 1: claim 900140 for Lisa Brown, 125 Oak St, water from a kitchen supply line on October 5, desk adjuster Davis, (352) 555-0177, deductible $1,000.00. The claim number is circled in pencil.',
+        alt: 'Sample, as we find it: the insurer\'s 6-page PDF open on the office computer, page 1: claim 900140 for Lisa Brown, 153 Oak St, water from a kitchen supply line on October 5, desk adjuster Davis, (352) 555-0177, deductible $1,000.00. The claim number is circled in pencil.',
         html: '<div class="scr-win t2-pdf t2o"><div class="win-tb"><i></i><i></i><i></i><span>Claim 900140 notice.pdf · Page 1 of 6</span></div><div class="win-b"><div class="pdf-pg">' +
           '<div class="pdf-h"><b>NOTICE OF CLAIM</b><span>Oct 7, 2026</span></div><dl class="pdf-dl">' +
-          '<div><dt>Insured</dt><dd>Brown, Lisa</dd></div><div><dt>Loss address</dt><dd>125 Oak St</dd></div>' +
+          '<div><dt>Insured</dt><dd>Brown, Lisa</dd></div><div><dt>Loss address</dt><dd>153 Oak St</dd></div>' +
           '<div><dt>Claim number</dt><dd><span class="pc">900140</span></dd></div><div><dt>Date of loss</dt><dd>Oct 5, 2026</dd></div>' +
           '<div><dt>Type of loss</dt><dd>Water, supply line, kitchen</dd></div><div><dt>Desk adjuster</dt><dd>Davis, (352) 555-0177</dd></div>' +
           '<div><dt>Deductible</dt><dd>$1,000.00</dd></div></dl><div class="pdf-lines" aria-hidden="true"><i></i><i></i><i></i></div></div></div></div>'
@@ -45,28 +45,28 @@
     ],
     pest: [
       { // Stop 1 · The renewal cards
-        note: 'Notice printed Oct 1. Smith never paid, and nobody called.',
-        alt: 'Sample, as we find it: the termite renewal card file, at the November tab. John Smith\'s card, account 7710, 123 Main St, bait, 22 stations, renews November 3 at $271.00, notice printed October 1. The Paid and Called lines are blank, and Called is circled in pencil.',
+        note: 'Notice printed Aug 4. Smith never paid, and nobody called.',
+        alt: 'Sample, as we find it: the termite renewal card file, at the September tab. John Smith\'s card, account 7710, 139 Main St, bait, 22 stations, renews September 3 at $271.00, notice printed August 4. The Paid and Called lines are blank, and Called is circled in pencil.',
         html: '<div class="t2-cards t2o"><div class="cd back" aria-hidden="true"><div class="cd-h"><b>WILSON, DAVID</b><span>Acct 7702</span></div></div>' +
           '<div class="cd back b2" aria-hidden="true"><div class="cd-h"><b>TAYLOR, ANN</b><span>Acct 7706</span></div></div>' +
-          '<div class="cd front"><span class="cd-tab" aria-hidden="true">NOV</span><div class="cd-h"><b>SMITH, JOHN</b><span>Acct 7710</span></div>' +
-          '<p class="hw">123 Main St · bait, 22 stations</p><p class="hw"><small>Renews</small>Nov 3 · $271.00</p><p class="hw"><small>Notice</small>printed 10/1</p>' +
+          '<div class="cd front"><span class="cd-tab" aria-hidden="true">SEP</span><div class="cd-h"><b>SMITH, JOHN</b><span>Acct 7710</span></div>' +
+          '<p class="hw">139 Main St · bait, 22 stations</p><p class="hw"><small>Renews</small>Sep 3 · $271.00</p><p class="hw"><small>Notice</small>printed 8/4</p>' +
           '<p><small>Paid</small></p><p><small>Called</small><span class="pc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p></div></div>'
       },
       { // Stop 2 · The payment report
-        alt: 'Sample, as we find it: a printed report of declined autopay charges for October 10: Ana Martinez $118.00, card expired; Lisa Brown $118.00, insufficient funds; Tom Anderson $89.00, do not honor. The Retry column is empty, and its heading is circled in pencil.',
-        html: '<div class="t2-gb t2o"><p class="gb-h"><span>KILLDEER PEST CONTROL</span><span>PAGE 1</span></p><p class="gb-s"><span>DECLINED AUTOPAY</span><span>10/10/26</span></p>' +
+        alt: 'Sample, as we find it: a printed report of declined autopay charges for September: Ana Martinez $115.00, card expired; Lisa Brown $95.00, insufficient funds; Tom Anderson $79.00, do not honor. The Retry column is empty, and its heading is circled in pencil.',
+        html: '<div class="t2-gb t2o"><p class="gb-h"><span>KILLDEER PEST CONTROL</span><span>PAGE 1</span></p><p class="gb-s"><span>DECLINED AUTOPAY</span><span>SEP 2026</span></p>' +
           '<table><thead><tr><th>CUSTOMER</th><th class="r">AMT</th><th>REASON</th><th class="rt"><span class="pc">RETRY</span></th></tr></thead><tbody>' +
-          '<tr><td>MARTINEZ, ANA</td><td class="r">118.00</td><td>CARD EXPIRED</td><td></td></tr>' +
-          '<tr><td>BROWN, LISA</td><td class="r">118.00</td><td>NSF</td><td></td></tr>' +
-          '<tr><td>ANDERSON, TOM</td><td class="r">89.00</td><td>DO NOT HONOR</td><td></td></tr></tbody></table>' +
-          '<p class="gb-f">DECLINED THIS MONTH: 24</p></div>'
+          '<tr><td>MARTINEZ, ANA</td><td class="r">115.00</td><td>CARD EXPIRED</td><td></td></tr>' +
+          '<tr><td>BROWN, LISA</td><td class="r">95.00</td><td>NSF</td><td></td></tr>' +
+          '<tr><td>ANDERSON, TOM</td><td class="r">79.00</td><td>DO NOT HONOR</td><td></td></tr></tbody></table>' +
+          '<p class="gb-f">DECLINED IN SEPTEMBER: 24</p></div>'
       },
       { // Stop 3 · The route sheets: the paper sheet from the truck, and the same account typed in again at night
         // (the leak is the double typing, so both copies are in the picture and the pencil circles the retyping)
-        alt: 'Sample, as we find it: route B\'s paper route sheet for Tuesday, October 13, truck 3, with four stops checked off by hand, the last one account 7732, termite inspection. A sticky note on it says: type in tonight. In front, the office computer at 9:42 PM: the same account 7732, Ann Miller, being typed into a service entry form by hand, the service half typed. The half-typed entry is circled in pencil.',
+        alt: 'Sample, as we find it: route B\'s paper route sheet for Tuesday, October 6, truck 3, with four stops checked off by hand, the last one account 7732, termite inspection. A sticky note on it says: type in tonight. In front, the office computer at 9:42 PM: the same account 7732, Ann Miller, being typed into a service entry form by hand, the service half typed. The half-typed entry is circled in pencil.',
         html: '<div class="t2-retype t2o"><div class="doc-clip"><span class="clamp" aria-hidden="true"><i></i></span><div class="t2-form">' +
-          '<div class="f-h"><b>ROUTE B</b><span>Tue 10/13 · Truck 3</span></div>' +
+          '<div class="f-h"><b>ROUTE B</b><span>Tue 10/6 · Truck 3</span></div>' +
           '<table><tr><th>Acct</th><th>Service</th><th class="ck">Done</th></tr>' +
           '<tr><td>7729</td><td>Initial</td><td class="ck hw">✓</td></tr>' +
           '<tr><td>7730</td><td>Re-service, ants</td><td class="ck hw">✓</td></tr>' +
@@ -82,21 +82,21 @@
     ],
     roofing: [
       { // Stop 1 · The insurer letter
-        alt: 'Sample, as we find it: the insurer\'s statement of loss for claim 900131, Ann Miller, wind, September 27, 2026. Replacement cost $17,242.74, less recoverable depreciation $5,140.00, less the 2% hurricane deductible $6,200.00, payment enclosed $5,902.74. The sentence saying depreciation is paid when repairs are complete and proof is received is circled in pencil.',
+        alt: 'Sample, as we find it: the insurer\'s statement of loss for claim 900131, Ann Miller, wind, July 19, 2026. Replacement cost $17,242.74, less recoverable depreciation $5,140.00, less the all other perils deductible $2,500.00, payment enclosed $9,602.74. The sentence saying depreciation is paid when repairs are complete and proof is received is circled in pencil.',
         html: '<div class="t2-letter t2o"><div class="lt-top"><b>STATEMENT OF LOSS</b><span>Claims department</span></div>' +
-          '<dl class="lt-meta"><dt>Insured</dt><dd>Ann Miller</dd><dt>Claim</dt><dd>900131</dd><dt>Loss</dt><dd>Wind, Sep 27, 2026</dd></dl>' +
+          '<dl class="lt-meta"><dt>Insured</dt><dd>Ann Miller</dd><dt>Claim</dt><dd>900131</dd><dt>Loss</dt><dd>Wind, Jul 19, 2026</dd></dl>' +
           '<table><tr><td>Replacement cost value</td><td class="r">$17,242.74</td></tr><tr><td>Less recoverable depreciation</td><td class="r">($5,140.00)</td></tr>' +
-          '<tr><td>Less deductible, 2% hurricane</td><td class="r">($6,200.00)</td></tr><tr class="tot"><td>Payment enclosed</td><td class="r">$5,902.74</td></tr></table>' +
+          '<tr><td>Less AOP deductible</td><td class="r">($2,500.00)</td></tr><tr class="tot"><td>Payment enclosed</td><td class="r">$9,602.74</td></tr></table>' +
           '<p class="lt-fine pc">Recoverable depreciation is paid when repairs are complete and proof is received, within the time your policy allows.</p></div>'
       },
       { // Stop 2 · The crew board in the shop
-        alt: 'Sample, as we find it: the crew board for the week of October 5. Monday, Davis tear-off at 125 Main St, with "12 sh. decking" written beside it and circled in pencil. Tuesday, Davis dry-in. Wednesday, Brown tear-off. Thursday, Garcia inspection. Friday, Davis shingles.',
+        alt: 'Sample, as we find it: the crew board for the week of October 5. Monday, Walker tear-off at 143 Oak St, with "12 sh. decking" written beside it and circled in pencil. Tuesday, Walker dry-in. Wednesday, Garcia in-progress inspection. Thursday, Walker shingles. Friday, Brown tear-off.',
         html: '<div class="wb t2o"><div class="wb-in"><p class="wb-t">CREW BOARD · WEEK OF 10/5</p><div class="wb-days">' +
-          '<div class="wb-day"><b>MON</b><p>Davis<small>tear-off, 125 Main</small></p><p class="pc">12 sh. decking</p></div>' +
-          '<div class="wb-day wide-only"><b>TUE</b><p>Davis<small>dry-in</small></p></div>' +
-          '<div class="wb-day wide-only"><b>WED</b><p>Brown<small>tear-off</small></p></div>' +
-          '<div class="wb-day"><b>THU</b><p>Garcia<small>inspection</small></p></div>' +
-          '<div class="wb-day"><b>FRI</b><p>Davis<small>shingles</small></p></div></div></div><div class="wb-tray"></div></div>'
+          '<div class="wb-day"><b>MON</b><p>Walker<small>tear-off, 143 Oak</small></p><p class="pc">12 sh. decking</p></div>' +
+          '<div class="wb-day wide-only"><b>TUE</b><p>Walker<small>dry-in</small></p></div>' +
+          '<div class="wb-day wide-only"><b>WED</b><p>Garcia<small>in-progress inspection</small></p></div>' +
+          '<div class="wb-day"><b>THU</b><p>Walker<small>shingles</small></p></div>' +
+          '<div class="wb-day"><b>FRI</b><p>Brown<small>tear-off</small></p></div></div></div><div class="wb-tray"></div></div>'
       },
       { // Stop 3 · The measurement report (a printed aerial report: the plan drawn from above, lengths on the edges)
         // The numbers agree: a 73 x 35 ft hip roof at 6/12 has a 38 ft ridge, four 26 ft hips, 216 ft of eaves and

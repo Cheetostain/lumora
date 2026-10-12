@@ -1,0 +1,218 @@
+/* What we automate (/what-we-automate/), page styles only (Lane 2, 2026-10-11). Shared parts come from ../../system/system.css.
+   Sizes outside the pictures stay on the one scale (15, 17, 20, 24, 32, 44, 64; Lumora.lint "Type" at 1280 and up). The close
+   (part 4) is Home's, copied from pages/home/home.css as of 2026-10-11 the way plumbing copied it; these copies go once Home's
+   blocks move into system.css section 27 (plumbing's "Shared blocks"). Notes: LIST-NOTES.md. */
+
+/* ======================================================= 1 head: words, call block, the filter; the stage index on a computer.
+   Phone order: words, call block, filter, then the list starts. */
+.wa-hero .hero-g{grid-template-areas:"copy" "act" "tool";row-gap:18px}
+.hero .cta-row .wa-sms{font-size:17px}
+.wa-sms,.c4-sms,.wa-about a,.mb a.u,.wa-how a{display:inline-block;padding-block:12px;margin-block:-12px}   /* 44px tall tap areas, no layout change */
+.cta-tel{padding-block:10.5px;margin-block:-10.5px}                                                         /* the number beside a call button: 52px tall */
+@media (min-width:900px){
+  .wa-hero .hero-g{grid-template-areas:"copy tool" "act tool";grid-template-rows:auto 1fr}
+  .wa-hero h1{max-width:none}
+}
+
+/* the trade filter (R11's quiet chips, as native radios: one tab stop, arrow keys move and pick, no script needed for that).
+   It only hides and counts lines already on the page; without JS it is hidden and every line shows with its trade names. */
+.wa-filter{margin:0;padding:0;border:0;min-width:0}
+html:not(.js) .wa-filter{display:none}
+.wa-filter legend{padding:0;margin-bottom:10px;font-size:17px;font-weight:600;color:var(--ink)}
+.wa-chips{display:flex;flex-wrap:wrap;gap:6px}
+.wa-chip{position:relative;display:inline-flex}
+.wa-chip input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.wa-chip span{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1.5px solid rgba(17,17,16,.22);border-radius:999px;font-size:15px;font-weight:500;color:var(--ink)}
+.wa-chip input:checked+span{background:var(--sheet);border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}   /* ringed, never filled (R11); same weight, so no chip moves */
+.wa-chip input:focus-visible+span{outline:3px solid var(--ink);outline-offset:2px}
+@media (hover:hover) and (pointer:fine){.wa-chip:hover input:not(:checked)+span{border-color:var(--ink)}}
+.wa-chip input:active+span{transform:scale(.97)}
+@media (prefers-reduced-motion:no-preference){.wa-chip span{transition:border-color var(--t-hover),transform var(--t-press)}}
+/* Windows high contrast drops the ring (box-shadow) and repaints borders, so the picked chip fills with the system highlight */
+@media (forced-colors:active){.wa-chip input:checked+span{forced-color-adjust:none;background:Highlight;color:HighlightText;border-color:Highlight}}
+/* the filter's result line, between the legend and the chips: the words a tap changes, in view above whichever chip was tapped */
+.wa-count{margin:-4px 0 12px;font-size:17px;color:var(--body)}
+
+/* the stage index: a computer-only extra (data-extra says why). Two columns read down, then across: First contact to The invoice
+   on the left, so reading down the left column is the job in order, and Tab order matches what you see. */
+.wa-index{display:none}
+.wa-index-k{margin-bottom:8px;font-size:15px;font-weight:600;color:var(--muted)}
+.wa-index ol{display:block;columns:2;column-gap:28px;border-top:2px solid var(--ink)}
+.wa-index li{break-inside:avoid}
+.wa-index a{display:flex;justify-content:space-between;align-items:baseline;gap:12px;min-height:44px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:17px;color:var(--ink);text-decoration:none;
+  background:linear-gradient(var(--pen),var(--pen)) 0 calc(100% - 1px)/0 2px no-repeat}
+.wa-index a:focus-visible{background-size:100% 2px}
+@media (hover:hover) and (pointer:fine){.wa-index a:hover{background-size:100% 2px}}
+@media (prefers-reduced-motion:no-preference){.wa-index a{transition:background-size var(--t-press) var(--ease-out)}.wa-index a:hover,.wa-index a:focus-visible{transition-duration:var(--t-hover)}}
+.wa-ni{font-size:15px;color:var(--muted)}
+@media (min-width:900px){.wa-index{display:block;margin-top:32px}}
+
+/* ======================================================= 2 the list: Home's ruled rows, one stage after another. The grey trade names
+   follow each line; once a trade is picked they go (every line left is for that trade). On a computer the stage name rides
+   beside its lines. */
+.wa-stage+.wa-stage{margin-top:32px}
+.wa-sh{margin-bottom:10px;font-size:24px;line-height:1.2}
+.wa-items{border-top:2px solid var(--ink)}
+.wa-items li{padding:10px 0;border-bottom:1px solid var(--rule);font-size:17px;line-height:1.45;color:var(--ink)}
+.wa-for{display:inline-block;font-size:15px;line-height:1.35;color:var(--muted)}
+.wa-one .wa-for{display:none}
+/* a row reached from a read-first link: a bone wash, widened past the text so the words do not move */
+.wa-items li:target{margin-inline:-10px;padding-inline:10px;background:var(--bone)}
+@media (min-width:900px){
+  .wa-stage{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);column-gap:48px;align-items:start}
+  .wa-stage+.wa-stage{margin-top:64px}
+  .wa-sh{position:sticky;top:calc(var(--hdr-h) + 24px);margin:0;padding-top:12px;border-top:2px solid var(--ink);font-size:32px}
+  .wa-items{max-width:42em}                                   /* about 85 characters a line at 17px, not 100 */
+  .wa-items li{padding:12px 0}
+}
+/* read first (JS only, a trade picked): that trade's 5 strongest rows as jump links, in page order, above the list */
+.wa-top{margin-bottom:36px}
+.wa-top-k{margin-bottom:10px;font-size:20px;font-weight:600;line-height:1.3;color:var(--ink)}
+.wa-top ol{border-top:2px solid var(--ink)}
+.wa-top a{display:flex;justify-content:space-between;align-items:baseline;gap:12px;min-height:44px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:17px;font-weight:600;color:var(--ink);text-decoration:none;
+  background:linear-gradient(var(--pen),var(--pen)) 0 calc(100% - 1px)/0 2px no-repeat}
+.wa-top a span{flex:none;font-size:15px;font-weight:400;color:var(--muted)}
+.wa-top a:focus-visible{background-size:100% 2px}
+@media (hover:hover) and (pointer:fine){.wa-top a:hover{background-size:100% 2px}}
+@media (prefers-reduced-motion:no-preference){.wa-top a{transition:background-size var(--t-press) var(--ease-out)}.wa-top a:hover,.wa-top a:focus-visible{transition-duration:var(--t-hover)}}
+@media (min-width:900px){
+  .wa-top{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);column-gap:48px;align-items:start;margin-bottom:64px}
+  .wa-top-k{margin:0;padding-top:12px;border-top:2px solid var(--ink)}
+  .wa-top ol{max-width:42em}
+}
+/* which trade is showing (JS only, a trade picked, phone layout): one line under the sticky header once the filter has scrolled
+   away, while the list is in view. Fixed, so showing it never moves the page; jumps and focus clear it (scroll-padding below). */
+.wa-now{position:fixed;z-index:39;left:0;right:0;top:calc(var(--hdr-h) + 1px);display:flex;align-items:center;justify-content:space-between;gap:12px;
+  min-height:44px;margin:0;padding:0 var(--g);background:var(--paper);border-bottom:1px solid var(--rule);font-size:15px;color:var(--ink)}
+.wa-now a{display:inline-flex;align-items:center;min-height:44px;font-weight:600}
+@media (max-width:899px){html.wa-one{scroll-padding-top:calc(var(--hdr-h) + 1px + 44px + 16px)}}
+@media (min-width:900px),(max-height:500px){.wa-now{display:none!important}}   /* computer: the stage name rides beside its lines; short landscape phones: the header scrolls away */
+
+/* ======================================================= 3 the papers: copy, then one picture (the PDF beside the four tools on a wide
+   picture, stacked on a phone). The tab panels share one grid cell, so switching tools never moves the page. */
+.wa-docs-g{display:grid;gap:28px}
+.wa-docs-copy p{margin-top:14px;font-size:17px;max-width:34em}
+.wa-docs-copy .wa-trust{font-size:15px;color:var(--muted)}
+.wa-pic{width:100%}
+.wa-pic-g{display:grid;gap:16px}
+.wa-col{container-type:inline-size;min-width:0}
+@container (min-width:640px){.wa-pic-g{grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:20px;align-items:start}}
+@media (min-width:900px){.wa-docs-g{grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:48px;align-items:start}}
+/* the supplier's PDF: the shop's PO numbers highlighted, as read */
+.wa-page{margin:12px;padding:14px 14px 12px;background:#fff;border:1px solid #ececea;box-shadow:0 1px 3px rgba(0,0,0,.08);font-family:var(--sys);color:#1d1d1f}
+.wa-co{font-weight:700;font-size:15px;line-height:1.25}
+.wa-co small{display:block;font-weight:400;font-size:12px;color:#555}
+.wa-dt{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 8px;margin-top:10px;font-size:13px;color:#555}
+.wa-dt b{font-weight:700;color:#1d1d1f}
+.wa-to{margin:2px 0 8px;font-size:12px;color:#555}
+.wa-page table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.3;font-variant-numeric:tabular-nums}
+.wa-page th{padding:4px 6px 4px 0;border-bottom:1.5px solid #1d1d1f;font-size:12px;font-weight:600;color:#555;text-align:left}
+.wa-page td{padding:6px 6px 6px 0;border-bottom:1px dotted #d0d0d0;vertical-align:top}
+.wa-page .r{text-align:right;padding-right:0;white-space:nowrap}
+.wa-page mark{padding:0 3px;background:#fde98a;color:#1d1d1f}
+.wa-tot{display:flex;justify-content:space-between;gap:8px;margin-top:8px;font-size:13px;font-weight:700}
+/* the four tools */
+.wa-into{margin-bottom:8px;font-size:15px;font-weight:600;color:var(--ink)}
+.wa-pic .tabs{gap:6px;margin-bottom:12px}
+.wa-panels{display:grid}
+.wa-panels>[role=tabpanel]{grid-area:1/1;min-width:0}
+.wa-panels>[role=tabpanel][hidden]{display:block!important;visibility:hidden}   /* kept in the cell, out of sight and out of the tab order */
+.wa-panels .scr-win{display:flex;flex-direction:column;height:100%}             /* a shorter tool fills the cell; its footer sits at the bottom */
+.wa-panels .xl,.wa-panels .win-b{flex:1;display:flex;flex-direction:column}
+.wa-panels .xl-tabs,.wa-panels .win-st,.wa-panels .wa-form-b{margin-top:auto}
+.wa-panels .xl table,.wa-panels .xl .xl-fx{flex:none}
+.wa-pic .xl table{table-layout:fixed}                                              /* fixed widths from the letter row; the part name gets the rest */
+.wa-pic .xl tr.cl td{max-width:none}                                               /* system.css's max-width:0 would clamp those widths to nothing */
+.wa-pic .xl tr.cl td:nth-child(1){width:44px}
+.wa-pic .xl tr.cl td:nth-child(2){width:52px}
+.wa-pic .xl tr.cl td:nth-child(3){width:auto}                                    /* system.css gives every letter cell 30px */
+.wa-pic .xl tr.cl td:nth-child(4){width:66px}
+.wa-pic .xl tr.cl td:nth-child(5){width:92px}
+/* the Excel panel is shorter than the form it shares a cell with: its spare height reads as more empty rows of the same sheet
+   (the row-number column, the column lines, a rule every row), not a blank under row 1206 (review 2026-10-11). Geometry measured
+   from the table: column edges at 44, 96, right minus 92 and right minus 158 (Cost; hidden at 420 and under), rows 31.8px a
+   phone, 34.7px wider (the table's type is max(12px, 3.4cqi) to 14px). */
+.wa-panels .xl{--xl-row:30.8px}
+@container (min-width:421px){.wa-panels .xl{--xl-row:33.7px}}
+.wa-panels .xl::after{content:"";order:2;flex:1 0 0;
+  background:linear-gradient(#dcdcdc,#dcdcdc) 44px 0/1px 100% no-repeat,linear-gradient(#dcdcdc,#dcdcdc) 96px 0/1px 100% no-repeat,
+    linear-gradient(#dcdcdc,#dcdcdc) calc(100% - 92px) 0/1px 100% no-repeat,linear-gradient(#dcdcdc,#dcdcdc) calc(100% - 158px) 0/1px 100% no-repeat,
+    linear-gradient(#f3f3f3,#f3f3f3) 0 0/44px 100% no-repeat,repeating-linear-gradient(transparent 0 var(--xl-row),#dcdcdc 0 calc(var(--xl-row) + 1px))}
+.wa-panels .xl-tabs{order:3}
+@container (max-width:420px){.wa-panels .xl::after{background:linear-gradient(#dcdcdc,#dcdcdc) 44px 0/1px 100% no-repeat,linear-gradient(#dcdcdc,#dcdcdc) 96px 0/1px 100% no-repeat,
+    linear-gradient(#dcdcdc,#dcdcdc) calc(100% - 92px) 0/1px 100% no-repeat,linear-gradient(#f3f3f3,#f3f3f3) 0 0/44px 100% no-repeat,
+    repeating-linear-gradient(transparent 0 var(--xl-row),#dcdcdc 0 calc(var(--xl-row) + 1px))}}
+.wa-pic .xl tr.wa-flag td:not(:first-child){background:#fbefd2}
+.wa-pic .dt tr.wa-flag td{background:#fdf3dc}
+.wa-pic .dt td small{display:block;font-size:12px;color:#6e6e73;margin-top:1px}
+.wa-app-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 10px;padding-bottom:8px;border-bottom:1px solid #e5e5ea;font-size:13px;color:#55555a}
+.wa-app-h b{font-size:15px;font-weight:700;color:#1d1d1f}
+.wa-app-k{margin-top:10px;font-size:12px;font-weight:600;color:#6e6e73}
+.wa-app-l li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:8px 6px;border-bottom:1px solid #efeff2;font-size:14px;line-height:1.3}
+.wa-app-l small{grid-column:1/-1;font-size:12px;color:#1b5e2c}
+.wa-app-l li.wa-flag{background:#fdf3dc}
+.wa-app-l li.wa-flag small{font-weight:600;color:#6b4800}
+.wa-form dl{margin-top:6px}
+.wa-form dl div{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:8px;padding:7px 6px;border-bottom:1px solid #efeff2;font-size:14px;line-height:1.3}
+.wa-form dt{color:#55555a}
+.wa-form dd{color:#1d1d1f}
+.wa-form .wa-flag{background:#fdf3dc}
+.wa-form .wa-flag dd{font-weight:600}
+.wa-form-b{display:flex;align-items:center;gap:14px;margin-top:12px}
+.wa-okb{display:inline-block;padding:6px 14px;border-radius:6px;background:#0a63d1;color:#fff;font-size:14px;font-weight:600}   /* his one tap, as an app draws it */
+.wa-skip{font-size:14px;color:#0b57a8}
+
+/* ======================================================= 4 the close: not on the list, the walk, Home's close parts, every trade */
+.close-g{display:grid;gap:44px}
+@media (min-width:900px){.close-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:start}.c4-card{padding-top:84px;position:sticky;top:96px}}
+.close-h{margin:0 0 20px;font-size:clamp(44px,5.4vw,64px)}
+.wa-cl{font-size:17px;max-width:34em}
+.wa-cl+.wa-cl{margin-top:12px}
+.wa-honest{margin-top:12px;font-size:15px;color:var(--muted);max-width:34em}   /* said plainly, as on Home; R9 keeps it */
+.wa-terms{display:grid;gap:10px;justify-items:start;margin:20px 0 26px}
+.wa-terms .price b{color:var(--ink)}
+.close-act{gap:12px}
+.close-act .arrow-to{position:relative;display:inline-flex;width:max-content}
+.close-act .arrow-to .pen-arrow{position:absolute;left:100%;top:-26px;width:110px;height:84px;margin-left:8px}
+.c4-tel{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 20px;font-size:17px}
+.wa-how{font-size:17px;font-weight:600}
+.c4-hours{margin-top:30px;border-top:1px solid var(--rule)}
+.c4-hours div{display:grid;gap:2px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.c4-hours dt{font-size:15px;font-weight:600;color:var(--muted)}
+.c4-hours dd{font-size:17px;color:var(--ink)}
+@media (min-width:700px){.c4-hours div{grid-template-columns:8.5em minmax(0,1fr);align-items:baseline;column-gap:16px}}
+.wa-also{margin-top:18px;font-size:15px;color:var(--muted);max-width:34em}
+.c4-llc{margin-top:10px;font-size:15px;color:var(--muted)}
+.c4-rules{margin-top:30px}
+.c4-rules h3{margin-bottom:6px;font-size:24px}
+.c4-rules li{position:relative;padding:9px 0 9px 36px;font-size:17px;font-weight:500;color:var(--ink)}
+.c4-rules .tick{left:0;top:11px;width:22px;height:18px}
+.wa-cc-k{margin-bottom:12px}
+.wa-about{margin-top:16px}
+.cc-slot{width:120px;margin:0 0 14px}
+.wa-more{display:grid;gap:6px;padding-top:18px;border-top:1px solid var(--rule)}
+@media (min-width:900px){.c4-main{grid-column:1;grid-row:1}.wa-more{grid-column:1;grid-row:2;align-self:start;margin-top:-20px}.c4-card{grid-column:2;grid-row:1/3}.close-g{grid-template-rows:auto 1fr}}
+.wa-trades{display:flex;flex-wrap:wrap;column-gap:20px}
+.wa-trades a{display:inline-flex;align-items:center;min-height:44px;font-size:17px;color:var(--body);text-decoration:underline;text-decoration-color:var(--muted);text-decoration-thickness:1px;text-underline-offset:4px}
+@media (hover:hover) and (pointer:fine){.wa-trades a:hover{color:var(--ink);text-decoration-color:var(--pen)}}
+/* Cardino perches on the contact card (Home, Franco 2026-10-10) */
+.contact-card .cardino{top:auto;bottom:100%;margin-bottom:-2px;width:58px;right:36px}
+@media (min-width:700px){.contact-card .cardino{top:auto;width:74px;right:56px}}
+
+/* ======================================================= band padding by role */
+@media (min-width:700px){
+  .wa-list{padding-block:72px 112px}
+  .wa-docs{padding-block:104px}
+  .wa-close{padding-block:112px 80px}
+}
+@media (max-width:699px){
+  main>.band{padding-block:40px}
+  main>.wa-list{padding-block:28px 44px}
+  main>.wa-close{padding-block:44px 32px}
+  .wa-hero{padding-bottom:28px}
+  .close-g{gap:36px}
+  .c4-card{margin-top:28px}
+  .wa-more{margin-top:-12px;padding-top:14px}
+  .wa-items li{padding-block:8px;line-height:1.4}   /* a phone line is about 45 characters, so it takes tighter leading than the 85 on a computer; with the four AC rows added (2026-10-11) this keeps the page under R9's 15,000px */
+}
+@media (max-width:359px){.cta-row,.c4-tel{row-gap:18px}}

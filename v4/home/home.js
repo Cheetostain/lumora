@@ -42,7 +42,8 @@
     if (n4 && /^[bc]$/.test(q.get('n4') || '')) n4.setAttribute('data-layout', q.get('n4'));
     var h = n4 && n4.querySelector('h2'); if (h && q.get('n4h') === '2') h.textContent = ES ? 'El trabajo de oficina, hecho antes de que usted se levante.' : 'Office work done before you wake up.';
   }
-  // What we automate, the code picture (2026-10-10, code demo B; English Home only, the Spanish page has no [data-bm]). It runs
+  // What we automate, the code picture (2026-10-10, code demo B; on the Spanish Home too since 2026-10-11, the same 43 lines
+  // with Spanish comments, so STEPS and MAIN hold for both; ES picks the button words). It runs
   // once when 60% of it is in view, about 10 seconds. Each step lights its two lines in main(), the plain comment and the call,
   // in the order the code really runs; then the call line gets a tick and its run log row goes from Waiting to done. After the
   // fourth, the code fades and the log rises into the owner's screen (home.css times the fold). The text button skips to the
@@ -56,6 +57,7 @@
         still = (window.Lumora && Lumora.still) || q.has('still') || matchMedia('(prefers-reduced-motion: reduce)').matches;
     var STEPS = [[30, 31], [32, 33], [34, 35], [36, 37]], MAIN = 28;   // new_jobs.py line numbers: comment and call; def main() is line 28
     var FIRST = 800, GAP = 2000, LOG = 800, FOLD = 1400;                // ms; FOLD covers the longest fold transition in home.css
+    var AGAIN = ES ? 'Verlo otra vez' : 'Run it again', SKIP = ES ? 'Saltar a la lista' : 'Skip to the list';   // "Saltar", as the page's skip link
     for (var j = 0; j < lines.length; j++) lines[j].style.setProperty('--ind', (/^ */.exec(lines[j].textContent)[0].length + 4) + 'ch');
     function scrollTo(n, smooth) {         // line n at the top, under the code's 8px padding (a wrapped line on a 320 phone is taller, so measure)
       code.scrollTo({ top: n > 1 ? lines[n - 1].offsetTop - 8 : 0, behavior: smooth && !still ? 'smooth' : 'auto' });
@@ -77,12 +79,12 @@
     function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
     function finish(view) {
       stop(); light(null); done(STEPS.length); show(view);
-      fig.setAttribute('data-run', 'done'); again.textContent = 'Run it again';
+      fig.setAttribute('data-run', 'done'); again.textContent = AGAIN;
       if (view === 'code') scrollTo(1, false);
     }
     function run() {
       stop(); light(null); done(0); show('code'); scrollTo(1, false);
-      fig.setAttribute('data-run', 'running'); again.textContent = 'Skip to the list';
+      fig.setAttribute('data-run', 'running'); again.textContent = SKIP;
       STEPS.forEach(function (s, i) {
         at(FIRST + i * GAP, function () { light(s); if (!i) scrollTo(MAIN, true); });
         at(FIRST + i * GAP + LOG, function () { done(i + 1); });
@@ -95,7 +97,7 @@
     again.addEventListener('click', function () { if (fig.getAttribute('data-run') === 'running') finish('screen'); else run(); });
     if (q.get('view') === 'code') { finish('code'); return; }
     if (still || !('IntersectionObserver' in window)) { finish('screen'); return; }
-    light(null); done(0); show('code'); fig.setAttribute('data-run', 'idle'); again.textContent = 'Skip to the list';   // the start state: the code, nothing run yet
+    light(null); done(0); show('code'); fig.setAttribute('data-run', 'idle'); again.textContent = SKIP;   // the start state: the code, nothing run yet
     var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); run(); } }, { threshold: 0.6 });
     io.observe(fig);
   }

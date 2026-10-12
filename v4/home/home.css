@@ -133,22 +133,20 @@ html:not(.js) .bm-again{display:none}
   .bm[data-run=running] .bm-rows li.on>b{animation:bm-in var(--t-enter) var(--ease-out) both}   /* job: cause and effect, the row ticks on as its step ends */
 }
 @keyframes bm-in{from{opacity:0;transform:translateX(-4px)}}
-/* the Spanish Home's picture until the Spanish lane ports the code demo: the builder's work order PDF and the shop's own
-   spreadsheet, the same data in both, an arrow between */
-.ap-stack{display:grid;gap:10px}
-.ap-pdf{width:min(100%,430px)}
-.ap-page{margin:12px;padding:14px 16px 12px;background:#fff;border:1px solid #ececea;box-shadow:0 1px 3px rgba(0,0,0,.08);font-family:var(--sys);color:#1d1d1f}
-.ap-co{font-weight:700;font-size:max(14px,min(3.8cqi,17px))}
-.ap-dt{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#555;margin:2px 0 10px}
-.ap-page dl div{display:grid;grid-template-columns:7em minmax(0,1fr);gap:8px;padding:4px 0;border-bottom:1px dotted #d6d6d6;font-size:max(12px,min(3.3cqi,14px));line-height:1.35}
-.ap-page dt{color:#555}
-.ap-page mark{background:#fde98a;color:#1d1d1f;padding:0 3px}
-.ap-arrow{justify-self:center;font-size:15px;font-weight:600;color:var(--ink)}
-.ap-arrow::before{content:"↓ "}
-.ap-xl{width:min(100%,500px);justify-self:end}
-.ap-xl .xl td,.ap-xl .xl th{white-space:nowrap;text-overflow:clip;max-width:none}
-.ap-xl .xl tr:nth-child(2) td,.ap-xl .xl tr:nth-child(2) th{border-bottom:2px solid #9a9a9a}   /* Excel's freeze line under the header row */
-@container (max-width:420px){.ap-page dl .ap-hm,.ap-xl tr.ap-hm{display:none}}   /* a phone-width picture drops two fields and two columns, as the screens kit does; the read-in row stays */
+/* the Spanish Home's code picture (2026-10-11; it replaced the work order PDF and spreadsheet pair, whose .ap- rules are in
+   "backup ORIGINAL-2026-10-11/"). Every rule above applies; Spanish's longer lines need two more. The owner's screen puts
+   the date and "Revisa cada 10 min" on one line when they fit (360px and up) and wraps the second under the first when they
+   don't, where English keeps its absolute corner. */
+:lang(es) .bm[data-view=screen] .bm-lk{display:flex;flex-wrap:wrap;justify-content:space-between;column-gap:12px}
+:lang(es) .bm[data-view=screen] .bm-nx{position:static}
+/* under 368px wide the Spanish lines wrap more than the 388px window holds (measured 2026-10-11: at 360 the header takes two
+   lines, at 320 every row does and the footer too), so the window is taller there, each step sized to its widest wrap plus
+   8px; from 368px up, and at 390 where R9 measures the page, it stays 388px like the English. */
+@container (max-width:335px){:lang(es) .bm-win{--bm-h:410px}}
+@container (max-width:319px){:lang(es) .bm-win{--bm-h:484px}}
+@container (max-width:299px){:lang(es) .bm-win{--bm-h:546px}}
+:lang(es) .bm .nw{white-space:nowrap}   /* a date ("12 de oct.") and a phone number never split at a wrap */
+:lang(es) .bm-src{text-align:start}     /* the footer link wraps under 340px; a button would centre its second line */
 
 /* ======================================================= 3 who we work with: its own ground (bone), big short lines, wide trade links,
    each with its trade's biggest leak; who a walk is not for under the heading on a computer */
@@ -268,6 +266,7 @@ html:not(.js) .bm-again{display:none}
 .close-g{display:grid;gap:44px}
 @media (min-width:900px){.close-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:start}.c4-card{padding-top:84px;position:sticky;top:96px}}
 .close-h{margin:0 0 24px;font-size:clamp(44px,5.4vw,64px)}   /* one step above nothing: the same top step as the H1, no longer 1.7 times it */
+html[lang=es] .close-h{font-size:clamp(40px,4.4vw,44px)}   /* "Hablemos de su negocio." is longer and its button wider: this keeps it on one line from 700 to 1440 so the arrow starts under the words (measured 2026-10-11) */
 .close-act{gap:12px}
 .close-act .arrow-to{position:relative;display:inline-flex;width:max-content}
 .close-act .arrow-to .pen-arrow{position:absolute;left:100%;top:-26px;width:110px;height:84px;margin-left:8px}   /* Franco 2026-10-10: it comes down from the heading's words and lands level with the button's middle */

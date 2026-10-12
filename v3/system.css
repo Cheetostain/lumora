@@ -78,7 +78,8 @@ p,li,dd{text-wrap:pretty}
 
 /* ======================================================================= 3. type roles (not sizes) */
 .t-display{font-size:clamp(68px,12vw,176px);font-weight:500;line-height:.92;letter-spacing:-.04em;color:var(--red)}   /* one per page: money */
-.t-close{font-size:clamp(52px,8.6vw,124px);font-weight:600;line-height:.95;letter-spacing:-.035em;color:var(--ink)}   /* the closing line, bigger than the H1 */
+.t-close{font-size:44px;font-weight:600;line-height:.95;letter-spacing:-.035em;color:var(--ink)}   /* the closing line: the H1's top step, no longer 1.7 times it (Home review 2026-10-10) */
+@media (min-width:700px){.t-close{font-size:clamp(52px,5.4vw,64px)}}   /* 52px floor, not Home's 44: the pen arrow starts 106px right of the 235px "Call (352) 226-0681" button, so the heading's last words must reach past it */
 h1,.t-h1{font-size:clamp(38px,5.2vw,66px);line-height:1.03;letter-spacing:-.026em}
 h2,.t-h2{font-size:clamp(30px,3.5vw,44px)}
 h3,.t-sub{font-size:clamp(21px,2vw,26px);line-height:1.18;letter-spacing:-.01em}
@@ -419,6 +420,8 @@ html:not(.js) .seg{display:none}
 .ph-who{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 10px 10px;border-bottom:1px solid #e5e5ea;background:#f7f7f9;font-size:13px;font-weight:600}
 .ph-who i{width:36px;height:36px;border-radius:50%;background:linear-gradient(#a8adb7,#868b95)}
 .thread{display:flex;flex-direction:column;gap:7px;padding:12px 12px;font-size:15px;line-height:1.3}
+/* the thread pins to its newest line, as a real phone does (review 2026-10-12: the text-back and the callback line sat below the screen) */
+.ph:has(.thread){display:flex;flex-direction:column}.ph:has(.thread)>*{flex:none}.ph:has(.thread)>.thread{flex:1 1 auto;min-height:0;justify-content:flex-end;overflow:hidden}
 .bub{max-width:84%;padding:8px 12px;border-radius:18px}
 .bub.in{align-self:flex-start;background:#e9e9eb;border-bottom-left-radius:5px}
 .bub.out{align-self:flex-end;background:#0a63d1;color:#fff;border-bottom-right-radius:5px}
@@ -435,7 +438,7 @@ html:not(.js) .seg{display:none}
 .xl-fx b{color:#666;font-weight:600;font-style:italic;font-family:Georgia,serif}
 .xl-fx span{overflow:hidden;text-overflow:ellipsis}
 .xl table{width:100%;border-collapse:collapse;font-size:max(12px,min(3.4cqi,14px));font-variant-numeric:tabular-nums}
-.xl td,.xl th{border:1px solid #dcdcdc;padding:6px 7px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:0}
+.xl td,.xl th{border:1px solid #dcdcdc;padding:6px 5px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:0}
 .xl .cl td,.xl td:first-child{background:#f3f3f3;color:#666;text-align:center;font-size:12px;width:30px}
 .xl th{font-weight:700;background:#fafafa}
 .xl tr.on td:not(:first-child){background:#e9f5ec}
@@ -644,20 +647,23 @@ html:not(.js) .pause{display:none}
 
 /* ======================================================================= 23. one contact, the close, the towns strip */
 .contact-card{position:relative;background:var(--sheet);box-shadow:var(--lift);padding:40px 20px 24px}
-.contact-card .cardino{position:absolute;right:16px;top:-60px;width:120px;height:auto}
+/* Cardino perches on the card (Home, Franco 2026-10-10: the full-frame drawing with a negative top floated above it). The perch
+   drawing is cropped to the bird, so bottom:100% puts his feet on the card's top edge at any size; 2px down so he stands on it */
+.contact-card .cardino{position:absolute;right:36px;bottom:100%;margin-bottom:-2px;width:58px;height:auto}
 .signed{font-size:18px;line-height:1.55;padding-left:16px;border-left:2px solid var(--ink);color:var(--ink)}
 .signed+figcaption,.signed-by{margin-top:10px;font-size:15px;color:var(--muted)}
 .cblock{margin-top:18px}
 .cblock div{display:grid;gap:2px;padding:12px 0;border-bottom:1px solid var(--rule)}
 .cblock dt{font-size:15px;font-weight:600;color:var(--muted)}
 .cblock dd{font-size:17px;color:var(--ink)}
-.cblock .big-tel{font-size:26px;font-weight:600;text-decoration:none}
-@media (min-width:700px){.contact-card{padding:44px 32px 28px}.contact-card .cardino{width:148px;top:-74px;right:28px}.cblock div{grid-template-columns:160px 1fr;align-items:baseline}}
-.close-h{margin:10px 0 18px}
+.cblock .big-tel{font-size:26px;font-weight:600;text-decoration:none;white-space:nowrap}
+@media (min-width:700px){.contact-card{padding:44px 32px 28px}.contact-card .cardino{width:74px;right:56px}.cblock div{grid-template-columns:160px 1fr;align-items:baseline}}
+.close-h{margin:10px 0 24px}
 .close-act{display:grid;gap:14px;justify-items:start}
-/* the pen's last mark points at the button it sits beside (A's arrow pointed at empty space) */
-.arrow-to{display:flex;align-items:center;gap:6px}
-.arrow-to .pen-arrow{width:72px;height:48px;margin-left:-8px}
+/* the pen's last mark (Home, Franco 2026-10-10): it comes down from under the heading's last words and lands pointing left at
+   the button's vertical middle, on its right side; never from the left, never at a corner. Needs the button right under the heading */
+.arrow-to{position:relative;display:inline-flex;width:max-content}
+.arrow-to .pen-arrow{position:absolute;left:100%;top:-26px;width:110px;height:84px;margin-left:8px}
 @media (max-width:699px){.arrow-to .pen-arrow{display:none}}
 .towns{position:relative;display:grid;gap:20px;align-items:center}
 @media (min-width:800px){.towns{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}}

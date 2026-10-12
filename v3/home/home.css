@@ -81,7 +81,6 @@
   .facts li:first-child,.facts li:last-child{grid-column:1/-1}
   .cblock .hm-cb-lang{display:none}                               /* the signed words right above already say English and Spanish */
   .hm-contact{margin-top:12px}
-  .contact-card .cardino{width:100px;top:-50px}
 }
 
 /* step tickets: the system's ruled lines start at a fixed 96px, so they cut through the text whenever a title wraps.

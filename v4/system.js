@@ -703,9 +703,9 @@
     // R4: nothing incoming stamped 11 p.m. to 5 a.m.; a text-back is a green SMS bubble (Spanish pages write "11:48 p. m.")
     shown('.lk4-nt, [data-task="calls"], .bub.in').forEach(function (x) { if (/\b(11:\d\d\s?(?:PM\b|p\.\s?m\.)|12:\d\d\s?(?:AM\b|a\.\s?m\.)|[1-4]:\d\d\s?(?:AM\b|a\.\s?m\.))/i.test(x.innerText)) E.push('R4: something incoming between 11 p.m. and 5 a.m.: ' + x.innerText.slice(0, 50)); });
     $$('.thread .sys').forEach(function (s) { var b = s.nextElementSibling; if (/^(Missed call|Llamada perdida)/.test(s.textContent) && b && b.classList.contains('out') && !b.classList.contains('sms')) E.push('R4: a text-back in a blue bubble.'); });
-    // R2: What we automate, second, at least 6 rows; no link to the full list until that page is live
+    // R2: What we automate, second, at least 6 rows. A link to the full list before that page is live is golive.py's push gate
+    // (full_list_problems): the browser can't know what is live (moved there when /what-we-automate/ was readied, 2026-10-11)
     var auto = document.getElementById('automate'); if (!auto || shown('[data-task]', auto).length < 6) E.push('R2: What we automate is missing or has under 6 rows.');
-    if (/see the full list|vea la lista completa/i.test(text)) E.push('R2: a "See the full list" link before that page is live.');
     // R5: the night band's headline has no call word, and its lock screen clock never hides
     shown('[data-ground=night] h2').forEach(function (h) { if (/\bcalls?\b|voicemail|missed|\bring|llamad|buz[oó]n|perdid/i.test(h.innerText)) E.push('R5: a call word in the night band headline.'); });
     $$('.lk4').forEach(function (k) { var c = k.querySelector('.lk4-t'); if (!c || !vis(c) || +getComputedStyle(c).opacity < 0.9) E.push('R5: the lock screen clock is hidden.'); });
@@ -751,6 +751,8 @@
     // Spanish: "lo que pagó por la visita", never "todo su dinero" (the old Spanish line) and never a figure
     if (/every dollar back|todo su dinero/i.test(text)) E.push('Money back: "every dollar back" is retired; the line says "the walk fee".');
     shown('.mb').forEach(function (m) { if (!/the walk fee|lo que pagó por la visita/i.test(m.innerText)) E.push('Money back: a money-back line without "the walk fee": ' + m.innerText.slice(0, 50)); });
+    // R9 always keeps the no-reviews line (list review 2026-10-11: the full list was built without it, and the rules pad alone passed R14)
+    if (!/no client reviews here yet|todavía no hay reseñas de clientes/i.test(text)) E.push('R9: the no-reviews line ("Lumora is new, so there are no client reviews here yet.") is missing; R9 always keeps it.');
     // R6: one phone component (the drawn frame with its camera island), never rotated, one width on a computer, .491 wide to tall
     if (shown('.scr-phone, .scr-lock').length) E.push('R6: an old phone style (.scr-phone or .scr-lock) on a v4 page.');
     var phs = shown('.ph4'), widths = {};

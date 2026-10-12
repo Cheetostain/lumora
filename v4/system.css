@@ -80,7 +80,8 @@ p,li,dd{text-wrap:pretty}
 
 /* ======================================================================= 3. type roles (not sizes) */
 .t-display{font-size:clamp(68px,12vw,176px);font-weight:500;line-height:.92;letter-spacing:-.04em;color:var(--red)}   /* one per page: money */
-.t-close{font-size:clamp(52px,8.6vw,124px);font-weight:600;line-height:.95;letter-spacing:-.035em;color:var(--ink)}   /* the closing line, bigger than the H1 */
+.t-close{font-size:var(--fs-44);font-weight:600;line-height:.95;letter-spacing:-.035em;color:var(--ink)}   /* the closing line: the H1's top step, no longer 1.7 times it (Home review 2026-10-10) */
+@media (min-width:700px){.t-close{font-size:clamp(52px,5.4vw,var(--fs-64))}}   /* 52px floor, not Home's 44: the pen arrow starts 106px right of the 243px "Call (352) 226-0681" button, so the heading's last words must reach past it */
 h1,.t-h1{font-size:clamp(38px,5.2vw,var(--fs-64));line-height:1.03;letter-spacing:-.026em}
 h2,.t-h2{font-size:clamp(30px,3.5vw,var(--fs-44))}
 h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing:-.01em}
@@ -396,6 +397,7 @@ html:not(.js) button.flip{display:none}
 /* job: feedback. The switch follows the picture: the pressed side fills with ink as the layers cross-fade */
 @media (prefers-reduced-motion:no-preference){.seg button{transition:background-color var(--t-hover) var(--ease-out),color var(--t-hover) var(--ease-out),box-shadow var(--t-hover),transform var(--t-press)}}
 html:not(.js) .seg{display:none}
+html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs cannot switch, so only the first panel shows, with no dead buttons (list review 2026-10-11) */
 /* ink ghosts: thin graphite lines, the shop's own scribbles */
 .ghost svg{width:100%;height:auto;max-height:380px;overflow:visible}
 .gs{fill:none;stroke:#7E786C;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
@@ -651,20 +653,23 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 
 /* ======================================================================= 23. one contact, the close, the towns strip */
 .contact-card{position:relative;background:var(--sheet);box-shadow:var(--lift);padding:40px 20px 24px}
-.contact-card .cardino{position:absolute;right:16px;top:-60px;width:120px;height:auto}
+/* Cardino perches on the card (Home, Franco 2026-10-10: the full-frame drawing with a negative top floated above it). The perch
+   drawing is cropped to the bird, so bottom:100% puts his feet on the card's top edge at any size; 2px down so he stands on it */
+.contact-card .cardino{position:absolute;right:36px;bottom:100%;margin-bottom:-2px;width:58px;height:auto}
 .signed{font-size:var(--fs-17);line-height:1.55;padding-left:16px;border-left:2px solid var(--ink);color:var(--ink)}
 .signed+figcaption,.signed-by{margin-top:10px;font-size:15px;color:var(--muted)}
 .cblock{margin-top:18px}
 .cblock div{display:grid;gap:2px;padding:12px 0;border-bottom:1px solid var(--rule)}
 .cblock dt{font-size:15px;font-weight:600;color:var(--muted)}
 .cblock dd{font-size:17px;color:var(--ink)}
-.cblock .big-tel{font-size:26px;font-weight:600;text-decoration:none}
-@media (min-width:700px){.contact-card{padding:44px 32px 28px}.contact-card .cardino{width:148px;top:-74px;right:28px}.cblock div{grid-template-columns:160px 1fr;align-items:baseline}}
-.close-h{margin:10px 0 18px}
+.cblock .big-tel{font-size:26px;font-weight:600;text-decoration:none;white-space:nowrap}
+@media (min-width:700px){.contact-card{padding:44px 32px 28px}.contact-card .cardino{width:74px;right:56px}.cblock div{grid-template-columns:160px 1fr;align-items:baseline}}
+.close-h{margin:10px 0 24px}
 .close-act{display:grid;gap:14px;justify-items:start}
-/* the pen's last mark points at the button it sits beside (A's arrow pointed at empty space) */
-.arrow-to{display:flex;align-items:center;gap:6px}
-.arrow-to .pen-arrow{width:72px;height:48px;margin-left:-8px}
+/* the pen's last mark (Home, Franco 2026-10-10): it comes down from under the heading's last words and lands pointing left at
+   the button's vertical middle, on its right side; never from the left, never at a corner. Needs the button right under the heading */
+.arrow-to{position:relative;display:inline-flex;width:max-content}
+.arrow-to .pen-arrow{position:absolute;left:100%;top:-26px;width:110px;height:84px;margin-left:8px}
 @media (max-width:699px){.arrow-to .pen-arrow{display:none}}
 .towns{position:relative;display:grid;gap:20px;align-items:center}
 @media (min-width:800px){.towns{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}}
@@ -890,4 +895,4 @@ html.review .slot{display:grid;align-content:center;justify-items:center;gap:4px
 .slot b{font-size:14px;color:var(--ink)}
 
 /* forced colours (Windows High Contrast): a pressed Before / After, the picked trade and the current language stay visible */
-@media (forced-colors:active){.seg button[aria-pressed=true],.lang a[aria-current],.chip[aria-checked=true]{forced-color-adjust:none;background:Highlight;color:HighlightText}}
+@media (forced-colors:active){.seg button[aria-pressed=true],.lang a[aria-current],.chip[aria-checked=true],.tabs [role=tab][aria-selected=true]{forced-color-adjust:none;background:Highlight;color:HighlightText}}
