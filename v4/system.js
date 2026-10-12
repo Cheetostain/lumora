@@ -218,8 +218,9 @@
     }
     return esc(v == null ? '' : v);
   }
-  // two layers for one spot (the window's status line, the formula bar): the old value, then the new one in its place
-  var was2 = function (v) { return typeof v === 'object' ? '<span class="chg"><span class="was">' + esc(v.was) + '</span><span class="now">' + esc(v.now) + '</span></span>' : esc(v); };
+  // two layers for one spot (the window's status line, the formula bar): the old value, then the new one in its place; with tr
+  // (a status line, restaurants 2026-10-12) the old words stay, struck in pencil, as a cell's do: the pair's one pencil trace (R7)
+  var was2 = function (v) { return typeof v === 'object' ? '<span class="chg' + (v.tr ? ' tr' : '') + '"><span class="was">' + esc(v.was) + '</span><span class="now">' + esc(v.now) + '</span></span>' : esc(v); };
   function pairHTML(P) {
     // P.line: the app's own label over the caller (a business phone line shows calls and texts in one thread)
     if (P.frame === 'phone') return ph4('<div class="ph-who">' + (P.line ? '<small class="ph-line">' + esc(P.line) + '</small>' : '') + '<i></i>' + esc(P.who) + '</div><div class="thread">' + P.msgs.map(function (m) {
@@ -254,7 +255,7 @@
       if (f('total')) f('total').textContent = money(total(t)) + perShort(t);
       // one short line for screen readers when the owner picks another trade (the sheet itself is not a live region: a pick
       // used to read out about 50 changed words). Empty on load, so nothing is announced before he chooses.
-      if (f('live') && animate) f('live').textContent = tr('Sample shop: ', 'Negocio de ejemplo: ') + t.name + ', ' + money(total(t)) + ' ' + perWord(t) + tr(' lost before any fix.', ' que pierde hoy, antes de arreglar nada.');
+      if (f('live') && animate) f('live').textContent = tr('Sample business: ', 'Negocio de ejemplo: ') + t.name + ', ' + money(total(t)) + ' ' + perWord(t) + tr(' lost before any fix.', ' que pierde hoy, antes de arreglar nada.');
       var tm = f('time'); if (tm) { tm.hidden = !t.time; if (t.time) tm.innerHTML = tr('Time back for you or your office: ', 'Usted o su oficina se ahorran ') + '<b>' + esc(t.time) + '</b>'; }
       $$('.pen-ring', el).forEach(ring);
       if (animate && !still) { el.classList.remove('writing', 'swap'); void el.offsetWidth; el.classList.add('swap'); } // job: cause and effect
@@ -401,9 +402,18 @@
   // v4 walk (R7, R9): one stop per sheet row; a stop with an approved same-object pair shows it with Before / After buttons,
   // any other shows just its real screen (the plan's fallback, never a drawing). Each stop ends on its dollar figure and
   // its one short formula; the tally names the stops and ticks them off, with no figures of its own.
+  // data-walk-formulas="off" on the walk (the trade pages, PLUMBING-INTEGRATE item 3): no formula under the stops. The sheet
+  // already shows each one, and R9 deletes a repeat rather than hiding it, so it is never written (prerender.py copies none).
   function walkPairs(el, t, animate) {
     var list = el.querySelector('[data-f="stops"]'); if (!list) return;
+    var noF = el.getAttribute('data-walk-formulas') === 'off';
+    // a page's own stop (li.stop[data-own="ROW ID"], written in the page) stands where that row's stop would be: the row stays on
+    // the sheet and its picture leaves the walk (PLUMBING-INTEGRATE item 37, C9; the AC page walks its change-out quote in place of
+    // the phone, 2026-10-12). Read once from the page's own markup, so a re-render and the prerender keep it as written.
+    if (!el._own) { el._own = {}; $$(':scope > li[data-own]', list).forEach(function (li) { el._own[li.getAttribute('data-own')] = li.outerHTML; }); }
+    var own = el._own, ownPlace = function (id) { var m = own[id] && /data-place="([^"]*)"/.exec(own[id]); return m && m[1]; };
     list.innerHTML = t.rows.map(function (r, i) {
+      if (own[r.id]) return own[r.id];
       var P = r.pair, n = i + 1, task = TASK[r.icon] || r.icon, place = (P && P.place) || r.place;
       var crop = (P ? P.frame : r.after.frame) === 'phone' ? ' crop-m' : '';   // R6 crop option: on a phone only the thread's part of the phone shows
       var pic = P ? '<div class="pair' + crop + '" data-g2r data-pair data-state="after" role="img" aria-label="' + esc(P.alt.after) + '" data-label-before="' + esc(P.alt.before) + '" data-label-after="' + esc(P.alt.after) + '">' + pairHTML(P) + '</div>'
@@ -417,12 +427,12 @@
         (P ? '<div class="seg" role="group" aria-label="' + tr('Show stop ', 'Mostrar el paso ') + n + '"><button type="button" data-show="before" aria-pressed="false">' + tr('Before', 'Antes') + '</button><button type="button" data-show="after" aria-pressed="true">' + tr('After', 'Después') + '</button></div>' : '') +
         '<span class="samp">' + tr('Sample', 'Ejemplo') + '</span></div>' +
         '<div class="stop-notes"><p class="pencil">' + esc(r.note) + '</p>' +
-        '<p class="find"><span class="find-usd money">' + money(r.usd) + ' ' + perWord(t) + UNDER_SVG + '</span><span class="find-f">' + esc(r.fs || r.f) + '</span></p>' +
+        '<p class="find"><span class="find-usd money">' + money(r.usd) + ' ' + perWord(t) + UNDER_SVG + '</span>' + (noF ? '' : '<span class="find-f">' + esc(r.fs || r.f) + '</span>') + '</p>' +
         // no "Fix:" line on v4 stops: the After picture shows the fix in the shop's own screen, and the line only repeated it (R9)
         '</div></div></li>'; }).join('');
     var tl = el.querySelector('[data-tally]');
     if (tl) {
-      var ol = tl.querySelector('ol'); if (ol) ol.innerHTML = t.rows.map(function (r, i) { return '<li data-i="' + i + '"><span>' + esc((r.pair && r.pair.place) || r.place) + '</span></li>'; }).join('');
+      var ol = tl.querySelector('ol'); if (ol) ol.innerHTML = t.rows.map(function (r, i) { return '<li data-i="' + i + '"><span>' + (ownPlace(r.id) || esc((r.pair && r.pair.place) || r.place)) + '</span></li>'; }).join('');
       var sub = tl.querySelector('[data-f="tsub"]'); if (sub) sub.textContent = t.shop + ', ' + t.short.split(', ').slice(1).join(', ');
     }
     initG2R(list, animate); initDraw(list); tally.bind(el, t); fitCrops();
@@ -533,7 +543,7 @@
           var of = tr(' of ', ' de '), st = tr(' stops', ' pasos');   // Spanish "paso": a "parada" is a bus stop (native read 2026-10-10)
           if (pg) pg.textContent = all ? tr('Walk done, ', 'Visita terminada, ') + n + of + n + st : n ? n + of + stops.length + st : stops.length + tr(' stops on this walk', ' pasos en esta visita');
           if (b1) b1.textContent = all ? tr('Walk done', 'Visita terminada') : n ? tr('Next: ', 'Sigue: ') + lc(nx ? nx.dataset.place : '') : tr('The walk, ', 'La visita, ') + stops.length + st;
-          if (b2) b2.textContent = n ? n + of + stops.length : tr('Sample shop', 'Negocio de ejemplo');
+          if (b2) b2.textContent = n ? n + of + stops.length : tr('Sample business', 'Negocio de ejemplo');
           return;
         }
         var tot = walk.querySelector('[data-tally] [data-f="tot"]'), tper = walk.querySelector('[data-tally] [data-f="tper"]');
@@ -543,7 +553,7 @@
         var next = stops[Math.min(n, stops.length - 1)];
         // one line on a phone at the start, and it names the NEXT stop (the counted one can still be on screen)
         if (bs) bs.textContent = all ? 'Walk done, ' + n + ' of ' + n + ' stops' : n ? 'Next: ' + (next ? next.dataset.place : '') : 'The walk, ' + stops.length + ' stops';
-        if (bu) bu.textContent = n ? money(sum) + ' ' + perWord(t) + (all ? '' : ' so far') : 'Sample shop';  // never "$0 so far"
+        if (bu) bu.textContent = n ? money(sum) + ' ' + perWord(t) + (all ? '' : ' so far') : 'Sample business';  // never "$0 so far"
       });
     }
   };
@@ -565,7 +575,7 @@
     function tick(it) {
       var lk = el.querySelector('.lk4'), clk = lk && lk.querySelector('.lk4-t'), day = lk && lk.querySelector('.lk4-d'); if (!clk) return;
       var cur = el.classList.contains('run') && !still && step < it.length ? it[Math.max(step, 0)] : null, m = cur && /^(\d+:\d\d) ([AP]M)$/.exec(cur.dataset.t || '');
-      clk.textContent = m ? m[1] : '6:41';
+      clk.textContent = m ? m[1] : (lk.dataset.end || '6:41');   // data-end: a night that ends on another clock (electrical's band: Thursday, 2:46 PM)
       if (day) day.textContent = m && m[2] === 'PM' ? lk.dataset.eve : lk.dataset.day;
     }
     function frame() {
@@ -717,6 +727,8 @@
     if (shown('.ghost').length) E.push('R8: an ink ghost drawing.');
     if ($$('img').some(function (i) { return /\/figs\//.test(i.getAttribute('src') || ''); })) E.push('R8: a trade drawing.');
     shown('.stamp,.samp').forEach(function (s) { var tf = getComputedStyle(s).transform; if (tf && tf !== 'none' && tf !== 'matrix(1, 0, 0, 1, 0, 0)') E.push('R8: a tilted Sample stamp.'); });
+    // papers sit straight too (PLUMBING-INTEGRATE item 42; system.css straightens .ticket and .doc.tilt-* on v4 pages): a move is fine, a turn is not
+    shown('.ticket,.doc').forEach(function (d) { var tf = getComputedStyle(d).transform; if (tf && tf !== 'none' && !/^matrix\(1, 0, 0, 1,/.test(tf)) E.push('R8: a tilted paper (' + d.className + ').'); });
     shown('.pic').forEach(function (p) { var n = $$('.samp,.stamp', p).filter(function (s) { return vis(s) && /^(sample|ejemplo)$/i.test(s.textContent.trim()); }).length;
       if (n !== 1) E.push('R8: a picture with ' + n + ' Sample labels (' + (p.className || p.id) + ').'); });
     $$('.slot').forEach(function (s) { if (['16:9', '1:1', '4:5'].indexOf(s.dataset.shape) < 0) E.push('R8: a picture slot that is not 16:9, 1:1 or 4:5.'); });

@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Restaurants and bars | Lumora</title>
-<meta name="description" content="For Gainesville restaurants and bars: supplier invoices checked line by line against last week's price, staff hours against sales, food cost and what delivery apps really keep, in English or Spanish.">
+<meta name="format-detection" content="telephone=no">   <!-- iPhone Safari: the sample 555 numbers inside the pictures stay plain text; the real number is always an explicit tel: link -->
+<title>Restaurants and bars | Lumora, Gainesville FL</title>
+<meta name="description" content="For restaurants and bars in Gainesville and Alachua County: cases billed but never delivered, distributor prices that rise while the menu stays put, slow nights staffed like busy ones and delivery-app charges nobody disputed, found in your own records.">
 <link rel="canonical" href="https://lumorafl.com/industries/restaurants-and-bars/">
 <link rel="alternate" hreflang="en" href="https://lumorafl.com/industries/restaurants-and-bars/">
 <link rel="alternate" hreflang="es" href="https://lumorafl.com/es/industries/restaurants-and-bars/">
@@ -22,17 +23,74 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="es_US">
 <meta name="theme-color" content="#F6F5F2">
-<link rel="icon" href="/v3/assets/mark.svg">
-<link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v3/system.css?v=00eee6ad">
-<link rel="stylesheet" href="/v3/trades-3/trades-3.css?v=00eee6ad">
-<script>document.documentElement.classList.add('js')</script>
-<script src="/v3/trades.js?v=00eee6ad" defer></script>
-<script src="/v3/system.js?v=00eee6ad" defer></script>
-<script src="/v3/trades-3/trades-3.js?v=00eee6ad" defer></script>
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="/v4/assets/mark.svg">
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/v4/system.css?v=93161f63">
+<link rel="stylesheet" href="/v4/trade-page.css?v=93161f63">
+<!-- Restaurants and bars v4, built 2026-10-12 from plumbing's approved layout and RESTAURANTS-PREP.md (benchmark, fact audit,
+     owner read, opener, section 5 copy, section 6 pictures, the 5.8 timeline). Before it: "backup ORIGINAL-2026-10-12/
+     restaurants-and-bars ORIGINAL-2026-10-12-v4.html" (the v3 layout). Its own source; restaurants-and-bars.src.html is retired.
+     Sample world (one timeline, no other page's names): Whimbrel Kitchen & Tap, 110 seats, owner Greg Nelson, R. Ortiz signs for
+     deliveries; Coastway Broadline Foods, Ocala, (352) 555-0181, rep Sam Evans, account 512077, route 214 stop 09, net 7. Invoice
+     7041138826 Thu Oct 1 (wings 3.12, oil 41.20); invoice 7041152203 Mon Oct 5 (wings 318.4 lb x 3.38 = 1,076.19, fries 10 cases
+     x 38.75 = 387.50 with 9 received, oil 6 x 46.85 = 281.10, patties 5 x 189.60 = 948.00, cheese, buns, ranch and fuel 504.05,
+     total 3,196.84); end of day Mon Oct 5 printed 10:46 PM; payout week Sept 28 to Oct 4 read 10:58 PM; credit request Tue Oct 6
+     6:10 AM; morning list 6:30 AM; schedule for the week of Oct 12 against Oct 5 to 9 sales. -->
+<style>
+/* the page's own extras; the shared trade-page blocks are in trade-page.css */
+/* 4. the distributor's customer copy: a full invoice cut to its lines, so a little wider than a counter ticket. The cook's
+   pencilled count beside the billed count, inside the page's one pencil circle; the received-by line with an empty shorts box */
+.rb-inv table{font-size:12px}   /* three columns in the printer font fit the 285px paper at 1280 and 390 without wrapping a line (13px wrapped two) */
+.rb-inv td{white-space:nowrap}
+.pl-docs .rb-inv tr:has(.pc){font-size:13px}   /* the circled fries line a step over the 12px floor at every width, as plumbing's circled line is (the shared step works only under 640px) */
+@container (max-width:330px){.pl-docs .rb-inv{width:100%}}   /* 320 to 340 wide the shared 85% paper was narrower than its unwrapped lines, and the amounts printed past its right edge */
+.pl-docs .rb-inv .pc::after{inset:-5px -7px -5px -6px}   /* the shared ring is wide for plumbing's long ticket line; this one sits at the paper's left edge */
+.rb-9{display:inline-block;margin-left:7px;font:italic 600 16px/1 var(--font);color:var(--pencil);transform:rotate(-6deg)}
+.rb-sig{align-items:center;margin-top:10px}
+.rb-hand{font:italic 500 14px/1 var(--font);color:#1f4a8a;margin-left:4px}   /* ballpoint blue */
+.rb-box{display:inline-block;width:46px;height:14px;margin-left:6px;vertical-align:-2px;border:1px solid #888}
+/* the credit request, drafted in the owner's email: the flag row (shared .pl-flag), then the fields and the body */
+.rb-ml{padding:10px 14px 12px;font-size:13px;line-height:1.45}
+.rb-f{display:grid;grid-template-columns:4.6em minmax(0,1fr);gap:6px;padding:5px 0;border-bottom:1px solid #ececea}
+.rb-f span{color:#6e6e73}
+.rb-body{padding-top:9px}
+.rb-body p+p{margin-top:7px}
+.rb-send{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;padding-top:10px;border-top:1px solid #ececea;color:#4d3500;font-weight:500}
+.rb-btn{flex:none;padding:5px 14px;border-radius:6px;background:#0a66d8;color:#fff;font-weight:600}
+@container (max-width:640px){.rb-ml{padding:8px 12px 10px;font-size:13px}}
+/* 2. the tip-out sheet picture (computer only, as plumbing's work order): the server's checkout read into the owner's own sheet */
+.rb-co{width:min(100%,300px);transform:none}
+.rb-co .tk-sum{font-size:13px}
+.rb-co mark{background:#fde98a;color:inherit;padding:0 3px}   /* the field read into the sheet, as on plumbing's work order */
+/* 6. the close checked overnight: the end-of-day tape beside the night log, the morning list clipped to the log. The clip, its
+   one-time cue and the night's phone rules are the shared ones (.pl-card, data-cue and .pl-night in trade-page.css) */
+.rb-night .n4-figs>.rb-tape-pic{width:min(300px,100%)}
+.rb-tape{max-width:none}
+.rb-tape .tk-sp{margin-top:8px}
+.rb-mo .mo-h{border-bottom-width:1.5px}
+.rb-mo .mo-row{padding:7px 0}
+/* on a computer the tape sits beside the log, and Pause sits under the tape on its left edge, 28px up into its caption strip, as
+   plumbing's sits under the phone (it used to hang alone under the whole 804px loop box, 476px below the tape) */
+@media (min-width:900px){
+  .rb-night .n4-loop{display:grid;grid-template-columns:300px minmax(0,440px);grid-template-rows:auto 1fr;column-gap:24px;justify-content:center;align-items:start;margin-top:18px}
+  .rb-night .n4-figs{display:contents}
+  .rb-night .n4-paper{grid-column:2;grid-row:1/3}
+  .rb-night .loop-ctl{grid-column:1;grid-row:2;margin-top:-28px}
+}
+@media (max-width:699px){
+  .rb-mo .mo-row .l,.rb-mo .mo-row .v{font-size:14px}
+  .rb-tape{padding:12px 14px 14px;font-size:12px}
+}
+</style>
+<!-- js: the hidden start states apply only with JS. review: picture slots show on this computer, the local check server or
+     ?review, never on lumorafl.com (R8: on the live site an empty slot shows nothing). -->
+<script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
+<script src="/v4/trades.js?v=93161f63" defer></script>
+<script src="/v4/system.js?v=93161f63" defer></script>
 </head>
-<body data-trade="food" data-trade-lock>
+<body data-trade="food" data-trade-lock data-rules="v4">
 <a class="skip" href="#main">Skip to content</a>
 
 <div class="util">
@@ -43,11 +101,11 @@
 </div>
 <header class="hdr">
   <div class="wrap hdr-in">
-    <a class="brand" href="/" aria-label="Lumora, home page"><img src="/v3/assets/logo.svg" alt="" width="124" height="30"></a>
+    <a class="brand" href="/" aria-label="Lumora, home page"><img src="/v4/assets/logo.svg" alt="" width="124" height="30"></a>
     <nav class="nav" id="nav" aria-label="Main">
       <ul>
         <li><a class="u" href="/how-it-works/">How it works</a></li>
-        <li><a class="u" href="/industries/" aria-current="page">Industries</a></li>
+        <li><a class="u" href="/industries/" aria-current="true">Industries</a></li>
         <li><a class="u" href="/leak-check/">Loss calculator</a></li>
         <li><a class="u" href="/about/">About</a></li>
         <li><a class="u" href="/articles/">Articles</a></li>
@@ -55,7 +113,7 @@
       </ul>
     </nav>
     <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
-    <a class="btn btn-sm" href="tel:+13522260681">Call or text</a>
+    <a class="btn btn-sm" href="tel:+13522260681">Call or text us</a>
     <span class="lang" role="group" aria-label="Language"><a href="/industries/restaurants-and-bars/" aria-current="true">EN</a><a href="/es/industries/restaurants-and-bars/" lang="es" hreflang="es">ES</a></span>
     <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   </div>
@@ -63,289 +121,351 @@
 
 <main id="main">
 
-<!-- ============================================================ 1 HERO: words, call block, strip, the sheet (the page's one pen ring) -->
-<section class="hero" id="top" data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="sheet">
+<!-- ============================================================ 1 HERO, with the facts strip. Back office leads (no calls row on this
+     sheet, none added); the sheet holds the page's one pen ring, on $1,153. Locked to restaurants: no picker, no time-back line
+     (sheets.json food has none, RESTAURANTS-PREP 7.2). The 60% under row 3 keeps its trace (7.3): read in the article itself on
+     2026-10-12 (Restaurant Business, "Restaurants say they're bearing the brunt of delivery chargebacks", 2024-04-03: Kory Lau
+     "estimated that he gets his money back about 60% of the time"). -->
+<!-- Go-live: the ES links point to /es/industries/restaurants-and-bars/, still the v3 Spanish page, with the old layout and words the v4 rules retired.
+     Hold this English page until the Spanish v4 page exists, or until Franco OKs shipping English first (review 2026-10-12). -->
+<section class="hero hm4-hero" id="top" data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="sheet">
   <div class="wrap hero-g">
     <div class="hero-copy">
-      <nav class="crumb" aria-label="Breadcrumb"><a class="u" href="/industries/">Industries</a><span aria-hidden="true">/</span><span aria-current="page">Restaurants and bars</span></nav>
-      <p class="eyebrow">Restaurants, bars and food trucks in Gainesville and Alachua County.</p>
+      <p class="eyebrow">Operations and automation for restaurants and bars in Gainesville and Alachua County.</p>
       <h1>Where restaurants and bars lose money</h1>
-      <p class="t-lede">Supplier invoices typed by hand and never checked. Staff hours that run past the sales. Delivery apps that keep more than their plan rate. We put a dollar figure on each one, from your own numbers, in English or Spanish.</p>
+      <p class="hero-one">The case on the invoice that never came off the truck.</p>
+      <p class="t-lede"><span class="hm-recog">Distributor prices that climb while the menu stays put.</span> We walk your place, put a dollar figure on each problem, then fix it inside the tools you already use.</p>
     </div>
     <div class="hero-act">
       <div class="cta">
         <div class="cta-row">
           <a class="btn btn-lg" href="tel:+13522260681">Call or text us</a>
           <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
+          <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
         </div>
-        <p class="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day. English or Spanish.</p>
-        <p class="cta-note">Up to 20 minutes, by phone. Free, and if a walk isn't worth it for your place, we'll tell you. <a class="u" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
-        <p class="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward the fix if it starts within 30 days.</p>
-        <p class="mb"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <span class="red">the walk fee back</span>. <a class="u" href="#close">Full terms</a></p>
+        <p class="reply"><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span> English or Spanish.</p>
       </div>
     </div>
-    <a class="hero-strip strip" href="#sheet" data-bind="strip" aria-label="Sample walk sheet, top leak">
+    <a class="hero-strip strip" href="#sheet" data-bind="strip">
       <span class="strip-k" data-s="sub">Restaurant and bar, 110 seats</span>
       <span class="stamp">Sample</span>
       <span class="strip-b" data-s="leak">A slow Tuesday staffed like a busy night</span>
-      <span class="strip-usd" data-s="usd">$1,153 a month</span>
-      <span class="strip-f" data-s="f">($980 labor − $714, a 34% target on $2,100 sales) × 52 weeks ÷ 12</span>
+      <span class="strip-usd" data-s="usd">$1,153 a month</span><span class="sr">, see it on the sample sheet below</span>
     </a>
+    <div class="hero-terms">
+      <p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward the fix if it starts within 30 days.</span></p>
+      <p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p>
+    </div>
     <div class="hero-tool">
-      <figure class="clip" aria-labelledby="sheet-cap">
+      <figure class="clip" aria-label="Sample walk sheet">
         <div class="board">
           <span class="clamp" aria-hidden="true"><i></i></span>
-          <div class="sheet" id="sheet" data-bind="sheet" data-ring data-fill aria-live="polite">
+          <div class="sheet" id="sheet" data-bind="sheet" data-ring data-fill data-short>
             <header class="sh-head">
               <div><b class="sh-title">Walk sheet</b><span class="sh-sub" data-f="sub">Restaurant and bar, 110 seats, Gainesville</span></div>
               <span class="stamp">Sample</span>
             </header>
-            <div class="sh-cols"><span>Leak</span><span data-f="per">A month</span></div>
-            <ol class="sh-rows" data-f="rows" id="pre-rows"><!--pre:pre-rows--><li style="--i:0"><div class="sh-l"><b>A slow Tuesday staffed like a busy night</b><small>($980 labor − $714, a 34% target on $2,100 sales) × 52 weeks ÷ 12</small></div><span class="sh-usd">$1,153<svg class="pen-ring" viewBox="0 0 76 51" aria-hidden="true"><path pathLength="1" d="M10.6 11.7C11.1 11.2 12.4 9.8 13.5 9.0C14.6 8.2 15.8 7.3 17.1 6.6C18.5 5.9 19.9 5.2 21.4 4.6C22.9 4.1 24.4 3.6 26.1 3.2C27.7 2.9 29.5 2.6 31.2 2.4C32.9 2.3 34.6 2.2 36.4 2.3C38.1 2.4 39.9 2.6 41.5 2.8C43.2 3.1 44.7 3.4 46.3 3.8C47.8 4.2 49.3 4.7 50.7 5.2C52.2 5.7 53.6 6.3 54.9 6.9C56.2 7.5 57.4 8.2 58.6 8.9C59.8 9.6 61.0 10.3 62.1 11.0C63.3 11.8 64.3 12.6 65.3 13.4C66.4 14.2 67.4 15.0 68.3 15.9C69.1 16.8 70.0 17.8 70.7 18.8C71.4 19.8 72.1 20.8 72.6 21.9C73.1 22.9 73.5 24.1 73.7 25.2C73.9 26.3 74.0 27.4 73.9 28.6C73.8 29.7 73.5 30.9 73.0 32.0C72.6 33.1 72.0 34.2 71.2 35.2C70.5 36.3 69.6 37.2 68.5 38.1C67.5 39.1 66.4 39.9 65.1 40.7C63.9 41.5 62.5 42.2 61.2 42.8C59.8 43.5 58.4 44.1 56.9 44.6C55.5 45.1 54.0 45.6 52.5 46.0C51.0 46.4 49.4 46.8 47.9 47.1C46.4 47.4 44.8 47.7 43.2 48.0C41.6 48.2 40.1 48.4 38.4 48.6C36.8 48.7 35.1 48.8 33.5 48.8C31.8 48.8 30.1 48.8 28.4 48.7C26.7 48.6 25.0 48.4 23.3 48.1C21.7 47.8 20.0 47.4 18.4 46.9C16.8 46.4 15.3 45.8 13.9 45.1C12.5 44.4 11.2 43.6 10.0 42.8C8.8 41.9 7.7 41.0 6.8 40.0C5.9 39.0 5.2 38.0 4.5 36.9C3.9 35.9 3.5 34.8 3.1 33.7C2.8 32.6 2.6 31.4 2.5 30.3C2.3 29.2 2.4 28.1 2.5 27.1C2.5 26.0 2.7 24.9 3.0 23.8C3.2 22.8 3.6 21.7 3.9 20.7C4.3 19.7 4.8 18.7 5.3 17.6C5.8 16.6 6.5 15.6 7.2 14.6C7.8 13.6 8.6 12.6 9.5 11.7C10.3 10.7 11.4 9.8 12.4 8.9C13.5 8.0 14.7 7.2 16.0 6.4C17.3 5.6 18.8 4.9 20.3 4.3C21.9 3.7 24.3 3.0 25.1 2.8"></path></svg></span></li><li style="--i:1"><div class="sh-l"><b>Supplier price rises never questioned or passed to the menu</b><small>(wings +$0.26/lb × 280 lb + fryer oil +$5.65 × 6 jugs) a week × 52 ÷ 12</small></div><span class="sh-usd">$462</span></li><li style="--i:2"><div class="sh-l"><b>Delivery-app error charges never disputed</b><small>$96.40 a week × 60% of disputes won (sample rate) × 52 ÷ 12</small></div><span class="sh-usd">$251</span></li><!--/pre--></ol>
+            <p class="sr" aria-live="polite" data-f="live"></p>
+            <div class="sh-cols"><span>Problem</span><span data-f="per">A month</span></div>
+            <ol class="sh-rows" data-f="rows"><!--prerender:rows--><li style="--i:0" data-task="reminders"><div class="sh-l"><b>A slow Tuesday staffed like a busy night</b><small>($980 − $714) × 52 ÷ 12</small></div><span class="sh-usd">$1,153<svg class="pen-ring" viewBox="0 0 76 51" aria-hidden="true"><path pathLength="1" d="M10.6 11.7C11.1 11.2 12.4 9.8 13.5 9.0C14.6 8.2 15.8 7.3 17.1 6.6C18.5 5.9 19.9 5.2 21.4 4.6C22.9 4.1 24.4 3.6 26.1 3.2C27.7 2.9 29.5 2.6 31.2 2.4C32.9 2.3 34.6 2.2 36.4 2.3C38.1 2.4 39.9 2.6 41.5 2.8C43.2 3.1 44.7 3.4 46.3 3.8C47.8 4.2 49.3 4.7 50.7 5.2C52.2 5.7 53.6 6.3 54.9 6.9C56.2 7.5 57.4 8.2 58.6 8.9C59.8 9.6 61.0 10.3 62.1 11.0C63.3 11.8 64.3 12.6 65.3 13.4C66.4 14.2 67.4 15.0 68.3 15.9C69.1 16.8 70.0 17.8 70.7 18.8C71.4 19.8 72.1 20.8 72.6 21.9C73.1 22.9 73.5 24.1 73.7 25.2C73.9 26.3 74.0 27.4 73.9 28.6C73.8 29.7 73.5 30.9 73.0 32.0C72.6 33.1 72.0 34.2 71.2 35.2C70.5 36.3 69.6 37.2 68.5 38.1C67.5 39.1 66.4 39.9 65.1 40.7C63.9 41.5 62.5 42.2 61.2 42.8C59.8 43.5 58.4 44.1 56.9 44.6C55.5 45.1 54.0 45.6 52.5 46.0C51.0 46.4 49.4 46.8 47.9 47.1C46.4 47.4 44.8 47.7 43.2 48.0C41.6 48.2 40.1 48.4 38.4 48.6C36.8 48.7 35.1 48.8 33.5 48.8C31.8 48.8 30.1 48.8 28.4 48.7C26.7 48.6 25.0 48.4 23.3 48.1C21.7 47.8 20.0 47.4 18.4 46.9C16.8 46.4 15.3 45.8 13.9 45.1C12.5 44.4 11.2 43.6 10.0 42.8C8.8 41.9 7.7 41.0 6.8 40.0C5.9 39.0 5.2 38.0 4.5 36.9C3.9 35.9 3.5 34.8 3.1 33.7C2.8 32.6 2.6 31.4 2.5 30.3C2.3 29.2 2.4 28.1 2.5 27.1C2.5 26.0 2.7 24.9 3.0 23.8C3.2 22.8 3.6 21.7 3.9 20.7C4.3 19.7 4.8 18.7 5.3 17.6C5.8 16.6 6.5 15.6 7.2 14.6C7.8 13.6 8.6 12.6 9.5 11.7C10.3 10.7 11.4 9.8 12.4 8.9C13.5 8.0 14.7 7.2 16.0 6.4C17.3 5.6 18.8 4.9 20.3 4.3C21.9 3.7 24.3 3.0 25.1 2.8"></path></svg></span></li><li style="--i:1" data-task="quotes"><div class="sh-l"><b>Supplier price rises never questioned or passed to the menu</b><small>$106.70 a week × 52 ÷ 12</small></div><span class="sh-usd">$462</span></li><li style="--i:2" data-task="quotes"><div class="sh-l"><b>Delivery-app error charges never disputed</b><small>$96.40 × 60% × 52 ÷ 12</small></div><span class="sh-usd">$251</span></li><!--/prerender--></ol>
             <div class="sh-total"><span>Lost before any fix</span><b data-f="total">$1,866 a month</b></div>
-            <p class="sh-time" data-f="time" hidden></p>
-            <p class="sh-note">Illustrative numbers. Your sheet is built from your point-of-sale reports, your time clock, your supplier invoices and your app statements.</p>
+            <p class="sh-note">Yours is built from your own point-of-sale reports, schedule, invoices and app statements. 60% is a sample win rate, one owner's figure in Restaurant Business.</p>
           </div>
         </div>
-        <figcaption id="sheet-cap" class="cap">Sample walk sheet for a restaurant and bar, with illustrative numbers: each leak, the arithmetic under it and what it costs a month.</figcaption>
       </figure>
     </div>
   </div>
-</section>
-
-<section class="facts" aria-label="Facts you can check">
-  <div class="wrap facts-in">
-    <span class="facts-k">Facts you can check</span>
-    <ul>
-      <li>Lumora Group LLC, a Florida company</li>
-      <li>Gainesville and Alachua County</li>
+  <div class="facts4">
+    <ul class="wrap" aria-label="Facts you can check">
+      <li>A Florida company, based in Gainesville</li>
       <li>English and Spanish</li>
-      <li>Money back within 7 days of the call on your sheet</li>
+      <li>Money back up to 7 days after we go over your sheet</li>
+      <li>We don't sell leads, and there's no long contract</li>
     </ul>
   </div>
 </section>
 
-<!-- ============================================================ 2 THE WALK: three stops, the restaurant's own schedule as stop 1's "before" -->
-<section class="band seam" id="walk" data-bind="walk" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops" style="--hole:var(--paper)">
-  <div class="wrap-wide">
-    <p class="kicker">How a walk goes</p>
-    <h2 class="two" style="max-width:24em">We come between lunch and dinner, or on the day you're closed. <span>Then we read a few weeks of your schedule, supplier invoices and app statements.</span></h2>
-    <p class="t-body lede-s">Walk a sample restaurant like yours. Each stop shows it as we find it, then fixed. The sheet adds up as you go.</p>
-    <div class="walk-grid">
-      <aside class="tally" data-tally aria-label="Walk sheet so far">
-        <div class="tally-card">
-          <p class="tally-h">Walk sheet <span class="stamp">Sample</span></p>
-          <p class="tally-sub" data-f="tsub">Whimbrel Kitchen &amp; Tap, 110 seats</p>
-          <ol id="pre-tally"><!--pre:pre-tally--><li data-i="0"><span>The schedule</span><b>$1,153</b></li><li data-i="1"><span>The supplier invoice</span><b>$462</b></li><li data-i="2"><span>The payout report</span><b>$251</b></li><!--/pre--></ol>
-          <p class="tally-tot"><span data-f="tper">A month</span><b data-f="tot">$1,866</b></p>
-        </div>
-        <p class="tally-bar" aria-hidden="true"><span data-f="bar-stop">Walk done, 3 of 3 stops</span><b data-f="bar-usd">$1,866 a month</b></p>
-      </aside>
-      <ol class="stops" data-f="stops" id="pre-stops"><!--pre:pre-stops--><li class="stop page" id="stop-1" data-usd="1153" data-place="The schedule"><p class="tab"><span class="tab-n">1</span>Stop 1 · The schedule</p><h3>A slow Tuesday staffed like a busy night</h3><div class="stop-body"><div class="pic"><div class="g2r" data-g2r="" data-state="after" role="img" aria-label="Sample, fixed: Sales and staff hours, last week. Target 34%: Tuesday staffed for $714." data-label-before="Sample, as we find it: the printed schedule pinned by the time clock, week of October 5. Tuesday has the same crew as Thursday, 4 servers, 2 at the bar, 3 cooks and 1 dishwasher, though last Tuesday sold $2,100 and last Thursday $3,120. Tuesday is circled in pencil." data-label-after="Sample, fixed: Sales and staff hours, last week. Target 34%: Tuesday staffed for $714."><div class="before">
-  <div class="sched">
-    <p class="sc-h"><b>SCHEDULE · WEEK OF OCT 5</b><span>Whimbrel Kitchen &amp; Tap · dinner</span></p>
-    <table>
-      <thead><tr><th scope="col"><span class="sr">Role</span></th><th class="x" scope="col">Mon</th><th scope="col"><span class="pc">Tue</span></th><th scope="col">Wed</th><th scope="col">Thu</th><th class="x" scope="col">Fri</th></tr></thead>
-      <tbody>
-        <tr><th scope="row">Servers</th><td class="x">3</td><td>4</td><td>3</td><td>4</td><td class="x">6</td></tr>
-        <tr><th scope="row">Bar</th><td class="x">1</td><td>2</td><td>1</td><td>2</td><td class="x">2</td></tr>
-        <tr><th scope="row">Line</th><td class="x">2</td><td>3</td><td>2</td><td>3</td><td class="x">4</td></tr>
-        <tr><th scope="row">Dish</th><td class="x">1</td><td>1</td><td>1</td><td>1</td><td class="x">2</td></tr>
-        <tr class="last"><th scope="row">last wk</th><td class="x hw">$2,480</td><td class="hw">$2,100</td><td class="hw">$2,650</td><td class="hw">$3,120</td><td class="x hw">$5,940</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div><div class="after"><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Sales and staff hours, last week</span></div><div class="win-b"><table class="dt"><tbody><tr><th>Night</th><th>Sales</th><th>Labor</th><th>Labor %</th></tr><tr><td>Mon</td><td>$2,480</td><td>$860</td><td>35%</td></tr><tr class="n"><td>Tue</td><td>$2,100</td><td>$980</td><td><span class="st wt">47%</span></td></tr><tr><td>Wed</td><td>$2,650</td><td>$910</td><td>34%</td></tr></tbody></table><span class="ok">✓ Target 34%: Tuesday staffed for $714</span></div></div></div></div><span class="samp">Sample</span></div><div class="stop-notes"><p class="pencil">Tuesday slow. Full crew on anyway.</p><p class="find"><span class="find-usd money">$1,153 a month<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span><span class="find-f">($980 labor − $714, a 34% target on $2,100 sales) × 52 weeks ÷ 12</span></p><p class="fixline"><b>Fix:</b> each night's sales next to its staff hours, every Monday.</p><div class="seg" role="group" aria-label="Show stop 1"><button type="button" data-show="before" aria-pressed="false">As we find it</button><button type="button" data-show="after" aria-pressed="true">Fixed</button></div></div></div></li><li class="stop page" id="stop-2" data-usd="462" data-place="The supplier invoice"><p class="tab"><span class="tab-n">2</span>Stop 2 · The supplier invoice</p><h3>Supplier price rises never questioned or passed to the menu</h3><div class="stop-body"><div class="pic"><div class="g2r" data-g2r="" data-state="after" role="img" aria-label="Sample, fixed: Coastway invoice 7041152203, Delivered Mon, Oct 5 · checked against the last order. 2 price rises flagged for your OK." data-label-before="Sample, as we find it: the supplier invoice: Supplier invoice , Wings ... a lb, Fryer oil ... a jug." data-label-after="Sample, fixed: Coastway invoice 7041152203, Delivered Mon, Oct 5 · checked against the last order. 2 price rises flagged for your OK."><div class="before"><div class="doc tilt-r"><div class="dhead"><b>The supplier invoice</b></div><table class="dt"><tbody><tr><td>Supplier invoice</td><td></td></tr><tr><td>Wings</td><td>... a lb</td></tr><tr><td>Fryer oil</td><td>... a jug</td></tr></tbody></table></div></div><div class="after"><div class="doc tilt-r"><div class="dhead"><b>Coastway invoice 7041152203</b><p class="dmeta">Delivered Mon, Oct 5 · checked against the last order</p></div><table class="dt"><tbody><tr><td>Wings, a lb · was $3.12</td><td>$3.38</td><td><span class="st wt">+$0.26</span></td></tr><tr><td>Fryer oil, 35 lb jug · was $41.20</td><td>$46.85</td><td><span class="st wt">+$5.65</span></td></tr><tr><td>Lemons, case · was $38.90</td><td>$38.90</td><td><span class="st ok">Same</span></td></tr></tbody></table><span class="ok wt">2 price rises flagged for your OK</span></div></div></div><span class="samp">Sample</span></div><div class="stop-notes"><p class="pencil">Wings up 26 cents a pound. Menu price the same.</p><p class="find"><span class="find-usd money">$462 a month<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span><span class="find-f">(wings +$0.26/lb × 280 lb + fryer oil +$5.65 × 6 jugs) a week × 52 ÷ 12</span></p><p class="fixline"><b>Fix:</b> every supplier invoice checked against the last price you paid.</p><div class="seg" role="group" aria-label="Show stop 2"><button type="button" data-show="before" aria-pressed="false">As we find it</button><button type="button" data-show="after" aria-pressed="true">Fixed</button></div></div></div></li><li class="stop page" id="stop-3" data-usd="251" data-place="The payout report"><p class="tab"><span class="tab-n">3</span>Stop 3 · The payout report</p><h3>Delivery-app error charges never disputed</h3><div class="stop-body"><div class="pic"><div class="g2r" data-g2r="" data-state="after" role="img" aria-label="Sample, fixed: Error charges, last week.  Ready for you to send $96.40." data-label-before="Sample, as we find it: the payout report: Payout report, −$18.40 −$31.25, −$46.75 ?." data-label-after="Sample, fixed: Error charges, last week.  Ready for you to send $96.40."><div class="before"><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Payout report</span></div><div class="win-b"><table class="dt"><tbody><tr><td>−$18.40</td><td>−$31.25</td></tr><tr><td>−$46.75</td><td>?</td></tr></tbody></table></div></div></div><div class="after"><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Error charges, last week</span></div><div class="win-b"><table class="dt"><tbody><tr><th>Order</th><th>Reason</th><th>Charge</th><th>Status</th></tr><tr><td>#8F3K2</td><td>Missing item</td><td>$18.40</td><td><span class="st wt">Ready</span></td></tr><tr><td>#2RZ9P</td><td>Item incorrect</td><td>$31.25</td><td><span class="st wt">Ready</span></td></tr><tr class="n"><td>#7HD4W</td><td>Wrong order</td><td>$46.75</td><td><span class="st wt">Ready</span></td></tr></tbody></table><div class="dtot"><span>Ready for you to send</span><span>$96.40</span></div></div></div></div></div><span class="samp">Sample</span></div><div class="stop-notes"><p class="pencil">Error charges taken out. Nobody disputed them.</p><p class="find"><span class="find-usd money">$251 a month<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span><span class="find-f">$96.40 a week × 60% of disputes won (sample rate) × 52 ÷ 12</span></p><p class="fixline"><b>Fix:</b> error charges listed each week, with the dispute ready to send.</p><div class="seg" role="group" aria-label="Show stop 3"><button type="button" data-show="before" aria-pressed="false">As we find it</button><button type="button" data-show="after" aria-pressed="true">Fixed</button></div></div></div></li><!--/pre--></ol>
-    </div>
-    <div class="also">
-      <h3>Also on the walk, without a price on this sample</h3>
-      <ul>
-        <li><b>Food cost that drifts</b>Supplier prices move while menu prices stand still. The sheet checks your top items' cost against their price.</li>
-        <li><b>What each app really keeps</b>Once promotions, ads and error charges are added, an app keeps more than its plan rate. You have 14 days to dispute on DoorDash and 30 on Uber Eats.</li>
-        <li><b>Tip-outs worked out by hand</b>Since September 30, 2026, Florida's tipped cash wage is $11.98, and a manager may never share in the tip pool. The sheet checks a month of tip-out sheets against your own rule. General information, not legal advice.</li>
+<!-- ============================================================ 2 WHAT WE AUTOMATE IN A RESTAURANT OR BAR, and who it's for. Six rows in
+     the order of a week, no dollar figures, leaving out what sections 4 and 5 show (shorts, price checks, schedule against sales,
+     error charges). Sources: items.json supplier-bills-4, numbers-6 (owner only, never called theft, FX-22), numbers-7 (your pool
+     rule: we never decide who is tip-eligible, FX-35), the-job-10, numbers-9, office-1 and office-7 (F.S. 509.049: food handler
+     training within 60 days after employment). The bar row (F.S. 561.42(2)) stays out for height. On a computer only, row 3 as a
+     picture (R9 computer-only extra, reason in data-extra): a server's checkout read into the owner's own tip-out sheet. -->
+<section class="band hm4-auto pl-auto" id="automate" data-ground="sheet" data-density="mid" data-width="split" data-loud="list" data-medium="list">
+  <div class="wrap pl-auto-g">
+    <h2>What we automate in a restaurant or bar</h2>
+    <p class="auto-tools"><span data-shared="tools">It all lands in what you already use: Excel, QuickBooks, your bookkeeper's sheet or a simple form we build.</span></p>
+    <div class="pl-auto-r">
+      <ul class="auto-list">
+        <li data-task="bills">Distributor invoices, photographed or emailed as PDFs, read line by line into your books.</li>
+        <li data-task="numbers">Last night's close checked against the bank deposit, with voids and comps listed by who approved them, for you only.</li>
+        <li data-task="numbers">Tip-outs worked out from each server's sales the way your pool rule says, ready before payroll.</li>
+        <li data-task="retyping">Sunday's inventory count typed once from the clipboard, next to what it should have been.</li>
+        <li data-task="numbers">Each app's payout matched to the bank deposit, with its real cut after promotions and ads.</li>
+        <li data-task="calendar">Food handler training due 60 days after each hire, license renewals and grease trap pump-outs, on one calendar.</li>
       </ul>
+      <p class="auto-close">On the walk, we find which of these your place has. <a class="u" href="/what-we-automate/?trade=food">See the full list for restaurants and bars</a></p>
+      <div class="pl-who">
+        <p class="pl-who-line"><span data-shared="who.for">For restaurants, bars and food trucks the owner runs.</span></p>
+        <p class="who-not"><span class="t-label">Who a walk is not for</span> <span data-shared="notfor">A place that wants a new point of sale built. Toast, Square and others already do that well. We work on everything around it.</span></p>
+      </div>
     </div>
+    <figure class="pic auto-pic pl-auto-pic" data-extra="computer only: on a computer the left column is empty under the heading, and row 3 as a picture breaks up two sections of text; on a phone it would add 440px (measured at 390) and take the page over its 11,000px limit, and section 4 shows a document being read two screens later">
+      <div class="ap-stack" role="img" aria-label="Sample: a server's checkout printed Tuesday, October 6, for server 104: net sales 486.20 and card tips 97.40. Beside it the owner's own Tip-outs October 2026 spreadsheet, where row 41 has the same date, server and sales, 17.02 to support staff at the rule's 3.5% of sales, marked Read from the checkout; nothing typed.">
+        <div class="ticket rb-co">
+          <p class="tk-co">WHIMBREL KITCHEN &amp; TAP<small>SERVER CHECKOUT</small></p>
+          <p class="tk-no"><span>TUE 10/06/26</span><span>SERVER 104</span></p>
+          <p class="tk-sum"><span>NET SALES</span><span><mark>486.20</mark></span></p>
+          <p class="tk-sum tk-tot"><span>CARD TIPS</span><span>97.40</span></p>
+        </div>
+        <p class="ap-arrow">Worked out by your rule: 3.5% of sales to support staff</p>
+        <div class="scr-win ap-xl">
+          <div class="win-tb"><i></i><i></i><i></i><span>Tip-outs, Oct 2026.xlsx</span></div>
+          <div class="win-b">
+            <div class="xl"><table>
+              <tr class="cl"><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr>
+              <tr><td>1</td><th>Date</th><th>Server</th><th>Sales</th><th>Support 3.5%</th><th>Entered</th></tr>
+              <tr class="on"><td>41</td><td>10/06</td><td>104</td><td>486.20</td><td>17.02</td><td>Read from the checkout</td></tr>
+            </table><div class="xl-tabs"><span class="on">Tip-outs</span><span>Payroll</span><em>Ready</em></div></div>
+          </div>
+        </div>
+      </div>
+      <span class="samp">Sample</span>
+    </figure>
+    <figure class="slot pl-auto-slot" data-slot="food-back-door" data-shape="4:5"><span class="slot-k">Photo slot</span><b>The back door at 7:30 a.m.</b><span>Shot list only. Hands holding the customer copy on a clipboard over stacked cases, a pen. No faces, no distributor name, no readable customer data. Section 4 shows the papers, so not the invoice again.</span></figure>
   </div>
 </section>
 
-<template id="before-1" data-label="Sample, as we find it: the printed schedule pinned by the time clock, week of October 5. Tuesday has the same crew as Thursday, 4 servers, 2 at the bar, 3 cooks and 1 dishwasher, though last Tuesday sold $2,100 and last Thursday $3,120. Tuesday is circled in pencil.">
-  <div class="sched">
-    <p class="sc-h"><b>SCHEDULE · WEEK OF OCT 5</b><span>Whimbrel Kitchen &amp; Tap · dinner</span></p>
-    <table>
-      <thead><tr><th scope="col"><span class="sr">Role</span></th><th class="x" scope="col">Mon</th><th scope="col"><span class="pc">Tue</span></th><th scope="col">Wed</th><th scope="col">Thu</th><th class="x" scope="col">Fri</th></tr></thead>
-      <tbody>
-        <tr><th scope="row">Servers</th><td class="x">3</td><td>4</td><td>3</td><td>4</td><td class="x">6</td></tr>
-        <tr><th scope="row">Bar</th><td class="x">1</td><td>2</td><td>1</td><td>2</td><td class="x">2</td></tr>
-        <tr><th scope="row">Line</th><td class="x">2</td><td>3</td><td>2</td><td>3</td><td class="x">4</td></tr>
-        <tr><th scope="row">Dish</th><td class="x">1</td><td>1</td><td>1</td><td>1</td><td class="x">2</td></tr>
-        <tr class="last"><th scope="row">last wk</th><td class="x hw">$2,480</td><td class="hw">$2,100</td><td class="hw">$2,650</td><td class="hw">$3,120</td><td class="x hw">$5,940</td></tr>
-      </tbody>
-    </table>
-  </div>
-</template>
-
-<!-- ============================================================ 3 BACK AT THE DESK: the one display figure and its arithmetic -->
-<section class="band seam" id="desk" data-bind="bigfig" data-ground="paper" data-density="low" data-width="wide" data-loud="figure" data-medium="figure" style="--hole:var(--bone)">
+<!-- ============================================================ 3 HOW IT WORKS: Home's block, every line bound from shared-text.json
+     (step 2's records read step2.what.food, step 3's sheet step3.what.food), ends on the call button (R12) -->
+<section class="band hm4-how" id="how" data-ground="paper" data-density="mid" data-width="wide" data-loud="steps" data-medium="timeline">
   <div class="wrap">
-    <p class="tab"><span class="tab-n">4</span>Back at the desk · The sheet</p>
-    <div class="bigfig">
-      <p class="big"><small>About</small><span class="t-display money" data-f="n">$1,866</span><small data-f="per">a month</small></p>
-      <div class="stack">
-        <p class="eq" data-f="eq" id="pre-eq"><!--pre:pre-eq--><span>$1,153 <small>a slow Tuesday staffed like a busy night</small></span><i>+</i><span>$462 <small>supplier price rises never questioned or passed to the menu</small></span><i>+</i><span>$251 <small>delivery-app error charges never disputed</small></span><i>=</i><span class="r">$1,866 <small>a month</small></span><!--/pre--></p>
-        <p class="t-body"><span class="stamp">Sample</span> <span data-f="sub">Restaurant and bar, 110 seats, Gainesville</span>. Your sheet is built from your own reports. Most get it within 5 business days of having them; bigger ones get a quote and a date on the free call. You keep it either way.</p>
-        <p class="t-body" data-f="time" hidden></p>
-      </div>
+    <div class="how-h">
+      <h2>How it works</h2>
+      <p class="t-lede"><span data-shared="steps.stop">You can stop after any of them.</span></p>
     </div>
+    <ol class="tl4">
+      <li>
+        <div class="tl-head"><h3><span data-shared="step1.when">Today</span></h3><span class="tl-tag free"><span data-shared="step1.cost">Free</span></span></div>
+        <div class="tl-body"><p class="t-body"><span data-shared="step1.what">A free call, up to 20 minutes.</span> We tell you plainly whether a walk fits.</p></div>
+      </li>
+      <li class="tl-big">
+        <div class="tl-head"><h3><span data-shared="step2.when">The walk</span></h3><span class="tl-tag"><span data-shared="step2.cost">Paid</span></span></div>
+        <div class="tl-body">
+          <p class="t-body"><span data-shared="step2.what">A visit sized to your place, plus your records: distributor invoices, point-of-sale reports, the schedule and app statements.</span> <span data-shared="step2.part">You sign one OK so we can look at them.</span></p>
+          <p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward the fix if it starts within 30 days.</span></p>
+          <p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span></p>
+        </div>
+        <figure class="slot" data-slot="home-how-records" data-shape="1:1"><span class="slot-k">Picture slot</span><b>Your records</b><span>Distributor invoices, point-of-sale reports, the schedule and app statements, as the place sends them.</span></figure>
+      </li>
+      <li>
+        <div class="tl-head"><h3><span data-shared="step3.when">Your sheet</span></h3></div>
+        <div class="tl-body"><p class="t-body"><span data-shared="step3.what">Every problem in dollars. Most places within 5 business days of having your records; bigger places get a quote and a date on the free call.</span> <span data-shared="step3.get">You keep it either way.</span></p></div>
+        <figure class="slot" data-slot="home-how-sheet" data-shape="1:1"><span class="slot-k">Picture slot</span><b>The sheet</b><span>A finished walk sheet, small, no dollar figures readable.</span></figure>
+      </li>
+      <li>
+        <div class="tl-head"><h3><span data-shared="step4.when">Then, only if you want</span></h3><span class="tl-tag">Paid</span></div>
+        <div class="tl-body">
+          <p class="t-body"><span data-shared="step4.what">One fix, priced before work starts, and a monthly check you can cancel any month.</span></p>
+          <p class="t-small tl-ai">Fixed rules you approve, AI, or both: your call. Anything AI writes waits for your OK, and nothing goes into an AI tool without it.</p>
+        </div>
+        <figure class="slot" data-slot="home-how-report" data-shape="1:1"><span class="slot-k">Picture slot</span><b>Monthly report</b><span>The one-page monthly check, small.</span></figure>
+      </li>
+    </ol>
     <div class="cta-inline">
       <a class="btn" href="tel:+13522260681">Call or text us</a>
       <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
-      <a class="u" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
+      <p class="mb mb-s"><span data-shared="moneyback.short"><b>Not worth it to you?</b> You get the walk fee back.</span></p>
     </div>
   </div>
 </section>
 
-<!-- ============================================================ 4 THE INK BAND: after close (a restaurant's night is the close, not missed calls) -->
-<section class="band" id="night" data-ground="night" data-density="mid" data-width="split" data-loud="list" data-medium="morning">
-  <div class="wrap">
-    <ul class="tapes" aria-label="The offer"><li style="--r:-1.6deg">Free call, up to 20 minutes</li><li style="--r:1.2deg">Visit sized to your shop</li><li style="--r:-.8deg">Most sheets within 5 business days</li><li style="--r:1.8deg">Money back within 7 days of the sheet call</li></ul>
-    <div class="night-g" data-bind="morning">
-      <div>
-        <p class="kicker">10:58 p.m., after close</p>
-        <h2 class="two">The drawers are counted and the deposit is in the safe. <span>The invoices, the app statement and tomorrow's schedule wait for whoever has time.</span></h2>
-        <p class="t-lede" style="margin-top:18px">After the fix, your own reports are read overnight, and at 6:30 a.m. one list is waiting on your phone: what ran over, what to dispute and what needs your OK.</p>
-        <ol class="slept" data-f="log" id="pre-log" aria-label="Overnight, sample log"><!--pre:pre-log--><li><time>10:58 PM</time><span>Read Monday’s point-of-sale report.</span></li><li><time>10:58 PM</time><span>Read the delivery-app weekly statement.</span></li><li><time>5:30 AM</time><span>Checked 3 supplier invoices against last week’s prices.</span></li><li><time>5:45 AM</time><span>Checked Tuesday’s schedule against expected sales.</span></li><li><time>6:30 AM</time><span>Morning list sent to your phone.</span></li><!--/pre--></ol>
-        <div class="cta-inline"><a class="btn" href="tel:+13522260681">Call or text us</a><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a></div>
-      </div>
-      <div class="night-figs">
-        <div class="pic rcpt-pic">
-          <div class="ticket rcpt" role="img" aria-label="Sample: Monday's end-of-day printout from the point-of-sale system, printed 10:46 p.m. Net sales $1,880.00, tax $141.00, card $1,742.35, cash $278.65, two voids for $24.60 and one comp for $18.00.">
-            <p class="tk-co">WHIMBREL KITCHEN &amp; TAP<small>END OF DAY</small></p>
-            <p class="tk-no"><span>MON 10/05/26</span><span>PRINTED 10:46 PM</span></p>
-            <p class="tk-sum tk-sp"><span>NET SALES</span><span>1,880.00</span></p>
-            <p class="tk-sum"><span>TAX 7.5%</span><span>141.00</span></p>
-            <p class="tk-sum"><span>CARD</span><span>1,742.35</span></p>
-            <p class="tk-sum"><span>CASH</span><span>278.65</span></p>
-            <p class="tk-sum tk-sp"><span>VOIDS (2)</span><span>24.60</span></p>
-            <p class="tk-sum"><span>COMPS (1)</span><span>18.00</span></p>
-            <p class="tk-sum tk-tot"><span>DEPOSIT</span><span>278.65</span></p>
-          </div>
-          <span class="samp">Sample</span>
-        </div>
-        <div class="morning" data-f="list" id="pre-list"><!--pre:pre-list--><div class="mo-h"><b>Morning list · Whimbrel Kitchen &amp; Tap</b><span>6:30 AM · Tue, Oct 6</span></div><div class="mo-row flag" style="--i:0"><span class="l">Tuesday labor over target</span><span class="v">$266.00</span><span class="d">$980 scheduled, 34% of $2,100 is $714</span></div><div class="mo-row" style="--i:1"><span class="l">Supplier price rises this week</span><span class="v">2 items, +$106.70 a week</span><span class="d">Wings +$0.26 a lb, fryer oil +$5.65 a jug</span></div><div class="mo-row" style="--i:2"><span class="l">Credit to request</span><span class="v">1 short case</span><span class="d">Coastway invoice 7041152203, fries</span></div><div class="mo-row" style="--i:3"><span class="l">Delivery-app charges to dispute</span><span class="v">$96.40 last week</span><span class="d">Ready for you to send in your merchant portal</span></div><div class="mo-row" style="--i:4"><span class="l">Sales by night</span><span class="v">Monday $1,880</span><span class="d">Under the 4-week average by $210</span></div><div class="mo-foot"><span>From your point-of-sale reports, time clock, supplier invoices and app statements</span><span>Sample</span></div><!--/pre--></div>
-      </div>
+<!-- ============================================================ 4 THE DISTRIBUTOR INVOICE AND THE CREDIT REQUEST (restaurants only, the
+     opener, RESTAURANTS-PREP section 4). Monday Oct 5's delivery: Coastway's customer copy of invoice 7041152203 bills 10 cases of
+     fries and the cook pencilled 9 after the driver left, so the signed driver's copy notes no short. The credit request is drafted
+     for the owner's OK by Tuesday 6:10 AM (the night log below), never sent by us (R4; FX-18 never disputes with the supplier
+     itself). $38.75 shows once, in the email (R9 count). No license or permit number on any paper. -->
+<section class="band pl-papers" id="invoice" data-ground="sheet" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
+  <div class="wrap pl-pw">
+    <div class="pl-pw-copy">
+      <h2>A case of fries on the invoice never came off the truck.</h2>
+      <p class="pl-find">Monday's delivery, a sample. Coastway's invoice bills 10 cases of fries. Nine came in. The cook wrote the 9 in pencil after the driver left, so the driver's copy says nothing, and nobody asked for the credit.</p>
+      <p class="pl-fix"><b>The fix:</b> the count at the back door goes into a photo or a short form, each invoice is checked against it, and a credit request is drafted for your OK by the next morning. On your walk, we check your marked copies for shorts with no credit.</p>
     </div>
-  </div>
-</section>
-
-<!-- ============================================================ 5 FIRST FIX + A ONE-JOB FIND: the driver copy and the credit request (the grid break) -->
-<section class="band" id="first" data-ground="sheet" data-density="mid" data-width="split" data-loud="invoice" data-medium="docs">
-  <div class="wrap ar-split">
-    <div class="stack-s">
-      <p class="kicker">Where the first fix will likely start</p>
-      <h2 class="two">A check that reads each supplier invoice once. <span>It flags any price that changed, and any case that never came off the truck.</span></h2>
-      <p>Often the invoices go straight into QuickBooks, with a monthly look at staff hours against sales. If a texting list for slow nights makes sense, it is built only from guests who signed up in writing.</p>
-      <p class="note-s">The sheet decides, not this page. We pick the leak that recovers the most for the effort, one you can watch move in your own records within 90 days. The price after the walk depends on how big the leak is, how many locations you run and what your point-of-sale system can already do.</p>
-    </div>
-    <figure class="ar-break" aria-labelledby="pair-cap">
-      <div class="pic">
-        <div class="pair-g">
-          <div>
-            <div class="inv" role="img" aria-label="Sample, as we find it: the driver copy of Coastway Broadline Foods invoice 7041152203, Monday 10/05/26, account 512077. Ten cases of fries, item 7120553, billed at $38.75 a case, the line circled in pencil; only 9 came off the truck and nothing is written on the copy. Invoice total $2,660.10.">
-              <div class="inv-h"><b>COASTWAY BROADLINE FOODS</b><span>DRIVER COPY</span></div>
-              <div class="inv-m"><span>INV 7041152203</span><span>MON 10/05/26</span><span>ACCT 512077</span><span>RTE 214 STOP 09</span><span>NET 7</span></div>
-              <table>
-                <tr><th class="hm">ITEM</th><th class="hm">PACK</th><th>DESCRIPTION</th><th class="r">SHIP</th><th class="r hm">PRICE</th><th class="r">EXT</th></tr>
-                <tr><td class="c hm">7088214</td><td class="c hm">1/40 LB</td><td>WING CHKN JMBO</td><td class="r">159.6 LB</td><td class="r hm">3.38</td><td class="r">539.45</td></tr>
-                <tr><td class="c hm">7120553</td><td class="c hm">6/5 LB</td><td><span class="pc">FRY 3/8 SKIN-ON</span></td><td class="r">10 CS</td><td class="r hm">38.75</td><td class="r">387.50</td></tr>
-                <tr><td class="c hm">7034471</td><td class="c hm">1/35 LB</td><td>OIL FRY CANOLA</td><td class="r">6 CS</td><td class="r hm">46.85</td><td class="r">281.10</td></tr>
-                <tr><td class="c hm">7201186</td><td class="c hm">4/10 LB</td><td>PATTY BEEF 80/20</td><td class="r">5 CS</td><td class="r hm">189.60</td><td class="r">948.00</td></tr>
-                <tr><td class="hm"></td><td class="hm"></td><td>3 MORE LINES, FUEL</td><td></td><td class="hm"></td><td class="r">504.05</td></tr>
-              </table>
-              <p class="inv-t"><span>INVOICE TOTAL</span><span>2,660.10</span></p>
-              <p class="inv-sig"><span>Received by <span class="hw">D. Brown</span></span><span>No shorts noted</span></p>
-            </div>
+    <figure class="pic pl-docs-pic">
+      <div role="img" aria-label="Sample: two papers from Monday's delivery. Coastway Broadline Foods' customer copy of invoice 7041152203, Monday 10/05/26, route 214 stop 09, net 7: wings, 318.4 pounds, 1,076.19; fries, 10 cases billed, 387.50, circled in pencil with a 9 pencilled beside it; fryer oil, 6 cases of one 35 lb jug, 281.10; beef patties, 5 cases, 948.00; 3 more lines and fuel, 504.05; invoice total 3,196.84. Received by R. Ortiz, the shorts box empty. Beside it, a credit request drafted in the owner's email to Sam Evans at Coastway: on Monday's delivery we received 9 of 10 cases of fries; please credit 38.75 dollars to account 512077. A flag across the top says the photo of the customer copy was read, 10 cases billed and 9 marked received. Drafted for your OK; nothing sent.">
+        <div class="pl-docs">
+          <div class="ticket rb-inv">
+            <p class="tk-co">COASTWAY BROADLINE FOODS<small>Ocala FL, (352) 555-0181</small></p>
+            <p class="tk-no pl-wide"><span>ACCT 512077</span><span>WHIMBREL KITCHEN &amp; TAP</span></p>
+            <p class="tk-no"><span>INVOICE 7041152203</span><span>MON 10/05/26</span></p>
+            <p class="tk-no pl-wide"><span>RTE 214 STOP 09</span><span>NET 7</span></p>
+            <table><tr><th>QTY</th><th>DESCRIPTION</th><th class="r">EXT</th></tr><tr><td>318.4 LB</td><td>WING CHKN JMBO</td><td class="r">1,076.19</td></tr><tr><td><span class="pc" data-draw>10 CS<i class="rb-9">9</i></span></td><td>FRY 3/8 SKIN-ON</td><td class="r">387.50</td></tr><tr><td>6 CS</td><td>OIL CANOLA 35LB JUG</td><td class="r">281.10</td></tr><tr><td>5 CS</td><td>PATTY BEEF 80/20</td><td class="r">948.00</td></tr><tr><td></td><td>3 MORE LINES, FUEL</td><td class="r">504.05</td></tr></table>
+            <p class="tk-sum tk-tot"><span>INVOICE TOTAL</span><span>3,196.84</span></p>
+            <p class="tk-no rb-sig"><span>RECEIVED BY<i class="rb-hand">R. Ortiz</i></span><span>SHORTS<span class="rb-box"></span></span></p>
           </div>
-          <div>
-            <div class="scr-win mail" role="img" aria-label="Sample, fixed: an email drafted to the Coastway sales rep, Credit request, invoice 7041152203. It says 9 of 10 cases of fries, item 7120553, came on Monday's delivery and asks for a $38.75 credit to account 512077. Drafted for your OK; nothing sent.">
-              <div class="win-tb"><i></i><i></i><i></i><span>Credit request</span></div>
-              <div class="win-b">
-                <p class="ml"><span>To</span>Sales rep, Coastway Broadline Foods</p>
-                <p class="ml"><span>Subject</span>Credit request, invoice 7041152203</p>
-                <div class="ml-b"><p>Hi,</p><p>On Monday's delivery we received 9 of 10 cases of 7120553 FRY 3/8 SKIN-ON. Please credit $38.75 to account 512077.</p><p>Thanks,<br>John Smith<br>Whimbrel Kitchen &amp; Tap</p></div>
-                <span class="ok wt">Drafted for your OK. Nothing sent.</span>
-              </div>
+          <div class="scr-win pl-inv">
+            <div class="win-tb"><i></i><i></i><i></i><span>Credit request, draft</span></div>
+            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>Photo of the customer copy read: 10 cases of fries billed, <b>9 marked received.</b></span></p>
+            <div class="rb-ml">
+              <p class="rb-f"><span>To</span>Sam Evans, Coastway Broadline Foods</p>
+              <p class="rb-f"><span>Subject</span>Credit request, invoice 7041152203</p>
+              <div class="rb-body"><p>Hi Sam,</p><p>On Monday's delivery we received 9 of 10 cases of FRY 3/8 SKIN-ON. Please credit $38.75 to account 512077.</p><p>Thanks,<br>Greg Nelson, Whimbrel Kitchen &amp; Tap</p></div>
+              <p class="rb-send"><span>Drafted for your OK. Nothing sent.</span><span class="rb-btn">Send</span></p>
             </div>
           </div>
         </div>
-        <span class="samp">Sample</span>
       </div>
-      <p class="find solo"><span class="find-usd money">$38.75 credit<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw><path pathLength="1" d="M2 6C28 2 60 9 98 4"/></svg></span><span class="find-f">1 case billed and not delivered, on one Monday invoice. At 3 a month, about $1,395 a year (our estimate).</span></p>
-      <figcaption id="pair-cap" class="cap">A one-job find, kept out of the monthly sheet: the driver copy as we find it, and the credit request drafted for you. Proteins bill by actual weight, and a short case nobody wrote on the driver's copy is easy to lose, so the credit request is ready the morning after delivery, with the count from your receiving log.</figcaption>
+      <span class="samp">Sample</span>
     </figure>
   </div>
 </section>
 
-<!-- ============================================================ 6 REST BEAT: the season, in one sentence with small pictures -->
-<section class="band-tight" id="season" data-ground="paper" data-density="low" data-width="narrow" data-loud="sentence" data-medium="say">
+<!-- ============================================================ 5 THE WALK, as proof: Home's stops (bound from trades.js, the same screen
+     Before / After from trades-src.json food pairs, R7), no formula under the stops, one total line, the call button with money
+     back. The prices in the pictures print without "$", as the documents do (R9 count). -->
+<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" style="--hole:var(--sheet)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
   <div class="wrap">
-    <p class="say">Heat <span class="inpic" role="img" aria-label="sun"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg></span>, storms <span class="inpic" role="img" aria-label="storm cloud"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 16.5h10.5a4 4 0 0 0 .4-8 6 6 0 0 0-11.5 1.6A3.3 3.3 0 0 0 7 16.5z"/><path d="M12 13.5l-2 4h3l-1.6 3.5"/></svg></span>, Gator games <span class="inpic" role="img" aria-label="football"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5c-1.6-4.6.4-10.6 4.6-13.3 3-1.9 7.1-2.4 10.4-1.2 1.6 4.6-.4 10.6-4.6 13.3-3 1.9-7.1 2.4-10.4 1.2z"/><path d="M9 15l6-6M10.6 10.6l2.8 2.8M12.4 8.8l1.4 1.4M8.8 12.4l1.4 1.4"/></svg></span> and the school calendar <span class="inpic" role="img" aria-label="calendar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4M8 13.5h2M14 13.5h2M8 16.5h2"/></svg></span> all move a dining room.</p>
-    <p class="say-after">So the sheet counts a few weeks of your own reports, not one night we happened to see.</p>
+    <h2 class="walk-h">What a walk finds</h2>
+    <p class="walk-intro">Whimbrel Kitchen &amp; Tap is a sample 110-seat restaurant and bar. Each stop shows the same screen before and after the fix, and the walk ends on the sheet's total.</p>
+    <p class="walk-honest">Lumora is new, so there are no client reviews here yet.</p>
   </div>
-</section>
-
-<!-- ============================================================ 7 THE OTHER TRADES: notebook index + pinned drawing -->
-<section class="band seam" id="trades" data-ground="bone" data-density="high" data-width="split" data-loud="names" data-medium="index" style="--hole:var(--paper)">
-  <div class="wrap idx-g" data-bind="idx">
-    <div class="page" style="--hole:var(--bone)">
-      <p class="tab"><span class="tab-n" aria-hidden="true">i</span>Index · Other trades</p>
-      <h2 class="t-h2 two" style="margin-bottom:10px">Not a restaurant? <span>The same walk, in other trades.</span></h2>
-      <ul class="idx">
-        <li><a href="/industries/plumbing/" data-t="plumbing"><b>Plumbing</b><span class="dots" aria-hidden="true"></span><span class="idx-p">The expansion tank on the supply-house ticket that never reached the invoice.</span></a></li>
-        <li><a href="/industries/ac-and-heating/" data-t="ac"><b>AC and heating</b><span class="dots" aria-hidden="true"></span><span class="idx-p">Maintenance plans that lapse because nobody followed up before the renewal date.</span></a></li>
-        <li><a href="/industries/electrical/" data-t="electrical"><b>Electrical</b><span class="dots" aria-hidden="true"></span><span class="idx-p">Wire costs up, and last January's prices still on the quote.</span></a></li>
-        <li><a href="/industries/water-damage-and-mold/" data-t="water"><b>Water damage and mold</b><span class="dots" aria-hidden="true"></span><span class="idx-p">Drying days the equipment ran but nobody billed.</span></a></li>
-        <li><a href="/industries/pest-control/" data-t="pest"><b>Pest control</b><span class="dots" aria-hidden="true"></span><span class="idx-p">Termite renewals that lapse with no follow-up.</span></a></li>
-        <li><a href="/industries/roofing/" data-t="roofing"><b>Roofing</b><span class="dots" aria-hidden="true"></span><span class="idx-p">A 30 percent deposit, and the permit clock nobody watched.</span></a></li>
-        <li><a href="/industries/property-managers/" data-t="rentals"><b>Property managers</b><span class="dots" aria-hidden="true"></span><span class="idx-p">Deposit deadlines and turnover week, tracked in the software you already pay for.</span></a></li>
-      </ul>
+  <div class="wrap">
+    <div class="walk-grid">
+      <aside class="tally tally4" data-tally aria-label="Walk sheet so far">
+        <div class="tally-card">
+          <p class="tally-h">Walk sheet <span class="stamp">Sample</span></p>
+          <p class="tally-sub" data-f="tsub">Whimbrel Kitchen &amp; Tap, 110 seats</p>
+          <ol><!--prerender:tally--><li data-i="0"><span>The schedule</span></li><li data-i="1"><span>The bills in your books</span></li><li data-i="2"><span>The payout report</span></li><!--/prerender--></ol>
+          <p class="tally-tot" data-f="tprog">Walk done, 3 of 3 stops</p>
+        </div>
+        <p class="tally-bar" aria-hidden="true"><span data-f="bar-stop">Walk done</span><b data-f="bar-n">3 of 3</b></p>
+      </aside>
+      <ol class="stops" data-f="stops"><!--prerender:stops--><li class="stop page" id="stop-1" data-usd="1153" data-place="The schedule" data-task="reminders"><div class="stop-h"><span class="tab-n">1</span><div class="stop-t"><h3><span class="sr">Stop 1: </span>The schedule</h3><p class="stop-leak">A slow Tuesday staffed like a busy night</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same schedule with last week's sales and labor % under each night. Tuesday sold 2,100 with labor at 47%, flagged against the 34% target; Monday at 1,880 and Wednesday at 2,650 sit at 34%, and Thursday at 3,120 at 31%. Posted Sun 4:00 PM is struck through in pencil and replaced by Checked against last week's sales." data-label-before="Sample, before: the posted schedule for the week of Oct 12, crew by night. Tuesday has 10 on, the same crew as Thursday. The rows for last week's sales and labor % are empty, and the status line says Posted Sun 4:00 PM." data-label-after="Sample, after: the same schedule with last week's sales and labor % under each night. Tuesday sold 2,100 with labor at 47%, flagged against the 34% target; Monday at 1,880 and Wednesday at 2,650 sit at 34%, and Thursday at 3,120 at 31%. Posted Sun 4:00 PM is struck through in pencil and replaced by Checked against last week's sales."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Schedule, week of Oct 12</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Crew</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th></tr><tr><td>Servers</td><td>3</td><td>4</td><td>4</td><td>4</td></tr><tr><td>Bar</td><td>1</td><td>2</td><td>1</td><td>2</td></tr><tr><td>Line</td><td>2</td><td>3</td><td>3</td><td>3</td></tr><tr><td>Dish</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>Sales last wk</td><td><span class="chg"><span class="was"></span><span class="now">1,880</span></span></td><td><span class="chg"><span class="was"></span><span class="now">2,100</span></span></td><td><span class="chg"><span class="was"></span><span class="now">2,650</span></span></td><td><span class="chg"><span class="was"></span><span class="now">3,120</span></span></td></tr><tr class="n"><td>Labor %</td><td><span class="chg"><span class="was"></span><span class="now">34%</span></span></td><td><span class="chg"><span class="was"></span><span class="now"><span class="st wt">47%</span></span></span></td><td><span class="chg"><span class="was"></span><span class="now">34%</span></span></td><td><span class="chg"><span class="was"></span><span class="now">31%</span></span></td></tr></tbody></table></div><p class="win-st"><span class="chg tr"><span class="was">Posted Sun 4:00 PM</span><span class="now">Checked against last week's sales, target 34%</span></span></p></div></div></div><div class="seg" role="group" aria-label="Show stop 1"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button></div><span class="samp">Sample</span></div><div class="stop-notes"><p class="pencil">Tuesday slow. Full crew on anyway.</p><p class="find"><span class="find-usd money">$1,153 a month<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><li class="stop page" id="stop-2" data-usd="462" data-place="The bills in your books" data-task="quotes"><div class="stop-h"><span class="tab-n">2</span><div class="stop-t"><h3><span class="sr">Stop 2: </span>The bills in your books</h3><p class="stop-leak">Supplier price rises never questioned or passed to the menu</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same bill with its lines read from the emailed copy. Wings at 3.38 a pound against 3.12 on the 10/01 bill, up 0.26, and fryer oil at 46.85 a jug against 41.20, up 5.65, both flagged; beef patties the same at 189.60. Total only is struck through in pencil." data-label-before="Sample, before: Coastway Broadline Foods bill 7041152203 in the books, delivered Mon 10/05. One line, Food purchases, 3,196.84, marked Total only: the item lines were never entered." data-label-after="Sample, after: the same bill with its lines read from the emailed copy. Wings at 3.38 a pound against 3.12 on the 10/01 bill, up 0.26, and fryer oil at 46.85 a jug against 41.20, up 5.65, both flagged; beef patties the same at 189.60. Total only is struck through in pencil."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Bill 7041152203, Coastway</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Line</th><th>This bill</th><th>Last price 10/01</th><th>Check</th></tr><tr class="n"><td>Food purchases</td><td class="nw">3,196.84</td><td></td><td><span class="chg tr"><span class="was"><span class="st gy">Total&nbsp;only</span></span><span class="now">Lines read</span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">Wings, a lb</span></span></td><td class="nw"><span class="chg"><span class="was"></span><span class="now">3.38</span></span></td><td><span class="chg"><span class="was"></span><span class="now">3.12</span></span></td><td><span class="chg"><span class="was"></span><span class="now"><span class="st wt">Up 0.26</span></span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">Fryer oil, a jug</span></span></td><td class="nw"><span class="chg"><span class="was"></span><span class="now">46.85</span></span></td><td><span class="chg"><span class="was"></span><span class="now">41.20</span></span></td><td><span class="chg"><span class="was"></span><span class="now"><span class="st wt">Up 5.65</span></span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">Beef patties, a case</span></span></td><td class="nw"><span class="chg"><span class="was"></span><span class="now">189.60</span></span></td><td><span class="chg"><span class="was"></span><span class="now">189.60</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Same</span></span></td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">Entered from the paper copy on Mon 10/05, total only</span><span class="now">Read from the emailed copy, 2 price rises flagged</span></span></p></div></div></div><div class="seg" role="group" aria-label="Show stop 2"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button></div><span class="samp">Sample</span></div><div class="stop-notes"><p class="pencil">Wings up 26 cents a pound. Menu price the same.</p><p class="find"><span class="find-usd money">$462 a month<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><li class="stop page" id="stop-3" data-usd="251" data-place="The payout report" data-task="quotes"><div class="stop-h"><span class="tab-n">3</span><div class="stop-t"><h3><span class="sr">Stop 3: </span>The payout report</h3><p class="stop-leak">Delivery-app error charges never disputed</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same statement with the error charges opened. Order #8F3K2, missing item, minus 18.40, send by Tuesday 10/13; #2RZ9P, item incorrect, minus 31.25, by Friday 10/16; #7HD4W, wrong order, minus 46.75, by Saturday 10/17. Unread is struck through in pencil, and the status line says the 3 disputes are ready for you to send." data-label-before="Sample, before: the delivery app's weekly payout statement for Sept 28 to Oct 4. One line, Error charges on 3 orders, minus 96.40, marked Unread." data-label-after="Sample, after: the same statement with the error charges opened. Order #8F3K2, missing item, minus 18.40, send by Tuesday 10/13; #2RZ9P, item incorrect, minus 31.25, by Friday 10/16; #7HD4W, wrong order, minus 46.75, by Saturday 10/17. Unread is struck through in pencil, and the status line says the 3 disputes are ready for you to send."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Weekly payout, Sept 28 to Oct 4</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Order</th><th>Reason</th><th>Charge</th><th>Status</th></tr><tr class="n"><td>3 orders</td><td>Error charges</td><td class="nw">−96.40</td><td><span class="chg tr"><span class="was"><span class="st gy">Unread</span></span><span class="now">Opened</span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">#8F3K2</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Missing item</span></span></td><td class="nw"><span class="chg"><span class="was"></span><span class="now">−18.40</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Send by Tue 10/13</span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">#2RZ9P</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Item incorrect</span></span></td><td class="nw"><span class="chg"><span class="was"></span><span class="now">−31.25</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Send by Fri 10/16</span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">#7HD4W</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Wrong order</span></span></td><td class="nw"><span class="chg"><span class="was"></span><span class="now">−46.75</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Send by Sat 10/17</span></span></td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">Paid to your bank account</span><span class="now">3 disputes ready for you to send</span></span></p></div></div></div><div class="seg" role="group" aria-label="Show stop 3"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button></div><span class="samp">Sample</span></div><div class="stop-notes"><p class="pencil">Error charges taken out. Nobody opened them.</p><p class="find"><span class="find-usd money">$251 a month<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><!--/prerender--></ol>
+    </div>
+    <div class="walk-end" data-bind="bigfig">
+      <p class="walk-total"><span>Lost before any fix</span> <b><span data-f="n">$1,866</span> <span data-f="per">a month</span></b></p>
+      <div class="cta-row"><a class="btn" href="tel:+13522260681">Call or text us</a><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a></div>
+      <p class="mb mb-s"><span data-shared="moneyback.short"><b>Not worth it to you?</b> You get the walk fee back.</span></p>
     </div>
   </div>
 </section>
 
-<!-- ============================================================ 8 CLOSE: the closing line, the pen's last mark, the contact page -->
-<section class="band seam" id="close" data-ground="paper" data-density="mid" data-width="split" data-loud="closing" data-medium="close" style="--hole:var(--bone)">
-  <div class="wrap ar-split">
-    <div>
-      <p class="tab"><span class="tab-n">→</span>Next stop · Your place</p>
-      <h2 class="t-close close-h">Let's talk shop.</h2>
-      <div class="close-act">
-        <div class="arrow-to"><a class="btn btn-lg" href="tel:+13522260681">Call (352) 226-0681</a><svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg></div>
-        <p class="t-lede">See your own numbers. Start with a free call of up to 20 minutes, or text us a photo of last week's sales and labor report and we'll tell you if a walk is worth it.</p>
-        <a class="btn btn-o btn-sm" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
-        <p class="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</p>
-        <div class="mb-box"><h3>Money back</h3><p class="mb"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <span class="red">the walk fee back</span>. You keep the sheet.</p></div>
+<!-- ============================================================ 6 THE NIGHT BAND: the close, checked by morning (R5: restaurants get the
+     back-office log, never an overnight lock screen; no call, nothing incoming 11 p.m. to 5 a.m.). Home's food night4 rows word for
+     word, so Home and this page tell one night: Monday Oct 5's end-of-day report (printed 10:46 PM) and the payout statement read
+     at 10:58 PM, Tuesday Oct 6 the invoices, the schedule, the credit request and the 6:30 AM morning list (clipped on, no dollar
+     figures). Static markup, as plumbing's night is. pl-night takes the shared night's phone rules; the morning list is the shared
+     clipped card .pl-card, lit once by the row marked data-cue (trade-page.css). -->
+<section class="band hm4-night pl-night rb-night" id="night" data-ground="night" data-density="mid" data-width="wide" data-loud="log" data-medium="log">
+  <div class="wrap n4">
+    <div class="n4-copy">
+      <h2>Closing reports checked overnight, so the morning starts with one list.</h2>
+      <p class="t-lede">After close, the day's report, the app statement and the invoices are checked against each other. At 6:30 a.m. the list is on your phone.</p>
+      <p class="pl-before"><b>Before</b> The deposit is in the safe. The invoices and tomorrow's schedule wait for whoever has time.</p>
+    </div>
+    <div class="n4-loop" data-loop data-steps>
+      <div class="n4-figs">
+        <div class="pic rb-tape-pic"><div class="ticket rb-tape" role="img" aria-label="Sample: Monday's end-of-day report from the point of sale, Monday 10/05/26, printed 10:46 p.m. Net sales 1,880.00, tax at 7.5% 141.00, two voids for 24.60, one comp for 18.00, cash deposit 278.65.">
+          <p class="tk-co">WHIMBREL KITCHEN &amp; TAP<small>END OF DAY</small></p>
+          <p class="tk-no"><span>MON 10/05/26</span><span>PRINTED 10:46 PM</span></p>
+          <p class="tk-sum tk-sp"><span>NET SALES</span><span>1,880.00</span></p>
+          <p class="tk-sum"><span>TAX 7.5%</span><span>141.00</span></p>
+          <p class="tk-sum tk-sp"><span>VOIDS (2)</span><span>24.60</span></p>
+          <p class="tk-sum"><span>COMPS (1)</span><span>18.00</span></p>
+          <p class="tk-sum tk-tot"><span>CASH DEPOSIT</span><span>278.65</span></p>
+        </div><span class="samp">Sample</span></div>
+        <div class="pic n4-paper"><div class="np">
+          <div class="np-h"><b>Night log, Whimbrel Kitchen &amp; Tap</b><span class="pl-after">After</span></div>
+          <ol class="np-rows">
+            <li class="pl-dayrow">Monday, Oct 5</li>
+            <li data-n="0" data-t="10:58 PM" data-task="numbers" class="on"><time>10:58 PM</time><span>Read Monday's point-of-sale report and the delivery-app statement. 3 error charges, listed and ready for you to send.</span></li>
+            <li class="pl-dayrow">Tuesday, Oct 6</li>
+            <li data-n="1" data-t="5:30 AM" data-task="bills" class="on"><time>5:30 AM</time><span>Checked 3 supplier invoices against last week's prices. 2 price rises.</span></li>
+            <li data-n="2" data-t="5:45 AM" data-task="numbers" class="on"><time>5:45 AM</time><span>Checked Tuesday's schedule against expected sales. Over the labor target.</span></li>
+            <li data-n="3" data-t="6:10 AM" data-task="bills" class="on"><time>6:10 AM</time><span>Credit request drafted for 1 short case of fries, for your OK.</span></li>
+            <li data-n="4" data-t="6:30 AM" data-task="reminders" data-cue class="on"><time>6:30 AM</time><span>Morning list sent to your phone.</span></li>
+          </ol>
+          <div class="pl-card rb-mo">
+            <div class="mo-h"><b>Morning list</b><span>Tue Oct 6, 6:30 AM</span></div>
+            <div class="mo-row flag"><span class="l">Tuesday's schedule</span><span class="v">47%, target 34%</span></div>
+            <div class="mo-row"><span class="l">Supplier price rises</span><span class="v">Wings, fryer oil</span></div>
+            <div class="mo-row"><span class="l">Credit to request</span><span class="v">1 case of fries</span><span class="d">Invoice 7041152203, drafted for your OK</span></div>
+            <div class="mo-row"><span class="l">App charges to dispute</span><span class="v">3</span><span class="d">Ready for you to send</span></div>
+          </div>
+        </div><span class="samp">Sample</span></div>
+      </div>
+      <div class="loop-ctl">
+        <button class="pause" type="button"><span class="pi" aria-hidden="true"></span><span class="pt">Pause</span></button>
       </div>
     </div>
-    <div class="page" style="--hole:var(--paper)">
-      <dl class="cblock trim" style="margin-top:0">
-        <div><dt>Owner</dt><dd>Franco A. Soto, owner</dd></div>
-        <div><dt>Call or text</dt><dd><a class="u big-tel" href="tel:+13522260681">(352) 226-0681</a></dd></div>
-        <div><dt>Email</dt><dd><a class="u" href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></dd></div>
-        <div><dt>Where</dt><dd>Gainesville, serving Alachua County. Farther in Florida by arrangement.</dd></div>
+  </div>
+</section>
+
+<!-- ============================================================ 7 RULES AND CONTACT: Home's close as plumbing ships it, then every trade's
+     page in one wrapped line (this one in ink) -->
+<section class="band hm4-close" id="contact" data-ground="paper" data-density="mid" data-width="split" data-loud="close" data-medium="close">
+  <div class="wrap close-g">
+    <div class="c4-main">
+      <h2 class="t-close close-h">Let's talk shop.</h2>
+      <div class="close-act">
+        <div class="arrow-to">
+          <a class="btn btn-lg" href="tel:+13522260681">Call or text us</a>
+          <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
+        </div>
+        <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
+      </div>
+      <dl class="c4-hours">
+        <div><dt>Money back</dt><dd><p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p></dd></div>
+        <div><dt>Hours</dt><dd><span data-shared="hours">Monday to Friday, 9 a.m. to 5 p.m.</span></dd></div>
+        <div><dt>Reply time</dt><dd><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span></dd></div>
         <div><dt>Language</dt><dd>English or Spanish</dd></div>
-        <div><dt>When we answer</dt><dd>Same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</dd></div>
       </dl>
-      <p class="honest-s">Lumora is new, so there are no client reviews here yet. Ask anything on the free call.</p>
+      <p class="c4-llc">Lumora Group LLC, a Florida company.</p>
     </div>
+    <div class="c4-card">
+      <figure class="contact-card">
+        <img class="cardino" src="/v4/assets/bird-cardino-perch.svg" alt="" width="74" height="60" loading="lazy">
+        <p class="t-label hm-cc-k">One contact, start to finish</p>
+        <figure class="slot cc-slot" data-slot="home-contact-portrait" data-shape="4:5"><span class="slot-k">Photo slot</span><b>The owner, a real photo</b><span>Waiting on the Q7 answer (About). No AI, no retouching.</span></figure>
+        <blockquote class="signed"><p>“I started Lumora here in Gainesville. We work in English or Spanish, and you deal with the same person from the first call to the last fix.”</p></blockquote>
+        <figcaption class="signed-by">Franco A. Soto, Owner</figcaption>
+        <dl class="cblock">
+          <div><dt>Where</dt><dd>Gainesville, serving Alachua County. Farther in Florida by arrangement.</dd></div>
+        </dl>
+        <p class="t-small hm-about"><a class="u" href="/about/">About Lumora</a></p>
+      </figure>
+      <div class="c4-rules">
+        <h3>Rules we keep</h3>
+        <ul>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>We build inside what you already pay for.</li>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>No filming or recording without your OK.</li>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>Say no once, and that's the end of it.</li>
+        </ul>
+      </div>
+    </div>
+    <nav class="pl-more" aria-labelledby="pl-more-k">
+      <p class="t-label" id="pl-more-k">Every trade we walk</p>
+      <ul class="pl-trades" data-trades>
+        <li><a href="/industries/plumbing/">Plumbing</a></li>
+        <li><a href="/industries/ac-and-heating/">AC and heating</a></li>
+        <li><a href="/industries/electrical/">Electrical</a></li>
+        <li><a href="/industries/water-damage-and-mold/">Water damage and mold</a></li>
+        <li><a href="/industries/pest-control/">Pest control</a></li>
+        <li><a href="/industries/roofing/">Roofing</a></li>
+        <li><a href="/industries/restaurants-and-bars/" aria-current="page">Restaurants and bars</a></li>
+        <li><a href="/industries/property-managers/">Property managers</a></li>
+      </ul>
+    </nav>
   </div>
 </section>
 </main>
 
 <footer class="foot">
   <div class="wrap foot-g">
-    <img src="/v3/assets/logo.svg" alt="Lumora" width="104" height="25">
-    <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/">Loss calculator</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/articles/">Articles</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
-    <p>Lumora Group LLC, a Florida company. Gainesville, serving Alachua County. Every shop, name and number marked Sample is illustrative, not a client; Coastway Broadline Foods and Whimbrel Kitchen &amp; Tap are invented.</p>
+    <img src="/v4/assets/logo.svg" alt="Lumora" width="104" height="25">
+    <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/what-we-automate/">What we automate</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/">Loss calculator</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/articles/">Articles</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
+    <p>Lumora Group LLC, a Florida company. Gainesville, serving Alachua County. Every business, name and number marked Sample is illustrative, not a client.</p>
   </div>
 </footer>
 

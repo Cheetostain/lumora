@@ -834,6 +834,10 @@ html:not(.js) .pic.has-seg{padding-bottom:28px}            /* no JS: no buttons,
 /* R4: a text-back is an SMS, green like on the shop's own phone; a darker green so white text passes 4.5:1 (5.1:1) */
 .bub.sms{background:#1a7f37;color:#fff}
 
+/* R8 extended to papers (PLUMBING-INTEGRATE item 42): a counter ticket or a document sits straight on a v4 page; Lumora.lint
+   fails a tilted one. The v3 pages keep their tilt. */
+[data-rules=v4] .ticket,[data-rules=v4] .doc.tilt-l,[data-rules=v4] .doc.tilt-r{transform:none}
+
 /* R5: the office-work lock screen. The big clock always shows; notifications sit right under it */
 .lk4-d{text-align:center;font-size:15px;font-weight:500;margin-top:8px;opacity:.94}
 .lk4-t{text-align:center;font-size:64px;font-weight:300;line-height:1.02;letter-spacing:-.02em}

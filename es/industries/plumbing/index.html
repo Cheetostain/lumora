@@ -27,7 +27,7 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=cadcbd6e">
+<link rel="stylesheet" href="/v4/system.css?v=93161f63">
 <!-- The Spanish plumbing page (2026-10-11), built from the English v4 page (plumbing.html, Franco's "plumbing yes"): the same
      seven sections, order, pictures and styles, written in Spanish from the idea (branding/guidelines-v2/ES-VOICE.md), usted
      throughout, as the Spanish Home was (pages/home/index.es.html, HOME-ES-NOTES.md). system.js reads <html lang="es"> and
@@ -37,308 +37,9 @@
      house's counter ticket, lang="en"); the shop's own screens and papers are Spanish (Trabajos 2026.xlsx, the invoice draft),
      as on the Spanish Home. golive.py publishes it to /es/industries/plumbing/ with the live Spanish page's SEO head
      (canonical and the hreflang pair); build.py's GOLIVE_ONLY keeps the old build from writing over it.
-     The <style> below is plumbing.html's as of 2026-10-11 18:33 (parts A to F and PL; their notes are the English page's);
-     a change to one goes to the other. The Spanish additions are in the second <style>. -->
-<style>
-/* ===== A. hero, with the facts strip (Home's, without the vision line and the picker; phone order: words, call block,
-   top-leak strip, price and money back, the sheet) */
-.hm4-hero{padding-bottom:0}
-.hm4-hero .hero-g{grid-template-areas:"copy" "act" "strip" "terms" "tool"}
-.hm-recog{color:var(--ink);font-weight:500}
-.hero-terms{grid-area:terms;display:grid;gap:10px;justify-items:start}
-.hero-terms .price b{color:var(--ink)}
-.hero .cta-row .hm-sms{font-size:17px}
-.hm-sms,.c4-sms,.hm-about a,.mb a.u{display:inline-block;padding-block:12px;margin-block:-12px}   /* a 44px tall tap area without moving the layout; PL adds "Full terms" (phone-access review: 70 x 23 px) */
-.cta-tel{padding-block:10.5px;margin-block:-10.5px}   /* PL: the number beside every call button gets a 52px tall target (SYSTEM.md call targets), no layout change; Home's is 5px (INTEGRATE) */
-.sh-sub{text-wrap:balance}
-@media (min-width:900px){
-  .hm4-hero .hero-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);grid-template-areas:"copy tool" "act tool" "terms tool";grid-template-rows:auto auto 1fr;row-gap:24px}
-  .hm4-hero h1{max-width:11.5em}
-}
-.facts4{margin-top:48px;border-block:1px solid var(--ink);background:var(--paper)}
-.facts4 ul{display:grid;gap:8px;padding-block:14px;font-size:15px;font-weight:500;color:var(--ink)}
-.facts4 li::before{content:"";display:inline-block;width:10px;height:6px;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(-48deg) translateY(-3px);margin-right:10px}
-/* PL: a hanging indent, so a fact that wraps ("Money back up to 7 days after we go over your sheet" at 390) starts its second
-   line under its words, not under the tick. Home's strip has the same wrap (INTEGRATE). */
-.facts4 li{position:relative;padding-left:22px}
-.facts4 li::before{position:absolute;left:1px;top:8px;margin-right:0}
-@media (min-width:900px){.facts4 ul{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:24px}}
-
-/* ===== B. what we automate: Home's tools line and ruled rows. PL: on a computer the heading, the tools line and row 1 as a
-   picture (a property manager's emailed work order read into the shop's own spreadsheet, computer only) sit on the left, and
-   the six rows with who it's for under them on the right; on a phone there is no picture (data-extra says why); the photo
-   slot shows in review only */
-.auto-tools{font-size:17px;font-weight:600;color:var(--ink);max-width:30em}
-.auto-list{border-top:2px solid var(--ink)}
-.auto-list li{padding:11px 0;border-bottom:1px solid var(--rule);font-size:17px;line-height:1.4;color:var(--ink)}
-.auto-close{font-size:17px;max-width:34em}
-.who-not{font-size:17px;max-width:44em}
-.who-not .t-label{display:block;margin-bottom:4px}
-.pl-auto-g{display:grid;gap:14px;grid-template-areas:"h" "tools" "r" "slot"}
-.pl-auto-g>h2{grid-area:h}.pl-auto-g .auto-tools{grid-area:tools}.pl-auto-r{grid-area:r;display:grid;gap:14px;margin-top:4px}.pl-auto-slot{grid-area:slot}.pl-auto-pic{grid-area:pic}
-.pl-who{display:grid;gap:12px;margin-top:6px;padding-top:14px;border-top:2px solid var(--ink)}
-.pl-who-line{font-size:20px;font-weight:500;line-height:1.35;color:var(--ink);max-width:24em}
-.pl-auto-slot{width:160px}
-@media (max-width:899px){.pl-auto-pic{display:none}}   /* computer-only extra (R9, reason in the markup's data-extra) */
-@media (min-width:900px){
-  .pl-auto-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"h r" "tools r" "pic r" "slot r";grid-template-rows:auto auto auto 1fr;column-gap:64px;row-gap:16px;align-items:start}
-  .pl-auto-r{margin-top:0;gap:18px}
-  .pl-who{margin-top:10px;border-top:1px solid var(--rule)}   /* one heavy rule in the section, the list's (design review: two at different heights read as a stray line) */
-  .pl-auto-pic{width:100%;margin-top:14px}
-  .pl-auto-pic .ap-xl{width:min(100%,580px)}   /* the property manager's full name and "Read from the PDF" fit in one row at 1280 */
-  .pl-auto-slot{width:180px}
-}
-/* row 1 as a picture, Home's work order pair (home.css section 2, as of 19:11) with plumbing's data: the PDF and the shop's
-   own spreadsheet, the same fields in both, an arrow between. Moves with Home's block (INTEGRATE "Shared blocks"). */
-.ap-stack{display:grid;gap:10px}
-.ap-pdf{width:min(100%,430px)}
-.ap-page{margin:12px;padding:14px 16px 12px;background:#fff;border:1px solid #ececea;box-shadow:0 1px 3px rgba(0,0,0,.08);font-family:var(--sys);color:#1d1d1f}
-.ap-co{font-weight:700;font-size:max(14px,min(3.8cqi,17px))}
-.ap-dt{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#555;margin:2px 0 10px}
-.ap-page dl div{display:grid;grid-template-columns:7em minmax(0,1fr);gap:8px;padding:4px 0;border-bottom:1px dotted #d6d6d6;font-size:max(12px,min(3.3cqi,14px));line-height:1.35}
-.ap-page dt{color:#555}
-.ap-page mark{background:#fde98a;color:#1d1d1f;padding:0 3px}
-.ap-arrow{justify-self:center;font-size:15px;font-weight:600;color:var(--ink)}
-.ap-arrow::before{content:"↓ "}
-.ap-xl{width:min(100%,500px);justify-self:end}
-.ap-xl .xl td,.ap-xl .xl th{white-space:nowrap;text-overflow:clip;max-width:none}
-.ap-xl .xl tr:nth-child(2) td,.ap-xl .xl tr:nth-child(2) th{border-bottom:2px solid #9a9a9a}   /* Excel's freeze line under the header row */
-@container (max-width:420px){.ap-page dl .ap-hm,.ap-xl tr.ap-hm{display:none}}
-
-/* ===== C. how it works (Home's) */
-.how-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 24px;margin-bottom:26px}
-.how-h .t-lede{color:var(--muted)}
-@media (min-width:900px){.hm4-how .tl-head{flex-direction:column;align-items:flex-start;gap:6px}}
-.tl4 .price,.tl4 .mb{font-size:17px}
-.tl-ai{color:var(--muted);max-width:36em}
-.tl4 .slot{width:130px}
-@media (min-width:900px){.tl4 .slot{width:150px}.hm4-how .tl4>li.tl-big{margin-inline:0;padding:32px 28px}}
-.hm4-how .cta-inline{margin-top:30px;border-top:0;padding-top:0}
-.cta-inline .mb-s{flex-basis:100%;font-size:15px;margin-top:-2px}
-.walk-end .mb-s{font-size:15px}
-
-/* ===== PL. the supply-house ticket and the invoice: one job's two papers, straight. The counter ticket is paper; the invoice
-   is the job tool's draft in the one window frame (R6), and the flag is a row inside it, under its title bar (design review:
-   a loose callout read as a stock web box). Side by side on a computer; on a phone the window lies over the ticket's torn edge
-   only, so no line is hidden. One pencil circle, on the ticket's tank. On a phone the copy splits around the picture: the
-   heading and the find, the papers, then the fix (design review: it explained the flag before showing it). */
-.pl-pw{display:grid;gap:18px;grid-template-areas:"h" "find" "pic" "fix"}
-.pl-pw-copy{display:contents}
-.pl-pw h2{grid-area:h;max-width:13em}
-.pl-pw .pl-find{grid-area:find}.pl-pw .pl-fix{grid-area:fix}.pl-pw .pl-docs-pic{grid-area:pic}
-.pl-pw-copy p{font-size:17px;max-width:34em}
-@media (min-width:900px){.pl-pw{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);grid-template-areas:"h pic" "find pic" "fix pic";grid-template-rows:auto auto 1fr;gap:14px 56px;align-items:start}}   /* top-aligned like the page's other split sections (the heading keeps 3 lines at 1280: a copy column wide enough for 2 squeezed the ticket to 256px and wrapped its fields) */
-.pl-docs{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.1fr);gap:18px;align-items:start}
-.pl-docs .ticket{transform:none;max-width:320px}   /* a counter ticket is narrow: never stretched wider (it ran 460px at 1024) */
-.pl-inv{margin-top:28px}
-.pl-inv .doc{box-shadow:none;padding:14px 16px 16px}
-.pl-docs .doc-to{line-height:1.4;margin:6px 0}
-.pl-docs .doc-bill{color:#1d1d1f;margin-bottom:8px}
-.pl-docs .doc-bill b{color:#1d1d1f;font-weight:600}
-.pl-docs .doc-bill .pl-k{color:#555;margin-right:4px}
-.pl-docs .doc-tot{border-top:1.5px solid #1d1d1f;margin-top:2px}
-.pl-li-h{color:#555;font-size:12px!important;font-weight:600;letter-spacing:.04em;text-transform:uppercase;border-bottom:1.5px solid #1d1d1f!important}
-.pl-due{font-size:12px;color:#555;text-align:right;margin-top:2px}
-/* a picture under 640px wide (phones, tablets, small laptops): the papers stack, the window laid over the ticket's torn edge; the
-   papers' own type steps down to the 12px floor (inside a picture), as the screens kit does on phones; the account line, the column
-   heads and "Due on receipt" wait for a wider picture. 640, not 560: side by side under it the ticket fell to 235px at 600 and
-   245px at 1080 and its fields wrapped. */
-@container (max-width:640px){
-  .pl-docs{grid-template-columns:minmax(0,1fr);gap:0}
-  .pl-docs .ticket{width:85%;justify-self:start;padding:12px 12px 16px;font-size:12px}
-  .pl-docs .tk-no{flex-wrap:wrap}.pl-docs .tk-no span{white-space:nowrap}   /* a field wraps whole, never "CUST PO" over "4470-DB" (360px) */
-  .pl-docs .ticket table{font-size:12px;margin:6px 0}
-  .pl-docs .ticket tr:has(.pc),.pl-docs .tk-tot{font-size:13px}   /* the circled tank line and the total a step over the 12px floor (phone-access review: the point of the picture sat at 12px) */
-  .pl-docs .tk-co{font-size:13px;margin-bottom:6px}
-  .pl-docs .pl-inv{position:relative;z-index:2;width:90%;max-width:440px;justify-self:end;margin-top:-16px}
-  .pl-inv .doc{padding:10px 14px 14px}
-  .pl-docs .doc-h b{font-size:14px}.pl-docs .doc-h span,.pl-docs .doc-to{font-size:12px}
-  .pl-docs .doc-li li{font-size:13px;padding:5px 0}
-  .pl-docs .doc-tot{font-size:15px;padding-top:6px}
-  .pl-docs .pl-flag{font-size:13px;padding:8px 12px}
-  .pl-li-h,.pl-due,.pl-docs .pl-wide{display:none!important}
-}
-.pl-flag{display:grid;grid-template-columns:16px minmax(0,1fr);gap:8px;align-items:start;padding:9px 14px;background:#fbefd2;border-bottom:1px solid #ecd59a;color:#4d3500;font:500 14px/1.4 var(--sys)}
-.pl-docs .pc::after{inset:-5px -16px}   /* the ticket line is long and low: a wider ring clears its first and last letters */
-.pl-flag svg{margin-top:2px}
-.pl-flag b{color:#3d2a00}
-/* a one-time cue when the papers come into view: the pencil ring goes round the tank, then the flag comes in (read, matched,
-   flagged). The .pc carries data-draw only as the in-view trigger (system.js adds .drawn; it has no path of its own). Static
-   with reduced motion, with JS off and in print. */
-@media screen and (prefers-reduced-motion:no-preference){
-  html.js .pl-docs .pc[data-draw]::after{clip-path:inset(-4px -4px -4px -4px);transition:clip-path 600ms var(--ease-move) 150ms}
-  html.js .pl-docs .pc[data-draw]:not(.drawn)::after{clip-path:inset(-4px 100% -4px -4px)}
-  html.js .pl-docs .pl-flag{transition:opacity 220ms var(--ease-out) 900ms}
-  html.js .pl-docs:has(.pc[data-draw]:not(.drawn)) .pl-flag{opacity:0}
-}
-
-/* ===== D. the walk (Home's). PL: no formula under the stops (plan P2, complexity-f): system.js prints .find-f under each stop
-   and has no switch yet, so this page hides it at every width. TEMPORARY until the opt-out exists (PLUMBING-INTEGRATE.md item 3). */
-.walk-h{max-width:20em}
-.walk-intro{margin-top:14px;font-size:17px;max-width:40em;color:var(--body)}
-.walk-honest{margin-top:8px;font-size:15px;color:var(--muted)}
-.stop-t{display:grid;gap:4px}
-.stop-t h3{margin:2px 0 0}
-.stop-leak{font-size:17px;font-weight:500;line-height:1.35;color:var(--body);max-width:30em}
-.stop .ph4{width:min(var(--ph-w),100%);margin-inline:0}
-.stop .crop-m{--crop-h:476px;height:var(--crop-h);overflow:hidden;-webkit-mask-image:linear-gradient(#000 calc(100% - 24px),transparent);mask-image:linear-gradient(#000 calc(100% - 24px),transparent)}
-.find-usd{font-size:32px}
-.hm4-walk .find-f{display:none}
-/* PL: with JS off on a phone under 380px the fixed crop cut stop 3's payoff line ("On the 12:30 PM callback list") or left it in
-   the fade (phone-access review: 320, 340, 360). With JS on, fitCrops' measured height overrides this, so the page height holds. */
-@media (max-width:379px){html:not(.js) .stop .crop-m{--crop-h:508px}html:not(.js) .n4 .crop-m{--crop-h:352px}}   /* and the night phone: its on-call line wraps under 380px */
-@container (min-width:421px){.hm4-walk .pair .xl td{white-space:nowrap}}
-@media (min-width:760px){
-  .hm4-walk .stop-body{grid-template-columns:minmax(0,1.5fr) minmax(0,.7fr)}
-  .hm4-walk .stop:nth-child(even) .stop-body{grid-template-columns:minmax(0,.7fr) minmax(0,1.5fr)}
-}
-@media (max-width:1079px){.hm4-walk .tally4{display:none}}
-.walk-end{display:grid;gap:10px;justify-items:start;margin-top:clamp(36px,5vw,56px);padding-top:16px;border-top:2px solid var(--ink)}
-.walk-total{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;font-size:20px;font-weight:600;color:var(--ink)}
-.walk-total b{font-size:44px;font-weight:600;color:var(--red);line-height:1.1}
-.walk-time{font-size:17px}
-.walk-end .cta-row{margin-top:8px}
-@media (min-width:1080px){.walk-end{margin-left:310px}}
-
-/* ===== E. the night band (Home's layout a: phone and paper as one centred pair, tops lined up). PL: the on-call night. The
-   Before line sits in the band's copy under the intro (design review: a real log has no before paragraph); the paper is the
-   log alone, After under its head and a day row where Saturday and Monday start, so every time lines up with its own text.
-   Both lock-screen notifications land during the loop (on call at 5:00 PM Saturday, the morning list at 6:30 AM Monday), so
-   the clock's two dates (data-eve, data-day) fit them with no workaround. The on-call card is clipped to the log; its border
-   lights once when the 7:40 PM row says Dave goes through it. */
-.n4{display:grid;gap:26px}
-.n4-copy h2{max-width:17em}
-.n4-copy .t-lede{margin-top:14px;max-width:34em;color:var(--on-night)}
-.n4-figs{display:grid;gap:20px;justify-items:center;margin-top:18px}
-.n4-figs>.pic{width:min(var(--ph-w),100%)}
-.n4-figs>.n4-paper{width:min(440px,100%)}
-.n4 .loop-ctl{position:relative;z-index:4;margin-top:-28px;justify-content:flex-start}
-.n4 .pause{min-height:44px;padding:0 14px 0 12px;gap:8px;border-color:rgba(233,228,216,.45);font-size:15px;color:var(--muted-night)}
-.n4 .pause .pi{width:10px;height:12px;border-left-width:3px;border-right-width:3px}
-.n4 .pause.is-paused .pi{width:0;height:0;border:0;border-left:10px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent}
-.n4 .cta-inline{margin-top:4px}
-.n4 .cta-inline .mb-s{color:var(--on-night)}
-@media (min-width:900px){
-  .n4{justify-items:center;text-align:center}
-  .n4-copy h2,.n4-copy .t-lede,.pl-before{margin-inline:auto}
-  .n4 .cta-inline{justify-content:center}
-  .n4-loop{width:100%;max-width:804px}
-  .n4-figs{grid-template-columns:var(--ph-w) minmax(0,440px);justify-content:center;align-items:stretch;gap:24px;text-align:left}
-  .n4-figs>.n4-paper{width:100%;display:flex;flex-direction:column}
-  .n4-paper .np{flex:1;display:flex;flex-direction:column}
-  .n4-paper .np-rows{flex:1;display:flex;flex-direction:column;justify-content:space-between}
-}
-.pl-before{margin-top:12px;max-width:34em;font-size:15px;color:var(--muted-night)}
-.pl-before b{color:var(--on-night);margin-right:4px}
-.np .np-h .pl-after{align-self:center;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--pencil)}   /* R5's plain label, in the log head where the dates used to be (the day rows carry them now) */
-.np-rows li.pl-dayrow{display:block;padding:12px 0 3px;border-bottom:0;font-size:15px;font-weight:600;line-height:1.3;color:var(--ink)}
-.np-rows li.pl-dayrow:first-child{padding-top:2px}
-.pl-card{position:relative;margin-top:20px;padding:16px 14px 10px;background:#fff;border:1.5px solid var(--ink);border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.14);font-size:15px;line-height:1.4;color:#1d1d1f}
-.pl-card::before{content:"";position:absolute;left:50%;top:-9px;width:64px;height:16px;margin-left:-32px;border-radius:4px 4px 3px 3px;background:var(--clamp);box-shadow:inset 0 -2px 0 rgba(0,0,0,.16),0 1px 2px rgba(0,0,0,.2)}   /* the clip */
-.pl-card::after{content:"";position:absolute;left:50%;top:-5px;width:24px;height:5px;margin-left:-12px;border-radius:3px;background:#7c7f84}   /* its slot, as on the hero clipboard's clamp (design review: the plain pill read as a phone's sheet handle) */
-.pl-card-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-bottom:8px;margin-bottom:6px;border-bottom:1px solid #d8d5cc}
-.pl-card-h b{font-size:15px;color:#111}
-.pl-card-tab{font-size:13px;color:#55555a;white-space:nowrap}   /* plain words, as a printed card says it; no tab, no underline (it read as a switch that did nothing) */
-.pl-card p+p{margin-top:5px}
-.pl-card p b{color:#111}
-@media screen and (prefers-reduced-motion:no-preference){
-  html.js .pl-night [data-loop].run:not(.fixed) .n4-paper:has(.np-rows li[data-n="2"].on) .pl-card{animation:pl-card-cue 1200ms var(--ease-out) 1}
-}
-@keyframes pl-card-cue{0%,100%{border-color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.14)}30%{border-color:#b07800;box-shadow:0 0 0 4px rgba(201,138,0,.4)}}
-
-/* ===== F. rules and contact (Home's, re-copied as of 19:11: the pen arrow comes down from the heading's words, Cardino perches
-   on the card). PL: one wrapped line of every trade's page (this one in ink, not underlined) at the bottom */
-.close-g{display:grid;gap:44px}
-@media (min-width:900px){.close-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:start}.c4-card{padding-top:84px;position:sticky;top:96px}}
-.close-h{margin:0 0 24px;font-size:clamp(40px,4.4vw,44px)}   /* Spanish Home's size (home.css): keeps "Hablemos de su negocio." on one line from 700 to 1440 so the arrow starts under the words */
-.close-act{gap:12px}
-.close-act .arrow-to{position:relative;display:inline-flex;width:max-content}
-.close-act .arrow-to .pen-arrow{position:absolute;left:100%;top:-26px;width:110px;height:84px;margin-left:8px}   /* Franco 2026-10-10 (Home): it comes down from the heading's words and lands level with the button's middle */
-.c4-tel{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 20px;font-size:17px}
-.c4-hours{margin-top:30px;border-top:1px solid var(--rule)}
-.c4-hours div{display:grid;gap:2px;padding:11px 0;border-bottom:1px solid var(--rule)}
-.c4-hours dt{font-size:15px;font-weight:600;color:var(--muted)}
-.c4-hours dd{font-size:17px;color:var(--ink)}
-.c4-hours .mb{font-size:17px;color:var(--ink)}
-@media (min-width:700px){.c4-hours div{grid-template-columns:8.5em minmax(0,1fr);align-items:baseline;column-gap:16px}}
-.c4-rules{margin-top:30px}
-.c4-rules h3{margin-bottom:6px;font-size:24px}
-.c4-rules li{position:relative;padding:9px 0 9px 36px;font-size:17px;font-weight:500;color:var(--ink)}
-.c4-rules .tick{left:0;top:11px;width:22px;height:18px}
-.c4-llc{margin-top:18px;font-size:15px;color:var(--muted)}
-.hm-cc-k{margin-bottom:12px}
-.hm-about{margin-top:16px}
-.cc-slot{width:120px;margin:0 0 14px}
-.pl-more{display:grid;gap:6px;padding-top:18px;border-top:1px solid var(--rule)}
-/* on a computer the trade links sit under the hours in the left column, and the contact card keeps the full height for its
-   sticky ride (a full-width row under it let the card slide over the links) */
-@media (min-width:900px){.c4-main{grid-column:1;grid-row:1}.pl-more{grid-column:1;grid-row:2;align-self:start;margin-top:-20px}.c4-card{grid-column:2;grid-row:1/3}.close-g{grid-template-rows:auto 1fr}}
-.pl-trades{display:flex;flex-wrap:wrap;column-gap:20px}
-.pl-trades a{display:inline-flex;align-items:center;min-height:44px;font-size:17px;color:var(--body);text-decoration:underline;text-decoration-color:var(--muted);text-decoration-thickness:1px;text-underline-offset:4px}
-.pl-trades a[aria-current=page]{color:var(--ink);font-weight:600;text-decoration:none}
-@media (hover:hover) and (pointer:fine){.pl-trades a:not([aria-current]):hover{color:var(--ink);text-decoration-color:var(--pen)}}
-/* Cardino perches on the contact card (Home, Franco 2026-10-10: he floated above it). The perch drawing is cropped to the bird, so
-   bottom:100% puts his feet on the card's top edge at any size; 2px down so he stands on it. Overrides system.css's top offsets. */
-.contact-card .cardino{top:auto;bottom:100%;margin-bottom:-2px;width:58px;right:36px}
-@media (min-width:700px){.contact-card .cardino{top:auto;width:74px;right:56px}}
-
-/* ===== phone length (budget 11,000px at 390; Home's band padding by role) */
-@media (min-width:700px){
-  .hm4-how{padding-block:96px}
-  .hm4-walk{padding-block:128px 96px}
-  .hm4-night{padding-block:144px}
-  .hm4-close{padding-block:112px 80px}
-}
-@media (max-width:699px){
-  main>.band{padding-block:40px}
-  main>.hm4-walk{padding-block:48px 40px}
-  main>.hm4-night{padding-block:48px}
-  main>.hm4-close{padding-block:44px 32px}
-  .hero{padding-bottom:0}
-  .facts4{margin-top:36px}
-  .facts4 ul{gap:4px}
-  .sh-total b{font-size:20px}
-  main>.hm4-auto,main>.hm4-how{padding-block:36px}
-  .auto-list li{padding-block:8px}
-  .pl-who-line{font-size:20px}
-  .stops{gap:28px}
-  .walk-end{margin-top:28px}
-  .hm4-hero .hero-g{row-gap:18px}
-  .close-g{gap:36px}
-  .n4{gap:20px}
-  .n4-figs{gap:14px;margin-top:8px}
-  .stop .crop-m{--crop-h:462px}
-  .tl4>li{padding-block:18px}
-  .tl4>li.big{padding:22px 18px}
-  .stop.page{padding-bottom:20px}
-  .stop-h{margin-bottom:14px}
-  .stop .pencil{font-size:17px}
-  .stop .ph4 .thread{font-size:13px}
-  .stop-body{gap:16px}
-  .walk-grid{margin-top:22px}
-  .c4-card{margin-top:28px}
-  .np-rows li{padding-block:6px;font-size:15px}
-  .n4 .crop-m{--crop-h:340px}   /* the no-JS crop: down to the on-call notification and clear of the fade (its bottom sits at 309 at 390; fitCrops measures the JS height) */
-  .walk-total b{font-size:32px}
-  .pl-night .np{padding:14px 14px 8px}
-  .pl-night .np-h{padding-bottom:8px}
-  .pl-night .np-rows li{grid-template-columns:4.7em minmax(0,1fr);font-size:14px;padding-block:5px}   /* 4.7em: "10:40 PM" on one line */
-  .pl-night .np-rows li.pl-dayrow{padding:7px 0 0;font-size:14px}
-  .pl-night .np-rows li.pl-dayrow:first-child{padding-top:1px}
-  .pl-card{font-size:14px;line-height:1.38}
-  .pl-card{margin-top:14px;padding:14px 12px 9px}
-  .pl-card-h{padding-bottom:6px;margin-bottom:5px}
-  main>.hm4-night{padding-block:40px}
-  .n4{gap:14px}
-  .n4 .cta-inline{padding-top:10px}
-  main>.pl-papers{padding-block:36px}
-  .pl-pw{gap:18px}
-  .pl-flag{grid-template-columns:14px minmax(0,1fr);gap:7px}
-  .pl-before{margin-top:8px}
-  .pl-more{margin-top:-12px;padding-top:14px}
-  .pl-who{margin-top:0;padding-top:12px}
-}
-</style>
+     Its shared styles are system/trade-page.css (moved there from both pages on 2026-10-12, rule for rule); the Spanish
+     additions, with the close heading's Spanish size, are in the <style> below. -->
+<link rel="stylesheet" href="/v4/trade-page.css?v=93161f63">
 <!-- ES. The header in Spanish, as on the Spanish Home (measured there, 2026-10-10): a label never wraps; the menu button up to
      1179px, the row at 15px from 1180 to 1279px and at English's 17px from 1280px. It sits here, not in system.css, so the
      English pages' approvals (Home, plumbing) stay valid; it moves into system.css's header rules when that file next changes.
@@ -346,6 +47,7 @@
      inside the phone screen, and the number and the text link keep their tap areas apart. The night log's time column is
      wider, since Spanish times ("10:40 p. m.") ran past it into the gap (measured 2026-10-11). -->
 <style>
+.close-h{margin:0 0 24px;font-size:clamp(40px,4.4vw,44px)}   /* Spanish Home's size (home.css): keeps "Hablemos de su negocio." on one line from 700 to 1440 so the arrow starts under the words */
 :lang(es) .nav a{white-space:nowrap}
 @media (min-width:900px) and (max-width:1179px){
   :lang(es) .nav{position:absolute;display:none;margin-left:0;background:var(--paper);border-bottom:1px solid var(--rule)}
@@ -368,8 +70,8 @@
 <!-- js: the hidden start states apply only with JS. review: picture slots show on this computer, the local check server or
      ?review, never on lumorafl.com (R8: on the live site an empty slot shows nothing). -->
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=cadcbd6e" defer></script>
-<script src="/v4/system.js?v=cadcbd6e" defer></script>
+<script src="/v4/trades.js?v=93161f63" defer></script>
+<script src="/v4/system.js?v=93161f63" defer></script>
 </head>
 <body data-trade="plumbing" data-trade-lock data-rules="v4">
 <a class="skip" href="#main">Saltar al contenido</a>
@@ -471,7 +173,7 @@
 <section class="band hm4-auto pl-auto" id="automate" data-ground="sheet" data-density="mid" data-width="split" data-loud="list" data-medium="list">
   <div class="wrap pl-auto-g">
     <h2>Lo que automatizamos en un negocio de plomería</h2>
-    <p class="auto-tools">Todo queda en lo que ya usa: Excel, QuickBooks, la aplicación donde lleva sus trabajos o un formulario sencillo que le armamos.</p>
+    <p class="auto-tools"><span data-shared="tools">Todo queda en lo que ya usa: Excel, QuickBooks, la aplicación donde lleva sus trabajos o un formulario sencillo que le armamos.</span></p>
     <div class="pl-auto-r">
       <ul class="auto-list">
         <li data-task="email">Órdenes de trabajo de administradores de propiedades y compañías de garantía del hogar, que pasan solas del PDF a su lista de trabajos.</li>
@@ -483,8 +185,8 @@
       </ul>
       <p class="auto-close">En la visita vemos cuáles de estos problemas tiene su negocio.</p>
       <div class="pl-who">
-        <p class="pl-who-line">Para negocios que lleva el propio dueño, con órdenes en papel, Excel, QuickBooks o una aplicación para los trabajos.</p>
-        <p class="who-not"><span class="t-label">A quién no le sirve la visita</span> Al negocio que quiere un programa nuevo para repartir los trabajos entre sus técnicos. Jobber, Housecall Pro y otros ya lo hacen bien. Nosotros nos encargamos de todo lo demás.</p>
+        <p class="pl-who-line"><span data-shared="who.for">Para negocios que lleva el propio dueño, con una persona en la oficina o ninguna.</span></p>
+        <p class="who-not"><span class="t-label">A quién no le sirve la visita</span> <span data-shared="notfor">Al negocio que quiere un programa nuevo para repartir los trabajos entre sus técnicos. Jobber, Housecall Pro y otros ya lo hacen bien. Nosotros nos encargamos de todo lo demás.</span></p>
       </div>
     </div>
     <figure class="pic auto-pic pl-auto-pic" data-extra="computer only: on a computer the left column is empty under the heading, and row 1 as a picture breaks up two sections of text; on a phone it would add about 450px to a page 1 screen under its limit, and section 4 shows a document being read two screens later">
@@ -610,7 +312,7 @@
 <!-- ============================================================ 5 THE WALK, as proof: Home's stops as shipped (bound from trades.js, the
      same screen Before / After, R7), no formula under the stops, one total line, the call button with money back. In .wrap,
      not .wrap-wide, as Home changed it at 19:10 (the walk lines up with the sections around it). -->
-<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" style="--hole:var(--sheet)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
+<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" style="--hole:var(--sheet)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
   <div class="wrap">
     <h2 class="walk-h">Lo que encuentra una visita</h2>
     <p class="walk-intro">Dunlin Plumbing es un negocio de ejemplo con 2&nbsp;camionetas. En cada paso se ve la misma pantalla antes y después del arreglo, y la visita termina con el total de la hoja.</p>
@@ -627,7 +329,7 @@
         </div>
         <p class="tally-bar" aria-hidden="true"><span data-f="bar-stop">Visita terminada</span><b data-f="bar-n">3 de 3</b></p>
       </aside>
-      <ol class="stops" data-f="stops"><!--prerender:stops--><li class="stop page" id="stop-1" data-usd="1900" data-place="La lista de cotizaciones" data-task="quotes"><div class="stop-h"><span class="tab-n">1</span><div class="stop-t"><h3><span class="sr">Paso 1: </span>La lista de cotizaciones</h3><p class="stop-leak">Cotizaciones enviadas más de 48 horas después de la visita al cliente</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Ejemplo, después: la misma lista de cotizaciones. Borrador, 3 días está tachado a lápiz, y la cotización Q-1182 ahora dice Enviada mar. 4:12&nbsp;p.&nbsp;m., el mismo día de la visita. La línea de estado dice que las 4 cotizaciones están enviadas, con un recordatorio para usted el jueves a las 9:00&nbsp;a.&nbsp;m. si Q-1182 no tiene respuesta." data-label-before="Ejemplo, antes: la lista de cotizaciones del negocio en octubre. La cotización Q-1182, el calentador de agua de 50 galones de Maria Garcia, con visita el martes 6 de octubre, todavía dice Borrador, 3 días. La línea de estado dice 4 cotizaciones, 1 borrador." data-label-after="Ejemplo, después: la misma lista de cotizaciones. Borrador, 3 días está tachado a lápiz, y la cotización Q-1182 ahora dice Enviada mar. 4:12&nbsp;p.&nbsp;m., el mismo día de la visita. La línea de estado dice que las 4 cotizaciones están enviadas, con un recordatorio para usted el jueves a las 9:00&nbsp;a.&nbsp;m. si Q-1182 no tiene respuesta."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Cotizaciones, octubre de 2026</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Cotización</th><th>Cliente</th><th class="hm">Visita</th><th>Estado</th></tr><tr class="hm"><td class="nw">Q-1180</td><td>Smith, John<small>Fuga debajo del fregadero</small></td><td class="hm nw">lun. 5 de oct.</td><td><span class="st ok">Aceptada</span></td></tr><tr><td class="nw">Q-1181</td><td>Brown, Linda<small>Calentador sin tanque</small></td><td class="hm nw">lun. 5 de oct.</td><td><span class="st ok">Aceptada</span></td></tr><tr class="n"><td class="nw">Q-1182</td><td>Garcia, Maria<small>Calentador de agua, 50 gal</small></td><td class="hm nw">mar. 6 de oct.</td><td><span class="chg tr"><span class="was"><span class="st wt">Borrador, 3 días</span></span><span class="now"><span class="st ok">Enviada mar. 4:12&nbsp;p.&nbsp;m.</span></span></span></td></tr><tr><td class="nw">Q-1183</td><td>Wilson, David<small>Cambio de tubería, PEX</small></td><td class="hm nw">mié. 7 de oct.</td><td><span class="st gy">Enviada mié.</span></td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">4 cotizaciones · 1 borrador</span><span class="now">4 cotizaciones · todas enviadas · recordatorio jue. 9:00&nbsp;a.&nbsp;m. si Q-1182 no tiene respuesta</span></span></p></div></div></div><div class="seg" role="group" aria-label="Mostrar el paso 1"><button type="button" data-show="before" aria-pressed="false">Antes</button><button type="button" data-show="after" aria-pressed="true">Después</button></div><span class="samp">Ejemplo</span></div><div class="stop-notes"><p class="pencil">La visita al cliente fue el martes. La cotización salió el viernes. Para entonces el cliente ya tenía otras dos.</p><p class="find"><span class="find-usd money">$1,900 al mes<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span><span class="find-f">5 trabajos × $380</span></p></div></div></li><li class="stop page" id="stop-2" data-usd="411" data-place="El Excel de los trabajos" data-task="retyping"><div class="stop-h"><span class="tab-n">2</span><div class="stop-t"><h3><span class="sr">Paso 2: </span>El Excel de los trabajos</h3><p class="stop-leak">El mismo trabajo anotado en tres lugares</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Ejemplo, después: la misma hoja. El trabajo 4521 se escribe una vez, en la fila 972. Las filas del calendario y de la factura dicen que salen de la fila 972, la dirección equivocada está tachada a lápiz y corregida a 456 Elm St, y la barra de fórmulas muestra que la celda C974 dice =C972." data-label-before="Ejemplo, antes: la hoja Trabajos 2026 del negocio. El trabajo 4521 de Linda Brown está anotado tres veces, para la lista de trabajos, el calendario y la factura, y en la fila de la factura la dirección está mal: 465 Elm St en vez de 456 Elm St." data-label-after="Ejemplo, después: la misma hoja. El trabajo 4521 se escribe una vez, en la fila 972. Las filas del calendario y de la factura dicen que salen de la fila 972, la dirección equivocada está tachada a lápiz y corregida a 456 Elm St, y la barra de fórmulas muestra que la celda C974 dice =C972."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Trabajos 2026.xlsx</span></div><div class="win-b"><div class="xl"><div class="xl-fx"><span class="fx-c">C974</span><b>fx</b><span class="chg"><span class="was">465 Elm St</span><span class="now">=C972</span></span></div><table><tbody><tr class="cl"><td></td><td>A</td><td class="hm">B</td><td>C</td><td>D</td></tr><tr><td>1</td><th>Trabajo</th><th class="hm">Cliente</th><th>Dirección</th><th>Anotado</th></tr><tr class="hm"><td>971</td><td class="nw">4520</td><td class="hm">Smith, John</td><td class="nw">123 Main St</td><td>Lista de trabajos, a mano</td></tr><tr class="n"><td>972</td><td class="nw">4521</td><td class="hm">Brown, Linda</td><td class="nw">456 Elm St</td><td><span class="chg"><span class="was">Lista de trabajos, a mano</span><span class="now"><span class="st ok">Escrito una vez</span></span></span></td></tr><tr><td>973</td><td class="nw">4521</td><td class="hm">Brown, Linda</td><td class="nw">456 Elm St</td><td><span class="chg"><span class="was">Calendario, otra vez a mano</span><span class="now"><span class="st ok">Calendario, sale de la fila 972</span></span></span></td></tr><tr><td>974</td><td class="nw">4521</td><td class="hm">Brown, Linda</td><td class="nw"><span class="chg tr"><span class="was">465 Elm St</span><span class="now">456 Elm St</span></span></td><td><span class="chg"><span class="was">Factura, otra vez a mano</span><span class="now"><span class="st ok">Factura, sale de la fila 972</span></span></span></td></tr></tbody></table><div class="xl-tabs"><span class="on">Trabajos</span><span>Calendario</span><span>Facturas</span><em>Listo</em></div></div></div></div></div><div class="seg" role="group" aria-label="Mostrar el paso 2"><button type="button" data-show="before" aria-pressed="false">Antes</button><button type="button" data-show="after" aria-pressed="true">Después</button></div><span class="samp">Ejemplo</span></div><div class="stop-notes"><p class="pencil">Lista de trabajos, calendario y factura: el mismo trabajo, tres veces, de noche.</p><p class="find"><span class="find-usd money">$411 al mes<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span><span class="find-f">40 min × 22 días × $28 la hora</span></p></div></div></li><li class="stop page" id="stop-3" data-usd="399" data-place="El teléfono del negocio" data-task="calls"><div class="stop-h"><span class="tab-n">3</span><div class="stop-t"><h3><span class="sr">Paso 3: </span>El teléfono del negocio</h3><p class="stop-leak">Llamadas que nadie devolvió</p></div></div><div class="stop-body"><div class="pic has-seg" data-pic="calls"><div class="pair crop-m" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Ejemplo, después: la misma conversación en la línea del negocio. A las 11:21&nbsp;a.&nbsp;m. salió un mensaje de texto con las palabras que aprobó el negocio: le devolverán la llamada hoy antes de las 12:30&nbsp;p.&nbsp;m. Quien llamó respondió con el trabajo y la dirección, y el número quedó anotado para devolverle la llamada a las 12:30&nbsp;p.&nbsp;m." data-label-before="Ejemplo, antes: la conversación de la línea del negocio con el (352) 555-0153. Una llamada perdida a las 11:20&nbsp;a.&nbsp;m. de un día entre semana, encerrada a lápiz, y nada después." data-label-after="Ejemplo, después: la misma conversación en la línea del negocio. A las 11:21&nbsp;a.&nbsp;m. salió un mensaje de texto con las palabras que aprobó el negocio: le devolverán la llamada hoy antes de las 12:30&nbsp;p.&nbsp;m. Quien llamó respondió con el trabajo y la dirección, y el número quedó anotado para devolverle la llamada a las 12:30&nbsp;p.&nbsp;m."><div class="ph4"><div class="ph4-scr"><div class="ph4-sb" aria-hidden="true"><span>11:24</span><span class="sb-ic"><svg viewBox="0 0 18 12" width="17" height="11"><rect x="0" y="8" width="3" height="4" rx=".7" fill="#000"></rect><rect x="5" y="5.5" width="3" height="6.5" rx=".7" fill="#000"></rect><rect x="10" y="3" width="3" height="9" rx=".7" fill="#000"></rect><rect x="15" y="0" width="3" height="12" rx=".7" fill="#000"></rect></svg><svg viewBox="0 0 16 12" width="15" height="11"><path d="M8 2.2c2.4 0 4.6.9 6.3 2.5l1.2-1.3C13.5 1.5 10.9.4 8 .4S2.5 1.5.5 3.4l1.2 1.3C3.4 3.1 5.6 2.2 8 2.2zm0 3.6c1.4 0 2.7.5 3.7 1.4l1.2-1.3C11.6 4.7 9.9 4 8 4s-3.6.7-4.9 1.9l1.2 1.3c1-.9 2.3-1.4 3.7-1.4zm0 3.5c-.6 0-1.2.2-1.6.6L8 11.6l1.6-1.7c-.4-.4-1-.6-1.6-.6z" fill="#000"></path></svg><svg viewBox="0 0 27 12" width="24" height="11"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#000" stroke-opacity=".45"></rect><rect x="2" y="2" width="17" height="8" rx="1.8" fill="#000"></rect><path d="M24 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2z" fill="#000" fill-opacity=".5"></path></svg></span></div><div class="ph-who"><small class="ph-line">Línea del negocio</small><i></i>(352) 555-0153</div><div class="thread"><p class="sys pc">Llamada perdida · 11:20&nbsp;a.&nbsp;m.</p><p class="bub out sms add">Hola, le escribe Dunlin Plumbing. Disculpe que no pudimos contestar. Le devolveremos la llamada hoy antes de las 12:30&nbsp;p.&nbsp;m. Si le es más fácil, responda por aquí. Responda STOP (o ALTO) para no recibir mensajes. / Reply STOP to stop texts.</p><p class="sys add">Enviado automáticamente · 11:21&nbsp;a.&nbsp;m.</p><p class="bub add">Se tapó el desagüe de la cocina. 123 Oak St.</p><p class="sys k add">Anotado para devolver la llamada a las 12:30&nbsp;p.&nbsp;m.</p></div></div><svg class="ph4-f" viewBox="0 0 433 882" aria-hidden="true" focusable="false"><path fill="#232326" fill-rule="evenodd" d="M2 73C2 32.68 34.68 0 75 0H357C397.32 0 430 32.68 430 73V809C430 849.32 397.32 882 357 882H75C34.68 882 2 849.32 2 809V73ZM21.25 75C21.25 44.21 46.21 19.25 77 19.25H355C385.79 19.25 410.75 44.21 410.75 75V807C410.75 837.79 385.79 862.75 355 862.75H77C46.21 862.75 21.25 837.79 21.25 807V75Z"></path><path fill="#232326" d="M0 171C0 170.45.45 170 1 170H3V204H1C.45 204 0 203.55 0 203V171ZM1 234C1 233.45 1.45 233 2 233H3.5V300H2C1.45 300 1 299.55 1 299V234ZM1 319C1 318.45 1.45 318 2 318H3.5V385H2C1.45 385 1 384.55 1 384V319ZM430 279H432C432.55 279 433 279.45 433 280V384C433 384.55 432.55 385 432 385H430V279Z"></path><path fill="#0a0a0b" fill-rule="evenodd" d="M6 74C6 35.34 37.34 4 76 4H356C394.66 4 426 35.34 426 74V808C426 846.66 394.66 878 356 878H76C37.34 878 6 846.66 6 808V74ZM21.25 75C21.25 44.21 46.21 19.25 77 19.25H355C385.79 19.25 410.75 44.21 410.75 75V807C410.75 837.79 385.79 862.75 355 862.75H77C46.21 862.75 21.25 837.79 21.25 807V75Z"></path><path fill="none" stroke="#2c2c30" stroke-width=".5" d="M21.25 75C21.25 44.21 46.21 19.25 77 19.25H355C385.79 19.25 410.75 44.21 410.75 75V807C410.75 837.79 385.79 862.75 355 862.75H77C46.21 862.75 21.25 837.79 21.25 807V75Z"></path><path opacity=".5" fill="#3a3a3e" d="M174 5H258V5.5C258 6.6 257.1 7.5 256 7.5H176C174.9 7.5 174 6.6 174 5.5V5Z"></path><path class="ph4-isl" fill="#000" d="M154 48.5C154 38.28 162.28 30 172.5 30H259.5C269.72 30 278 38.28 278 48.5C278 58.72 269.72 67 259.5 67H172.5C162.28 67 154 58.72 154 48.5Z"></path><circle cx="259.5" cy="48.5" r="10.5" fill="#0c0c11"></circle><circle cx="259.5" cy="48.5" r="5.5" fill="#1b1b24"></circle></svg></div></div><div class="seg" role="group" aria-label="Mostrar el paso 3"><button type="button" data-show="before" aria-pressed="false">Antes</button><button type="button" data-show="after" aria-pressed="true">Después</button></div><span class="samp">Ejemplo</span></div><div class="stop-notes"><p class="pencil">11:20&nbsp;a.&nbsp;m., los dos técnicos en la calle. Nadie devolvió la llamada.</p><p class="find"><span class="find-usd money">$399 al mes<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span><span class="find-f">11 llamadas × 24% × $151</span></p></div></div></li><!--/prerender--></ol>
+      <ol class="stops" data-f="stops"><!--prerender:stops--><li class="stop page" id="stop-1" data-usd="1900" data-place="La lista de cotizaciones" data-task="quotes"><div class="stop-h"><span class="tab-n">1</span><div class="stop-t"><h3><span class="sr">Paso 1: </span>La lista de cotizaciones</h3><p class="stop-leak">Cotizaciones enviadas más de 48 horas después de la visita al cliente</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Ejemplo, después: la misma lista de cotizaciones. Borrador, 3 días está tachado a lápiz, y la cotización Q-1182 ahora dice Enviada mar. 4:12&nbsp;p.&nbsp;m., el mismo día de la visita. La línea de estado dice que las 4 cotizaciones están enviadas, con un recordatorio para usted el jueves a las 9:00&nbsp;a.&nbsp;m. si Q-1182 no tiene respuesta." data-label-before="Ejemplo, antes: la lista de cotizaciones del negocio en octubre. La cotización Q-1182, el calentador de agua de 50 galones de Maria Garcia, con visita el martes 6 de octubre, todavía dice Borrador, 3 días. La línea de estado dice 4 cotizaciones, 1 borrador." data-label-after="Ejemplo, después: la misma lista de cotizaciones. Borrador, 3 días está tachado a lápiz, y la cotización Q-1182 ahora dice Enviada mar. 4:12&nbsp;p.&nbsp;m., el mismo día de la visita. La línea de estado dice que las 4 cotizaciones están enviadas, con un recordatorio para usted el jueves a las 9:00&nbsp;a.&nbsp;m. si Q-1182 no tiene respuesta."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Cotizaciones, octubre de 2026</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Cotización</th><th>Cliente</th><th class="hm">Visita</th><th>Estado</th></tr><tr class="hm"><td class="nw">Q-1180</td><td>Smith, John<small>Fuga debajo del fregadero</small></td><td class="hm nw">lun. 5 de oct.</td><td><span class="st ok">Aceptada</span></td></tr><tr><td class="nw">Q-1181</td><td>Brown, Linda<small>Calentador sin tanque</small></td><td class="hm nw">lun. 5 de oct.</td><td><span class="st ok">Aceptada</span></td></tr><tr class="n"><td class="nw">Q-1182</td><td>Garcia, Maria<small>Calentador de agua, 50 gal</small></td><td class="hm nw">mar. 6 de oct.</td><td><span class="chg tr"><span class="was"><span class="st wt">Borrador, 3 días</span></span><span class="now"><span class="st ok">Enviada mar. 4:12&nbsp;p.&nbsp;m.</span></span></span></td></tr><tr><td class="nw">Q-1183</td><td>Wilson, David<small>Cambio de tubería, PEX</small></td><td class="hm nw">mié. 7 de oct.</td><td><span class="st gy">Enviada mié.</span></td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">4 cotizaciones · 1 borrador</span><span class="now">4 cotizaciones · todas enviadas · recordatorio jue. 9:00&nbsp;a.&nbsp;m. si Q-1182 no tiene respuesta</span></span></p></div></div></div><div class="seg" role="group" aria-label="Mostrar el paso 1"><button type="button" data-show="before" aria-pressed="false">Antes</button><button type="button" data-show="after" aria-pressed="true">Después</button></div><span class="samp">Ejemplo</span></div><div class="stop-notes"><p class="pencil">La visita al cliente fue el martes. La cotización salió el viernes. Para entonces el cliente ya tenía otras dos.</p><p class="find"><span class="find-usd money">$1,900 al mes<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><li class="stop page" id="stop-2" data-usd="411" data-place="El Excel de los trabajos" data-task="retyping"><div class="stop-h"><span class="tab-n">2</span><div class="stop-t"><h3><span class="sr">Paso 2: </span>El Excel de los trabajos</h3><p class="stop-leak">El mismo trabajo anotado en tres lugares</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Ejemplo, después: la misma hoja. El trabajo 4521 se escribe una vez, en la fila 972. Las filas del calendario y de la factura dicen que salen de la fila 972, la dirección equivocada está tachada a lápiz y corregida a 456 Elm St, y la barra de fórmulas muestra que la celda C974 dice =C972." data-label-before="Ejemplo, antes: la hoja Trabajos 2026 del negocio. El trabajo 4521 de Linda Brown está anotado tres veces, para la lista de trabajos, el calendario y la factura, y en la fila de la factura la dirección está mal: 465 Elm St en vez de 456 Elm St." data-label-after="Ejemplo, después: la misma hoja. El trabajo 4521 se escribe una vez, en la fila 972. Las filas del calendario y de la factura dicen que salen de la fila 972, la dirección equivocada está tachada a lápiz y corregida a 456 Elm St, y la barra de fórmulas muestra que la celda C974 dice =C972."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Trabajos 2026.xlsx</span></div><div class="win-b"><div class="xl"><div class="xl-fx"><span class="fx-c">C974</span><b>fx</b><span class="chg"><span class="was">465 Elm St</span><span class="now">=C972</span></span></div><table><tbody><tr class="cl"><td></td><td>A</td><td class="hm">B</td><td>C</td><td>D</td></tr><tr><td>1</td><th>Trabajo</th><th class="hm">Cliente</th><th>Dirección</th><th>Anotado</th></tr><tr class="hm"><td>971</td><td class="nw">4520</td><td class="hm">Smith, John</td><td class="nw">123 Main St</td><td>Lista de trabajos, a mano</td></tr><tr class="n"><td>972</td><td class="nw">4521</td><td class="hm">Brown, Linda</td><td class="nw">456 Elm St</td><td><span class="chg"><span class="was">Lista de trabajos, a mano</span><span class="now"><span class="st ok">Escrito una vez</span></span></span></td></tr><tr><td>973</td><td class="nw">4521</td><td class="hm">Brown, Linda</td><td class="nw">456 Elm St</td><td><span class="chg"><span class="was">Calendario, otra vez a mano</span><span class="now"><span class="st ok">Calendario, sale de la fila 972</span></span></span></td></tr><tr><td>974</td><td class="nw">4521</td><td class="hm">Brown, Linda</td><td class="nw"><span class="chg tr"><span class="was">465 Elm St</span><span class="now">456 Elm St</span></span></td><td><span class="chg"><span class="was">Factura, otra vez a mano</span><span class="now"><span class="st ok">Factura, sale de la fila 972</span></span></span></td></tr></tbody></table><div class="xl-tabs"><span class="on">Trabajos</span><span>Calendario</span><span>Facturas</span><em>Listo</em></div></div></div></div></div><div class="seg" role="group" aria-label="Mostrar el paso 2"><button type="button" data-show="before" aria-pressed="false">Antes</button><button type="button" data-show="after" aria-pressed="true">Después</button></div><span class="samp">Ejemplo</span></div><div class="stop-notes"><p class="pencil">Lista de trabajos, calendario y factura: el mismo trabajo, tres veces, de noche.</p><p class="find"><span class="find-usd money">$411 al mes<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><li class="stop page" id="stop-3" data-usd="399" data-place="El teléfono del negocio" data-task="calls"><div class="stop-h"><span class="tab-n">3</span><div class="stop-t"><h3><span class="sr">Paso 3: </span>El teléfono del negocio</h3><p class="stop-leak">Llamadas que nadie devolvió</p></div></div><div class="stop-body"><div class="pic has-seg" data-pic="calls"><div class="pair crop-m" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Ejemplo, después: la misma conversación en la línea del negocio. A las 11:21&nbsp;a.&nbsp;m. salió un mensaje de texto con las palabras que aprobó el negocio: le devolverán la llamada hoy antes de las 12:30&nbsp;p.&nbsp;m. Quien llamó respondió con el trabajo y la dirección, y el número quedó anotado para devolverle la llamada a las 12:30&nbsp;p.&nbsp;m." data-label-before="Ejemplo, antes: la conversación de la línea del negocio con el (352) 555-0153. Una llamada perdida a las 11:20&nbsp;a.&nbsp;m. de un día entre semana, encerrada a lápiz, y nada después." data-label-after="Ejemplo, después: la misma conversación en la línea del negocio. A las 11:21&nbsp;a.&nbsp;m. salió un mensaje de texto con las palabras que aprobó el negocio: le devolverán la llamada hoy antes de las 12:30&nbsp;p.&nbsp;m. Quien llamó respondió con el trabajo y la dirección, y el número quedó anotado para devolverle la llamada a las 12:30&nbsp;p.&nbsp;m."><div class="ph4"><div class="ph4-scr"><div class="ph4-sb" aria-hidden="true"><span>11:24</span><span class="sb-ic"><svg viewBox="0 0 18 12" width="17" height="11"><rect x="0" y="8" width="3" height="4" rx=".7" fill="#000"></rect><rect x="5" y="5.5" width="3" height="6.5" rx=".7" fill="#000"></rect><rect x="10" y="3" width="3" height="9" rx=".7" fill="#000"></rect><rect x="15" y="0" width="3" height="12" rx=".7" fill="#000"></rect></svg><svg viewBox="0 0 16 12" width="15" height="11"><path d="M8 2.2c2.4 0 4.6.9 6.3 2.5l1.2-1.3C13.5 1.5 10.9.4 8 .4S2.5 1.5.5 3.4l1.2 1.3C3.4 3.1 5.6 2.2 8 2.2zm0 3.6c1.4 0 2.7.5 3.7 1.4l1.2-1.3C11.6 4.7 9.9 4 8 4s-3.6.7-4.9 1.9l1.2 1.3c1-.9 2.3-1.4 3.7-1.4zm0 3.5c-.6 0-1.2.2-1.6.6L8 11.6l1.6-1.7c-.4-.4-1-.6-1.6-.6z" fill="#000"></path></svg><svg viewBox="0 0 27 12" width="24" height="11"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#000" stroke-opacity=".45"></rect><rect x="2" y="2" width="17" height="8" rx="1.8" fill="#000"></rect><path d="M24 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2z" fill="#000" fill-opacity=".5"></path></svg></span></div><div class="ph-who"><small class="ph-line">Línea del negocio</small><i></i>(352) 555-0153</div><div class="thread"><p class="sys pc">Llamada perdida · 11:20&nbsp;a.&nbsp;m.</p><p class="bub out sms add">Hola, le escribe Dunlin Plumbing. Disculpe que no pudimos contestar. Le devolveremos la llamada hoy antes de las 12:30&nbsp;p.&nbsp;m. Si le es más fácil, responda por aquí. Responda STOP (o ALTO) para no recibir mensajes. / Reply STOP to stop texts.</p><p class="sys add">Enviado automáticamente · 11:21&nbsp;a.&nbsp;m.</p><p class="bub add">Se tapó el desagüe de la cocina. 123 Oak St.</p><p class="sys k add">Anotado para devolver la llamada a las 12:30&nbsp;p.&nbsp;m.</p></div></div><svg class="ph4-f" viewBox="0 0 433 882" aria-hidden="true" focusable="false"><path fill="#232326" fill-rule="evenodd" d="M2 73C2 32.68 34.68 0 75 0H357C397.32 0 430 32.68 430 73V809C430 849.32 397.32 882 357 882H75C34.68 882 2 849.32 2 809V73ZM21.25 75C21.25 44.21 46.21 19.25 77 19.25H355C385.79 19.25 410.75 44.21 410.75 75V807C410.75 837.79 385.79 862.75 355 862.75H77C46.21 862.75 21.25 837.79 21.25 807V75Z"></path><path fill="#232326" d="M0 171C0 170.45.45 170 1 170H3V204H1C.45 204 0 203.55 0 203V171ZM1 234C1 233.45 1.45 233 2 233H3.5V300H2C1.45 300 1 299.55 1 299V234ZM1 319C1 318.45 1.45 318 2 318H3.5V385H2C1.45 385 1 384.55 1 384V319ZM430 279H432C432.55 279 433 279.45 433 280V384C433 384.55 432.55 385 432 385H430V279Z"></path><path fill="#0a0a0b" fill-rule="evenodd" d="M6 74C6 35.34 37.34 4 76 4H356C394.66 4 426 35.34 426 74V808C426 846.66 394.66 878 356 878H76C37.34 878 6 846.66 6 808V74ZM21.25 75C21.25 44.21 46.21 19.25 77 19.25H355C385.79 19.25 410.75 44.21 410.75 75V807C410.75 837.79 385.79 862.75 355 862.75H77C46.21 862.75 21.25 837.79 21.25 807V75Z"></path><path fill="none" stroke="#2c2c30" stroke-width=".5" d="M21.25 75C21.25 44.21 46.21 19.25 77 19.25H355C385.79 19.25 410.75 44.21 410.75 75V807C410.75 837.79 385.79 862.75 355 862.75H77C46.21 862.75 21.25 837.79 21.25 807V75Z"></path><path opacity=".5" fill="#3a3a3e" d="M174 5H258V5.5C258 6.6 257.1 7.5 256 7.5H176C174.9 7.5 174 6.6 174 5.5V5Z"></path><path class="ph4-isl" fill="#000" d="M154 48.5C154 38.28 162.28 30 172.5 30H259.5C269.72 30 278 38.28 278 48.5C278 58.72 269.72 67 259.5 67H172.5C162.28 67 154 58.72 154 48.5Z"></path><circle cx="259.5" cy="48.5" r="10.5" fill="#0c0c11"></circle><circle cx="259.5" cy="48.5" r="5.5" fill="#1b1b24"></circle></svg></div></div><div class="seg" role="group" aria-label="Mostrar el paso 3"><button type="button" data-show="before" aria-pressed="false">Antes</button><button type="button" data-show="after" aria-pressed="true">Después</button></div><span class="samp">Ejemplo</span></div><div class="stop-notes"><p class="pencil">11:20&nbsp;a.&nbsp;m., los dos técnicos en la calle. Nadie devolvió la llamada.</p><p class="find"><span class="find-usd money">$399 al mes<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><!--/prerender--></ol>
     </div>
     <div class="walk-end" data-bind="bigfig">
       <p class="walk-total"><span>Lo que pierde hoy, antes de arreglar nada</span> <b><span data-f="n">$2,710</span> <span data-f="per">al mes</span></b></p>
