@@ -213,6 +213,6 @@ html:not(.js) .wa-filter{display:none}
   .close-g{gap:36px}
   .c4-card{margin-top:28px}
   .wa-more{margin-top:-12px;padding-top:14px}
-  .wa-items li{padding-block:8px;line-height:1.4}   /* a phone line is about 45 characters, so it takes tighter leading than the 85 on a computer; with the four AC rows added (2026-10-11) this keeps the page under R9's 15,000px */
+  .wa-items li{padding-block:7px;line-height:1.4}   /* a phone line is about 45 characters, so it takes tighter leading than the 85 on a computer; 7px since 2026-10-12 (113 items) keeps the page under R9's 15,000px */
 }
 @media (max-width:359px){.cta-row,.c4-tel{row-gap:18px}}

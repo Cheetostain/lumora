@@ -267,6 +267,24 @@
       if (el.tagName === 'A') el.href = '#' + ($('[data-bind=sheet]') ? $('[data-bind=sheet]').id || 'sheet' : 'sheet');
     },
     text: function (el, t) { var v = t[el.getAttribute('data-field')]; if (v != null) el.textContent = v; },
+    // the trade index (Industries v4, 2026-10-12): each [data-t] row gets its trade's one-problem line (line: the hero-one under the
+    // h1 on that trade's own page; check.py fails the two if they drift) and the top line of its sample sheet with the dollars, as
+    // Home's Who we work with reads it, so nothing on the index is typed. The row takes that sheet row's task tag (R1). The shop
+    // size is home.js size()'s. A Spanish page keeps its prerendered words until trades-src-es.json carries a Spanish line.
+    // The sample line opens "From the sample sheet for a 2-crew shop:" so it reads as its own item, never as the price of the
+    // one-problem line above it (Industries review, 2026-10-12: roofing's $771 depreciation row sat under the decking line, and
+    // decking is its own $689 row). A trailing number keeps its word ("day 30").
+    index: function (el) {
+      $$('[data-t]', el).forEach(function (li) {
+        var t = D[li.getAttribute('data-t')], r = t && t.rows[0]; if (!r) return;
+        var one = li.querySelector('[data-f="one"]'), leak = li.querySelector('[data-f="leak"]'), m = /, (\d+) (\w+?)s?$/.exec(t.short) || [],
+          kind = t.per === 'yr' ? 'property manager' : /^Restaurant/.test(t.short) ? 'restaurant and bar' : 'shop';
+        li.setAttribute('data-task', TASK[r.icon] || r.icon);
+        if (ES) return;
+        if (one) one.textContent = t.line;
+        if (leak) leak.innerHTML = 'From the sample sheet for a ' + (m[1] ? m[1] + '-' + m[2] + ' ' : '') + kind + ': ' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', <b>' + money(r.usd) + perShort(t) + '</b>.';
+      });
+    },
     bigfig: function (el, t) {
       var f = function (k) { return el.querySelector('[data-f="' + k + '"]'); }, sum = total(t);
       rollTo(f('n'), shown.big, sum, money); shown.big = sum;
@@ -407,12 +425,15 @@
   function walkPairs(el, t, animate) {
     var list = el.querySelector('[data-f="stops"]'); if (!list) return;
     var noF = el.getAttribute('data-walk-formulas') === 'off';
+    // data-walk-skip="ROW ID ..." on the walk: rows the page leaves off its walk and its tally. They stay on the sheet, and the
+    // page's total line under the stops names them (property managers, 2026-10-12: the vendor bills row, for the 11,000px budget)
+    var skip = (el.getAttribute('data-walk-skip') || '').split(/\s+/), rows = t.rows.filter(function (r) { return skip.indexOf(r.id) < 0; });
     // a page's own stop (li.stop[data-own="ROW ID"], written in the page) stands where that row's stop would be: the row stays on
     // the sheet and its picture leaves the walk (PLUMBING-INTEGRATE item 37, C9; the AC page walks its change-out quote in place of
     // the phone, 2026-10-12). Read once from the page's own markup, so a re-render and the prerender keep it as written.
     if (!el._own) { el._own = {}; $$(':scope > li[data-own]', list).forEach(function (li) { el._own[li.getAttribute('data-own')] = li.outerHTML; }); }
     var own = el._own, ownPlace = function (id) { var m = own[id] && /data-place="([^"]*)"/.exec(own[id]); return m && m[1]; };
-    list.innerHTML = t.rows.map(function (r, i) {
+    list.innerHTML = rows.map(function (r, i) {
       if (own[r.id]) return own[r.id];
       var P = r.pair, n = i + 1, task = TASK[r.icon] || r.icon, place = (P && P.place) || r.place;
       var crop = (P ? P.frame : r.after.frame) === 'phone' ? ' crop-m' : '';   // R6 crop option: on a phone only the thread's part of the phone shows
@@ -432,7 +453,7 @@
         '</div></div></li>'; }).join('');
     var tl = el.querySelector('[data-tally]');
     if (tl) {
-      var ol = tl.querySelector('ol'); if (ol) ol.innerHTML = t.rows.map(function (r, i) { return '<li data-i="' + i + '"><span>' + (ownPlace(r.id) || esc((r.pair && r.pair.place) || r.place)) + '</span></li>'; }).join('');
+      var ol = tl.querySelector('ol'); if (ol) ol.innerHTML = rows.map(function (r, i) { return '<li data-i="' + i + '"><span>' + (ownPlace(r.id) || esc((r.pair && r.pair.place) || r.place)) + '</span></li>'; }).join('');
       var sub = tl.querySelector('[data-f="tsub"]'); if (sub) sub.textContent = t.shop + ', ' + t.short.split(', ').slice(1).join(', ');
     }
     initG2R(list, animate); initDraw(list); tally.bind(el, t); fitCrops();
@@ -868,11 +889,19 @@
 
   /* ================================================================ focus never hides under the sticky header or the call bar (WCAG 2.4.11) */
   // Browsers do not scroll an element that is already "in view" but sits under a fixed bar; scrollIntoView honours scroll-padding.
+  // Industries review (2026-10-12): the call bar is position:fixed, so its offsetParent is always null and this never saw it
+  // (the close's phone link sat 18px under it at 390); a bar counts when it has a box. A stretched link (its ::after covers the
+  // whole row, the Industries index) draws its ring on that row, so the row is what must show. The test waits one frame, until
+  // the browser's own focus scroll is done. check.py's FOCUS_JS measures the same box (ringBox).
+  var ringBox = function (el) { var a = getComputedStyle(el, '::after'); return a.position === 'absolute' && a.content !== 'none' && a.top === '0px' && a.bottom === '0px' && el.offsetParent || el; };
   document.addEventListener('focusin', function (e) {
     var el = e.target; if (!el || !el.getBoundingClientRect || el.closest('.hdr, .callbar')) return;
-    var r = el.getBoundingClientRect(), hdr = $('.hdr'), bar = $('.callbar');
-    var top = hdr ? hdr.getBoundingClientRect().bottom : 0, bottom = bar && bar.offsetParent ? bar.getBoundingClientRect().top : innerHeight;
-    if (r.top < top || r.bottom > bottom) el.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+    el = ringBox(el);
+    requestAnimationFrame(function () {
+      var r = el.getBoundingClientRect(), hdr = $('.hdr'), bar = $('.callbar');
+      var top = hdr ? hdr.getBoundingClientRect().bottom : 0, bottom = bar && bar.getClientRects().length ? bar.getBoundingClientRect().top : innerHeight;
+      if (r.top < top || r.bottom > bottom) el.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+    });
   });
 
   /* ================================================================ start */

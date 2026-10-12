@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Industries | Lumora</title>
-<meta name="description" content="Trades first: plumbing, AC and heating, electrical, water damage and mold, pest control and roofing. Then restaurants and bars with dead nights. Gainesville and Alachua County.">
+<meta name="format-detection" content="telephone=no">   <!-- iPhone Safari: the real number is always an explicit tel: link -->
+<title>Industries | Lumora, Gainesville FL</title>
+<meta name="description" content="The trades we work with in Gainesville and Alachua County, and where each one loses money: plumbing, AC and heating, electrical, water damage, pest control, roofing, restaurants and property managers. Free call, up to 20 minutes.">
 <link rel="canonical" href="https://lumorafl.com/industries/">
 <link rel="alternate" hreflang="en" href="https://lumorafl.com/industries/">
 <link rel="alternate" hreflang="es" href="https://lumorafl.com/es/industries/">
@@ -22,262 +23,216 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="es_US">
 <meta name="theme-color" content="#F6F5F2">
-<link rel="icon" href="/v3/assets/mark.svg">
-<link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v3/system.css?v=00eee6ad">
-<link rel="stylesheet" href="/v3/trades-1/trades-1.css?v=00eee6ad">
-<script>document.documentElement.classList.add('js')</script>
-<script src="/v3/trades.js?v=00eee6ad" defer></script>
-<script src="/v3/system.js?v=00eee6ad" defer></script>
-<script src="/v3/trades-1/trades-1.js?v=00eee6ad" defer></script>
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="/v4/assets/mark.svg">
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/v4/system.css?v=e66636cd">
+<link rel="stylesheet" href="/v4/trade-page.css?v=e66636cd">
+<!-- Industries v4 (/industries/), built 2026-10-12 (wave 2) once all eight trade pages were v4. Hand-built and its own source:
+     pages/trades-1/build.py no longer lists it, and industries.src.html is the retired v3 draft. Before: "backup
+     ORIGINAL-2026-10-12/industries ORIGINAL-2026-10-12-w2-industries.html" (the stale v4 draft of the v3 page).
+     Benchmark (Jobber, ServiceTitan, Housecall Pro, FieldEdge, Decimal, Bench): names first in one plain list that starts on
+     the first phone screen, a line under each name that only that trade could have, and no borrowed proof. So the page is one
+     tool, the trade index: each row is the trade's name, its one-problem line (the hero-one under the h1 on its own page) and
+     the top line of its sample sheet with the dollars. Both are bound from trades.js by system.js's "index" binder, the way
+     Home's Who we work with reads them, and prerendered with `python ../home/prerender.py industries.html` (slot "who").
+     check.py fails a trade page whose hero-one drifts from trades.js. Kept from the v3 page: the trades in words, the reason
+     trade shops come first, the other trades we walk, what every walk looks for (now What we automate in any trade, R2), who
+     a walk is not for, the honest line in place of client stories, the facts and the close. Dropped, since Home and each trade
+     page now carry them: the sample sheet with its picker, the night band and the Florida calendar.
+     Go-live: publish it with the v4 pest control, roofing and property managers pages (and water damage, whose hero line
+     changed on 2026-10-12) or after them, never alone first.
+     check.py --live, which the push gate runs, fails a row whose link opens a page that doesn't open on the row's line. -->
+<style>
+/* ===== the trade index: the page's one tool. Phone order: words, call block, the index, price and money back. On a computer
+   the index takes the wider right column (the copy is short), and from 1200px each row reads like a notebook index: the name,
+   a dotted leader, then the line and the sample row (the v3 page's index, at the v4 type scale). The whole row is the link,
+   but its name is the trade alone (the stretched ::after), so a screen reader hears "Plumbing", not 30 words. */
+.ix-hero .hero-g{grid-template-areas:"copy" "act" "tool" "terms"}
+.ix-h{font-size:24px;line-height:1.2}
+.ix-list{margin-top:10px;border-top:2px solid var(--ink);font-size:17px}
+.ix-list li{position:relative;display:grid;gap:4px;padding:13px 0 14px;border-bottom:1px solid var(--rule)}
+.ix-n{font-size:20px;line-height:1.2;letter-spacing:-.01em}
+.ix-n a{color:var(--ink);text-decoration:none}
+.ix-n a::after{content:"";position:absolute;inset:0}
+.ix-n::after{content:"→";content:"→" / "";display:inline-block;margin-left:8px;font-weight:500;color:var(--pencil)}   /* decoration: no alt text */
+.ix-n a:focus-visible{outline:none}
+.ix-n a:focus-visible::after{outline:3px solid var(--ink);outline-offset:2px;border-radius:2px}
+.ix-b{display:grid;gap:4px}
+.ix-one{font-size:17px;line-height:1.4;color:var(--ink)}
+.ix-leak{font-size:15px;line-height:1.4;color:var(--muted)}
+.ix-leak b{font-weight:600;color:var(--ink);white-space:nowrap}
+.ix-also{margin-top:16px;font-size:17px;max-width:34em}
+.ix-note{margin-top:10px;font-size:15px;color:var(--muted);max-width:40em}
+.ix-note a{padding-block:12px;margin-block:-12px}   /* a 44px tall tap area without moving the layout */
+@media (hover:hover) and (pointer:fine){
+  .ix-list li:hover .ix-n a{text-decoration:underline;text-decoration-color:var(--pen);text-decoration-thickness:2px;text-underline-offset:5px}
+  .ix-list li:hover .ix-n::after{transform:translateX(3px)}
+}
+@media (prefers-reduced-motion:no-preference){.ix-n::after{transition:transform var(--t-hover) var(--ease-out)}}
+@media (min-width:900px){
+  .ix-hero .hero-g{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);grid-template-areas:"copy tool" "act tool" "terms tool";grid-template-rows:auto auto 1fr}
+  .ix-h{font-size:24px}
+}
+@media (min-width:1200px){   /* one set of columns for all eight rows (subgrid), so every line starts at the same x, however long the trade's name;
+                                the dotted leader runs from each name's arrow to that column (the name cell's ::before, placed last) */
+  .ix-list{display:grid;grid-template-columns:auto minmax(0,24em);column-gap:12px}
+  .ix-list li{grid-column:1/-1;grid-template-columns:subgrid;align-items:baseline;column-gap:12px}   /* the li's own gap:4px would set the subgrid's column gap */
+  .ix-n{display:flex;align-items:baseline;white-space:nowrap}
+  .ix-n::before{content:"";order:2;flex:1 0 24px;margin-left:12px;border-bottom:2px dotted rgba(17,17,16,.35);transform:translateY(-4px)}
+}
+</style>
+<!-- js: the hidden start states apply only with JS. review: picture slots show on this computer, the local check server or
+     ?review, never on lumorafl.com (R8: on the live site an empty slot shows nothing). -->
+<script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
+<script src="/v4/trades.js?v=e66636cd" defer></script>
+<script src="/v4/system.js?v=e66636cd" defer></script>
 </head>
-<body data-trade="plumbing">
+<body data-rules="v4">
 <a class="skip" href="#main">Skip to content</a>
 
 <div class="util">
   <div class="wrap util-in">
     <span>Gainesville, serving Alachua County</span>
-    <span class="util-r"><span class="lang" role="group" aria-label="Language"><a href="#" aria-current="true">EN</a><a href="/es/industries/" lang="es" hreflang="es">ES</a></span></span>
+    <span class="util-r"><span class="lang" role="group" aria-label="Language"><a href="/industries/" aria-current="true">EN</a><a href="/es/industries/" lang="es" hreflang="es">ES</a></span></span>
   </div>
 </div>
 <header class="hdr">
   <div class="wrap hdr-in">
-    <a class="brand" href="/" aria-label="Lumora, home page"><img src="/v3/assets/logo.svg" alt="" width="124" height="30"></a>
+    <a class="brand" href="/" aria-label="Lumora, home page"><img src="/v4/assets/logo.svg" alt="" width="124" height="30"></a>
     <nav class="nav" id="nav" aria-label="Main">
       <ul>
         <li><a class="u" href="/how-it-works/">How it works</a></li>
         <li><a class="u" href="/industries/" aria-current="page">Industries</a></li>
         <li><a class="u" href="/leak-check/">Loss calculator</a></li>
         <li><a class="u" href="/about/">About</a></li>
+        <li><a class="u" href="/articles/">Articles</a></li>
         <li><a class="u" href="/contact/">Contact</a></li>
       </ul>
     </nav>
     <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
-    <a class="btn btn-sm" href="tel:+13522260681">Call or text</a>
-    <span class="lang" role="group" aria-label="Language"><a href="#" aria-current="true">EN</a><a href="/es/industries/" lang="es" hreflang="es">ES</a></span>
+    <a class="btn btn-sm" href="tel:+13522260681">Call or text us</a>
+    <span class="lang" role="group" aria-label="Language"><a href="/industries/" aria-current="true">EN</a><a href="/es/industries/" lang="es" hreflang="es">ES</a></span>
     <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   </div>
 </header>
 
 <main id="main">
 
-<!-- 1 HERO: words, call block, recognition strip, and the notebook index of trades as the page's tool (the pinned drawing follows hover and focus) -->
-<section class="hero ind-hero" data-ground="ruled" id="top" data-density="mid" data-width="split" data-loud="H1" data-medium="index">
-  <div class="wrap hero-g" data-bind="idx">
+<!-- ============================================================ 1 HERO: the words, the call block, then the trade index (the page's
+     tool), price and money back, and the facts strip. The index's heading and first trade are held to the first phone screen
+     (data-first). Under the list: the trades we also walk (Decimal's "Don't see your industry?") and the honest line where the
+     software pages put review stars. -->
+<section class="hero hm4-hero ix-hero" id="top" data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="index">
+  <div class="wrap hero-g">
     <div class="hero-copy">
       <p class="eyebrow">Plumbing, AC, electrical, water damage, pest control, roofing, restaurants and property managers in Gainesville and Alachua County.</p>
       <h1>Who we work with</h1>
-      <p class="t-lede">Trades and local shops in Gainesville and Alachua County. Trade shops come first: their jobs have the most steps between the first call and the paid invoice, and the most places for money to slip.</p>
+      <p class="t-lede">Trade shops come first, because their jobs have the most steps between the first call and the paid invoice. Restaurants and property managers lose money in the same kind of paperwork, from supplier invoices to deposit claims.</p>
     </div>
     <div class="hero-act">
       <div class="cta">
         <div class="cta-row">
           <a class="btn btn-lg" href="tel:+13522260681">Call or text us</a>
           <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
+          <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
         </div>
-        <p class="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day. English or Spanish.</p>
-        <p class="mb"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <span class="red">the walk fee back</span>.</p>
+        <p class="reply"><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span> English or Spanish.</p>
       </div>
     </div>
-    <a class="hero-strip strip" href="#sheet" data-bind="strip" aria-label="Sample walk sheet, top leak for the trade shown">
-      <span class="strip-k" data-s="sub">Plumbing, 2 trucks</span>
-      <span class="stamp">Sample: a plumbing shop</span>
-      <span class="strip-b" data-s="leak">Quotes sent 48+ hours after the visit</span>
-      <span class="strip-usd" data-s="usd">$1,900 a month</span>
-      <span class="strip-f" data-s="f">5 jobs × $380 profit a job</span>
-    </a>
-    <div class="hero-tool">
-      <div class="page ind-idx">
-        <p class="tab"><span class="tab-n" aria-hidden="true">i</span>Index · Pick your trade</p>
-        <h2 class="t-h2">Pick your trade</h2>
-        <p class="ind-idx-sub">Each page walks a sample shop in that trade, stop by stop, with a sheet that adds up.</p>
-        <ul class="idx" id="pre-idx"><!--pre:pre-idx-->
-          <li><a href="/industries/plumbing/" data-t="plumbing"><b>Plumbing</b><span class="dots" aria-hidden="true"></span><span class="idx-p">The expansion tank on the supply-house ticket that never reached the invoice.</span></a></li>
-          <li><a href="/industries/ac-and-heating/" data-t="ac"><b>AC and heating</b><span class="dots" aria-hidden="true"></span><span class="idx-p">Maintenance plans that lapse because nobody followed up before the renewal date.</span></a></li>
-          <li><a href="/industries/electrical/" data-t="electrical"><b>Electrical</b><span class="dots" aria-hidden="true"></span><span class="idx-p">Wire costs up, and last January's prices still on the quote.</span></a></li>
-          <li><a href="/industries/water-damage-and-mold/" data-t="water"><b>Water damage and mold</b><span class="dots" aria-hidden="true"></span><span class="idx-p">Drying days the equipment ran but nobody billed.</span></a></li>
-          <li><a href="/industries/pest-control/" data-t="pest"><b>Pest control</b><span class="dots" aria-hidden="true"></span><span class="idx-p">Termite renewals that lapse with no follow-up.</span></a></li>
-          <li><a href="/industries/roofing/" data-t="roofing"><b>Roofing</b><span class="dots" aria-hidden="true"></span><span class="idx-p">A 30 percent deposit, and the permit clock nobody watched.</span></a></li>
-          <li><a href="/industries/restaurants-and-bars/" data-t="food"><b>Restaurants and bars</b><span class="dots" aria-hidden="true"></span><span class="idx-p">Supplier invoices, staff hours and food cost, checked against your own numbers. Food trucks too.</span></a></li>
-          <li><a href="/industries/property-managers/" data-t="rentals"><b>Property managers</b><span class="dots" aria-hidden="true"></span><span class="idx-p">Deposit deadlines and turnover week, tracked in the software you already pay for.</span></a></li>
-        <!--/pre--></ul>
-        <p class="also-trades"><b>Also:</b> cleaning, pool service, pressure washing and auto repair. The walk works the same way: your calls, jobs, invoices and supplier bills.</p>
-      </div>
+    <div class="hero-tool ix">
+      <h2 class="ix-h" id="ix-h" data-first="the trade list's heading">Pick your trade</h2>
+      <nav aria-labelledby="ix-h">
+        <ul class="ix-list" data-trades data-bind="index"><!--prerender:who--><li data-t="plumbing" data-task="quotes"><h3 class="ix-n" data-first="the first trade"><a href="/industries/plumbing/">Plumbing</a></h3><div class="ix-b"><p class="ix-one" data-f="one">The part on the supply-house ticket that never reached the invoice.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 2-truck shop: quotes sent 48+ hours after the visit, <b>$1,900 a month</b>.</p></div></li><li data-t="ac" data-task="reminders"><h3 class="ix-n"><a href="/industries/ac-and-heating/">AC and heating</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Tune-ups members paid&nbsp;for, and nobody booked.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 3-truck shop: maintenance plans that lapsed with no follow-up, <b>$331 a month</b>.</p></div></li><li data-t="electrical" data-task="retyping"><h3 class="ix-n"><a href="/industries/electrical/">Electrical</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Quotes still priced on January's copper.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 3-truck shop: supply-house tickets with no job number, never billed, <b>$574 a month</b>.</p></div></li><li data-t="water" data-task="invoices"><h3 class="ix-n"><a href="/industries/water-damage-and-mold/">Water damage and mold</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Four dehumidifier days on the log, three on the invoice.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 2-crew shop: drying days nobody billed, <b>$1,026 a month</b>.</p></div></li><li data-t="pest" data-task="reminders"><h3 class="ix-n"><a href="/industries/pest-control/">Pest control</a></h3><div class="ix-b"><p class="ix-one" data-f="one">The termite renewal that lapsed, and nobody called.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 3-route shop: termite renewals that lapsed with no follow-up, <b>$675 a month</b>.</p></div></li><li data-t="roofing" data-task="reminders"><h3 class="ix-n"><a href="/industries/roofing/">Roofing</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Rotted decking replaced at tear-off and left off the bill.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 2-crew shop: depreciation checks nobody asked for, <b>$771 a month</b>.</p></div></li><li data-t="food" data-task="reminders"><h3 class="ix-n"><a href="/industries/restaurants-and-bars/">Restaurants and bars</a></h3><div class="ix-b"><p class="ix-one" data-f="one">The case on the invoice that never came off the truck.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 110-seat restaurant and bar: a slow Tuesday staffed like a busy night, <b>$1,153 a month</b>.</p></div></li><li data-t="rentals" data-task="reminders"><h3 class="ix-n"><a href="/industries/property-managers/">Property managers</a></h3><div class="ix-b"><p class="ix-one" data-f="one">The deposit claim that went out on day&nbsp;31.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 212-door property manager: deposit claims sent after day&nbsp;30, <b>$2,700 a year</b>.</p></div></li><!--/prerender--></ul>
+      </nav>
+      <p class="ix-also">We also walk cleaning, pool service, pressure washing and auto repair shops. The walk works the same way.</p>
+      <p class="ix-note">The shops and numbers here are samples. Each trade's page has its full sample sheet, with the math for every line (<a class="u" href="/how-it-works/#sample">where the sample numbers come from</a>). Yours is built from your own invoices, calendar and call history. Lumora is new, so there are no client reviews here yet.</p>
+    </div>
+    <div class="hero-terms">
+      <p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward the fix if it starts within 30 days.</span></p>
+      <p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p>
     </div>
   </div>
-</section>
-
-<section class="facts" aria-label="Facts you can check">
-  <div class="wrap facts-in">
-    <span class="facts-k">Facts you can check</span>
-    <ul>
-      <li>Lumora Group LLC, a Florida company</li>
-      <li>Gainesville and Alachua County</li>
+  <div class="facts4">
+    <ul class="wrap" aria-label="Facts you can check">
+      <li>A Florida company, based in Gainesville</li>
       <li>English and Spanish</li>
-      <li>Money back within 7 days of the call on your sheet</li>
+      <li>Money back up to 7 days after we go over your sheet</li>
+      <li>We don't sell leads, and there's no long contract</li>
     </ul>
   </div>
 </section>
 
-<!-- 2 THE SAMPLE SHEET: the picker rewrites the sheet (the page's one pen ring) and, below, the night band -->
-<section class="band seam" data-ground="bone" id="sample" data-density="high" data-width="split" data-loud="sheet" data-medium="sheet" style="--hole:var(--paper)">
-  <div class="wrap ar-split ind-sheet">
-    <div>
-      <p class="kicker">A sample shop like yours</p>
-      <h2 class="two">See the sheet before you call. <span>Pick a trade, and the sample sheet changes to a shop in it.</span></h2>
-      <div class="picker" data-picker style="margin-top:22px">
-        <p class="picker-q" id="pick-q">Your trade</p>
-        <label class="picker-sel"><span class="sr">Your trade</span><select aria-describedby="pick-q"></select></label>
-        <div class="chips" aria-labelledby="pick-q">
-          <a class="chip" href="/industries/plumbing/" data-t="plumbing" aria-current="true">Plumbing</a>
-          <a class="chip" href="/industries/ac-and-heating/" data-t="ac">AC and heating</a>
-          <a class="chip" href="/industries/electrical/" data-t="electrical">Electrical</a>
-          <a class="chip" href="/industries/water-damage-and-mold/" data-t="water">Water and mold</a>
-          <a class="chip" href="/industries/pest-control/" data-t="pest">Pest control</a>
-          <a class="chip" href="/industries/roofing/" data-t="roofing">Roofing</a>
-          <a class="chip" href="/industries/restaurants-and-bars/" data-t="food">Restaurants</a>
-          <a class="chip" href="/industries/property-managers/" data-t="rentals">Property managers</a>
-        </div>
-      </div>
-      <p style="margin-top:22px">Every line is a leak with the arithmetic under it. Your own sheet is built from your invoices, your calendar and your call log. Most shops get it within 5 business days of having your records; bigger shops get a quote and a date on the free call. You keep it either way.</p>
-      <p style="margin-top:16px"><a class="u" href="/industries/plumbing/" data-trade-link>See the whole walk for <span data-f="tname">plumbing</span></a></p>
-    </div>
-    <figure class="clip" aria-labelledby="sheet-cap">
-      <div class="board">
-        <span class="clamp" aria-hidden="true"><i></i></span>
-        <div class="sheet" id="sheet" data-bind="sheet" data-ring data-fill aria-live="polite">
-          <header class="sh-head">
-            <div><b class="sh-title">Walk sheet</b><span class="sh-sub" data-f="sub">Plumbing, 2 trucks, Alachua County</span></div>
-            <span class="stamp">Sample</span>
-          </header>
-          <div class="sh-cols"><span>Leak</span><span data-f="per">A month</span></div>
-          <ol class="sh-rows" data-f="rows" id="pre-rows"><!--pre:pre-rows--><li style="--i:0"><div class="sh-l"><b>Quotes sent 48+ hours after the visit</b><small>5 jobs × $380 profit a job</small></div><span class="sh-usd">$1,900<svg class="pen-ring" viewBox="0 0 76 51" aria-hidden="true"><path pathLength="1" d="M10.6 11.7C11.1 11.2 12.4 9.8 13.5 9.0C14.6 8.2 15.8 7.3 17.1 6.6C18.5 5.9 19.9 5.2 21.4 4.6C22.9 4.1 24.4 3.6 26.1 3.2C27.7 2.9 29.5 2.6 31.2 2.4C32.9 2.3 34.6 2.2 36.4 2.3C38.1 2.4 39.9 2.6 41.5 2.8C43.2 3.1 44.7 3.4 46.3 3.8C47.8 4.2 49.3 4.7 50.7 5.2C52.2 5.7 53.6 6.3 54.9 6.9C56.2 7.5 57.4 8.2 58.6 8.9C59.8 9.6 61.0 10.3 62.1 11.0C63.3 11.8 64.3 12.6 65.3 13.4C66.4 14.2 67.4 15.0 68.3 15.9C69.1 16.8 70.0 17.8 70.7 18.8C71.4 19.8 72.1 20.8 72.6 21.9C73.1 22.9 73.5 24.1 73.7 25.2C73.9 26.3 74.0 27.4 73.9 28.6C73.8 29.7 73.5 30.9 73.0 32.0C72.6 33.1 72.0 34.2 71.2 35.2C70.5 36.3 69.6 37.2 68.5 38.1C67.5 39.1 66.4 39.9 65.1 40.7C63.9 41.5 62.5 42.2 61.2 42.8C59.8 43.5 58.4 44.1 56.9 44.6C55.5 45.1 54.0 45.6 52.5 46.0C51.0 46.4 49.4 46.8 47.9 47.1C46.4 47.4 44.8 47.7 43.2 48.0C41.6 48.2 40.1 48.4 38.4 48.6C36.8 48.7 35.1 48.8 33.5 48.8C31.8 48.8 30.1 48.8 28.4 48.7C26.7 48.6 25.0 48.4 23.3 48.1C21.7 47.8 20.0 47.4 18.4 46.9C16.8 46.4 15.3 45.8 13.9 45.1C12.5 44.4 11.2 43.6 10.0 42.8C8.8 41.9 7.7 41.0 6.8 40.0C5.9 39.0 5.2 38.0 4.5 36.9C3.9 35.9 3.5 34.8 3.1 33.7C2.8 32.6 2.6 31.4 2.5 30.3C2.3 29.2 2.4 28.1 2.5 27.1C2.5 26.0 2.7 24.9 3.0 23.8C3.2 22.8 3.6 21.7 3.9 20.7C4.3 19.7 4.8 18.7 5.3 17.6C5.8 16.6 6.5 15.6 7.2 14.6C7.8 13.6 8.6 12.6 9.5 11.7C10.3 10.7 11.4 9.8 12.4 8.9C13.5 8.0 14.7 7.2 16.0 6.4C17.3 5.6 18.8 4.9 20.3 4.3C21.9 3.7 24.3 3.0 25.1 2.8"></path></svg></span></li><li style="--i:1"><div class="sh-l"><b>Same job typed in three places</b><small>40 min a day × 22 days × $28 an hour</small></div><span class="sh-usd">$411</span></li><li style="--i:2"><div class="sh-l"><b>Calls nobody called back</b><small>11 calls × 24% book rate (sample rate) × $151 profit a job ($341 average visit × 44.3% kept)</small></div><span class="sh-usd">$399</span></li><!--/pre--></ol>
-          <div class="sh-total"><span>Lost before any fix</span><b data-f="total">$2,710 a month</b></div>
-          <p class="sh-time" data-f="time">Time back for you or your office: <b>about 15 hours a month</b></p>
-          <p class="sh-note">Illustrative numbers. Your sheet is built from your invoices, your calendar and your call log.</p>
-        </div>
-      </div>
-      <figcaption id="sheet-cap" class="cap">Sample walk sheet for a business like yours, with illustrative numbers: each leak, the formula behind it and what it costs. <a class="u" href="/how-it-works/#sample">See the full sample sheet, from a plumbing shop</a></figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- 3 THE NIGHT SHIFT: the one ink band; the picker changes the night's text and the morning list too -->
-<section class="band night-short" data-ground="night" id="night" data-density="mid" data-width="split" data-loud="phone" data-medium="lock">
-  <div class="wrap" data-bind="night">
-    <ul class="tapes" aria-label="The offer in four facts"><li style="--r:-1.6deg">Free call, up to 20 minutes</li><li style="--r:1.2deg">Visit sized to your shop</li><li style="--r:-.8deg">Most sheets within 5 business days</li><li style="--r:1.8deg">Money back within 7 days of the sheet call</li></ul>
-    <div class="night-g fixed" data-loop data-bind="morning">
-      <div>
-        <p class="kicker">6:41 a.m., before the first truck rolls</p>
-        <h2 class="two">One list before the day starts, in every trade. <span>What came in overnight, what got done and what needs your OK.</span></h2>
-        <p class="t-lede" style="margin-top:18px">After the fix, every caller gets a text back within a minute, in words you approve, and the morning list is built from your own records.</p>
-        <div class="loop-ctl">
-          <p class="phase" aria-hidden="true"><span class="ph-a">Before</span><span class="ph-b">With the fix</span></p>
-          <button class="pause" type="button" aria-pressed="false"><span class="pi" aria-hidden="true"></span><span class="pt">Pause animation</span></button>
-        </div>
-        <ol class="slept" data-f="log" aria-label="While you slept, sample log" id="pre-log"><!--pre:pre-log--><li><time>11:48 PM</time><span>Missed call (352) 555-0119. Text back sent 11:49 PM.</span></li><li><time>3:02 AM</time><span>Missed call (352) 555-0148. Text back sent 3:03 AM.</span></li><li><time>5:40 AM</time><span>Checked 31 finished jobs against invoices sent. 2 not invoiced.</span></li><li><time>5:52 AM</time><span>Checked 22 quotes. 2 with no answer after 2 days.</span></li><li><time>6:30 AM</time><span>Morning list sent to your phone.</span></li><!--/pre--></ol>
-        <div class="cta-inline"><a class="btn" href="tel:+13522260681">Call or text us</a><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a></div>
-      </div>
-      <div class="night-figs">
-        <div class="pic"><div class="scr-lock" role="img" aria-label="Sample: a shop phone's lock screen at 6:41 a.m. with the night's missed calls, a voicemail and a text.">
-          <div class="lk-sb" aria-hidden="true"><span>6:41</span><i></i></div><p class="lk-d" aria-hidden="true" data-f="date">Monday, October 5</p><p class="lk-t" aria-hidden="true">6:41</p>
-          <div class="nts" aria-hidden="true" id="pre-nts"><!--pre:pre-nts--><div class="nt cb on"><span class="ap" aria-hidden="true"><svg viewBox="0 0 16 16" width="17" height="17"><path fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" d="M5.5 4.5h7M5.5 8h7M5.5 11.5h7M2.8 4.5h.4M2.8 8h.4M2.8 11.5h.4"></path></svg></span><div><p class="nr"><b>Callback list for 7:30</b></p><p>2 callers, both texted back within a minute.</p></div></div><div class="nt on"><span class="ap" aria-hidden="true"><svg viewBox="0 0 16 16" width="17" height="17"><path fill="#fff" d="M3.6 6.7a8 8 0 0 0 5.7 5.7l1.4-1.4c.2-.2.5-.3.7-.2.7.3 1.5.4 2.3.4.4 0 .7.3.7.7v2.2c0 .4-.3.7-.7.7A11.5 11.5 0 0 1 2 3.1c0-.4.3-.7.7-.7h2.2c.4 0 .7.3.7.7 0 .8.1 1.6.4 2.3.1.2 0 .5-.2.7z"></path></svg></span><div><p class="nr"><b>Missed Call</b><span>6:38 AM</span></p><p>(352) 555-0148</p><span class="fx">↩ Already texted at 3:03 AM</span></div></div><div class="nt on"><span class="ap" aria-hidden="true"><svg viewBox="0 0 16 16" width="17" height="17"><path fill="#fff" d="M8 2.2c3.6 0 6.4 2.3 6.4 5.2S11.6 12.6 8 12.6c-.7 0-1.3-.1-1.9-.2L3 14l.8-2.7C2.4 10.4 1.6 9 1.6 7.4 1.6 4.5 4.4 2.2 8 2.2z"></path></svg></span><div><p class="nr"><b>(352) 555-0148</b><span>3:06 AM</span></p><p>Water heater is leaking into the garage. Can someone come today?</p><span class="fx">↩ On the callback list</span></div></div><div class="nt on"><span class="ap" aria-hidden="true"><svg viewBox="0 0 16 16" width="17" height="17"><path fill="#fff" d="M3.6 6.7a8 8 0 0 0 5.7 5.7l1.4-1.4c.2-.2.5-.3.7-.2.7.3 1.5.4 2.3.4.4 0 .7.3.7.7v2.2c0 .4-.3.7-.7.7A11.5 11.5 0 0 1 2 3.1c0-.4.3-.7.7-.7h2.2c.4 0 .7.3.7.7 0 .8.1 1.6.4 2.3.1.2 0 .5-.2.7z"></path></svg></span><div><p class="nr"><b>New Voicemail</b><span>3:04 AM</span></p><p>(352) 555-0148 · 0:41</p><span class="fx">↩ On the callback list</span></div></div><div class="nt on"><span class="ap" aria-hidden="true"><svg viewBox="0 0 16 16" width="17" height="17"><path fill="#fff" d="M3.6 6.7a8 8 0 0 0 5.7 5.7l1.4-1.4c.2-.2.5-.3.7-.2.7.3 1.5.4 2.3.4.4 0 .7.3.7.7v2.2c0 .4-.3.7-.7.7A11.5 11.5 0 0 1 2 3.1c0-.4.3-.7.7-.7h2.2c.4 0 .7.3.7.7 0 .8.1 1.6.4 2.3.1.2 0 .5-.2.7z"></path></svg></span><div><p class="nr"><b>Missed Call</b><span>3:02 AM</span></p><p>(352) 555-0148</p><span class="fx">↩ Texted back · 3:03 AM</span></div></div><div class="nt on"><span class="ap" aria-hidden="true"><svg viewBox="0 0 16 16" width="17" height="17"><path fill="#fff" d="M3.6 6.7a8 8 0 0 0 5.7 5.7l1.4-1.4c.2-.2.5-.3.7-.2.7.3 1.5.4 2.3.4.4 0 .7.3.7.7v2.2c0 .4-.3.7-.7.7A11.5 11.5 0 0 1 2 3.1c0-.4.3-.7.7-.7h2.2c.4 0 .7.3.7.7 0 .8.1 1.6.4 2.3.1.2 0 .5-.2.7z"></path></svg></span><div><p class="nr"><b>Missed Call</b><span>11:48 PM</span></p><p>(352) 555-0119</p><span class="fx">↩ Texted back · 11:49 PM</span></div></div><!--/pre--></div><span class="lk-home" aria-hidden="true"></span></div><span class="samp">Sample</span></div>
-        <div class="morning" data-f="list" id="pre-mlist"><!--pre:pre-mlist--><div class="mo-h"><b>Morning list · Dunlin Plumbing</b><span>6:30 AM · Mon, Oct 5</span></div><div class="mo-row flag" style="--i:0"><span class="l">Done, not invoiced</span><span class="v">2 jobs, $1,310</span><span class="d">Jobs 4503 (Thu) and 4507 (Fri)</span></div><div class="mo-row" style="--i:1"><span class="l">Quotes, no answer after 2 days</span><span class="v">2, $6,355</span><span class="d">Wilson repipe $4,200, Davis water heater $2,155</span></div><div class="mo-row" style="--i:2"><span class="l">Past due</span><span class="v">4 invoices, $3,210.00</span><span class="d">3 reminders drafted for your OK</span></div><div class="mo-row" style="--i:3"><span class="l">Missed calls</span><span class="v">2 since last night</span><span class="d">Both texted back, on the 7:30 callback list</span></div><div class="mo-row" style="--i:4"><span class="l">Permit to file today</span><span class="v">1</span><span class="d">Saturday’s emergency water heater swap, 125 Oak St</span></div><div class="mo-foot"><span>From your own job list, invoices and call log</span><span>Sample</span></div><!--/pre--></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 4 WHAT EVERY WALK LOOKS FOR: the blank walk sheet we carry, six lines, before any number goes on it -->
-<section class="band" data-ground="paper" id="common" data-density="mid" data-width="split" data-loud="form" data-medium="docs">
-  <div class="wrap form-g">
-    <div>
-      <p class="kicker">In every trade</p>
-      <h2 class="two">What every walk looks for. <span>Six lines on every sheet, before the lines only your trade has.</span></h2>
-      <p style="margin-top:16px">The six below come first, in every shop we walk. Then each trade gets its own lines: the water heater permit, the maintenance plan, the panel's three dates, the drying log, the termite renewal and the deposit clock.</p>
-      <p style="margin-top:14px">Every dollar figure comes from your own records.</p>
-    </div>
-    <div class="pic">
-      <div class="sheet blank" role="img" aria-label="Sample: a blank walk sheet with six lines, each with a box to tick and a blank for the dollar figure: calls that ring out, quotes that leave late, the same job typed three times, reviews never requested, texts in one language, follow-ups that never happen. At the foot, Lost before any fix, blank. A pencil note: filled in from your records.">
-        <header class="sh-head"><div><b class="sh-title">Walk sheet</b><span class="sh-sub">Shop and trade: ____________</span></div><span class="stamp">Sample</span></header>
-        <ol class="bl-rows">
-          <li class="rv"><span class="bx"></span><b>Calls that ring out</b><span class="ln">$</span></li>
-          <li class="rv"><span class="bx"></span><b>Quotes that leave late</b><span class="ln">$</span></li>
-          <li class="rv"><span class="bx"></span><b>The same job, typed three times</b><span class="ln">$</span></li>
-          <li class="rv"><span class="bx"></span><b>Reviews never requested</b><span class="ln">$</span></li>
-          <li class="rv"><span class="bx"></span><b>Texts in one language</b><span class="ln">$</span></li>
-          <li class="rv"><span class="bx"></span><b>Follow-ups that never happen</b><span class="ln">$</span></li>
-        </ol>
-        <p class="bl-foot"><span>Lost before any fix</span><span class="ln"></span></p>
-        <p class="pencil bl-note rv">Filled in from your records, not from one day on site.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 5 FLORIDA SHAPES THE WORK: the year on one wall calendar (the page's one abstract format, with its meaning in words) -->
-<section class="band seam" data-ground="graph" id="florida" data-density="mid" data-width="wide" data-loud="calendar" data-medium="chart" style="--hole:var(--paper)">
-  <div class="wrap ar-label">
-    <div>
-      <p class="kicker">Florida shapes the work</p>
-      <h2 class="t-h2">Hurricane season, humidity, pools and rentals all show up on the sheet.</h2>
-      <p style="margin-top:14px">Heat, storms and UF move-in weeks change how busy the phones, the trucks and the calendar get, so we count from your own records, not from one day on site.</p>
-    </div>
-    <div class="pic">
-      <div class="cal" role="img" aria-label="Sample wall calendar of the year. Hurricane season runs June 1 to November 30. Summer, June to September, is when AC shops get the most calls after hours. UF move-in comes in August.">
-        <div class="cal-h"><b>The year, from the office wall</b><span class="stamp">Sample</span></div>
-        <div class="cal-g">
-          <span class="m" style="--c:1">Jan</span><span class="m" style="--c:2">Feb</span><span class="m" style="--c:3">Mar</span><span class="m" style="--c:4">Apr</span><span class="m" style="--c:5">May</span><span class="m" style="--c:6">Jun</span><span class="m" style="--c:7">Jul</span><span class="m" style="--c:8">Aug</span><span class="m" style="--c:9">Sep</span><span class="m" style="--c:10">Oct</span><span class="m" style="--c:11">Nov</span><span class="m" style="--c:12">Dec</span>
-          <span class="bd hur" style="--a:6;--b:12"><span>Hurricane season, Jun 1 to Nov 30</span></span>
-          <span class="bd acp" style="--a:6;--b:10"><span>Summer: AC calls after hours</span></span>
-          <span class="uf pc">UF move-in</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 6 WHO A WALK IS NOT FOR, and the honest empty slot where client stories will go -->
-<section class="band" data-ground="paper" id="not" data-density="low" data-width="split" data-loud="none" data-medium="list">
-  <div class="wrap ar-split">
-    <div>
-      <h2 class="t-h2">Who a walk is not for</h2>
-      <ul class="nf-l" style="margin-top:18px">
-        <li class="rv">A shop that wants dispatch software built. Every field-service plan already has dispatch, so we never build it.</li>
-        <li class="rv">Anyone who wants calls recorded or a crew on camera.</li>
-        <li class="rv">A shop outside Alachua County, unless we arrange it first.</li>
+<!-- ============================================================ 2 WHAT WE AUTOMATE IN ANY TRADE (the v3 page's "What every walk looks
+     for", in v4 form; R2). Six lines from the full list that apply to all eight trades (items.json first-contact-3,
+     email-files-2, supplier-bills-2, numbers-1, office-1, office-5), word for word without the list's bold, in the order a job
+     moves. Each trade's own lines are on its page. Then who it's for and who a walk is not for, both bound (plain keys). The
+     photo slot shows in review only. -->
+<section class="band hm4-auto pl-auto" id="automate" data-ground="sheet" data-density="mid" data-width="split" data-loud="list" data-medium="list">
+  <div class="wrap pl-auto-g">
+    <h2>What we automate in any trade</h2>
+    <p class="auto-tools"><span data-shared="tools">It all lands in what you already use: Excel, QuickBooks, your job app or a simple form we build.</span></p>
+    <div class="pl-auto-r">
+      <ul class="auto-list">
+        <li data-task="email">A first reply drafted in English or Spanish, whichever the customer wrote in, ready for you to send.</li>
+        <li data-task="email">Attachments read into your own tools: insurer PDFs, Word files, spreadsheets and scanned paper.</li>
+        <li data-task="bills">The same supplier bill entered twice, or a return with no credit, caught before you pay.</li>
+        <li data-task="numbers">One page every morning: what came in, what got done and what needs your OK.</li>
+        <li data-task="reminders">Reminders for the whole year on one calendar: license and insurance renewals, tax dates, certificates and inspections.</li>
+        <li data-task="email">Logins removed when someone leaves, and emails asking to change bank details flagged before anyone pays.</li>
       </ul>
+      <p class="auto-close">Each trade's page adds the work only that trade has, like the water heater permit or the deposit clock. On the walk, we find which ones your shop has. <a class="u" href="/what-we-automate/">See the full list</a></p>
+      <div class="pl-who">
+        <p class="pl-who-line"><span data-shared="who.for">For shops the owner runs, with one person in the office or none.</span></p>
+        <p class="who-not"><span class="t-label">Who a walk is not for</span> <span data-shared="notfor">A shop that wants new dispatch software built. Jobber, Housecall Pro and others already do that well. We work on everything around it.</span></p>
+      </div>
     </div>
-    <div class="stories rv">
-      <h3>Client stories</h3>
-      <p>None yet. The first ones go here after our first walks, with each owner's written OK. Until then, the sample sheet shows what you get.</p>
-      <p style="margin-top:12px"><a class="u" href="/how-it-works/#sample">See the full sample sheet</a></p>
-    </div>
+    <figure class="slot pl-auto-slot" data-slot="industries-trucks" data-shape="4:5"><span class="slot-k">Photo slot</span><b>Trucks loading up at 7 a.m.</b><span>Shot list only. Ladders, hoses and tool bags going in; no plates, no logos, no faces.</span></figure>
   </div>
 </section>
 
-<!-- 7 CLOSE: the closing line, the pen's last mark (an arrow into Call), money back, the signed card -->
-<section class="band seam" data-ground="bone" id="close" data-density="mid" data-width="split" data-loud="closing line" data-medium="close" style="--hole:var(--paper)">
+<!-- ============================================================ 3 RULES AND CONTACT: Home's close as on every v4 trade page (the
+     arrow, the perched Cardino, the quote, the money back row, the rules). No trade line at the foot: the page is the index. -->
+<section class="band hm4-close" id="contact" data-ground="paper" data-density="mid" data-width="split" data-loud="close" data-medium="close">
   <div class="wrap close-g">
-    <div>
-      <p class="tab"><span class="tab-n">→</span>Next stop · Your shop</p>
+    <div class="c4-main">
       <h2 class="t-close close-h">Let's talk shop.</h2>
       <div class="close-act">
-        <div class="arrow-to"><a class="btn btn-lg" href="tel:+13522260681">Call (352) 226-0681</a><svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg></div>
-        <p class="t-lede">See your own numbers. Start with a free call of up to 20 minutes, or put your numbers in the loss calculator first.</p>
-        <p><a class="u" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a> · <a class="u" href="/leak-check/">Try the loss calculator</a></p>
-        <p class="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</p>
-        <p class="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward the fix if it starts within 30 days.</p>
-        <div class="mb-box"><h3>Money back</h3><p class="mb"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <span class="red">the walk fee back</span>. You keep the sheet either way.</p></div>
+        <div class="arrow-to">
+          <a class="btn btn-lg" href="tel:+13522260681">Call or text us</a>
+          <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
+        </div>
+        <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
       </div>
+      <dl class="c4-hours">
+        <div><dt>Money back</dt><dd><p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p></dd></div>
+        <div><dt>Hours</dt><dd><span data-shared="hours">Monday to Friday, 9 a.m. to 5 p.m.</span></dd></div>
+        <div><dt>Reply time</dt><dd><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span></dd></div>
+        <div><dt>Language</dt><dd>English or Spanish</dd></div>
+      </dl>
+      <p class="c4-llc">Lumora Group LLC, a Florida company.</p>
     </div>
-    <div class="close-r">
+    <div class="c4-card">
       <figure class="contact-card">
-        <img class="cardino" src="/v3/assets/bird-cardino-perch.svg" alt="" width="74" height="60" loading="lazy">
-        <blockquote class="signed"><p>“I'm Franco A. Soto. I started Lumora here in Gainesville. We work in English or Spanish, and you deal with the same person from the first call to the last fix. Lumora is new, so there are no client reviews here yet. Ask anything on the free call.”</p></blockquote>
-        <figcaption class="signed-by">Franco A. Soto, owner</figcaption>
+        <img class="cardino" src="/v4/assets/bird-cardino-perch.svg" alt="" width="74" height="60" loading="lazy">
+        <p class="t-label hm-cc-k">One contact, start to finish</p>
+        <figure class="slot cc-slot" data-slot="home-contact-portrait" data-shape="4:5"><span class="slot-k">Photo slot</span><b>The owner, a real photo</b><span>Waiting on the Q7 answer (About). No AI, no retouching.</span></figure>
+        <blockquote class="signed"><p>“I started Lumora here in Gainesville. We work in English or Spanish, and you deal with the same person from the first call to the last fix.”</p></blockquote>
+        <figcaption class="signed-by">Franco A. Soto, Owner</figcaption>
+        <dl class="cblock">
+          <div><dt>Where</dt><dd>Gainesville, serving Alachua County. Farther in Florida by arrangement.</dd></div>
+        </dl>
+        <p class="t-small hm-about"><a class="u" href="/about/">About Lumora</a></p>
       </figure>
+      <div class="c4-rules">
+        <h3>Rules we keep</h3>
+        <ul>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>We build inside what you already pay for.</li>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>No filming or recording without your OK.</li>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>Say no once, and that's the end of it.</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
@@ -285,13 +240,12 @@
 
 <footer class="foot">
   <div class="wrap foot-g">
-    <img src="/v3/assets/logo.svg" alt="Lumora" width="104" height="25">
-    <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/">Loss calculator</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
+    <img src="/v4/assets/logo.svg" alt="Lumora" width="104" height="25">
+    <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/what-we-automate/">What we automate</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/">Loss calculator</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/articles/">Articles</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
     <p>Lumora Group LLC, a Florida company. Gainesville, serving Alachua County. Every shop, name and number marked Sample is illustrative, not a client.</p>
   </div>
 </footer>
 
 <nav class="callbar" aria-label="Call or text us"><a href="tel:+13522260681">Call</a><a href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text</a></nav>
-
 </body>
 </html>
