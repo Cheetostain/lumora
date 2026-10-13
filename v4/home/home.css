@@ -149,7 +149,7 @@ html:not(.js) .bm-again{display:none}
 :lang(es) .bm-src{text-align:start}     /* the footer link wraps under 340px; a button would centre its second line */
 
 /* ======================================================= 3 who we work with: its own ground (bone), big short lines, wide trade links,
-   each with its trade's biggest leak; who a walk is not for under the heading on a computer */
+   each with its trade's biggest leak; what you keep under the heading on a computer */
 .who-g{display:grid;gap:24px;grid-template-areas:"h" "lines" "trades" "all" "not" "slot"}
 .who-g>h2{grid-area:h}.who-lines{grid-area:lines}.who-trades{grid-area:trades}.who-all{grid-area:all}.who-not{grid-area:not}.who-slot{grid-area:slot}
 .who-lines{display:grid;gap:12px}
@@ -200,7 +200,7 @@ html:not(.js) .bm-again{display:none}
 /* ======================================================= 5 the walk */
 .walk-h{max-width:20em}
 .walk-intro{margin-top:14px;font-size:17px;max-width:40em;color:var(--body)}
-.walk-honest{margin-top:8px;font-size:15px;color:var(--muted)}        /* said plainly, beside the proof; not an italic apology */
+.walk-honest{margin-top:8px;font-size:15px;color:var(--muted)}        /* unused since 2026-10-13: the no-reviews line was cut */
 .stop-t{display:grid;gap:4px}
 .stop-t h3{margin:2px 0 0}
 .stop-leak{font-size:17px;font-weight:500;line-height:1.35;color:var(--body);max-width:30em}

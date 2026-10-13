@@ -784,8 +784,8 @@
     // Spanish: "lo que pagó por la visita", never "todo su dinero" (the old Spanish line) and never a figure
     if (/every dollar back|todo su dinero/i.test(text)) E.push('Money back: "every dollar back" is retired; the line says "the walk fee".');
     shown('.mb').forEach(function (m) { if (!/the walk fee|lo que pagó por la visita/i.test(m.innerText)) E.push('Money back: a money-back line without "the walk fee": ' + m.innerText.slice(0, 50)); });
-    // R9 always keeps the no-reviews line (list review 2026-10-11: the full list was built without it, and the rules pad alone passed R14)
-    if (!/no client reviews here yet|todavía no hay reseñas de clientes/i.test(text)) E.push('R9: the no-reviews line ("Lumora is new, so there are no client reviews here yet.") is missing; R9 always keeps it.');
+    // R9 bans the no-reviews line (Franco 2026-10-13: never volunteer what Lumora lacks; say it only when someone asks). Until then R9 required it
+    if (/no (?:client )?reviews here yet|no hay rese[ñn]as de clientes/i.test(text)) E.push('R9: the retired no-reviews line ("Lumora is new, so there are no client reviews here yet.") is back; say it only when someone asks.');
     // R6: one phone component (the drawn frame with its camera island), never rotated, one width on a computer, .491 wide to tall
     if (shown('.scr-phone, .scr-lock').length) E.push('R6: an old phone style (.scr-phone or .scr-lock) on a v4 page.');
     var phs = shown('.ph4'), widths = {};

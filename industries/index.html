@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="format-detection" content="telephone=no">   <!-- iPhone Safari: the real number is always an explicit tel: link -->
+<meta name="format-detection" content="telephone=no">   
 <title>Industries | Lumora, Gainesville FL</title>
 <meta name="description" content="The trades we work with in Gainesville and Alachua County, and where each one loses money: plumbing, AC and heating, electrical, water damage, pest control, roofing, restaurants and property managers. Free call, up to 20 minutes.">
 <link rel="canonical" href="https://lumorafl.com/industries/">
@@ -11,7 +11,7 @@
 <link rel="alternate" hreflang="es" href="https://lumorafl.com/es/industries/">
 <link rel="alternate" hreflang="x-default" href="https://lumorafl.com/industries/">
 <meta property="og:title" content="Industries | Lumora">
-<meta property="og:description" content="Trades first: plumbing, AC and heating, electrical, water damage and mold, pest control and roofing. Then restaurants and bars with dead nights. Gainesville and Alachua County.">
+<meta property="og:description" content="Plumbing, AC and heating, electrical, water damage and mold, pest control, roofing, restaurants and bars, and property managers in Gainesville and Alachua County.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lumorafl.com/industries/">
 <meta property="og:image" content="https://lumorafl.com/assets/share-card-en.png">
@@ -27,23 +27,8 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=e66636cd">
-<link rel="stylesheet" href="/v4/trade-page.css?v=e66636cd">
-<!-- Industries v4 (/industries/), built 2026-10-12 (wave 2) once all eight trade pages were v4. Hand-built and its own source:
-     pages/trades-1/build.py no longer lists it, and industries.src.html is the retired v3 draft. Before: "backup
-     ORIGINAL-2026-10-12/industries ORIGINAL-2026-10-12-w2-industries.html" (the stale v4 draft of the v3 page).
-     Benchmark (Jobber, ServiceTitan, Housecall Pro, FieldEdge, Decimal, Bench): names first in one plain list that starts on
-     the first phone screen, a line under each name that only that trade could have, and no borrowed proof. So the page is one
-     tool, the trade index: each row is the trade's name, its one-problem line (the hero-one under the h1 on its own page) and
-     the top line of its sample sheet with the dollars. Both are bound from trades.js by system.js's "index" binder, the way
-     Home's Who we work with reads them, and prerendered with `python ../home/prerender.py industries.html` (slot "who").
-     check.py fails a trade page whose hero-one drifts from trades.js. Kept from the v3 page: the trades in words, the reason
-     trade shops come first, the other trades we walk, what every walk looks for (now What we automate in any trade, R2), who
-     a walk is not for, the honest line in place of client stories, the facts and the close. Dropped, since Home and each trade
-     page now carry them: the sample sheet with its picker, the night band and the Florida calendar.
-     Go-live: publish it with the v4 pest control, roofing and property managers pages (and water damage, whose hero line
-     changed on 2026-10-12) or after them, never alone first.
-     check.py --live, which the push gate runs, fails a row whose link opens a page that doesn't open on the row's line. -->
+<link rel="stylesheet" href="/v4/system.css?v=03e175a7">
+<link rel="stylesheet" href="/v4/trade-page.css?v=03e175a7">
 <style>
 /* ===== the trade index: the page's one tool. Phone order: words, call block, the index, price and money back. On a computer
    the index takes the wider right column (the copy is short), and from 1200px each row reads like a notebook index: the name,
@@ -83,11 +68,9 @@
   .ix-n::before{content:"";order:2;flex:1 0 24px;margin-left:12px;border-bottom:2px dotted rgba(17,17,16,.35);transform:translateY(-4px)}
 }
 </style>
-<!-- js: the hidden start states apply only with JS. review: picture slots show on this computer, the local check server or
-     ?review, never on lumorafl.com (R8: on the live site an empty slot shows nothing). -->
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=e66636cd" defer></script>
-<script src="/v4/system.js?v=e66636cd" defer></script>
+<script src="/v4/trades.js?v=03e175a7" defer></script>
+<script src="/v4/system.js?v=03e175a7" defer></script>
 </head>
 <body data-rules="v4">
 <a class="skip" href="#main">Skip to content</a>
@@ -120,16 +103,12 @@
 
 <main id="main">
 
-<!-- ============================================================ 1 HERO: the words, the call block, then the trade index (the page's
-     tool), price and money back, and the facts strip. The index's heading and first trade are held to the first phone screen
-     (data-first). Under the list: the trades we also walk (Decimal's "Don't see your industry?") and the honest line where the
-     software pages put review stars. -->
 <section class="hero hm4-hero ix-hero" id="top" data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="index">
   <div class="wrap hero-g">
     <div class="hero-copy">
       <p class="eyebrow">Plumbing, AC, electrical, water damage, pest control, roofing, restaurants and property managers in Gainesville and Alachua County.</p>
       <h1>Who we work with</h1>
-      <p class="t-lede">Trade shops come first, because their jobs have the most steps between the first call and the paid invoice. Restaurants and property managers lose money in the same kind of paperwork, from supplier invoices to deposit claims.</p>
+      <p class="t-lede">Trade shops have the most steps between the first call and the paid invoice. Restaurants and property managers lose money in the same kind of paperwork, from supplier invoices to deposit claims.</p>
     </div>
     <div class="hero-act">
       <div class="cta">
@@ -144,10 +123,10 @@
     <div class="hero-tool ix">
       <h2 class="ix-h" id="ix-h" data-first="the trade list's heading">Pick your trade</h2>
       <nav aria-labelledby="ix-h">
-        <ul class="ix-list" data-trades data-bind="index"><!--prerender:who--><li data-t="plumbing" data-task="quotes"><h3 class="ix-n" data-first="the first trade"><a href="/industries/plumbing/">Plumbing</a></h3><div class="ix-b"><p class="ix-one" data-f="one">The part on the supply-house ticket that never reached the invoice.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 2-truck shop: quotes sent 48+ hours after the visit, <b>$1,900 a month</b>.</p></div></li><li data-t="ac" data-task="reminders"><h3 class="ix-n"><a href="/industries/ac-and-heating/">AC and heating</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Tune-ups members paid&nbsp;for, and nobody booked.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 3-truck shop: maintenance plans that lapsed with no follow-up, <b>$331 a month</b>.</p></div></li><li data-t="electrical" data-task="retyping"><h3 class="ix-n"><a href="/industries/electrical/">Electrical</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Quotes still priced on January's copper.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 3-truck shop: supply-house tickets with no job number, never billed, <b>$574 a month</b>.</p></div></li><li data-t="water" data-task="invoices"><h3 class="ix-n"><a href="/industries/water-damage-and-mold/">Water damage and mold</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Four dehumidifier days on the log, three on the invoice.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 2-crew shop: drying days nobody billed, <b>$1,026 a month</b>.</p></div></li><li data-t="pest" data-task="reminders"><h3 class="ix-n"><a href="/industries/pest-control/">Pest control</a></h3><div class="ix-b"><p class="ix-one" data-f="one">The termite renewal that lapsed, and nobody called.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 3-route shop: termite renewals that lapsed with no follow-up, <b>$675 a month</b>.</p></div></li><li data-t="roofing" data-task="reminders"><h3 class="ix-n"><a href="/industries/roofing/">Roofing</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Rotted decking replaced at tear-off and left off the bill.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 2-crew shop: depreciation checks nobody asked for, <b>$771 a month</b>.</p></div></li><li data-t="food" data-task="reminders"><h3 class="ix-n"><a href="/industries/restaurants-and-bars/">Restaurants and bars</a></h3><div class="ix-b"><p class="ix-one" data-f="one">The case on the invoice that never came off the truck.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 110-seat restaurant and bar: a slow Tuesday staffed like a busy night, <b>$1,153 a month</b>.</p></div></li><li data-t="rentals" data-task="reminders"><h3 class="ix-n"><a href="/industries/property-managers/">Property managers</a></h3><div class="ix-b"><p class="ix-one" data-f="one">The deposit claim that went out on day&nbsp;31.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 212-door property manager: deposit claims sent after day&nbsp;30, <b>$2,700 a year</b>.</p></div></li><!--/prerender--></ul>
+        <ul class="ix-list" data-trades data-bind="index"><li data-t="plumbing" data-task="quotes"><h3 class="ix-n" data-first="the first trade"><a href="/industries/plumbing/">Plumbing</a></h3><div class="ix-b"><p class="ix-one" data-f="one">The part on the supply-house ticket that never reached the invoice.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 2-truck shop: quotes sent 48+ hours after the visit, <b>$1,900 a month</b>.</p></div></li><li data-t="ac" data-task="reminders"><h3 class="ix-n"><a href="/industries/ac-and-heating/">AC and heating</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Tune-ups members paid&nbsp;for, and nobody booked.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 3-truck shop: maintenance plans that lapsed with no follow-up, <b>$331 a month</b>.</p></div></li><li data-t="electrical" data-task="retyping"><h3 class="ix-n"><a href="/industries/electrical/">Electrical</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Quotes still priced on January's copper.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 3-truck shop: supply-house tickets with no job number, never billed, <b>$574 a month</b>.</p></div></li><li data-t="water" data-task="invoices"><h3 class="ix-n"><a href="/industries/water-damage-and-mold/">Water damage and mold</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Four dehumidifier days on the log, three on the invoice.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 2-crew shop: drying days nobody billed, <b>$1,026 a month</b>.</p></div></li><li data-t="pest" data-task="reminders"><h3 class="ix-n"><a href="/industries/pest-control/">Pest control</a></h3><div class="ix-b"><p class="ix-one" data-f="one">The termite renewal that lapsed, and nobody called.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 3-route shop: termite renewals that lapsed with no follow-up, <b>$675 a month</b>.</p></div></li><li data-t="roofing" data-task="reminders"><h3 class="ix-n"><a href="/industries/roofing/">Roofing</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Rotted decking replaced at tear-off and left off the bill.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 2-crew shop: depreciation checks nobody asked for, <b>$771 a month</b>.</p></div></li><li data-t="food" data-task="reminders"><h3 class="ix-n"><a href="/industries/restaurants-and-bars/">Restaurants and bars</a></h3><div class="ix-b"><p class="ix-one" data-f="one">The case on the invoice that never came off the truck.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 110-seat restaurant and bar: a slow Tuesday staffed like a busy night, <b>$1,153 a month</b>.</p></div></li><li data-t="rentals" data-task="reminders"><h3 class="ix-n"><a href="/industries/property-managers/">Property managers</a></h3><div class="ix-b"><p class="ix-one" data-f="one">The deposit claim that went out on day&nbsp;31.</p><p class="ix-leak" data-f="leak">From the sample sheet for a 212-door property manager: deposit claims sent after day&nbsp;30, <b>$2,700 a year</b>.</p></div></li></ul>
       </nav>
       <p class="ix-also">We also walk cleaning, pool service, pressure washing and auto repair shops. The walk works the same way.</p>
-      <p class="ix-note">The shops and numbers here are samples. Each trade's page has its full sample sheet, with the math for every line (<a class="u" href="/how-it-works/#sample">where the sample numbers come from</a>). Yours is built from your own invoices, calendar and call history. Lumora is new, so there are no client reviews here yet.</p>
+      <p class="ix-note">The shops and numbers here are samples. Each trade's page has its full sample sheet, with the math for every line (<a class="u" href="/how-it-works/#sample">where the sample numbers come from</a>). Yours is built from your own invoices, calendar and call history.</p>
     </div>
     <div class="hero-terms">
       <p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward the fix if it starts within 30 days.</span></p>
@@ -164,11 +143,6 @@
   </div>
 </section>
 
-<!-- ============================================================ 2 WHAT WE AUTOMATE IN ANY TRADE (the v3 page's "What every walk looks
-     for", in v4 form; R2). Six lines from the full list that apply to all eight trades (items.json first-contact-3,
-     email-files-2, supplier-bills-2, numbers-1, office-1, office-5), word for word without the list's bold, in the order a job
-     moves. Each trade's own lines are on its page. Then who it's for and who a walk is not for, both bound (plain keys). The
-     photo slot shows in review only. -->
 <section class="band hm4-auto pl-auto" id="automate" data-ground="sheet" data-density="mid" data-width="split" data-loud="list" data-medium="list">
   <div class="wrap pl-auto-g">
     <h2>What we automate in any trade</h2>
@@ -185,15 +159,12 @@
       <p class="auto-close">Each trade's page adds the work only that trade has, like the water heater permit or the deposit clock. On the walk, we find which ones your shop has. <a class="u" href="/what-we-automate/">See the full list</a></p>
       <div class="pl-who">
         <p class="pl-who-line"><span data-shared="who.for">For shops the owner runs, with one person in the office or none.</span></p>
-        <p class="who-not"><span class="t-label">Who a walk is not for</span> <span data-shared="notfor">A shop that wants new dispatch software built. Jobber, Housecall Pro and others already do that well. We work on everything around it.</span></p>
+        <p class="who-not"><span class="t-label">What you keep</span> <span data-shared="notfor">Keep Jobber, Housecall Pro or whatever runs your dispatch. We work on everything around it.</span></p>
       </div>
     </div>
-    <figure class="slot pl-auto-slot" data-slot="industries-trucks" data-shape="4:5"><span class="slot-k">Photo slot</span><b>Trucks loading up at 7 a.m.</b><span>Shot list only. Ladders, hoses and tool bags going in; no plates, no logos, no faces.</span></figure>
   </div>
 </section>
 
-<!-- ============================================================ 3 RULES AND CONTACT: Home's close as on every v4 trade page (the
-     arrow, the perched Cardino, the quote, the money back row, the rules). No trade line at the foot: the page is the index. -->
 <section class="band hm4-close" id="contact" data-ground="paper" data-density="mid" data-width="split" data-loud="close" data-medium="close">
   <div class="wrap close-g">
     <div class="c4-main">
@@ -217,7 +188,6 @@
       <figure class="contact-card">
         <img class="cardino" src="/v4/assets/bird-cardino-perch.svg" alt="" width="74" height="60" loading="lazy">
         <p class="t-label hm-cc-k">One contact, start to finish</p>
-        <figure class="slot cc-slot" data-slot="home-contact-portrait" data-shape="4:5"><span class="slot-k">Photo slot</span><b>The owner, a real photo</b><span>Waiting on the Q7 answer (About). No AI, no retouching.</span></figure>
         <blockquote class="signed"><p>“I started Lumora here in Gainesville. We work in English or Spanish, and you deal with the same person from the first call to the last fix.”</p></blockquote>
         <figcaption class="signed-by">Franco A. Soto, Owner</figcaption>
         <dl class="cblock">
@@ -242,7 +212,7 @@
   <div class="wrap foot-g">
     <img src="/v4/assets/logo.svg" alt="Lumora" width="104" height="25">
     <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/what-we-automate/">What we automate</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/">Loss calculator</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/articles/">Articles</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
-    <p>Lumora Group LLC, a Florida company. Gainesville, serving Alachua County. Every shop, name and number marked Sample is illustrative, not a client.</p>
+    <p>Lumora Group LLC, a Florida company. Gainesville, serving Alachua County. Every shop, name and number marked Sample is made up.</p>
   </div>
 </footer>
 

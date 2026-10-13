@@ -146,7 +146,7 @@
   .cal-g .bd::before{transform-origin:top}                         /* the months run down the page here, so a season fills downward */
 }
 
-/* ------------------------------------------------------------------ industries: who a walk is not for, and the honest empty proof slot */
+/* ------------------------------------------------------------------ industries: what you keep, and the empty proof slot */
 .nf-l{display:grid;gap:0}
 .nf-l li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--rule);font-size:17px}
 .nf-l li::before{content:"";width:20px;height:20px;margin-top:3px;background:linear-gradient(45deg,transparent 45%,var(--ink) 45% 55%,transparent 55%),linear-gradient(-45deg,transparent 45%,var(--ink) 45% 55%,transparent 55%)}

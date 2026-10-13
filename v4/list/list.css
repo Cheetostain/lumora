@@ -168,7 +168,7 @@ html:not(.js) .wa-filter{display:none}
 .close-h{margin:0 0 20px;font-size:clamp(44px,5.4vw,64px)}
 .wa-cl{font-size:17px;max-width:34em}
 .wa-cl+.wa-cl{margin-top:12px}
-.wa-honest{margin-top:12px;font-size:15px;color:var(--muted);max-width:34em}   /* said plainly, as on Home; R9 keeps it */
+.wa-honest{margin-top:12px;font-size:15px;color:var(--muted);max-width:34em}   /* holds only the free-call line since the no-reviews line was cut (2026-10-13) */
 .wa-terms{display:grid;gap:10px;justify-items:start;margin:20px 0 26px}
 .wa-terms .price b{color:var(--ink)}
 .close-act{gap:12px}

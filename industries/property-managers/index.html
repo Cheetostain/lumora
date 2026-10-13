@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="format-detection" content="telephone=no">   <!-- iPhone Safari: the sample 555 numbers inside the pictures stay plain text; the real number is always an explicit tel: link -->
+<meta name="format-detection" content="telephone=no">   
 <title>Property managers and landlords | Lumora, Gainesville FL</title>
 <meta name="description" content="For property managers and landlords in Gainesville and Alachua County: we automate the office work, like deposit claims that miss day 30, tenant damage billed to the owner and your markup left off vendor bills. Free call, up to 20 minutes.">
 <link rel="canonical" href="https://lumorafl.com/industries/property-managers/">
@@ -27,25 +27,8 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=e66636cd">
-<link rel="stylesheet" href="/v4/trade-page.css?v=e66636cd">
-<!-- Property managers v4, built 2026-10-12 from plumbing's approved layout and PROPERTY-PREP.md (benchmark, fact audit, owner read,
-     opener, section 5 copy, section 6 pictures, the 6b timeline, the legal limits). Before it: "backup ORIGINAL-2026-10-12/
-     property-managers ORIGINAL-2026-10-12-w2.html" (the stale v4 draft). Its own source; property-managers.src.html is retired.
-     Franco's open cards, recommended answers: the h1 pattern with the one-problem line; we count the deposit clock and the office
-     sends the notice from its own template (FX-25: no notice text in any picture); the sheet's new row is the firm's own money,
-     the 10% markup never added to vendor bills (70 x $180 x 10% = $1,260, inside the prep's $1,000 to $3,000, traced on How it
-     works); section 4 is the guarantor balance; the who-line is who.for.rentals, no headcount. The walk shows the three biggest
-     rows and leaves the vendor bills row off (data-walk-skip, for the 11,000px budget); its total line names it.
-     Sample world (one timeline; no other page's names): Moorhen Property Management, 212 doors (plumbing's Moorhen: MPM-26-nnnn
-     work orders, all below plumbing's MPM-26-0418 of Thu Oct 8). Unit codes only, no street address: OAK-3 (Garcia, Ana, Home's
-     night4 name, moved out Tue Jul 28, lease to Fri Jul 31, day 27 on Mon Aug 24, day 30 Thu Aug 27 by the careful count from
-     move-out; 83.49(3)(a) counts from the lease's end, Sun Aug 30, so the page never calls the lease-end count wrong), BRM-204-C (Emily Anderson,
-     guarantor Robert Anderson; notice certified Fri Aug 21, day 21, delivered Mon Aug 24, no objection by Tue Sep 8, deposit 50.00
-     applied, charges 385.00, balance 335.00 unbilled on Mon Sep 28), BRM-118-D (Luis Martinez, no forwarding address);
-     MPM-26-0409 (BRM-212, Dunlin Plumbing invoice 4514, Mon Oct 5, closed Tue Oct 6, 135.00 split 67.50 a bed); owner OWN-0142's
-     September statement (MPM-26-0371, 0379, 0384; Dunlin's bill keyed in by hand, so no markup), publishes Thu Oct 15; MPM-26-0413
-     and 0414 (CDR-2, emailed Wed Oct 7 at 4:12 PM, owner's limit 400.00). Vendors are the cleared sample shops (names-map.json). -->
+<link rel="stylesheet" href="/v4/system.css?v=03e175a7">
+<link rel="stylesheet" href="/v4/trade-page.css?v=03e175a7">
 <style>
 /* the page's own extras; the shared trade-page blocks are in trade-page.css */
 /* 4. one student move-out: the inspection paper (a plain printed report, no software maker's look, R6, as AC's load calc) and
@@ -108,11 +91,9 @@
   .pm-mo .mo-row .l,.pm-mo .mo-row .v{font-size:14px}
 }
 </style>
-<!-- js: the hidden start states apply only with JS. review: picture slots show on this computer, the local check server or
-     ?review, never on lumorafl.com (R8: on the live site an empty slot shows nothing). -->
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=e66636cd" defer></script>
-<script src="/v4/system.js?v=e66636cd" defer></script>
+<script src="/v4/trades.js?v=03e175a7" defer></script>
+<script src="/v4/system.js?v=03e175a7" defer></script>
 </head>
 <body data-trade="rentals" data-trade-lock data-rules="v4">
 <a class="skip" href="#main">Skip to content</a>
@@ -145,11 +126,6 @@
 
 <main id="main">
 
-<!-- ============================================================ 1 HERO, with the facts strip. The deposit clock leads (PROPERTY-PREP
-     section 4: the biggest row, and Gainesville's own July 31); no calls row on this sheet, none added. The sheet holds the page's
-     one pen ring, on $2,700. Locked to property managers: no picker. -->
-<!-- Go-live: the ES links point to /es/industries/property-managers/, still the v3 Spanish page from the old build. Hold this English
-     page until the Spanish v4 page exists, or until Franco OKs shipping English first (as restaurants, review 2026-10-12). -->
 <section class="hero hm4-hero" id="top" data-hero-long data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="sheet">
   <div class="wrap hero-g">
     <div class="hero-copy">
@@ -189,7 +165,7 @@
             </header>
             <p class="sr" aria-live="polite" data-f="live"></p>
             <div class="sh-cols"><span>Problem</span><span data-f="per">A year</span></div>
-            <ol class="sh-rows" data-f="rows"><!--prerender:rows--><li style="--i:0" data-task="reminders"><div class="sh-l"><b>Deposit claims sent after day 30</b><small>6 claims × $450</small></div><span class="sh-usd">$2,700<svg class="pen-ring" viewBox="0 0 76 51" aria-hidden="true"><path pathLength="1" d="M10.6 11.7C11.1 11.2 12.4 9.8 13.5 9.0C14.6 8.2 15.8 7.3 17.1 6.6C18.5 5.9 19.9 5.2 21.4 4.6C22.9 4.1 24.4 3.6 26.1 3.2C27.7 2.9 29.5 2.6 31.2 2.4C32.9 2.3 34.6 2.2 36.4 2.3C38.1 2.4 39.9 2.6 41.5 2.8C43.2 3.1 44.7 3.4 46.3 3.8C47.8 4.2 49.3 4.7 50.7 5.2C52.2 5.7 53.6 6.3 54.9 6.9C56.2 7.5 57.4 8.2 58.6 8.9C59.8 9.6 61.0 10.3 62.1 11.0C63.3 11.8 64.3 12.6 65.3 13.4C66.4 14.2 67.4 15.0 68.3 15.9C69.1 16.8 70.0 17.8 70.7 18.8C71.4 19.8 72.1 20.8 72.6 21.9C73.1 22.9 73.5 24.1 73.7 25.2C73.9 26.3 74.0 27.4 73.9 28.6C73.8 29.7 73.5 30.9 73.0 32.0C72.6 33.1 72.0 34.2 71.2 35.2C70.5 36.3 69.6 37.2 68.5 38.1C67.5 39.1 66.4 39.9 65.1 40.7C63.9 41.5 62.5 42.2 61.2 42.8C59.8 43.5 58.4 44.1 56.9 44.6C55.5 45.1 54.0 45.6 52.5 46.0C51.0 46.4 49.4 46.8 47.9 47.1C46.4 47.4 44.8 47.7 43.2 48.0C41.6 48.2 40.1 48.4 38.4 48.6C36.8 48.7 35.1 48.8 33.5 48.8C31.8 48.8 30.1 48.8 28.4 48.7C26.7 48.6 25.0 48.4 23.3 48.1C21.7 47.8 20.0 47.4 18.4 46.9C16.8 46.4 15.3 45.8 13.9 45.1C12.5 44.4 11.2 43.6 10.0 42.8C8.8 41.9 7.7 41.0 6.8 40.0C5.9 39.0 5.2 38.0 4.5 36.9C3.9 35.9 3.5 34.8 3.1 33.7C2.8 32.6 2.6 31.4 2.5 30.3C2.3 29.2 2.4 28.1 2.5 27.1C2.5 26.0 2.7 24.9 3.0 23.8C3.2 22.8 3.6 21.7 3.9 20.7C4.3 19.7 4.8 18.7 5.3 17.6C5.8 16.6 6.5 15.6 7.2 14.6C7.8 13.6 8.6 12.6 9.5 11.7C10.3 10.7 11.4 9.8 12.4 8.9C13.5 8.0 14.7 7.2 16.0 6.4C17.3 5.6 18.8 4.9 20.3 4.3C21.9 3.7 24.3 3.0 25.1 2.8"></path></svg></span></li><li style="--i:1" data-task="retyping"><div class="sh-l"><b>Tenant-caused repairs never charged back</b><small>2 a month × 12 months × $67.50</small></div><span class="sh-usd">$1,620</span></li><li style="--i:2" data-task="invoices"><div class="sh-l"><b>Markup never added to vendor bills</b><small>70 bills × $180 × 10%</small></div><span class="sh-usd">$1,260</span></li><li style="--i:3" data-task="retyping"><div class="sh-l"><b>Turn-week vendor bills typed and matched by hand</b><small>600 bills × 3 min × $28 an hour</small></div><span class="sh-usd">$840</span></li><!--/prerender--></ol>
+            <ol class="sh-rows" data-f="rows"><li style="--i:0" data-task="reminders"><div class="sh-l"><b>Deposit claims sent after day 30</b><small>6 claims × $450</small></div><span class="sh-usd">$2,700<svg class="pen-ring" viewBox="0 0 76 51" aria-hidden="true"><path pathLength="1" d="M10.6 11.7C11.1 11.2 12.4 9.8 13.5 9.0C14.6 8.2 15.8 7.3 17.1 6.6C18.5 5.9 19.9 5.2 21.4 4.6C22.9 4.1 24.4 3.6 26.1 3.2C27.7 2.9 29.5 2.6 31.2 2.4C32.9 2.3 34.6 2.2 36.4 2.3C38.1 2.4 39.9 2.6 41.5 2.8C43.2 3.1 44.7 3.4 46.3 3.8C47.8 4.2 49.3 4.7 50.7 5.2C52.2 5.7 53.6 6.3 54.9 6.9C56.2 7.5 57.4 8.2 58.6 8.9C59.8 9.6 61.0 10.3 62.1 11.0C63.3 11.8 64.3 12.6 65.3 13.4C66.4 14.2 67.4 15.0 68.3 15.9C69.1 16.8 70.0 17.8 70.7 18.8C71.4 19.8 72.1 20.8 72.6 21.9C73.1 22.9 73.5 24.1 73.7 25.2C73.9 26.3 74.0 27.4 73.9 28.6C73.8 29.7 73.5 30.9 73.0 32.0C72.6 33.1 72.0 34.2 71.2 35.2C70.5 36.3 69.6 37.2 68.5 38.1C67.5 39.1 66.4 39.9 65.1 40.7C63.9 41.5 62.5 42.2 61.2 42.8C59.8 43.5 58.4 44.1 56.9 44.6C55.5 45.1 54.0 45.6 52.5 46.0C51.0 46.4 49.4 46.8 47.9 47.1C46.4 47.4 44.8 47.7 43.2 48.0C41.6 48.2 40.1 48.4 38.4 48.6C36.8 48.7 35.1 48.8 33.5 48.8C31.8 48.8 30.1 48.8 28.4 48.7C26.7 48.6 25.0 48.4 23.3 48.1C21.7 47.8 20.0 47.4 18.4 46.9C16.8 46.4 15.3 45.8 13.9 45.1C12.5 44.4 11.2 43.6 10.0 42.8C8.8 41.9 7.7 41.0 6.8 40.0C5.9 39.0 5.2 38.0 4.5 36.9C3.9 35.9 3.5 34.8 3.1 33.7C2.8 32.6 2.6 31.4 2.5 30.3C2.3 29.2 2.4 28.1 2.5 27.1C2.5 26.0 2.7 24.9 3.0 23.8C3.2 22.8 3.6 21.7 3.9 20.7C4.3 19.7 4.8 18.7 5.3 17.6C5.8 16.6 6.5 15.6 7.2 14.6C7.8 13.6 8.6 12.6 9.5 11.7C10.3 10.7 11.4 9.8 12.4 8.9C13.5 8.0 14.7 7.2 16.0 6.4C17.3 5.6 18.8 4.9 20.3 4.3C21.9 3.7 24.3 3.0 25.1 2.8"></path></svg></span></li><li style="--i:1" data-task="retyping"><div class="sh-l"><b>Tenant-caused repairs never charged back</b><small>2 a month × 12 months × $67.50</small></div><span class="sh-usd">$1,620</span></li><li style="--i:2" data-task="invoices"><div class="sh-l"><b>Markup never added to vendor bills</b><small>70 bills × $180 × 10%</small></div><span class="sh-usd">$1,260</span></li><li style="--i:3" data-task="retyping"><div class="sh-l"><b>Turn-week vendor bills typed and matched by hand</b><small>600 bills × 3 min × $28 an hour</small></div><span class="sh-usd">$840</span></li></ol>
             <div class="sh-total"><span>Lost before any fix</span><b data-f="total">$6,420 a year</b></div>
             <p class="sh-time" data-f="time">Time back for you or your office: <b>about 30 hours a year</b></p>
             <p class="sh-note">Yours is built from your own move-out list, work orders, vendor bills and owner statements.</p>
@@ -208,19 +184,6 @@
   </div>
 </section>
 
-<!-- ============================================================ 2 WHAT WE AUTOMATE IN A PROPERTY MANAGEMENT OFFICE, and who it's for.
-     Six rows in the order a repair and a month move, no dollar figures, all items.json text (first-contact-6, office-2,
-     getting-paid-14, getting-paid-15 shortened as the prep does, numbers-12, office-6), so the full list holds every one. Left out on
-     purpose: what the sheet, the walk and section 4 show (the deposit clock, charge-backs, the markup, vendor bills, the guarantor
-     balance), and calls and late-rent reminders (AppFolio does them). The prep's new row 2 (repairs over the owner's limit, chased)
-     waits for items.json and the list page's rebuild. Review 2026-10-12: schedule-9 (entry notices to tenants) left, because the
-     not-for line beside it says we never send a notice in your name (FX-25 never serves a legal notice); office-2 (vendor insurance
-     certificates) took its place. office-6 now says "where the law calls for them": the 83.49(2) notice skips landlords with fewer
-     than 5 units and 83.512 covers leases of a year or longer. Legal limits: nothing claims a 24-hour entry rule for showings
-     (83.53), 83.56(3) days marked for the office to check (the tool never certifies a date), 68.065 (covers returned electronic
-     payments), 61J2-14.012(2) the broker signs. On a computer only, row 1 as a picture (R9 computer-only extra, reason in
-     data-extra): a tenant's email to the office read into its open work orders, MPM-26-0414 for CDR-2, Wed Oct 7. An email, not
-     the resident portal: AppFolio already turns a portal request into a work order with the limit on it (PROPERTY-PREP benchmark). -->
 <section class="band hm4-auto pl-auto" id="automate" data-ground="sheet" data-density="mid" data-width="split" data-loud="list" data-medium="list">
   <div class="wrap pl-auto-g">
     <h2>What we automate in a property management office</h2>
@@ -237,7 +200,7 @@
       <p class="auto-close">On the walk, we find which of these your office has. <a class="u" href="/what-we-automate/?trade=rentals">See the full list for property managers</a></p>
       <div class="pl-who">
         <p class="pl-who-line"><span data-shared="who.for">For property management offices the owner runs.</span></p>
-        <p class="who-not"><span class="t-label">Who a walk is not for</span> <span data-shared="notfor">An office that wants to replace AppFolio or Buildium. They do that job well. We work on everything around it, and we never move money, sign for the broker or send a notice in your name.</span></p>
+        <p class="who-not"><span class="t-label">What you keep</span> <span data-shared="notfor">Keep AppFolio or Buildium. We work on everything around it, and we never move money, sign for the broker or send a notice in your name.</span></p>
       </div>
     </div>
     <figure class="pic auto-pic pl-auto-pic" data-extra="computer only: on a computer the left column is empty under the heading, and row 1 as a picture breaks up two sections of text; on a phone it would add about 450px to a page near its 11,000px limit, and section 4 shows a document being read two screens later">
@@ -269,12 +232,9 @@
       </div>
       <span class="samp">Sample</span>
     </figure>
-    <figure class="slot pl-auto-slot" data-slot="rentals-key-drop" data-shape="4:5"><span class="slot-k">Photo slot</span><b>The key drop on July 31</b><span>Shot list only. A box of returned keys with paper tags on an office counter, a hand sorting them. No faces, no readable unit codes, names or addresses. Section 4 shows the inspection, so not that paper again.</span></figure>
   </div>
 </section>
 
-<!-- ============================================================ 3 HOW IT WORKS: Home's block, every line bound from shared-text.json
-     (step 2's records read step2.what.rentals), ends on the call button (R12) -->
 <section class="band hm4-how" id="how" data-ground="paper" data-density="mid" data-width="wide" data-loud="steps" data-medium="timeline">
   <div class="wrap">
     <div class="how-h">
@@ -293,12 +253,10 @@
           <p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward the fix if it starts within 30 days.</span></p>
           <p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span></p>
         </div>
-        <figure class="slot" data-slot="home-how-records" data-shape="1:1"><span class="slot-k">Picture slot</span><b>Your records</b><span>The move-out list, work orders, vendor bills and owner statements, as the office sends them.</span></figure>
       </li>
       <li>
         <div class="tl-head"><h3><span data-shared="step3.when">Your sheet</span></h3></div>
-        <div class="tl-body"><p class="t-body"><span data-shared="step3.what">Every problem in dollars. Most shops within 5 business days of having your records; bigger shops get a quote and a date on the free call.</span> <span data-shared="step3.get">You keep it either way.</span></p></div>
-        <figure class="slot" data-slot="home-how-sheet" data-shape="1:1"><span class="slot-k">Picture slot</span><b>The sheet</b><span>A finished walk sheet, small, no dollar figures readable.</span></figure>
+        <div class="tl-body"><p class="t-body"><span data-shared="step3.what">Every problem in dollars. About 5 business days after we have your records; bigger shops get a quote and a date on the free call.</span> <span data-shared="step3.get">You keep it either way.</span></p></div>
       </li>
       <li>
         <div class="tl-head"><h3><span data-shared="step4.when">Then, only if you want</span></h3><span class="tl-tag">Paid</span></div>
@@ -306,7 +264,6 @@
           <p class="t-body"><span data-shared="step4.what">One fix, priced before work starts, and a monthly check you can cancel any month.</span></p>
           <p class="t-small tl-ai">Fixed rules you approve, AI, or both: your call. Anything AI writes waits for your OK, and nothing goes into an AI tool without it.</p>
         </div>
-        <figure class="slot" data-slot="home-how-report" data-shape="1:1"><span class="slot-k">Picture slot</span><b>Monthly report</b><span>The one-page monthly check, small.</span></figure>
       </li>
     </ol>
     <div class="cta-inline">
@@ -317,25 +274,13 @@
   </div>
 </section>
 
-<!-- ============================================================ 4 THE PAPERS FROM ONE MOVE-OUT (property managers only, PROPERTY-PREP
-     section 4, Franco's card default: the guarantor balance). BRM-204-C, a by-the-bed student lease with a guarantor: the
-     notice went out certified on day 21 (Fri Aug 21), was delivered Mon Aug 24, no objection came in 15 days (to Tue Sep 8), so the
-     50.00 deposit was applied; charges 385.00, balance 335.00, and no bill to the guarantor 20 days later (Mon Sep 28). The ledger
-     lists the notice as an event, never its text (FX-25). The guarantor bill is drafted for the office's OK and goes out in the
-     daytime, without threats (F.S. 559.72, FX-23). The certified number fails USPS's check digit, so it is no real piece. $52 is the
-     section's one dollar figure (UF Off-Campus Life's 2026-27 averages within two miles of UF, offcampus.ufl.edu and the GatorGuide,
-     read 2026-10-11: $52 with a guarantor, $1,282 without). D29 (2026-10-11) wants the $52 always beside its comparison; the
-     $1,282 written out would be the page's 17th dollar figure (R9 caps 16), so the comparison is the ratio, 52 / 1,282 = 4.06%,
-     "about 4%". The amounts in the papers print without "$" (R9 count). The rule line is the page's one statement that the office
-     writes and sends the notice (FX-25: we never prepare it), with "only" before the email addendum both sides sign (83.505).
-     Cut for the R9 word budget in review 2026-10-12; the ledger title is short so the date shows at 320 (no "Ledger", no "Mon"). -->
 <section class="band pl-papers pm-papers" id="guarantor" data-ground="sheet" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
   <div class="wrap pl-pw">
     <div class="pl-pw-copy">
       <h2>The damage ran past the deposit, and the guarantor never got the bill.</h2>
       <p class="pl-find">On a sample student lease, the claim notice went out certified on day 21 and the deposit was applied. Within two miles of UF, the average deposit with a guarantor is $52, about 4% of the average without one (UF Off-Campus Life, 2026-27).</p>
       <p class="pl-fix"><b>The fix:</b> every move-out with charges past the deposit goes on one list with its guarantor, and the bill is drafted for your OK. On your walk, we count last August's unbilled balances.</p>
-      <p class="t-small pm-rule">Your office writes the claim notice and mails it certified, or emails it only where you and the tenant signed the email addendum (F.S. 83.49 and 83.505). General information, not legal advice.</p>
+      <p class="t-small pm-rule">Your office writes the claim notice and mails it certified, or emails it only where you and the tenant signed the email addendum (F.S. 83.49 and 83.505).</p>
     </div>
     <figure class="pic pl-docs-pic">
       <div role="img" aria-label="Sample: two papers from one student move-out. The move-out inspection for Bramble Court 204, bed C, tenant Emily Anderson, Friday, July 31, 2026, compared with the move-in report of August 15, 2025 and 23 photos: deep clean beyond normal wear 240.00, closet door off its track and rehung 75.00, two broken blinds 70.00, charges 385.00. Beside it the ledger for BRM-204-C as of Monday, September 28: the move-out charges, 385.00, and the claim notice sent by certified mail on August 21, delivered August 24; no objection in 15 days, so the 50.00 deposit was applied on September 8. The balance, 335.00, is circled in pencil. Guarantor on file: Robert Anderson, guaranty signed April 12, 2025. A flag across the top says the charges are 335.00 over the deposit, the guarantor has had no bill in 20 days, and the bill is drafted for your OK.">
@@ -375,16 +320,10 @@
   </div>
 </section>
 
-<!-- ============================================================ 5 THE WALK, as proof: Home's stops (bound from trades.js, the same screen
-     Before / After from trades-src.json rentals pairs, R7), no formula under the stops, one total line, the call button with money
-     back. data-walk-skip="bills": the sheet's last row (turn-week vendor bills) stays on the sheet and leaves the walk, and the total
-     line names it, so the stops plus that line add up to the sheet's $6,420 (2,700 + 1,620 + 1,260 + 840). Its pair stays in
-     trades-src for Home's pick. The prices in the pictures print without "$", as the documents do (R9 count). -->
 <section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" data-walk-skip="bills" style="--hole:var(--sheet)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
   <div class="wrap">
     <h2 class="walk-h">What a walk finds</h2>
     <p class="walk-intro">Moorhen Property Management is a sample 212-door office. Each stop shows the same screen before and after the fix, and the walk ends on the sheet's total.</p>
-    <p class="walk-honest">Lumora is new, so there are no client reviews here yet.</p>
   </div>
   <div class="wrap">
     <div class="walk-grid">
@@ -392,12 +331,12 @@
         <div class="tally-card">
           <p class="tally-h">Walk sheet <span class="stamp">Sample</span></p>
           <p class="tally-sub" data-f="tsub">Moorhen Property Management, 212 doors</p>
-          <ol><!--prerender:tally--><li data-i="0"><span>The move-out list</span></li><li data-i="1"><span>The work order</span></li><li data-i="2"><span>The owner statement</span></li><!--/prerender--></ol>
+          <ol><li data-i="0"><span>The move-out list</span></li><li data-i="1"><span>The work order</span></li><li data-i="2"><span>The owner statement</span></li></ol>
           <p class="tally-tot" data-f="tprog">Walk done, 3 of 3 stops</p>
         </div>
         <p class="tally-bar" aria-hidden="true"><span data-f="bar-stop">Walk done</span><b data-f="bar-n">3 of 3</b></p>
       </aside>
-      <ol class="stops" data-f="stops"><!--prerender:stops--><li class="stop page" id="stop-1" data-usd="2700" data-place="The move-out list" data-task="reminders"><div class="stop-h"><span class="tab-n">1</span><div class="stop-t"><h3><span class="sr">Stop 1: </span>The move-out list</h3><p class="stop-leak">Deposit claims sent after day 30</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same list, each day counted from the earlier of move-out and lease end. OAK-3 now shows day 27, and Charges ready is struck through in pencil: her day 30 is Thursday, August 27." data-label-before="Sample, before: the office's list of July move-outs on Monday, August 24, every day counted from the lease end. OAK-3, Ana Garcia, moved out July 28, before her lease ended July 31, and shows day 24, charges ready. BRM-204-C, Emily Anderson, day 24, notice delivered August 24. BRM-118-D, Luis Martinez, day 24, no forwarding address. The status line says 131 move-outs, counted from the lease end." data-label-after="Sample, after: the same list, each day counted from the earlier of move-out and lease end. OAK-3 now shows day 27, and Charges ready is struck through in pencil: her day 30 is Thursday, August 27."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Move-outs, Jul 2026</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Unit</th><th>Moved out</th><th>Day</th><th>Claim notice</th></tr><tr class="n"><td>OAK-3<small>Garcia, Ana</small></td><td>Jul 28<small>Lease to Jul 31</small></td><td class="nw"><span class="chg"><span class="was">24</span><span class="now">27</span></span></td><td><span class="chg tr"><span class="was">Charges ready</span><span class="now"><span class="st wt">Day 30 is Thu, Aug 27</span></span></span></td></tr><tr><td>BRM-204-C<small>Anderson, Emily</small></td><td>Jul 31</td><td class="nw">24</td><td>Delivered Aug 24</td></tr><tr><td>BRM-118-D<small>Martinez, Luis</small></td><td>Jul 31</td><td class="nw">24</td><td>No forwarding address</td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">131 move-outs, counted from the lease end</span><span class="now">131 move-outs, counted from the earlier date</span></span></p></div></div></div><div class="seg" role="group" aria-label="Show stop 1"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button></div><span class="samp">Sample</span></div><div class="stop-notes"><p class="pencil">Moved out July 28, three days early. The careful count starts that day, so day 30 is Thursday.</p><p class="find"><span class="find-usd money">$2,700 a year<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><li class="stop page" id="stop-2" data-usd="1620" data-place="The work order" data-task="retyping"><div class="stop-h"><span class="tab-n">2</span><div class="stop-t"><h3><span class="sr">Stop 2: </span>The work order</h3><p class="stop-leak">Tenant-caused repairs never charged back</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same work order. Owner, OWN-0142 is struck through in pencil and reads Beds A and B, 67.50 each. The status line says the charge-back comes from the tech's note and the lease, for your OK." data-label-before="Sample, before: work order MPM-26-0409 for BRM-212, the hall bath beds A and B share, closed Tuesday, October 6. Dunlin Plumbing's invoice 4514: toilet augered, wipes removed, photo attached, 135.00, billed to the owner, OWN-0142. The status line says the tech's note named wipes and the owner paid." data-label-after="Sample, after: the same work order. Owner, OWN-0142 is struck through in pencil and reads Beds A and B, 67.50 each. The status line says the charge-back comes from the tech's note and the lease, for your OK."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>MPM-26-0409</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Field</th><th>Entry</th></tr><tr><td>Unit</td><td>BRM-212, hall bath for beds A and B</td></tr><tr><td>Closed</td><td>Tue, Oct 6</td></tr><tr><td>Bill</td><td>Dunlin Plumbing, invoice 4514, 135.00</td></tr><tr><td>Work</td><td>Toilet augered, wipes removed, photo attached</td></tr><tr class="n"><td>Billed to</td><td><span class="chg tr"><span class="was">Owner, OWN-0142</span><span class="now">Beds A and B, 67.50 each</span></span></td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">Tech's note says wipes. Paid by the owner.</span><span class="now">From the tech's note and the lease. For your OK.</span></span></p></div></div></div><div class="seg" role="group" aria-label="Show stop 2"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button></div><span class="samp">Sample</span></div><div class="stop-notes"><p class="pencil">The plumber's photo shows wipes. The owner paid the bill.</p><p class="find"><span class="find-usd money">$1,620 a year<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><li class="stop page" id="stop-3" data-usd="1260" data-place="The owner statement" data-task="invoices"><div class="stop-h"><span class="tab-n">3</span><div class="stop-t"><h3><span class="sr">Stop 3: </span>The owner statement</h3><p class="stop-leak">Markup never added to vendor bills</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same statement. On the Dunlin Plumbing bill, Not added is struck through in pencil and reads 41.00, the 10% in your management agreement. The status line says it waits for your OK before it publishes on Thursday, October 15." data-label-before="Sample, before: the September statement for owner OWN-0142, ready to publish to the owner portal on Thursday, October 15. Three vendor bills: Kestrel Air 245.00 with a 24.50 markup, Killdeer Pest Control 120.00 with 12.00, and Dunlin Plumbing 410.00 with no markup added." data-label-after="Sample, after: the same statement. On the Dunlin Plumbing bill, Not added is struck through in pencil and reads 41.00, the 10% in your management agreement. The status line says it waits for your OK before it publishes on Thursday, October 15."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>OWN-0142, Sept</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th class="hm">Date</th><th>Vendor bill</th><th>Amount</th><th>Markup 10%</th></tr><tr><td class="hm">09/04</td><td>Kestrel Air<small>MPM-26-0371</small></td><td class="nw">245.00</td><td class="nw">24.50</td></tr><tr><td class="hm">09/09</td><td>Killdeer Pest Control<small>MPM-26-0379</small></td><td class="nw">120.00</td><td class="nw">12.00</td></tr><tr class="n"><td class="hm">09/11</td><td>Dunlin Plumbing<small>MPM-26-0384</small></td><td class="nw">410.00</td><td class="nw"><span class="chg tr"><span class="was">Not added</span><span class="now">41.00</span></span></td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">Publishes to the owner portal Thu, Oct 15</span><span class="now">1 markup added, for your OK before Thu, Oct 15</span></span></p></div></div></div><div class="seg" role="group" aria-label="Show stop 3"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button></div><span class="samp">Sample</span></div><div class="stop-notes"><p class="pencil">Keyed in by hand, Dunlin's bill got no markup. Your agreement says 10%.</p><p class="find"><span class="find-usd money">$1,260 a year<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><!--/prerender--></ol>
+      <ol class="stops" data-f="stops"><li class="stop page" id="stop-1" data-usd="2700" data-place="The move-out list" data-task="reminders"><div class="stop-h"><span class="tab-n">1</span><div class="stop-t"><h3><span class="sr">Stop 1: </span>The move-out list</h3><p class="stop-leak">Deposit claims sent after day 30</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same list, each day counted from the earlier of move-out and lease end. OAK-3 now shows day 27, and Charges ready is struck through in pencil: her day 30 is Thursday, August 27." data-label-before="Sample, before: the office's list of July move-outs on Monday, August 24, every day counted from the lease end. OAK-3, Ana Garcia, moved out July 28, before her lease ended July 31, and shows day 24, charges ready. BRM-204-C, Emily Anderson, day 24, notice delivered August 24. BRM-118-D, Luis Martinez, day 24, no forwarding address. The status line says 131 move-outs, counted from the lease end." data-label-after="Sample, after: the same list, each day counted from the earlier of move-out and lease end. OAK-3 now shows day 27, and Charges ready is struck through in pencil: her day 30 is Thursday, August 27."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Move-outs, Jul 2026</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Unit</th><th>Moved out</th><th>Day</th><th>Claim notice</th></tr><tr class="n"><td>OAK-3<small>Garcia, Ana</small></td><td>Jul 28<small>Lease to Jul 31</small></td><td class="nw"><span class="chg"><span class="was">24</span><span class="now">27</span></span></td><td><span class="chg tr"><span class="was">Charges ready</span><span class="now"><span class="st wt">Day 30 is Thu, Aug 27</span></span></span></td></tr><tr><td>BRM-204-C<small>Anderson, Emily</small></td><td>Jul 31</td><td class="nw">24</td><td>Delivered Aug 24</td></tr><tr><td>BRM-118-D<small>Martinez, Luis</small></td><td>Jul 31</td><td class="nw">24</td><td>No forwarding address</td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">131 move-outs, counted from the lease end</span><span class="now">131 move-outs, counted from the earlier date</span></span></p></div></div></div><div class="seg" role="group" aria-label="Show stop 1"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button></div><span class="samp">Sample</span></div><div class="stop-notes"><p class="pencil">Moved out July 28, three days early. The careful count starts that day, so day 30 is Thursday.</p><p class="find"><span class="find-usd money">$2,700 a year<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><li class="stop page" id="stop-2" data-usd="1620" data-place="The work order" data-task="retyping"><div class="stop-h"><span class="tab-n">2</span><div class="stop-t"><h3><span class="sr">Stop 2: </span>The work order</h3><p class="stop-leak">Tenant-caused repairs never charged back</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same work order. Owner, OWN-0142 is struck through in pencil and reads Beds A and B, 67.50 each. The status line says the charge-back comes from the tech's note and the lease, for your OK." data-label-before="Sample, before: work order MPM-26-0409 for BRM-212, the hall bath beds A and B share, closed Tuesday, October 6. Dunlin Plumbing's invoice 4514: toilet augered, wipes removed, photo attached, 135.00, billed to the owner, OWN-0142. The status line says the tech's note named wipes and the owner paid." data-label-after="Sample, after: the same work order. Owner, OWN-0142 is struck through in pencil and reads Beds A and B, 67.50 each. The status line says the charge-back comes from the tech's note and the lease, for your OK."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>MPM-26-0409</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Field</th><th>Entry</th></tr><tr><td>Unit</td><td>BRM-212, hall bath for beds A and B</td></tr><tr><td>Closed</td><td>Tue, Oct 6</td></tr><tr><td>Bill</td><td>Dunlin Plumbing, invoice 4514, 135.00</td></tr><tr><td>Work</td><td>Toilet augered, wipes removed, photo attached</td></tr><tr class="n"><td>Billed to</td><td><span class="chg tr"><span class="was">Owner, OWN-0142</span><span class="now">Beds A and B, 67.50 each</span></span></td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">Tech's note says wipes. Paid by the owner.</span><span class="now">From the tech's note and the lease. For your OK.</span></span></p></div></div></div><div class="seg" role="group" aria-label="Show stop 2"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button></div><span class="samp">Sample</span></div><div class="stop-notes"><p class="pencil">The plumber's photo shows wipes. The owner paid the bill.</p><p class="find"><span class="find-usd money">$1,620 a year<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><li class="stop page" id="stop-3" data-usd="1260" data-place="The owner statement" data-task="invoices"><div class="stop-h"><span class="tab-n">3</span><div class="stop-t"><h3><span class="sr">Stop 3: </span>The owner statement</h3><p class="stop-leak">Markup never added to vendor bills</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same statement. On the Dunlin Plumbing bill, Not added is struck through in pencil and reads 41.00, the 10% in your management agreement. The status line says it waits for your OK before it publishes on Thursday, October 15." data-label-before="Sample, before: the September statement for owner OWN-0142, ready to publish to the owner portal on Thursday, October 15. Three vendor bills: Kestrel Air 245.00 with a 24.50 markup, Killdeer Pest Control 120.00 with 12.00, and Dunlin Plumbing 410.00 with no markup added." data-label-after="Sample, after: the same statement. On the Dunlin Plumbing bill, Not added is struck through in pencil and reads 41.00, the 10% in your management agreement. The status line says it waits for your OK before it publishes on Thursday, October 15."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>OWN-0142, Sept</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th class="hm">Date</th><th>Vendor bill</th><th>Amount</th><th>Markup 10%</th></tr><tr><td class="hm">09/04</td><td>Kestrel Air<small>MPM-26-0371</small></td><td class="nw">245.00</td><td class="nw">24.50</td></tr><tr><td class="hm">09/09</td><td>Killdeer Pest Control<small>MPM-26-0379</small></td><td class="nw">120.00</td><td class="nw">12.00</td></tr><tr class="n"><td class="hm">09/11</td><td>Dunlin Plumbing<small>MPM-26-0384</small></td><td class="nw">410.00</td><td class="nw"><span class="chg tr"><span class="was">Not added</span><span class="now">41.00</span></span></td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">Publishes to the owner portal Thu, Oct 15</span><span class="now">1 markup added, for your OK before Thu, Oct 15</span></span></p></div></div></div><div class="seg" role="group" aria-label="Show stop 3"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button></div><span class="samp">Sample</span></div><div class="stop-notes"><p class="pencil">Keyed in by hand, Dunlin's bill got no markup. Your agreement says 10%.</p><p class="find"><span class="find-usd money">$1,260 a year<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li></ol>
     </div>
     <div class="walk-end" data-bind="bigfig">
       <p class="walk-total"><span>Lost before any fix</span> <b><span data-f="n">$6,420</span> <span data-f="per">a year</span></b></p>
@@ -409,12 +348,6 @@
   </div>
 </section>
 
-<!-- ============================================================ 6 THE NIGHT BAND: the office night in turn week (R5: property managers
-     get the back-office log, never an overnight lock screen; no call, nothing incoming 11 p.m. to 5 a.m.; every row is the office's
-     own records). Home's rentals night4 rows word for word, so Home and this page tell one night: Sunday Aug 23 at 9:10 PM the turn
-     crew's bills, Monday Aug 24 the day counts, Garcia, Ana at day 27 (the walk's stop 1), the charge-backs and the 6:30 AM morning
-     list, clipped on (no dollar figures). Static markup, as plumbing's night is; the clipped card is the shared .pl-card, lit once by
-     the row marked data-cue (trade-page.css). -->
 <section class="band hm4-night pl-night pm-night" id="night" data-ground="night" data-density="mid" data-width="wide" data-loud="log" data-medium="log">
   <div class="wrap n4">
     <div class="n4-copy">
@@ -450,8 +383,6 @@
   </div>
 </section>
 
-<!-- ============================================================ 7 RULES AND CONTACT: Home's close as plumbing ships it, then every trade's
-     page in one wrapped line (this one in ink) -->
 <section class="band hm4-close" id="contact" data-ground="paper" data-density="mid" data-width="split" data-loud="close" data-medium="close">
   <div class="wrap close-g">
     <div class="c4-main">
@@ -475,7 +406,6 @@
       <figure class="contact-card">
         <img class="cardino" src="/v4/assets/bird-cardino-perch.svg" alt="" width="74" height="60" loading="lazy">
         <p class="t-label hm-cc-k">One contact, start to finish</p>
-        <figure class="slot cc-slot" data-slot="home-contact-portrait" data-shape="4:5"><span class="slot-k">Photo slot</span><b>The owner, a real photo</b><span>Waiting on the Q7 answer (About). No AI, no retouching.</span></figure>
         <blockquote class="signed"><p>“I started Lumora here in Gainesville. We work in English or Spanish, and you deal with the same person from the first call to the last fix.”</p></blockquote>
         <figcaption class="signed-by">Franco A. Soto, Owner</figcaption>
         <dl class="cblock">
@@ -513,7 +443,7 @@
   <div class="wrap foot-g">
     <img src="/v4/assets/logo.svg" alt="Lumora" width="104" height="25">
     <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/what-we-automate/">What we automate</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/">Loss calculator</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/articles/">Articles</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
-    <p>Lumora Group LLC, a Florida company. Gainesville, serving Alachua County. Every business, name and number marked Sample is illustrative, not a client.</p>
+    <p>Lumora Group LLC, a Florida company. Gainesville, serving Alachua County. Every business, name and number marked Sample is made up.</p>
   </div>
 </footer>
 

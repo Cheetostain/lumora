@@ -276,7 +276,7 @@
 [data-ground=night] .pad b{color:var(--ink)}
 .rules-k{color:var(--muted-night);font-size:15px;max-width:40em;margin:0 auto 28px;text-align:center}
 
-/* what we can show you today: a notebook index of things to check */
+/* check it yourself: a notebook index of things to check */
 .proof-g{display:grid;gap:36px}
 @media (min-width:900px){.proof-g{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:56px;align-items:start}}
 .idx.plain a{grid-template-columns:1fr}
