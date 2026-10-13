@@ -753,9 +753,11 @@
     shown('.pic').forEach(function (p) { var n = $$('.samp,.stamp', p).filter(function (s) { return vis(s) && /^(sample|ejemplo)$/i.test(s.textContent.trim()); }).length;
       if (n !== 1) E.push('R8: a picture with ' + n + ' Sample labels (' + (p.className || p.id) + ').'); });
     $$('.slot').forEach(function (s) { if (['16:9', '1:1', '4:5'].indexOf(s.dataset.shape) < 0) E.push('R8: a picture slot that is not 16:9, 1:1 or 4:5.'); });
-    // R9: no dollar figure more than twice, 16 or fewer, counted per width; the phone-only top-leak strip is the named exception
+    // R9: no dollar figure more than twice, 16 or fewer, counted per width; the phone-only top-leak strip is the named exception.
+    // The bound price sentence counts its bold price only: the plain words after it are the credit's terms, and their $1,500
+    // floor (Franco, 2026-10-13, premortem item 9) is a condition the law needs beside the credit, not a figure on show.
     var seen = {}, total = 0;
-    texts(function (s, pe) { if (pe.closest('.hero-strip')) return; (s.match(/\$\d[\d,]*(?:\.\d+)?/g) || []).forEach(function (m) { var k = m.replace(/\.0+$/, ''); seen[k] = (seen[k] || 0) + 1; total++; }); });
+    texts(function (s, pe) { if (pe.closest('.hero-strip') || pe.matches('[data-shared="price"]')) return; (s.match(/\$\d[\d,]*(?:\.\d+)?/g) || []).forEach(function (m) { var k = m.replace(/\.0+$/, ''); seen[k] = (seen[k] || 0) + 1; total++; }); });
     Object.keys(seen).forEach(function (k) { if (seen[k] > 2) B.push('R9: ' + k + ' shows ' + seen[k] + ' times (twice at most).'); });
     if (total > 16) B.push('R9: ' + total + ' dollar figures on the page (16 or fewer).');
     // R11: the picked chip is never filled black on a computer screen
