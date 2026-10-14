@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Loss calculator | Lumora</title>
-<meta name="description" content="What do missed calls, late quotes and retyping cost your shop? Put in your own numbers for a rough monthly figure. It runs on your device and sends us nothing.">
+<meta name="description" content="What does the busywork cost your shop? Put in your own numbers for retyping, jobs never billed, quotes that went cold and missed calls. It runs on your device and sends us nothing.">
 <link rel="canonical" href="https://lumorafl.com/leak-check/">
 <link rel="alternate" hreflang="en" href="https://lumorafl.com/leak-check/">
 <link rel="alternate" hreflang="es" href="https://lumorafl.com/es/leak-check/">
 <link rel="alternate" hreflang="x-default" href="https://lumorafl.com/leak-check/">
 <meta property="og:title" content="Loss calculator | Lumora">
-<meta property="og:description" content="What do missed calls, late quotes and retyping cost your shop? Put in your own numbers for a rough monthly figure. It runs on your device and sends us nothing.">
+<meta property="og:description" content="What does the busywork cost your shop? Put in your own numbers for retyping, jobs never billed, quotes that went cold and missed calls. It runs on your device and sends us nothing.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lumorafl.com/leak-check/">
 <meta property="og:image" content="https://lumorafl.com/assets/share-card-en.png">
@@ -22,17 +22,134 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="es_US">
 <meta name="theme-color" content="#F6F5F2">
-<link rel="icon" href="/v3/assets/mark.svg">
-<link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v3/system.css?v=e3291eab">
-<link rel="stylesheet" href="/v3/trades-3/trades-3.css?v=e3291eab">
-<script>document.documentElement.classList.add('js')</script>
-<script src="/v3/trades.js?v=e3291eab" defer></script>
-<script src="/v3/system.js?v=e3291eab" defer></script>
-<script src="/v3/trades-3/trades-3.js?v=e3291eab" defer></script>
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="/v4/assets/mark.svg">
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/v4/system.css?v=8b01ec22">
+<link rel="stylesheet" href="/v4/trade-page.css?v=8b01ec22">
+<script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
+<script src="/v4/trades.js?v=8b01ec22" defer></script>
+<script src="/v4/system.js?v=8b01ec22" defer></script>
+<style>
+/* ===== Loss calculator, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
+   32, 44, 64) outside the pictures; every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
+.lk-sms,.find-rows a.u,.lk-cta .mb a.u,.auto-close a.u,.lk-rows .mb a.u{display:inline-block;padding-block:12px;margin-block:-12px;position:relative;z-index:1}   /* a 44px tall tap area without moving the layout */
+
+/* 1 the calculator (L1, L2): the boxes on a sheet, the estimate beside them on a computer, under them on a phone. On a phone an ink
+   bar holds the figure in view while he types (sticky inside the form only, so it leaves with the form) */
+.lk{padding:28px 0 64px}
+.lk h1{max-width:12em}
+.lk .t-lede{margin-top:14px;max-width:34em}
+.lk-priv{margin-top:12px;font-size:17px;font-weight:600;color:var(--ink);max-width:34em}
+.lk-g{display:grid;gap:28px;margin-top:28px}
+.lk-form{background:var(--sheet);box-shadow:var(--lift);border-radius:2px;padding:0 18px 22px}
+.lk-ex{font-size:15px;color:var(--body);padding:16px 0 0}
+.lk-form fieldset{border:0;margin:0;padding:20px 0 0;min-width:0}
+.lk-form fieldset+fieldset{margin-top:22px;border-top:2px solid var(--ink)}
+.lk-form legend{float:left;width:100%;padding:0;margin-bottom:12px;font-size:20px;font-weight:600;line-height:1.25;color:var(--ink)}
+.lk-form .lf{clear:both;margin-bottom:18px}
+.lk-form .lf:last-child{margin-bottom:0}
+.lk-form .lf label{line-height:1.35}
+.ex{display:inline-block;margin-left:4px;padding:0 6px;font-size:15px;font-weight:600;line-height:21px;color:var(--pencil);border:1.5px solid var(--pencil);border-radius:3px;vertical-align:1px}
+.lk-form .lf input{width:120px;font-size:24px}
+.lk-form .unit{display:flex}
+.lk-form .stepb{font-size:24px}
+#lk input,#lk button{scroll-margin-top:68px}   /* the browser's own focus scroll keeps a box clear of the 52px phone bar */
+.lk-form .lf-err:not(:empty){padding:0;border:0;background:none;color:var(--ink)}   /* the message in words under its box; no bar down its side */
+.lk-form input[aria-invalid=true]{border-style:dashed}
+html:not(.js) .stepb,html:not(.js) .lk-btns{display:none}
+.lk-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;padding-top:18px;border-top:1px solid var(--rule)}
+.lk-bar{margin:0 -18px}
+.lk-bar .tally-bar{min-height:52px;padding:10px 18px}
+.lk-bar span{white-space:nowrap}
+.lk-bar b{font-size:17px;white-space:nowrap}
+.lk-bar.bad b{white-space:normal;text-align:right;font-size:15px}   /* what is wrong may wrap; it never hides */
+html:not(.js) .lk-bar{display:none}
+@media (min-width:900px){.lk-bar{display:none}}
+.lk-sheet{background:var(--sheet);box-shadow:var(--lift);border-radius:2px;padding:18px 18px 20px}
+.lk-sh-h{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.lk-sh-h h2{font-size:24px;line-height:1.2}
+.lk-total{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;margin:18px 0 8px}
+.lk-about{font-size:24px;font-weight:600;color:var(--ink)}
+.lk-usd{position:relative;display:inline-block;margin:0 6px;padding:2px 8px;font-size:44px;font-weight:500;line-height:1.1;letter-spacing:-.02em;color:var(--red);white-space:nowrap}
+.lk-per{font-size:20px;color:var(--body)}
+.lk-lines li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:11px 0;border-top:1px solid var(--rule);font-size:15px;line-height:1.45}
+.lk-lines li b{display:block;font-size:17px;color:var(--ink)}
+.lk-lines .v{font-size:20px;font-weight:600;color:var(--ink);white-space:nowrap}
+.lk-lines .off{color:var(--muted)}
+.lk-empty{padding:16px 0 4px;font-size:17px;font-weight:600;color:var(--ink)}
+.lk-note{margin-top:12px;font-size:15px;color:var(--muted)}
+.lk-cta{margin-top:20px;gap:12px}
+.lk-cta .mb{font-size:15px}
+@media (min-width:600px){
+  .lk-form{padding:0 28px 28px}.lk-bar{margin:0 -28px}.lk-bar .tally-bar{padding-inline:28px}.lk-sheet{padding:22px 26px 24px}
+  /* a worksheet on a wider screen: the line's words on the left, its box on the right, every box in one column (a one-box line
+     sits where a stepper's box sits); on a phone each line stacks */
+  .lk-form .lf{grid-template-columns:minmax(0,1fr) 244px;column-gap:24px;row-gap:4px;align-items:start}
+  .lk-form .lf>label{grid-column:1;grid-row:1;padding-top:6px}
+  .lk-form .lf>.unit,.lk-form .lf>.step{grid-column:2;grid-row:1/span 3;justify-content:center}
+  .lk-form .lf>.lf-h,.lk-form .lf>.lf-err{grid-column:1}
+}
+@media (min-width:700px){.lk-usd{font-size:64px}}
+@media (min-width:900px){
+  .lk{padding:48px 0 96px}
+  .lk-g{grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:48px;align-items:start}
+  .lk-out{position:sticky;top:calc(var(--hdr-h) + 24px)}
+}
+
+/* 2 where to find your numbers (L3): the one window, then a row per group of boxes, the records first and call history last */
+.find-g{display:grid;gap:22px;grid-template-areas:"h" "fig" "rows"}
+.find-g>h2{grid-area:h}.find-fig{grid-area:fig;min-width:0}.find-rows{grid-area:rows}
+.find-fig .pic{max-width:440px}
+.find-fig .dt td:last-child{white-space:nowrap}
+.find-fig .dt .pc{display:inline-block;padding:0 4px;margin-right:8px}
+.find-rows li{padding:14px 0;border-top:1px solid var(--rule);font-size:17px;max-width:36em}
+.find-rows li:last-child{border-bottom:1px solid var(--rule)}
+.find-rows b{display:block;margin-bottom:2px;font-size:20px;color:var(--ink)}
+@media (min-width:900px){.find-g{grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-areas:"h h" "fig rows";column-gap:64px;row-gap:28px;align-items:start}.find-rows{margin-top:-14px}}
+
+/* 3 how we count (L4): the four formulas in words, then what the calculator leaves out (#automate, the R2 hook every v4 page
+   carries); the questions and the sources beside them on a computer */
+.how-g{display:grid;gap:36px}
+.how-steps{margin-top:18px;counter-reset:s}
+.how-steps li{position:relative;padding:14px 0 14px 44px;border-top:1px solid var(--rule);font-size:17px;max-width:36em}
+.how-steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:13px;width:30px;height:30px;display:grid;place-items:center;font-size:15px;font-weight:600;color:var(--ink);border:1.5px solid var(--pencil);border-radius:52% 48% 50% 46%/48% 52% 46% 54%}
+.how-steps b{color:var(--ink)}
+.how-sum{padding-top:14px;border-top:1px solid var(--rule);font-size:17px;max-width:36em}
+.how-auto h3{margin-bottom:12px;font-size:24px}
+.how-auto .auto-close{margin-top:12px}
+.why>div+div{margin-top:28px}
+.why h3{margin-bottom:6px;font-size:20px;line-height:1.25}
+.why p{font-size:17px;max-width:34em}
+.why .src li{font-size:15px;color:var(--muted);max-width:34em}
+.why .src li+li{margin-top:8px}
+@media (min-width:900px){   /* the steps on the left; what the calculator leaves out, then the sources, on the right */
+  .how-g{grid-template-columns:minmax(0,7fr) minmax(0,5fr);grid-template-areas:"main auto" "main src";grid-template-rows:auto 1fr;column-gap:64px;row-gap:40px;align-items:start}
+  .how-main{grid-area:main}.how-auto{grid-area:auto;padding-top:72px}.why{grid-area:src}
+}
+
+/* 4 close (L4): Home's close with this page's own line; the rows beside the call on a computer, under it on a phone */
+.lk-close .close-g{gap:32px}
+.lk-close-p{margin-top:26px;font-size:17px;max-width:30em}
+.lk-rows{margin-top:0}
+.lk-rows .price,.lk-rows .mb{font-size:17px}
+.lk-rows ul li+li{margin-top:2px}
+@media (min-width:900px){
+  .lk-close .close-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"main rows" "trades rows";grid-template-rows:auto 1fr;column-gap:64px;row-gap:32px}
+  .lk-close .c4-main{grid-area:main}.lk-close .lk-rows{grid-area:rows;margin-top:8px}.lk-close .pl-more{grid-area:trades;margin-top:0}
+}
+@media (max-width:699px){
+  .lk{padding-bottom:40px}
+  .how-g{gap:32px}
+}
+@media screen and (prefers-reduced-motion:no-preference){
+  .lk-bar b.bump{animation:lk-bump var(--t-small) var(--ease-out)}   /* job: cause and effect. The figure he can see while typing nudges when it changes */
+}
+@keyframes lk-bump{from{opacity:.35;translate:0 6px}to{opacity:1;translate:0 0}}
+</style>
 </head>
-<body>
+<body data-trade="plumbing" data-rules="v4">
 <a class="skip" href="#main">Skip to content</a>
 
 <div class="util">
@@ -43,7 +160,7 @@
 </div>
 <header class="hdr">
   <div class="wrap hdr-in">
-    <a class="brand" href="/" aria-label="Lumora, home page"><img src="/v3/assets/logo.svg" alt="" width="124" height="30"></a>
+    <a class="brand" href="/" aria-label="Lumora, home page"><img src="/v4/assets/logo.svg" alt="" width="124" height="30"></a>
     <nav class="nav" id="nav" aria-label="Main">
       <ul>
         <li><a class="u" href="/how-it-works/">How it works</a></li>
@@ -55,7 +172,7 @@
       </ul>
     </nav>
     <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
-    <a class="btn btn-sm" href="tel:+13522260681">Call or text</a>
+    <a class="btn btn-sm" href="tel:+13522260681">Call or text us</a>
     <span class="lang" role="group" aria-label="Language"><a href="/leak-check/" aria-current="true">EN</a><a href="/es/leak-check/" lang="es" hreflang="es">ES</a></span>
     <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   </div>
@@ -63,77 +180,80 @@
 
 <main id="main">
 
-<section class="lk" id="top" data-ground="graph" data-density="high" data-width="split" data-loud="estimate" data-medium="calc">
+<section class="hero lk" id="top" data-ground="graph" data-density="high" data-width="split" data-loud="estimate" data-medium="calc">
   <div class="wrap">
-    <p class="kicker">Loss calculator</p>
-    <h1>What is your business losing each month?</h1>
-    <p class="t-lede lede-s">What do missed calls, late quotes and retyping cost your shop? Put in your own numbers. It takes about a minute.</p>
-    <p class="lk-priv">This runs on your phone or computer. Nothing you type is sent to us or saved.</p>
+    <h1>What does the busywork cost you?</h1>
+    <p class="t-lede">Put in your own numbers and see roughly what four kinds of office work cost you a month. It takes about a minute.</p>
+    <p class="lk-priv" data-first="the privacy line">It runs on your device and sends us nothing. Close the page and your numbers are gone.</p>
     <div class="lk-g">
-      <form class="calc lk-form" id="lk" novalidate autocomplete="off" aria-describedby="lk-ex">
-        <div class="lk-bar tally" aria-hidden="true"><span data-o="barl">Example</span><b data-o="bar">About $1,540 a month</b></div>
-        <p class="lk-ex" id="lk-ex">The numbers already in the boxes are examples, not yours. Change them.</p>
-        <fieldset>
-          <legend>Missed calls</legend>
-          <div class="lf"><label for="lk-calls">Calls a week <span class="ex" data-ex="calls">Example</span></label>
-            <div class="step"><button type="button" class="stepb" data-step="-1" data-for="calls" aria-label="One fewer call a week">−</button><input id="lk-calls" name="calls" inputmode="decimal" value="40" aria-describedby="h-calls"><button type="button" class="stepb" data-step="1" data-for="calls" aria-label="One more call a week">+</button></div>
-            <p class="lf-h" id="h-calls">All calls to the shop, answered or not.</p></div>
-          <div class="lf"><label for="lk-rang">Calls a week that ring out or go to voicemail <span class="ex" data-ex="rang">Example</span></label>
-            <div class="step"><button type="button" class="stepb" data-step="-1" data-for="rang" aria-label="One fewer call that rang out">−</button><input id="lk-rang" name="rang" inputmode="decimal" value="6" aria-describedby="h-rang"><button type="button" class="stepb" data-step="1" data-for="rang" aria-label="One more call that rang out">+</button></div>
-            <p class="lf-h" id="h-rang">Count them in your call history if you can. If you guess, guess low.</p></div>
-          <div class="lf"><label for="lk-back">Of those, how many you call back <span class="ex" data-ex="back">Example</span></label>
-            <div class="step"><button type="button" class="stepb" data-step="-1" data-for="back" aria-label="One fewer call returned">−</button><input id="lk-back" name="back" inputmode="decimal" value="3" aria-describedby="h-back"><button type="button" class="stepb" data-step="1" data-for="back" aria-label="One more call returned">+</button></div>
-            <p class="lf-h" id="h-back">Calls you returned. If you are not sure, guess.</p></div>
-          <div class="lf"><label for="lk-book">Share that would have booked a job (%) <span class="ex" data-ex="book">Example</span></label>
-            <div class="unit"><input id="lk-book" name="book" inputmode="decimal" value="24%" aria-describedby="h-book"></div>
-            <p class="lf-h" id="h-book">Out of every 100 calls nobody returned, how many would have become a job? Type a percent: 3 in 10 is 30%. Not sure? A study of more than 3,000 trade businesses found they booked 42 percent of calls on average, and 24 percent at shops with fewer than 5 technicians (ServiceTitan, 2022, vendor data, US and Canada).</p></div>
-          <div class="lf"><label for="lk-profit">Typical profit per job <span class="ex" data-ex="profit">Example</span></label>
-            <div class="unit"><input id="lk-profit" name="profit" inputmode="decimal" value="$150" aria-describedby="h-profit"></div>
-            <p class="lf-h" id="h-profit">What you keep after parts and labor on a typical job, not the ticket price.</p></div>
-        </fieldset>
-        <fieldset>
-          <legend>Quotes <span>(optional)</span></legend>
-          <div class="lf"><label for="lk-quotes">Quotes a month that went cold <span class="ex" data-ex="quotes">Example</span></label>
-            <div class="step"><button type="button" class="stepb" data-step="-1" data-for="quotes" aria-label="One fewer quote">−</button><input id="lk-quotes" name="quotes" inputmode="decimal" value="2" aria-describedby="h-quotes"><button type="button" class="stepb" data-step="1" data-for="quotes" aria-label="One more quote">+</button></div>
-            <p class="lf-h" id="h-quotes">Only the ones you think you lost because they left late or nobody followed up.</p></div>
-          <div class="lf"><label for="lk-qprofit">Profit on a typical quoted job <span class="ex" data-ex="qprofit">Example</span></label>
-            <div class="unit"><input id="lk-qprofit" name="qprofit" inputmode="decimal" value="$400" aria-describedby="h-qprofit"></div>
-            <p class="lf-h" id="h-qprofit">What you keep after parts and labor.</p></div>
-        </fieldset>
-        <fieldset>
-          <legend>Retyping <span>(optional)</span></legend>
-          <div class="lf"><label for="lk-minutes">Minutes a day spent typing the same job into more than one place <span class="ex" data-ex="minutes">Example</span></label>
-            <div class="unit"><input id="lk-minutes" name="minutes" inputmode="decimal" value="30" aria-describedby="h-minutes"></div>
-            <p class="lf-h" id="h-minutes">Paper ticket, calendar, invoice software. Add them up.</p></div>
+      <form class="lk-form" id="lk" novalidate autocomplete="off" aria-label="Loss calculator">
+        <div class="tally lk-bar" aria-hidden="true"><div class="tally-bar"><span data-o="barl">Example</span><b data-o="bar">About $1,540 a month</b></div></div>
+        <p class="lk-ex">Change the examples to your numbers. Leave blank what you don't know.</p>
+        <fieldset data-task="retyping">
+          <legend>Typing the same job twice</legend>
+          <div class="lf"><label for="lk-minutes">Minutes a day, everyone added up <span class="ex" data-ex="minutes">Example</span></label>
+            <div class="unit"><input id="lk-minutes" name="minutes" inputmode="decimal" value="30" aria-describedby="h-minutes" data-first="the first box"></div>
+            <p class="lf-h" id="h-minutes">Paper ticket, calendar, invoice: add up every place.</p></div>
           <div class="lf"><label for="lk-days">Workdays a month <span class="ex" data-ex="days">Example</span></label>
             <div class="unit"><input id="lk-days" name="days" inputmode="decimal" value="22"></div></div>
-          <div class="lf"><label for="lk-rate">Hourly cost of whoever does the typing <span class="ex" data-ex="rate">Example</span></label>
+          <div class="lf"><label for="lk-rate">Hourly cost of whoever types it <span class="ex" data-ex="rate">Example</span></label>
             <div class="unit"><input id="lk-rate" name="rate" inputmode="decimal" value="$25" aria-describedby="h-rate"></div>
-            <p class="lf-h" id="h-rate">If it is you, at night, count it only if it takes time you would otherwise bill. If not, leave this line out: those are hours, not dollars.</p></div>
+            <p class="lf-h" id="h-rate">Pay plus taxes. If it's you at night, skip it: those are hours, not dollars.</p></div>
         </fieldset>
-                <div class="lk-btns"><button type="button" class="btn btn-o btn-sm" data-act="reset">Put the example numbers back</button><button type="button" class="btn btn-o btn-sm" data-act="clear">Clear all</button></div>
+        <fieldset data-task="invoices">
+          <legend>Jobs finished but never billed</legend>
+          <div class="lf"><label for="lk-unbilled">Finished jobs with no invoice, last 3 months</label>
+            <div class="step"><button type="button" class="stepb" data-step="-1" data-for="unbilled" aria-label="One fewer job">−</button><input id="lk-unbilled" name="unbilled" inputmode="decimal" value="" aria-describedby="h-unbilled"><button type="button" class="stepb" data-step="1" data-for="unbilled" aria-label="One more job">+</button></div>
+            <p class="lf-h" id="h-unbilled">Don't count jobs you did free on purpose. Haven't counted yet? Skip it for now.</p></div>
+          <div class="lf"><label for="lk-avg">Your average invoice <span class="ex" data-ex="avg">Example</span></label>
+            <div class="unit"><input id="lk-avg" name="avg" inputmode="decimal" value="$341" aria-describedby="h-avg"></div>
+            <p class="lf-h" id="h-avg">Last month's invoice total ÷ the number of invoices.</p></div>
+        </fieldset>
+        <fieldset data-task="quotes">
+          <legend>Quotes that went cold</legend>
+          <div class="lf"><label for="lk-quotes">Quotes a month lost to a late send or no follow-up <span class="ex" data-ex="quotes">Example</span></label>
+            <div class="step"><button type="button" class="stepb" data-step="-1" data-for="quotes" aria-label="One fewer quote">−</button><input id="lk-quotes" name="quotes" inputmode="decimal" value="2" aria-describedby="h-quotes"><button type="button" class="stepb" data-step="1" data-for="quotes" aria-label="One more quote">+</button></div>
+            <p class="lf-h" id="h-quotes">Not the ones you lost on price.</p></div>
+          <div class="lf"><label for="lk-qprofit">What you keep on a typical quoted job <span class="ex" data-ex="qprofit">Example</span></label>
+            <div class="unit"><input id="lk-qprofit" name="qprofit" inputmode="decimal" value="$400" aria-describedby="h-qprofit"></div>
+            <p class="lf-h" id="h-qprofit">After parts and labor, not the quote total.</p></div>
+        </fieldset>
+        <fieldset data-task="calls">
+          <legend>Calls nobody called back</legend>
+          <div class="lf"><label for="lk-rang">Calls a week from new numbers that rang out or went to voicemail <span class="ex" data-ex="rang">Example</span></label>
+            <div class="step"><button type="button" class="stepb" data-step="-1" data-for="rang" aria-label="One fewer call">−</button><input id="lk-rang" name="rang" inputmode="decimal" value="6" aria-describedby="h-rang"><button type="button" class="stepb" data-step="1" data-for="rang" aria-label="One more call">+</button></div>
+            <p class="lf-h" id="h-rang">Leave out numbers already in your contacts or customer list. If you guess, guess low.</p></div>
+          <div class="lf"><label for="lk-back">Of those, how many you called back <span class="ex" data-ex="back">Example</span></label>
+            <div class="step"><button type="button" class="stepb" data-step="-1" data-for="back" aria-label="One fewer call returned">−</button><input id="lk-back" name="back" inputmode="decimal" value="3"><button type="button" class="stepb" data-step="1" data-for="back" aria-label="One more call returned">+</button></div></div>
+          <div class="lf"><label for="lk-book">Share that would have booked a job (%) <span class="ex" data-ex="book">Example</span></label>
+            <div class="unit"><input id="lk-book" name="book" inputmode="decimal" value="24%" aria-describedby="h-book"></div>
+            <p class="lf-h" id="h-book">3 in 10 is 30%. Not sure? Shops with fewer than 5 technicians booked 24% of calls (ServiceTitan blog, 2022, vendor data).</p></div>
+          <div class="lf"><label for="lk-profit">What you keep on a typical job <span class="ex" data-ex="profit">Example</span></label>
+            <div class="unit"><input id="lk-profit" name="profit" inputmode="decimal" value="$150" aria-describedby="h-profit"></div>
+            <p class="lf-h" id="h-profit">After parts and labor, not the ticket price.</p></div>
+        </fieldset>
+        <div class="lk-btns"><button type="button" class="btn btn-o btn-sm" data-act="reset">Put the example numbers back</button><button type="button" class="btn btn-o btn-sm" data-act="clear">Clear all</button></div>
       </form>
 
       <div class="lk-out">
         <div class="lk-sheet">
-          <div class="lk-sh-h"><b>Your estimate</b><span class="stamp" data-o="stamp">Sample</span></div>
+          <div class="lk-sh-h"><h2>Your estimate</h2><span class="stamp" data-o="stamp">Sample</span></div>
           <div data-o="result">
-            <p class="lk-total"><span class="lk-about">About</span><span class="out-usd money" data-o="total">$1,540<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><small>a month</small></p>
-            <div class="dots" data-o="dots" role="img" aria-label="13.0 calls a month nobody returned; about 3.1 of them would have booked a job."><span class="dot job"></span><span class="dot job"></span><span class="dot job"></span><span class="dot part" style="--p:12%"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-            <p class="dots-key" style="margin-top:10px"><span><i></i>A call nobody returned, in a month</span><span><i class="j"></i>Would have booked a job</span></p>
+            <p class="lk-total"><span class="lk-about">About</span><span class="lk-usd" data-o="total">$1,540<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="lk-per">a month</span></p>
             <ol class="lk-lines">
-              <li data-o="l-calls"><span><b>Missed calls</b>3 a week nobody returned × 52 ÷ 12 = 13.0 a month. × 24% that would have booked = 3.12 jobs. × $150 profit a job = $468 a month.</span><span class="v">$468</span></li>
-              <li data-o="l-quotes"><span><b>Quotes</b>2 a month that went cold × $400 profit a job = $800 a month.</span><span class="v">$800</span></li>
-              <li data-o="l-retype"><span><b>Retyping</b>30 minutes a day × 22 days ÷ 60 = 11.0 hours × $25 an hour = $275 a month.</span><span class="v">$275</span></li>
+              <li data-o="l-retype" data-name="Typing the same job twice" data-task="retyping"><span><b>Typing the same job twice</b>30 minutes a day × 22 days ÷ 60 = 11.0 hours × $25 an hour = $275 a month.</span><span class="v">$275</span></li>
+              <li data-o="l-unbilled" data-name="Jobs never billed" data-task="invoices"><span class="off"><b>Jobs never billed</b>Left blank.</span></li>
+              <li data-o="l-quotes" data-name="Quotes that went cold" data-task="quotes"><span><b>Quotes that went cold</b>2 a month × $400 kept on a job = $800 a month.</span><span class="v">$800</span></li>
+              <li data-o="l-calls" data-name="Calls nobody called back" data-task="calls"><span><b>Calls nobody called back</b>6 rang out − 3 called back = 3 a week × 52 ÷ 12 = 13.0 a month × 24% booked = 3.12 jobs × $150 kept on a job = $468 a month.</span><span class="v">$468</span></li>
             </ol>
           </div>
-          <p class="lk-empty" data-o="empty" hidden>Put a number in each missed-call box to see your estimate.</p>
-          <p class="t-small muted">An estimate from your numbers. The walk counts the real ones.</p>
-          <noscript><p class="t-small" style="margin-top:10px">With the example numbers: 3 calls a week nobody returned × 52 ÷ 12 = 13.0 a month. × 24% = 3.12 jobs. × $150 = $468 a month. Run the same steps with your own numbers.</p></noscript>
+          <p class="lk-empty" data-o="empty" hidden>Fill in one group of boxes to see your estimate.</p>
+          <p class="lk-note">An estimate from your numbers. A walk counts the real ones.</p>
+          <noscript><p class="lk-note">With JavaScript off the boxes can't add up your own numbers, so this is the example. Every step is under How we count.</p></noscript>
         </div>
-        <div class="cta-row">
-          <a class="btn" href="tel:+13522260681">Call or text us</a>
-          <a class="u" data-o="sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20ran%20the%20leak%20check%20on%20your%20site%3A%20about%20%241%2C860%20a%20month.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text us this estimate</a>
+        <div class="cta lk-cta">
+          <div class="cta-row"><a class="btn" href="tel:+13522260681">Call or text us</a><a class="u lk-sms" data-o="sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20used%20the%20loss%20calculator%20on%20your%20site%3A%20about%20%241%2C540%20a%20month.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text us this estimate</a></div>
+          <p class="mb"><span data-shared="moneyback.short"><b>Not worth it to you?</b> Text or email us within 7 days after we go over your sheet, and you get the walk fee back.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p>
         </div>
         <p class="sr" aria-live="polite" data-o="live"></p>
       </div>
@@ -141,116 +261,265 @@
   </div>
 </section>
 
-<section class="band seam" id="find" data-ground="sheet" data-density="mid" data-width="wide" data-loud="pictures" data-medium="docs" style="--hole:var(--paper)">
-  <div class="wrap">
-    <h2 class="two" style="max-width:22em">Where to find your numbers. <span>Each box has a place in your own records.</span></h2>
-    <div class="find-g">
-      <figure>
-        <div class="pic pic-c">
-          <div class="scr-phone crop" role="img" aria-label="Sample: a phone's Recents list on the Missed tab, with missed calls from (352) 555-0144 twice yesterday, (352) 555-0148 and (352) 555-0119 on Monday, and Maria Garcia on Saturday.">
-            <div class="ph"><div class="ph-sb"><span>7:05</span><i></i></div><div class="ph-body">
-              <div class="ph-seg"><span>All</span><span class="on">Missed</span></div><p class="ph-h">Recents</p>
-              <ul class="ph-list">
-                <li class="miss"><b>(352) 555-0144 (2)</b><small>Gainesville, FL</small><time>Yesterday</time></li>
-                <li class="miss"><b>(352) 555-0148</b><small>Newberry, FL</small><time>Monday</time></li>
-                <li class="miss"><b>(352) 555-0119</b><small>Gainesville, FL</small><time>Monday</time></li>
-                <li class="miss"><b>Maria Garcia</b><small>mobile</small><time>Saturday</time></li>
-              </ul></div></div>
-          </div>
-          <span class="samp">Sample</span>
+<section class="band seam lk-find" id="find" style="--hole:var(--paper)" data-ground="sheet" data-density="mid" data-width="split" data-loud="picture" data-medium="grid">
+  <div class="wrap find-g">
+    <h2>Where to find your numbers</h2>
+    <figure class="find-fig">
+      <div class="pic">
+        <div class="scr-win" role="img" aria-label="Sample: a job list for the last 3 months beside the invoices. Job 4536 for Tom Davis, finished October 12, invoice sent. Job 4534 for David Wilson, finished October 9, no invoice, circled in pencil. Job 4533 for John Smith, finished October 9, invoice sent. Job 4531 for Mary Johnson, finished October 8, invoice paid.">
+          <div class="win-tb" aria-hidden="true" data-ui-ok="fake-chrome R6: the one window frame for computer tasks; Franco kept the Mac buttons (Oct 6)"><i></i><i></i><i></i><span>Jobs finished, last 3 months</span></div>
+          <div class="win-b"><table class="dt">
+            <tr><th>Job</th><th>Finished</th><th>Invoice</th></tr>
+            <tr><td>4536<br>Davis, Tom</td><td>Oct 12</td><td>Sent</td></tr>
+            <tr><td>4534<br>Wilson, David</td><td>Oct 9</td><td><span class="pc">None</span></td></tr>
+            <tr><td>4533<br>Smith, John</td><td>Oct 9</td><td>Sent</td></tr>
+            <tr><td>4531<br>Johnson, Mary</td><td>Oct 8</td><td>Paid</td></tr>
+          </table></div>
         </div>
-        <figcaption><b>Calls that rang out</b>Your phone's call history, on the Missed tab. A shop line keeps the same list in its online account. <a class="u" href="/articles/call-history-from-your-phone-company/">How to get 30 days of call history</a></figcaption>
-      </figure>
-      <figure>
-        <div class="pic">
-          <div class="scr-win" role="img" aria-label="Sample: the quote list in a job software, sorted by status. Quote Q-1182 for John Smith sent October 6, no answer; Q-1179 for David Wilson sent October 2, no answer; Q-1175 for Tom Davis sent September 29, won.">
-            <div class="win-tb"><i></i><i></i><i></i><span>Quotes · sorted by status</span></div>
-            <div class="win-b"><table class="dt"><tr><th>Quote</th><th>Customer</th><th>Status</th></tr>
-              <tr class="n"><td>Q-1182</td><td>Smith, John<br>sent Oct 6</td><td><span class="st wt">No answer</span></td></tr>
-              <tr class="n"><td>Q-1179</td><td>Wilson, David<br>sent Oct 2</td><td><span class="st wt">No answer</span></td></tr>
-              <tr><td>Q-1175</td><td>Davis, Tom<br>sent Sep 29</td><td><span class="st ok">Won</span></td></tr></table></div>
-          </div>
-          <span class="samp">Sample</span>
-        </div>
-        <figcaption><b>Quotes that went cold</b>Your job software's quote list, sorted by status. Count only the ones that left late or nobody followed up.</figcaption>
-      </figure>
-      <figure>
-        <div class="pic">
-          <div class="slips" role="img" aria-label="Sample: the same job written three times. A paper ticket, job 4521, Maria Garcia, water heater; the calendar, Wednesday 8 to 12, Maria Garcia; and an invoice in QuickBooks, Maria Garcia, water heater.">
-            <div class="slip ppr"><b>Paper ticket</b><span>#4521 Garcia, Maria</span><span>W/H 50 gal</span></div>
-            <div class="slip"><b>Calendar</b><span>Garcia, Maria</span><span>Wed 8 to 12</span></div>
-            <div class="slip"><b>QuickBooks</b><span>Invoice · Garcia, Maria</span><span>Water heater</span></div>
-          </div>
-          <span class="samp">Sample</span>
-        </div>
-        <figcaption><b>Retyping</b>Time one ordinary day. Every place the same job gets typed: the paper ticket, the calendar, the invoice software. Add them up.</figcaption>
-      </figure>
-    </div>
+        <span class="samp" aria-hidden="true">Sample</span>
+      </div>
+      <figcaption class="cap">A finished job with no invoice. Count every one like it in 3 months.</figcaption>
+    </figure>
+    <ol class="find-rows">
+      <li data-task="invoices"><b>Jobs never billed</b>Your job list beside your invoices for the last 3 months, in QuickBooks or your job app.</li>
+      <li data-task="quotes"><b>Quotes that went cold</b>Your quote list, sorted by status.</li>
+      <li data-task="retyping"><b>Typing the same job twice</b>A stopwatch on one ordinary day.</li>
+      <li data-task="calls"><b>Calls nobody called back</b>Your phone's call history, on the Missed tab, or the shop line's online account. <a class="u" href="/articles/call-history-from-your-phone-company/">How to get 30 days of call history</a></li>
+    </ol>
   </div>
 </section>
 
-<section class="band" id="how" data-ground="paper" data-density="low" data-width="narrow" data-loud="numbers" data-medium="say">
+<section class="band lk-how" id="how" data-ground="paper" data-density="mid" data-width="split" data-loud="steps" data-medium="list">
   <div class="wrap how-g">
-    <div>
+    <div class="how-main">
       <h2>How we count</h2>
       <ol class="how-steps">
-        <li class="rv"><p>Calls that rang out, minus the ones you called back, are the calls nobody returned.</p></li>
-        <li class="rv"><p>A week times 52, divided by 12, gives a month.</p></li>
-        <li class="rv"><p>Times the share that would have booked gives the jobs lost.</p></li>
-        <li class="rv"><p>Times what you keep on a job gives the profit lost.</p></li>
-        <li class="rv"><p>Quotes and retyping, if you fill them in, are added on top.</p></li>
+        <li data-task="retyping"><b>Typing the same job twice.</b> Minutes a day × workdays ÷ 60 × the hourly cost. With no hourly cost it stays as hours, out of the total.</li>
+        <li data-task="invoices"><b>Jobs never billed.</b> The count for 3 months ÷ 3 × your average invoice. The whole invoice, because the parts and the hours are already spent.</li>
+        <li data-task="quotes"><b>Quotes that went cold.</b> Quotes a month × what you keep on a quoted job.</li>
+        <li data-task="calls"><b>Calls nobody called back.</b> (New numbers that rang out − the ones you called back) × 52 weeks ÷ 12 months × the share that would have booked × what you keep on a job.</li>
       </ol>
-      <p class="say say-sm" style="margin-top:48px">Not counted here: reviews <span class="inpic" role="img" aria-label="star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z"/></svg></span>, past customers nobody called back <span class="inpic" role="img" aria-label="phone"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M10.5 18.5h3"/></svg></span> and texts in one language <span class="inpic es" role="img" aria-label="Spanish">ES</span>.</p>
-      <p class="say-after">The walk looks at those too.</p>
+      <p class="how-sum">The total adds the lines you filled in, rounded to the nearest ten dollars.</p>
+    </div>
+    <div class="how-auto" id="automate">
+        <h3>What this leaves out</h3>
+        <ul class="auto-list">
+          <li data-task="bills">Supplier bills that don't match the quote.</li>
+          <li data-task="bills">Supply-house tickets with no job number.</li>
+          <li data-task="email">Reading emails and filing the attachments by hand.</li>
+          <li data-task="reminders">Reminding crew and customers, one at a time.</li>
+          <li data-task="calendar">Keeping every calendar up to date by hand.</li>
+          <li data-task="numbers">Adding up the month-end numbers.</li>
+        </ul>
+        <p class="auto-close">A walk looks at all of it. <a class="u" href="/what-we-automate/">See the full list</a></p>
     </div>
     <div class="why">
-      <div class="keynum">
-        <div><b>42%</b><p>of calls booked, on average, in a study of more than 3,000 trade businesses</p><small>ServiceTitan, 2022, vendor data, US and Canada.</small></div>
-        <div><b>24%</b><p>of calls booked at shops with fewer than 5 technicians, in the same study</p><small>ServiceTitan, 2022, vendor data, US and Canada.</small></div>
-      </div>
-      <div><h3>Why profit, not the ticket price?</h3><p>A lost job costs you what you would have kept, not the whole invoice. Our walk sheets count it the same way.</p></div>
-      <div><h3>Why only an estimate?</h3><p>Your guesses carry the answer. The walk replaces them with counts from your call history, your quotes and your invoices.</p></div>
-      <p><a class="u" href="/articles/missed-call-cost/">How to count what a missed call costs your shop</a></p>
+            <div class="src"><h3>Where the example numbers come from</h3><ul><li>24%: what shops with fewer than 5 technicians booked in a study of more than 3,000 trade businesses in the US and Canada; all of them booked 42% (ServiceTitan blog, 2022, vendor data).</li><li>$150 kept on a job: $341, HomeAdvisor's national average plumber visit (2026), × 44.3%, Level's median job gross margin (vendor data), rounded.</li><li>The other examples are round numbers, not data.</li></ul></div>
     </div>
   </div>
 </section>
 
-<section class="band seam" id="close" data-ground="bone" data-density="mid" data-width="split" data-loud="closing" data-medium="close" style="--hole:var(--paper)">
-  <div class="wrap ar-split">
-    <div>
-      <p class="tab"><span class="tab-n">→</span>Next stop · Your shop</p>
+<section class="band seam hm4-close lk-close" id="contact" style="--hole:var(--paper)" data-ground="bone" data-density="mid" data-width="split" data-loud="close" data-medium="close">
+  <div class="wrap close-g">
+    <div class="c4-main">
       <h2 class="t-close close-h">Want the real numbers?</h2>
       <div class="close-act">
-        <div class="arrow-to"><a class="btn btn-lg" href="tel:+13522260681">Call (352) 226-0681</a><svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg></div>
-        <p class="t-lede">A free call, up to 20 minutes. We look your shop up on Google first and bring one number from it.</p>
-        <a class="btn btn-o btn-sm" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
-        <p class="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</p>
-        <div class="mb-box"><h3>Money back</h3><p class="mb"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <span class="red">the walk fee back</span>. You keep the sheet.</p></div>
+        <div class="arrow-to">
+          <a class="btn btn-lg" href="tel:+13522260681">Call or text us</a>
+          <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
+        </div>
+        <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
       </div>
+      <p class="lk-close-p"><span data-shared="step1.what">A free call, up to 20 minutes.</span> Bring your estimate, and we'll tell you whether a walk fits your shop and what it costs. Fixes are built inside the tools you already use.</p>
     </div>
-    <div class="page" style="--hole:var(--bone)">
-      <dl class="cblock trim" style="margin-top:0">
-        <div><dt>Owner</dt><dd>Franco A. Soto, owner</dd></div>
-        <div><dt>Call or text</dt><dd><a class="u big-tel" href="tel:+13522260681">(352) 226-0681</a></dd></div>
-        <div><dt>Email</dt><dd><a class="u" href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></dd></div>
-        <div><dt>Where</dt><dd>Gainesville, serving Alachua County. Farther in Florida by arrangement.</dd></div>
-        <div><dt>Language</dt><dd>English or Spanish</dd></div>
-        <div><dt>When we answer</dt><dd>Same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</dd></div>
-      </dl>
-      <p class="honest-s">Ask anything on the free call.</p>
-    </div>
+    <dl class="c4-hours lk-rows">
+      <div><dt>The walk</dt><dd><p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward a fix of $1,500 or more that starts within 30 days.</span></p></dd></div>
+      <div><dt>Money back</dt><dd><p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> You keep the sheet. <a class="u" href="/how-it-works/#terms">Full terms</a></p></dd></div>
+      <div><dt>Hours</dt><dd><span data-shared="hours">Monday to Friday, 9 a.m. to 5 p.m.</span></dd></div>
+      <div><dt>Reply time</dt><dd><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span></dd></div>
+      <div><dt>Language</dt><dd>English or Spanish</dd></div>
+      <div><dt>Rules we keep</dt><dd><ul><li>We build inside what you already pay for.</li><li>No filming or recording without your OK.</li><li>Say no once, and that's the end of it.</li></ul></dd></div>
+    </dl>
+    <nav class="pl-more" aria-labelledby="pl-more-k">
+      <p class="t-label" id="pl-more-k">Every trade we walk</p>
+      <ul class="pl-trades" data-trades>
+        <li><a href="/industries/plumbing/">Plumbing</a></li>
+        <li><a href="/industries/ac-and-heating/">AC and heating</a></li>
+        <li><a href="/industries/electrical/">Electrical</a></li>
+        <li><a href="/industries/water-damage-and-mold/">Water damage and mold</a></li>
+        <li><a href="/industries/pest-control/">Pest control</a></li>
+        <li><a href="/industries/roofing/">Roofing</a></li>
+        <li><a href="/industries/restaurants-and-bars/">Restaurants and bars</a></li>
+        <li><a href="/industries/property-managers/">Property managers</a></li>
+      </ul>
+    </nav>
   </div>
 </section>
 </main>
 
 <footer class="foot">
   <div class="wrap foot-g">
-    <img src="/v3/assets/logo.svg" alt="Lumora" width="104" height="25">
-    <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/">Loss calculator</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/articles/">Articles</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
+    <img src="/v4/assets/logo.svg" alt="Lumora" width="104" height="25">
+    <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/what-we-automate/">What we automate</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/" aria-current="page">Loss calculator</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/articles/">Articles</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
     <p>Lumora Group LLC, a Florida company. Gainesville, serving Alachua County. Every shop, name and number marked Sample is made up.</p>
   </div>
 </footer>
 
 <nav class="callbar" aria-label="Call or text us"><a href="tel:+13522260681">Call</a><a href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text</a></nav>
+
+<script>
+/* The loss calculator. All the math runs here, in the visitor's browser: no fetch, no storage, no form action, and Enter never
+   submits. Only the owner's own input moves the figure. A line counts once all its boxes are filled; the total adds the lines
+   and rounds to $10. Formulas: delivery/walk-kit/_build/leak_math.py (retyping, never_invoiced with nothing free on purpose,
+   late_quotes, the calls row of leak_check); check.py's calc_problems types sets of numbers in and compares every line with it. */
+(function () {
+  'use strict';
+  var form = document.getElementById('lk'); if (!form) return;
+  var still = /[?&]still\b/.test(location.search) || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var F = ['minutes', 'days', 'rate', 'unbilled', 'avg', 'quotes', 'qprofit', 'rang', 'back', 'book', 'profit'];
+  var NAMES = { minutes: 'Minutes a day', days: 'Workdays', rate: 'Hourly cost', unbilled: 'Jobs never billed', avg: 'Average invoice',
+    quotes: 'Quotes', qprofit: 'Kept on a quoted job', rang: 'Calls that rang out', back: 'Calls called back', book: 'Share that booked', profit: 'Kept on a job' };
+  var LEFT = 'Left out: fill in its boxes to add it.';
+  var inp = function (n) { return form.elements[n]; };
+  var o = function (k) { return $('[data-o="' + k + '"]'); };
+  var num = function (v) { v = String(v).replace(/[$,%\s]/g, ''); return v === '' ? NaN : +v; };
+  var usd = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+  var cash = function (n) { return Number.isInteger(n) ? usd(n) : '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };   // what he typed, cents kept
+  var one = function (n) { return (Math.round(n * 10) / 10).toFixed(1); };
+  var plain = function (n) { return String(+n.toFixed(2)); };
+  var SMS = 'sms:+13522260681?&body=';
+  var EX = {}, shown = null, firstRun = true, liveT = 0, deb = 0;
+  F.forEach(function (n) { EX[n] = inp(n).value; });   // the examples are the markup's own values, so the two can't drift
+
+  // each box gets its own error line, right under it and tied to it with aria-describedby (a phone never hunts for it)
+  F.forEach(function (n) {
+    var lf = inp(n).closest('.lf'), e = document.createElement('p');
+    e.className = 'lf-err'; e.id = 'e-' + n; lf.insertBefore(e, lf.querySelector('.lf-h'));
+  });
+  function mark(bad, msg) {
+    F.forEach(function (n) {
+      var el = inp(n), e = document.getElementById('e-' + n), on = n === bad;
+      e.textContent = on ? msg : '';
+      var ids = (el.getAttribute('aria-describedby') || '').split(' ').filter(function (x) { return x && x !== e.id; });
+      if (on) { el.setAttribute('aria-invalid', 'true'); ids.unshift(e.id); } else el.removeAttribute('aria-invalid');
+      if (ids.length) el.setAttribute('aria-describedby', ids.join(' ')); else el.removeAttribute('aria-describedby');
+    });
+  }
+  function problem(v) {   // the first problem: [box, the words under it, the short words for the phone bar]
+    for (var i = 0; i < F.length; i++) {
+      var n = F[i];
+      if (inp(n).value.trim() !== '' && (isNaN(v[n]) || v[n] < 0)) return [n, 'Use a number of 0 or more.', NAMES[n] + ' needs a number'];
+    }
+    if (v.minutes > 1440) return ['minutes', 'A day has 1,440 minutes.', 'too many minutes for a day'];
+    if (v.days > 31) return ['days', 'A month has 31 days at most.', 'too many workdays'];
+    if (v.back > v.rang) return ['back', "Calls you called back can't be more than the calls that rang out.", 'more called back than rang out'];
+    if (v.book > 100) return ['book', 'Use a share from 0 to 100.', 'the share goes from 0 to 100'];
+    return null;
+  }
+  function line(key, text, value) {
+    var li = o(key);
+    li.innerHTML = '<span' + (value ? '' : ' class="off"') + '><b>' + li.getAttribute('data-name') + '</b>' + text + '</span>' + (value ? '<span class="v">' + value + '</span>' : '');
+  }
+  function roll(el, from, to) {   // job: cause and effect. The figure moves only because the owner changed a box.
+    var fmt = function (n) { return usd(Math.round(n / 10) * 10); };
+    var t = el.firstChild && el.firstChild.nodeType === 3 ? el.firstChild : el.insertBefore(document.createTextNode(''), el.firstChild);
+    var ring = function () { var L = window.Lumora; if (L && L.ring) L.ring(el.querySelector('.pen-ring')); };
+    if (still || from == null || from === to) { t.nodeValue = fmt(to); if (from != null) ring(); return; }
+    var t0 = performance.now();
+    (function step(now) {
+      var k = Math.min(1, (now - t0) / 500), e = 1 - Math.pow(1 - k, 3);
+      t.nodeValue = fmt(from + (to - from) * e);
+      if (k < 1) requestAnimationFrame(step); else ring();
+    })(t0);
+  }
+
+  function calc() {
+    var v = {}; F.forEach(function (n) { v[n] = num(inp(n).value); });
+    var err = problem(v);
+    mark(err && err[0], err ? err[1] : '');
+    var has = function (ks) { return ks.every(function (k) { return !isNaN(v[k]); }); };
+    // the math, as leak_math.py has it; rounded only for display
+    var hours = has(['minutes', 'days']) ? v.minutes * v.days / 60 : null;
+    var retype = hours !== null && has(['rate']) ? hours * v.rate : null;
+    var unbilled = has(['unbilled', 'avg']) ? v.unbilled / 3 * v.avg : null;
+    var quotes = has(['quotes', 'qprofit']) ? v.quotes * v.qprofit : null;
+    var notBack = v.rang - v.back, month = notBack * 52 / 12, jobs = month * v.book / 100;
+    var calls = has(['rang', 'back', 'book', 'profit']) ? jobs * v.profit : null;
+    var parts = [retype, unbilled, quotes, calls].filter(function (x) { return x !== null; });
+    var ok = !err && parts.length > 0, bar = o('bar');
+    o('result').hidden = !ok; o('empty').hidden = ok;
+    bar.closest('.lk-bar').classList.toggle('bad', !!err);
+    o('barl').textContent = err ? 'Check:' : o('stamp').hidden ? 'Your estimate' : 'Example';
+    o('sms').textContent = ok ? 'Text us this estimate' : 'Or send us a text';
+    if (!ok) {
+      var only = !err && hours !== null;   // typing hours with no hourly cost, and nothing else yet: say the hours, not an error
+      var msg = only ? one(hours) + ' hours a month typing the same job twice. Add an hourly cost, or another group, to see dollars.'
+        : 'Fill in one group of boxes to see your estimate.';
+      o('empty').textContent = err ? 'Fix the box marked in the form to see your estimate.' : msg;
+      bar.textContent = err ? err[2] : only ? one(hours) + ' hours a month' : 'Fill in one group of boxes';
+      o('sms').href = SMS + encodeURIComponent('Hi, I saw your website. When is a good time for the free call?');
+      return err ? err[1] : msg;
+    }
+    if (retype !== null) line('l-retype', plain(v.minutes) + ' minutes a day × ' + plain(v.days) + ' days ÷ 60 = ' + one(hours) + ' hours × ' + cash(v.rate) + ' an hour = ' + usd(retype) + ' a month.', usd(retype));
+    else if (hours !== null) line('l-retype', plain(v.minutes) + ' minutes a day × ' + plain(v.days) + ' days ÷ 60 = ' + one(hours) + ' hours a month. With no hourly cost these are hours, not dollars, so they stay out of the total.');
+    else line('l-retype', LEFT);
+    if (unbilled !== null) line('l-unbilled', plain(v.unbilled) + (v.unbilled === 1 ? ' job' : ' jobs') + ' in 3 months ÷ 3 × ' + cash(v.avg) + ' average invoice = ' + usd(unbilled) + ' a month.', usd(unbilled));
+    else line('l-unbilled', isNaN(v.unbilled) ? 'Left blank.' : LEFT);
+    if (quotes !== null) line('l-quotes', plain(v.quotes) + ' a month × ' + cash(v.qprofit) + ' kept on a job = ' + usd(quotes) + ' a month.', usd(quotes));
+    else line('l-quotes', LEFT);
+    if (calls !== null) line('l-calls', plain(v.rang) + ' rang out − ' + plain(v.back) + ' called back = ' + plain(notBack) + ' a week × 52 ÷ 12 = ' + one(month) + ' a month × ' + plain(v.book) + '% booked = ' + plain(jobs) + (jobs === 1 ? ' job' : ' jobs') + ' × ' + cash(v.profit) + ' kept on a job = ' + usd(calls) + ' a month.', usd(calls));
+    else line('l-calls', LEFT);
+    var total = parts.reduce(function (a, b) { return a + b; }, 0), r10 = Math.round(total / 10) * 10, moved = !firstRun && r10 !== shown;
+    roll(o('total'), firstRun ? null : shown, r10); shown = r10; firstRun = false;
+    var words = 'About ' + usd(r10) + ' a month';
+    bar.textContent = words;
+    if (moved && !still) { bar.classList.remove('bump'); void bar.offsetWidth; bar.classList.add('bump'); }
+    o('sms').href = SMS + encodeURIComponent('Hi, I used the loss calculator on your site: about ' + usd(r10) + ' a month. When is a good time for the free call?');
+    return 'Your estimate: ' + words + '.';
+  }
+
+  function announce(msg) {   // one polite announcement once he stops typing, not one per keystroke
+    clearTimeout(liveT);
+    liveT = setTimeout(function () { o('live').textContent = msg; }, 700);
+  }
+  function edited(n) {
+    var tag = $('[data-ex="' + n + '"]'); if (tag) tag.hidden = true;
+    o('stamp').hidden = true;
+  }
+  F.forEach(function (n) {
+    var el = inp(n);
+    el.addEventListener('input', function () { edited(n); clearTimeout(deb); deb = setTimeout(function () { announce(calc()); }, 250); });
+    el.addEventListener('keydown', function (e) { if (e.key === 'Enter') e.preventDefault(); });
+  });
+  $$('[data-step]', form).forEach(function (b) {
+    b.addEventListener('click', function () {
+      var el = inp(b.getAttribute('data-for')), v = num(el.value);
+      el.value = Math.max(0, (isNaN(v) ? 0 : v) + +b.getAttribute('data-step')); edited(el.name); announce(calc());
+    });
+  });
+  form.addEventListener('submit', function (e) { e.preventDefault(); });
+  $('[data-act="reset"]', form).addEventListener('click', function () {
+    F.forEach(function (n) { inp(n).value = EX[n]; var t = $('[data-ex="' + n + '"]'); if (t) t.hidden = false; });
+    o('stamp').hidden = false; announce(calc());
+  });
+  $('[data-act="clear"]', form).addEventListener('click', function () {
+    F.forEach(function (n) { inp(n).value = ''; var t = $('[data-ex="' + n + '"]'); if (t) t.hidden = true; });
+    o('stamp').hidden = true; announce(calc()); inp(F[0]).focus();
+  });
+  calc();
+
+  // the phone bar is sticky; a focused box must never sit under it (WCAG 2.4.11). system.js clears the header and call bar only.
+  var barBox = $('.lk-bar');
+  document.addEventListener('focusin', function (e) {
+    if (!barBox || !barBox.getClientRects().length || !form.contains(e.target)) return;
+    requestAnimationFrame(function () {   // after the browser's own focus scroll
+      var r = e.target.getBoundingClientRect(), b = barBox.getBoundingClientRect();
+      if (r.top < b.bottom + 4 && r.bottom > b.top) window.scrollBy({ top: r.top - b.bottom - 16, behavior: 'instant' });
+    });
+  });
+})();
+</script>
 </body>
 </html>
