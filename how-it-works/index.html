@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>How it works | Lumora</title>
-<meta name="description" content="A free call of up to 20 minutes, a walk that puts a dollar figure on what your shop leaks, one fix inside your own tools, then a monthly check you can cancel any month.">
+<meta name="format-detection" content="telephone=no">   
+<title>How it works | Lumora, Gainesville FL</title>
+<meta name="description" content="A free call of up to 20 minutes, a paid walk of your shop and your records that puts a dollar figure on each problem, then one fix inside your own tools and a monthly check you can cancel any month.">
 <link rel="canonical" href="https://lumorafl.com/how-it-works/">
 <link rel="alternate" hreflang="en" href="https://lumorafl.com/how-it-works/">
 <link rel="alternate" hreflang="es" href="https://lumorafl.com/es/how-it-works/">
@@ -22,28 +23,244 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="es_US">
 <meta name="theme-color" content="#F6F5F2">
-<link rel="icon" href="/v3/assets/mark.svg">
-<link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v3/system.css?v=e3291eab">
-<link rel="stylesheet" href="/v3/how-about/how-about.css?v=e3291eab">
-<script>document.documentElement.classList.add('js')</script>
-<script src="/v3/trades.js?v=e3291eab" defer></script>
-<script src="/v3/system.js?v=e3291eab" defer></script>
-<script src="/v3/how-about/how-about.js?v=e3291eab" defer></script>
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="/v4/assets/mark.svg">
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/v4/system.css?v=d561bbbe">
+<link rel="stylesheet" href="/v4/trade-page.css?v=d561bbbe">
+<script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
+<script src="/v4/trades.js?v=d561bbbe" defer></script>
+<script src="/v4/system.js?v=d561bbbe" defer></script>
+<style>
+/* ===== How it works, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
+   32, 44, 64), and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
+.step-h{display:flex;align-items:center;gap:14px}
+.step-h .tab-n{width:44px;height:44px;font-size:20px}
+.step-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:12px;font-size:17px;color:var(--body)}
+[data-ground=night] .step-meta{color:var(--on-night)}
+[data-ground=night] .tl-tag{border-color:var(--on-night);color:var(--on-night)}
+
+/* 1 hero: words and the call block, then the 4-row timeline (R12); split on a computer, the timeline on the right */
+.hiw-hero{padding-bottom:48px}
+.hiw-g{display:grid;gap:28px}
+.hiw-copy h1{max-width:11em}
+.hiw-copy .cta{margin-top:24px}
+.hiw-tl .tl-stop{font-size:17px;color:var(--muted);padding-bottom:12px}
+.hiw-tl .tl4>li{grid-template-columns:none}
+.hiw-tl .tl-head{flex-direction:row;align-items:baseline}
+.hiw-tl .tl4>li.tl-big{margin-inline:0}
+.hiw-tl .tl4 .price,.hiw-tl .tl4 .mb{font-size:17px}
+.tl-go{justify-self:start;font-size:15px;padding-block:12px;margin-block:-10px -12px}   /* each row jumps to its step (H1); a 44px tall tap area without moving the layout */
+@media (min-width:900px){
+  .hiw-g{grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:56px;align-items:start}
+  .hiw-copy{position:sticky;top:112px}
+  .hiw-tl .tl4>li.tl-big{padding:26px 26px 24px}
+}
+
+/* 2 the free call: the page's type-only rest (one big sentence, three short lines) */
+.fc .fc-big{margin-top:20px;font-size:clamp(20px,2.5vw,32px);font-weight:500;line-height:1.3;letter-spacing:-.01em;color:var(--ink);max-width:22em}
+.fc p:not(.fc-big):not(.step-meta){margin-top:14px;font-size:17px;max-width:34em}
+
+/* 3 the walk: price beside the heading, the walk page of four stops beside records and sheet, the two lists, full terms */
+.wk-top{display:grid;gap:22px}
+.wk-top .t-lede{margin-top:14px;max-width:30em}
+.wk-price{display:grid;gap:10px;align-self:end;padding-top:14px;border-top:2px solid var(--ink)}
+.wk-parts{display:grid;gap:30px;margin-top:34px}
+.wk-page .wk-ph{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.wk-page h3{margin-bottom:4px}
+.wk-page .wk-sub{font-size:17px;color:var(--body);max-width:30em}
+.wstops{margin-top:14px;border-top:1px solid var(--rule)}
+.wstops li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:2px 12px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.wstops .tab-n{grid-row:1/3}
+.wstops b{font-size:20px;line-height:1.25;color:var(--ink)}
+.wstops b small{font-size:15px;font-weight:500;color:var(--muted)}
+.wstops .pencil{font-size:17px}
+.wk-follow{margin-top:14px;font-size:17px}
+.wk-text{display:grid;gap:22px;align-content:start}
+.wk-text h3{margin-bottom:6px}
+.wk-text p{font-size:17px;max-width:34em}
+.wk-keep{font-size:20px!important;font-weight:600;color:var(--ink);line-height:1.35}
+.wk-lists{display:grid;gap:28px;margin-top:40px}
+.wk-lists h3{margin-bottom:6px}
+.checks li,.nevers li{position:relative;padding:9px 0 9px 32px;border-top:1px solid var(--rule-bone);font-size:17px}
+.checks li:first-child,.nevers li:first-child{border-top:0}
+.checks li::before{content:"";position:absolute;left:4px;top:15px;width:13px;height:7px;border-left:2.4px solid var(--ink);border-bottom:2.4px solid var(--ink);transform:rotate(-48deg)}
+.nevers li::before,.nevers li::after{content:"";position:absolute;left:5px;top:21px;width:15px;height:2.4px;background:var(--ink);transform:rotate(45deg)}
+.nevers li::after{transform:rotate(-45deg)}
+.wk-lists .note-r{margin-top:8px;font-size:15px;color:var(--muted);max-width:34em}
+.wk-lists .note-r a{display:inline-block;padding-block:12px;margin-block:-12px}   /* a 44px tall tap area without moving the layout */
+@media (min-width:900px){
+  .wk-top{grid-template-columns:minmax(0,1fr) minmax(0,26em);gap:56px}
+  .wk-parts{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:56px;align-items:start}
+  .wk-lists{grid-template-columns:1fr 1fr;gap:56px}
+}
+
+/* a native disclosure (Full terms, the sources, the cover lists): the facts stay one tap away without a wall of text */
+details:not([open])>:not(summary){display:none}   /* a closed answer takes no room and no count: Chrome lays out closed details content (content-visibility), so Lumora.lint() counted its figures and check.py its words */
+.more{margin-top:28px;border-top:1px solid var(--rule-bone);border-bottom:1px solid var(--rule-bone)}
+.more summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;cursor:pointer;font-weight:600;font-size:17px;color:var(--ink);list-style:none}
+.more summary::-webkit-details-marker{display:none}
+.more summary::after{content:"";width:12px;height:12px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg) translate(-3px,-3px);flex:none}
+.more[open] summary::after{transform:rotate(-135deg) translate(-3px,-3px)}
+.more>div{display:grid;gap:10px;padding:0 0 18px;font-size:17px;max-width:46em}
+
+/* 4 your sheet: the full sample on the clipboard; four columns on a computer, folded rows on a phone */
+.fs-board{margin-top:28px}
+.fs .sheet{padding:22px 16px 18px}
+@media (min-width:700px){.fs .sheet{padding:30px 32px 24px}}
+.fs-src{font-size:15px;color:var(--muted);padding:10px 0 2px}
+.fs-cols{display:flex;justify-content:space-between;font-size:15px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--rule)}
+.fs-cols span:nth-child(2),.fs-cols span:nth-child(4){display:none}   /* a phone folds effort and "how you will see it move" into each row, so only two heads apply */
+.fs-rows>li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.fs-leak b{display:block;font-size:17px;line-height:1.3;color:var(--ink)}
+.fs-leak p{font-size:15px;margin-top:4px;color:var(--body)}
+.fs-leak small{display:block;font-size:15px;color:var(--muted);margin-top:4px}
+.fs-usd{grid-column:2;grid-row:1;position:relative;align-self:start;justify-self:end;font-weight:600;font-size:19px;color:var(--red);white-space:nowrap;text-align:right}
+.fs-usd.unp{color:var(--muted);font-weight:500;font-size:15px}
+.fs-usd .pen-ring{left:-14px;top:-12px;width:calc(100% + 26px);height:calc(100% + 24px)}
+.fs-eff,.fs-move{grid-column:1/-1;font-size:15px;color:var(--body)}
+.fs-eff i,.fs-move i{font-style:normal;font-weight:600;color:var(--muted)}
+.fs-first{display:block;margin-top:4px;font-size:17px}   /* the pencil's note on the suggested first fix */
+.sh-total{margin-top:0}
+.fs-more{margin-top:14px;border-top:1px solid var(--rule);border-bottom:0}
+.fs-more summary{font-size:15px;min-height:48px}
+.fs-more .fs-rows>li:last-child{border-bottom:0}
+@media (min-width:980px){
+  .fs-cols{display:grid;grid-template-columns:minmax(0,2.3fr) 90px 150px minmax(0,1.3fr);gap:20px;padding:10px 0}
+  .fs-cols span:nth-child(2),.fs-cols span:nth-child(4){display:block}
+  .fs-cols span:nth-child(3){text-align:right}
+  .fs-rows>li{grid-template-columns:minmax(0,2.3fr) 90px 150px minmax(0,1.3fr);gap:20px;align-items:start}
+  .fs-usd{grid-column:3;grid-row:1}
+  .fs-eff{grid-column:2;grid-row:1}
+  .fs-move{grid-column:4;grid-row:1}
+  .fs-eff i,.fs-move i{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+}
+.fs-after{display:grid;gap:12px;margin-top:26px;max-width:46em}
+.fs-after p{font-size:17px}
+.fs-after .lead{font-size:20px;line-height:1.4;color:var(--ink)}
+.src-d{margin-top:4px}
+.src-d summary{font-size:15px;min-height:48px}
+.src-d .note-r{font-size:15px;color:var(--muted)}
+
+/* 5 one fix: words and the six kinds of fix on the left, the same fix three ways on the right (a computer) */
+.fx-g{display:grid;gap:34px}
+.fx-copy>p{margin-top:14px;font-size:17px;max-width:34em}
+.fx-copy>p.t-lede{font-size:clamp(17px,1.6vw,20px);color:var(--ink)}
+.fx-ai{color:var(--muted)}
+#automate{margin-top:30px}
+#automate h3{margin-bottom:10px}
+#automate .auto-close{margin-top:12px;font-size:17px}
+#automate .auto-close a{display:inline-block;padding-block:12px;margin-block:-12px}
+.fx-tools h3{margin-bottom:8px}
+.fx-tools>p{font-size:17px;max-width:34em}
+.fx-tools .auto-tools{margin-top:10px}
+.fx-tools .tabs{margin-top:18px}
+.jobscr .win-b{padding:14px}
+.js-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.js-h b{font-size:16px;color:#111}.js-h span{font-size:12px;color:#55555a}
+.js-l{font-size:12px;font-weight:600;color:#55555a;margin:10px 0 4px}
+.js-act{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.js-act span{display:inline-grid;place-items:center;min-height:32px;padding:0 12px;border-radius:7px;font-size:13px;font-weight:600;border:1px solid #b9b9bf;color:#1d1d1f;background:#fff}
+.js-act span.pri{background:#0a57b8;border-color:#0a57b8;color:#fff}
+.js-ok{display:block;margin-top:10px;font-size:13px;color:#1f6b36}
+.fx-tools .doc{padding:16px}
+.fx-tools .xl td,.fx-tools .xl th{max-width:none;white-space:normal}   /* four short columns: each sizes to its words, so "3/4\" T&P relief valve" shows whole at 320 instead of ending in dots */
+.fx-tools .xl tr>:first-child{width:1%;white-space:nowrap}
+@media (min-width:900px){.fx-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}}
+
+/* 6 the monthly check, the page's one ink band: the words beside one printed page, straight (papers never tilt on v4) */
+.mcheck{display:grid;gap:36px}
+.mcheck .prose>p{margin-top:14px;font-size:17px;max-width:34em;color:var(--on-night)}
+@media (min-width:1000px){.mcheck{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}}
+.report{background:var(--sheet);color:var(--body);box-shadow:0 30px 60px rgba(0,0,0,.45);padding:22px 18px 18px;font-family:var(--sys);max-width:520px;margin-inline:auto}
+@media (min-width:600px){.report{padding:28px 28px 22px}}
+.rp-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding-bottom:10px;border-bottom:2px solid #111}
+.rp-h b{display:block;font-family:var(--font);font-size:22px;color:#111;font-weight:600}
+.rp-h small{display:block;font-size:13px;color:#55555a}
+[data-ground=night] .report .stamp{border-color:var(--pencil);color:var(--pencil)}
+.rp-sec{padding:12px 0;border-bottom:1px solid #e2e0da}
+.rp-k{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#55555a}
+.rp-big{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin-top:4px}
+.rp-big .money{font-family:var(--font);font-size:34px;font-weight:600;color:var(--red);line-height:1.05}
+.rp-big span{font-size:14px;color:#3a3a3f}
+.rp-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rp-two p{font-size:14px;color:#3a3a3f}
+.rp-two b{display:block;font-family:var(--font);font-size:24px;color:#111;font-weight:600}
+.rp-two b i{font-style:normal;color:#77757a;font-weight:500}
+.bars{display:grid;grid-template-columns:repeat(8,1fr);align-items:end;gap:6px;height:84px;margin-top:10px;border-bottom:1.5px solid #111}
+.bars span{display:block;background:#8d8a82;height:var(--h)}
+.bars span.f{background:#111}
+.bars-x{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;font-size:12px;color:#55555a;text-align:center;margin-top:4px}
+.bars-key{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:#3a3a3f;margin-top:6px}
+.bars-key i{display:inline-block;width:10px;height:10px;margin-right:5px;vertical-align:-1px;background:#8d8a82}
+.bars-key i.f{background:#111}
+.rp-next{font-size:14px;color:#3a3a3f}
+.rp-next b{font-weight:700;color:#111;white-space:nowrap}   /* ink, not red: $501.00 leads alone (one red per screen) */
+.rp-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 10px;font-size:12px;color:#55555a;padding-top:10px}
+.cover-d{margin-top:36px;border-color:rgba(233,228,216,.22)}
+.cover-d summary{color:#fff}
+.cover-d summary::after{border-color:var(--on-night)}
+.cover{display:grid;gap:18px;margin-top:6px}
+@media (min-width:900px){.cover{grid-template-columns:1fr 1fr;gap:40px}}
+.cover h3{color:#fff;font-size:20px;margin-bottom:6px}
+.cover li{position:relative;padding:8px 0 8px 26px;border-top:1px solid rgba(233,228,216,.16);font-size:17px;color:var(--on-night)}
+.cover .yes li::before{content:"";position:absolute;left:2px;top:15px;width:12px;height:6px;border-left:2.2px solid var(--on-night);border-bottom:2.2px solid var(--on-night);transform:rotate(-48deg)}
+.cover .no li::before{content:"";position:absolute;left:3px;top:20px;width:12px;height:2px;background:var(--muted-night)}
+
+/* 7 questions owners ask: native disclosures, so twelve answers fit a phone without a wall */
+.faq{margin-top:24px;border-top:2px solid var(--ink)}
+.faq details{border-bottom:1px solid var(--rule)}
+.faq summary{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:52px;padding:10px 0;cursor:pointer;list-style:none;font-weight:600;font-size:20px;color:var(--ink);line-height:1.3}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;width:36px;height:36px;display:grid;place-items:center;border:1.5px solid var(--ink);border-radius:50%;font-weight:500;font-size:20px;line-height:1}
+.faq details[open] summary::after{content:"\2212"}
+.faq .ans{padding:0 0 20px;display:grid;gap:12px;max-width:40em}
+.faq .ans p{font-size:17px}
+.faq-more{margin-top:22px;font-size:17px}
+.faq-more a{display:inline-block;padding-block:12px;margin-block:-12px}
+@media (hover:hover) and (pointer:fine){.faq summary:hover::after{background:var(--ink);color:#fff}}
+.faq summary:active::after{background:var(--ink);color:#fff}
+
+/* motion: an opened answer settles in; nothing else on this page moves but the pen ring, which draws once in view */
+@media screen and (prefers-reduced-motion:no-preference){
+  .faq details[open] .ans,.more[open]>div{animation:rise var(--t-small) var(--ease-out)}
+  .more summary::after{transition:transform var(--t-small) var(--ease-out)}
+  .faq summary::after{transition:background-color var(--t-hover),color var(--t-hover)}
+}
+
+/* phone length (budget 13,000px at 390) */
+@media (max-width:699px){
+  .hiw-hero{padding-bottom:36px}
+  .hiw-g{gap:24px}
+  .hiw-tl .tl4>li{padding-block:16px}
+  .hiw-tl .tl4>li.tl-big{padding:20px 16px}
+  .step-h .tab-n{width:40px;height:40px}
+  .fs-leak{display:contents}
+  .fs-leak b{grid-column:1;grid-row:1}
+  .fs-leak p,.fs-leak small{grid-column:1/-1;margin-top:0}   /* what we saw runs the full width under the name and the figure */
+  .fs-rows>li{gap:4px 12px;padding:14px 0}
+  .checks li,.nevers li{padding:7px 0 7px 30px}
+  .checks li::before{top:13px}.nevers li::before,.nevers li::after{top:19px}
+  .wk-lists{margin-top:30px}
+  .wk-parts{margin-top:28px}
+  .wstops li{padding:12px 0}
+  .page.wk-page{padding:30px 16px 18px}
+}
+</style>
 </head>
-<body data-trade="plumbing">
+<body data-trade="plumbing" data-rules="v4">
 <a class="skip" href="#main">Skip to content</a>
 
 <div class="util">
   <div class="wrap util-in">
     <span>Gainesville, serving Alachua County</span>
-    <span class="util-r"><span class="lang" role="group" aria-label="Language"><a href="#" aria-current="true">EN</a><a href="/es/how-it-works/" lang="es" hreflang="es">ES</a></span></span>
+    <span class="util-r"><span class="lang" role="group" aria-label="Language"><a href="/how-it-works/" aria-current="true">EN</a><a href="/es/how-it-works/" lang="es" hreflang="es">ES</a></span></span>
   </div>
 </div>
 <header class="hdr">
   <div class="wrap hdr-in">
-    <a class="brand" href="/" aria-label="Lumora, home page"><img src="/v3/assets/logo.svg" alt="" width="124" height="30"></a>
+    <a class="brand" href="/" aria-label="Lumora, home page"><img src="/v4/assets/logo.svg" alt="" width="124" height="30"></a>
     <nav class="nav" id="nav" aria-label="Main">
       <ul>
         <li><a class="u" href="/how-it-works/" aria-current="page">How it works</a></li>
@@ -55,152 +272,129 @@
       </ul>
     </nav>
     <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
-    <a class="btn btn-sm" href="tel:+13522260681">Call or text</a>
-    <span class="lang" role="group" aria-label="Language"><a href="#" aria-current="true">EN</a><a href="/es/how-it-works/" lang="es" hreflang="es">ES</a></span>
+    <a class="btn btn-sm" href="tel:+13522260681">Call or text us</a>
+    <span class="lang" role="group" aria-label="Language"><a href="/how-it-works/" aria-current="true">EN</a><a href="/es/how-it-works/" lang="es" hreflang="es">ES</a></span>
     <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   </div>
 </header>
 
 <main id="main">
 
-<section class="hero-a" id="top" data-ground="ruled" data-density="mid" data-width="split" data-loud="H1" data-medium="timeline">
-  <div class="wrap ar-split">
-    <div>
-      <p class="kick-h">How it works</p>
-      <h1>A free call, a paid walk, one fix, then a monthly check.</h1>
-      <p class="t-lede">You can stop after any step. The sheet is yours either way.</p>
+<section class="hero hiw-hero" id="top" data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="timeline">
+  <div class="wrap hiw-g">
+    <div class="hiw-copy">
+      <h1>What happens after you call us</h1>
+      <p class="t-lede">The free call tells us whether a walk fits your shop. The walk is the first paid step, and it ends in a sheet with a dollar figure on every problem.</p>
       <div class="cta">
         <div class="cta-row">
-          <a class="btn btn-lg" href="tel:+13522260681">Call or text us</a>
+          <a class="btn btn-lg" href="tel:+13522260681" data-first="the call button">Call or text us</a>
           <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
+          <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
         </div>
-        <p class="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day. English or Spanish.</p>
-        <p class="cta-note">The first call is free and takes up to 20 minutes. <a class="u" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
-        <p class="mb"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <span class="red">the walk fee back</span>. <a class="u" href="#terms">Full terms</a></p>
+        <p class="reply"><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span> English or Spanish.</p>
       </div>
-      <nav class="jump" aria-label="On this page">
-        <p>On this page</p>
-        <ul>
-          <li><a href="#s1">1. The free call</a></li>
-          <li><a href="#s2">2. The walk</a></li>
-          <li><a href="#s3">3. One fix</a></li>
-          <li><a href="#s4">4. The monthly check</a></li>
-          <li><a href="#sample">Sample sheet</a></li>
-          <li><a href="#faq">Questions</a></li>
-        </ul>
-      </nav>
     </div>
-    <div class="glance" id="glance" data-once>
-      <div class="gl-h"><h2>At a glance</h2><span class="gl-key"><i class="sq" aria-hidden="true"></i>Filled squares: where money changes hands</span></div>
-      <ol class="gl seq">
-        <li><span class="gl-ico" aria-hidden="true"><svg viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M100-118.46V-860h760v600H241.54L100-118.46ZM216-320h584v-480H160v535.39L216-320Zm-56 0v-480 480Zm90-90h300v-60H250v60Zm0-120h460v-60H250v60Zm0-120h460v-60H250v60Z"/></svg></span>
-          <span class="gl-when">Before</span><b>A call of up to 20 minutes</b><p>Free. We look your shop up on Google first and bring one number from it.</p></li>
-        <li class="paid"><span class="gl-ico" aria-hidden="true"><svg viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M140-104.62v-750.76l55.39 49.230 56.92-49.23 56.92 49.23 56.92-49.23 56.93 49.23L480-855.38l56.92 49.23 56.93-49.23 56.92 49.23 56.920-49.23 56.92 49.23L820-855.38v750.76l-55.39-49.23-56.92 49.23-56.92-49.23-56.92 49.23-56.93-49.23L480-104.62l-56.92-49.23-56.93 49.23-56.92-49.23-56.92 49.23-56.92-49.23L140-104.62Zm110-197.69h460v-60H250v60ZM250-450h460v-60H250v60Zm0-147.690h460v-60H250v60ZM200-196h560v-568H200v568Zm0-568v568-568Z"/></svg></span>
-          <span class="gl-when">Booking<span class="sr">, paid step</span></span><b>The walk is paid when booked</b><p class="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward a fix of $1,500 or more that starts within 30 days.</p></li>
-        <li><span class="gl-ico" aria-hidden="true"><svg viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M233.76-177.690q-46.84 0-79.53-32.760T121.54-290H53.85v-490h616.92v152.31h106.15l129.23 173.08V-290h-72.3q0 46.79-32.79 79.55-32.78 32.76-79.61 32.76t-79.53-32.76q-32.69-32.76-32.69-79.55H346.15q0 46.92-32.78 79.61-32.78 32.7-79.61 32.7Zm.09-60q22 0 37.15-15.16Q286.15-268 286.15-290T271-327.16q-15.15-15.15-37.15-15.15t-37.16 15.15Q181.54-312 181.54-290q0 22 15.15 37.15 15.16 15.16 37.16 15.16ZM113.85-350h28.92q12.77-22.23 36.88-37.27 24.12-15.04 54.2-15.04 29.3 0 53.8 14.85 24.5 14.85 37.27 37.46h285.85v-370H113.85v370Zm607.69 112.31q22 0 37.15-15.16Q773.85-268 773.85-290t-15.16-37.16q-15.15-15.15-37.15-15.15t-37.16 15.15Q669.23-312 669.23-290q0 22 15.15 37.15 15.16 15.16 37.16 15.16ZM670.77-430H850L746.15-567.69h-75.38V-430Z"/></svg></span>
-          <span class="gl-when">Week 1</span><b>The visit, sized to your shop</b><p>The phone, the whiteboard, the trucks and the invoice pile. You sign the OK for the call history.</p></li>
-        <li><span class="gl-ico" aria-hidden="true"><svg viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M743-100q-116.54 0-232.12-51.89-115.57-51.88-211.15-147.65-95.57-95.77-147.65-211.42Q100-626.61 100-743v-37h206.77l35.46 182.15-110.92 107.7q24.69 43.23 52.84 80.34 28.16 37.12 59.54 67.89 30.54 31.31 67.93 59.15 37.38 27.85 83.15 53.54L605-341.38l175 35.61V-100h-37ZM202.92-546.92l74.85-71.39L257.69-720h-97.07q3.07 45.38 13.65 88.35 10.58 42.96 28.65 84.730Zm348 345.69q38.46 17.77 82.04 27.96 43.58 10.19 87.04 12.04v-96.08l-94.77-19-74.31 75.08ZM480-800v-60h380v60H480Zm0 147.69v-60h380v60H480Zm0 147.69v-60h380v60H480Z"/></svg></span>
-          <span class="gl-when">The data</span><b>The past 30 days of calls</b><p>From the history your phone company keeps. Only where none exists, a 30-day tally by the phone.</p></li>
-        <li><span class="gl-ico" aria-hidden="true"><svg viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M290-290h260v-60H290v60Zm0-160h380v-60H290v60Zm0-160h380v-60H290v60ZM140-140v-680h680v680H140Zm60-60h560v-560H200v560Zm0 0v-560 560Z"/></svg></span>
-          <span class="gl-when">About 5 business days</span><b>The sheet, on a walkthrough call</b><p>Every leak with a dollar figure next to it, and the effort to fix it. Bigger shops get a quote and a date on the free call.</p></li>
-        <li class="paid"><span class="gl-ico" aria-hidden="true"><svg viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M724.62-110.31 447.08-389.08q-21.16 9.16-43 14.12-21.85 4.96-46.39 4.96-95.77 0-162.88-67.12-67.12-67.11-67.12-162.88 0-31 7.89-59.27 7.88-28.27 22.42-53.81l143.69 142.93L387.54-656 245.39-798.92q25.53-14.54 53.42-22.81 27.88-8.27 58.88-8.27 95.77 0 162.89 67.12 67.11 67.11 67.11 162.88 0 25.31-4.77 47.15-4.770 21.85-14.31 42.24l278.77 277.53-122.76 122.77Zm0-85.53 36.61-36.62-266.38-266.39q16.84-20.77 24.84-47.27 8-26.5 8-53.88 0-66.54-47.54-117.77Q432.61-769 359.84-768l112 112-170.15 170.15-112-112q.15 77 51.77 122.43Q293.08-430 357.69-430q26.39 0 52.58-7.81 26.19-7.8 47.96-24.42l266.39 266.39Z"/></svg></span>
-          <span class="gl-when">Within 30 days<span class="sr">, paid step</span></span><b>The fix starts, if you want it</b><p>Priced from the sheet. The walk's price counts toward a fix of $1,500 or more.</p></li>
-        <li class="paid"><span class="gl-ico" aria-hidden="true"><svg viewBox="-3 -3 30 30"><path fill="currentColor" transform="matrix(0.025 0 0 0.025 0 24)" d="M140-100v-680h127.69v-84.61h61.54V-780h303.08v-84.61h60V-780H820v680H140Zm60-60h560v-387.69H200V-160Zm0-447.69h560V-720H200v112.31Zm0 0V-720v112.31Z"/></svg></span>
-          <span class="gl-when">Every month<span class="sr">, paid step</span></span><b>The check</b><p>What the fix did, what broke, the next leak. Cancel any month.</p></li>
+    <div class="hiw-tl">
+      <h2 class="sr">The steps</h2>
+      <p class="tl-stop"><span data-shared="steps.stop">You can stop after any of them.</span></p>
+      <ol class="tl4">
+        <li>
+          <div class="tl-head"><h3 data-first="the first step"><span data-shared="step1.when">Today</span></h3><span class="tl-tag free"><span data-shared="step1.cost">Free</span></span></div>
+          <div class="tl-body">
+            <p class="t-body"><span data-shared="step1.what">A free call, up to 20 minutes.</span> We tell you plainly whether a walk fits.</p>
+            <a class="u tl-go" href="#conversation">How the free call goes</a>
+          </div>
+        </li>
+        <li class="tl-big">
+          <div class="tl-head"><h3><span data-shared="step2.when">The walk</span></h3><span class="tl-tag"><span data-shared="step2.cost">Paid</span></span></div>
+          <div class="tl-body">
+            <p class="t-body"><span data-shared="step2.what">A visit sized to your shop, plus your records: invoices, calendar, job list and call history.</span> <span data-shared="step2.part">You sign one OK so we can look at them.</span></p>
+            <p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward a fix of $1,500 or more that starts within 30 days.</span></p>
+            <p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> <a class="u" href="#terms">Full terms</a></p>
+            <a class="u tl-go" href="#walk">What the walk covers</a>
+          </div>
+        </li>
+        <li>
+          <div class="tl-head"><h3><span data-shared="step3.when">Your sheet</span></h3></div>
+          <div class="tl-body">
+            <p class="t-body"><span data-shared="step3.what">Every problem in dollars. About 5 business days after we have your records; bigger shops get a quote and a date on the free call.</span> <span data-shared="step3.get">You keep it either way.</span></p>
+            <a class="u tl-go" href="#sample">See a full sample sheet</a>
+          </div>
+        </li>
+        <li>
+          <div class="tl-head"><h3><span data-shared="step4.when">Then, only if you want</span></h3><span class="tl-tag">Paid</span></div>
+          <div class="tl-body">
+            <p class="t-body"><span data-shared="step4.what">One fix, priced before work starts, and a monthly check you can cancel any month.</span></p>
+            <a class="u tl-go" href="#fix">What a fix and the monthly check include</a>
+          </div>
+        </li>
       </ol>
     </div>
   </div>
 </section>
 
-<section class="band" id="s1" data-ground="paper" data-density="low" data-width="split" data-loud="quote" data-medium="phone">
-  <div class="wrap ar-split">
-    <div class="prose">
-      <div class="step-h">
-        <span class="stepno" aria-hidden="true">01</span>
-        <h2><span class="sr">1. </span>The free call</h2>
-        <p class="step-price">Free, up to 20 minutes, by phone</p>
-      </div>
-      <p>Before we talk, we look your shop up on Google, so you don't spend the call explaining what you do. We bring one number from it, like how many reviews it shows or the hours it lists. If someone else keeps your books, bring them on the call.</p>
-      <blockquote class="bigquote rv"><p>“Your listing says you close at five. The sheet will show what happens to the calls after that.”</p></blockquote>
-      <p class="cap">An example of the one number we bring.</p>
-      <p>You tell us what eats your week. We tell you plainly whether a walk fits your shop. If you say no, we don't call or text again unless you ask.</p>
-    </div>
-    <figure class="s1-pic" data-once>
-      <div class="pic pic-c">
-        <div class="scr-phone" role="img" aria-label="Sample: a phone showing the business listing for Dunlin Plumbing, a plumber in Gainesville, Florida, rated 4.6 from 12 reviews. The hours line, Open, closes 5 PM, is circled in pencil.">
-          <div class="ph">
-            <div class="ph-sb" aria-hidden="true"><span>9:41</span><i></i></div>
-            <div class="ls" aria-hidden="true">
-              <p class="ls-search">dunlin plumbing gainesville</p>
-              <p class="ls-name">Dunlin Plumbing</p>
-              <p class="ls-rate"><b>4.6</b><span class="stars">★★★★★</span><span>12 reviews</span></p>
-              <p class="ls-kind">Plumber in Gainesville, Florida</p>
-              <div class="ls-btns"><span>Call</span><span>Directions</span><span>Website</span></div>
-              <p class="ls-row"><span class="op">Open</span> · <span class="pc">Closes 5 PM</span><small>Saturday and Sunday: Closed</small></p>
-              <p class="ls-row">123 Main St, Gainesville, FL<small>Service area: Alachua County</small></p>
-              <p class="ls-row">(352) 555-0140</p>
-              <div class="ls-rv"><p><b>4.6</b><span class="stars">★★★★★</span><small>12 reviews</small></p><ul><li><i>5</i><span style="--w:75%"></span></li><li><i>4</i><span style="--w:17%"></span></li><li><i>3</i><span style="--w:8%"></span></li><li><i>2</i><span style="--w:0%"></span></li><li><i>1</i><span style="--w:0%"></span></li></ul></div>
-            </div>
-          </div>
-        </div>
-        <span class="samp">Sample</span>
-      </div>
-      <p class="pencil">Closes at 5. And the calls after that?</p>
-    </figure>
+<section class="band fc-band" id="conversation" data-ground="paper" data-density="low" data-width="narrow" data-loud="sentence" data-medium="say">
+  <div class="wrap-read fc">
+    <h2 class="step-h"><span class="tab-n" aria-hidden="true">1</span><span><span class="sr">Step 1: </span>The free call</span></h2>
+    <p class="step-meta"><span class="tl-tag free">Free</span> Up to 20 minutes, by phone.</p>
+    <p class="fc-big">Before we talk, we look your shop up on Google, so you don't spend the call explaining what you do.</p>
+    <p>We bring one number from it, like how many reviews it shows. If your listing shows 12 reviews after years of jobs, we ask who sends the review request when a job is done. If nobody does, that is office work a fix can take over.</p>
+    <p>You tell us what eats your week. We tell you plainly whether a walk fits.</p>
+    <p>If someone else keeps your books, bring them on the call. If you say no to a walk, we don't call or text again unless you ask.</p>
   </div>
 </section>
 
-<section class="band seam" id="s2" style="--hole:var(--paper)" data-ground="bone" data-density="high" data-width="wide" data-loud="route" data-medium="plan">
-  <div class="wrap-wide">
-    <div class="step-h">
-      <span class="stepno" aria-hidden="true">02</span>
-      <h2 class="two"><span class="sr">2. </span>The walk. <span>Paid when booked. Three parts: the visit, the call data and the sheet.</span></h2>
-    </div>
-    <div class="walk2">
-      <figure class="plan" id="plan" data-once>
-        <div class="plan-art">
-          <svg viewBox="0 0 600 352" role="img" aria-labelledby="plan-t"><title id="plan-t">Drawing: floor plan of a sample plumbing shop with the walk route from the door. Stop 1, the phone on the counter. Stop 2, the whiteboard in the office. Stop 3, the trucks in the lot. Stop 4, the invoice pile on the desk.</title>
-            <path class="pl-wall" d="M20 20 H420 V140 M420 200 V320 H120 M60 320 H20 V20"/><path class="pl-thin" d="M20 170 H200 V20 M200 230 V320"/>
-            <g class="pl-thin"><rect x="40" y="200" width="120" height="26" rx="2"/><rect x="250" y="34" width="130" height="10"/><rect x="280" y="230" width="100" height="60" rx="2"/><rect x="462" y="52" width="110" height="46" rx="8"/><rect x="462" y="178" width="110" height="46" rx="8"/><path d="M440 20 V320" stroke-dasharray="6 8"/><rect x="300" y="244" width="34" height="24" rx="1"/><rect x="306" y="250" width="34" height="24" rx="1"/></g>
-            <defs><mask id="route-m" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="360"><path class="pl-route-m" pathLength="1" d="M90 346 C 96 300, 100 260, 104 226 C 140 160, 230 86, 300 66 C 360 92, 400 150, 432 168 C 466 160, 500 146, 517 138 C 480 170, 440 186, 410 206 C 390 222, 370 240, 350 250"/></mask></defs>
-            <path class="pl-route" mask="url(#route-m)" d="M90 346 C 96 300, 100 260, 104 226 C 140 160, 230 86, 300 66 C 360 92, 400 150, 432 168 C 466 160, 500 146, 517 138 C 480 170, 440 186, 410 206 C 390 222, 370 240, 350 250"/>
-          </svg>
-          <div class="plan-labs" aria-hidden="true"><span style="--x:4%;--y:86%">Counter</span><span style="--x:23%;--y:28%">Office</span><span style="--x:45%;--y:89%">Desk</span><span style="--x:80%;--y:94%">Lot</span><span style="--x:22%;--y:99.5%">Door</span></div>
-          <div class="plan-stops"><a href="#ws-1" style="--x:17.3%;--y:62.5%" aria-label="Stop 1, the phone"><span>1</span></a><a href="#ws-2" style="--x:50%;--y:18.8%" aria-label="Stop 2, the whiteboard"><span>2</span></a><a href="#ws-3" style="--x:86.2%;--y:39.2%" aria-label="Stop 3, the trucks"><span>3</span></a><a href="#ws-4" style="--x:58.3%;--y:71%" aria-label="Stop 4, the invoice pile"><span>4</span></a></div>
-        </div>
-        <figcaption class="cap">The route of a walk, drawn on a sample shop. Pick a number to read that stop.</figcaption>
-      </figure>
+<section class="band seam wk" id="walk" style="--hole:var(--paper)" data-ground="bone" data-density="high" data-width="wide" data-loud="walk page" data-medium="stops">
+  <div class="wrap">
+    <div class="wk-top">
       <div>
-        <h3 class="walk2-h">What the visit looks at</h3>
-        <ol class="wstops">
-          <li id="ws-1"><span class="tab-n ticked">1</span><b>The phone <small>· counter</small></b><p class="pencil">6:12 PM, after close. Nobody called back.</p></li>
-          <li id="ws-2"><span class="tab-n ticked">2</span><b>The whiteboard <small>· office</small></b><p class="pencil">Visit Tuesday. Quote Friday.</p></li>
-          <li id="ws-3"><span class="tab-n ticked">3</span><b>The trucks <small>· lot</small></b><p class="pencil">Supply ticket in the door pocket. No job number.</p></li>
-          <li id="ws-4"><span class="tab-n ticked">4</span><b>The invoice pile <small>· desk</small></b><p class="pencil">Paper ticket, calendar, QuickBooks. Same job, three times.</p></li>
-        </ol>
-        <p class="note-r" style="margin-top:14px">Then we follow one job from the first call to the paid invoice and the next visit.</p>
+        <h2 class="step-h"><span class="tab-n" aria-hidden="true">2</span><span><span class="sr">Step 2: </span>The walk</span></h2>
+        <p class="step-meta"><span class="tl-tag">Paid</span> Up front, when you book.</p>
+        <p class="t-lede">It has three parts: the visit, your records and the sheet.</p>
+      </div>
+      <div class="wk-price">
+        <p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward a fix of $1,500 or more that starts within 30 days.</span></p>
+        <p class="mb" id="money-back"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span></p>
       </div>
     </div>
 
-    <ol class="parts">
-      <li class="page rv"><p class="tab"><span class="tab-n">1</span>Week one</p><h3>The visit</h3><p>Sized to your shop. We look at the phone, the whiteboard, the trucks and the invoice pile, the way your jobs really run.</p></li>
-      <li class="page rv"><p class="tab"><span class="tab-n">2</span>The past 30 days</p><h3>The call data</h3><p>With your written OK, the call history your phone company already keeps. Where it keeps none, your staff keeps a hand tally by the phone for the next 30 days. It shows when calls came in and whether anyone answered. It is not a recording.</p></li>
-      <li class="page rv"><p class="tab"><span class="tab-n">3</span>About 5 business days</p><h3>The sheet</h3><p>On a walkthrough call: every leak with a dollar figure, the formula behind it and the effort to fix it. You get it about 5 business days after we have your records; bigger shops get a quote and a date on the free call. If a setting you already pay for closes a leak, the sheet says so.</p></li>
-    </ol>
-    <p class="keep">The sheet is yours to keep, whether or not you hire us for a fix.</p>
+    <div class="wk-parts">
+      <div class="page wk-page" style="--hole:var(--bone)">
+        <div class="wk-ph"><h3>The visit</h3><span class="stamp">Sample</span></div>
+        <p class="wk-sub">We come in the first week after booking. At a sample 2-truck plumbing shop, it stops here:</p>
+        <ol class="wstops">
+          <li data-task="quotes"><span class="tab-n">1</span><b>The whiteboard <small>in the office</small></b><p class="pencil">Visit Tuesday. Quote Friday.</p></li>
+          <li data-task="bills"><span class="tab-n">2</span><b>The trucks <small>in the lot</small></b><p class="pencil">Supply ticket in the door pocket. No job number.</p></li>
+          <li data-task="retyping"><span class="tab-n">3</span><b>The invoice pile <small>on the desk</small></b><p class="pencil">Paper ticket, calendar, QuickBooks. Same job, three times.</p></li>
+          <li data-task="calls"><span class="tab-n">4</span><b>The phone <small>at the counter</small></b><p class="pencil">11:20 AM, both techs on jobs. Nobody called back.</p></li>
+        </ol>
+        <p class="wk-follow">Then we follow one job from the first call to the paid invoice and the next visit.</p>
+      </div>
+      <div class="wk-text">
+        <div>
+          <h3>Your records</h3>
+          <p>Invoices, calendar, job list and call history. You run the exports, or give us a user seat of our own. The call history comes from your phone company, with your written OK; where it keeps none, your staff keeps a tally by the phone for 30 days. It shows when calls came in and whether anyone answered, not what was said.</p>
+        </div>
+        <div>
+          <h3>The sheet</h3>
+          <p>On a walkthrough call: every problem with a dollar figure, the formula behind it and the effort to fix it. If a setting you already pay for fixes one, the sheet says so.</p>
+        </div>
+        <p class="wk-keep">The sheet is yours to keep, whether or not you hire us for a fix.</p>
+      </div>
+    </div>
 
-    <div class="two-lists">
-      <div class="box">
+    <div class="wk-lists">
+      <div>
         <h3>What we need from you</h3>
         <ul class="checks">
           <li>Your written OK for the call history</li>
-          <li>Exports of your quotes and invoices, which you run, or a user seat of our own</li>
-          <li>Your calendar</li>
+          <li>Exports of your quotes, invoices and calendar, which you run, or a user seat of our own</li>
+          <li>Your profit on a typical job and your office's hourly wage, from your books</li>
           <li>A time for the visit, and one for the walkthrough call</li>
         </ul>
         <p class="note-r">Never a shared password. How we handle your records is on the <a class="u" href="/privacy/">privacy page</a>.</p>
       </div>
-      <div class="box">
+      <div>
         <h3>What the walk never does</h3>
         <ul class="nevers">
           <li>Renew, or add a charge. It's one charge.</li>
@@ -209,162 +403,180 @@
           <li>Text your customers.</li>
           <li>Put your files into an AI tool unless you say yes. They're deleted once your sheet is delivered.</li>
         </ul>
-        <p class="note-r">Questions before you pay? Call or text us at <a class="u" href="tel:+13522260681">(352) 226-0681</a>.</p>
       </div>
     </div>
     <details class="more" id="terms">
       <summary>Full terms</summary>
-      <div><p>Paid when you book, by card, bank debit or check. We hold the date we set on the call, and it's final once payment arrives. If we can't make the visit or can't deliver your sheet, you get all of it back. Cancel before the visit starts and before your call history is shared, and you get all of it back within 5 business days. Not worth it to you? Tell us within 7 days of going over your sheet and we send it back; the sheet stays yours. Start a fix of $1,500 or more within 30 days after we hand you the sheet, and the walk's price comes off that fix.</p></div>
+      <div><p>Paid when you book, by card, bank debit or check. We hold the date we set on the call, and it's final once payment arrives. If we can't make the visit or can't deliver your sheet, you get all of it back. Cancel before the visit starts and before your call history is shared, and you get all of it back within 5 business days. Not worth it to you? Tell us within 7 days of going over your sheet and we send it back; the sheet stays yours. Start a fix of $1,500 or more within 30 days after we hand you the sheet, and the walk's price comes off that fix. A refunded walk carries no credit toward a fix.</p></div>
     </details>
   </div>
 </section>
 
-<section class="band" id="s3" data-ground="paper" data-density="mid" data-width="split" data-loud="ticket" data-medium="docs">
-  <div class="wrap ar-split">
-    <div class="prose">
-      <div class="step-h">
-        <span class="stepno" aria-hidden="true">03</span>
-        <h2><span class="sr">3. </span>One fix</h2>
-        <p class="step-price">Priced from the sheet</p>
-      </div>
-      <p>We start with the leak that recovers the most for the effort, one you can watch move in your own records within 90 days.</p>
-      <p>Each fix is priced on its own, so you can start with one. The price is fixed, never by the hour, and you hear it with the sheet in hand, before any work starts. Any software or service the fix needs is opened in your name, and its fee shows on its own line, at cost, never marked up. You pay half when you sign and half when it's working.</p>
-      <div class="wholeshop">
-        <h3>The whole shop</h3>
-        <p>If you would rather fix everything together, we quote it from the sheet too, one fix at a time, and the prices add up. We suggest one fix first, to see it hold.</p>
-      </div>
-    </div>
-    <figure>
-      <p class="kicker">Row 7 of the sample sheet, on sample papers</p>
-      <div class="pic">
-        <div class="pair" data-once role="img" aria-label="Sample: a supply-house invoice, number 30172, with five lines, each marked with a job number. One line, a three quarter inch T and P relief valve for job 4471, 41 dollars 20, is circled in pencil. Beside it, Dunlin Plumbing's invoice 4471 for Ann Miller lists a service call, an element and labor for 354 dollars, and no relief valve.">
-          <div class="ticket" aria-hidden="true">
-            <p class="tk-co">OAK STREET SUPPLY CO.<small>500 Oak St, Gainesville FL</small></p>
-            <p class="tk-no"><span>INVOICE 30172</span><span>09/30/26</span></p>
-            <p class="tk-no"><span>ACCT 2210</span><span>DUNLIN PLUMBING</span></p>
-            <table>
-              <tr><th>PO</th><th>DESCRIPTION</th><th class="r">EXT</th></tr>
-              <tr><td>4466</td><td>PEX-A 1/2" 100FT</td><td class="r">58.40</td></tr>
-              <tr><td>4468</td><td>WAX RING FLG X2</td><td class="r">13.96</td></tr>
-              <tr><td>4471</td><td><span class="pc">T&amp;P VLV 3/4"</span></td><td class="r">41.20</td></tr>
-              <tr><td>4471</td><td>WH ELEM 4500W</td><td class="r">27.85</td></tr>
-              <tr><td>4473</td><td>PVC P-TRAP 1.5"</td><td class="r">9.12</td></tr>
-            </table>
-            <p class="tk-sum"><span>MERCHANDISE</span><span>150.53</span></p>
-            <p class="tk-sum"><span>SALES TAX 7.5%</span><span>11.29</span></p>
-            <p class="tk-sum tk-tot"><span>TOTAL</span><span>161.82</span></p>
-          </div>
-          <div class="inv" aria-hidden="true">
-            <div class="inv-h"><b>DUNLIN PLUMBING</b><span>INVOICE 4471 · 09/29/26</span></div>
-            <p class="inv-to">Ann Miller · 210 Oak St · Water heater repair, 40 gal</p>
-            <ul>
-              <li><span>Service call and diagnosis</span><span>89.00</span></li>
-              <li><span>Replace upper element, 4500 W</span><span>145.00</span></li>
-              <li><span>Labor, drain and refill</span><span>120.00</span></li>
-            </ul>
-            <p class="inv-tot"><span>Total</span><span>$354.00</span></p>
-            <p class="inv-miss">No relief valve on it.</p>
-          </div>
+<section class="band fs-band" id="sample" data-ground="paper" data-density="high" data-width="wide" data-loud="sheet" data-medium="sheet">
+  <div class="wrap">
+    <h2 class="step-h"><span class="tab-n" aria-hidden="true">3</span><span><span class="sr">Step 3: </span>Your sheet</span></h2>
+    <p class="step-meta">A full sample for a 2-truck plumbing shop. Every priced row shows its formula, so you can check the math.</p>
+    <figure class="clip fs fs-board" aria-label="Sample walk sheet, in full">
+      <div class="board">
+        <span class="clamp" aria-hidden="true"><i></i></span>
+        <div class="sheet" data-full-sheet="plumbing" data-ui-ok="nested-card the sheet on its clipboard is the brand object (SYSTEM.md 6), as on Home and every trade page">
+          <header class="sh-head">
+            <div><b class="sh-title">Walk sheet</b><span class="sh-sub">Dunlin Plumbing, 2 trucks, Alachua County</span></div>
+            <span class="stamp">Sample</span>
+          </header>
+          <p class="fs-src">Built from the calendar, a QuickBooks export of quotes and invoices, 30 days of call history from the phone company, and the visit.</p>
+          <div class="fs-cols" aria-hidden="true" data-extra="computer: the column heads for effort and for how you will see it move; on a phone each row says both in its own words"><span>Problem and what we saw</span><span>Effort</span><span>Profit lost, a month</span><span>How you will see it move</span></div>
+          <ol class="fs-rows">
+            <li data-row="quotes" data-task="quotes"><div class="fs-leak"><b>Quotes sent 48+ hours after the visit</b><p>9 of 22 quotes went out 2 or more days after the visit. 5 of those customers went elsewhere.</p><small>5 jobs × $380 profit a job</small></div>
+              <span class="fs-eff"><i>Effort: </i>Medium</span><span class="fs-usd">$1,900<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" data-draw><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="fs-move"><i>How you will see it move: </i>Days from visit to quote, in your quote export.</span></li>
+            <li data-row="retyping" data-task="retyping"><div class="fs-leak"><b>Same job typed in three places</b><p>Paper ticket, calendar, QuickBooks.</p><small>40 min a day × 22 days × $28 an hour</small></div>
+              <span class="fs-eff"><i>Effort: </i>Medium</span><span class="fs-usd">$411</span><span class="fs-move"><i>How you will see it move: </i>Minutes a day, timed on site before and after.</span></li>
+            <li data-row="calls" data-task="calls"><div class="fs-leak"><b>Calls nobody called back</b><p>14 a month from numbers that aren't customers yet. 3 called back, 11 were not.</p><small>11 calls × 24% book rate (sample rate) × $151 profit a job ($341 average visit × 44.3% kept)</small></div>
+              <span class="fs-eff"><i>Effort: </i>Low</span><span class="fs-usd">$399</span><span class="fs-move"><i>How you will see it move: </i>Calls not called back, in your call history, month by month.</span></li>
+            <li class="is-first" data-task="bills"><div class="fs-leak"><b>Supply-house tickets with no job number</b><p>14 counter tickets last month carried no job number, $612 in parts. From your supplier statement.</p><small>Until each ticket is matched to a job, nobody can say which parts were billed. <span class="pencil fs-first">Suggested first fix</span></small></div>
+              <span class="fs-eff"><i>Effort: </i>Low</span><span class="fs-usd unp">not priced</span><span class="fs-move"><i>How you will see it move: </i>Tickets with a job number, on your monthly supplier statement.</span></li>
+          </ol>
+          <div class="sh-total"><span>Lost before any fix</span><b>$2,710 a month</b></div>
+          <p class="sh-time">Time back for you or your office: <b>about 15 hours a month</b></p>
+          <p class="sh-note">Yours is built from your own invoices, calendar and call history.</p>
+          <details class="more fs-more">
+            <summary>3 more things the walk found, not priced</summary>
+            <div>
+              <ol class="fs-rows">
+                <li data-task="reminders"><div class="fs-leak"><b>Reviews never requested</b><p>61 jobs finished this month, 0 review requests sent. The Google page still shows 12 reviews.</p></div>
+                  <span class="fs-eff"><i>Effort: </i>Low</span><span class="fs-usd unp">not priced</span><span class="fs-move"><i>How you will see it move: </i>Your Google review count.</span></li>
+                <li data-task="reminders"><div class="fs-leak"><b>Past customers with no job since</b><p>38 customers with a job 13 to 36 months ago and none since. From your invoices.</p></div>
+                  <span class="fs-eff"><i>Effort: </i>Medium</span><span class="fs-usd unp">not priced</span><span class="fs-move"><i>How you will see it move: </i>Past customers who book again, in your invoices.</span></li>
+                <li data-task="reminders"><div class="fs-leak"><b>Texts in one language</b><p>Booking texts go out in English only. The office noted 9 callers last month who asked for Spanish.</p></div>
+                  <span class="fs-eff"><i>Effort: </i>Medium</span><span class="fs-usd unp">not priced</span><span class="fs-move"><i>How you will see it move: </i>Spanish texts sent, in your booking tool.</span></li>
+              </ol>
+            </div>
+          </details>
         </div>
-        <span class="samp">Sample</span>
-      </div>
-      <div class="find2">
-        <p class="pencil">Bought for job 4471. Never reached its invoice.</p>
-        <p class="find"><span class="find-usd money">$41.20, one job<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw><path pathLength="1" d="M2 6C28 2 60 9 98 4"/></svg></span><span class="find-f">One valve on one job. A supply bill matcher checks every line, every bill.</span></p>
       </div>
     </figure>
+    <div class="fs-after">
+      <p class="lead"><b>Suggested first fix: row 4, the supply-house tickets.</b> Row 1 is bigger, but this one is low effort, and every part it finds is money you already spent.</p>
+      <p>You will see it move on your own supplier statement: every ticket with a job number, and a weekly list of parts bought for a job that never reached its invoice. Next on the list: row 1, then row 2.</p>
+      <details class="more src-d"><summary>Where the sample numbers come from</summary><div><p class="note-r">$341 is HomeAdvisor's national average plumber visit (2026, cost guide); 44.3% is Level's median job gross margin (vendor data). 24% is the share of calls that shops with fewer than 5 technicians booked at all hours (ServiceTitan blog, 2022, vendor data).</p><p class="note-r">On the AC and heating sheet, 1 in 4 comes from ServiceTitan's January 2026 data on commercial service agreements: 29.8% renewed when renewal was manual and 49.1% with auto-renew and email reminders, so about 1 in 4 of the plans that would have lapsed were kept (vendor data). $189 is a sample yearly fee for a plan with two tune-ups, within published Florida plan prices.</p>
+<p class="note-r">On the property manager sheet, 10% is a common maintenance markup in management agreements (BiggerPockets forum, owners and managers reporting; 0 to 20% seen, or a flat fee instead). 70 bills is a sample: about 5% of the 1,400 or so vendor bills a 212-door office pays in a year (about 600 in turn week, plus 3 to 5 work orders a door), at a sample $180 a bill.</p>
+<p class="note-r">On the pest control sheet, 1 in 2 and 20% are our own sample rates, and your walk puts your own numbers in their place: 1 in 2 lapsed termite renewals won back by a follow-up call, and 20% more declined autopay charges recovered once retries run on a schedule. For scale, Recurly's 2018 study of more than 1,300 subscription businesses found that over 45% of the charges declined for the three most common reasons were recovered (vendor data). $225 is a renewal's $271 average fee across $325 bait and $195 liquid agreements, less a $46 yearly inspection. On the pest control page, $7.50 a foot for trench-and-rod termite treatment sits inside two national cost guides, Fixr's $4 to $14.50 and Polyguard's $3 to $15.</p></div></details>
+    </div>
+    <div class="cta-inline">
+      <a class="btn" href="tel:+13522260681">Call or text us</a>
+      <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
+      <p class="mb mb-s"><span data-shared="moneyback.short"><b>Not worth it to you?</b> You get the walk fee back.</span></p>
+    </div>
   </div>
 </section>
 
-<section class="band" id="tools" data-ground="graph" data-density="mid" data-width="split" data-loud="screen" data-medium="tabs">
-  <div class="wrap ar-split">
-    <div>
-      <h2 class="two">Built inside the tools you already use. <span>The same fix, three ways.</span></h2>
-      <p style="margin-top:16px">The fix for row 7, on sample data: a supply bill matcher. It reads the supplier's PDF bill when the email arrives, checks each line against the invoice for the same job and flags the $41.20 relief valve. You choose: add it to the invoice, or no charge. Nothing is sent or billed on its own.</p>
-      <p class="rules-line">Every fix runs on rules, not guesses, inside accounts you own. If something changes, it stops and tells us. If a fix ever breaks, it falls back to how your shop worked before, and we look at it the next business morning.</p>
+<section class="band fx" id="fix" data-ground="sheet" data-density="mid" data-width="split" data-loud="screen" data-medium="tabs">
+  <div class="wrap fx-g">
+    <div class="fx-copy">
+      <h2 class="step-h"><span class="tab-n" aria-hidden="true">4</span><span><span class="sr">Step 4: </span>One fix</span></h2>
+      <p class="step-meta"><span class="tl-tag">Paid</span> Only if you want it.</p>
+      <p class="t-lede">We suggest starting with one fix you can watch move in your own records within 90 days.</p>
+      <p>Each fix has its own fixed price, never by the hour, and you hear it with the sheet in hand, before any work starts. You pay half when you sign and half when it's working. Any software it needs is opened in your name, at cost, never marked up.</p>
+      <p>Want everything fixed at once? We quote that from the sheet too, and the prices add up.</p>
+      <p class="fx-ai">Fixed rules you approve, AI, or both: your call. Anything AI writes waits for your OK, and nothing goes into an AI tool without it.</p>
+      <p>Everything runs in accounts you own. If a fix breaks, it falls back to how your shop worked before, and we look at it the next business morning.</p>
+      <div id="automate">
+        <h3>What a fix can look like</h3>
+        <ul class="auto-list">
+          <li data-task="bills">Every supplier bill checked against the job it was bought for.</li>
+          <li data-task="invoices">Finished jobs listed each morning until each one is invoiced.</li>
+          <li data-task="quotes">The quote sent the day of the visit, with a reminder to you if nobody answers.</li>
+          <li data-task="retyping">A job typed once and filled in everywhere else.</li>
+          <li data-task="email">Emails and attachments read and filed into the right job folder.</li>
+          <li data-task="reminders">Reminders to your crew and customers, all year.</li>
+        </ul>
+        <p class="auto-close"><a class="u" href="/what-we-automate/">See the full list</a></p>
+      </div>
     </div>
-    <div data-tabs class="tabs-wrap">
-      <div class="tabs" role="tablist" aria-label="Pick your tool">
-        <button role="tab" id="tb1" aria-controls="tp1" aria-selected="true" type="button">In your Excel</button>
-        <button role="tab" id="tb2" aria-controls="tp2" aria-selected="false" type="button">In your job software</button>
-        <button role="tab" id="tb3" aria-controls="tp3" aria-selected="false" type="button">A tool we build</button>
-      </div>
-      <div class="pic" role="tabpanel" id="tp1" aria-labelledby="tb1">
-        <div class="scr-win" role="img" aria-label="Sample: a spreadsheet named matched.xlsx with five lines from the supply-house bill. Four are marked yes, on the job's invoice. Row 4, the 41 dollar 20 relief valve for job 4471, is highlighted and marked no. The formula bar shows a COUNTIFS check against the invoices sheet.">
-          <div class="win-tb"><i></i><i></i><i></i><span>matched.xlsx</span></div>
-          <div class="xl"><p class="xl-fx"><b>fx</b><span>=IF(COUNTIFS(Invoices[Job],A4,Invoices[Item],B4),"yes","no")</span></p>
-            <table><tr class="cl"><td></td><td>A</td><td>B</td><td>C</td><td class="hm">D</td><td class="hm">E</td></tr>
-              <tr><td>1</td><th>Job</th><th>Item</th><th>On invoice</th><th class="hm">Qty</th><th class="hm">Amount</th></tr>
-              <tr><td>2</td><td>4466</td><td>1/2" PEX-A 100 ft</td><td>yes</td><td class="hm">1</td><td class="hm">$58.40</td></tr>
-              <tr><td>3</td><td>4468</td><td>Wax ring w/flange</td><td>yes</td><td class="hm">2</td><td class="hm">$13.96</td></tr>
-              <tr class="on"><td>4</td><td>4471</td><td>3/4" T&amp;P relief valve</td><td>no</td><td class="hm">1</td><td class="hm">$41.20</td></tr>
-              <tr><td>5</td><td>4471</td><td>Element 4500W</td><td>yes</td><td class="hm">1</td><td class="hm">$27.85</td></tr>
-              <tr><td>6</td><td>4473</td><td>P-trap 1-1/2" PVC</td><td>yes</td><td class="hm">1</td><td class="hm">$9.12</td></tr>
-            </table>
-          </div>
+    <div class="fx-tools">
+      <h3>The same fix, three ways</h3>
+      <p>The fix for row 4, on sample data: every supply-house ticket carries the job number as its PO, and a matcher checks each emailed bill against that job's invoice. Here it flags a $41.20 relief valve on job 4471. You choose: add it to the invoice, or no charge.</p>
+      <p class="auto-tools"><span data-shared="tools">It all lands in what you already use: Excel, QuickBooks, your job app or a simple form we build.</span></p>
+      <div data-tabs class="tabs-wrap">
+        <div class="tabs" role="tablist" aria-label="Pick your tool">
+          <button role="tab" id="tb1" aria-controls="tp1" aria-selected="true" type="button">In your Excel</button>
+          <button role="tab" id="tb2" aria-controls="tp2" aria-selected="false" type="button">In your job software</button>
+          <button role="tab" id="tb3" aria-controls="tp3" aria-selected="false" type="button">A tool we build</button>
         </div>
-        <span class="samp">Sample</span>
-      </div>
-      <div class="pic" role="tabpanel" id="tp2" aria-labelledby="tb2" hidden>
-        <div class="scr-win jobscr" role="img" aria-label="Sample: job 4471 for Ann Miller in a job app. Parts from supplier bills: the element, 27 dollars 85, on the invoice; the relief valve, 41 dollars 20, not on the invoice, with two buttons, Add to invoice and No charge.">
-          <div class="win-tb"><i></i><i></i><i></i><span>Job 4471</span></div>
-          <div class="win-b">
-            <div class="js-h"><b>Ann Miller · Water heater repair</b><span>Done Tue, Sep 29 · Invoice 4471</span></div>
-            <p class="js-l">Parts from supplier bills</p>
-            <table class="dt"><tr><th>Item</th><th>Bill</th><th>Status</th></tr>
-              <tr><td>Element 4500W · $27.85</td><td>30172</td><td><span class="st ok">On invoice</span></td></tr>
-              <tr class="n"><td>3/4" T&amp;P relief valve · $41.20</td><td>30172</td><td><span class="st wt">Not on invoice</span></td></tr>
-            </table>
+        <div class="pic" role="tabpanel" id="tp1" aria-labelledby="tb1">
+          <div class="scr-win" role="img" aria-label="Sample: a spreadsheet named matched.xlsx with the five lines of Oak Street Supply's bill 30172, each with its job number. Four are marked yes, on that job's invoice. Row 4, the relief valve for job 4471, is highlighted and marked no. The formula bar shows a COUNTIFS check against the invoices sheet.">
+            <div class="win-tb" data-ui-ok="fake-chrome R6: the one window frame for computer tasks; Franco kept the Mac buttons (Oct 6)"><i></i><i></i><i></i><span>matched.xlsx</span></div>
+            <div class="xl"><p class="xl-fx"><b>fx</b><span>=IF(COUNTIFS(Invoices[Job],A4,Invoices[Item],B4),"yes","no")</span></p>
+              <table><tr class="cl"><td></td><td>A</td><td>B</td><td>C</td></tr>
+                <tr><td>1</td><th>Job</th><th>Item, bill 30172</th><th>On invoice</th></tr>
+                <tr><td>2</td><td>4466</td><td>1/2" PEX-A 100 ft</td><td>yes</td></tr>
+                <tr><td>3</td><td>4468</td><td>Wax ring w/flange, 2</td><td>yes</td></tr>
+                <tr class="on"><td>4</td><td>4471</td><td>3/4" T&amp;P relief valve</td><td>no</td></tr>
+                <tr><td>5</td><td>4471</td><td>Element 4500W</td><td>yes</td></tr>
+                <tr><td>6</td><td>4473</td><td>P-trap 1-1/2" PVC</td><td>yes</td></tr>
+              </table>
+            </div>
+          </div>
+          <span class="samp">Sample</span>
+        </div>
+        <div class="pic" role="tabpanel" id="tp2" aria-labelledby="tb2" hidden>
+          <div class="scr-win jobscr" role="img" aria-label="Sample: job 4471 for Ann Miller in a job app. Parts from supplier bills: the element, 27 dollars 85, on the invoice; the relief valve, 41 dollars 20, not on the invoice, with two buttons, Add to invoice and No charge.">
+            <div class="win-tb" data-ui-ok="fake-chrome R6: the one window frame for computer tasks; Franco kept the Mac buttons (Oct 6)"><i></i><i></i><i></i><span>Job 4471</span></div>
+            <div class="win-b">
+              <div class="js-h"><b>Ann Miller, water heater repair</b><span>Done Wed, Sep 23, invoice 4471</span></div>
+              <p class="js-l">Parts from supplier bills</p>
+              <table class="dt"><tr><th>Item</th><th>Bill</th><th>Status</th></tr>
+                <tr><td>Element 4500W, $27.85</td><td>30172</td><td><span class="st ok">On invoice</span></td></tr>
+                <tr class="n"><td>3/4" T&amp;P relief valve, $41.20</td><td>30172</td><td><span class="st wt">Not on invoice</span></td></tr>
+              </table>
+              <div class="js-act"><span class="pri">Add to invoice</span><span>No charge</span></div>
+              <span class="js-ok">Waiting for your OK. Nothing is billed on its own.</span>
+            </div>
+          </div>
+          <span class="samp">Sample</span>
+        </div>
+        <div class="pic" role="tabpanel" id="tp3" aria-labelledby="tb3" hidden>
+          <div class="doc" role="img" aria-label="Sample: the morning email from a small tool. Supplier bills checked: Oak Street Supply bill 30172, 5 lines read, 4 on their job's invoice, 1 to decide: the relief valve, 41 dollars 20, job 4471.">
+            <div class="doc-h"><b>Supplier bills, checked</b><span>Thu 6:30 AM</span></div>
+            <ul class="doc-li">
+              <li><span>Oak Street Supply, bill 30172</span><span>5 lines read</span></li>
+              <li><span>On their job's invoice</span><span>4 of 5</span></li>
+              <li class="new"><span>To decide: 3/4" T&amp;P relief valve, job 4471</span><span>$41.20</span></li>
+            </ul>
             <div class="js-act"><span class="pri">Add to invoice</span><span>No charge</span></div>
-            <span class="ok">✓ Waiting for your OK. Nothing is billed on its own.</span>
+            <span class="js-ok">Runs each night, in an account you own</span>
           </div>
+          <span class="samp">Sample</span>
         </div>
-        <span class="samp">Sample</span>
-      </div>
-      <div class="pic" role="tabpanel" id="tp3" aria-labelledby="tb3" hidden>
-        <div class="doc" role="img" aria-label="Sample: the morning email from a small tool. Supplier bills checked: Oak Street Supply invoice 30172, 5 lines read, 4 on their job's invoice, 1 to decide: the relief valve, 41 dollars 20, job 4471.">
-          <div class="doc-h"><b>Supplier bills, checked</b><span>Wed 6:30 AM</span></div>
-          <ul class="doc-li">
-            <li><span>Oak Street Supply, invoice 30172</span><span>5 lines read</span></li>
-            <li><span>On their job's invoice</span><span>4 of 5</span></li>
-            <li class="new"><span>To decide: 3/4" T&amp;P relief valve, job 4471</span><span>$41.20</span></li>
-          </ul>
-          <div class="js-act"><span class="pri">Add to invoice</span><span>No charge</span></div>
-          <span class="ok">✓ Runs each night, in an account you own</span>
-        </div>
-        <span class="samp">Sample</span>
       </div>
     </div>
   </div>
 </section>
 
-<section class="band" id="s4" data-ground="night" data-density="mid" data-width="split" data-loud="report" data-medium="chart">
+<section class="band mc" id="check" data-ground="night" data-density="mid" data-width="split" data-loud="report" data-medium="report">
   <div class="wrap">
     <div class="mcheck">
       <div class="prose">
-        <div class="step-h">
-          <span class="stepno" aria-hidden="true">04</span>
-          <h2><span class="sr">4. </span>The monthly check</h2>
-          <p class="step-price">Sized to the shop</p>
-        </div>
-        <p>One page, once a month: what the fix did in your numbers, what broke and how we handled it, the next leak with a dollar figure and how many change requests your plan includes.</p>
-        <p>At 90 days we compare what the fix brought back with what the sheet said. If it brought back less, the monthly check goes down to match. The price for the fixes you have does not go up in the first year. After that we review it once a year: it goes up only if our work for you has grown, never because your shop got busier, and only with 30 days' notice. A fix you add later brings its own part of the price, shown before you sign. Cancel any month, by email. In storm season you can add a same-evening check on the after-hours flow, quoted from the sheet like everything else.</p>
-        <ul class="tapes" aria-label="The monthly check in four facts"><li style="--r:-1.4deg">Cancel any month</li><li style="--r:1.1deg">Up to 2 small changes a month</li><li style="--r:-.7deg">Fixed from the next business morning</li><li style="--r:1.6deg">Never goes up in the first year</li></ul>
+        <h2>The monthly check</h2>
+        <p class="step-meta"><span class="tl-tag">Paid</span> Month to month, once a fix is working.</p>
+        <p>One page, once a month: what the fix did in your numbers, what broke and how we handled it, the next problem with a dollar figure, and up to 2 small changes a month.</p>
+        <p>At 90 days we compare what the fix brought back with what the sheet said. If it brought back less, the monthly check goes down to match.</p>
+        <p>The price for the fixes you have does not go up in the first year. After that we review it once a year, and it goes up only if our work for you has grown, never because your shop got busier, with 30 days' notice. A fix you add later brings its own part of the price, shown before you sign. Cancel any month, by email.</p>
       </div>
-      <figure>
+      <figure class="mc-pic">
         <div class="pic">
-          <div class="report" data-once role="img" aria-label="Sample: one monthly check page for Dunlin Plumbing, September. What the fix did: 501 dollars caught in the month from supplies bought for a job and never billed. Days from finished to invoice sent fell from 7.0 to 1.5 over eight weeks, shown as bars, the last four after the fix. Jobs done but not invoiced fell from 2 to 0. What broke: one supplier bill came in a new layout; the matcher stopped and told us, and it was fixed the next morning. Next leak: quotes sent 48 or more hours after the visit, 1,900 dollars a month. Small changes used: 1 of 2.">
-            <div class="rp-h" aria-hidden="true"><div><b>Monthly check</b><small>Dunlin Plumbing · September</small></div><span class="stamp">Sample</span></div>
+          <div class="report" role="img" aria-label="Sample: one monthly check page for Dunlin Plumbing, September. What the fix did: 501 dollars found in the month, in parts bought for a job that never reached its invoice. Supply tickets with no job number fell from 14 a month to 2, shown as weekly bars, the last four after the fix, and 11 parts were found missing from an invoice. What broke: one supplier bill came in a new layout; the matcher stopped and told us, and it was fixed the next morning. Next problem: quotes sent 48 or more hours after the visit, 1,900 dollars a month. Small changes used: 1 of 2.">
+            <div class="rp-h" aria-hidden="true"><div><b>Monthly check</b><small>Dunlin Plumbing, September</small></div><span class="stamp">Sample</span></div>
             <div aria-hidden="true">
-              <div class="rp-sec"><p class="rp-k">What the fix did</p><p class="rp-big"><span class="money">$501.00</span><span>caught this month: supplies bought for a job and never billed</span></p></div>
+              <div class="rp-sec"><p class="rp-k">What the fix did</p><p class="rp-big"><span class="money">$501.00</span><span>found this month: parts bought for a job that never reached its invoice</span></p></div>
               <div class="rp-sec">
-                <div class="rp-two"><p>Days from finished to invoice sent<b>7.0 <i>to</i> 1.5</b></p><p>Jobs done, not invoiced<b>2 <i>to</i> 0</b></p></div>
-                <div class="bars seq"><span style="--h:93%"></span><span style="--h:87%"></span><span style="--h:100%"></span><span style="--h:80%"></span><span class="f" style="--h:40%"></span><span class="f" style="--h:27%"></span><span class="f" style="--h:20%"></span><span class="f" style="--h:20%"></span></div>
+                <div class="rp-two"><p>Supply tickets with no job number<b>14 <i>to</i> 2</b></p><p>Parts found missing from an invoice<b>11</b></p></div>
+                <div class="bars"><span style="--h:100%"></span><span style="--h:75%"></span><span style="--h:100%"></span><span style="--h:75%"></span><span class="f" style="--h:25%"></span><span class="f" style="--h:3%"></span><span class="f" style="--h:25%"></span><span class="f" style="--h:3%"></span></div>
                 <div class="bars-x"><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span><span>W8</span></div>
-                <p class="bars-key"><span><i></i>Days to invoice, before the fix</span><span><i class="f"></i>After</span></p>
+                <p class="bars-key"><span><i></i>Tickets with no job number, before the fix</span><span><i class="f"></i>After</span></p>
               </div>
               <div class="rp-sec"><p class="rp-k">What broke</p><p class="rp-next">One supplier bill came in a new layout. The matcher stopped and told us. Fixed the next morning.</p></div>
-              <div class="rp-sec"><p class="rp-k">Next leak</p><p class="rp-next">Quotes sent 48+ hours after the visit: <b class="nb">$1,900 a month</b></p></div>
+              <div class="rp-sec"><p class="rp-k">Next problem</p><p class="rp-next">Quotes sent 48+ hours after the visit: <b>$1,900 a month</b></p></div>
               <p class="rp-foot"><span>Small changes used: 1 of 2</span><span>Cancel any month, by email</span></p>
             </div>
           </div>
@@ -372,97 +584,39 @@
       </figure>
     </div>
     <details class="more cover-d">
-    <summary>What the monthly check covers, and what it doesn't</summary>
-    <div class="cover">
-      <div class="yes"><h3>Covered</h3><ul>
-        <li>Watching every fix we built</li><li>Fixing what breaks, starting the next business morning, even when another company changes its software</li><li>Reconnecting logins</li><li>Up to 2 small changes a month, each about an hour of work or less</li><li>Alerts before a software plan limit stops a fix, where the software offers them</li><li>The one-page report</li><li>The next leak, with a dollar figure</li></ul></div>
-      <div class="no"><h3>Not covered</h3><ul>
-        <li>New fixes, each quoted on its own</li><li>Copying a fix to a new location or moving it to new software, each quoted on its own</li><li>Rebuilding a fix after another company removes something it needs, quoted with the options</li><li>Software subscriptions, in your name and at cost</li><li>Hardware</li><li>Time when another company's software is down</li><li>Marketing or ads</li><li>Dispatch software</li></ul></div>
-    </div>
-    </details>
-    <div class="cta-inline"><a class="btn" href="tel:+13522260681">Call or text us</a><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a></div>
-  </div>
-</section>
-
-<section class="band seam" id="sample" style="--hole:var(--night)" data-ground="bone" data-density="high" data-width="wide" data-loud="sheet" data-medium="sheet">
-  <div class="wrap-wide">
-    <h2 class="two" style="max-width:24em">A full sample sheet. <span>What you get after the walk, with sample numbers for a 2-truck plumbing shop. Every priced row shows its formula, so you can check the math.</span></h2>
-    <figure class="clip fs fs-board" aria-labelledby="fs-cap">
-      <div class="board">
-        <span class="clamp" aria-hidden="true"><i></i></span>
-        <div class="sheet" data-once>
-          <header class="sh-head">
-            <div><b class="sh-title">Walk sheet</b><span class="sh-sub">Plumbing, 2 trucks, Alachua County</span></div>
-            <span class="stamp">Sample</span>
-          </header>
-          <p class="fs-src"><b>Built from</b> Jobs: the calendar. Quotes and invoices: a QuickBooks export. Calls: the phone company's call history, past 30 days. Visit: week one.</p>
-          <div class="fs-cols" aria-hidden="true"><span>Leak and what we saw</span><span>Effort</span><span>Profit lost, a month</span><span>How you will see it move</span></div>
-          <ol class="fs-rows seq">
-            <li><div class="fs-leak"><b>Quotes sent 48+ hours after the visit <span class="fs-first">First fix</span></b><p>9 of 22. 5 went cold, observed.</p><small>5 jobs × $380 profit a job</small></div>
-              <span class="fs-eff"><i>Effort: </i>Medium</span><span class="fs-usd">$1,900 a month<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="fs-move"><i>How you will see it move: </i>Days from visit to quote, in your quote export.</span></li>
-            <li><div class="fs-leak"><b>Same job typed in three places</b><p>Paper ticket, calendar, QuickBooks.</p><small>40 min a day × 22 days × $28 an hour</small></div>
-              <span class="fs-eff"><i>Effort: </i>Medium</span><span class="fs-usd">$411 a month</span><span class="fs-move"><i>How you will see it move: </i>Minutes a day, timed on site before and after.</span></li>
-            <li><div class="fs-leak"><b>Calls nobody called back</b><p>14 a month from numbers that aren't customers yet. 3 called back, 11 were not.</p><small>11 calls × 24% book rate (sample rate) × $151 profit a job ($341 average visit × 44.3% kept)</small></div>
-              <span class="fs-eff"><i>Effort: </i>Low</span><span class="fs-usd">$399 a month</span><span class="fs-move"><i>How you will see it move: </i>Calls not called back, in your call history, month by month.</span></li>
-            <li><div class="fs-leak"><b>Reviews never requested</b><p>61 jobs finished this month, 0 review requests sent. The Google page still shows 12 reviews.</p></div>
-              <span class="fs-eff"><i>Effort: </i>Low</span><span class="fs-usd np">not priced</span><span class="fs-move"><i>How you will see it move: </i>Your Google review count.</span></li>
-            <li><div class="fs-leak"><b>Past customers with no job since</b><p>38 customers with a job 13 to 36 months ago and none since. From your invoices.</p><small>Counted, not priced.</small></div>
-              <span class="fs-eff"><i>Effort: </i>Medium</span><span class="fs-usd np">not priced</span><span class="fs-move"><i>How you will see it move: </i>Past customers who book again, in your invoices.</span></li>
-            <li><div class="fs-leak"><b>Texts in one language</b><p>Booking texts go out in English only. The office noted 9 callers last month who asked for Spanish.</p></div>
-              <span class="fs-eff"><i>Effort: </i>Medium</span><span class="fs-usd np">not priced</span><span class="fs-move"><i>How you will see it move: </i>Spanish texts sent, in your booking tool.</span></li>
-            <li><div class="fs-leak"><b>Supply-house tickets with no job number</b><p>14 counter tickets last month carried no job number, $612 in parts. From your supplier statement.</p><small>Until each ticket is matched to a job, nobody can say which parts were billed.</small></div>
-              <span class="fs-eff"><i>Effort: </i>Low</span><span class="fs-usd np">not priced</span><span class="fs-move"><i>How you will see it move: </i>Tickets with a job number, on your monthly supplier statement.</span></li>
-          </ol>
-          <div class="sh-total" data-beat><span>Lost before any fix</span><b>$2,710 a month</b></div>
-          <p class="sh-note">Illustrative numbers. Your sheet is built from your call log, your invoices and your calendar.</p>
-        </div>
+      <summary>What the monthly check covers, and what it doesn't</summary>
+      <div class="cover">
+        <div class="yes"><h3>Covered</h3><ul>
+          <li>Watching every fix we built</li><li>Fixing what breaks, starting the next business morning, even when another company changes its software</li><li>Reconnecting logins</li><li>Up to 2 small changes a month, each about an hour of work or less</li><li>Alerts before a software plan limit stops a fix, where the software offers them</li><li>The one-page report</li><li>The next problem, with a dollar figure</li></ul></div>
+        <div class="no"><h3>Not covered</h3><ul>
+          <li>New fixes, each quoted on its own</li><li>Copying a fix to a new location or moving it to new software, each quoted on its own</li><li>Rebuilding a fix after another company removes something it needs, quoted with the options</li><li>Software subscriptions, in your name and at cost</li><li>Hardware</li><li>Time when another company's software is down</li><li>Marketing or ads</li><li>Dispatch software</li></ul></div>
       </div>
-      <figcaption id="fs-cap" class="cap fs-cap">Full sample walk sheet with illustrative numbers: each leak, what we saw, the effort to fix it, the profit it loses a month and how you will see it move.</figcaption>
-    </figure>
-    <div class="fs-after">
-      <p class="lead"><b>Suggested first fix: row 1.</b> The biggest leak, and your quote export shows the change the next month. Next on the list: row 2, then row 7.</p>
-      <p>The sheet has no price for the fix. You hear that with the sheet in hand, before any work starts.</p>
-      <details class="more src-d"><summary>Where the sample numbers come from</summary><div><p class="note-r">$341 is HomeAdvisor's national average plumber visit (2026, cost guide); 44.3% is Level's median job gross margin (vendor data). 24% is the share of calls that shops with fewer than 5 technicians booked at all hours in ServiceTitan's 2022 data (vendor data).</p><p class="note-r">On the AC and heating sheet, 1 in 4 comes from ServiceTitan's January 2026 data on commercial service agreements: 29.8% renewed when renewal was manual and 49.1% with auto-renew and email reminders, so about 1 in 4 of the plans that would have lapsed were kept (vendor data). $189 is a sample yearly fee for a plan with two tune-ups, within published Florida plan prices.</p>
-<p class="note-r">On the property manager sheet, 10% is a common maintenance markup in management agreements (BiggerPockets forum, owners and managers reporting; 0 to 20% seen, or a flat fee instead). 70 bills is a sample: about 5% of the 1,400 or so vendor bills a 212-door office pays in a year (about 600 in turn week, plus 3 to 5 work orders a door), at a sample $180 a bill.</p>
-<p class="note-r">On the pest control sheet, 1 in 2 and 20% are our own sample rates, and your walk puts your own numbers in their place: 1 in 2 lapsed termite renewals won back by a follow-up call, and 20% more declined autopay charges recovered once retries run on a schedule. For scale, Recurly's 2018 study of more than 1,300 subscription businesses found that over 45% of the charges declined for the three most common reasons were recovered (vendor data). $225 is a renewal's $271 average fee across $325 bait and $195 liquid agreements, less a $46 yearly inspection. On the pest control page, $7.50 a foot for trench-and-rod termite treatment sits inside two national cost guides, Fixr's $4 to $14.50 and Polyguard's $3 to $15.</p></div></details>
-    </div>
+    </details>
     <div class="cta-inline">
       <a class="btn" href="tel:+13522260681">Call or text us</a>
       <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
-      <a class="u" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
-      <p class="mb"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <span class="red">the walk fee back</span>.</p>
+      <p class="mb mb-s"><span data-shared="moneyback.short"><b>Not worth it to you?</b> You get the walk fee back.</span></p>
     </div>
   </div>
 </section>
 
-<section class="band drivers" id="price" data-ground="paper" data-density="low" data-width="narrow" data-loud="sentence" data-medium="say">
-  <div class="wrap">
-    <h2>What sets the price after the walk</h2>
-    <p class="t-lede" style="margin-top:14px;max-width:36em">Everything after the walk is quoted from your sheet, so the number comes after the walk, not before. Three things move it:</p>
-    <p class="say">How big the leak is <span class="inpic" role="img" aria-label="a dollar figure"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 7.5c-.8-1.3-2.1-2-3.6-2-2 0-3.4 1.1-3.4 2.6 0 3.6 7.3 2 7.3 5.9 0 1.6-1.6 2.8-3.8 2.8-1.7 0-3.1-.8-3.9-2.2M12 3.5v17"/></svg></span>, how many trucks <span class="inpic" role="img" aria-label="a truck"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.4v2.6h-7"/><circle cx="6.5" cy="17" r="1.8"/><circle cx="17" cy="17" r="1.8"/></svg></span> (or locations) you run, and what your tools can already do <span class="inpic" role="img" aria-label="a laptop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14v9H5zM3 18.5h18"/></svg></span>.</p>
-    <p class="say-after">That is why there is no price list. Two shops in the same trade can leak different amounts, in different places. The walk is the only price we can name before we see your shop.</p>
-  </div>
-</section>
-
-<section class="band" id="faq" data-ground="sheet" data-density="mid" data-width="narrow" data-loud="questions" data-medium="faq">
+<section class="band faq-band" id="faq" data-ground="sheet" data-density="mid" data-width="narrow" data-loud="questions" data-medium="faq">
   <div class="wrap-read">
     <h2>Questions owners ask</h2>
     <div class="faq">
-      <details><summary>What does it cost?</summary><div class="ans">
-        <p>The walk starts at $500, as printed under Booking at the top of this page; bigger shops get a quote on the free call. It counts toward a fix of $1,500 or more that starts within 30 days, and it is paid when booked. <b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <span class="red">the walk fee back</span>. You keep the sheet either way, even if you never hire us for a fix.</p>
-        <p>Everything after the walk is quoted from your sheet. Each fix has its own fixed price, never by the hour, so you can start with one. Any software or service fees show on their own line, at cost. The monthly check is sized to your shop; if a fix brings back less than the sheet said, it costs less. The price for the fixes you have does not go up in the first year, and a fix you add later shows its own part before you sign. You hear each price before any work starts. The first conversation is free.</p></div></details>
-      <details><summary>What happens on the free call?</summary><div class="ans">
-        <p>Before we talk, we look your shop up on Google, so you don't spend the call explaining what you do. We bring one number from it, like how many reviews it shows or the hours it lists.</p>
-        <p>You tell us what eats your week. We tell you plainly whether a walk fits. If you say no, we don't call or text again unless you ask.</p></div></details>
+      <details id="price"><summary>What does it cost?</summary><div class="ans">
+        <p>The walk's price is printed with step 2 above, and it is paid when booked. You keep the sheet either way, even if you never hire us for a fix.</p>
+        <p>Everything after the walk is quoted from your sheet, so that number comes after the walk, not before. Three things move it: how big the problem is, how many trucks or locations you run, and what your tools can already do. That is why there is no price list. Two shops in the same trade can lose different amounts, in different places.</p>
+        <p>Each fix has its own fixed price, never by the hour, so you can start with one. Any software fees show on their own line, at cost. The monthly check is sized to your shop, and if a fix brings back less than the sheet said, it costs less. You hear each price before any work starts. The first conversation is free.</p></div></details>
       <details><summary>Do you work outside Gainesville?</summary><div class="ans">
         <p>We are based in Gainesville and walk shops across Alachua County. Farther in Florida by arrangement. Every walk includes a visit, so call and we will tell you if the drive works.</p></div></details>
       <details><summary>What data do you need, and what do you do with it?</summary><div class="ans">
-        <p>Three things from your own records: the call history your phone company keeps, your quote and invoice exports and your calendar. We use the call history only with your written OK. You run the exports, or give us a user seat of our own. We never take a shared password or a login sheet.</p>
+        <p>Your own records: invoices, quotes, your calendar and job list, and the call history your phone company keeps. We use the call history only with your written OK. You run the exports, or give us a user seat of our own. We never take a shared password or a login sheet.</p>
         <p>We accept exports with no card or bank numbers, no Social Security or ID numbers, no health data and no GPS or location logs. We keep them encrypted and delete them once your sheet is delivered. If a breach ever touches them, we tell you within 10 days.</p></div></details>
       <details><summary>Do you record calls or film anything?</summary><div class="ans">
         <p>Only with your OK. Florida law also needs everyone on a call to agree before it is recorded. If you would rather nothing is photographed or recorded, that is the rule. The call history we use shows when calls came in and whether anyone answered, not what was said. Some answering tools record every call by default, so we keep that switched off unless you want it and every caller agrees first.</p></div></details>
       <details><summary>Will this replace my office staff?</summary><div class="ans">
-        <p>It replaces retyping, waiting and forgetting: the job typed into three places, the quote that waits until Friday, the follow-up nobody owns. What you do with the time it frees is up to you.</p></div></details>
+        <p>It replaces the retyping and the chasing, like the job typed into three places or the quote that waits until Friday. What you do with the time it frees is up to you.</p></div></details>
       <details><summary>Do I have to switch software?</summary><div class="ans">
         <p>No, not by default. We build inside what you already pay for when it can do the job. If a fix needs a new subscription, you hear the monthly cost before we start, and why the free option lost. If you switch software later, moving your fixes is quoted on its own, and we tell you first what the new software can and can't do.</p></div></details>
       <details><summary>What happens when my shop grows or I change software?</summary><div class="ans">
@@ -481,48 +635,84 @@
         <p>Yes. Cancel before the visit starts and before your call history is shared, and you get the walk fee back. After that, if the sheet wasn't worth it to you, text or email us within 7 days of the call where you go over it, and you get the walk fee back.</p>
         <p>You keep the sheet either way. The monthly check runs month to month: cancel by email before the next billing date. If you stop a fix or a build partway, the agreement says what is owed for the work done.</p></div></details>
       <details><summary>Do you work in Spanish?</summary><div class="ans">
-        <p>Yes. The free call, the walk, your sheet, the monthly check and the one-page handover sheet can all be in Spanish. If your booking tool texts customers only in English, that can be one of the leaks we fix.</p></div></details>
+        <p>Yes. The free call, the walk, your sheet, the monthly check and the one-page handover sheet can all be in Spanish. If your booking tool texts customers only in English, that can be one of the problems we fix.</p></div></details>
     </div>
     <p class="faq-more">Another question? Call or text <a class="u" href="tel:+13522260681">(352) 226-0681</a>.</p>
-    <p class="honest-l">Ask anything on the free call.</p>
   </div>
 </section>
 
-<section class="band seam" id="close" style="--hole:var(--sheet)" data-ground="bone" data-density="mid" data-width="split" data-loud="closing line" data-medium="close">
-  <div class="wrap ar-split">
-    <div>
-      <p class="tab"><span class="tab-n">→</span>Next stop · Your shop</p>
-      <h2 class="t-close close-h" style="font-size:clamp(44px,5.4vw,64px)">Start with a free call.</h2>
+<section class="band hm4-close" id="contact" data-ground="paper" data-density="mid" data-width="split" data-loud="close" data-medium="close">
+  <div class="wrap close-g">
+    <div class="c4-main">
+      <h2 class="t-close close-h">Start with a free call.</h2>
       <div class="close-act">
-        <div class="arrow-to"><a class="btn btn-lg" href="tel:+13522260681">Call (352) 226-0681</a><svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg></div>
-        <p class="t-lede">Call or text with your trade and your town. The call is free, up to 20 minutes, and we bring one number about your shop.</p>
-        <a class="u" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
-        <a class="u" href="/leak-check/">Or try the loss calculator first</a>
-        <p class="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</p>
-        <div class="mb-box"><h3>Money back</h3><p class="mb"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <span class="red">the walk fee back</span>. <a class="u" href="#terms">Full terms</a></p></div>
+        <div class="arrow-to">
+          <a class="btn btn-lg" href="tel:+13522260681">Call or text us</a>
+          <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
+        </div>
+        <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
       </div>
-    </div>
-    <div class="page" style="--hole:var(--bone)">
-      <dl class="cblock" style="margin-top:0">
-        <div><dt>Call or text</dt><dd><a class="u big-tel" href="tel:+13522260681">(352) 226-0681</a></dd></div>
-        <div><dt>Hours</dt><dd>Monday to Friday, 9 a.m. to 5 p.m.</dd></div>
-        <div><dt>Where</dt><dd>Gainesville, serving Alachua County. Farther in Florida by arrangement.</dd></div>
+      <dl class="c4-hours">
+        <div><dt>Money back</dt><dd><p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> <a class="u" href="#terms">Full terms</a></p></dd></div>
+        <div><dt>Hours</dt><dd><span data-shared="hours">Monday to Friday, 9 a.m. to 5 p.m.</span></dd></div>
+        <div><dt>Reply time</dt><dd><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span></dd></div>
         <div><dt>Language</dt><dd>English or Spanish</dd></div>
       </dl>
+      <p class="c4-llc">Lumora Group LLC, a Florida company.</p>
     </div>
+    <div class="c4-card">
+      <figure class="contact-card">
+        <img class="cardino" src="/v4/assets/bird-cardino-perch.svg" alt="" width="74" height="60" loading="lazy">
+        <p class="t-label hm-cc-k">One contact, start to finish</p>
+        <blockquote class="signed"><p>“I started Lumora here in Gainesville. We work in English or Spanish, and you deal with the same person from the first call to the last fix.”</p></blockquote>
+        <figcaption class="signed-by">Franco A. Soto, Owner</figcaption>
+        <dl class="cblock">
+          <div><dt>Where</dt><dd>Gainesville, serving Alachua County. Farther in Florida by arrangement.</dd></div>
+        </dl>
+        <p class="t-small hm-about"><a class="u" href="/about/">About Lumora</a></p>
+      </figure>
+      <div class="c4-rules">
+        <h3>Rules we keep</h3>
+        <ul>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>We build inside what you already pay for.</li>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>No filming or recording without your OK.</li>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>Say no once, and that's the end of it.</li>
+        </ul>
+      </div>
+    </div>
+    <nav class="pl-more" aria-labelledby="pl-more-k">
+      <p class="t-label" id="pl-more-k">Every trade we walk</p>
+      <ul class="pl-trades" data-trades>
+        <li><a href="/industries/plumbing/">Plumbing</a></li>
+        <li><a href="/industries/ac-and-heating/">AC and heating</a></li>
+        <li><a href="/industries/electrical/">Electrical</a></li>
+        <li><a href="/industries/water-damage-and-mold/">Water damage and mold</a></li>
+        <li><a href="/industries/pest-control/">Pest control</a></li>
+        <li><a href="/industries/roofing/">Roofing</a></li>
+        <li><a href="/industries/restaurants-and-bars/">Restaurants and bars</a></li>
+        <li><a href="/industries/property-managers/">Property managers</a></li>
+      </ul>
+    </nav>
   </div>
 </section>
 </main>
 
 <footer class="foot">
   <div class="wrap foot-g">
-    <img src="/v3/assets/logo.svg" alt="Lumora" width="104" height="25">
-    <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/">Loss calculator</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
+    <img src="/v4/assets/logo.svg" alt="Lumora" width="104" height="25">
+    <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/what-we-automate/">What we automate</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/">Loss calculator</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/articles/">Articles</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
     <p>Lumora Group LLC, a Florida company. Gainesville, serving Alachua County. Every shop, name and number marked Sample is made up.</p>
-    <!-- Icons: Material Symbols by Google, Apache License 2.0. License: /assets/icons/LICENSE.txt and /assets/icons/NOTICE.txt -->
   </div>
 </footer>
 
 <nav class="callbar" aria-label="Call or text us"><a href="tel:+13522260681">Call</a><a href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text</a></nav>
+<script>
+(function () {
+  function open(id) { var t = id && document.getElementById(id), d = t && t.closest('details'); if (d) d.open = true; }
+  open(decodeURIComponent(location.hash.slice(1)));
+  document.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('a[href^="#"]'); if (a) open(a.getAttribute('href').slice(1)); });
+  addEventListener('hashchange', function () { open(decodeURIComponent(location.hash.slice(1))); });
+})();
+</script>
 </body>
 </html>
