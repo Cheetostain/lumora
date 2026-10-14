@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact | Lumora</title>
+<meta name="format-detection" content="telephone=no">   
+<title>Contact | Lumora, Gainesville FL</title>
 <meta name="description" content="Call or text us in Gainesville. Tell us your trade and your town, and we start with a free call of up to 20 minutes. English or Spanish.">
 <link rel="canonical" href="https://lumorafl.com/contact/">
 <link rel="alternate" hreflang="en" href="https://lumorafl.com/contact/">
@@ -22,17 +23,92 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="es_US">
 <meta name="theme-color" content="#F6F5F2">
-<link rel="icon" href="/v3/assets/mark.svg">
-<link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v3/system.css?v=e3291eab">
-<link rel="stylesheet" href="/v3/trades-3/trades-3.css?v=e3291eab">
-<script>document.documentElement.classList.add('js')</script>
-<script src="/v3/trades.js?v=e3291eab" defer></script>
-<script src="/v3/system.js?v=e3291eab" defer></script>
-<script src="/v3/trades-3/trades-3.js?v=e3291eab" defer></script>
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="/v4/assets/mark.svg">
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/v4/system.css?v=d561bbbe">
+<link rel="stylesheet" href="/v4/trade-page.css?v=d561bbbe">
+<script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
+<script src="/v4/trades.js?v=d561bbbe" defer></script>
+<script src="/v4/system.js?v=d561bbbe" defer></script>
+<style>
+/* ===== Contact, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24, 32, 44,
+   64) outside the pictures, and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
+.ct-hero a.u,.ct-where a.u,.ct-more a,.auto-close a{display:inline-block;padding-block:12px;margin-block:-12px;position:relative;z-index:1}   /* a 44px tall tap area without moving the layout, painted over the next line so all of it takes the tap */
+
+/* 1 hero (K1): the words and the call block; the contact card beside them on a computer, under them on a phone. On a phone
+   Call and Text are full-width buttons, one above the other (conversion FINDINGS R04: two 56px buttons right under the h1) */
+.ct-hero{padding-bottom:56px}
+.ct-g{display:grid;gap:68px}   /* room above the card for Cardino, who stands on its top edge */
+.ct-copy h1{max-width:11em}
+.ct-copy .t-lede{margin-top:14px;max-width:30em}
+.ct-copy .cta{margin-top:24px;gap:12px}
+.ct-btns{display:grid;gap:12px;width:100%}
+.ct-tel{margin-top:4px}   /* the shared 20px: the card's number leads */
+.ct-copy .mb{margin-top:2px}
+.ct-es{margin-top:26px;font-size:17px}   /* clear of the Full terms link's tap area above it */
+.ct-card .cblock{margin-top:0}
+.ct-card .cblock div:last-child{border-bottom:0}
+.ct-card .big-tel{font-size:24px}
+@media (min-width:560px){.ct-btns{display:flex;flex-wrap:wrap;width:auto}}
+@media (min-width:900px){
+  .ct-hero{padding:56px 0 64px}
+  .ct-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:72px;align-items:center}
+}
+
+/* 2 what we take over (#automate): the six kinds of computer work in Home's words, and every trade's page in one line */
+.ct-auto-g{display:grid;gap:16px}
+.ct-auto-t .t-lede{margin-top:10px;max-width:24em}
+.ct-auto-g .pl-more{margin-top:10px}
+@media (min-width:900px){
+  .ct-auto-g{grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-areas:"t list" "t more" "trades trades";column-gap:64px;row-gap:12px;align-items:start}
+  .ct-auto-t{grid-area:t}.ct-auto-g>.auto-list{grid-area:list}.ct-auto-g>.auto-close{grid-area:more}
+  .ct-auto-g>.pl-more{grid-area:trades;margin-top:28px}
+}
+
+/* 3 what happens after you reach out (K2): the text thread in the one phone frame (cropped on a phone just under its last
+   line, Lumora.fitCrops), then the four steps bound from shared-text.json (R12). The owner's own texts are green, as SMS
+   bubbles are on his phone; none of them is a text-back, so they keep the plain .out class (Lumora.lint R4 reads .sms as one) */
+.ct-next .bub.out{background:#1a7f37;color:#fff}   /* the system's SMS green, white text 5.1:1 */
+.ct-next-g{display:grid;gap:20px;grid-template-areas:"h" "fig" "tl" "more"}
+.ct-next-h{grid-area:h}.ct-fig{grid-area:fig;min-width:0}.ct-tl{grid-area:tl}.ct-more{grid-area:more}
+.ct-fig .pic{max-width:380px;margin-inline:auto}
+.ct-fig .cap{text-align:center;max-width:24em;margin-inline:auto}
+.ct-more{font-size:17px}
+@media (min-width:900px){
+  .ct-next-g{grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-areas:"fig h" "fig tl" "fig more";grid-template-rows:auto auto 1fr;column-gap:64px;row-gap:18px;align-items:start}
+  .ct-fig{position:sticky;top:112px}
+  .ct-tl>li.tl-big{margin-inline:0}                                       /* flush with the column, as About and How it works */
+  .ct-tl .tl-head{flex-direction:column;align-items:flex-start;gap:6px}   /* every tag under its heading, as plumbing's timeline */
+}
+
+/* 4 we drive to you (K3): the county map, then money back, language, the calculator and privacy as rows, and a last call */
+.ct-where-g{display:grid;gap:22px;grid-template-areas:"t" "map" "rows" "cta"}
+.ct-where-t{grid-area:t}.ct-where .county{grid-area:map;justify-self:center}.ct-rows{grid-area:rows}.ct-last{grid-area:cta}
+.ct-where-t p{margin-top:12px;font-size:17px;max-width:30em}
+.ct-rows{margin-top:0}
+.ct-rows dt{color:var(--ink)}
+.ct-rules li+li{margin-top:2px}
+.ct-last{margin-top:0;padding-top:0;border-top:0}   /* the list's last rule is the line above it */
+@media (max-width:899px){.ct-last{display:none}}   /* computer-only extra (R9, reason in the markup's data-extra): on a phone the call bar right under it has Call and Text */
+.county .tw.ul{display:block;transform:translate(-100%,calc(-100% - 9px))}   /* Gainesville's label up and to the left of its dot, clear of Newberry at every width (About's) */
+.county .tw.ul::before{position:absolute;right:-6px;bottom:-15px}
+@media (max-width:559px){.ct-where .county{max-width:288px}.county .tw.ur{display:block;transform:translate(2px,calc(-100% - 4px))}.county .tw.ur::before{position:absolute;left:-6px;bottom:-8px}}   /* a smaller map on a phone; at this size Archer's label sits above its dot, clear of Micanopy (About's 320 fix) */
+@media (min-width:900px){
+  .ct-where-g{grid-template-columns:minmax(0,6fr) minmax(0,5fr);grid-template-areas:"t map" "rows map" "cta map";grid-template-rows:auto auto 1fr;column-gap:64px;row-gap:24px;align-items:start}
+  .ct-where .county{max-width:480px;align-self:center}
+  .county .tw{font-size:15px}.county .tw.big{font-size:17px}
+}
+
+/* phone length (budget 5,100px at 390, target 4,100) */
+@media (max-width:699px){
+  .ct-hero{padding-bottom:44px}
+  .ct-g{gap:58px}
+}
+</style>
 </head>
-<body>
+<body data-trade="plumbing" data-rules="v4">
 <a class="skip" href="#main">Skip to content</a>
 
 <div class="util">
@@ -43,7 +119,7 @@
 </div>
 <header class="hdr">
   <div class="wrap hdr-in">
-    <a class="brand" href="/" aria-label="Lumora, home page"><img src="/v3/assets/logo.svg" alt="" width="124" height="30"></a>
+    <a class="brand" href="/" aria-label="Lumora, home page"><img src="/v4/assets/logo.svg" alt="" width="124" height="30"></a>
     <nav class="nav" id="nav" aria-label="Main">
       <ul>
         <li><a class="u" href="/how-it-works/">How it works</a></li>
@@ -55,7 +131,7 @@
       </ul>
     </nav>
     <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
-    <a class="btn btn-sm" href="tel:+13522260681">Call or text</a>
+    <a class="btn btn-sm" href="tel:+13522260681">Call or text us</a>
     <span class="lang" role="group" aria-label="Language"><a href="/contact/" aria-current="true">EN</a><a href="/es/contact/" lang="es" hreflang="es">ES</a></span>
     <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   </div>
@@ -63,97 +139,132 @@
 
 <main id="main">
 
-<section class="c-hero" id="top" data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="contact">
-  <div class="wrap ar-split">
-    <div>
-      <p class="eyebrow">Gainesville, serving Alachua County. English or Spanish.</p>
-      <h1>Call or text us.</h1>
-      <p class="t-lede">Call or text with your trade and your town. We start with a free call of up to 20 minutes, and book the walk from there.</p>
+<section class="hero ct-hero" id="top" data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="card">
+  <div class="wrap ct-g">
+    <div class="ct-copy">
+      <h1>Call or text us</h1>
+      <p class="t-lede">Tell us your trade and your town. On a free call of up to 20 minutes, we tell you whether a walk fits your shop and what it costs.</p>
       <div class="cta">
-        <div class="cta-row">
-          <a class="btn btn-lg" href="tel:+13522260681">Call us</a>
-          <a class="btn btn-o btn-lg" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text us</a>
-          <a class="cta-tel c-tel" href="tel:+13522260681">(352) 226-0681</a>
+        <div class="ct-btns">
+          <a class="btn btn-lg" href="tel:+13522260681" data-first="the Call button">Call us</a>
+          <a class="btn btn-o btn-lg" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F" data-first="the Text button">Text us</a>
         </div>
-        <p class="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</p>
-        <p class="cta-note">Tap Text us and the first message is already written for you.</p>
+        <a class="cta-tel ct-tel" href="tel:+13522260681">(352) 226-0681</a>
+        <p class="reply"><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span></p>
+        <p class="mb"><span data-shared="moneyback.short"><b>Not worth it to you?</b> You get the walk fee back.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p>
       </div>
-      <p class="c-es" lang="es"><a class="u" href="/es/contact/">También en español.</a></p>
+      <p class="ct-es" lang="es"><a class="u" href="/es/contact/">También en español.</a></p>
     </div>
-    <div class="page" style="--hole:var(--paper)">
-      <p class="tab"><span class="tab-n" aria-hidden="true">→</span>Contact · Lumora</p>
+    <div class="contact-card ct-card">
+      <img class="cardino" src="/v4/assets/bird-cardino-perch.svg" alt="" width="74" height="60">
+      <h2 class="sr">Contact details</h2>
       <dl class="cblock">
-        <div><dt>Owner</dt><dd>Franco A. Soto, owner</dd></div>
         <div><dt>Call or text</dt><dd><a class="u big-tel" href="tel:+13522260681">(352) 226-0681</a></dd></div>
+        <div><dt>Hours</dt><dd><span data-shared="hours">Monday to Friday, 9 a.m. to 5 p.m.</span></dd></div>
         <div><dt>Email</dt><dd><a class="u" href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></dd></div>
-        <div><dt>Where</dt><dd>Gainesville, serving Alachua County. Farther in Florida by arrangement.</dd></div>
-        <div><dt>Language</dt><dd>English or Spanish</dd></div>
-        <div><dt>When we answer</dt><dd>Same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</dd></div>
+        <div><dt>Where</dt><dd>Gainesville, serving Alachua County</dd></div>
+        <div><dt>Owner</dt><dd>Franco A. Soto</dd></div>
       </dl>
     </div>
   </div>
 </section>
 
-<section class="band" id="next" data-ground="paper" data-density="mid" data-width="split" data-loud="steps" data-medium="phone">
-  <div class="wrap ar-split">
-    <div>
-      <h2 class="two">What happens after you reach out. <span>You can stop after any step.</span></h2>
-      <ol class="booked" style="margin-top:28px">
-        <li class="rv"><span class="bn">1</span><b>We set a time</b><p>We call or text back to set a time for the free call.</p></li>
-        <li class="rv"><span class="bn">2</span><b>The free call, up to 20 minutes</b><p>Before we talk, we look your shop up on Google, so you don't spend the call explaining what you do. You tell us what eats your week, and we tell you plainly whether a walk fits. If someone else keeps your books, bring them on the call. If you say no, we don't call or text again unless you ask.</p></li>
-        <li class="rv"><span class="bn">3</span><b>If you book, the walk</b><p>The walk is paid when booked. <b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward a fix of $1,500 or more that starts within 30 days. <b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <span class="red">the walk fee back</span>. You keep the sheet.</p></li>
-        <li class="rv"><span class="bn">4</span><b>Week one</b><p>We visit, and you sign the OK for your call history. You get the sheet about 5 business days after we have your records, on a walkthrough call; bigger shops get a quote and a date on the free call.</p></li>
-        <li class="rv"><span class="bn">5</span><b>Then you decide</b><p>The sheet is yours either way.</p></li>
-      </ol>
+<section class="band ct-auto" id="automate" data-ground="paper" data-density="low" data-width="split" data-loud="list" data-medium="list">
+  <div class="wrap ct-auto-g">
+    <div class="ct-auto-t">
+      <h2>Not sure what to say?</h2>
+      <p class="t-lede">Name the one that eats most of your week. That's enough to start.</p>
     </div>
-    <figure class="next-fig" aria-labelledby="thread-cap">
-      <div class="pic">
-        <div class="scr-phone" role="img" aria-label="Sample: a text thread with Lumora on an owner's phone. 7:52 a.m.: Hi, I saw your website. When is a good time for the free call? Lumora answers: we can call today at 2:15 p.m. or tomorrow at 9 a.m., which works, and what's your trade and town? The owner: Plumbing, in Alachua. 2:15 works. Lumora: we call at 2:15 from this number, up to 20 minutes.">
-          <div class="ph"><div class="ph-sb"><span>9:41</span><i></i></div><div class="ph-who"><i></i>Lumora</div>
-            <div class="thread">
-              <p class="sys">Today 7:52 AM</p>
-              <p class="bub out">Hi, I saw your website. When is a good time for the free call?</p>
-              <p class="bub in">Hi, this is Lumora. Thanks for the text. We can call today at 2:15 p.m. or tomorrow at 9 a.m. Which works? And what's your trade and town?</p>
-              <p class="bub out">Plumbing, in Alachua. 2:15 works.</p>
-              <p class="bub in">Done. We call at 2:15 from this number. Up to 20 minutes.</p>
-              <p class="sys k">Free call · Today 2:15 PM</p>
-            </div>
-          </div>
-        </div>
-        <span class="samp">Sample</span>
-      </div>
-      <figcaption id="thread-cap" class="cap">What a text to us looks like, start to finish. Tap Text and the first message is already written.</figcaption>
-    </figure>
+    <ul class="auto-list">
+      <li data-task="retyping">Typing the same job twice.</li>
+      <li data-task="invoices">Jobs finished but never billed.</li>
+      <li data-task="bills">Supplier bills that don't match the quote.</li>
+      <li data-task="email">Reading emails and filing the attachments by hand.</li>
+      <li data-task="reminders">Reminding crew and customers, one at a time.</li>
+      <li data-task="numbers">Adding up the month-end numbers.</li>
+    </ul>
+    <p class="auto-close"><a class="u" href="/what-we-automate/">See the full list</a></p>
+    <nav class="pl-more" aria-labelledby="pl-more-k">
+      <p class="t-label" id="pl-more-k">Every trade we walk</p>
+      <ul class="pl-trades" data-trades>
+        <li><a href="/industries/plumbing/">Plumbing</a></li>
+        <li><a href="/industries/ac-and-heating/">AC and heating</a></li>
+        <li><a href="/industries/electrical/">Electrical</a></li>
+        <li><a href="/industries/water-damage-and-mold/">Water damage and mold</a></li>
+        <li><a href="/industries/pest-control/">Pest control</a></li>
+        <li><a href="/industries/roofing/">Roofing</a></li>
+        <li><a href="/industries/restaurants-and-bars/">Restaurants and bars</a></li>
+        <li><a href="/industries/property-managers/">Property managers</a></li>
+      </ul>
+    </nav>
   </div>
 </section>
 
-<section class="band-tight seam" id="where" data-ground="bone" data-density="low" data-width="split" data-loud="map" data-medium="map" style="--hole:var(--paper)">
-  <div class="wrap towns">
-    <div>
-      <h2 class="t-h2">We drive to you.</h2>
-      <p class="town-list" style="margin-top:14px"><span>Gainesville</span><span>Alachua</span><span>High Springs</span><span>Newberry</span><span>Archer</span><span>Micanopy</span><span>Hawthorne</span><span>Waldo</span></p>
-      <p style="margin-top:14px">And the rest of the county. Every walk includes a visit to your shop, so if you are farther out, call and we will tell you if the drive works.</p>
-      <p class="t-small muted" style="margin-top:10px">Farther in Florida by arrangement.</p>
+<section class="band seam ct-next" id="next" style="--hole:var(--paper)" data-ground="bone" data-density="mid" data-width="split" data-loud="steps" data-medium="phone">
+  <div class="wrap ct-next-g">
+    <h2 class="ct-next-h">What happens after you reach out</h2>
+    <figure class="ct-fig">
+      <div class="pic">
+        <div class="ct-ph crop-m" role="img" aria-label="Sample: a text thread with Lumora on an owner's phone. Today at 7:52 a.m. the owner writes: Hi, I saw your website. When is a good time for the free call? At 9:06 a.m. Lumora answers: we can call today at 2:15 p.m. or tomorrow at 9 a.m., which works, and what's your trade and town? The owner: Plumbing, in Alachua. 2:15 works. Lumora: we'll call you at 2:15 from this number. Free call, today at 2:15 p.m.">
+          <div class="ph4"><div class="ph4-scr" data-ui-ok="nested-card a text thread: the bubbles are the messages on the one phone screen (R6), not boxes around content"><div class="ph4-sb" aria-hidden="true"><span>9:12</span><span class="sb-ic"><svg viewBox="0 0 18 12" width="17" height="11"><rect x="0" y="8" width="3" height="4" rx=".7" fill="#000"/><rect x="5" y="5.5" width="3" height="6.5" rx=".7" fill="#000"/><rect x="10" y="3" width="3" height="9" rx=".7" fill="#000"/><rect x="15" y="0" width="3" height="12" rx=".7" fill="#000"/></svg><svg viewBox="0 0 16 12" width="15" height="11"><path d="M8 2.2c2.4 0 4.6.9 6.3 2.5l1.2-1.3C13.5 1.5 10.9.4 8 .4S2.5 1.5.5 3.4l1.2 1.3C3.4 3.1 5.6 2.2 8 2.2zm0 3.6c1.4 0 2.7.5 3.7 1.4l1.2-1.3C11.6 4.7 9.9 4 8 4s-3.6.7-4.9 1.9l1.2 1.3c1-.9 2.3-1.4 3.7-1.4zm0 3.5c-.6 0-1.2.2-1.6.6L8 11.6l1.6-1.7c-.4-.4-1-.6-1.6-.6z" fill="#000"/></svg><svg viewBox="0 0 27 12" width="24" height="11"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#000" stroke-opacity=".45"/><rect x="2" y="2" width="17" height="8" rx="1.8" fill="#000"/><path d="M24 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2z" fill="#000" fill-opacity=".5"/></svg></span></div><div class="ph-who"><i></i>Lumora</div><div class="thread"><p class="sys">Today 7:52 AM</p><p class="bub out">Hi, I saw your website. When is a good time for the free call?</p><p class="sys">9:06 AM</p><p class="bub in">Hi, this is Lumora. Thanks for the text. We can call today at 2:15 p.m. or tomorrow at 9 a.m. Which works? And what's your trade and town?</p><p class="bub out">Plumbing, in Alachua. 2:15 works.</p><p class="bub in">Done. We'll call you at 2:15 from this number.</p><p class="sys k">Free call, today 2:15 PM</p></div></div><svg class="ph4-f" viewBox="0 0 433 882" aria-hidden="true" focusable="false"><path fill="#232326" fill-rule="evenodd" d="M2 73C2 32.68 34.68 0 75 0H357C397.32 0 430 32.68 430 73V809C430 849.32 397.32 882 357 882H75C34.68 882 2 849.32 2 809V73ZM21.25 75C21.25 44.21 46.21 19.25 77 19.25H355C385.79 19.25 410.75 44.21 410.75 75V807C410.75 837.79 385.79 862.75 355 862.75H77C46.21 862.75 21.25 837.79 21.25 807V75Z"/><path fill="#232326" d="M0 171C0 170.45.45 170 1 170H3V204H1C.45 204 0 203.55 0 203V171ZM1 234C1 233.45 1.45 233 2 233H3.5V300H2C1.45 300 1 299.55 1 299V234ZM1 319C1 318.45 1.45 318 2 318H3.5V385H2C1.45 385 1 384.55 1 384V319ZM430 279H432C432.55 279 433 279.45 433 280V384C433 384.55 432.55 385 432 385H430V279Z"/><path fill="#0a0a0b" fill-rule="evenodd" d="M6 74C6 35.34 37.34 4 76 4H356C394.66 4 426 35.34 426 74V808C426 846.66 394.66 878 356 878H76C37.34 878 6 846.66 6 808V74ZM21.25 75C21.25 44.21 46.21 19.25 77 19.25H355C385.79 19.25 410.75 44.21 410.75 75V807C410.75 837.79 385.79 862.75 355 862.75H77C46.21 862.75 21.25 837.79 21.25 807V75Z"/><path fill="none" stroke="#2c2c30" stroke-width=".5" d="M21.25 75C21.25 44.21 46.21 19.25 77 19.25H355C385.79 19.25 410.75 44.21 410.75 75V807C410.75 837.79 385.79 862.75 355 862.75H77C46.21 862.75 21.25 837.79 21.25 807V75Z"/><path opacity=".5" fill="#3a3a3e" d="M174 5H258V5.5C258 6.6 257.1 7.5 256 7.5H176C174.9 7.5 174 6.6 174 5.5V5Z"/><path class="ph4-isl" fill="#000" d="M154 48.5C154 38.28 162.28 30 172.5 30H259.5C269.72 30 278 38.28 278 48.5C278 58.72 269.72 67 259.5 67H172.5C162.28 67 154 58.72 154 48.5Z"/><circle cx="259.5" cy="48.5" r="10.5" fill="#0c0c11"/><circle cx="259.5" cy="48.5" r="5.5" fill="#1b1b24"/></svg></div>
+        </div>
+        <span class="samp" aria-hidden="true">Sample</span>
+      </div>
+      <figcaption class="cap">First we call or text back to set a time.</figcaption>
+    </figure>
+    <ol class="tl4 ct-tl">
+      <li>
+        <div class="tl-head"><h3><span data-shared="step1.when">Today</span></h3><span class="tl-tag free"><span data-shared="step1.cost">Free</span></span></div>
+        <div class="tl-body">
+          <p class="t-body"><span data-shared="step1.what">A free call, up to 20 minutes.</span></p>
+        </div>
+      </li>
+      <li class="tl-big">
+        <div class="tl-head"><h3><span data-shared="step2.when">The walk</span></h3><span class="tl-tag"><span data-shared="step2.cost">Paid</span></span></div>
+        <div class="tl-body">
+          <p class="t-body"><span data-shared="step2.what">A visit sized to your shop, plus your records: invoices, calendar, job list and call history.</span> <span data-shared="step2.part">You sign one OK so we can look at them.</span></p>
+          <p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward a fix of $1,500 or more that starts within 30 days.</span></p>
+          <p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p>
+        </div>
+      </li>
+      <li>
+        <div class="tl-head"><h3><span data-shared="step3.when">Your sheet</span></h3></div>
+        <div class="tl-body">
+          <p class="t-body"><span data-shared="step3.what">Every problem in dollars. About 5 business days after we have your records; bigger shops get a quote and a date on the free call.</span> <span data-shared="step3.get">You keep it either way.</span></p>
+        </div>
+      </li>
+      <li>
+        <div class="tl-head"><h3><span data-shared="step4.when">Then, only if you want</span></h3><span class="tl-tag">Paid</span></div>
+        <div class="tl-body">
+          <p class="t-body"><span data-shared="step4.what">One fix, priced before work starts, and a monthly check you can cancel any month.</span></p>
+        </div>
+      </li>
+    </ol>
+    <p class="ct-more"><span data-shared="steps.stop">You can stop after any of them.</span> <a class="u" href="/how-it-works/">Every step in detail</a></p>
+  </div>
+</section>
+
+<section class="band seam ct-where" id="where" style="--hole:var(--bone)" data-ground="paper" data-density="low" data-width="split" data-loud="map" data-medium="map">
+  <div class="wrap ct-where-g">
+    <div class="ct-where-t">
+      <h2>We drive to you</h2>
+      <p>Every walk includes a visit to your shop, anywhere in Alachua County. Farther out in Florida, call and we'll tell you whether the drive works.</p>
     </div>
     <div class="county" role="img" aria-label="Map outline of Alachua County with Gainesville, Alachua, High Springs, Newberry, Archer, Micanopy, Hawthorne and Waldo marked.">
-      <img src="/v3/assets/alachua.svg" alt="" width="1000" height="965" loading="lazy">
-      <span class="tw big t" style="--x:55.2%;--y:55.8%" aria-hidden="true">Gainesville</span><span class="tw" style="--x:31.3%;--y:31.7%" aria-hidden="true">Alachua</span><span class="tw" style="--x:15.2%;--y:25.1%" aria-hidden="true">High Springs</span><span class="tw" style="--x:13.8%;--y:56.8%" aria-hidden="true">Newberry</span><span class="tw" style="--x:26.6%;--y:77.2%" aria-hidden="true">Archer</span><span class="tw l" style="--x:61.5%;--y:81.6%" aria-hidden="true">Micanopy</span><span class="tw l" style="--x:90.2%;--y:66.3%" aria-hidden="true">Hawthorne</span><span class="tw l" style="--x:78.3%;--y:31.6%" aria-hidden="true">Waldo</span>
+      <img src="/v4/assets/alachua.svg" alt="" width="1000" height="965" loading="lazy">
+      <span class="tw big ul" style="--x:55.2%;--y:55.8%" aria-hidden="true">Gainesville</span><span class="tw" style="--x:31.3%;--y:31.7%" aria-hidden="true">Alachua</span><span class="tw" style="--x:15.2%;--y:25.1%" aria-hidden="true">High Springs</span><span class="tw" style="--x:13.8%;--y:56.8%" aria-hidden="true">Newberry</span><span class="tw ur" style="--x:26.6%;--y:77.2%" aria-hidden="true">Archer</span><span class="tw l" style="--x:61.5%;--y:81.6%" aria-hidden="true">Micanopy</span><span class="tw l" style="--x:90.2%;--y:66.3%" aria-hidden="true">Hawthorne</span><span class="tw l" style="--x:78.3%;--y:31.6%" aria-hidden="true">Waldo</span>
     </div>
-  </div>
-</section>
-
-<section class="band seam" id="money-back" data-ground="paper" data-density="low" data-width="split" data-loud="quote" data-medium="card" style="--hole:var(--bone)">
-  <div class="wrap card-g">
-    <figure class="contact-card rv">
-      <img class="cardino" src="/v3/assets/bird-cardino-perch.svg" alt="" width="74" height="60" loading="lazy">
-      <blockquote class="signed"><p>“I'm Franco A. Soto. I started Lumora here in Gainesville. We work in English or Spanish, and you deal with the same person from the first call to the last fix. Ask anything on the free call.”</p></blockquote>
-      <figcaption class="signed-by">Franco A. Soto, owner</figcaption>
-    </figure>
-    <div class="side-list">
-      <div class="mb-box"><h3>Money back</h3><p class="mb"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <span class="red">the walk fee back</span>. You keep the sheet.</p></div>
-      <div><h3>Language</h3><p>English or Spanish. We answer in the language you call or text in.</p></div>
-      <div><h3>Not ready to call?</h3><p>Put your own numbers in the <a class="u" href="/leak-check/">loss calculator</a> first. It runs on your phone and sends us nothing.</p></div>
-      <p class="note-s">What we do with what you send us is on our <a class="u" href="/privacy/">privacy page</a>.</p>
+    <dl class="c4-hours ct-rows">
+      <div id="money-back"><dt>Money back</dt><dd><p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> You keep the sheet. <a class="u" href="/how-it-works/#terms">Full terms</a></p></dd></div>
+      <div><dt>Rules we keep</dt><dd><ul class="ct-rules"><li>We build inside what you already pay for.</li><li>No filming or recording without your OK.</li><li>Say no once, and that's the end of it.</li></ul></dd></div>
+      <div><dt>Language</dt><dd>English or Spanish. We answer in the one you use, and your sheet can be in Spanish too.</dd></div>
+      <div><dt>Not ready to call?</dt><dd>Put your own numbers in the <a class="u" href="/leak-check/">loss calculator</a> first. It runs on your device and sends us nothing.</dd></div>
+      <div><dt>Privacy</dt><dd>What we do with what you send us is on our <a class="u" href="/privacy/">privacy page</a>.</dd></div>
+    </dl>
+    <div class="cta-inline ct-last" data-extra="computer: the last call, under money back; on a phone the call bar right under it has Call and Text">
+      <a class="btn" href="tel:+13522260681">Call or text us</a>
+      <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
+      <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
     </div>
   </div>
 </section>
@@ -161,8 +272,8 @@
 
 <footer class="foot">
   <div class="wrap foot-g">
-    <img src="/v3/assets/logo.svg" alt="Lumora" width="104" height="25">
-    <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/">Loss calculator</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/articles/">Articles</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
+    <img src="/v4/assets/logo.svg" alt="Lumora" width="104" height="25">
+    <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/what-we-automate/">What we automate</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/">Loss calculator</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/articles/">Articles</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
     <p>Lumora Group LLC, a Florida company. Gainesville, serving Alachua County. Every shop, name and number marked Sample is made up.</p>
   </div>
 </footer>
