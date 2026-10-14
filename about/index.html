@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>About | Lumora</title>
-<meta name="description" content="We find where Gainesville businesses lose money and time, and fix the causes with technology. The person who walks your shop stays your contact, start to finish. Rules in writing, in English or Spanish.">
+<meta name="format-detection" content="telephone=no">   
+<title>About | Lumora, Gainesville FL</title>
+<meta name="description" content="We find where Gainesville businesses lose money and time, and fix the causes. The person who walks your shop stays your contact, start to finish. The first call is free, in English or Spanish.">
 <link rel="canonical" href="https://lumorafl.com/about/">
 <link rel="alternate" hreflang="en" href="https://lumorafl.com/about/">
 <link rel="alternate" hreflang="es" href="https://lumorafl.com/es/about/">
@@ -22,28 +23,167 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="es_US">
 <meta name="theme-color" content="#F6F5F2">
-<link rel="icon" href="/v3/assets/mark.svg">
-<link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/v3/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v3/system.css?v=e3291eab">
-<link rel="stylesheet" href="/v3/how-about/how-about.css?v=e3291eab">
-<script>document.documentElement.classList.add('js')</script>
-<script src="/v3/trades.js?v=e3291eab" defer></script>
-<script src="/v3/system.js?v=e3291eab" defer></script>
-<script src="/v3/how-about/how-about.js?v=e3291eab" defer></script>
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="/v4/assets/mark.svg">
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/v4/system.css?v=d561bbbe">
+<link rel="stylesheet" href="/v4/trade-page.css?v=d561bbbe">
+<script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
+<script src="/v4/trades.js?v=d561bbbe" defer></script>
+<script src="/v4/system.js?v=d561bbbe" defer></script>
+<style>
+/* ===== About, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24, 32, 44,
+   64) outside the pictures, and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
+
+/* 1 hero: the words and the call block; the signed note beside them on a computer, under them on a phone */
+.ab-hero{padding-bottom:64px}
+.ab-g{display:grid;gap:60px}   /* room above the card for Cardino, who stands on its top edge */
+.ab-copy h1{max-width:11em}
+.ab-copy .t-lede{margin-top:16px;max-width:30em}
+.ab-copy .cta{margin-top:26px}
+.ab-free{font-size:17px;color:var(--ink);max-width:30em}
+.ab-card .signed{font-size:20px;line-height:1.5}
+@media (min-width:900px){
+  .ab-hero{padding:56px 0 96px}
+  .ab-g{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:72px;align-items:center}
+}
+
+/* 2 one contact: four papers from one job, straight (papers never tilt on v4), two a row on a phone, four on a computer.
+   Inside the picture each paper keeps its own type, 12px floor; the pencil rings the one line every paper ends on. */
+.ab-docs .t-lede{margin-top:14px;max-width:34em}
+.fourdocs{display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (min-width:1000px){.fourdocs{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}}
+@media (max-width:359px){.fourdocs{grid-template-columns:minmax(0,1fr)}}   /* under 360 two papers a row left 113px for text, one word a line */
+.ab-docs figure{margin-top:28px}
+@media (min-width:1000px){.ab-docs figure{margin-top:40px}}
+.fd{background:#fff;box-shadow:var(--lift);padding:14px 12px 12px;font-family:var(--sys);color:#1d1d1f;display:flex;flex-direction:column}
+@media (min-width:700px){.fd{padding:18px 16px 14px;min-height:250px}}
+.fd-k{font-size:12px;font-weight:600;color:#55555a}
+.fd-t{font:600 max(15px,min(5.4cqi,20px))/1.15 var(--font);color:#111;margin:2px 0 8px;padding-bottom:8px;border-bottom:2px solid #111}
+.fd-l{margin:2px 0 12px}
+.fd-l>p{font-size:12px;font-weight:600;color:#111;line-height:1.35}
+.fd-r{margin-top:4px}
+.fd-r li{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:5px 0;border-bottom:1px solid #ecebe6;font-size:12px;color:#3a3a3f;line-height:1.3}
+.fd-r b{font-weight:600;color:#111;white-space:nowrap}
+.fd-r b.w{white-space:normal;text-align:right}
+.fd-n{counter-reset:fdn}
+.fd-n li{justify-content:flex-start}
+.fd-n li::before{counter-increment:fdn;content:counter(fdn) ".";font-weight:600;color:#111;flex:none;width:14px}
+.fd-foot{margin-top:auto;padding-top:8px;border-top:1px dashed #b5b3ad;font-size:12px;color:#3a3a3f;line-height:1.35}
+.fd-foot .pc{display:inline-block;padding:1px 4px;margin:4px 0 0 6px;font-weight:700;color:#111;font-size:13px;white-space:nowrap}
+.fd-foot .pc::after{inset:-4px -8px}   /* the ring clears the first and last digits */
+.fd:nth-child(2) .pc::after{transform:rotate(1deg);border-radius:52% 48% 54% 46%/44% 56% 44% 56%}   /* four rings by one hand, never four copies */
+.fd:nth-child(3) .pc::after{transform:rotate(-2.5deg);border-radius:50% 50% 44% 56%/58% 42% 54% 46%}
+.fd:nth-child(4) .pc::after{transform:rotate(.5deg);border-radius:46% 54% 52% 48%/50% 50% 46% 54%}
+@media (min-width:1000px){.fd-r li,.fd-l>p,.fd-foot{font-size:13px}.fd-k{font-size:13px}.fd-foot .pc::after{inset:-4px -10px}}   /* four papers a row on a computer have the room for a step up from the 12px floor */
+.ab-docs .pic{padding:30px 0 0}
+.ab-docs .samp{top:0;bottom:auto;left:0;right:auto}   /* the one Sample label sits over the papers, so it is read before them */
+
+/* 3 the work is operations: on a phone the words, the job's history, then the list; on a computer the history sits right */
+.ops-g{display:grid;gap:18px;grid-template-areas:"h" "say" "pic" "list"}
+.ops-h{grid-area:h}.ops-say{grid-area:say}.ops-pic{grid-area:pic}.ops-list{grid-area:list}
+.ops-say p{font-size:17px;max-width:34em}
+.ops-say p+p{margin-top:14px}
+.ops-say .t-lede{font-size:clamp(17px,1.6vw,20px);color:var(--ink)}
+.ops-pic{margin-top:10px;min-width:0}
+.ops-pic .pic{max-width:520px}
+.ops-find{display:grid;gap:10px;margin-top:22px;max-width:520px}
+.ops-list h3{margin:18px 0 10px}
+.ops-list .auto-close{margin-top:12px}
+.ops-list .auto-close a{display:inline-block;padding-block:12px;margin-block:-12px}   /* a 44px tall tap area without moving the layout */
+.ops-no{margin-top:24px;font-size:20px;font-weight:500;line-height:1.4;color:var(--ink);max-width:26em}
+@media (min-width:900px){
+  .ops-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"h pic" "say pic" "list pic";grid-template-rows:auto auto 1fr;column-gap:64px;row-gap:16px;align-items:start}
+  .ops-pic{margin-top:0;position:sticky;top:112px}
+}
+/* the job's history in the one window frame: one job from the first call, the late quote's date circled in pencil */
+.jh-h{padding:14px 16px 10px;border-bottom:1px solid #e5e5ea}
+.jh-h b{display:block;font-size:max(15px,min(4.2cqi,18px));color:#111}
+.jh-h span{font-size:13px;color:#55555a}
+.jh ol{padding:8px 16px 14px}
+.jh li{position:relative;display:grid;grid-template-columns:16px minmax(0,1fr) auto;gap:2px 12px;padding:10px 0}
+.jh li::before{content:"";grid-row:1/3;width:11px;height:11px;margin-top:4px;border-radius:50%;background:#fff;border:2px solid #8b8b92;position:relative;z-index:1}
+.jh li::after{content:"";position:absolute;left:6px;top:24px;bottom:-12px;border-left:2px solid #e2e2e6}   /* ui-ok: stripe the axis of a timeline */
+.jh li:last-child::after{display:none}
+.jh li b{font-size:14px;color:#111;font-weight:600}
+.jh li time{grid-column:3;grid-row:1;justify-self:end;font-size:13px;color:#55555a;white-space:nowrap}
+.jh li time.pc{padding:0 4px}
+.jh li small{grid-column:2/4;font-size:13px;color:#55555a}
+.jh li.late::before{border-color:#b86b00;background:#fbefd2}
+.jh li.lost::before{border-color:#55555a;background:#55555a}   /* the lost step stays ink, so the page's red is the figure under the picture */
+.jh-gap{grid-column:2/4;justify-self:start;margin-top:4px;font:italic 500 15px/1.2 var(--font);color:var(--pencil);transform:rotate(-1.5deg)}
+
+/* 4 rules we keep, the page's one ink band: the pad is paper, so its text is paper ink on the dark desk */
+[data-ground=night] .pad{box-shadow:0 30px 60px rgba(0,0,0,.5);--hole:var(--night);color:var(--body)}
+[data-ground=night] .pad h2,[data-ground=night] .pad b{color:var(--ink)}
+.ab-rules .cta-inline{max-width:820px;margin-inline:auto}
+
+/* 5 in English or Spanish: the page's type-only rest */
+.lang-big{margin-top:18px;font-size:clamp(24px,3vw,32px);font-weight:500;line-height:1.3;letter-spacing:-.01em;color:var(--ink);max-width:22em}
+.ab-lang .wrap-read>p:last-child{margin-top:14px;font-size:17px;max-width:34em}
+
+@media (min-width:900px){.ab-lang{padding-block:96px 72px}.ab-proof{padding-block:72px 112px}}
+
+/* 6 check it yourself: four things to check, as a plain index (the system's row fill on hover and focus) */
+.proof-g{display:grid;gap:18px}
+.ab-proof .idx{border-top:2px solid var(--ink);margin-inline:-10px}   /* the row fill bleeds 10px past the words, so the words stay in line with the heading */
+.ab-proof .idx a{margin:0;padding-inline:10px}
+.ab-proof .idx b{font-size:20px}
+.ab-proof .idx-p{font-size:17px}
+@media (min-width:900px){
+  .proof-g{grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:56px;align-items:start}
+  .ab-proof .idx a{grid-template-columns:minmax(0,12em) minmax(0,1fr);gap:20px}
+}
+@media (hover:hover) and (pointer:fine){.ab-proof .idx a:hover::before{transform:scaleY(1)}.ab-proof .idx a:hover b,.ab-proof .idx a:hover .idx-p{color:#fff}}
+
+/* 7 where we are: the county map, the company line, the bird in one line */
+.ab-where .towns{gap:28px}
+.where-p,.where-llc{margin-top:14px;font-size:17px;max-width:30em}
+.where-llc{margin-top:10px;color:var(--body)}
+.bird-line{display:flex;align-items:center;gap:14px;margin-top:24px;font-size:17px;color:var(--ink)}
+.bird-line img{width:44px;height:auto;flex:none}
+.ab-where .county{justify-self:center}
+.county .tw.ul{display:block;transform:translate(-100%,calc(-100% - 9px))}   /* Gainesville's label up and to the left of its dot, clear of Newberry at every width */
+.county .tw.ul::before{position:absolute;right:-6px;bottom:-15px}
+@media (max-width:359px){.county .tw.ur{display:block;transform:translate(2px,calc(-100% - 4px))}.county .tw.ur::before{position:absolute;left:-6px;bottom:-8px}}   /* at 320 Archer and Micanopy ran together */
+@media (min-width:900px){.ab-where .county{max-width:520px}.county .tw{font-size:15px}.county .tw.big{font-size:17px}}
+
+/* 8 close: Home's (the arrow, money back with the hours), the owner and email as rows of the same list, then the trade line */
+.ab-close-g{display:grid;gap:34px}
+.ab-close-g .c4-hours{margin-top:0}
+.ab-close-g .c4-hours a{display:inline-block;padding-block:12px;margin-block:-12px}
+.ab-close-g .pl-more{margin-top:0;border-top:0;padding-top:0}   /* on a phone it follows the list's last rule; one line between them, not two */
+@media (min-width:900px){
+  .ab-close-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);column-gap:64px;row-gap:40px;align-items:start}
+  .ab-close-g .c4-main{grid-column:1;grid-row:1}
+  .ab-close-g .c4-hours{grid-column:2;grid-row:1/3;margin-top:10px}
+  .ab-close-g .pl-more{grid-column:1;grid-row:2;margin-top:0;padding-top:18px;border-top:1px solid var(--rule)}
+}
+
+/* phone length (budget 9,100px at 390, target 8,100) */
+@media (max-width:699px){
+  .ab-hero{padding-bottom:44px}
+  .ab-g{gap:56px}
+  .ab-card .signed{font-size:17px}
+  .ops-g{gap:16px}
+  .ops-list h3{margin-top:14px}
+  .ab-close-g{gap:30px}
+}
+</style>
 </head>
-<body data-trade="plumbing">
+<body data-trade="plumbing" data-rules="v4">
 <a class="skip" href="#main">Skip to content</a>
 
 <div class="util">
   <div class="wrap util-in">
     <span>Gainesville, serving Alachua County</span>
-    <span class="util-r"><span class="lang" role="group" aria-label="Language"><a href="#" aria-current="true">EN</a><a href="/es/about/" lang="es" hreflang="es">ES</a></span></span>
+    <span class="util-r"><span class="lang" role="group" aria-label="Language"><a href="/about/" aria-current="true">EN</a><a href="/es/about/" lang="es" hreflang="es">ES</a></span></span>
   </div>
 </div>
 <header class="hdr">
   <div class="wrap hdr-in">
-    <a class="brand" href="/" aria-label="Lumora, home page"><img src="/v3/assets/logo.svg" alt="" width="124" height="30"></a>
+    <a class="brand" href="/" aria-label="Lumora, home page"><img src="/v4/assets/logo.svg" alt="" width="124" height="30"></a>
     <nav class="nav" id="nav" aria-label="Main">
       <ul>
         <li><a class="u" href="/how-it-works/">How it works</a></li>
@@ -55,201 +195,209 @@
       </ul>
     </nav>
     <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
-    <a class="btn btn-sm" href="tel:+13522260681">Call or text</a>
-    <span class="lang" role="group" aria-label="Language"><a href="#" aria-current="true">EN</a><a href="/es/about/" lang="es" hreflang="es">ES</a></span>
+    <a class="btn btn-sm" href="tel:+13522260681">Call or text us</a>
+    <span class="lang" role="group" aria-label="Language"><a href="/about/" aria-current="true">EN</a><a href="/es/about/" lang="es" hreflang="es">ES</a></span>
     <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   </div>
 </header>
 
 <main id="main">
 
-<section class="hero-a" id="top" data-ground="paper" data-density="mid" data-width="split" data-loud="H1" data-medium="card">
-  <div class="wrap ar-split">
-    <div>
-      <p class="kick-h">About Lumora</p>
-      <h1>We automate the busywork and fix how your business runs.</h1>
-      <p class="t-lede">We look at how your business really runs and fix the causes with technology: automation first, custom tools when nothing else fits. The person who walks your shop stays your contact from the first conversation to the monthly check, with no account manager in between.</p>
+<section class="hero ab-hero" id="top" data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="card">
+  <div class="wrap ab-g">
+    <div class="ab-copy">
+      <h1>A Gainesville company that automates the busywork</h1>
+      <p class="t-lede">We find where your office loses time and money, like quotes that go out late or jobs nobody billed. Then we fix the causes inside the tools you already use.</p>
       <div class="cta">
+        <p class="ab-free"><span data-shared="step1.what">A free call, up to 20 minutes.</span> We tell you plainly whether a walk through your shop fits.</p>
         <div class="cta-row">
-          <a class="btn btn-lg" href="tel:+13522260681">Call or text us</a>
+          <a class="btn btn-lg" href="tel:+13522260681" data-first="the call button">Call or text us</a>
           <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
+          <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
         </div>
-        <p class="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day. English or Spanish.</p>
-        <p class="mb"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <span class="red">the walk fee back</span>. <a class="u" href="/how-it-works/#terms">Full terms</a></p>
+        <p class="reply"><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span></p>
+        <p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p>
       </div>
     </div>
-    <figure class="contact-card hero-card">
-      <img class="cardino" src="/v3/assets/bird-cardino-perch.svg" alt="" width="74" height="60">
+    <figure class="contact-card ab-card">
+      <img class="cardino" src="/v4/assets/bird-cardino-perch.svg" alt="" width="74" height="60">
       <blockquote class="signed"><p>“I'm Franco A. Soto. I started Lumora here in Gainesville. We work in English or Spanish, and you deal with the same person from the first call to the last fix.”</p></blockquote>
       <figcaption class="signed-by">Franco A. Soto, owner</figcaption>
     </figure>
   </div>
 </section>
 
-<section class="band seam" id="contact-one" style="--hole:var(--paper)" data-ground="bone" data-density="high" data-width="wide" data-loud="papers" data-medium="docs">
-  <div class="wrap-wide">
-    <h2 class="two" style="max-width:24em">One contact, start to finish. <span>The person who walks your shop is the person who reads your sheet with you, quotes the fix and checks it every month.</span></h2>
+<section class="band seam ab-docs" id="contact-one" style="--hole:var(--paper)" data-ground="bone" data-density="high" data-width="wide" data-loud="papers" data-medium="docs">
+  <div class="wrap">
+    <h2>One contact, start to finish</h2>
+    <p class="t-lede">The person who walks your shop goes over your sheet with you, quotes the fix and does the monthly check. Every page you get ends with the same phone number.</p>
     <figure>
-      <div class="pic fourdocs-pic">
-        <div class="fourdocs seq" data-once role="img" aria-label="Sample: four pages from a sample job, the walk sheet, a fix quote, a monthly check and a one-page handover sheet. Each ends with the same line: your contact, (352) 226-0681, circled in pencil.">
-          <div class="fd" aria-hidden="true"><span class="stamp">Sample</span><p class="fd-k">After the walk</p><p class="fd-t">Walk sheet</p>
-            <div class="fd-l"><p>Dunlin Plumbing, 2 trucks</p><ul class="fd-r"><li><span>Quotes 48+ hours late</span><b>$1,900/mo</b></li><li><span>Same job typed 3 times</span><b>$411/mo</b></li><li><span>Calls nobody called back</span><b>$399/mo</b></li></ul></div>
+      <div class="pic">
+        <div class="fourdocs" role="img" aria-label="Sample: four pages from one job: the walk sheet, the fix quote, a monthly check and the one-page handover sheet. Each ends with the same line: your contact, (352) 226-0681, circled in pencil.">
+          <div class="fd" aria-hidden="true"><p class="fd-k">After the walk</p><p class="fd-t">Walk sheet</p>
+            <div class="fd-l"><p>Dunlin Plumbing, 2 trucks</p><ul class="fd-r"><li data-task="quotes"><span>Quotes 48+ hours late</span><b>$1,900/mo</b></li><li data-task="retyping"><span>Same job typed 3 times</span><b>$411/mo</b></li><li data-task="calls"><span>Calls nobody called back</span><b>$399/mo</b></li></ul></div>
             <p class="fd-foot">Questions about a row? Your contact:<br><span class="pc">(352) 226-0681</span></p></div>
-          <div class="fd" aria-hidden="true"><span class="stamp">Sample</span><p class="fd-k">Before any work</p><p class="fd-t">Fix quote</p>
-            <div class="fd-l"><p>Fix 1: quotes sent late</p><ul class="fd-r"><li><span>Quote out the same day</span><b>Yes</b></li><li><span>Price</span><b>Fixed</b></li><li><span>Paid</span><b>Half, half</b></li><li><span>Software fee</span><b>At cost</b></li></ul></div>
+          <div class="fd" aria-hidden="true"><p class="fd-k">Before any work</p><p class="fd-t">Fix quote</p>
+            <div class="fd-l"><p>Fix: quotes sent late</p><ul class="fd-r"><li><span>Quote out the same day</span><b>Yes</b></li><li><span>Price</span><b>Fixed</b></li><li><span>Paid</span><b class="w">Half now, half when it works</b></li><li><span>Software fee</span><b>At cost</b></li></ul></div>
             <p class="fd-foot">Questions about the price? Your contact:<br><span class="pc">(352) 226-0681</span></p></div>
-          <div class="fd" aria-hidden="true"><span class="stamp">Sample</span><p class="fd-k">Every month</p><p class="fd-t">Monthly check</p>
-            <div class="fd-l"><p>October, fix 1</p><ul class="fd-r"><li><span>Quotes sent 48+ hours late</span><b>9 to 1</b></li><li><span>What broke</span><b>Nothing</b></li><li><span>Next leak</span><b>Row 2</b></li></ul></div>
+          <div class="fd" aria-hidden="true"><p class="fd-k">Every month</p><p class="fd-t">Monthly check</p>
+            <div class="fd-l"><p>December, quotes fix</p><ul class="fd-r"><li><span>Quotes sent 48+ hours late</span><b>9 to 1</b></li><li><span>What broke</span><b>Nothing</b></li><li><span>Next problem</span><b>Retyping, $411/mo</b></li></ul></div>
             <p class="fd-foot">Something looks off? Your contact:<br><span class="pc">(352) 226-0681</span></p></div>
-          <div class="fd" aria-hidden="true"><span class="stamp">Sample</span><p class="fd-k">Yours to keep</p><p class="fd-t">How to run it</p>
-            <div class="fd-l"><p>One page, English or Spanish</p><ol class="fd-r fd-n"><li><span>Read the 6:30 a.m. list</span></li><li><span>Call back the flagged numbers</span></li><li><span>Stops? Text us</span></li></ol></div>
+          <div class="fd" aria-hidden="true"><p class="fd-k">Yours to keep</p><p class="fd-t">How to run it</p>
+            <div class="fd-l"><p>One page, English or Spanish</p><ol class="fd-r fd-n"><li><span>Read the 6:30 a.m. quote list</span></li><li><span>Send the quotes waiting for your OK</span></li><li><span>Stops? Text us</span></li></ol></div>
             <p class="fd-foot">Stuck on a step? Your contact:<br><span class="pc">(352) 226-0681</span></p></div>
         </div>
-        <span class="samp">Sample</span>
+        <span class="samp" aria-hidden="true">Sample</span>
       </div>
-      <figcaption class="cap">Sample pages from one job: the walk sheet, a fix quote, the monthly check and the handover sheet. The same contact and the same number on every one.</figcaption>
     </figure>
   </div>
 </section>
 
-<section class="band" id="ops" data-ground="paper" data-density="mid" data-width="split" data-loud="screen" data-medium="screen">
-  <div class="wrap ar-split flip">
-    <div class="prose">
-      <h2>The work is operations</h2>
-      <p>Some call it operations, some call it optimization. We find where your office loses time and money, put a dollar figure on it and fix it, one leak at a time.</p>
-      <p>First we follow one job through your shop, from the first call to the paid invoice and the next visit. The fix comes from what that shows, and only then do we suggest a tool.</p>
-      <p>Software, automation and sometimes AI are tools we use. Most fixes are a setting, a spreadsheet or a small tool inside what you already pay for.</p>
-      <p><b>We do not sell software, and we take no commissions on the tools we suggest.</b></p>
+<section class="band ab-ops" id="ops" data-ground="paper" data-density="mid" data-width="split" data-loud="screen" data-medium="screen">
+  <div class="wrap ops-g">
+    <h2 class="ops-h">The work is operations</h2>
+    <div class="ops-say">
+      <p class="t-lede">We start with the computer work, because that is where the hours go. When it clearly pays, the same approach reaches the stockroom and the equipment, one fix at a time, in accounts you own, and only with your OK.</p>
+      <p>First we follow one job through your shop, from the first call to the paid invoice. The fix comes from what that shows, and only then do we suggest a tool.</p>
     </div>
-    <figure>
+    <figure class="ops-pic">
       <div class="pic">
-        <div class="scr-win" role="img" aria-label="Sample: the history of job 4521 for Maria Garcia, a 50 gallon water heater. First call Monday, September 14 at 9:12 AM. Visit Tuesday, September 15, 8 to 12. Quote sent Friday, September 18; the date is circled in pencil with the note 3 days after the visit. Monday, September 21: the customer went with another company. No invoice, no next visit.">
-          <div class="win-tb"><i></i><i></i><i></i><span>Job 4521 · History</span></div>
-          <div class="jh" data-once aria-hidden="true">
-            <div class="jh-h"><b>Garcia, Maria · Water heater, 50 gal</b><span>123 Main St · Job 4521</span></div>
-            <ol class="seq">
-              <li><b>First call, booked</b><time>Mon, Sep 14 · 9:12 AM</time><small>Shop line, answered by the office</small></li>
-              <li><b>Visit</b><time>Tue, Sep 15 · 8 to 12</time><small>Dave, truck 1. Measured, photos taken.</small></li>
-              <li class="late"><b>Quote sent, $1,810.00</b><time class="pc">Fri, Sep 18 · 4:40 PM</time><span class="jh-gap">3 days after the visit</span></li>
-              <li class="lost"><b>Customer reply</b><time>Mon, Sep 21</time><small>“Thanks, we went with another company.”</small></li>
+        <div class="scr-win" data-task="quotes" role="img" aria-label="Sample: the history of quote Q-1182 for Maria Garcia, a 50 gallon water heater. First call Monday, October 5 at 9:12 AM. Visit Tuesday, October 6, 8 to 12. Quote sent Friday, October 9 at 4:40 PM, for 1,810 dollars; the date is circled in pencil with the note 3 days after the visit. Monday, October 12: the customer went with another company. No invoice, no next visit.">
+          <div class="win-tb" data-ui-ok="fake-chrome R6: the one window frame for computer tasks; Franco kept the Mac buttons (Oct 6)"><i></i><i></i><i></i><span>Quote Q-1182, history</span></div>
+          <div class="jh" aria-hidden="true">
+            <div class="jh-h"><b>Garcia, Maria: water heater, 50 gal</b><span>456 Elm St, quote Q-1182</span></div>
+            <ol>
+              <li><b>First call, booked</b><time>Mon, Oct 5, 9:12 AM</time><small>Shop line, answered by the office</small></li>
+              <li><b>Visit</b><time>Tue, Oct 6, 8 to 12</time><small>Dave, truck 1. Measured, photos taken.</small></li>
+              <li class="late"><b>Quote sent, $1,810.00</b><time class="pc">Fri, Oct 9, 4:40 PM</time><span class="jh-gap">3 days after the visit</span></li>
+              <li class="lost"><b>Customer reply</b><time>Mon, Oct 12</time><small>“Thanks, we went with another company.”</small></li>
               <li><b>Invoice</b><time>None</time><small>No job, no next visit</small></li>
             </ol>
           </div>
         </div>
-        <span class="samp">Sample</span>
+        <span class="samp" aria-hidden="true">Sample</span>
       </div>
       <div class="ops-find">
         <p class="pencil">Visit Tuesday. Quote Friday. By then the customer had two other quotes.</p>
         <p class="find"><span class="find-usd money">$1,900 a month<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw><path pathLength="1" d="M2 6C28 2 60 9 98 4"/></svg></span><span class="find-f">On the sample sheet: quotes sent 48+ hours after the visit. 5 jobs × $380 profit a job.</span></p>
       </div>
     </figure>
+    <div class="ops-list" id="automate">
+      <h3>Where the hours go</h3>
+      <ul class="auto-list">
+        <li data-task="retyping">Typing the same job twice.</li>
+        <li data-task="invoices">Jobs finished but never billed.</li>
+        <li data-task="bills">Supplier bills that don't match the quote.</li>
+        <li data-task="email">Reading emails and filing the attachments by hand.</li>
+        <li data-task="reminders">Reminding crew and customers, one at a time.</li>
+        <li data-task="numbers">Adding up the month-end numbers.</li>
+      </ul>
+      <p class="auto-close">On the walk, we find which ones your shop has. <a class="u" href="/what-we-automate/">See the full list</a></p>
+      <p class="ops-no">We do not sell software, and we take no commissions on the tools we suggest.</p>
+    </div>
   </div>
 </section>
 
-<section class="band" id="rules" data-ground="night" data-density="mid" data-width="narrow" data-loud="pad" data-medium="pad">
+<section class="band ab-rules" id="rules" data-ground="night" data-density="mid" data-width="narrow" data-loud="pad" data-medium="pad">
   <div class="wrap">
-    <p class="rules-k">In writing, so you can hold us to them.</p>
     <div class="pad">
       <div class="pad-bind" aria-hidden="true"></div><div class="pad-perf" aria-hidden="true"></div>
       <div class="pad-b">
         <h2>Rules we keep</h2>
         <ol>
-          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg><p><b>It replaces retyping, waiting and forgetting.</b> Every fix goes after a task: the job typed into three places, the quote that waits until Friday, the follow-up nobody owns.</p></li>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg><p><b>Every fix goes after a task you can name.</b> It might be the job typed into three places, or the quote that waits until Friday.</p></li>
           <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg><p><b>We build inside what you already pay for.</b> If a fix needs a new subscription, you hear the monthly cost before we start, and why the free option lost.</p></li>
-          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg><p><b>No filming or recording without your OK.</b> If you say no, that is the rule. Photos only of what you point to, unless we agree on more. We work from your call history, your invoices and your calendar.</p></li>
-          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg><p><b>Cancel any month.</b> One email before the next billing date is enough.</p></li>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg><p><b>No filming or recording without your OK.</b> Photos only of what you point to, unless we agree in writing on more. We work from your call history, invoices and calendar, once you sign the OK to look at them.</p></li>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg><p><b>Cancel the monthly check any month.</b> One email before the next billing date is enough.</p></li>
           <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg><p><b>Say no once, and that's the end of it.</b> After a no, we don't call, text or stop by again unless you ask.</p></li>
           <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg><p><b>Every number says where it came from.</b> Your sheet is built from your own records. Samples say Sample.</p></li>
         </ol>
-        <p class="honest">Ask anything on the free call.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="band" id="lang" data-ground="paper" data-density="low" data-width="wide" data-loud="sentence" data-medium="say">
-  <div class="wrap">
-    <h2 class="kick-h">In English or Spanish</h2>
-    <p class="say">The free call <span class="inpic" role="img" aria-label="a phone call"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h3l1.5 4-2 1.4a10 10 0 0 0 5.6 5.6l1.4-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 5 5.5a2 2 0 0 1 2-2z"/></svg></span>, the walk, your sheet <span class="inpic" role="img" aria-label="the walk sheet"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h12v17H6zM9 8h6M9 12h6M9 16h4"/></svg></span> and the monthly check can all be in Spanish <span class="inpic es" role="img" aria-label="Spanish">ES</span>.</p>
-    <p class="say-after">That goes down to the one-page handover sheet. We offer Spanish and never assume it. You choose the language, and we keep to it.</p>
-  </div>
-</section>
-
-<section class="band seam" id="proof" style="--hole:var(--paper)" data-ground="bone" data-density="high" data-width="split" data-loud="list" data-medium="index">
-  <div class="wrap proof-g">
-    <div class="page" style="--hole:var(--bone)">
-      <p class="tab"><span class="tab-n" aria-hidden="true">i</span>Index · Check it yourself</p>
-      <h2 class="t-h2" style="margin-bottom:10px">Check it yourself</h2>
-      <ul class="idx plain">
-        <li><a href="/how-it-works/#sample"><b>The sample sheet</b><span class="dots" aria-hidden="true"></span><span class="idx-p">Seven rows, each with its formula, for a 2-truck plumbing shop.</span></a></li>
-        <li><a href="#rules"><b>The rules in writing</b><span class="dots" aria-hidden="true"></span><span class="idx-p">Six rules, on this page.</span></a></li>
-        <li><a href="/leak-check/"><b>The loss calculator</b><span class="dots" aria-hidden="true"></span><span class="idx-p">Your own numbers, about a minute. Nothing leaves your device.</span></a></li>
-        <li><a href="tel:+13522260681"><b>Our own phone line</b><span class="dots" aria-hidden="true"></span><span class="idx-p">(352) 226-0681. Call it.</span></a></li>
-      </ul>
+    <div class="cta-inline">
+      <a class="btn" href="tel:+13522260681">Call or text us</a>
+      <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
+      <p class="mb mb-s"><span data-shared="moneyback.short"><b>Not worth it to you?</b> You get the walk fee back.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p>
     </div>
-    <figure class="print">
-      <div class="print-s"><img src="/v3/how-about/assets/fig-proof.svg" alt="Drawing: three papers on the counter: a Walk sheet stamped Sample, a card titled Rules we keep and a card titled Loss calculator." width="600" height="490" loading="lazy"></div>
-      <figcaption>Check it yourself: the sample sheet, the rules in writing and the loss calculator.</figcaption>
-    </figure>
   </div>
 </section>
 
-<section class="band-tight" id="where" data-ground="sheet" data-density="low" data-width="split" data-loud="map" data-medium="map">
+<section class="band ab-lang" id="lang" data-ground="paper" data-density="low" data-width="narrow" data-loud="sentence" data-medium="say">
+  <div class="wrap-read">
+    <h2>In English or Spanish</h2>
+    <p class="lang-big">The free call, the walk, your sheet and the monthly check can all be in Spanish, down to the one-page handover sheet.</p>
+    <p>We offer Spanish and never assume it. You choose the language, and we keep to it.</p>
+  </div>
+</section>
+
+<section class="band ab-proof" id="proof" data-ground="sheet" data-density="mid" data-width="split" data-loud="list" data-medium="index">
+  <div class="wrap proof-g">
+    <h2>Check it yourself</h2>
+    <ul class="idx">
+      <li><a href="/how-it-works/#sample"><b>The sample sheet</b><span class="idx-p">A full sample for a 2-truck plumbing shop, every priced row with its formula.</span></a></li>
+      <li><a href="/how-it-works/#terms"><b>The full terms</b><span class="idx-p">When you pay, how to cancel, and how you get the walk fee back.</span></a></li>
+      <li><a href="/leak-check/"><b>The loss calculator</b><span class="idx-p">Your own numbers, about a minute. Nothing leaves your device.</span></a></li>
+      <li><a href="tel:+13522260681"><b>Our own phone line</b><span class="idx-p">(352) 226-0681, a Gainesville number. Call or text it.</span></a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="band seam ab-where" id="where" style="--hole:var(--sheet)" data-ground="bone" data-density="low" data-width="split" data-loud="map" data-medium="map">
   <div class="wrap towns">
     <div>
       <h2>Where we are</h2>
-      <p class="where-p">Gainesville, serving Alachua County. We come to your shop. Lumora is part of Lumora Group LLC, a Florida limited liability company, document no. L25000321722.</p>
-      <p class="town-list" style="margin-top:18px"><span>Gainesville</span><span>Alachua</span><span>High Springs</span><span>Newberry</span><span>Archer</span><span>Micanopy</span><span>Hawthorne</span><span>Waldo</span></p>
-      <p class="t-small muted" style="margin-top:10px">Farther in Florida by arrangement.</p>
+      <p class="where-p">Based in Gainesville. We come to your shop anywhere in Alachua County, and farther in Florida by arrangement.</p>
+      <p class="where-llc">Lumora is part of Lumora Group LLC, a Florida limited liability company, document no. L25000321722.</p>
+      <p class="bird-line"><img src="/v4/assets/mark.svg" alt="" width="200" height="160">Our bird is Cardino, the same in English and Spanish.</p>
     </div>
     <div class="county" role="img" aria-label="Map outline of Alachua County with Gainesville, Alachua, High Springs, Newberry, Archer, Micanopy, Hawthorne and Waldo marked.">
-      <img src="/v3/assets/alachua.svg" alt="" width="1000" height="965" loading="lazy">
-      <span class="tw big ul" style="--x:55.2%;--y:55.8%" aria-hidden="true">Gainesville</span><span class="tw" style="--x:31.3%;--y:31.7%" aria-hidden="true">Alachua</span><span class="tw" style="--x:15.2%;--y:25.1%" aria-hidden="true">High Springs</span><span class="tw" style="--x:13.8%;--y:56.8%" aria-hidden="true">Newberry</span><span class="tw" style="--x:26.6%;--y:77.2%" aria-hidden="true">Archer</span><span class="tw l" style="--x:61.5%;--y:81.6%" aria-hidden="true">Micanopy</span><span class="tw l" style="--x:90.2%;--y:66.3%" aria-hidden="true">Hawthorne</span><span class="tw l" style="--x:78.3%;--y:31.6%" aria-hidden="true">Waldo</span>
+      <img src="/v4/assets/alachua.svg" alt="" width="1000" height="965" loading="lazy">
+      <span class="tw big ul" style="--x:55.2%;--y:55.8%" aria-hidden="true">Gainesville</span><span class="tw" style="--x:31.3%;--y:31.7%" aria-hidden="true">Alachua</span><span class="tw" style="--x:15.2%;--y:25.1%" aria-hidden="true">High Springs</span><span class="tw" style="--x:13.8%;--y:56.8%" aria-hidden="true">Newberry</span><span class="tw ur" style="--x:26.6%;--y:77.2%" aria-hidden="true">Archer</span><span class="tw l" style="--x:61.5%;--y:81.6%" aria-hidden="true">Micanopy</span><span class="tw l" style="--x:90.2%;--y:66.3%" aria-hidden="true">Hawthorne</span><span class="tw l" style="--x:78.3%;--y:31.6%" aria-hidden="true">Waldo</span>
     </div>
   </div>
 </section>
 
-<section class="band-tight" id="bird" data-ground="paper" data-density="low" data-width="narrow" data-loud="mark" data-medium="mark">
-  <div class="wrap bird-g">
-    <img src="/v3/assets/mark.svg" alt="The Lumora mark: one crested bird." width="200" height="160" loading="lazy">
-    <div>
-      <h2>One bird</h2>
-      <p style="margin-top:12px">Our bird is Cardino, the same in English and Spanish.</p>
-    </div>
-  </div>
-</section>
-
-<section class="band seam" id="close" style="--hole:var(--paper)" data-ground="bone" data-density="mid" data-width="split" data-loud="closing line" data-medium="close">
-  <div class="wrap ar-split">
-    <div>
-      <p class="tab"><span class="tab-n">→</span>Next stop · Your shop</p>
+<section class="band hm4-close" id="contact" data-ground="paper" data-density="mid" data-width="split" data-loud="close" data-medium="close">
+  <div class="wrap ab-close-g">
+    <div class="c4-main">
       <h2 class="t-close close-h">Let's talk shop.</h2>
       <div class="close-act">
-        <div class="arrow-to"><a class="btn btn-lg" href="tel:+13522260681">Call (352) 226-0681</a><svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg></div>
-        <p class="t-lede">Call or text with your trade and your town. We start with a free call of up to 20 minutes.</p>
-        <a class="u" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
-        <p class="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</p>
-        <div class="mb-box"><h3>Money back</h3><p class="mb"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <span class="red">the walk fee back</span>. <a class="u" href="/how-it-works/#terms">Full terms</a></p></div>
+        <div class="arrow-to">
+          <a class="btn btn-lg" href="tel:+13522260681">Call or text us</a>
+          <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
+        </div>
+        <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
       </div>
     </div>
-    <div class="page" style="--hole:var(--bone)">
-      <dl class="cblock" style="margin-top:0">
-        <div><dt>Owner</dt><dd>Franco A. Soto, owner</dd></div>
-        <div><dt>Call or text</dt><dd><a class="u big-tel" href="tel:+13522260681">(352) 226-0681</a></dd></div>
-        <div><dt>Email</dt><dd><a class="u" href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></dd></div>
-        <div><dt>Where</dt><dd>Gainesville, serving Alachua County. Farther in Florida by arrangement.</dd></div>
-        <div><dt>Language</dt><dd>English or Spanish</dd></div>
-        <div><dt>Hours</dt><dd>Monday to Friday, 9 a.m. to 5 p.m.</dd></div>
-      </dl>
-    </div>
+    <dl class="c4-hours">
+      <div><dt>Money back</dt><dd><p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p></dd></div>
+      <div><dt>Hours</dt><dd><span data-shared="hours">Monday to Friday, 9 a.m. to 5 p.m.</span></dd></div>
+      <div><dt>Reply time</dt><dd><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span></dd></div>
+      <div><dt>Language</dt><dd>English or Spanish</dd></div>
+      <div><dt>Owner</dt><dd>Franco A. Soto</dd></div>
+      <div><dt>Email</dt><dd><a class="u" href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></dd></div>
+    </dl>
+    <nav class="pl-more" aria-labelledby="pl-more-k">
+      <p class="t-label" id="pl-more-k">Every trade we walk</p>
+      <ul class="pl-trades" data-trades>
+        <li><a href="/industries/plumbing/">Plumbing</a></li>
+        <li><a href="/industries/ac-and-heating/">AC and heating</a></li>
+        <li><a href="/industries/electrical/">Electrical</a></li>
+        <li><a href="/industries/water-damage-and-mold/">Water damage and mold</a></li>
+        <li><a href="/industries/pest-control/">Pest control</a></li>
+        <li><a href="/industries/roofing/">Roofing</a></li>
+        <li><a href="/industries/restaurants-and-bars/">Restaurants and bars</a></li>
+        <li><a href="/industries/property-managers/">Property managers</a></li>
+      </ul>
+    </nav>
   </div>
 </section>
 </main>
 
 <footer class="foot">
   <div class="wrap foot-g">
-    <img src="/v3/assets/logo.svg" alt="Lumora" width="104" height="25">
-    <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/">Loss calculator</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
+    <img src="/v4/assets/logo.svg" alt="Lumora" width="104" height="25">
+    <ul class="foot-n"><li><a class="u" href="/how-it-works/">How it works</a></li><li><a class="u" href="/what-we-automate/">What we automate</a></li><li><a class="u" href="/industries/">Industries</a></li><li><a class="u" href="/leak-check/">Loss calculator</a></li><li><a class="u" href="/about/">About</a></li><li><a class="u" href="/articles/">Articles</a></li><li><a class="u" href="/contact/">Contact</a></li><li><a class="u" href="/privacy/">Privacy</a></li></ul>
     <p>Lumora Group LLC, a Florida company. Gainesville, serving Alachua County. Every shop, name and number marked Sample is made up.</p>
   </div>
 </footer>
