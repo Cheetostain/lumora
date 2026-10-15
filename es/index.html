@@ -27,8 +27,8 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=8b01ec22">
-<link rel="stylesheet" href="/v4/home/home.css?v=8b01ec22">
+<link rel="stylesheet" href="/v4/system.css?v=8512e437">
+<link rel="stylesheet" href="/v4/home/home.css?v=8512e437">
 <style>
 :lang(es) .nav a{white-space:nowrap}
 @media (min-width:900px) and (max-width:1179px){
@@ -43,9 +43,9 @@
 @media (min-width:1180px) and (max-width:1279px){:lang(es) .nav a{font-size:var(--fs-15)}}   /* from 1280 the labels keep English's 17px on one line (ES-VOICE: break, never shrink) */
 </style>
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=8b01ec22" defer></script>
-<script src="/v4/system.js?v=8b01ec22" defer></script>
-<script src="/v4/home/home.js?v=8b01ec22" defer></script>
+<script src="/v4/trades.js?v=8512e437" defer></script>
+<script src="/v4/system.js?v=8512e437" defer></script>
+<script src="/v4/home/home.js?v=8512e437" defer></script>
 </head>
 <body data-trade="plumbing" data-rules="v4">
 <a class="skip" href="#main">Saltar al contenido</a>
@@ -61,6 +61,7 @@
     <a class="brand" href="/es/" aria-label="Lumora, página de inicio"><img src="/v4/assets/logo.svg" alt="" width="124" height="30"></a>
     <nav class="nav" id="nav" aria-label="Principal">
       <ul>
+        <li><a class="u" href="/es/" aria-current="page">Inicio</a></li>
         <li><a class="u" href="/es/how-it-works/">Cómo funciona</a></li>
         <li><a class="u" href="/es/industries/">A quién atendemos</a></li>
         <li><a class="u" href="/es/leak-check/">Calculadora de pérdidas</a></li>
@@ -367,8 +368,8 @@
     <div class="c4-card">
       <figure class="contact-card">
         <img class="cardino" src="/v4/assets/bird-cardino-perch.svg" alt="" width="74" height="60" loading="lazy">
-        <p class="t-label hm-cc-k">Un solo contacto, de principio a fin</p>
-        <blockquote class="signed"><p>“Fundé Lumora aquí en Gainesville. Trabajamos en español o en inglés, y usted trata con la misma persona desde la primera llamada hasta el último arreglo.”</p></blockquote>
+        <p class="t-label hm-cc-k">Por qué Lumora</p>
+        <blockquote class="signed"><p>“Antes de Lumora, me tocaba pasar a la computadora todo el papeleo de una empresa de daños por agua, y terminé automatizando casi todo. Ahora hacemos lo mismo en su negocio.”</p></blockquote>
         <figcaption class="signed-by">Franco A. Soto, dueño</figcaption>
         <dl class="cblock">
           <div><dt>Dónde</dt><dd>Gainesville y el condado de Alachua. ¿Está en otra parte de Florida? Pregúntenos.</dd></div>
@@ -388,11 +389,22 @@
 </section>
 </main>
 
-<footer class="foot">
-  <div class="wrap foot-g">
-    <img src="/v4/assets/logo.svg" alt="Lumora" width="104" height="25">
-    <ul class="foot-n"><li><a class="u" href="/es/how-it-works/">Cómo funciona</a></li><li><a class="u" href="/es/industries/">A quién atendemos</a></li><li><a class="u" href="/es/leak-check/">Calculadora de pérdidas</a></li><li><a class="u" href="/es/about/">Quiénes somos</a></li><li><a class="u" href="/es/articles/">Artículos</a></li><li><a class="u" href="/es/contact/">Contacto</a></li><li><a class="u" href="/es/privacy/">Privacidad</a></li></ul>
-    <p>Lumora Group LLC, empresa de Florida. Gainesville; atendemos el condado de Alachua. Los negocios, nombres y números marcados como Ejemplo son ficticios.</p>
+<footer class="foot" data-ground="night">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-lead">
+        <a class="foot-brand" href="/es/" aria-label="Lumora, página de inicio"><img src="/v4/assets/logo-white.svg" alt="" width="148" height="36"></a>
+        <p class="foot-line">Su negocio debería funcionar igual, esté usted o no.</p>
+        <a class="btn" href="tel:+13522260681">Llámenos o escríbanos</a>
+      </div>
+      <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="/es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="/es/how-it-works/#walk">La visita</a></li><li><a href="/es/how-it-works/#fix">Un arreglo</a></li><li><a href="/es/how-it-works/#check">La revisión mensual</a></li><li><a href="/es/how-it-works/#faq">Preguntas de los dueños</a></li><li><a href="/es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
+      <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">A quién atendemos</h2><ul><li><a href="/es/industries/plumbing/">Plomería</a></li><li><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li><li><a href="/es/industries/electrical/">Electricidad</a></li><li><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></li><li><a href="/es/industries/pest-control/">Control de plagas</a></li><li><a href="/es/industries/roofing/">Techos</a></li><li><a href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a></li><li><a href="/es/industries/property-managers/">Administración de propiedades</a></li><li><a href="/es/industries/">Todos los rubros</a></li></ul></nav>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li>Llame o escriba al <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></li><li>Gainesville; atendemos el condado de Alachua</li><li>En inglés o en español</li></ul></div>
+    </div>
+    <div class="foot-base">
+      <p class="legal">Lumora Group LLC, empresa de Florida. Los negocios, nombres y números marcados como Ejemplo son ficticios.</p>
+      <ul><li><a href="/es/about/">Quiénes somos</a></li><li><a href="/es/articles/">Artículos</a></li><li><a href="/es/contact/">Contacto</a></li><li><a href="/es/privacy/">Privacidad</a></li></ul>
+    </div>
   </div>
 </footer>
 

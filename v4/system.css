@@ -701,10 +701,31 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .booked b{font-size:17px}.booked p{font-size:15px;color:var(--muted)}
 
 /* ======================================================================= 25. footer */
-.foot{border-top:1px solid var(--ink);padding:32px 0 40px;font-size:15px;color:var(--muted)}
-.foot-g{display:grid;gap:12px}
-.foot-n{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--body)}
-.foot-n a{min-height:44px;display:inline-flex;align-items:center}
+/* The dark footer (Franco 2026-10-15: "Footer looked way better" before v4). The old site's layout on v4's night ground,
+   so its colors, links, focus ring and button come from that ground. Sizes stay on the scale: 15, 17, 24. */
+.foot{font-size:var(--fs-15);line-height:1.55;padding:clamp(56px,7vw,88px) 0 32px}
+.foot a{color:var(--on-night);text-decoration:none}
+.foot a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.foot-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);row-gap:40px}
+.foot-lead{grid-column:1/span 4}
+.foot-col{grid-column:span 2}
+.foot-col:nth-child(2){grid-column:6/span 2}
+.foot-col.c-contact{grid-column:span 3}
+.foot-brand{display:inline-block}
+.foot-brand img{display:block;width:148px;height:auto}
+.foot-line{margin-top:24px;font-size:var(--fs-24);font-weight:600;line-height:1.2;letter-spacing:-.015em;color:#fff;max-width:14em;text-wrap:balance}
+.foot .btn{margin-top:24px}
+.foot .btn:hover{text-decoration:none;color:var(--night)}
+.foot-h{font-size:var(--fs-15);font-weight:500;letter-spacing:0;color:#fff;padding-bottom:10px;margin-bottom:6px;border-bottom:1px solid rgba(233,228,216,.22)}
+.foot-col li{padding:5px 0}
+.foot-col a{display:inline-block;min-height:24px}
+.foot a.tel{color:#fff;white-space:nowrap}
+.foot-base{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 28px;margin-top:clamp(48px,6vw,72px);padding-top:20px;border-top:1px solid rgba(233,228,216,.22);color:var(--muted-night)}
+.foot-base .legal{margin-right:auto;max-width:44em}
+.foot-base ul{display:flex;flex-wrap:wrap;gap:8px 22px}
+@media (max-width:1023px){.foot-lead{grid-column:1/-1}.foot-col,.foot-col:nth-child(2),.foot-col.c-contact{grid-column:span 4}}
+@media (max-width:699px){.foot-col,.foot-col:nth-child(2){grid-column:span 6}.foot-col.c-contact{grid-column:1/-1}}
+@media (max-width:359px){.foot-col,.foot-col:nth-child(2){grid-column:1/-1}}
 
 /* ======================================================================= 26. motion (everything below is extra; the still page above is complete) */
 @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
