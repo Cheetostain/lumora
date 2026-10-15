@@ -260,9 +260,18 @@
       $$('.pen-ring', el).forEach(ring);
       if (animate && !still) { el.classList.remove('writing', 'swap'); void el.offsetWidth; el.classList.add('swap'); } // job: cause and effect
     },
+    // the hero strip has no shop name beside it, so "Plumbing, 2 trucks" read as a list (Franco 2026-10-15: "whats meant by
+    // plumbing 2 trucks"). English says the size as a phrase: "A 2-truck plumbing shop", "A 110-seat restaurant and bar",
+    // "A 212-door property manager". The Spanish keeps its short line until the Spanish run writes its own phrase
     strip: function (el, t) {
+      function stripSize(t) {
+        var m = /^(.*), (\d+) (\w+?)s?$/.exec(t.short); if (!m || ES) return t.short;
+        var trade = /^[A-Z]{2}/.test(m[1]) ? m[1] : m[1].charAt(0).toLowerCase() + m[1].slice(1);
+        var kind = t.per === 'yr' ? 'property manager' : /^Restaurant/.test(m[1]) ? 'restaurant and bar' : trade + ' shop';
+        return (/^(8\d*|11|18)$/.test(m[2]) ? 'An ' : 'A ') + m[2] + '-' + m[3] + ' ' + kind;
+      }
       var s = function (k) { return el.querySelector('[data-s="' + k + '"]'); }, r = t.rows[0];
-      if (s('sub')) s('sub').textContent = t.short; if (s('leak')) s('leak').textContent = r.b;
+      if (s('sub')) s('sub').textContent = stripSize(t); if (s('leak')) s('leak').textContent = r.b;
       if (s('usd')) s('usd').textContent = money(r.usd) + perShort(t); if (s('f')) s('f').textContent = r.f;
       if (el.tagName === 'A') el.href = '#' + ($('[data-bind=sheet]') ? $('[data-bind=sheet]').id || 'sheet' : 'sheet');
     },
