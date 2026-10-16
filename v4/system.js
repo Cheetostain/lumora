@@ -843,7 +843,8 @@
         var fs = parseFloat(getComputedStyle(pe).fontSize); if (!SCALE.some(function (v) { return Math.abs(v - fs) < 0.6; })) odd[Math.round(fs * 10) / 10 + 'px'] = s.trim().slice(0, 24); });
       Object.keys(odd).forEach(function (k) { E.push('Type: ' + k + ' is off the scale (15, 17, 20, 24, 32, 44, 64): "' + odd[k] + '"'); });
     }
-    if (ES) lintES(E, text);
+    // papers from outside the shop keep their English (lang="en", as they arrive), so the Spanish checks skip them (2026-10-16)
+    if (ES) { var tES = text; $$('[lang="en"]').forEach(function (n) { var t = n.innerText; if (t && t.trim()) tES = tES.split(t).join(' '); }); lintES(E, tES); }
   }
   // Spanish pages (2026-10-10): the picked trade's Spanish is complete, its figures, times, dates and numbers are the English
   // data's (digit groups compared field by field), and none of this file's English words show
