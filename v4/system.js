@@ -16,7 +16,7 @@
   function localize(k, t) {            // anything missing stays English and is listed for lint()
     var e = t.es, o = {}, q, n = t.night4; if (!e) { ESMISS.push(k + ': no Spanish block'); return t; }
     for (q in t) if (q !== 'es') o[q] = t[q];
-    ['name', 'href', 'sub', 'short', 'time'].forEach(function (f) { if (e[f] != null) o[f] = e[f]; else if (t[f] != null) ESMISS.push(k + ': ' + f); });
+    ['name', 'line', 'href', 'sub', 'short', 'time'].forEach(function (f) { if (e[f] != null) o[f] = e[f]; else if (t[f] != null) ESMISS.push(k + ': ' + f); });
     o.rows = t.rows.map(function (r) {
       var y = (e.rows || {})[r.id] || {}, x = {};
       for (q in r) x[q] = r[q]; for (q in y) x[q] = y[q];
@@ -261,11 +261,18 @@
       if (animate && !still) { el.classList.remove('writing', 'swap'); void el.offsetWidth; el.classList.add('swap'); } // job: cause and effect
     },
     // the hero strip has no shop name beside it, so "Plumbing, 2 trucks" read as a list (Franco 2026-10-15: "whats meant by
-    // plumbing 2 trucks"). English says the size as a phrase. The Spanish keeps its short line until the Spanish run
-    // writes its own phrase
+    // plumbing 2 trucks"). Both languages say the size as a phrase; the Spanish one is written from the idea (Friday run,
+    // 2026-10-16): "Un pequeño negocio de plomería con 2 camionetas"
     strip: function (el, t) {
       function stripSize(t) {
-        var m = /^(.*), (\d+) (\w+?)s?$/.exec(t.short); if (!m || ES) return t.short;
+        if (ES) {
+          var e = /^(.*), (\d+) (.+)$/.exec(t.short); if (!e) return t.short;
+          if (t.per === 'yr') return 'Una administradora de propiedades con ' + e[2] + ' unidades';
+          if (/^Restaurante/.test(e[1])) return 'Un restaurante y bar con capacidad para ' + e[2] + ' personas';
+          if (/^Daños/.test(e[1])) return 'Una pequeña empresa de daños por agua con ' + e[2] + ' ' + e[3];
+          return 'Un pequeño negocio de ' + e[1].charAt(0).toLowerCase() + e[1].slice(1) + ' con ' + e[2] + ' ' + e[3];
+        }
+        var m = /^(.*), (\d+) (\w+?)s?$/.exec(t.short); if (!m) return t.short;
         // Franco asked again what "2 trucks" meant, so the size says "small" outright and keeps the owner's own word:
         // "A small plumbing shop with 2 trucks"; "A property manager with 212 rentals" (doors is jargon too)
         var trade = /^[A-Z]{2}/.test(m[1]) ? m[1] : m[1].charAt(0).toLowerCase() + m[1].slice(1);
@@ -292,8 +299,15 @@
         var one = li.querySelector('[data-f="one"]'), leak = li.querySelector('[data-f="leak"]'), m = /, (\d+) (\w+?)s?$/.exec(t.short) || [],
           kind = t.per === 'yr' ? 'property manager' : /^Restaurant/.test(t.short) ? 'restaurant and bar' : 'shop';
         li.setAttribute('data-task', TASK[r.icon] || r.icon);
-        if (ES) return;
         if (one) one.textContent = t.line;
+        // Spanish (Friday run, 2026-10-16): trades-src-es.json now carries each trade's line, so the index binds in both
+        if (ES) {
+          var me = /, (\d+) (.+)$/.exec(t.short) || [], qui = t.per === 'yr' ? 'una administradora de propiedades con ' :
+            /^Restaurante/.test(t.short) ? 'un restaurante y bar con capacidad para ' : 'un negocio con ';
+          if (leak) leak.innerHTML = 'De la hoja de ejemplo de ' + qui + (me[1] ? me[1] + ' ' + (/^Restaurante/.test(t.short) ? 'personas' : me[2]) : '') + ': ' +
+            esc(r.b.charAt(0).toLowerCase() + r.b.slice(1)) + ', <b>' + money(r.usd) + perShort(t) + '</b>.';
+          return;
+        }
         if (leak) leak.innerHTML = 'From the sample sheet for a ' + (m[1] ? m[1] + '-' + m[2] + ' ' : '') + kind + ': ' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', <b>' + money(r.usd) + perShort(t) + '</b>.';
       });
     },
