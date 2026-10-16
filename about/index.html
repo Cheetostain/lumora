@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=caf18257">
-<link rel="stylesheet" href="/v4/trade-page.css?v=caf18257">
+<link rel="stylesheet" href="/v4/system.css?v=7faa7fa5">
+<link rel="stylesheet" href="/v4/trade-page.css?v=7faa7fa5">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=caf18257" defer></script>
-<script src="/v4/system.js?v=caf18257" defer></script>
+<script src="/v4/trades.js?v=7faa7fa5" defer></script>
+<script src="/v4/system.js?v=7faa7fa5" defer></script>
 <style>
 /* ===== About, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24, 32, 44,
    64) outside the pictures, and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -42,7 +42,7 @@
 .ab-copy h1{max-width:11em}
 .ab-copy .t-lede{margin-top:16px;max-width:30em}
 .ab-copy .cta{margin-top:26px}
-.ab-free{font-size:17px;color:var(--ink);max-width:30em}
+.ab-free{font-size:17px;color:var(--ink);max-width:30em;margin-bottom:6px}   /* 2026-10-15: a step of air before the call block */
 .ab-card .signed{font-size:20px;line-height:1.5}
 @media (min-width:900px){
   .ab-hero{padding:56px 0 96px}
@@ -129,6 +129,7 @@
 .proof-g{display:grid;gap:18px}
 .ab-proof .idx{border-top:2px solid var(--ink);margin-inline:-10px}   /* the row fill bleeds 10px past the words, so the words stay in line with the heading */
 .ab-proof .idx a{margin:0;padding-inline:10px}
+@media (max-width:899px){.ab-proof .idx{margin-inline:0}.ab-proof .idx a{padding-inline:0}}   /* 2026-10-15: on phones the lines stop at the text, as system.css's index does (the fill still bleeds into the gutter) */
 .ab-proof .idx b{font-size:20px}
 .ab-proof .idx-p{font-size:17px}
 @media (min-width:900px){
@@ -216,7 +217,7 @@
           <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
           <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
         </div>
-        <p class="reply"><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span></p>
+        <p class="reply"><span data-shared="reply">We answer or call back the same business day; after 5&nbsp;p.m. or on weekends, by 10&nbsp;a.m. the next business day.</span></p>
         <p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p>
       </div>
     </div>
@@ -236,13 +237,13 @@
       <div class="pic">
         <div class="fourdocs" role="img" aria-label="Sample: four pages from one job: the walk sheet, the fix quote, a monthly check and the one-page handover sheet. Each ends with the same line: your contact, (352) 226-0681, circled in pencil.">
           <div class="fd" aria-hidden="true"><p class="fd-k">After the walk</p><p class="fd-t">Walk sheet</p>
-            <div class="fd-l"><p>Dunlin Plumbing, 2 trucks</p><ul class="fd-r"><li data-task="quotes"><span>Quotes 48+ hours late</span><b>$1,900/mo</b></li><li data-task="retyping"><span>Same job typed 3 times</span><b>$411/mo</b></li><li data-task="calls"><span>Calls nobody called back</span><b>$399/mo</b></li></ul></div>
+            <div class="fd-l"><p>Dunlin Plumbing, 2&nbsp;trucks</p><ul class="fd-r"><li data-task="quotes"><span>Quotes 48+ hours late</span><b>$1,900/mo</b></li><li data-task="retyping"><span>Same job typed 3 times</span><b>$411/mo</b></li><li data-task="calls"><span>Calls nobody called back</span><b>$399/mo</b></li></ul></div>
             <p class="fd-foot">Questions about a row? Your contact:<br><span class="pc">(352) 226-0681</span></p></div>
           <div class="fd" aria-hidden="true"><p class="fd-k">Before any work</p><p class="fd-t">Fix quote</p>
             <div class="fd-l"><p>Fix: quotes sent late</p><ul class="fd-r"><li><span>Quote out the same day</span><b>Yes</b></li><li><span>Price</span><b>Fixed</b></li><li><span>Paid</span><b class="w">Half now, half when it works</b></li><li><span>Software fee</span><b>At cost</b></li></ul></div>
             <p class="fd-foot">Questions about the price? Your contact:<br><span class="pc">(352) 226-0681</span></p></div>
           <div class="fd" aria-hidden="true"><p class="fd-k">Every month</p><p class="fd-t">Monthly check</p>
-            <div class="fd-l"><p>December, quotes fix</p><ul class="fd-r"><li><span>Quotes sent 48+ hours late</span><b>9 to 1</b></li><li><span>What broke</span><b>Nothing</b></li><li><span>Next problem</span><b>Retyping, $411/mo</b></li></ul></div>
+            <div class="fd-l"><p>December, quotes fix</p><ul class="fd-r"><li><span>Quotes sent 48+ hours late</span><b>9 to 1</b></li><li><span>What broke</span><b>Nothing</b></li><li><span>Next problem</span><b class="w">Retyping, $411/mo</b></li></ul></div>
             <p class="fd-foot">Something looks off? Your contact:<br><span class="pc">(352) 226-0681</span></p></div>
           <div class="fd" aria-hidden="true"><p class="fd-k">Yours to keep</p><p class="fd-t">How to run it</p>
             <div class="fd-l"><p>One page, English or Spanish</p><ol class="fd-r fd-n"><li><span>Read the 6:30 a.m. quote list</span></li><li><span>Send the quotes waiting for your OK</span></li><li><span>Stops? Text us</span></li></ol></div>
@@ -372,8 +373,8 @@
     </div>
     <dl class="c4-hours">
       <div><dt>Money back</dt><dd><p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p></dd></div>
-      <div><dt>Hours</dt><dd><span data-shared="hours">Monday to Friday, 9 a.m. to 5 p.m.</span></dd></div>
-      <div><dt>Reply time</dt><dd><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span></dd></div>
+      <div><dt>Hours</dt><dd><span data-shared="hours">Monday to Friday, 9&nbsp;a.m. to 5&nbsp;p.m.</span></dd></div>
+      <div><dt>Reply time</dt><dd><span data-shared="reply">We answer or call back the same business day; after 5&nbsp;p.m. or on weekends, by 10&nbsp;a.m. the next business day.</span></dd></div>
       <div><dt>Language</dt><dd>English or Spanish</dd></div>
       <div><dt>Owner</dt><dd>Franco A. Soto</dd></div>
       <div><dt>Email</dt><dd><a class="u" href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></dd></div>
@@ -405,7 +406,7 @@
       </div>
       <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">How it works</h2><ul><li><a href="/how-it-works/#conversation">The free call</a></li><li><a href="/how-it-works/#walk">The walk</a></li><li><a href="/how-it-works/#fix">One fix</a></li><li><a href="/how-it-works/#check">The monthly check</a></li><li><a href="/how-it-works/#faq">Questions owners ask</a></li><li><a href="/what-we-automate/">What we automate</a></li><li><a href="/leak-check/">Loss calculator</a></li></ul></nav>
       <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">Industries</h2><ul><li><a href="/industries/plumbing/">Plumbing</a></li><li><a href="/industries/ac-and-heating/">AC and heating</a></li><li><a href="/industries/electrical/">Electrical</a></li><li><a href="/industries/water-damage-and-mold/">Water damage and mold</a></li><li><a href="/industries/pest-control/">Pest control</a></li><li><a href="/industries/roofing/">Roofing</a></li><li><a href="/industries/restaurants-and-bars/">Restaurants and bars</a></li><li><a href="/industries/property-managers/">Property managers</a></li><li><a href="/industries/">All industries</a></li></ul></nav>
-      <div class="foot-col c-contact"><h2 class="foot-h">Contact</h2><ul><li>Call or text <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">Monday to Friday, 9 a.m. to 5 p.m.</span></li><li>Gainesville, serving Alachua County</li><li>English or Spanish</li></ul></div>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contact</h2><ul><li>Call or text <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">Monday to Friday, 9&nbsp;a.m. to 5&nbsp;p.m.</span></li><li>Gainesville, serving Alachua County</li><li>English or Spanish</li></ul></div>
     </div>
     <div class="foot-base">
       <p class="legal">Lumora Group LLC, a Florida company. Every shop, name and number marked Sample is made up.</p>

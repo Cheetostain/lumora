@@ -23,6 +23,7 @@ html:not(.js) .wa-filter{display:none}
 .wa-chip{position:relative;display:inline-flex}
 .wa-chip input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 .wa-chip span{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1.5px solid rgba(17,17,16,.22);border-radius:999px;font-size:15px;font-weight:500;color:var(--ink)}
+.wa-chip span{background:var(--paper)}   /* 2026-10-15: no ground lines through a chip; a checked chip keeps --sheet (the rule below wins) */
 .wa-chip input:checked+span{background:var(--sheet);border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}   /* ringed, never filled (R11); same weight, so no chip moves */
 .wa-chip input:focus-visible+span{outline:3px solid var(--ink);outline-offset:2px}
 @media (hover:hover) and (pointer:fine){.wa-chip:hover input:not(:checked)+span{border-color:var(--ink)}}
@@ -52,6 +53,9 @@ html:not(.js) .wa-filter{display:none}
    beside its lines. */
 .wa-stage+.wa-stage{margin-top:32px}
 .wa-sh{margin-bottom:10px;font-size:24px;line-height:1.2}
+/* 2026-10-15: on phones each stage name stays in view under the header while its lines scroll (a long list lost its place) */
+@media (max-width:899px){.wa-sh{position:sticky;top:var(--hdr-h);z-index:5;margin:0;padding-block:10px;background:var(--sheet)}}
+@media (max-width:899px) and (max-height:500px){.wa-sh{top:0}}
 .wa-items{border-top:2px solid var(--ink)}
 .wa-items li{padding:10px 0;border-bottom:1px solid var(--rule);font-size:17px;line-height:1.45;color:var(--ink)}
 .wa-for{display:inline-block;font-size:15px;line-height:1.35;color:var(--muted)}
@@ -61,7 +65,7 @@ html:not(.js) .wa-filter{display:none}
 @media (min-width:900px){
   .wa-stage{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);column-gap:48px;align-items:start}
   .wa-stage+.wa-stage{margin-top:64px}
-  .wa-sh{position:sticky;top:calc(var(--hdr-h) + 24px);margin:0;padding-top:12px;border-top:2px solid var(--ink);font-size:32px}
+  .wa-sh{position:sticky;top:calc(var(--hdr-h) + 24px);margin:0;padding-top:12px;border-top:2px solid var(--ink);font-size:32px /* ui-ok: stripe the ruled list's heading line, computer only; the phone rule's sheet fill (2026-10-15) never meets it */}
   .wa-items{max-width:42em}                                   /* about 85 characters a line at 17px, not 100 */
   .wa-items li{padding:12px 0}
 }

@@ -1,6 +1,7 @@
 /* Lumora v4 trade pages: the blocks every trade page shares, loaded right after system.css by each page locked to one trade
    (<body data-trade="..." data-trade-lock data-rules="v4">). Moved here on 2026-10-12 from plumbing.html's own <style> (the v4
-   pilot), rule for rule, so the trade pages load one copy instead of eight (PLUMBING-INTEGRATE.md items 40 and 41); plumbing's
+   pilot), rule for rule, so the trade pages load one copy instead of eight (PLUMBING-INTEGRATE.md items 40 and 41; the facts strip
+   moved on to system.css section 12b on 2026-10-15, with Home's copy); plumbing's
    look did not change (full-page stills at 320, 390, 760 and 1280 compared pixel for pixel, English and Spanish).
    Parts A to F are Home's blocks (pages/home/home.css as of 2026-10-10 18:19, the close as of 19:11) in the trade-page order.
    PL parts are the components the pilot made, shared now: the paper pair .pl-docs with its flag row .pl-flag, the on-call card
@@ -16,13 +17,16 @@
 .hm-recog{color:var(--ink);font-weight:500}
 /* the one-problem line, first under the headline on every trade page (Franco's card 19 default, 2026-10-12): the trade's own
    find in one sentence, a step under the h1 and over the lede; check.py fails an English trade page without it */
-.hero-one{margin-top:10px;font-size:clamp(19px,2.1vw,24px);font-weight:600;line-height:1.22;letter-spacing:-.01em;color:var(--ink);max-width:22em;text-wrap:balance}
-.hero .hero-one+.t-lede{margin-top:10px}   /* measured on plumbing: with 16px and 14px the $1,900 row fell 27px under the call bar at 360 x 780 */
+.hero-one{margin-top:14px;font-size:clamp(19px,2.1vw,24px);font-weight:600;line-height:1.22;letter-spacing:-.01em;color:var(--ink);max-width:22em;text-wrap:balance}
+.hero .hero-one+.t-lede{margin-top:16px}   /* 2026-10-15: 16px again (the hero read as one slab); A4's shorter strip wins back the height that put the $1,900 row 27px under the call bar at 360 x 780 */
+.hero-one+.t-lede .hm-recog{font-weight:400}   /* 2026-10-15: under the one-problem line the lede reads as body, not a second heading */
 .hero-terms{grid-area:terms;display:grid;gap:10px;justify-items:start}
 .hero-terms .price b{color:var(--ink)}
 .hero .cta-row .hm-sms{font-size:17px}
 .hm-sms,.c4-sms,.hm-about a,.mb a.u{display:inline-block;padding-block:12px;margin-block:-12px}   /* a 44px tall tap area without moving the layout; PL adds "Full terms" (phone-access review: 70 x 23 px) */
-.cta-tel{padding-block:10.5px;margin-block:-10.5px}   /* PL: the number beside every call button gets a 52px tall target (SYSTEM.md call targets), no layout change; Home's is 5px (INTEGRATE) */
+.cta-tel{padding-block:10.5px;margin-block:-10.5px}
+.cta-row,.c4-tel{row-gap:24px}   /* 2026-10-15: wrapped, the number's and the text link's padded tap areas overlapped by up to 16px */
+@media (max-width:899px){.hero .cta-row{row-gap:12px}}   /* 2026-10-15: the phone hero hides its text link (system.css), so only the button and the number wrap and 12px clears them; 24px put the top-leak row under the call bar at 360 x 780 */   /* PL: the number beside every call button gets a 52px tall target (SYSTEM.md call targets), no layout change; Home's is 5px (INTEGRATE) */
 .sh-sub{text-wrap:balance}
 /* a long trade noun: the hero opts in with data-hero-long. Under 380px its h1 steps down so the headline keeps two lines, and
    the hero rows sit 6px closer. AC at 38px took three lines at 360 and pushed the top-leak strip under the call bar at
@@ -33,14 +37,7 @@
   .hm4-hero .hero-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);grid-template-areas:"copy tool" "act tool" "terms tool";grid-template-rows:auto auto 1fr;row-gap:24px}
   .hm4-hero h1{max-width:11.5em}
 }
-.facts4{margin-top:48px;border-block:1px solid var(--ink);background:var(--paper)}
-.facts4 ul{display:grid;gap:8px;padding-block:14px;font-size:15px;font-weight:500;color:var(--ink)}
-.facts4 li::before{content:"";display:inline-block;width:10px;height:6px;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(-48deg) translateY(-3px);margin-right:10px}
-/* PL: a hanging indent, so a fact that wraps ("Money back up to 7 days after we go over your sheet" at 390) starts its second
-   line under its words, not under the tick. Home's strip has the same wrap (INTEGRATE). */
-.facts4 li{position:relative;padding-left:22px}
-.facts4 li::before{position:absolute;left:1px;top:8px;margin-right:0}
-@media (min-width:900px){.facts4 ul{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:24px}}
+/* the facts strip (.facts4) moved to system.css section 12b on 2026-10-15, with Home's copy (item 40) */
 
 /* ===== B. what we automate: Home's tools line and ruled rows. PL: on a computer the heading, the tools line and row 1 as a
    picture (a property manager's emailed work order read into the shop's own spreadsheet, computer only) sit on the left, and
@@ -191,7 +188,7 @@
 .n4-figs{display:grid;gap:20px;justify-items:center;margin-top:18px}
 .n4-figs>.pic{width:min(var(--ph-w),100%)}
 .n4-figs>.n4-paper{width:min(440px,100%)}
-.n4 .loop-ctl{position:relative;z-index:4;margin-top:-28px;justify-content:flex-start}
+.n4 .loop-ctl{position:relative;z-index:4;margin-top:-12px;justify-content:flex-start}   /* 2026-10-15: -12px, not -28px: a 16px gap, so Pause no longer sits glued to the log */
 .n4 .pause{min-height:44px;padding:0 14px 0 12px;gap:8px;border-color:rgba(233,228,216,.45);font-size:15px;color:var(--muted-night)}
 .n4 .pause .pi{width:10px;height:12px;border-left-width:3px;border-right-width:3px}
 .n4 .pause.is-paused .pi{width:0;height:0;border:0;border-left:10px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent}
@@ -205,11 +202,11 @@
   .n4-figs{grid-template-columns:var(--ph-w) minmax(0,440px);justify-content:center;align-items:stretch;gap:24px;text-align:left}
   .n4-figs>.n4-paper{width:100%;display:flex;flex-direction:column}
   .n4-paper .np{flex:1;display:flex;flex-direction:column}
-  .n4-paper .np-rows{flex:1;display:flex;flex-direction:column;justify-content:space-between}
+  .n4-paper .np-rows{flex:1;display:flex;flex-direction:column;justify-content:flex-start}   /* 2026-10-15: rows from the top (space-between spread them apart); flex:1 keeps the paper the phone's height */
 }
 .pl-before{margin-top:12px;max-width:34em;font-size:15px;color:var(--muted-night)}
 .pl-before b{color:var(--on-night);margin-right:4px}
-.np .np-h .pl-after{align-self:center;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--pencil)}   /* R5's plain label, in the log head where the dates used to be (the day rows carry them now) */
+.np .np-h .pl-after{align-self:center;font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--pencil)}   /* 2026-10-15: plain words, as the Sample stamp now reads (was 12px tracked capitals) */   /* R5's plain label, in the log head where the dates used to be (the day rows carry them now) */
 .np-rows li.pl-dayrow{display:block;padding:12px 0 3px;border-bottom:0;font-size:15px;font-weight:600;line-height:1.3;color:var(--ink)}
 .np-rows li.pl-dayrow:first-child{padding-top:2px}
 .pl-card{position:relative;margin-top:20px;padding:16px 14px 10px;background:#fff;border:1.5px solid var(--ink);border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.14);font-size:15px;line-height:1.4;color:#1d1d1f}
@@ -275,8 +272,6 @@
   main>.hm4-night{padding-block:48px}
   main>.hm4-close{padding-block:44px 32px}
   .hero{padding-bottom:0}
-  .facts4{margin-top:36px}
-  .facts4 ul{gap:4px}
   .sh-total b{font-size:20px}
   main>.hm4-auto,main>.hm4-how{padding-block:36px}
   .auto-list li{padding-block:8px}

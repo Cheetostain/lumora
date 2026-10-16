@@ -27,14 +27,15 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=caf18257">
-<link rel="stylesheet" href="/v4/trade-page.css?v=caf18257">
+<link rel="stylesheet" href="/v4/system.css?v=7faa7fa5">
+<link rel="stylesheet" href="/v4/trade-page.css?v=7faa7fa5">
 <style>
 /* ===== the trade index: the page's one tool. Phone order: words, call block, the index, price and money back. On a computer
    the index takes the wider right column (the copy is short), and from 1200px each row reads like a notebook index: the name,
    a dotted leader, then the line and the sample row (the v3 page's index, at the v4 type scale). The whole row is the link,
    but its name is the trade alone (the stretched ::after), so a screen reader hears "Plumbing", not 30 words. */
 .ix-hero .hero-g{grid-template-areas:"copy" "act" "tool" "terms"}
+.ix-hero .cta-row{column-gap:16px}   /* 2026-10-15: at 18px "Or send a text" missed the 458px column by a fraction from 1280 up and sat alone under the button (under 1280 it still wraps, 24px down) */
 .ix-h{font-size:24px;line-height:1.2}
 .ix-list{margin-top:10px;border-top:2px solid var(--ink);font-size:17px}
 .ix-list li{position:relative;display:grid;gap:4px;padding:13px 0 14px;border-bottom:1px solid var(--rule)}
@@ -67,10 +68,11 @@
   .ix-n{display:flex;align-items:baseline;white-space:nowrap}
   .ix-n::before{content:"";order:2;flex:1 0 24px;margin-left:12px;border-bottom:2px dotted rgba(17,17,16,.35);transform:translateY(-4px)}
 }
+@media (min-width:900px){.ix-hero .hero-tool.ix{background:var(--paper);box-shadow:0 0 0 12px var(--paper)}}   /* 2026-10-15: the ruled lines doubled the rules between trades */
 </style>
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=caf18257" defer></script>
-<script src="/v4/system.js?v=caf18257" defer></script>
+<script src="/v4/trades.js?v=7faa7fa5" defer></script>
+<script src="/v4/system.js?v=7faa7fa5" defer></script>
 </head>
 <body data-rules="v4">
 <a class="skip" href="#main">Skip to content</a>
@@ -118,7 +120,7 @@
           <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
           <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
         </div>
-        <p class="reply"><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span> English or Spanish.</p>
+        <p class="reply"><span data-shared="reply">We answer or call back the same business day; after 5&nbsp;p.m. or on weekends, by 10&nbsp;a.m. the next business day.</span> English or Spanish.</p>
       </div>
     </div>
     <div class="hero-tool ix">
@@ -179,8 +181,8 @@
       </div>
       <dl class="c4-hours">
         <div><dt>Money back</dt><dd><p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p></dd></div>
-        <div><dt>Hours</dt><dd><span data-shared="hours">Monday to Friday, 9 a.m. to 5 p.m.</span></dd></div>
-        <div><dt>Reply time</dt><dd><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span></dd></div>
+        <div><dt>Hours</dt><dd><span data-shared="hours">Monday to Friday, 9&nbsp;a.m. to 5&nbsp;p.m.</span></dd></div>
+        <div><dt>Reply time</dt><dd><span data-shared="reply">We answer or call back the same business day; after 5&nbsp;p.m. or on weekends, by 10&nbsp;a.m. the next business day.</span></dd></div>
         <div><dt>Language</dt><dd>English or Spanish</dd></div>
       </dl>
       <p class="c4-llc">Lumora Group LLC, a Florida company.</p>
@@ -219,7 +221,7 @@
       </div>
       <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">How it works</h2><ul><li><a href="/how-it-works/#conversation">The free call</a></li><li><a href="/how-it-works/#walk">The walk</a></li><li><a href="/how-it-works/#fix">One fix</a></li><li><a href="/how-it-works/#check">The monthly check</a></li><li><a href="/how-it-works/#faq">Questions owners ask</a></li><li><a href="/what-we-automate/">What we automate</a></li><li><a href="/leak-check/">Loss calculator</a></li></ul></nav>
       <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">Industries</h2><ul><li><a href="/industries/plumbing/">Plumbing</a></li><li><a href="/industries/ac-and-heating/">AC and heating</a></li><li><a href="/industries/electrical/">Electrical</a></li><li><a href="/industries/water-damage-and-mold/">Water damage and mold</a></li><li><a href="/industries/pest-control/">Pest control</a></li><li><a href="/industries/roofing/">Roofing</a></li><li><a href="/industries/restaurants-and-bars/">Restaurants and bars</a></li><li><a href="/industries/property-managers/">Property managers</a></li><li><a href="/industries/">All industries</a></li></ul></nav>
-      <div class="foot-col c-contact"><h2 class="foot-h">Contact</h2><ul><li>Call or text <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">Monday to Friday, 9 a.m. to 5 p.m.</span></li><li>Gainesville, serving Alachua County</li><li>English or Spanish</li></ul></div>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contact</h2><ul><li>Call or text <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">Monday to Friday, 9&nbsp;a.m. to 5&nbsp;p.m.</span></li><li>Gainesville, serving Alachua County</li><li>English or Spanish</li></ul></div>
     </div>
     <div class="foot-base">
       <p class="legal">Lumora Group LLC, a Florida company. Every shop, name and number marked Sample is made up.</p>

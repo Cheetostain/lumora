@@ -247,7 +247,7 @@
   var BIND = {
     sheet: function (el, t, animate) {
       var f = function (k) { return el.querySelector('[data-f="' + k + '"]'); };
-      if (f('sub')) f('sub').textContent = t.sub;
+      if (f('sub')) f('sub').textContent = t.sub.replace(/(\d) /g, '$1\u00a0');   // 2026-10-15: "2 / trucks" never splits (no-break space)
       if (f('per')) f('per').textContent = t.per === 'yr' ? tr('A year', 'Al año') : tr('A month', 'Al mes');
       var ringOn = el.hasAttribute('data-ring'), short = el.hasAttribute('data-short');   // data-short (v4, R9): the row's one short formula
       if (f('rows')) f('rows').innerHTML = t.rows.map(function (r, i) {
@@ -269,9 +269,9 @@
         // Franco asked again what "2 trucks" meant, so the size says "small" outright and keeps the owner's own word:
         // "A small plumbing shop with 2 trucks"; "A property manager with 212 rentals" (doors is jargon too)
         var trade = /^[A-Z]{2}/.test(m[1]) ? m[1] : m[1].charAt(0).toLowerCase() + m[1].slice(1);
-        if (t.per === 'yr') return 'A property manager with ' + m[2] + ' rentals';
+        if (t.per === 'yr') return 'A property manager with ' + m[2] + '\u00a0rentals';   // 2026-10-15: no-break space, the count stays with its noun
         if (/^Restaurant/.test(m[1])) return (/^(8\d*|11|18)$/.test(m[2]) ? 'An ' : 'A ') + m[2] + '-' + m[3] + ' restaurant and bar';
-        return 'A small ' + trade + ' shop with ' + m[2] + ' ' + m[3] + (m[2] === '1' ? '' : 's');
+        return 'A small ' + trade + ' shop with ' + m[2] + '\u00a0' + m[3] + (m[2] === '1' ? '' : 's');
       }
       var s = function (k) { return el.querySelector('[data-s="' + k + '"]'); }, r = t.rows[0];
       if (s('sub')) s('sub').textContent = stripSize(t); if (s('leak')) s('leak').textContent = r.b;
@@ -301,7 +301,7 @@
       var f = function (k) { return el.querySelector('[data-f="' + k + '"]'); }, sum = total(t);
       rollTo(f('n'), shown.big, sum, money); shown.big = sum;
       if (f('per')) f('per').textContent = perWord(t);
-      if (f('sub')) f('sub').textContent = t.sub;
+      if (f('sub')) f('sub').textContent = t.sub.replace(/(\d) /g, '$1\u00a0');   // 2026-10-15: no-break space after a count
       if (f('time')) { f('time').hidden = !t.time; if (t.time) f('time').innerHTML = tr('Time back for you or your office: ', 'Usted o su oficina se ahorran ') + '<b>' + esc(t.time) + '</b>.'; }
       if (f('eq')) f('eq').innerHTML = t.rows.map(function (r, i) { return (i ? '<i>+</i>' : '') + '<span>' + money(r.usd) + ' <small>' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1)) + '</small></span>'; }).join('') +
         '<i>=</i><span class="r">' + money(sum) + ' <small>' + perWord(t) + '</small></span>';
@@ -324,7 +324,7 @@
       var tl = el.querySelector('[data-tally]');
       if (tl) {
         var ol = tl.querySelector('ol'); if (ol) ol.innerHTML = t.rows.map(function (r, i) { return '<li data-i="' + i + '"><span>' + esc(r.place) + '</span><b>' + money(r.usd) + '</b></li>'; }).join('');
-        var sub = tl.querySelector('[data-f="tsub"]'); if (sub) sub.textContent = t.shop + ', ' + t.short.split(', ').slice(1).join(', ');
+        var sub = tl.querySelector('[data-f="tsub"]'); if (sub) sub.textContent = (t.shop + ', ' + t.short.split(', ').slice(1).join(', ')).replace(/(\d) /g, '$1\u00a0');   // 2026-10-15: no-break space after a count
       }
       var plan = el.querySelector('[data-f="plan-sub"]'); if (plan) plan.textContent = t.shop;
       initG2R(list, animate); initDraw(list); tally.bind(el, t);
@@ -466,7 +466,7 @@
     var tl = el.querySelector('[data-tally]');
     if (tl) {
       var ol = tl.querySelector('ol'); if (ol) ol.innerHTML = rows.map(function (r, i) { return '<li data-i="' + i + '"><span>' + (ownPlace(r.id) || esc((r.pair && r.pair.place) || r.place)) + '</span></li>'; }).join('');
-      var sub = tl.querySelector('[data-f="tsub"]'); if (sub) sub.textContent = t.shop + ', ' + t.short.split(', ').slice(1).join(', ');
+      var sub = tl.querySelector('[data-f="tsub"]'); if (sub) sub.textContent = (t.shop + ', ' + t.short.split(', ').slice(1).join(', ')).replace(/(\d) /g, '$1\u00a0');   // 2026-10-15: no-break space after a count
     }
     initG2R(list, animate); initDraw(list); tally.bind(el, t); fitCrops();
   }
@@ -654,7 +654,8 @@
 
   /* ================================================================ the leak check (only his own input moves the figure) */
   function initLeak(form) {
-    var num = function (v) { v = String(v).replace(/[$,%\s]/g, ''); return v === '' ? NaN : +v; };
+    // 2026-10-15: a comma with one or two digits after it is a decimal comma ("1,5" is 1.5, never 15); other commas group thousands
+    var num = function (v) { v = String(v).replace(/[$%\s]/g, '').replace(/^(\d*),(\d{1,2})$/, '$1.$2').replace(/,/g, ''); return v === '' ? NaN : +v; };
     var g = function (n) { return form.querySelector('[name="' + n + '"]'); };
     var scope = form.closest('[data-leak-scope], section') || document;
     var out = function (k) { return form.querySelector('[data-f="' + k + '"]') || scope.querySelector('[data-f="' + k + '"]') || document.createElement('span'); };

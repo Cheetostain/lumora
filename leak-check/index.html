@@ -26,11 +26,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=caf18257">
-<link rel="stylesheet" href="/v4/trade-page.css?v=caf18257">
+<link rel="stylesheet" href="/v4/system.css?v=7faa7fa5">
+<link rel="stylesheet" href="/v4/trade-page.css?v=7faa7fa5">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=caf18257" defer></script>
-<script src="/v4/system.js?v=caf18257" defer></script>
+<script src="/v4/trades.js?v=7faa7fa5" defer></script>
+<script src="/v4/system.js?v=7faa7fa5" defer></script>
 <style>
 /* ===== Loss calculator, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64) outside the pictures; every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -51,7 +51,7 @@
 .lk-form .lf{clear:both;margin-bottom:18px}
 .lk-form .lf:last-child{margin-bottom:0}
 .lk-form .lf label{line-height:1.35}
-.ex{display:inline-block;margin-left:4px;padding:0 6px;font-size:15px;font-weight:600;line-height:21px;color:var(--pencil);border:1.5px solid var(--pencil);border-radius:3px;vertical-align:1px}
+.ex{display:inline-block;margin-left:0;white-space:nowrap;padding:0 6px;font-size:15px;font-weight:600;line-height:21px;color:var(--pencil);border:1.5px solid var(--pencil);border-radius:3px;vertical-align:1px}
 .lk-form .lf input{width:120px;font-size:24px}
 .lk-form .unit{display:flex}
 .lk-form .stepb{font-size:24px}
@@ -61,7 +61,7 @@
 html:not(.js) .stepb,html:not(.js) .lk-btns{display:none}
 .lk-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;padding-top:18px;border-top:1px solid var(--rule)}
 .lk-bar{margin:0 -18px}
-.lk-bar .tally-bar{min-height:52px;padding:10px 18px}
+.lk-bar .tally-bar{min-height:40px;padding:6px 18px}   /* 2026-10-15: slimmer, it shows only under 900px and holds no control */
 .lk-bar span{white-space:nowrap}
 .lk-bar b{font-size:17px;white-space:nowrap}
 .lk-bar.bad b{white-space:normal;text-align:right;font-size:15px}   /* what is wrong may wrap; it never hides */
@@ -147,6 +147,9 @@ html:not(.js) .lk-bar{display:none}
   .lk-bar b.bump{animation:lk-bump var(--t-small) var(--ease-out)}   /* job: cause and effect. The figure he can see while typing nudges when it changes */
 }
 @keyframes lk-bump{from{opacity:.35;translate:0 6px}to{opacity:1;translate:0 0}}
+/* 2026-10-15: on a phone every box starts at the same x, minus and plus on its right (tab order is unchanged) */
+@media (max-width:599px){.lk-form .step input{order:-1}}
+@media (max-width:899px){.lk-close .lk-rows+.pl-more{border-top:0;margin-top:16px}}   /* 2026-10-15: one hairline, not two; page-only, Contact keeps its line */
 </style>
 </head>
 <body data-trade="plumbing" data-rules="v4">
@@ -336,8 +339,8 @@ html:not(.js) .lk-bar{display:none}
     <dl class="c4-hours lk-rows">
       <div><dt>The walk</dt><dd><p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward a fix of $1,500 or more that starts within 30 days.</span></p></dd></div>
       <div><dt>Money back</dt><dd><p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> You keep the sheet. <a class="u" href="/how-it-works/#terms">Full terms</a></p></dd></div>
-      <div><dt>Hours</dt><dd><span data-shared="hours">Monday to Friday, 9 a.m. to 5 p.m.</span></dd></div>
-      <div><dt>Reply time</dt><dd><span data-shared="reply">We answer or call back the same business day; after 5 p.m. or on weekends, by 10 a.m. the next business day.</span></dd></div>
+      <div><dt>Hours</dt><dd><span data-shared="hours">Monday to Friday, 9&nbsp;a.m. to 5&nbsp;p.m.</span></dd></div>
+      <div><dt>Reply time</dt><dd><span data-shared="reply">We answer or call back the same business day; after 5&nbsp;p.m. or on weekends, by 10&nbsp;a.m. the next business day.</span></dd></div>
       <div><dt>Language</dt><dd>English or Spanish</dd></div>
       <div><dt>Rules we keep</dt><dd><ul><li>We build inside what you already pay for.</li><li>No filming or recording without your OK.</li><li>Say no once, and that's the end of it.</li></ul></dd></div>
     </dl>
@@ -368,7 +371,7 @@ html:not(.js) .lk-bar{display:none}
       </div>
       <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">How it works</h2><ul><li><a href="/how-it-works/#conversation">The free call</a></li><li><a href="/how-it-works/#walk">The walk</a></li><li><a href="/how-it-works/#fix">One fix</a></li><li><a href="/how-it-works/#check">The monthly check</a></li><li><a href="/how-it-works/#faq">Questions owners ask</a></li><li><a href="/what-we-automate/">What we automate</a></li><li><a href="/leak-check/">Loss calculator</a></li></ul></nav>
       <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">Industries</h2><ul><li><a href="/industries/plumbing/">Plumbing</a></li><li><a href="/industries/ac-and-heating/">AC and heating</a></li><li><a href="/industries/electrical/">Electrical</a></li><li><a href="/industries/water-damage-and-mold/">Water damage and mold</a></li><li><a href="/industries/pest-control/">Pest control</a></li><li><a href="/industries/roofing/">Roofing</a></li><li><a href="/industries/restaurants-and-bars/">Restaurants and bars</a></li><li><a href="/industries/property-managers/">Property managers</a></li><li><a href="/industries/">All industries</a></li></ul></nav>
-      <div class="foot-col c-contact"><h2 class="foot-h">Contact</h2><ul><li>Call or text <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">Monday to Friday, 9 a.m. to 5 p.m.</span></li><li>Gainesville, serving Alachua County</li><li>English or Spanish</li></ul></div>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contact</h2><ul><li>Call or text <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">Monday to Friday, 9&nbsp;a.m. to 5&nbsp;p.m.</span></li><li>Gainesville, serving Alachua County</li><li>English or Spanish</li></ul></div>
     </div>
     <div class="foot-base">
       <p class="legal">Lumora Group LLC, a Florida company. Every shop, name and number marked Sample is made up.</p>
@@ -396,7 +399,8 @@ html:not(.js) .lk-bar{display:none}
   var LEFT = 'Left out: fill in its boxes to add it.';
   var inp = function (n) { return form.elements[n]; };
   var o = function (k) { return $('[data-o="' + k + '"]'); };
-  var num = function (v) { v = String(v).replace(/[$,%\s]/g, ''); return v === '' ? NaN : +v; };
+  // 2026-10-15: a comma with one or two digits after it is a decimal comma ("1,5" is 1.5, never 15); other commas group thousands
+  var num = function (v) { v = String(v).replace(/[$%\s]/g, '').replace(/^(\d*),(\d{1,2})$/, '$1.$2').replace(/,/g, ''); return v === '' ? NaN : +v; };
   var usd = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
   var cash = function (n) { return Number.isInteger(n) ? usd(n) : '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };   // what he typed, cents kept
   var one = function (n) { return (Math.round(n * 10) / 10).toFixed(1); };

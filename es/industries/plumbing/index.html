@@ -27,21 +27,10 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=caf18257">
-<link rel="stylesheet" href="/v4/trade-page.css?v=caf18257">
+<link rel="stylesheet" href="/v4/system.css?v=7faa7fa5">
+<link rel="stylesheet" href="/v4/trade-page.css?v=7faa7fa5">
 <style>
 .close-h{margin:0 0 24px;font-size:clamp(40px,4.4vw,44px)}   /* Spanish Home's size (home.css): keeps "Hablemos de su negocio." on one line from 700 to 1440 so the arrow starts under the words */
-:lang(es) .nav a{white-space:nowrap}
-@media (min-width:900px) and (max-width:1179px){
-  :lang(es) .nav{position:absolute;display:none;margin-left:0;background:var(--paper);border-bottom:1px solid var(--rule)}
-  :lang(es) .nav.open{display:block}
-  :lang(es) .nav ul{display:grid;gap:0;padding:8px var(--g) 18px}
-  :lang(es) .nav a{font-size:19px;padding:12px 0}
-  :lang(es) .hdr-tel{margin-left:auto}
-  :lang(es) .menu-b{display:inline-block;margin-left:0}
-}
-@media (min-width:1180px){:lang(es) .nav ul{gap:16px}}
-@media (min-width:1180px) and (max-width:1279px){:lang(es) .nav a{font-size:var(--fs-15)}}
 :lang(es) .np-rows li{grid-template-columns:5em minmax(0,1fr)}   /* "10:40 p. m." is 77.5px at 16px; the shared 4.6em column (73.6px) let it run into the gap */
 @media (max-width:699px){:lang(es) .pl-night .np-rows li{grid-template-columns:5.1em minmax(0,1fr)}}   /* 67.9px at 14px, was a 4.7em (65.8px) column */
 @media (max-width:359px){
@@ -51,8 +40,8 @@
 }
 </style>
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=caf18257" defer></script>
-<script src="/v4/system.js?v=caf18257" defer></script>
+<script src="/v4/trades.js?v=7faa7fa5" defer></script>
+<script src="/v4/system.js?v=7faa7fa5" defer></script>
 </head>
 <body data-trade="plumbing" data-trade-lock data-rules="v4">
 <a class="skip" href="#main">Saltar al contenido</a>
@@ -119,7 +108,7 @@
           <span class="clamp" aria-hidden="true"><i></i></span>
           <div class="sheet" id="sheet" data-bind="sheet" data-ring data-fill data-short>
             <header class="sh-head">
-              <div><b class="sh-title">Hoja de visita</b><span class="sh-sub" data-f="sub">Plomería, 2 camionetas, condado de Alachua</span></div>
+              <div><b class="sh-title">Hoja de visita</b><span class="sh-sub" data-f="sub">Plomería, 2&nbsp;camionetas, condado de Alachua</span></div>
               <span class="stamp">Ejemplo</span>
             </header>
             <p class="sr" aria-live="polite" data-f="live"></p>
@@ -281,7 +270,7 @@
       <aside class="tally tally4" data-tally aria-label="La hoja de visita hasta ahora">
         <div class="tally-card">
           <p class="tally-h">Hoja de visita <span class="stamp">Ejemplo</span></p>
-          <p class="tally-sub" data-f="tsub">Dunlin Plumbing, 2 camionetas</p>
+          <p class="tally-sub" data-f="tsub">Dunlin Plumbing, 2&nbsp;camionetas</p>
           <ol><li data-i="0"><span>La lista de cotizaciones</span></li><li data-i="1"><span>El Excel de los trabajos</span></li><li data-i="2"><span>El teléfono del negocio</span></li></ol>
           <p class="tally-tot" data-f="tprog">Visita terminada, 3 de 3 pasos</p>
         </div>

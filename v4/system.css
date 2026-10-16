@@ -121,6 +121,13 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
 [data-ground=bone]{background:var(--grain) 0 0/160px 160px,var(--bone)}
 [data-ground=ruled]{background:repeating-linear-gradient(to bottom,transparent 0 31px,var(--ruled) 31px 32px),var(--paper)}
 [data-ground=graph]{background:linear-gradient(var(--ruled) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,var(--ruled) 1px,transparent 1px) 0 0/24px 24px,var(--paper)}
+/* 2026-10-15: under 900px the lines struck through hero text (its clamp() line heights share no 32px beat), so phones and
+   tablets get plain paper; a hairline keeps the seam where a paper band follows. data-ground stays for Lumora.lint, and
+   check.py fails the lines showing at 390 or 768 or missing at 1440 */
+@media (max-width:899px){
+  [data-ground=ruled],[data-ground=graph]{background:var(--paper)}
+  [data-ground=ruled]+[data-ground=paper],[data-ground=graph]+[data-ground=paper]{border-top:1px solid var(--rule)}
+}
 [data-ground=night]{background:radial-gradient(rgba(233,228,216,.05) 1px,transparent 1.2px) 0 0/5px 5px,var(--night);color:var(--on-night)}
 [data-ground=night] b{color:#fff}
 /* the perforated seam: a row of punched holes where one band tears from the next (2 or 3 per page) */
@@ -135,13 +142,17 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
 .lang{display:inline-flex;border:1px solid var(--rule);border-radius:999px;padding:2px}
 .lang a{min-width:44px;min-height:36px;display:grid;place-items:center;border-radius:999px;font-size:15px;font-weight:600;text-decoration:none;color:var(--body)}
 .lang a[aria-current]{background:var(--ink);color:#fff}
+.lang:not(:has(a+a)){display:none}   /* 2026-10-15: a page with no Spanish twin showed a lone EN pill; golive never links ES to the Spanish home instead */
+.hdr .lang a{min-height:44px}.hdr .lang{margin-left:4px}   /* 2026-10-15: the phone header's switch reaches the 44px target (50px pill in the 64px header) */
 .hdr{position:sticky;top:0;z-index:40;background:rgba(246,245,242,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
 .hdr-in{display:flex;align-items:center;gap:12px;min-height:var(--hdr-h)}
+.brand{flex-shrink:0}   /* 2026-10-15: a full header row squeezed the logo first (Spanish, 1280: 28px of its 124); check.py fails a shrunk logo */
 .brand img{width:104px;height:auto}
 .nav{position:absolute;top:100%;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--rule);display:none}
 .nav.open{display:block}
 .nav ul{display:grid;padding:8px var(--g) 18px}
 .nav a{display:block;padding:12px 0;font-size:19px;text-decoration:none}
+.nav a[aria-current]{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--pen);text-decoration-thickness:2px;text-underline-offset:6px}   /* 2026-10-15: nothing marked the page you are on; text-decoration, since a background stroke runs edge to edge on the phone menu's block links */
 .menu-b{margin-left:auto;min-height:44px;padding:0 16px;border:1.5px solid var(--ink);border-radius:999px;background:none;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer}
 .hdr-tel,.hdr .btn{display:none}
 @media (min-width:900px){
@@ -162,12 +173,34 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
 .callbar a:focus-visible{outline-color:#fff;outline-offset:-5px}
 body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom))}
 @media (min-width:900px){.callbar{display:none}body:has(.callbar){padding-bottom:0}}
+@media (max-width:899px){body:has(input:not([type=checkbox],[type=radio]):focus,textarea:focus) .callbar{display:none}}   /* 2026-10-15: three bars on screen while typing in a form; checkboxes and radios (the filter chips) keep it, and the body padding stays so nothing jumps */
 @media (hover:hover) and (pointer:fine){.hdr-tel:hover{background-size:100% 2px}}
 .hdr .btn{white-space:nowrap}
-@media (min-width:900px) and (max-width:1079px){.nav ul{gap:16px}.nav a{font-size:var(--fs-15)}}   /* room for "Call or text us" and the number on a small laptop */
+@media (min-width:900px) and (max-width:1079px){.nav ul{gap:16px}.nav a{font-size:var(--fs-15)}}
+@media (min-width:1140px){.hdr-tel{margin-left:32px}}   /* 2026-10-15: at 24px the number read as one more menu item; from 1140, since under 1120 the extra room wrapped "How it works" */   /* room for "Call or text us" and the number on a small laptop */
+/* the header in Spanish (moved here from the two Spanish pages' own styles, 2026-10-15). Spanish runs about 23% longer
+   (ES-VOICE) and a label never wraps. With "Artículos" added the row needs about 1194px at 15px with 14px between labels and
+   the number 24px out, and it never fits at English's 17px, so the menu button stays up to 1279px and the row shows from
+   1280px (measured: 6px to spare at 1280 and 1440; the old 1180 to 1279 row squeezed the logo to 26 to 106px) */
+:lang(es) .nav a{white-space:nowrap}
+@media (min-width:900px) and (max-width:1279px){
+  :lang(es) .nav{position:absolute;display:none;margin-left:0;background:var(--paper);border-bottom:1px solid var(--rule)}
+  :lang(es) .nav.open{display:block}
+  :lang(es) .nav ul{display:grid;gap:0;padding:8px var(--g) 18px}
+  :lang(es) .nav a{font-size:19px;padding:12px 0}
+  :lang(es) .hdr-tel{margin-left:auto}
+  :lang(es) .menu-b{display:inline-block;margin-left:0}
+}
+@media (min-width:1280px){:lang(es) .nav ul{gap:14px}:lang(es) .nav a{font-size:var(--fs-15)}:lang(es) .hdr-tel{margin-left:24px}}
 @media (prefers-reduced-motion:no-preference){.hdr-tel{transition:background-size var(--t-press) var(--ease-out)}.hdr-tel:hover,.hdr-tel:focus-visible{transition-duration:var(--t-hover)}}
 /* a phone turned sideways: the header scrolls away, so a sample screen is not squeezed between three fixed bars (the call bar stays) */
 @media (max-width:899px) and (max-height:500px){.hdr{position:static}}
+/* 2026-10-15: the open phone menu is a full sheet under the header, so the page under it neither shows nor scrolls. No scrim
+   (.hdr's backdrop-filter clips a fixed child to the header) and no outside-tap JS (the only thing outside is the header) */
+@media (max-width:899px){
+  .nav.open{height:calc(100vh - var(--hdr-h));height:calc(100dvh - var(--hdr-h));overflow-y:auto;overscroll-behavior:contain;border-bottom:0;padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom))}
+  body:has(.nav.open){overflow:hidden}
+}
 
 /* ======================================================================= 6. links, buttons, the call block */
 /* job: signifier. A real underline at rest; hover or focus swaps it for a red pen stroke drawn left to right. */
@@ -185,6 +218,11 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 .btn-lg{min-height:58px;padding:12px 32px;font-size:var(--fs-20)}
 .btn:focus-visible{background:var(--ink-hover);border-color:var(--ink-hover)}.btn-o:focus-visible{background:rgba(17,17,16,.08);border-color:var(--ink)}
 @media (hover:hover) and (pointer:fine){.btn:hover{background:var(--ink-hover);border-color:var(--ink-hover)}.btn-o:hover{background:rgba(17,17,16,.08);border-color:var(--ink)}}
+/* 2026-10-15: on a ruled or graph ground the outline button is filled with paper, so the lines never run through its label;
+   #E4E3E0 is the 8% ink tint over paper as a solid colour (section 9's hover) */
+[data-ground=ruled] .btn-o,[data-ground=graph] .btn-o{background:var(--paper)}
+[data-ground=ruled] .btn-o:focus-visible,[data-ground=graph] .btn-o:focus-visible{background:#E4E3E0}
+@media (hover:hover) and (pointer:fine){[data-ground=ruled] .btn-o:hover,[data-ground=graph] .btn-o:hover{background:#E4E3E0}}
 .btn:active{transform:scale(.98)}
 [data-ground=night] .btn{border-color:var(--on-night);background:var(--on-night);color:var(--night)}
 [data-ground=night] .btn:focus-visible{background:var(--sheet);border-color:var(--sheet)}
@@ -192,6 +230,8 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 @media (prefers-reduced-motion:no-preference){.btn{transition:background-color var(--t-hover) var(--ease-out),border-color var(--t-hover) var(--ease-out),transform var(--t-press)}}
 /* the call block: button + the number as readable, tappable text + reply time (+ money back where booking happens) */
 .cta{display:grid;gap:10px;justify-items:start}
+.cta>.reply+.mb,.cta>.cta-row+.mb{margin-top:14px}   /* 2026-10-15: groups 24px apart, lines inside a group 10px (the call block read as one tight stack) */
+@media (max-width:899px){.hero .cta-row a.u[href^="sms:"]{display:none}}   /* 2026-10-15: texting was offered three times on the first phone screen; the call bar's Text keeps its prefilled body. By its sms: link, not .hm-sms (the list page's is .wa-sms); a button is never hidden */
 .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
 .cta-tel{font-size:var(--fs-20);font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;background:linear-gradient(var(--pen),var(--pen)) 0 100%/0 2px no-repeat;padding-bottom:2px}
 .cta-tel:focus-visible{background-size:100% 2px}
@@ -215,7 +255,7 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 /* ======================================================================= 7. labels and stamps */
 .stamp{display:inline-block;border:1.6px solid var(--pencil);color:var(--pencil);font-weight:600;font-size:15px;line-height:1.3;padding:1px 9px;border-radius:3px;letter-spacing:.04em;white-space:nowrap}
 .pic:has(>.samp){padding-bottom:28px}
-.samp{position:absolute;right:10px;bottom:0;z-index:3;font:600 12px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;color:var(--pencil);background:rgba(255,254,251,.92);padding:5px 7px;border-radius:2px}
+.samp{position:absolute;right:10px;bottom:0;z-index:3;font:600 15px/1.3 var(--font);letter-spacing:.04em;color:var(--pencil);background:rgba(255,254,251,.92);padding:1px 9px;border:1.6px solid var(--pencil);border-radius:3px}   /* 2026-10-15: the stamp's look (was 12px tracked capitals, a second Sample style); about 25px tall, inside the 28px band */
 [data-ground=night] .stamp{border-color:var(--on-night);color:var(--on-night)}
 .kicker{font-size:15px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--pencil);margin-bottom:12px}
 [data-ground=night] .kicker{color:var(--muted-night)}
@@ -258,15 +298,23 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
   .hero .hero-strip{display:none}
 }
 /* recognition strip: the trade, the top leak, its figure and its math, above the phone fold (R1) */
-.strip{position:relative;display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:14px 16px 14px 18px;background:var(--sheet);box-shadow:var(--lift);border-left:3px solid var(--pencil);text-decoration:none;color:inherit}
-.strip-k{font-size:15px;font-weight:600;color:var(--muted)}
+.strip{position:relative;display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:14px 16px;background:var(--sheet);box-shadow:var(--lift);text-decoration:none;color:inherit}   /* 2026-10-15: the pencil stripe down its left edge is gone (a UI humanizer tell); check.py fails it coming back */
+.strip-k{font-size:15px;font-weight:600;color:var(--muted);line-height:1.3;text-wrap:balance}
 .strip .stamp{grid-column:2;grid-row:1;justify-self:end;align-self:start}
-.strip-b{grid-column:1/-1;font-weight:600;color:var(--ink);font-size:17px;line-height:1.3}
+.strip-b{grid-column:1/-1;font-weight:600;color:var(--ink);font-size:17px;line-height:1.3;text-wrap:balance}
 .strip-usd{grid-column:1/-1;font-size:30px;font-weight:600;color:var(--red);line-height:1.1}
 .strip-f{grid-column:1/-1;font-size:15px;color:var(--muted)}
 a.strip:active{transform:scale(.99)}                       /* job: feedback. A tap on the strip jumps to the full sheet */
 a.strip:focus-visible{outline-offset:3px}
 @media (prefers-reduced-motion:no-preference){a.strip{transition:transform var(--t-press)}}
+/* 2026-10-15: from 360 to 899 the Sample stamp moves onto the dollar row, so the label gets the full width and one line (the
+   strip is 22 to 24px shorter). Under 360 it stays: at 320 the dollar figure wrapped when it shared the row */
+@media (min-width:360px) and (max-width:899px){
+  .strip-k{grid-column:1/-1;grid-row:1}
+  .strip-b{grid-row:2}
+  .strip .stamp{grid-row:3;align-self:center}
+  .strip-usd{grid-column:1;grid-row:3}
+}
 
 /* ======================================================================= 10. the trade picker (the page as a tool) */
 .picker{margin-bottom:14px}
@@ -312,6 +360,17 @@ a.strip:focus-visible{outline-offset:3px}
 .facts ul{display:grid;gap:6px;font-size:15px;font-weight:500;color:var(--ink)}
 .facts li::before{content:"";display:inline-block;width:10px;height:6px;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(-48deg) translateY(-3px);margin-right:10px}
 @media (min-width:900px){.facts ul{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:20px}}
+
+/* ======================================================================= 12b. the v4 facts strip (2026-10-15)
+   Moved here from home.css and trade-page.css (trade-page.css item 40: it moves when Home next changes). A fact that wraps
+   starts its second line under its words, not under the tick; 10px between facts on a phone (4px read as one block).
+   .facts above stays for the retired .src.html drafts. */
+.facts4{margin-top:48px;border-block:1px solid var(--ink);background:var(--paper)}
+.facts4 ul{display:grid;gap:8px;padding-block:14px;font-size:15px;font-weight:500;color:var(--ink)}
+.facts4 li{position:relative;padding-left:22px}
+.facts4 li::before{content:"";position:absolute;left:1px;top:8px;width:10px;height:6px;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(-48deg) translateY(-3px)}
+@media (min-width:900px){.facts4 ul{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:24px}}
+@media (max-width:699px){.facts4{margin-top:36px}.facts4 ul{gap:10px}}
 
 /* ======================================================================= 13. the walk: floor plan, stops, tally */
 .plan{position:relative;background:var(--sheet);box-shadow:var(--lift);padding:14px;border-radius:2px;max-width:820px}
@@ -432,11 +491,11 @@ html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs
 .bub.out{align-self:flex-end;background:#0a63d1;color:#fff;border-bottom-right-radius:5px}
 .sys{align-self:center;font-size:12px;color:#5f5f66;text-align:center}
 .sys.k{font-weight:600;color:#1b5e2c;background:#e3f1e6;border-radius:8px;padding:3px 8px}
-/* a window (Mac chrome is allowed: Franco asked for it, 2026-10-06), a spreadsheet grid, paper, a counter ticket, a clipboard doc */
+/* a window (grey title bar and frame; the Mac dots were dropped 2026-10-15), a spreadsheet grid, paper, a counter ticket, a clipboard doc */
 .scr-win{background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--lift-hi);font-family:var(--sys);color:#1d1d1f}
 .win-tb{display:flex;align-items:center;gap:7px;height:32px;padding:0 12px;background:linear-gradient(#f1f1f1,#e4e4e4);border-bottom:1px solid #d0d0d0}
-.win-tb i{width:12px;height:12px;border-radius:50%;background:#ec6a5e}.win-tb i+i{background:#f4bf4f}.win-tb i+i+i{background:#61c554}
-.win-tb span{flex:1;text-align:center;margin-right:46px;font-size:13px;font-weight:600;color:#3a3a3a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.win-tb i{display:none}   /* 2026-10-15: the Mac traffic lights are a humanizer tell and the owners use Windows and Excel; hiding them frees about 80px, so titles fit at 320 */
+.win-tb span{flex:1;text-align:center;margin-right:0;font-size:13px;font-weight:600;color:#3a3a3a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .win-b{padding:12px}
 .xl{font-family:var(--xls);color:#1f1f1f;background:#fff}
 .xl-fx{display:flex;gap:8px;align-items:center;font-size:13px;padding:6px 8px;border-bottom:1px solid #d6d6d6;background:#fafafa;white-space:nowrap;overflow:hidden}
@@ -607,6 +666,14 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .idx a:focus-visible b,.idx a:focus-visible .idx-p,.idx a.pv b,.idx a.pv .idx-p{color:#fff}
 .idx a:focus-visible{outline-offset:-4px;outline-color:#fff}
 @media (prefers-reduced-motion:no-preference){.idx a::before{transition:transform var(--t-hover) var(--ease-out)}.idx b,.idx-p{transition:color var(--t-hover)}}
+/* 2026-10-15: on phones the row names are underlined (they did not read as links) and the divider lines stop at the text;
+   the ink fill on a tap still bleeds 10px into the gutter */
+@media (max-width:899px){
+  .idx b{text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:var(--muted);text-underline-offset:4px}
+  .idx a.pv b,.idx a:focus-visible b{text-decoration-color:currentColor}
+  .idx a{margin-inline:0;padding-inline:0}
+  .idx a::before{inset:0 -10px}
+}
 @media (min-width:900px){.idx a{grid-template-columns:auto 1fr minmax(0,24em);align-items:baseline;gap:12px}.idx .dots{display:block;border-bottom:2px dotted rgba(17,17,16,.35);transform:translateY(-4px)}.idx a.pv .dots{border-color:rgba(255,255,255,.5)}}
 /* a pinned print: tape at a corner, a few degrees off; holds a drawing now, a photo once Franco's shoot exists */
 .print{position:relative;background:var(--sheet);padding:12px 12px 14px;box-shadow:var(--lift);transform:rotate(1.2deg);max-width:460px}
@@ -730,6 +797,15 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 @media (max-width:1023px){.foot-lead{grid-column:1/-1}.foot-col,.foot-col:nth-child(2),.foot-col.c-contact{grid-column:span 4}}
 @media (max-width:699px){.foot-col,.foot-col:nth-child(2){grid-column:span 6}.foot-col.c-contact{grid-column:1/-1}}
 @media (max-width:359px){.foot-col,.foot-col:nth-child(2){grid-column:1/-1}}
+/* 2026-10-15: on phones the column links fill their 34px pitch and the bottom row's links are 44px tall, with no layout change;
+   in the contact column the plain lines step back to muted so the number and the email lead, and the email reads as a link */
+@media (max-width:899px){
+  .foot-col a{padding-block:5px;margin-block:-5px}
+  .foot-base ul{gap:0 24px}
+  .foot-base ul a{display:inline-block;padding-block:13px}
+}
+.foot-col.c-contact li:not(:has(a)){color:var(--muted-night)}
+.foot-col.c-contact a[href^="mailto:"]{text-decoration:underline;text-decoration-color:var(--muted-night);text-underline-offset:3px}
 
 /* ======================================================================= 26. motion (everything below is extra; the still page above is complete) */
 @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
@@ -794,12 +870,16 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 html:not(.js) .pic.has-seg{padding-bottom:28px}            /* no JS: no buttons, so no empty slot under the picture */
 .pic.has-seg>.seg{position:absolute;left:0;bottom:0}
 .pic.has-seg>.samp{bottom:13px}
+@media (max-width:359px){.seg button{padding:0 12px}.pic.has-seg>.samp{right:0}}   /* 2026-10-15: at 320 the bigger Sample label ("Ejemplo") ran 11px into Antes / Después; now 15px clear (English 37px) */
 .pair .st,.solo .st{white-space:normal}   /* a status that is the fix wraps rather than being cut (Water stop 2 at 320 to 360) */
+.chg.tr>.was .st{white-space:nowrap}   /* 2026-10-15: a struck old pill on one line ("Draft, 3 / days" put the strike between its lines) */
+@container (max-width:300px){.ptbl td:last-child{padding-right:0}.ptbl .chg.tr>.was .st{padding-inline:5px}}   /* 2026-10-15: so "Borrador, 3 días" fits unwrapped at 320 (it ran 7px past the window) */
 .pair{position:relative}
 .chg{display:inline-grid;vertical-align:top}
 .chg>*{grid-area:1/1}
 .chg.tr{display:inline-flex;flex-wrap:wrap;align-items:center;gap:3px 6px}
-.chg.tr>.was{position:relative}
+.chg.tr>.was{position:relative;white-space:nowrap}   /* 2026-10-15: a wrapped old value left a stray strike bar on its first line */
+td .chg.tr{flex-direction:column;align-items:flex-start;gap:2px}   /* 2026-10-15: in a cell, old above new, never jumbled on one wrapped line */
 .chg.tr>.was::after{content:"";position:absolute;left:-3px;right:-3px;top:52%;height:2px;border-radius:1px;background:var(--pencil);transform:scaleX(0);transform-origin:left}
 .pair[data-state=before] .now,.pair[data-state=before] .add{visibility:hidden;opacity:0}
 .pair[data-state=after] .chg:not(.tr)>.was{visibility:hidden;opacity:0}
@@ -879,6 +959,7 @@ html:not(.js) .pic.has-seg{padding-bottom:28px}            /* no JS: no buttons,
 .np{background:var(--sheet);color:var(--body);box-shadow:var(--lift);padding:16px 18px 12px;border-top:4px solid var(--ink)}
 .np .np-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline;padding-bottom:10px;border-bottom:2px solid var(--ink)}
 .np .np-h b{font-size:16px;color:var(--ink)}
+.np .np-h b{text-wrap:balance}   /* 2026-10-15: a lone word on the head's second line */
 .np .np-h span{font-size:15px;color:var(--muted);white-space:nowrap}
 .np-rows li{display:grid;grid-template-columns:4.6em minmax(0,1fr);gap:8px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:16px;line-height:1.38}
 .np-rows time{font-weight:600;color:var(--ink)}
