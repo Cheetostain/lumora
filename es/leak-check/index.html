@@ -1,11 +1,10 @@
 <!doctype html>
-<!-- Built by _build/build.py from _build/content. Edit those and rebuild: changes made in this file are overwritten. -->
-<html lang="es" dir="ltr">
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Calculadora de pérdidas | Lumora</title>
-<meta name="description" content="¿Cuánto le cuestan a su negocio las llamadas perdidas, las cotizaciones que salen tarde y anotar lo mismo dos veces? Ponga sus propios números y obtenga una cifra mensual aproximada. Funciona en su dispositivo y no nos envía nada.">
+<meta name="description" content="¿Cuánto le cuesta el papeleo a su negocio? Ponga sus números: el mismo trabajo anotado dos veces, trabajos sin facturar, cotizaciones que se enfriaron y llamadas que nadie devolvió. Funciona en su teléfono o computadora y no nos manda nada.">
 <link rel="canonical" href="https://lumorafl.com/es/leak-check/">
 <link rel="alternate" hreflang="en" href="https://lumorafl.com/leak-check/">
 <link rel="alternate" hreflang="es" href="https://lumorafl.com/es/leak-check/">
@@ -23,257 +22,518 @@
 <meta property="og:locale" content="es_US">
 <meta property="og:locale:alternate" content="en_US">
 <meta name="theme-color" content="#F6F5F2">
-<link rel="icon" href="../../assets/mark.svg" type="image/svg+xml">
-<link rel="preload" href="../../assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../../assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/site.css?v=5ff3a325">
-</head>
-<body>
-<a class="skip" href="#main">Saltar al contenido</a>
-<svg class="defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><g id="lm-word" fill="currentColor"><path d="M107.001 14.4V57.5246H99V14.4H107.001Z"/><path d="M138.356 54.6307C135.859 57.0516 132.398 58.2622 127.972 58.2622C123.546 58.2622 120.066 57.0516 117.531 54.6307C115.034 52.1717 113.786 48.7862 113.786 44.4737V26.5997H121.787V44.4737C121.787 46.4407 122.335 48.0106 123.432 49.1834C124.529 50.3561 126.042 50.9424 127.972 50.9424C129.901 50.9424 131.414 50.3561 132.511 49.1834C133.608 48.0106 134.157 46.4407 134.157 44.4737V26.5997H142.157V44.4737C142.157 48.8239 140.89 52.2096 138.356 54.6307Z"/><path d="M186.431 25.7486C190.139 25.7486 193.146 26.9023 195.453 29.2099C197.837 31.5175 199.028 34.7328 199.028 38.8562V57.5246H191.028V40.3315C191.028 38.0239 190.46 36.246 189.325 34.9975C188.228 33.7493 186.734 33.125 184.842 33.125C182.8 33.125 181.154 33.8059 179.906 35.1679C178.658 36.4918 178.033 38.2886 178.033 40.5583V57.5246H170.033V40.3882C170.033 38.1185 169.465 36.3406 168.33 35.0544C167.233 33.7682 165.72 33.125 163.791 33.125C161.824 33.125 160.197 33.8059 158.911 35.1679C157.663 36.5297 157.038 38.3455 157.038 40.6152V57.5246H149.038V26.5997H156.868V31.0258C157.738 29.399 159.024 28.1129 160.727 27.167C162.429 26.1835 164.283 25.7107 166.288 25.7486C168.255 25.7486 170.052 26.2214 171.678 27.167C173.343 28.1129 174.572 29.4557 175.367 31.1959C176.501 29.4936 178.052 28.1695 180.019 27.2239C181.986 26.2404 184.124 25.7486 186.431 25.7486Z"/><path d="M204.246 42.0338C204.246 37.4566 205.797 33.6168 208.899 30.515C212.039 27.3374 216.011 25.7486 220.815 25.7486C225.619 25.7486 229.591 27.3374 232.731 30.515C235.833 33.6168 237.384 37.4566 237.384 42.0338C237.384 46.6488 235.833 50.5073 232.731 53.6093C229.591 56.749 225.619 58.319 220.815 58.319C216.011 58.319 212.039 56.749 208.899 53.6093C205.797 50.5073 204.246 46.6488 204.246 42.0338ZM214.686 48.3322C216.313 50.0345 218.356 50.8855 220.815 50.8855C223.198 50.8855 225.222 50.0345 226.886 48.3322C228.551 46.5542 229.383 44.4547 229.383 42.0338C229.383 39.6127 228.551 37.5322 226.886 35.7919C225.222 34.0898 223.198 33.2386 220.815 33.2386C218.356 33.2386 216.313 34.0898 214.686 35.7919C213.06 37.4566 212.247 39.5371 212.247 42.0338C212.247 44.4926 213.06 46.5922 214.686 48.3322Z"/><path d="M251.018 57.5246H243.019V26.5997H250.678V30.7418C252.533 27.413 255.37 25.7486 259.19 25.7486C260.438 25.7486 261.686 25.9754 262.934 26.4295L262.253 34.0898C260.892 33.6737 259.663 33.4656 258.566 33.4656C256.219 33.4656 254.366 34.26 253.006 35.8488C251.681 37.3997 251.018 39.7262 251.018 42.8282V57.5246Z"/><path d="M289.397 30.288V26.5997H297V57.5246H289.397V53.9498C286.75 56.8248 283.457 58.2622 279.523 58.2622C275.059 58.2622 271.39 56.7113 268.514 53.6093C265.639 50.5073 264.202 46.6109 264.202 41.9203C264.202 37.2674 265.658 33.4277 268.572 30.4015C271.486 27.3374 275.136 25.8053 279.523 25.8053C283.382 25.8053 286.673 27.2995 289.397 30.288ZM289.51 42.0338C289.51 39.6127 288.677 37.5132 287.014 35.7353C285.386 33.9953 283.325 33.125 280.829 33.125C278.294 33.125 276.214 33.9953 274.586 35.7353C272.998 37.4755 272.203 39.5748 272.203 42.0338C272.203 44.5303 273.017 46.6488 274.644 48.389C276.269 50.129 278.333 50.999 280.829 50.999C283.325 50.999 285.386 50.129 287.014 48.389C288.677 46.6109 289.51 44.4926 289.51 42.0338Z"/></g><g id="lm-mark"><path fill-rule="evenodd" clip-rule="evenodd" d="M90 8.4409C85.8561 8.5788 81.8053 9.6543 78.5818 11.9296C75.3583 14.2048 72.962 17.6797 72.166 21.5559C71.77 23.4841 71.77 25.5116 71.77 27.525C71.77 33.4927 71.77 39.4603 71.77 45.428C71.77 49.2815 71.77 53.1885 70.2579 56.7901C68.7265 60.4376 65.6443 63.7719 62.1274 66.1376C58.6105 68.5034 54.6589 69.9005 50.7291 70.7849C47.0072 71.6225 43.3048 72.0001 39.5853 72.0001C35.4501 72.0001 31.2938 71.5333 27.1654 70.5199C23.2446 69.5573 19.3491 68.1017 13.4902 65.5518C18.9353 66.2577 23.7401 65.0072 27.3381 63.5431C31.7025 61.7671 35.86 59.0385 39.2758 56.1487C43.3184 52.7287 46.5352 48.903 48.5787 45.5599C49.882 43.4278 50.9656 41.0708 51.8262 38.4557C52.6869 35.8406 53.3246 32.9674 53.9172 30.0677C54.5099 27.1679 55.0576 24.2416 55.7823 21.6864C56.5069 19.1312 57.4085 16.9473 58.8638 15.0547C60.3192 13.1622 62.3283 11.5612 64.8204 10.3245C67.3125 9.0878 70.2876 8.2154 73.2911 7.704C75.5687 7.3162 77.8627 7.1359 80.0564 7.1359C83.6485 7.1359 86.9717 7.6193 90 8.4409Z" fill="#FF323C"/><path fill-rule="evenodd" clip-rule="evenodd" d="M0 47.5235C4.2778 48.0257 8.2391 48.0494 12.3023 47.292C16.3654 46.5346 20.5305 44.9959 23.8039 42.6413C27.0774 40.2867 29.4592 37.116 30.9594 33.3639C32.4596 29.6118 33.0781 25.2782 34.2347 21.2198C35.3913 17.1614 37.0861 13.3783 39.6425 10.2153C42.199 7.0523 45.6171 4.5095 49.3595 2.7949C53.5349 0.8819 58.1139 0 62.753 0C66.4297 0 70.1441 0.554 73.7422 1.2518C77.8111 2.0409 81.7313 3.014 85.1911 4.701C81.4497 4.2352 77.4952 4.2807 73.592 4.8711C69.6889 5.4614 65.837 6.5968 62.6593 8.3485C59.4815 10.1003 56.9779 12.4685 55.2857 15.5037C53.5935 18.5389 52.7127 22.2411 51.8998 26.1803C51.0869 30.1195 50.3418 34.2956 49.0854 37.9777C47.8289 41.6597 46.061 44.8477 43.7883 47.4888C41.5157 50.1299 38.7384 52.2243 35.3579 53.2774C33.352 53.9022 31.1338 54.1605 28.7581 54.1605C27.1302 54.1605 25.4283 54.0392 23.6747 53.834C19.3621 53.3293 14.737 52.3168 10.6412 51.2183C6.5455 50.1199 2.9791 48.9355 0 47.5235Z" fill="#FF323C"/></g></defs></svg>
-<div class="util"><div class="wrap util-in">
-  <p class="util-where">Gainesville; atendemos el condado de Alachua.</p>
-  <p class="util-call">Llame o escriba al <a class="tel" href="tel:+13522260681">(352) <span class="nw">226-0681</span></a></p>
-  <nav class="lang" aria-label="Idioma"><a href="../../leak-check/" hreflang="en" lang="en" data-lang="en"><span aria-hidden="true">EN</span><span class="sr-only">English</span></a><span class="on" aria-current="true" lang="es"><span aria-hidden="true">ES</span><span class="sr-only">Español</span></span></nav>
-</div></div>
-<header class="bar"><div class="wrap bar-in">
-  <a class="brand" href="../../es/" aria-label="Lumora, página de inicio"><svg viewBox="0 0 297 72" width="99" height="24" aria-hidden="true" focusable="false"><use href="#lm-word"/><use href="#lm-mark"/></svg></a>
-  <nav class="nav-main" aria-label="Principal"><ul><li><a href="../../es/">Inicio</a></li><li><a href="../../es/how-it-works/">Cómo funciona</a></li><li><a href="../../es/industries/">A quién atendemos</a></li><li><a href="../../es/leak-check/" aria-current="page">Calculadora de pérdidas</a></li><li><a href="../../es/about/">Quiénes somos</a></li><li><a href="../../es/articles/">Artículos</a></li><li><a href="../../es/contact/">Contacto</a></li></ul></nav>
-  <a class="btn btn-bar" href="../../es/contact/">Llamada sin costo</a>
-  <details class="menu">
-    <summary><span class="ico" aria-hidden="true"></span><span class="menu-t">Menú</span></summary>
-    <div class="menu-panel"><div class="wrap">
-      <nav aria-label="Principal"><ul><li><a href="../../es/">Inicio</a></li><li><a href="../../es/how-it-works/">Cómo funciona</a></li><li><a href="../../es/industries/">A quién atendemos</a></li><li><a href="../../es/leak-check/" aria-current="page">Calculadora de pérdidas</a></li><li><a href="../../es/about/">Quiénes somos</a></li><li><a href="../../es/articles/">Artículos</a></li><li><a href="../../es/contact/">Contacto</a></li></ul></nav>
-      <a class="btn" href="../../es/contact/">Llámenos o escríbanos</a>
-    </div></div>
-  </details>
-</div></header>
-<main id="main">
-<div class="page-head bone"><div class="wrap">
-  <nav class="crumbs" aria-label="Ruta de navegación"><ol><li><a href="../../es/">Inicio</a></li><li><span aria-current="page">Calculadora de pérdidas</span></li></ol></nav>
-  <div class="ph-main"><h1>¿Cuánto pierde su negocio cada mes?</h1><p class="lede">¿Cuánto le cuestan a su negocio las llamadas perdidas, las cotizaciones que salen tarde y anotar lo mismo dos veces? Ponga sus propios números. Toma más o menos un minuto.</p></div>
-  <div class="ph-aside"><div class="note-box">Esto funciona en su teléfono o su computadora. Nada de lo que escribe se nos envía ni se guarda.</div></div>
-</div></div>
-<section class="sec first" id="check" aria-label="¿Cuánto pierde su negocio cada mes?"><div class="wrap">
-  <div class="calc" id="calc" hidden>
-    <div class="calc-form">
-      <p class="examples">Los números que ya están en las casillas son ejemplos, no los suyos. Cámbielos.</p>
-      <form id="leak-form" novalidate>
-        <fieldset><legend><h2>Llamadas perdidas</h2></legend><div class="field">
-  <label for="f-calls">Llamadas por semana<span class="tag" id="t-calls">Ejemplo</span></label>
-  <input id="f-calls" name="calls" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="40" aria-describedby="h-calls e-calls" required>
-  <p class="help" id="h-calls">Todas las llamadas al negocio, contestadas o no.</p><p class="err" id="e-calls" hidden></p>
-</div><div class="field">
-  <label for="f-rang">Llamadas por semana que nadie contesta o que van al buzón de voz<span class="tag" id="t-rang">Ejemplo</span></label>
-  <input id="f-rang" name="rang" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="6" aria-describedby="h-rang e-rang" required>
-  <p class="help" id="h-rang">Cuéntelas en su historial de llamadas si puede. Si calcula a ojo, quédese corto.</p><p class="err" id="e-rang" hidden></p>
-</div><div class="field">
-  <label for="f-back">De esas, cuántas devuelve<span class="tag" id="t-back">Ejemplo</span></label>
-  <input id="f-back" name="back" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="3" aria-describedby="h-back e-back" required>
-  <p class="help" id="h-back">Las llamadas que usted devolvió. Si no está seguro, calcule a ojo.</p><p class="err" id="e-back" hidden></p>
-</div><div class="field">
-  <label for="f-book">Porcentaje que se habría convertido en trabajo (%)<span class="tag" id="t-book">Ejemplo</span></label>
-  <input id="f-book" name="book" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="24%" aria-describedby="h-book e-book" required>
-  <p class="help" id="h-book">De cada 100 llamadas que nadie devolvió, ¿cuántas se habrían convertido en un trabajo? Escriba un porcentaje: 3 de cada 10 es 30%. ¿No está seguro? Un estudio de más de 3,000 empresas contratistas encontró que convertían en trabajo el 42 por ciento de las llamadas en promedio, y el 24 por ciento en los negocios con menos de 5 técnicos <span class="src">(ServiceTitan, 2022, datos de proveedor, EE. UU. y Canadá)</span>.</p><p class="err" id="e-book" hidden></p>
-</div><div class="field">
-  <label for="f-profit">Ganancia típica por trabajo<span class="tag" id="t-profit">Ejemplo</span></label>
-  <input id="f-profit" name="profit" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="$150" aria-describedby="h-profit e-profit" required>
-  <p class="help" id="h-profit">Lo que le queda después de materiales y mano de obra en un trabajo típico, no el precio cobrado.</p><p class="err" id="e-profit" hidden></p>
-</div></fieldset><fieldset><legend><h2>Cotizaciones (opcional)</h2></legend><div class="field">
-  <label for="f-quotes">Cotizaciones al mes que se enfriaron<span class="tag" id="t-quotes">Ejemplo</span></label>
-  <input id="f-quotes" name="quotes" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="2" aria-describedby="h-quotes e-quotes">
-  <p class="help" id="h-quotes">Solo las que cree que perdió porque salieron tarde o porque nadie volvió a llamar al cliente.</p><p class="err" id="e-quotes" hidden></p>
-</div><div class="field">
-  <label for="f-qprofit">Ganancia en un trabajo cotizado típico<span class="tag" id="t-qprofit">Ejemplo</span></label>
-  <input id="f-qprofit" name="qprofit" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="$400" aria-describedby="h-qprofit e-qprofit">
-  <p class="help" id="h-qprofit">Lo que le queda después de materiales y mano de obra.</p><p class="err" id="e-qprofit" hidden></p>
-</div></fieldset><fieldset><legend><h2>Volver a escribir (opcional)</h2></legend><div class="field">
-  <label for="f-minutes">Minutos al día anotando el mismo trabajo en más de un lugar<span class="tag" id="t-minutes">Ejemplo</span></label>
-  <input id="f-minutes" name="minutes" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="30" aria-describedby="h-minutes e-minutes">
-  <p class="help" id="h-minutes">Orden de trabajo en papel, calendario, programa de facturación. Súmelos.</p><p class="err" id="e-minutes" hidden></p>
-</div><div class="field">
-  <label for="f-days">Días hábiles al mes<span class="tag" id="t-days">Ejemplo</span></label>
-  <input id="f-days" name="days" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="22" aria-describedby="e-days">
-  <p class="err" id="e-days" hidden></p>
-</div><div class="field">
-  <label for="f-rate">Costo por hora de quien hace ese trabajo<span class="tag" id="t-rate">Ejemplo</span></label>
-  <input id="f-rate" name="rate" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="$25" aria-describedby="h-rate e-rate">
-  <p class="help" id="h-rate">Si es usted, de noche, cuéntelo solo si le quita tiempo que de otro modo cobraría. Si no, deje esta casilla vacía: son horas, no dólares.</p><p class="err" id="e-rate" hidden></p>
-</div></fieldset>
-        <div class="calc-btns"><button class="btn btn-line" type="button" id="b-reset">Restaurar los números de ejemplo</button><button class="btn btn-line" type="button" id="b-clear">Borrar todo</button></div>
-      </form>
-      <a class="calc-mini" href="#result"><span>Su cálculo</span><b id="r-mini" aria-hidden="true"></b></a>
-    </div>
-    <section class="calc-out" aria-labelledby="result-h">
-      <div class="sheet result" id="result">
-        <div class="sheet-head"><h2 id="result-h" class="sheet-title">Su cálculo</h2><span class="stamp" id="r-stamp">Ejemplo</span></div>
-        <div id="r-body"></div>
-        <div class="r-total" id="r-total"><span>Pérdida al mes, antes de cualquier arreglo</span><b id="r-total-v"></b></div>
-        <div class="sheet-end"><p class="sheet-note">Un cálculo con sus números. La visita cuenta los reales.</p><svg class="sheet-mark" viewBox="0 0 90 72" aria-hidden="true" focusable="false"><use href="#lm-mark"/></svg></div>
-      </div>
-      <p class="more"><a class="btn btn-line" id="r-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F" data-base="sms:+13522260681?&amp;body=">Mándenos este cálculo por texto</a></p>
-      <p class="sr-only" aria-live="polite" id="r-live"></p>
-    </section>
-  </div>
-  <div class="nojs" id="leak-nojs"><p>Con los números de ejemplo: 3 llamadas por semana que nadie devolvió × 52 ÷ 12 = 13.0 al mes. × 24% = 3.12 trabajos. × $150 = $468 al mes. Haga los mismos pasos con sus propios números.</p></div>
-</div></section>
-<section class="sec white" id="how" aria-labelledby="how-h"><div class="wrap split">
-  <div class="side"><div class="side-in"><h2 id="how-h">Cómo contamos</h2></div></div>
-  <div class="main"><ol class="a-b a-steps" id="a-steps"><li><span class="a-sn"><b aria-hidden="true">1</b><span>Paso 1 de 5</span></span><p>Las llamadas que nadie contestó, menos las que usted devolvió, son las llamadas que nadie devolvió.</p></li><li><span class="a-sn"><b aria-hidden="true">2</b><span>Paso 2 de 5</span></span><p>Lo de una semana por 52, dividido entre 12, da un mes.</p></li><li><span class="a-sn"><b aria-hidden="true">3</b><span>Paso 3 de 5</span></span><p>Multiplicado por el porcentaje que se habría convertido en trabajo, da los trabajos perdidos.</p></li><li><span class="a-sn"><b aria-hidden="true">4</b><span>Paso 4 de 5</span></span><p>Multiplicado por lo que le queda en cada trabajo, da la ganancia perdida.</p></li><li><span class="a-sn"><b aria-hidden="true">5</b><span>Paso 5 de 5</span></span><p>Si llena las cotizaciones y el tiempo de volver a escribir, se suman al total.</p></li></ol><ul class="a-b a-nums"><li><span class="a-v">42%</span><span class="a-l">de las llamadas se convirtieron en trabajo, en promedio, en un estudio de más de 3,000 empresas contratistas</span><p class="a-src"><b>Fuente:</b> ServiceTitan, 2022, datos de proveedor, EE. UU. y Canadá.</p></li><li><span class="a-v">24%</span><span class="a-l">de las llamadas se convirtieron en trabajo en los negocios con menos de 5 técnicos, en el mismo estudio</span><p class="a-src"><b>Fuente:</b> ServiceTitan, 2022, datos de proveedor, EE. UU. y Canadá.</p></li></ul>
-  <div class="block"><h3>¿Por qué la ganancia y no el precio cobrado?</h3><div class="rich"><p>Un trabajo perdido le cuesta lo que le habría quedado, no la factura completa. Nuestras hojas de visita lo cuentan igual.</p></div></div>
-  <div class="block"><h3>¿Por qué solo un cálculo?</h3><div class="rich"><p>El resultado depende de lo que usted calcula a ojo. La visita lo reemplaza con conteos de su historial de llamadas, sus cotizaciones y sus facturas.</p></div></div>
-  <div class="block rich"><p class="muted">Lo que no se cuenta aquí: las reseñas, los clientes anteriores a quienes nadie volvió a llamar y los mensajes en un solo idioma. La visita también los revisa.</p><p class="more"><a class="tl" href="../../es/articles/missed-call-cost/">Cómo calcular lo que le cuesta a su negocio una llamada perdida</a></p><p class="more"><a class="tl" href="../../es/articles/call-history-from-your-phone-company/">Cómo descargar 30 días de historial de llamadas de su compañía telefónica</a></p></div></div>
-</div></section>
-<section class="cta" aria-labelledby="cta-h"><div class="wrap cta-in">
-  <h2 id="cta-h">¿Quiere los números reales?</h2><p class="cta-p">Agende una llamada sin costo, de hasta 20 minutos. Antes buscamos su negocio en Google y le llevamos un dato de su perfil.</p>
-  <div class="actions"><a class="btn" href="../../es/contact/">Llámenos o escríbanos</a><p>O llame o escriba al <a class="tel" href="tel:+13522260681">(352) <span class="nw">226-0681</span></a>.</p><div class="mb"><p class="mb-h">Devolución del dinero</p><p><b>¿No le valió la pena?</b> Mándenos un texto o un correo dentro de los 7 días después de la llamada en que revisan su hoja, y le devolvemos <span class="red">lo que pagó por la visita</span>.</p><a class="tl" href="../../es/how-it-works/#walk">Condiciones completas</a></div></div>
-</div></section>
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="/v4/assets/mark.svg">
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/v4/system.css?v=0affe2ee">
+<link rel="stylesheet" href="/v4/trade-page.css?v=0affe2ee">
+<script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
+<script src="/v4/trades.js?v=0affe2ee" defer></script>
+<script src="/v4/system.js?v=0affe2ee" defer></script>
+<style>
+/* ===== Loss calculator, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
+   32, 44, 64) outside the pictures; every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
+.lk-sms,.find-rows a.u,.lk-cta .mb a.u,.auto-close a.u,.lk-rows .mb a.u{display:inline-block;padding-block:12px;margin-block:-12px;position:relative;z-index:1}   /* a 44px tall tap area without moving the layout */
 
+/* 1 the calculator (L1, L2): the boxes on a sheet, the estimate beside them on a computer, under them on a phone. On a phone an ink
+   bar holds the figure in view while he types (sticky inside the form only, so it leaves with the form) */
+.lk{padding:28px 0 64px}
+.lk h1{max-width:12em}
+.lk .t-lede{margin-top:14px;max-width:34em}
+.lk-priv{margin-top:12px;font-size:17px;font-weight:600;color:var(--ink);max-width:34em}
+.lk-g{display:grid;gap:28px;margin-top:28px}
+.lk-form{background:var(--sheet);box-shadow:var(--lift);border-radius:2px;padding:0 18px 22px}
+.lk-ex{font-size:15px;color:var(--body);padding:16px 0 0}
+.lk-form fieldset{border:0;margin:0;padding:20px 0 0;min-width:0}
+.lk-form fieldset+fieldset{margin-top:22px;border-top:2px solid var(--ink)}
+.lk-form legend{float:left;width:100%;padding:0;margin-bottom:12px;font-size:20px;font-weight:600;line-height:1.25;color:var(--ink)}
+.lk-form .lf{clear:both;margin-bottom:18px}
+.lk-form .lf:last-child{margin-bottom:0}
+.lk-form .lf label{line-height:1.35}
+.ex{display:inline-block;margin-left:0;white-space:nowrap;padding:0 6px;font-size:15px;font-weight:600;line-height:21px;color:var(--pencil);border:1.5px solid var(--pencil);border-radius:3px;vertical-align:1px}
+.lk-form .lf input{width:120px;font-size:24px}
+.lk-form .unit{display:flex}
+.lk-form .stepb{font-size:24px}
+#lk input,#lk button{scroll-margin-top:68px}   /* the browser's own focus scroll keeps a box clear of the 52px phone bar */
+.lk-form .lf-err:not(:empty){padding:0;border:0;background:none;color:var(--ink)}   /* the message in words under its box; no bar down its side */
+.lk-form input[aria-invalid=true]{border-style:dashed}
+html:not(.js) .stepb,html:not(.js) .lk-btns{display:none}
+.lk-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;padding-top:18px;border-top:1px solid var(--rule)}
+.lk-bar{margin:0 -18px}
+.lk-bar .tally-bar{min-height:40px;padding:6px 18px}   /* 2026-10-15: slimmer, it shows only under 900px and holds no control */
+.lk-bar span{white-space:nowrap}
+.lk-bar b{font-size:17px;white-space:nowrap}
+.lk-bar.bad b{white-space:normal;text-align:right;font-size:15px}   /* what is wrong may wrap; it never hides */
+html:not(.js) .lk-bar{display:none}
+@media (min-width:900px){.lk-bar{display:none}}
+.lk-sheet{background:var(--sheet);box-shadow:var(--lift);border-radius:2px;padding:18px 18px 20px}
+.lk-sh-h{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.lk-sh-h h2{font-size:24px;line-height:1.2}
+.lk-total{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;margin:18px 0 8px}
+.lk-about{font-size:24px;font-weight:600;color:var(--ink)}
+.lk-usd{position:relative;display:inline-block;margin:0 6px;padding:2px 8px;font-size:44px;font-weight:500;line-height:1.1;letter-spacing:-.02em;color:var(--red);white-space:nowrap}
+.lk-per{font-size:20px;color:var(--body)}
+.lk-lines li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:11px 0;border-top:1px solid var(--rule);font-size:15px;line-height:1.45}
+.lk-lines li b{display:block;font-size:17px;color:var(--ink)}
+.lk-lines .v{font-size:20px;font-weight:600;color:var(--ink);white-space:nowrap}
+.lk-lines .off{color:var(--muted)}
+.lk-empty{padding:16px 0 4px;font-size:17px;font-weight:600;color:var(--ink)}
+.lk-note{margin-top:12px;font-size:15px;color:var(--muted)}
+.lk-cta{margin-top:20px;gap:12px}
+.lk-cta .mb{font-size:15px}
+@media (min-width:600px){
+  .lk-form{padding:0 28px 28px}.lk-bar{margin:0 -28px}.lk-bar .tally-bar{padding-inline:28px}.lk-sheet{padding:22px 26px 24px}
+  /* a worksheet on a wider screen: the line's words on the left, its box on the right, every box in one column (a one-box line
+     sits where a stepper's box sits); on a phone each line stacks */
+  .lk-form .lf{grid-template-columns:minmax(0,1fr) 244px;column-gap:24px;row-gap:4px;align-items:start}
+  .lk-form .lf>label{grid-column:1;grid-row:1;padding-top:6px}
+  .lk-form .lf>.unit,.lk-form .lf>.step{grid-column:2;grid-row:1/span 3;justify-content:center}
+  .lk-form .lf>.lf-h,.lk-form .lf>.lf-err{grid-column:1}
+}
+@media (min-width:700px){.lk-usd{font-size:64px}}
+@media (min-width:900px){
+  .lk{padding:48px 0 96px}
+  .lk-g{grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:48px;align-items:start}
+  .lk-out{position:sticky;top:calc(var(--hdr-h) + 24px)}
+}
+
+/* 2 where to find your numbers (L3): the one window, then a row per group of boxes, the records first and call history last */
+.find-g{display:grid;gap:22px;grid-template-areas:"h" "fig" "rows"}
+.find-g>h2{grid-area:h}.find-fig{grid-area:fig;min-width:0}.find-rows{grid-area:rows}
+.find-fig .pic{max-width:440px}
+.find-fig .dt td:last-child{white-space:nowrap}
+.find-fig .dt .pc{display:inline-block;padding:0 4px;margin-right:8px}
+.find-rows li{padding:14px 0;border-top:1px solid var(--rule);font-size:17px;max-width:36em}
+.find-rows li:last-child{border-bottom:1px solid var(--rule)}
+.find-rows b{display:block;margin-bottom:2px;font-size:20px;color:var(--ink)}
+@media (min-width:900px){.find-g{grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-areas:"h h" "fig rows";column-gap:64px;row-gap:28px;align-items:start}.find-rows{margin-top:-14px}}
+
+/* 3 how we count (L4): the four formulas in words, then what the calculator leaves out (#automate, the R2 hook every v4 page
+   carries); the questions and the sources beside them on a computer */
+.how-g{display:grid;gap:36px}
+.how-steps{margin-top:18px;counter-reset:s}
+.how-steps li{position:relative;padding:14px 0 14px 44px;border-top:1px solid var(--rule);font-size:17px;max-width:36em}
+.how-steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:13px;width:30px;height:30px;display:grid;place-items:center;font-size:15px;font-weight:600;color:var(--ink);border:1.5px solid var(--pencil);border-radius:52% 48% 50% 46%/48% 52% 46% 54%}
+.how-steps b{color:var(--ink)}
+.how-sum{padding-top:14px;border-top:1px solid var(--rule);font-size:17px;max-width:36em}
+.how-auto h3{margin-bottom:12px;font-size:24px}
+.how-auto .auto-close{margin-top:12px}
+.why>div+div{margin-top:28px}
+.why h3{margin-bottom:6px;font-size:20px;line-height:1.25}
+.why p{font-size:17px;max-width:34em}
+.why .src li{font-size:15px;color:var(--muted);max-width:34em}
+.why .src li+li{margin-top:8px}
+@media (min-width:900px){   /* the steps on the left; what the calculator leaves out, then the sources, on the right */
+  .how-g{grid-template-columns:minmax(0,7fr) minmax(0,5fr);grid-template-areas:"main auto" "main src";grid-template-rows:auto 1fr;column-gap:64px;row-gap:40px;align-items:start}
+  .how-main{grid-area:main}.how-auto{grid-area:auto;padding-top:72px}.why{grid-area:src}
+}
+
+/* 4 close (L4): Home's close with this page's own line; the rows beside the call on a computer, under it on a phone */
+.lk-close .close-g{gap:32px}
+.lk-close-p{margin-top:26px;font-size:17px;max-width:30em}
+.lk-rows{margin-top:0}
+.lk-rows .price,.lk-rows .mb{font-size:17px}
+.lk-rows ul li+li{margin-top:2px}
+@media (min-width:900px){
+  .lk-close .close-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"main rows" "trades rows";grid-template-rows:auto 1fr;column-gap:64px;row-gap:32px}
+  .lk-close .c4-main{grid-area:main}.lk-close .lk-rows{grid-area:rows;margin-top:8px}.lk-close .pl-more{grid-area:trades;margin-top:0}
+}
+@media (max-width:699px){
+  .lk{padding-bottom:40px}
+  .how-g{gap:32px}
+}
+@media screen and (prefers-reduced-motion:no-preference){
+  .lk-bar b.bump{animation:lk-bump var(--t-small) var(--ease-out)}   /* job: cause and effect. The figure he can see while typing nudges when it changes */
+}
+@keyframes lk-bump{from{opacity:.35;translate:0 6px}to{opacity:1;translate:0 0}}
+/* 2026-10-15: on a phone every box starts at the same x, minus and plus on its right (tab order is unchanged) */
+@media (max-width:599px){.lk-form .step input{order:-1}}
+@media (max-width:899px){.lk-close .lk-rows+.pl-more{border-top:0;margin-top:16px}}   /* 2026-10-15: one hairline, not two; page-only, Contact keeps its line */
+</style>
+</head>
+<body data-trade="plumbing" data-rules="v4">
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<div class="util">
+  <div class="wrap util-in">
+    <span>Gainesville; atendemos el condado de Alachua.</span>
+    <span class="util-r"><span class="lang" role="group" aria-label="Idioma"><a href="/leak-check/" lang="en" hreflang="en" aria-label="EN, English">EN</a><a href="/es/leak-check/" aria-current="page" aria-label="ES, español">ES</a></span></span>
+  </div>
+</div>
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="/es/" aria-label="Lumora, página de inicio"><img src="/v4/assets/logo.svg" alt="" width="124" height="30"></a>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <ul>
+        <li><a class="u" href="/es/">Inicio</a></li>
+        <li><a class="u" href="/es/how-it-works/">Cómo funciona</a></li>
+        <li><a class="u" href="/es/industries/">A quién atendemos</a></li>
+        <li><a class="u" href="/es/leak-check/" aria-current="page">Calculadora de pérdidas</a></li>
+        <li><a class="u" href="/es/about/">Quiénes somos</a></li>
+        <li><a class="u" href="/es/articles/">Artículos</a></li>
+        <li><a class="u" href="/es/contact/">Contacto</a></li>
+      </ul>
+    </nav>
+    <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
+    <a class="btn btn-sm" href="tel:+13522260681">Llámenos o escríbanos</a>
+    <span class="lang" role="group" aria-label="Idioma"><a href="/leak-check/" lang="en" hreflang="en" aria-label="EN, English">EN</a><a href="/es/leak-check/" aria-current="page" aria-label="ES, español">ES</a></span>
+    <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menú</button>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero lk" id="top" data-ground="graph" data-density="high" data-width="split" data-loud="estimate" data-medium="calc">
+  <div class="wrap">
+    <h1>¿Cuánto le cuesta el papeleo?</h1>
+    <p class="t-lede">Ponga sus números y vea, más o menos, cuánto le cuestan al mes cuatro tareas de oficina. Le toma como un minuto.</p>
+    <p class="lk-priv" data-first="the privacy line">Funciona en su teléfono o computadora y no nos manda nada. Cuando cierra la página, sus números se borran.</p>
+    <div class="lk-g">
+      <form class="lk-form" id="lk" novalidate autocomplete="off" aria-label="Calculadora de pérdidas">
+        <div class="tally lk-bar" aria-hidden="true"><div class="tally-bar"><span data-o="barl">Ejemplo</span><b data-o="bar">Unos $1,540 al mes</b></div></div>
+        <p class="lk-ex">Cambie los ejemplos por sus números. Lo que no sepa, déjelo en blanco.</p>
+        <fieldset data-task="retyping">
+          <legend>Anotar el mismo trabajo dos&nbsp;veces</legend>
+          <div class="lf"><label for="lk-minutes">Minutos al día, entre todos <span class="ex" data-ex="minutes">Ejemplo</span></label>
+            <div class="unit"><input id="lk-minutes" name="minutes" inputmode="decimal" value="30" aria-describedby="h-minutes" data-first="the first box"></div>
+            <p class="lf-h" id="h-minutes">La orden en papel, el calendario, la factura: sume todos los lugares donde lo anotan.</p></div>
+          <div class="lf"><label for="lk-days">Días hábiles al mes <span class="ex" data-ex="days">Ejemplo</span></label>
+            <div class="unit"><input id="lk-days" name="days" inputmode="decimal" value="22"></div></div>
+          <div class="lf"><label for="lk-rate">Costo por hora de quien lo anota <span class="ex" data-ex="rate">Ejemplo</span></label>
+            <div class="unit"><input id="lk-rate" name="rate" inputmode="decimal" value="$25" aria-describedby="h-rate"></div>
+            <p class="lf-h" id="h-rate">Sueldo más impuestos. Si es usted, de noche, déjelo en blanco: son horas, no dólares.</p></div>
+        </fieldset>
+        <fieldset data-task="invoices">
+          <legend>Trabajos terminados que nunca se facturaron</legend>
+          <div class="lf"><label for="lk-unbilled">Trabajos terminados sin factura en los últimos 3 meses</label>
+            <div class="step"><button type="button" class="stepb" data-step="-1" data-for="unbilled" aria-label="Un trabajo menos">−</button><input id="lk-unbilled" name="unbilled" inputmode="decimal" value="" aria-describedby="h-unbilled"><button type="button" class="stepb" data-step="1" data-for="unbilled" aria-label="Un trabajo más">+</button></div>
+            <p class="lf-h" id="h-unbilled">No cuente los que decidió no cobrar. ¿Todavía no los ha contado? Déjelo para después.</p></div>
+          <div class="lf"><label for="lk-avg">Su factura promedio <span class="ex" data-ex="avg">Ejemplo</span></label>
+            <div class="unit"><input id="lk-avg" name="avg" inputmode="decimal" value="$341" aria-describedby="h-avg"></div>
+            <p class="lf-h" id="h-avg">Lo que facturó el mes pasado ÷ el número de facturas.</p></div>
+        </fieldset>
+        <fieldset data-task="quotes">
+          <legend>Cotizaciones que se enfriaron</legend>
+          <div class="lf"><label for="lk-quotes">Cotizaciones al mes que se perdieron por mandarlas tarde o no volver a llamar <span class="ex" data-ex="quotes">Ejemplo</span></label>
+            <div class="step"><button type="button" class="stepb" data-step="-1" data-for="quotes" aria-label="Una cotización menos">−</button><input id="lk-quotes" name="quotes" inputmode="decimal" value="2" aria-describedby="h-quotes"><button type="button" class="stepb" data-step="1" data-for="quotes" aria-label="Una cotización más">+</button></div>
+            <p class="lf-h" id="h-quotes">No cuente las que perdió por el precio.</p></div>
+          <div class="lf"><label for="lk-qprofit">Lo que le queda en un trabajo cotizado típico <span class="ex" data-ex="qprofit">Ejemplo</span></label>
+            <div class="unit"><input id="lk-qprofit" name="qprofit" inputmode="decimal" value="$400" aria-describedby="h-qprofit"></div>
+            <p class="lf-h" id="h-qprofit">Después de materiales y mano de obra, no el total de la cotización.</p></div>
+        </fieldset>
+        <fieldset data-task="calls">
+          <legend>Llamadas que nadie devolvió</legend>
+          <div class="lf"><label for="lk-rang">Llamadas por semana de números nuevos que nadie contestó o que cayeron al buzón de voz <span class="ex" data-ex="rang">Ejemplo</span></label>
+            <div class="step"><button type="button" class="stepb" data-step="-1" data-for="rang" aria-label="Una llamada menos">−</button><input id="lk-rang" name="rang" inputmode="decimal" value="6" aria-describedby="h-rang"><button type="button" class="stepb" data-step="1" data-for="rang" aria-label="Una llamada más">+</button></div>
+            <p class="lf-h" id="h-rang">No cuente los números que ya tiene en sus contactos o en su lista de clientes. Si calcula a ojo, quédese corto.</p></div>
+          <div class="lf"><label for="lk-back">De esas, cuántas devolvió <span class="ex" data-ex="back">Ejemplo</span></label>
+            <div class="step"><button type="button" class="stepb" data-step="-1" data-for="back" aria-label="Una llamada devuelta menos">−</button><input id="lk-back" name="back" inputmode="decimal" value="3"><button type="button" class="stepb" data-step="1" data-for="back" aria-label="Una llamada devuelta más">+</button></div></div>
+          <div class="lf"><label for="lk-book">Porcentaje que se habría convertido en trabajo (%) <span class="ex" data-ex="book">Ejemplo</span></label>
+            <div class="unit"><input id="lk-book" name="book" inputmode="decimal" value="24%" aria-describedby="h-book"></div>
+            <p class="lf-h" id="h-book">Si fueran 3 de cada 10, ponga 30%. ¿No está seguro? Los negocios con menos de 5 técnicos convirtieron en trabajo el 24% de sus llamadas (blog de ServiceTitan, 2022, datos de proveedor).</p></div>
+          <div class="lf"><label for="lk-profit">Lo que le queda en un trabajo típico <span class="ex" data-ex="profit">Ejemplo</span></label>
+            <div class="unit"><input id="lk-profit" name="profit" inputmode="decimal" value="$150" aria-describedby="h-profit"></div>
+            <p class="lf-h" id="h-profit">Después de materiales y mano de obra, no el precio que cobra.</p></div>
+        </fieldset>
+        <div class="lk-btns"><button type="button" class="btn btn-o btn-sm" data-act="reset">Volver a los números de ejemplo</button><button type="button" class="btn btn-o btn-sm" data-act="clear">Borrar todo</button></div>
+      </form>
+
+      <div class="lk-out">
+        <div class="lk-sheet">
+          <div class="lk-sh-h"><h2>Su cálculo</h2><span class="stamp" data-o="stamp">Ejemplo</span></div>
+          <div data-o="result">
+            <p class="lk-total"><span class="lk-about">Unos</span><span class="lk-usd" data-o="total">$1,540<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="lk-per">al mes</span></p>
+            <ol class="lk-lines">
+              <li data-o="l-retype" data-name="Anotar el mismo trabajo dos&nbsp;veces" data-task="retyping"><span><b>Anotar el mismo trabajo dos&nbsp;veces</b>30 minutos al día × 22 días ÷ 60 = 11.0 horas × $25 la hora =&nbsp;$275&nbsp;al&nbsp;mes.</span><span class="v">$275</span></li>
+              <li data-o="l-unbilled" data-name="Trabajos sin facturar" data-task="invoices"><span class="off"><b>Trabajos sin facturar</b>Lo dejó en blanco.</span></li>
+              <li data-o="l-quotes" data-name="Cotizaciones que se enfriaron" data-task="quotes"><span><b>Cotizaciones que se enfriaron</b>2 al mes × $400 de ganancia por trabajo =&nbsp;$800&nbsp;al&nbsp;mes.</span><span class="v">$800</span></li>
+              <li data-o="l-calls" data-name="Llamadas que nadie devolvió" data-task="calls"><span><b>Llamadas que nadie devolvió</b>6 sin contestar − 3 devueltas = 3 por semana × 52 ÷ 12 = 13.0 al mes × 24% convertidas en trabajo = 3.12 trabajos × $150 de ganancia por trabajo =&nbsp;$468&nbsp;al&nbsp;mes.</span><span class="v">$468</span></li>
+            </ol>
+          </div>
+          <p class="lk-empty" data-o="empty" hidden>Llene un grupo de casillas para ver su cálculo.</p>
+          <p class="lk-note">Un cálculo con sus números. En la visita contamos los reales.</p>
+          <noscript><p class="lk-note">Con JavaScript desactivado, las casillas no pueden sumar sus números, así que esto es el ejemplo. Cada paso está en Cómo contamos.</p></noscript>
+        </div>
+        <div class="cta lk-cta">
+          <div class="cta-row"><a class="btn" href="tel:+13522260681">Llámenos o escríbanos</a><a class="u lk-sms" data-o="sms" href="sms:+13522260681?&amp;body=Hola%2C%20us%C3%A9%20la%20calculadora%20de%20p%C3%A9rdidas%20de%20su%20p%C3%A1gina%3A%20unos%20%241%2C540%20al%20mes.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">Mándenos este cálculo por mensaje</a></div>
+          <p class="mb"><span data-shared="moneyback.short"><b>¿No le valió la pena?</b> Escríbanos en los 7 días después de que repasemos su hoja, y le devolvemos lo que pagó por la visita.</span> <a class="u" href="/es/how-it-works/#terms">Condiciones completas</a></p>
+        </div>
+        <p class="sr" aria-live="polite" data-o="live"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band seam lk-find" id="find" style="--hole:var(--paper)" data-ground="sheet" data-density="mid" data-width="split" data-loud="picture" data-medium="grid">
+  <div class="wrap find-g">
+    <h2>Dónde encontrar sus números</h2>
+    <figure class="find-fig">
+      <div class="pic">
+        <div class="scr-win" role="img" aria-label="Ejemplo: la lista de trabajos de los últimos 3 meses junto a las facturas. Trabajo 4536 de Tom Davis, terminado el 12 de octubre, factura enviada. Trabajo 4534 de David Wilson, terminado el 9 de octubre, sin factura, marcado con un círculo a lápiz. Trabajo 4533 de John Smith, terminado el 9 de octubre, factura enviada. Trabajo 4531 de Mary Johnson, terminado el 8 de octubre, factura pagada.">
+          <div class="win-tb" aria-hidden="true" data-ui-ok="fake-chrome R6: the one window frame for computer tasks; Franco kept the Mac buttons (Oct 6)"><i></i><i></i><i></i><span>Trabajos terminados, últimos 3 meses</span></div>
+          <div class="win-b"><table class="dt">
+            <tr><th>Trabajo</th><th>Terminado</th><th>Factura</th></tr>
+            <tr><td>4536<br>Davis, Tom</td><td>12 oct.</td><td>Enviada</td></tr>
+            <tr><td>4534<br>Wilson, David</td><td>9 oct.</td><td><span class="pc">Ninguna</span></td></tr>
+            <tr><td>4533<br>Smith, John</td><td>9 oct.</td><td>Enviada</td></tr>
+            <tr><td>4531<br>Johnson, Mary</td><td>8 oct.</td><td>Pagada</td></tr>
+          </table></div>
+        </div>
+        <span class="samp" aria-hidden="true">Ejemplo</span>
+      </div>
+      <figcaption class="cap">Un trabajo terminado sin factura. Cuente todos los que encuentre así en 3 meses.</figcaption>
+    </figure>
+    <ol class="find-rows">
+      <li data-task="invoices"><b>Trabajos sin facturar</b>Su lista de trabajos junto a sus facturas de los últimos 3 meses, en QuickBooks o en la aplicación de trabajos que use.</li>
+      <li data-task="quotes"><b>Cotizaciones que se enfriaron</b>Su lista de cotizaciones, ordenada por estado.</li>
+      <li data-task="retyping"><b>Anotar el mismo trabajo dos&nbsp;veces</b>Un cronómetro, en un día cualquiera.</li>
+      <li data-task="calls"><b>Llamadas que nadie devolvió</b>El historial de llamadas de su teléfono, en la pestaña Perdidas, o la cuenta en internet de la línea del negocio. <a class="u" href="/es/articles/call-history-from-your-phone-company/">Cómo descargar 30 días de historial de llamadas</a></li>
+    </ol>
+  </div>
+</section>
+
+<section class="band lk-how" id="how" data-ground="paper" data-density="mid" data-width="split" data-loud="steps" data-medium="list">
+  <div class="wrap how-g">
+    <div class="how-main">
+      <h2>Cómo contamos</h2>
+      <ol class="how-steps">
+        <li data-task="retyping"><b>Anotar el mismo trabajo dos&nbsp;veces.</b> Minutos al día × días hábiles ÷ 60 × el costo por hora. Si no pone un costo por hora, queda en horas y no entra en el total.</li>
+        <li data-task="invoices"><b>Trabajos sin facturar.</b> Los trabajos de 3 meses ÷ 3 × su factura promedio. Se cuenta la factura completa, porque los materiales y las horas ya se gastaron.</li>
+        <li data-task="quotes"><b>Cotizaciones que se enfriaron.</b> Cotizaciones al mes × lo que le queda en un trabajo cotizado.</li>
+        <li data-task="calls"><b>Llamadas que nadie devolvió.</b> (Números nuevos que nadie contestó − los que usted devolvió) × 52 semanas ÷ 12 meses × el porcentaje que se habría convertido en trabajo × lo que le queda en un trabajo.</li>
+      </ol>
+      <p class="how-sum">El total suma las líneas que llenó y se redondea a la decena de dólares más cercana.</p>
+    </div>
+    <div class="how-auto" id="automate">
+        <h3>Lo que esto no cuenta</h3>
+        <ul class="auto-list">
+          <li data-task="bills">Facturas de proveedores que no cuadran con la cotización.</li>
+          <li data-task="bills">Material sacado del proveedor sin número de trabajo.</li>
+          <li data-task="email">Leer los correos y guardar los adjuntos a mano.</li>
+          <li data-task="reminders">Mandarles recordatorios a su equipo y a sus clientes, uno por uno.</li>
+          <li data-task="calendar">Mantener al día todos los calendarios a mano.</li>
+          <li data-task="numbers">Sumar los números de fin de mes.</li>
+        </ul>
+        <p class="auto-close">En la visita revisamos todo eso.</p>
+    </div>
+    <div class="why">
+            <div class="src"><h3>De dónde salen los números de ejemplo</h3><ul><li>El 24% es lo que convirtieron en trabajo los negocios con menos de 5 técnicos, en un estudio de más de 3,000 empresas contratistas de EE.&nbsp;UU. y Canadá. El promedio de todas fue el 42% (blog de ServiceTitan, 2022, datos de proveedor).</li><li>Los $150 de ganancia por trabajo: $341, la visita promedio de un plomero en el país según HomeAdvisor (2026), × 44.3%, el margen bruto mediano por trabajo según Level (datos de proveedor), redondeado.</li><li>Los demás ejemplos son números redondos, no datos.</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="band seam hm4-close lk-close" id="contact" style="--hole:var(--paper)" data-ground="bone" data-density="mid" data-width="split" data-loud="close" data-medium="close">
+  <div class="wrap close-g">
+    <div class="c4-main">
+      <h2 class="t-close close-h">¿Quiere los números reales?</h2>
+      <div class="close-act">
+        <div class="arrow-to">
+          <a class="btn btn-lg" href="tel:+13522260681">Llámenos o escríbanos</a>
+          <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
+        </div>
+        <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a></p>
+      </div>
+      <p class="lk-close-p"><span data-shared="step1.what">Una llamada sin costo, de hasta 20 minutos.</span> Tenga a mano su cálculo y le decimos si la visita le conviene a su negocio y cuánto le costaría. Los arreglos los hacemos dentro de las herramientas que ya usa.</p>
+    </div>
+    <dl class="c4-hours lk-rows">
+      <div><dt>La visita</dt><dd><p class="price"><span data-shared="price"><b>La visita cuesta a partir de $500.</b> Si su negocio es más grande, le damos el precio en la llamada sin costo. Se descuenta de un arreglo de $1,500 o más que empiece dentro de los 30 días siguientes.</span></p></dd></div>
+      <div><dt>Devolución del dinero</dt><dd><p class="mb"><span data-shared="moneyback"><b>¿No le valió la pena?</b> Mándenos un mensaje de texto o un correo en los 7 días después de la llamada en que repasamos su hoja con usted, y le devolvemos <b class="red">lo que pagó por la visita</b>.</span> La hoja es suya. <a class="u" href="/es/how-it-works/#terms">Condiciones completas</a></p></dd></div>
+      <div><dt>Horario</dt><dd><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></dd></div>
+      <div><dt>Tiempo de respuesta</dt><dd><span data-shared="reply">Le contestamos o le devolvemos la llamada el mismo día hábil. Si llama después de las 5&nbsp;p.&nbsp;m. o en fin de semana, le respondemos a más tardar a las 10&nbsp;a.&nbsp;m. del próximo día hábil.</span></dd></div>
+      <div><dt>Idioma</dt><dd>Español o inglés</dd></div>
+      <div><dt>Reglas que respetamos</dt><dd><ul><li>Trabajamos con las herramientas que ya paga.</li><li>No filmamos ni grabamos nada sin su permiso.</li><li>Con un solo “no”, ahí queda.</li></ul></dd></div>
+    </dl>
+    <nav class="pl-more" aria-labelledby="pl-more-k">
+      <p class="t-label" id="pl-more-k">Tipos de negocio que visitamos</p>
+      <ul class="pl-trades" data-trades>
+        <li><a href="/es/industries/plumbing/">Plomería</a></li>
+        <li><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li>
+        <li><a href="/es/industries/electrical/">Electricidad</a></li>
+        <li><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></li>
+        <li><a href="/es/industries/pest-control/">Control de plagas</a></li>
+        <li><a href="/es/industries/roofing/">Techos</a></li>
+        <li><a href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a></li>
+        <li><a href="/es/industries/property-managers/">Administradores de propiedades</a></li>
+      </ul>
+    </nav>
+  </div>
+</section>
 </main>
-<div class="hem" aria-hidden="true"></div>
-<footer class="foot">
+
+<footer class="foot" data-ground="night">
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-lead">
-        <a class="foot-brand" href="../../es/" aria-label="Lumora, página de inicio"><svg class="lk-line" viewBox="0 0 297 81.36" width="185" height="50.68" aria-hidden="true" focusable="false"><use href="#lm-word"/><use href="#lm-mark"/><path fill="currentColor" d="M104.388 78.375Q102.582 78.375 101.381 77.637Q100.179 76.898 99.59 75.54Q99 74.181 99 72.345Q99 70.495 99.59 69.144Q100.179 67.793 101.381 67.054Q102.582 66.316 104.388 66.316Q106.224 66.316 107.418 67.054Q108.612 67.793 109.201 69.144Q109.791 70.495 109.791 72.345Q109.791 74.181 109.201 75.54Q108.612 76.898 107.418 77.637Q106.224 78.375 104.388 78.375ZM104.403 76.763Q106.06 76.763 106.851 75.607Q107.642 74.45 107.642 72.345Q107.642 70.226 106.851 69.077Q106.06 67.928 104.403 67.928Q102.731 67.928 101.94 69.077Q101.149 70.226 101.149 72.345Q101.149 74.45 101.94 75.607Q102.731 76.763 104.403 76.763Z M111.522 81.151V69.211H113.358V70.375H113.716Q114 69.823 114.604 69.413Q115.209 69.002 116.224 69.002Q117.403 69.002 118.201 69.592Q119 70.181 119.41 71.241Q119.821 72.301 119.821 73.689Q119.821 75.092 119.41 76.144Q119 77.196 118.201 77.778Q117.403 78.36 116.239 78.36Q115.343 78.36 114.776 78.025Q114.209 77.689 113.896 77.137H113.537V81.151ZM115.731 76.838Q116.687 76.838 117.216 76.032Q117.746 75.226 117.746 73.689Q117.746 72.151 117.216 71.338Q116.687 70.525 115.731 70.525Q114.716 70.525 114.119 71.383Q113.522 72.241 113.522 73.689Q113.522 75.122 114.119 75.98Q114.716 76.838 115.731 76.838Z M125.179 78.39Q123.134 78.39 122.067 77.107Q121 75.823 121 73.674Q121 72.241 121.478 71.196Q121.955 70.151 122.881 69.569Q123.806 68.987 125.149 68.987Q127.075 68.987 128.09 70.189Q129.104 71.39 129.104 73.689V74.181H122.955Q123.03 75.405 123.59 76.151Q124.149 76.898 125.179 76.898Q125.955 76.898 126.433 76.45Q126.91 76.002 127.09 75.301H129Q128.836 76.166 128.381 76.86Q127.925 77.554 127.134 77.972Q126.343 78.39 125.179 78.39ZM122.97 72.838H127.134Q127.09 71.674 126.575 71.054Q126.06 70.435 125.134 70.435Q124.194 70.435 123.642 71.047Q123.09 71.659 122.97 72.838Z M130.851 78.166V69.211H132.672V70.793H133.03Q133.119 70.375 133.358 69.995Q133.597 69.614 134.097 69.368Q134.597 69.122 135.463 69.122H135.851V70.972H135.299Q134 70.972 133.433 71.637Q132.866 72.301 132.866 73.689V78.166Z M140.224 78.36Q139.015 78.36 138.209 77.771Q137.403 77.181 137 76.122Q136.597 75.062 136.597 73.674Q136.597 72.271 137.007 71.219Q137.418 70.166 138.224 69.584Q139.03 69.002 140.224 69.002Q141.209 69.002 141.813 69.398Q142.418 69.793 142.687 70.375H143.045V69.211H144.881V78.166H143.045V77.002H142.687Q142.418 77.554 141.813 77.957Q141.209 78.36 140.224 78.36ZM140.672 76.838Q141.687 76.838 142.291 75.98Q142.896 75.122 142.896 73.689Q142.896 72.241 142.291 71.383Q141.687 70.525 140.672 70.525Q139.716 70.525 139.194 71.338Q138.672 72.151 138.672 73.689Q138.672 75.226 139.194 76.032Q139.716 76.838 140.672 76.838Z M150.746 78.39Q148.731 78.39 147.701 77.107Q146.672 75.823 146.672 73.689Q146.672 71.465 147.746 70.226Q148.821 68.987 150.761 68.987Q152.433 68.987 153.418 69.89Q154.403 70.793 154.612 72.42H152.627Q152.507 71.495 152.037 70.995Q151.567 70.495 150.791 70.495Q149.761 70.495 149.254 71.338Q148.746 72.181 148.746 73.689Q148.746 75.196 149.254 76.04Q149.761 76.883 150.776 76.883Q151.567 76.883 152.037 76.375Q152.507 75.868 152.627 74.957H154.612Q154.388 76.569 153.396 77.48Q152.403 78.39 150.746 78.39Z M156.299 78.166V69.211H158.313V78.166ZM157.313 68.062Q156.761 68.062 156.47 67.763Q156.179 67.465 156.179 66.972Q156.179 66.48 156.47 66.174Q156.761 65.868 157.313 65.868Q157.881 65.868 158.172 66.174Q158.463 66.48 158.463 66.972Q158.463 67.465 158.172 67.763Q157.881 68.062 157.313 68.062Z M164.328 78.39Q162.194 78.39 161.149 77.114Q160.104 75.838 160.104 73.689Q160.104 71.54 161.149 70.263Q162.194 68.987 164.328 68.987Q166.463 68.987 167.507 70.263Q168.552 71.54 168.552 73.689Q168.552 75.838 167.507 77.114Q166.463 78.39 164.328 78.39ZM164.328 76.928Q165.433 76.928 165.955 76.084Q166.478 75.241 166.478 73.689Q166.478 72.122 165.955 71.286Q165.433 70.45 164.328 70.45Q163.209 70.45 162.694 71.286Q162.179 72.122 162.179 73.689Q162.179 75.241 162.694 76.084Q163.209 76.928 164.328 76.928Z M170.328 78.166V69.211H172.164V70.554H172.522Q172.791 69.838 173.381 69.413Q173.97 68.987 175 68.987Q176.537 68.987 177.261 69.935Q177.985 70.883 177.985 72.45V78.166H175.97V72.823Q175.97 71.778 175.597 71.219Q175.224 70.659 174.418 70.659Q173.433 70.659 172.888 71.428Q172.343 72.196 172.343 73.331V78.166Z M183.836 78.39Q181.791 78.39 180.724 77.107Q179.657 75.823 179.657 73.674Q179.657 72.241 180.134 71.196Q180.612 70.151 181.537 69.569Q182.463 68.987 183.806 68.987Q185.731 68.987 186.746 70.189Q187.761 71.39 187.761 73.689V74.181H181.612Q181.687 75.405 182.246 76.151Q182.806 76.898 183.836 76.898Q184.612 76.898 185.09 76.45Q185.567 76.002 185.746 75.301H187.657Q187.493 76.166 187.037 76.86Q186.582 77.554 185.791 77.972Q185 78.39 183.836 78.39ZM181.627 72.838H185.791Q185.746 71.674 185.231 71.054Q184.716 70.435 183.791 70.435Q182.851 70.435 182.299 71.047Q181.746 71.659 181.627 72.838Z M192.642 78.39Q191.284 78.39 190.433 77.935Q189.582 77.48 189.179 76.763Q188.776 76.047 188.716 75.301H190.657Q190.716 75.719 190.963 76.092Q191.209 76.465 191.642 76.689Q192.075 76.913 192.731 76.913Q193.478 76.913 193.851 76.622Q194.224 76.331 194.224 75.853Q194.224 75.435 193.91 75.144Q193.597 74.853 192.925 74.629L191.851 74.256Q191.104 73.987 190.493 73.666Q189.881 73.345 189.507 72.853Q189.134 72.36 189.134 71.584Q189.134 70.405 190 69.696Q190.866 68.987 192.418 68.987Q193.537 68.987 194.261 69.353Q194.985 69.719 195.358 70.338Q195.731 70.957 195.791 71.719H193.925Q193.866 71.166 193.485 70.793Q193.104 70.42 192.343 70.42Q191.701 70.42 191.366 70.681Q191.03 70.943 191.03 71.405Q191.03 71.853 191.366 72.144Q191.701 72.435 192.388 72.674L193.448 73.017Q194.194 73.271 194.806 73.592Q195.418 73.913 195.769 74.413Q196.119 74.913 196.119 75.689Q196.119 76.898 195.231 77.644Q194.343 78.39 192.642 78.39Z M201.866 81.151V81.092Q202.269 80.45 202.724 79.607Q203.179 78.763 203.537 77.928L200.388 69.301V69.211H202.388L203.687 72.793Q203.881 73.301 204.06 73.883Q204.239 74.465 204.433 75.331H204.791Q204.97 74.465 205.157 73.883Q205.343 73.301 205.522 72.793L206.821 69.211H208.701V69.301L205.791 77.151Q205.299 78.495 204.813 79.525Q204.328 80.554 203.97 81.151Z M216.597 78.166V68.211H212.94V66.525H222.343V68.211H218.687V78.166Z M226.672 78.39Q224.627 78.39 223.56 77.107Q222.493 75.823 222.493 73.674Q222.493 72.241 222.97 71.196Q223.448 70.151 224.373 69.569Q225.299 68.987 226.642 68.987Q228.567 68.987 229.582 70.189Q230.597 71.39 230.597 73.689V74.181H224.448Q224.522 75.405 225.082 76.151Q225.642 76.898 226.672 76.898Q227.448 76.898 227.925 76.45Q228.403 76.002 228.582 75.301H230.493Q230.328 76.166 229.873 76.86Q229.418 77.554 228.627 77.972Q227.836 78.39 226.672 78.39ZM224.463 72.838H228.627Q228.582 71.674 228.067 71.054Q227.552 70.435 226.627 70.435Q225.687 70.435 225.134 71.047Q224.582 71.659 224.463 72.838Z M235.821 78.39Q233.806 78.39 232.776 77.107Q231.746 75.823 231.746 73.689Q231.746 71.465 232.821 70.226Q233.896 68.987 235.836 68.987Q237.507 68.987 238.493 69.89Q239.478 70.793 239.687 72.42H237.701Q237.582 71.495 237.112 70.995Q236.642 70.495 235.866 70.495Q234.836 70.495 234.328 71.338Q233.821 72.181 233.821 73.689Q233.821 75.196 234.328 76.04Q234.836 76.883 235.851 76.883Q236.642 76.883 237.112 76.375Q237.582 75.868 237.701 74.957H239.687Q239.463 76.569 238.47 77.48Q237.478 78.39 235.821 78.39Z M241.373 78.166V69.211H243.209V70.554H243.567Q243.836 69.838 244.425 69.413Q245.015 68.987 246.045 68.987Q247.582 68.987 248.306 69.935Q249.03 70.883 249.03 72.45V78.166H247.015V72.823Q247.015 71.778 246.642 71.219Q246.269 70.659 245.463 70.659Q244.478 70.659 243.933 71.428Q243.388 72.196 243.388 73.331V78.166Z M254.925 78.39Q252.791 78.39 251.746 77.114Q250.701 75.838 250.701 73.689Q250.701 71.54 251.746 70.263Q252.791 68.987 254.925 68.987Q257.06 68.987 258.104 70.263Q259.149 71.54 259.149 73.689Q259.149 75.838 258.104 77.114Q257.06 78.39 254.925 78.39ZM254.925 76.928Q256.03 76.928 256.552 76.084Q257.075 75.241 257.075 73.689Q257.075 72.122 256.552 71.286Q256.03 70.45 254.925 70.45Q253.806 70.45 253.291 71.286Q252.776 72.122 252.776 73.689Q252.776 75.241 253.291 76.084Q253.806 76.928 254.925 76.928Z M261.627 78.166Q261.254 77.719 261.067 77.137Q260.881 76.554 260.881 75.495V66.226H262.896V75.256Q262.896 76.42 263.149 77.04Q263.403 77.659 263.806 78.077V78.166Z M268.985 78.39Q266.851 78.39 265.806 77.114Q264.761 75.838 264.761 73.689Q264.761 71.54 265.806 70.263Q266.851 68.987 268.985 68.987Q271.119 68.987 272.164 70.263Q273.209 71.54 273.209 73.689Q273.209 75.838 272.164 77.114Q271.119 78.39 268.985 78.39ZM268.985 76.928Q270.09 76.928 270.612 76.084Q271.134 75.241 271.134 73.689Q271.134 72.122 270.612 71.286Q270.09 70.45 268.985 70.45Q267.866 70.45 267.351 71.286Q266.836 72.122 266.836 73.689Q266.836 75.241 267.351 76.084Q267.866 76.928 268.985 76.928Z M278.567 81.36Q277.463 81.36 276.754 81.092Q276.045 80.823 275.627 80.398Q275.209 79.972 275.022 79.51Q274.836 79.047 274.791 78.659H276.776Q276.866 79.122 277.276 79.502Q277.687 79.883 278.597 79.883Q279.597 79.883 280.119 79.316Q280.642 78.748 280.642 77.584V76.554H280.284Q280.06 77.166 279.493 77.547Q278.925 77.928 277.97 77.928Q276.269 77.928 275.328 76.719Q274.388 75.51 274.388 73.435Q274.388 72.107 274.799 71.099Q275.209 70.092 276.015 69.54Q276.821 68.987 277.97 68.987Q278.955 68.987 279.515 69.368Q280.075 69.748 280.328 70.331H280.687V69.211H282.522V77.584Q282.522 79.405 281.53 80.383Q280.537 81.36 278.567 81.36ZM278.388 76.405Q279.403 76.405 279.97 75.592Q280.537 74.778 280.537 73.45Q280.537 72.122 279.97 71.316Q279.403 70.51 278.403 70.51Q277.463 70.51 276.94 71.263Q276.418 72.017 276.418 73.45Q276.418 74.913 276.94 75.659Q277.463 76.405 278.388 76.405Z M284.91 78.166V69.211H286.925V78.166ZM285.119 68.316V68.226L286.224 65.629H288.104V65.719L286.731 68.316Z M292.343 78.36Q291.134 78.36 290.328 77.771Q289.522 77.181 289.119 76.122Q288.716 75.062 288.716 73.674Q288.716 72.271 289.127 71.219Q289.537 70.166 290.343 69.584Q291.149 69.002 292.343 69.002Q293.328 69.002 293.933 69.398Q294.537 69.793 294.806 70.375H295.164V69.211H297V78.166H295.164V77.002H294.806Q294.537 77.554 293.933 77.957Q293.328 78.36 292.343 78.36ZM292.791 76.838Q293.806 76.838 294.41 75.98Q295.015 75.122 295.015 73.689Q295.015 72.241 294.41 71.383Q293.806 70.525 292.791 70.525Q291.836 70.525 291.313 71.338Q290.791 72.151 290.791 73.689Q290.791 75.226 291.313 76.032Q291.836 76.838 292.791 76.838Z"/></svg></a>
-        <p class="foot-line">Lumora se encarga de lo que hoy se vuelve a escribir, se queda esperando o se olvida.</p>
-        <p class="foot-about">Para contratistas, restaurantes y negocios locales de Gainesville.</p>
-        <p class="foot-price"><b>La visita cuesta a partir de $500.</b> Si su negocio es más grande, le damos el precio en la llamada sin costo. Se descuenta de un arreglo de $1,500 o más que empiece dentro de los 30 días siguientes.</p>
-        <a class="btn" href="../../es/contact/">Llámenos o escríbanos</a>
+        <a class="foot-brand" href="/es/" aria-label="Lumora, página de inicio"><img src="/v4/assets/logo-white.svg" alt="" width="148" height="36"></a>
+        <p class="foot-line">Su negocio debería funcionar igual, esté usted o no.</p>
+        <a class="btn" href="tel:+13522260681">Llámenos o escríbanos</a>
       </div>
-      <nav class="foot-col c-how" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="../../es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="../../es/how-it-works/#walk">La visita</a></li><li><a href="../../es/how-it-works/#fix">Un arreglo</a></li><li><a href="../../es/how-it-works/#check">La revisión mensual</a></li><li><a href="../../es/how-it-works/#price">De qué depende el precio</a></li><li><a href="../../es/how-it-works/#sample">La hoja de ejemplo</a></li><li><a href="../../es/how-it-works/#faq">Preguntas que nos hacen los dueños</a></li><li><a href="../../es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
-      <nav class="foot-col c-ind" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">A quién atendemos</h2><ul><li><a href="../../es/industries/plumbing/">Plomería</a></li><li><a href="../../es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li><li><a href="../../es/industries/electrical/">Electricidad</a></li><li><a href="../../es/industries/water-damage-and-mold/">Daños por agua y moho</a></li><li><a href="../../es/industries/pest-control/">Control de plagas</a></li><li><a href="../../es/industries/roofing/">Techos</a></li><li><a href="../../es/industries/restaurants-and-bars/">Restaurantes y bares</a></li><li><a href="../../es/industries/property-managers/">Administradores de propiedades</a></li><li><a href="../../es/industries/">Todos los tipos de negocio</a></li></ul></nav>
-      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li>Llame o escriba al <a class="tel" href="tel:+13522260681">(352) <span class="nw">226-0681</span></a></li><li>Contestamos o le devolvemos la llamada el mismo día hábil; después de las 5 p. m. o el fin de semana, a más tardar a las 10 a. m. del siguiente día hábil.</li><li><a class="mail" href="mailto:franco@lumorafl.com?subject=Solicitud%20de%20visita">franco@lumorafl.com</a></li><li>De lunes a viernes, de 9 a. m. a 5 p. m.</li><li>Gainesville; atendemos el condado de Alachua. Otras zonas de Florida, previo acuerdo.</li><li>Español o inglés</li></ul></div>
+      <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="/es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="/es/how-it-works/#walk">La visita</a></li><li><a href="/es/how-it-works/#fix">Un arreglo</a></li><li><a href="/es/how-it-works/#check">La revisión mensual</a></li><li><a href="/es/how-it-works/#faq">Preguntas de los dueños</a></li><li><a href="/es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
+      <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">A quién atendemos</h2><ul><li><a href="/es/industries/plumbing/">Plomería</a></li><li><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li><li><a href="/es/industries/electrical/">Electricidad</a></li><li><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></li><li><a href="/es/industries/pest-control/">Control de plagas</a></li><li><a href="/es/industries/roofing/">Techos</a></li><li><a href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a></li><li><a href="/es/industries/property-managers/">Administradores de propiedades</a></li><li><a href="/es/industries/">Todos los tipos de negocio</a></li></ul></nav>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li>Llame o escriba al <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></li><li>Gainesville; atendemos el condado de Alachua</li><li>En inglés o en español</li></ul></div>
     </div>
     <div class="foot-base">
-      <p class="legal">Lumora es parte de Lumora Group LLC, una sociedad de responsabilidad limitada de Florida, n.º de documento L25000321722. Gainesville, Florida.</p>
-      <ul>
-        <li><a href="../../es/about/">Quiénes somos</a></li>
-        <li><a href="../../es/articles/">Artículos</a></li>
-        <li><a href="../../es/privacy/">Privacidad</a></li>
-        <li><a href="../../leak-check/" hreflang="en" lang="en" data-lang="en">Also in English</a></li>
-      </ul>
-      <p>© 2026 Lumora Group LLC</p>
-      <!-- Icons: Material Symbols by Google, Apache License 2.0. License: ../../assets/icons/LICENSE.txt and ../../assets/icons/NOTICE.txt -->
+      <p class="legal">Lumora Group LLC, empresa de Florida. Los negocios, nombres y números marcados como Ejemplo son ficticios.</p>
+      <ul><li><a href="/es/about/">Quiénes somos</a></li><li><a href="/es/articles/">Artículos</a></li><li><a href="/es/contact/">Contacto</a></li><li><a href="/es/privacy/">Privacidad</a></li></ul>
     </div>
   </div>
 </footer>
 
-<script src="../../assets/site.js?v=b9cb9473" defer></script>
+<nav class="callbar" aria-label="Llámenos o escríbanos"><a href="tel:+13522260681">Llamar</a><a href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">Escribir</a></nav>
+
 <script>
-(function(){
-  "use strict";
-  var L = {"examples": {"calls": "40", "rang": "6", "back": "3", "book": "24%", "profit": "$150", "quotes": "2", "qprofit": "$400", "minutes": "30", "days": "22", "rate": "$25"}, "skipped": "No se incluyó: esta sección está vacía.", "empty": "Ponga un número en cada casilla de llamadas perdidas para ver su cálculo.", "total": "Unos {TOTAL} al mes", "sms": "Hola, usé la calculadora de pérdidas de su página: {TOTAL}. ¿Cuándo podemos hablar por teléfono?", "err": {"neg": "Use un número de 0 o más.", "rang": "Las llamadas que nadie contesta no pueden ser más que las llamadas por semana.", "back": "Las llamadas que devuelve no pueden ser más que las que nadie contestó.", "pct": "Use un porcentaje de 0 a 100."}, "calls": {"label": "Llamadas perdidas", "pairs": [["{NOTBACK} por semana que nadie devolvió × 52 ÷ 12", "{CALLSMONTH} al mes"], ["× {BOOK}% que se habría convertido en trabajo", "{JOBS} trabajos"], ["× {PROFIT} de ganancia por trabajo", "{CALLSUSD} al mes"]]}, "quotes": {"label": "Cotizaciones", "pairs": [["{QUOTES} al mes que se enfriaron × {QPROFIT} de ganancia por trabajo", "{QUOTESUSD} al mes"]]}, "retype": {"label": "Volver a escribir", "pairs": [["{MINUTES} minutos al día × {DAYS} días ÷ 60", "{HOURS} horas"], ["× {RATE} la hora", "{RETYPEUSD} al mes"]]}};
-  var calc = document.getElementById("calc"), nojs = document.getElementById("leak-nojs");
-  var form = document.getElementById("leak-form");
-  if (!calc || !form) return;
-  calc.hidden = false; if (nojs) nojs.hidden = true;
-  form.addEventListener("submit", function(e){ e.preventDefault(); });
+/* The loss calculator, Spanish page. The script is the English page's (leak-check.html) line for line: the same fields, checks
+   and math, so check.py's calc_problems and delivery/walk-kit/_build/leak_math.py read both pages the same way. Only the words
+   it writes are Spanish (every quoted sentence below); numbers stay en-US ($1,540, 11.0, 3.12). All the math runs here, in the
+   visitor's browser: no fetch, no storage, no form action, and Enter never submits. */
+(function () {
+  'use strict';
+  var form = document.getElementById('lk'); if (!form) return;
+  var still = /[?&]still\b/.test(location.search) || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var F = ['minutes', 'days', 'rate', 'unbilled', 'avg', 'quotes', 'qprofit', 'rang', 'back', 'book', 'profit'];
+  var NAMES = { minutes: 'los minutos al día', days: 'los días hábiles', rate: 'el costo por hora', unbilled: 'los trabajos sin factura', avg: 'la factura promedio',
+    quotes: 'las cotizaciones', qprofit: 'lo que le queda en un trabajo cotizado', rang: 'las llamadas sin contestar', back: 'las llamadas devueltas', book: 'el porcentaje', profit: 'lo que le queda en un trabajo' };
+  var LEFT = 'No se incluye: llene sus casillas para sumarlo.';
+  var inp = function (n) { return form.elements[n]; };
+  var o = function (k) { return $('[data-o="' + k + '"]'); };
+  // 2026-10-15: a comma with one or two digits after it is a decimal comma ("1,5" is 1.5, never 15); other commas group thousands
+  var num = function (v) { v = String(v).replace(/[$%\s]/g, '').replace(/^(\d*),(\d{1,2})$/, '$1.$2').replace(/,/g, ''); return v === '' ? NaN : +v; };
+  var usd = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+  var cash = function (n) { return Number.isInteger(n) ? usd(n) : '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };   // what he typed, cents kept
+  var one = function (n) { return (Math.round(n * 10) / 10).toFixed(1); };
+  var plain = function (n) { return String(+n.toFixed(2)); };
+  var SMS = 'sms:+13522260681?&body=';
+  var EX = {}, shown = null, firstRun = true, liveT = 0, deb = 0;
+  F.forEach(function (n) { EX[n] = inp(n).value; });   // the examples are the markup's own values, so the two can't drift
 
-  var F = ["calls","rang","back","book","profit","quotes","qprofit","minutes","days","rate"];
-  var REQ = ["calls","rang","back","book","profit"];
-  var inp = {}, edited = {};
-  F.forEach(function(k){ inp[k] = document.getElementById("f-" + k); edited[k] = false; });
-  function $(id){ return document.getElementById(id); }
-  var nf1 = new Intl.NumberFormat("en-US", {minimumFractionDigits:1, maximumFractionDigits:1});
-  var nf0 = new Intl.NumberFormat("en-US", {maximumFractionDigits:0});
-  var nf2 = new Intl.NumberFormat("en-US", {maximumFractionDigits:2});
-  var nfx = new Intl.NumberFormat("en-US", {maximumFractionDigits:2});
-  function usd(x){ return "$" + nf0.format(Math.round(x)); }
-  function usdIn(x){ return "$" + nfx.format(x); }
-  function num(x){ return nfx.format(x); }
-  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-  function parse(v){
-    v = String(v).replace(/[$,%\s]/g, "");
-    if (v === "") return null;
-    if (!/^-?(\d+\.?\d*|\.\d+)$/.test(v)) return NaN;
-    return parseFloat(v);
-  }
-  function fill(t, vals){ return t.replace(/\{([A-Z]+)\}/g, function(m, k){ return vals[k]; }); }
-
-  function setErr(k, msg){
-    var e = $("e-" + k);
-    if (msg){ e.textContent = msg; e.hidden = false; inp[k].setAttribute("aria-invalid", "true"); }
-    else { e.textContent = ""; e.hidden = true; inp[k].removeAttribute("aria-invalid"); }
-  }
-
-  function lines(tpl, vals){
-    var h = '<div class="r-group"><p class="r-label">' + esc(tpl.label) + '</p>';
-    tpl.pairs.forEach(function(p, i){
-      var last = i === tpl.pairs.length - 1;
-      h += '<div class="r-line' + (last ? ' sum' : '') + '"><span>' + esc(fill(p[0], vals)) + '</span><span>' + esc(fill(p[1], vals)) + '</span></div>';
+  // each box gets its own error line, right under it and tied to it with aria-describedby (a phone never hunts for it)
+  F.forEach(function (n) {
+    var lf = inp(n).closest('.lf'), e = document.createElement('p');
+    e.className = 'lf-err'; e.id = 'e-' + n; lf.insertBefore(e, lf.querySelector('.lf-h'));
+  });
+  function mark(bad, msg) {
+    F.forEach(function (n) {
+      var el = inp(n), e = document.getElementById('e-' + n), on = n === bad;
+      e.textContent = on ? msg : '';
+      var ids = (el.getAttribute('aria-describedby') || '').split(' ').filter(function (x) { return x && x !== e.id; });
+      if (on) { el.setAttribute('aria-invalid', 'true'); ids.unshift(e.id); } else el.removeAttribute('aria-invalid');
+      if (ids.length) el.setAttribute('aria-describedby', ids.join(' ')); else el.removeAttribute('aria-describedby');
     });
-    return h + '</div>';
   }
-  function skipped(tpl){
-    return '<div class="r-group"><p class="r-label">' + esc(tpl.label) + '</p><p class="r-skip">' + esc(L.skipped) + '</p></div>';
-  }
-
-  var lastSaid = "", sayTimer = null;
-  function say(text){
-    clearTimeout(sayTimer);
-    sayTimer = setTimeout(function(){ if (text !== lastSaid){ $("r-live").textContent = text; lastSaid = text; } }, 900);
-  }
-
-  function run(){
-    var v = {}, bad = false;
-    F.forEach(function(k){ v[k] = parse(inp[k].value); setErr(k, ""); });
-    F.forEach(function(k){
-      if (v[k] !== null && (isNaN(v[k]) || v[k] < 0)){ setErr(k, L.err.neg); bad = bad || REQ.indexOf(k) >= 0; v[k] = NaN; }
-    });
-    if (!isNaN(v.rang) && !isNaN(v.calls) && v.rang !== null && v.calls !== null && v.rang > v.calls){ setErr("rang", L.err.rang); bad = true; }
-    if (!isNaN(v.back) && !isNaN(v.rang) && v.back !== null && v.rang !== null && v.back > v.rang){ setErr("back", L.err.back); bad = true; }
-    if (!isNaN(v.book) && v.book !== null && v.book > 100){ setErr("book", L.err.pct); bad = true; }
-    REQ.forEach(function(k){ if (v[k] === null || isNaN(v[k])) bad = true; });
-
-    var anyEdited = F.some(function(k){ return edited[k]; });
-    $("r-stamp").hidden = anyEdited;
-    F.forEach(function(k){ $("t-" + k).hidden = edited[k]; });
-
-    if (bad){
-      $("r-body").innerHTML = '<p class="r-empty">' + esc(L.empty) + '</p>';
-      $("r-total").hidden = true;
-      $("r-mini").textContent = "";
-      say(L.empty);
-      return;
+  function problem(v) {   // the first problem: [box, the words under it, the short words for the phone bar]
+    for (var i = 0; i < F.length; i++) {
+      var n = F[i];
+      if (inp(n).value.trim() !== '' && (isNaN(v[n]) || v[n] < 0)) return [n, 'Use un número de 0 o más.', NAMES[n]];
     }
-    var notBack = v.rang - v.back;
-    var callsMonth = notBack * 52 / 12;
-    var jobs = callsMonth * v.book / 100;
-    var callsUSD = (Math.round(jobs * 10) / 10) * v.profit;  // the line shows jobs to one decimal, so multiply that
-    var h = lines(L.calls, {NOTBACK: num(notBack), CALLSMONTH: nf1.format(callsMonth), BOOK: num(v.book), JOBS: nf2.format(jobs), PROFIT: usdIn(v.profit), CALLSUSD: usd(callsUSD)});
-    var total = callsUSD;
-    if (v.quotes !== null && v.qprofit !== null && !isNaN(v.quotes) && !isNaN(v.qprofit)){
-      var q = v.quotes * v.qprofit; total += q;
-      h += lines(L.quotes, {QUOTES: num(v.quotes), QPROFIT: usdIn(v.qprofit), QUOTESUSD: usd(q)});
-    } else { h += skipped(L.quotes); }
-    if (v.minutes !== null && v.days !== null && v.rate !== null && !isNaN(v.minutes) && !isNaN(v.days) && !isNaN(v.rate)){
-      var hours = v.minutes * v.days / 60, r = (Math.round(hours * 10) / 10) * v.rate; total += r;
-      h += lines(L.retype, {MINUTES: num(v.minutes), DAYS: num(v.days), HOURS: nf1.format(hours), RATE: usdIn(v.rate), RETYPEUSD: usd(r)});
-    } else { h += skipped(L.retype); }
-    $("r-body").innerHTML = h;
-    var t = L.total.replace("{TOTAL}", "$" + nf0.format(Math.round(total / 10) * 10));
-    $("r-total").hidden = false;
-    $("r-total-v").textContent = t;
-    $("r-mini").textContent = t;
-    var sm = $("r-sms"); if (sm) sm.href = sm.getAttribute("data-base") + encodeURIComponent(L.sms.replace("{TOTAL}", t));
-    say(t);
+    if (v.minutes > 1440) return ['minutes', 'Un día tiene 1,440 minutos.', 'demasiados minutos para un día'];
+    if (v.days > 31) return ['days', 'Un mes tiene 31 días como máximo.', 'demasiados días hábiles'];
+    if (v.back > v.rang) return ['back', 'Las llamadas que devolvió no pueden ser más que las que nadie contestó.', 'más devueltas que sin contestar'];
+    if (v.book > 100) return ['book', 'Use un porcentaje de 0 a 100.', 'el porcentaje va de 0 a 100'];
+    return null;
+  }
+  function line(key, text, value) {
+    var li = o(key);
+    li.innerHTML = '<span' + (value ? '' : ' class="off"') + '><b>' + li.getAttribute('data-name') + '</b>' + text + '</span>' + (value ? '<span class="v">' + value + '</span>' : '');
+  }
+  function roll(el, from, to) {   // job: cause and effect. The figure moves only because the owner changed a box.
+    var fmt = function (n) { return usd(Math.round(n / 10) * 10); };
+    var t = el.firstChild && el.firstChild.nodeType === 3 ? el.firstChild : el.insertBefore(document.createTextNode(''), el.firstChild);
+    var ring = function () { var L = window.Lumora; if (L && L.ring) L.ring(el.querySelector('.pen-ring')); };
+    if (still || from == null || from === to) { t.nodeValue = fmt(to); if (from != null) ring(); return; }
+    var t0 = performance.now();
+    (function step(now) {
+      var k = Math.min(1, (now - t0) / 500), e = 1 - Math.pow(1 - k, 3);
+      t.nodeValue = fmt(from + (to - from) * e);
+      if (k < 1) requestAnimationFrame(step); else ring();
+    })(t0);
   }
 
-  var timer = null;
-  F.forEach(function(k){
-    inp[k].addEventListener("input", function(){ edited[k] = true; clearTimeout(timer); timer = setTimeout(run, 180); });
+  function calc() {
+    var v = {}; F.forEach(function (n) { v[n] = num(inp(n).value); });
+    var err = problem(v);
+    mark(err && err[0], err ? err[1] : '');
+    var has = function (ks) { return ks.every(function (k) { return !isNaN(v[k]); }); };
+    // the math, as leak_math.py has it; rounded only for display
+    var hours = has(['minutes', 'days']) ? v.minutes * v.days / 60 : null;
+    var retype = hours !== null && has(['rate']) ? hours * v.rate : null;
+    var unbilled = has(['unbilled', 'avg']) ? v.unbilled / 3 * v.avg : null;
+    var quotes = has(['quotes', 'qprofit']) ? v.quotes * v.qprofit : null;
+    var notBack = v.rang - v.back, month = notBack * 52 / 12, jobs = month * v.book / 100;
+    var calls = has(['rang', 'back', 'book', 'profit']) ? jobs * v.profit : null;
+    var parts = [retype, unbilled, quotes, calls].filter(function (x) { return x !== null; });
+    var ok = !err && parts.length > 0, bar = o('bar');
+    o('result').hidden = !ok; o('empty').hidden = ok;
+    bar.closest('.lk-bar').classList.toggle('bad', !!err);
+    o('barl').textContent = err ? 'Revise:' : o('stamp').hidden ? 'Su cálculo' : 'Ejemplo';
+    o('sms').textContent = ok ? 'Mándenos este cálculo por mensaje' : 'O mándenos un mensaje';
+    if (!ok) {
+      var only = !err && hours !== null;   // typing hours with no hourly cost, and nothing else yet: say the hours, not an error
+      var msg = only ? 'Anotar el mismo trabajo dos veces le toma ' + one(hours) + ' horas al mes. Ponga un costo por hora, u otro grupo de casillas, para verlo en dólares.'
+        : 'Llene un grupo de casillas para ver su cálculo.';
+      o('empty').textContent = err ? 'Corrija la casilla marcada para ver su cálculo.' : msg;
+      bar.textContent = err ? err[2] : only ? one(hours) + ' horas al mes' : 'Llene un grupo de casillas';
+      o('sms').href = SMS + encodeURIComponent('Hola, vi su página web. ¿Cuándo podemos hablar por teléfono?');
+      return err ? err[1] : msg;
+    }
+    if (retype !== null) line('l-retype', plain(v.minutes) + ' minutos al día × ' + plain(v.days) + ' días ÷ 60 = ' + one(hours) + ' horas × ' + cash(v.rate) + ' la hora = ' + usd(retype) + ' al mes.', usd(retype));
+    else if (hours !== null) line('l-retype', plain(v.minutes) + ' minutos al día × ' + plain(v.days) + ' días ÷ 60 = ' + one(hours) + ' horas al mes. Sin un costo por hora son horas y no dólares, así que no entran en el total.');
+    else line('l-retype', LEFT);
+    if (unbilled !== null) line('l-unbilled', plain(v.unbilled) + (v.unbilled === 1 ? ' trabajo' : ' trabajos') + ' en 3 meses ÷ 3 × ' + cash(v.avg) + ' de factura promedio = ' + usd(unbilled) + ' al mes.', usd(unbilled));
+    else line('l-unbilled', isNaN(v.unbilled) ? 'Lo dejó en blanco.' : LEFT);
+    if (quotes !== null) line('l-quotes', plain(v.quotes) + ' al mes × ' + cash(v.qprofit) + ' de ganancia por trabajo = ' + usd(quotes) + ' al mes.', usd(quotes));
+    else line('l-quotes', LEFT);
+    if (calls !== null) line('l-calls', plain(v.rang) + ' sin contestar − ' + plain(v.back) + (v.back === 1 ? ' devuelta' : ' devueltas') + ' = ' + plain(notBack) + ' por semana × 52 ÷ 12 = ' + one(month) + ' al mes × ' + plain(v.book) + '% convertidas en trabajo = ' + plain(jobs) + (jobs === 1 ? ' trabajo' : ' trabajos') + ' × ' + cash(v.profit) + ' de ganancia por trabajo = ' + usd(calls) + ' al mes.', usd(calls));
+    else line('l-calls', LEFT);
+    var total = parts.reduce(function (a, b) { return a + b; }, 0), r10 = Math.round(total / 10) * 10, moved = !firstRun && r10 !== shown;
+    roll(o('total'), firstRun ? null : shown, r10); shown = r10; firstRun = false;
+    bar.textContent = 'Unos ' + usd(r10) + ' al mes';
+    if (moved && !still) { bar.classList.remove('bump'); void bar.offsetWidth; bar.classList.add('bump'); }
+    o('sms').href = SMS + encodeURIComponent('Hola, usé la calculadora de pérdidas de su página: unos ' + usd(r10) + ' al mes. ¿Cuándo podemos hablar por teléfono?');
+    return 'Su cálculo: unos ' + usd(r10) + ' al mes.';
+  }
+
+  function announce(msg) {   // one polite announcement once he stops typing, not one per keystroke
+    clearTimeout(liveT);
+    liveT = setTimeout(function () { o('live').textContent = msg; }, 700);
+  }
+  function edited(n) {
+    var tag = $('[data-ex="' + n + '"]'); if (tag) tag.hidden = true;
+    o('stamp').hidden = true;
+  }
+  F.forEach(function (n) {
+    var el = inp(n);
+    el.addEventListener('input', function () { edited(n); clearTimeout(deb); deb = setTimeout(function () { announce(calc()); }, 250); });
+    el.addEventListener('keydown', function (e) { if (e.key === 'Enter') e.preventDefault(); });
   });
-  $("b-reset").addEventListener("click", function(){
-    F.forEach(function(k){ inp[k].value = L.examples[k]; edited[k] = false; });
-    run();
+  $$('[data-step]', form).forEach(function (b) {
+    b.addEventListener('click', function () {
+      var el = inp(b.getAttribute('data-for')), v = num(el.value);
+      el.value = Math.max(0, (isNaN(v) ? 0 : v) + +b.getAttribute('data-step')); edited(el.name); announce(calc());
+    });
   });
-  $("b-clear").addEventListener("click", function(){
-    F.forEach(function(k){ inp[k].value = ""; edited[k] = true; });
-    run();
-    inp.calls.focus();
+  form.addEventListener('submit', function (e) { e.preventDefault(); });
+  $('[data-act="reset"]', form).addEventListener('click', function () {
+    F.forEach(function (n) { inp(n).value = EX[n]; var t = $('[data-ex="' + n + '"]'); if (t) t.hidden = false; });
+    o('stamp').hidden = false; announce(calc());
   });
-  run();
+  $('[data-act="clear"]', form).addEventListener('click', function () {
+    F.forEach(function (n) { inp(n).value = ''; var t = $('[data-ex="' + n + '"]'); if (t) t.hidden = true; });
+    o('stamp').hidden = true; announce(calc()); inp(F[0]).focus();
+  });
+  calc();
+
+  // the phone bar is sticky; a focused box must never sit under it (WCAG 2.4.11). system.js clears the header and call bar only.
+  var barBox = $('.lk-bar');
+  document.addEventListener('focusin', function (e) {
+    if (!barBox || !barBox.getClientRects().length || !form.contains(e.target)) return;
+    requestAnimationFrame(function () {   // after the browser's own focus scroll
+      var r = e.target.getBoundingClientRect(), b = barBox.getBoundingClientRect();
+      if (r.top < b.bottom + 4 && r.bottom > b.top) window.scrollBy({ top: r.top - b.bottom - 16, behavior: 'instant' });
+    });
+  });
 })();
 </script>
 </body>
