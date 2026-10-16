@@ -1,11 +1,11 @@
 <!doctype html>
-<!-- Built by _build/build.py from _build/content. Edit those and rebuild: changes made in this file are overwritten. -->
-<html lang="es" dir="ltr">
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contratistas de techos | Lumora</title>
-<meta name="description" content="Para contratistas de techos de Gainesville y el condado de Alachua: presupuestos grandes sin seguimiento, llamadas que nadie contesta desde el techo y plazos de depósitos que nadie vigiló, con arreglos que respetan las reglas de Florida sobre trabajos por tormentas.">
+<meta name="format-detection" content="telephone=no">   
+<title>Contratistas de techos | Lumora, Gainesville FL</title>
+<meta name="description" content="Para contratistas de techos de Gainesville y el condado de Alachua: madera podrida que nunca llega a la factura final, depreciación que nadie pidió, medidas anotadas tres veces y el plazo del permiso después de un depósito. Le decimos cuánto le cuesta cada mes y lo arreglamos con lo que ya usa. Llamada sin costo de hasta 20 minutos.">
 <link rel="canonical" href="https://lumorafl.com/es/industries/roofing/">
 <link rel="alternate" hreflang="en" href="https://lumorafl.com/industries/roofing/">
 <link rel="alternate" hreflang="es" href="https://lumorafl.com/es/industries/roofing/">
@@ -23,100 +23,422 @@
 <meta property="og:locale" content="es_US">
 <meta property="og:locale:alternate" content="en_US">
 <meta name="theme-color" content="#F6F5F2">
-<link rel="icon" href="../../../assets/mark.svg" type="image/svg+xml">
-<link rel="preload" href="../../../assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../../../assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../../assets/site.css?v=5ff3a325">
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="/v4/assets/mark.svg">
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/v4/system.css?v=5b244872">
+<link rel="stylesheet" href="/v4/trade-page.css?v=5b244872">
+<style>
+/* RF: roofing's own extras, after trade-page.css, as on the English page (the signed contract beside the county permit
+   search, plumbing's paper pair; one pencil ring on "No applications found"). */
+.rf-ct{max-width:340px;padding:14px 16px 18px}
+@container (min-width:641px){.rf-docs{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)}}
+.rf-kv div{display:grid;grid-template-columns:7.4em minmax(0,1fr);gap:8px;padding:5px 0;border-bottom:1px dotted #d6d6d6;font-size:13px;line-height:1.35;color:#1d1d1f}
+.rf-kv dt{color:#555}
+.rf-kv dd b{font-weight:600}
+.rf-sig{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:16px}
+.rf-sig span{border-top:1px solid #1d1d1f;padding-top:4px;font-size:12px;line-height:1.3;color:#555}
+.rf-ps-b{padding:12px 14px 14px;font-family:var(--sys);color:#1d1d1f}
+.rf-q{display:flex;gap:10px;align-items:baseline;padding:6px 10px;border:1px solid #c7c7cc;border-radius:7px;font-size:14px}
+.rf-q span:first-child{font-size:12px;color:#6e6e73}
+.rf-none{margin:14px 6px 16px;font-size:15px;font-weight:600;line-height:1.35}
+.rf-days-k{font-size:12px;color:#6e6e73;margin-bottom:6px}
+.rf-days{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+.rf-days li{display:grid;gap:1px;justify-items:center;padding:6px 2px;border-radius:6px;background:#f2f2f0;font-size:12px;line-height:1.25;color:#555;text-align:center}
+.rf-days b{font-size:15px;color:#1d1d1f}
+.rf-days .on{background:#fbefd2;color:#4d3500}
+.rf-days .on b{color:#3d2a00}
+.rf-days .due{box-shadow:inset 0 0 0 1.5px #c98a00}
+@container (max-width:640px){
+  .rf-docs .rf-ct{width:85%;justify-self:start;padding:12px 12px 28px}
+  .rf-kv div{grid-template-columns:6.8em minmax(0,1fr);font-size:12px;padding:4px 0}
+  .rf-docs .doc-h b{font-size:13px}
+  .rf-ps-b{padding:10px 12px 12px}
+  .rf-none{font-size:14px;margin:12px 6px 12px}
+  .rf-days-k{display:none}
+}
+.rf-none{margin-left:18px}
+.rf-none .pc::after{inset:-8px -18px}
+/* ES, as the Spanish plumbing and pest pages: the close heading's Spanish size, the night log's wider time column ("10:40 p. m."
+   ran into the gap), and under 360px the call rows keep their tap areas apart */
+.close-h{margin:0 0 24px;font-size:clamp(40px,4.4vw,44px)}
+:lang(es) .np-rows li{grid-template-columns:5em minmax(0,1fr)}
+@media (max-width:699px){:lang(es) .pl-night .np-rows li{grid-template-columns:5.1em minmax(0,1fr)}}
+@media (max-width:359px){.cta-row,.c4-tel{row-gap:18px}}
+</style>
+<script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
+<script src="/v4/trades.js?v=5b244872" defer></script>
+<script src="/v4/system.js?v=5b244872" defer></script>
 </head>
-<body>
+<body data-trade="roofing" data-trade-lock data-rules="v4">
 <a class="skip" href="#main">Saltar al contenido</a>
-<svg class="defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><g id="lm-word" fill="currentColor"><path d="M107.001 14.4V57.5246H99V14.4H107.001Z"/><path d="M138.356 54.6307C135.859 57.0516 132.398 58.2622 127.972 58.2622C123.546 58.2622 120.066 57.0516 117.531 54.6307C115.034 52.1717 113.786 48.7862 113.786 44.4737V26.5997H121.787V44.4737C121.787 46.4407 122.335 48.0106 123.432 49.1834C124.529 50.3561 126.042 50.9424 127.972 50.9424C129.901 50.9424 131.414 50.3561 132.511 49.1834C133.608 48.0106 134.157 46.4407 134.157 44.4737V26.5997H142.157V44.4737C142.157 48.8239 140.89 52.2096 138.356 54.6307Z"/><path d="M186.431 25.7486C190.139 25.7486 193.146 26.9023 195.453 29.2099C197.837 31.5175 199.028 34.7328 199.028 38.8562V57.5246H191.028V40.3315C191.028 38.0239 190.46 36.246 189.325 34.9975C188.228 33.7493 186.734 33.125 184.842 33.125C182.8 33.125 181.154 33.8059 179.906 35.1679C178.658 36.4918 178.033 38.2886 178.033 40.5583V57.5246H170.033V40.3882C170.033 38.1185 169.465 36.3406 168.33 35.0544C167.233 33.7682 165.72 33.125 163.791 33.125C161.824 33.125 160.197 33.8059 158.911 35.1679C157.663 36.5297 157.038 38.3455 157.038 40.6152V57.5246H149.038V26.5997H156.868V31.0258C157.738 29.399 159.024 28.1129 160.727 27.167C162.429 26.1835 164.283 25.7107 166.288 25.7486C168.255 25.7486 170.052 26.2214 171.678 27.167C173.343 28.1129 174.572 29.4557 175.367 31.1959C176.501 29.4936 178.052 28.1695 180.019 27.2239C181.986 26.2404 184.124 25.7486 186.431 25.7486Z"/><path d="M204.246 42.0338C204.246 37.4566 205.797 33.6168 208.899 30.515C212.039 27.3374 216.011 25.7486 220.815 25.7486C225.619 25.7486 229.591 27.3374 232.731 30.515C235.833 33.6168 237.384 37.4566 237.384 42.0338C237.384 46.6488 235.833 50.5073 232.731 53.6093C229.591 56.749 225.619 58.319 220.815 58.319C216.011 58.319 212.039 56.749 208.899 53.6093C205.797 50.5073 204.246 46.6488 204.246 42.0338ZM214.686 48.3322C216.313 50.0345 218.356 50.8855 220.815 50.8855C223.198 50.8855 225.222 50.0345 226.886 48.3322C228.551 46.5542 229.383 44.4547 229.383 42.0338C229.383 39.6127 228.551 37.5322 226.886 35.7919C225.222 34.0898 223.198 33.2386 220.815 33.2386C218.356 33.2386 216.313 34.0898 214.686 35.7919C213.06 37.4566 212.247 39.5371 212.247 42.0338C212.247 44.4926 213.06 46.5922 214.686 48.3322Z"/><path d="M251.018 57.5246H243.019V26.5997H250.678V30.7418C252.533 27.413 255.37 25.7486 259.19 25.7486C260.438 25.7486 261.686 25.9754 262.934 26.4295L262.253 34.0898C260.892 33.6737 259.663 33.4656 258.566 33.4656C256.219 33.4656 254.366 34.26 253.006 35.8488C251.681 37.3997 251.018 39.7262 251.018 42.8282V57.5246Z"/><path d="M289.397 30.288V26.5997H297V57.5246H289.397V53.9498C286.75 56.8248 283.457 58.2622 279.523 58.2622C275.059 58.2622 271.39 56.7113 268.514 53.6093C265.639 50.5073 264.202 46.6109 264.202 41.9203C264.202 37.2674 265.658 33.4277 268.572 30.4015C271.486 27.3374 275.136 25.8053 279.523 25.8053C283.382 25.8053 286.673 27.2995 289.397 30.288ZM289.51 42.0338C289.51 39.6127 288.677 37.5132 287.014 35.7353C285.386 33.9953 283.325 33.125 280.829 33.125C278.294 33.125 276.214 33.9953 274.586 35.7353C272.998 37.4755 272.203 39.5748 272.203 42.0338C272.203 44.5303 273.017 46.6488 274.644 48.389C276.269 50.129 278.333 50.999 280.829 50.999C283.325 50.999 285.386 50.129 287.014 48.389C288.677 46.6109 289.51 44.4926 289.51 42.0338Z"/></g><g id="lm-mark"><path fill-rule="evenodd" clip-rule="evenodd" d="M90 8.4409C85.8561 8.5788 81.8053 9.6543 78.5818 11.9296C75.3583 14.2048 72.962 17.6797 72.166 21.5559C71.77 23.4841 71.77 25.5116 71.77 27.525C71.77 33.4927 71.77 39.4603 71.77 45.428C71.77 49.2815 71.77 53.1885 70.2579 56.7901C68.7265 60.4376 65.6443 63.7719 62.1274 66.1376C58.6105 68.5034 54.6589 69.9005 50.7291 70.7849C47.0072 71.6225 43.3048 72.0001 39.5853 72.0001C35.4501 72.0001 31.2938 71.5333 27.1654 70.5199C23.2446 69.5573 19.3491 68.1017 13.4902 65.5518C18.9353 66.2577 23.7401 65.0072 27.3381 63.5431C31.7025 61.7671 35.86 59.0385 39.2758 56.1487C43.3184 52.7287 46.5352 48.903 48.5787 45.5599C49.882 43.4278 50.9656 41.0708 51.8262 38.4557C52.6869 35.8406 53.3246 32.9674 53.9172 30.0677C54.5099 27.1679 55.0576 24.2416 55.7823 21.6864C56.5069 19.1312 57.4085 16.9473 58.8638 15.0547C60.3192 13.1622 62.3283 11.5612 64.8204 10.3245C67.3125 9.0878 70.2876 8.2154 73.2911 7.704C75.5687 7.3162 77.8627 7.1359 80.0564 7.1359C83.6485 7.1359 86.9717 7.6193 90 8.4409Z" fill="#FF323C"/><path fill-rule="evenodd" clip-rule="evenodd" d="M0 47.5235C4.2778 48.0257 8.2391 48.0494 12.3023 47.292C16.3654 46.5346 20.5305 44.9959 23.8039 42.6413C27.0774 40.2867 29.4592 37.116 30.9594 33.3639C32.4596 29.6118 33.0781 25.2782 34.2347 21.2198C35.3913 17.1614 37.0861 13.3783 39.6425 10.2153C42.199 7.0523 45.6171 4.5095 49.3595 2.7949C53.5349 0.8819 58.1139 0 62.753 0C66.4297 0 70.1441 0.554 73.7422 1.2518C77.8111 2.0409 81.7313 3.014 85.1911 4.701C81.4497 4.2352 77.4952 4.2807 73.592 4.8711C69.6889 5.4614 65.837 6.5968 62.6593 8.3485C59.4815 10.1003 56.9779 12.4685 55.2857 15.5037C53.5935 18.5389 52.7127 22.2411 51.8998 26.1803C51.0869 30.1195 50.3418 34.2956 49.0854 37.9777C47.8289 41.6597 46.061 44.8477 43.7883 47.4888C41.5157 50.1299 38.7384 52.2243 35.3579 53.2774C33.352 53.9022 31.1338 54.1605 28.7581 54.1605C27.1302 54.1605 25.4283 54.0392 23.6747 53.834C19.3621 53.3293 14.737 52.3168 10.6412 51.2183C6.5455 50.1199 2.9791 48.9355 0 47.5235Z" fill="#FF323C"/></g></defs><defs><symbol id="i-leak-calls" viewBox="-4 -7 62 62"><path fill="currentColor" transform="matrix(0.05 0 0 0.05 0 48)" d="M161.77-142.69 29.85-271.39l32.69-33.69q84.61-89.07 195.58-132Q369.08-480 480-480t220.88 43.42q109.97 43.43 196.2 131.5l33.07 33.69-131.92 128.7L650-254.62v-136.3q-41.85-13.93-84.54-21.5Q522.77-420 480-420q-42.77 0-85.46 7.58-42.69 7.57-84.54 21.5v136.3L161.77-142.69ZM250-367.39q-37.08 18.08-71.39 42-34.3 23.93-64.46 51.39l53.08 53.08 82.77-63.7v-82.77Zm460 1.23v80.77l82.77 64.47L846.62-272q-32.85-29.85-66-53.08-33.16-23.23-70.62-41.08Zm-460-1.23Zm460 1.23ZM479.15-519.08 280.38-717.85V-600h-59.99v-220h219.99v60H322.54l156 156L698-823.46l42.77 42.77-261.62 261.61Z"/><path class="drop" fill="#FF323C" stroke="none" transform="matrix(0.013372 0 0 0.013372 45.541 42.203)" d="M489.85-206.15q10.46-1 17.23-7.77t6.77-16.46q0-11.31-7.47-17.89-7.46-6.58-18.76-5.58-41 3-89.31-24.03Q350-304.92 338-371.92q-2-10.23-8.58-16.08-6.57-5.85-15.65-5.85-10.92 0-18.19 8.2-7.27 8.19-4.66 21.03 16.23 87.16 78.47 124.62 62.23 37.46 120.46 33.85ZM480-100q-128.54 0-214.27-88.23Q180-276.46 180-408q0-93.08 74.5-204.04T480-853.84Q631-723 705.5-612.04 780-501.08 780-408q0 131.54-85.73 219.77Q608.54-100 480-100Z"/></symbol><symbol id="i-leak-followups" viewBox="-4 -7 62 62"><path fill="currentColor" transform="matrix(0.05 0 0 0.05 0 48)" d="M140-100v-680h127.69v-84.61h61.54V-780h303.08v-84.61h60V-780H820v306.15h-60v-73.84H200V-160h285.77v60H140ZM760-6.15q-68.38 0-120.38-42.04t-67.54-105.66h49.69q14.54 44.39 51.85 72.2 37.31 27.8 86.38 27.8 60.55 0 103.35-42.8T906.15-200q0-60.55-42.8-103.35T760-346.15q-32.85 0-62.08 14.15-29.23 14.15-50.92 38.15h66.85v47.7h-147.7v-147.7h47.7v65.47q27.76-29.47 65.69-47.47 37.92-18 80.46-18 80.45 0 137.15 56.7T953.85-200q0 80.45-56.7 137.15T760-6.15ZM200-607.69h560V-720H200v112.31Zm0 0V-720v112.31Z"/><path class="drop" fill="#FF323C" stroke="none" transform="matrix(0.013372 0 0 0.013372 46.726 49.03)" d="M489.85-206.15q10.46-1 17.23-7.77t6.77-16.46q0-11.31-7.47-17.89-7.46-6.58-18.76-5.58-41 3-89.31-24.03Q350-304.92 338-371.92q-2-10.23-8.58-16.08-6.57-5.85-15.65-5.85-10.92 0-18.19 8.2-7.27 8.19-4.66 21.03 16.23 87.16 78.47 124.62 62.23 37.46 120.46 33.85ZM480-100q-128.54 0-214.27-88.23Q180-276.46 180-408q0-93.08 74.5-204.04T480-853.84Q631-723 705.5-612.04 780-501.08 780-408q0 131.54-85.73 219.77Q608.54-100 480-100Z"/></symbol><symbol id="i-leak-quotes" viewBox="-4 -7 62 62"><path fill="currentColor" transform="matrix(0.05 0 0 0.05 0 48)" d="M316.15-160h327.7v-120q0-68.31-47.77-116.85-47.77-48.54-116.08-48.54t-116.08 48.54Q316.15-348.31 316.15-280v120ZM480-514.61q68.31 0 116.08-48.54 47.77-48.54 47.77-116.85v-120h-327.7v120q0 68.31 47.77 116.85 47.77 48.54 116.08 48.54ZM180-100v-60h76.16v-120q0-67.54 36.96-122.96 36.96-55.43 97.96-77.04-61-22-97.96-77.23-36.96-55.23-36.96-122.77v-120H180v-60h600v60h-76.16v120q0 67.54-36.96 122.77Q629.92-502 568.92-480q61 21.61 97.96 77.04 36.96 55.42 36.96 122.96v120H780v60H180Z"/><path class="drop" fill="#FF323C" stroke="none" transform="matrix(0.013372 0 0 0.013372 38.033 44.337)" d="M489.85-206.15q10.46-1 17.23-7.77t6.77-16.46q0-11.31-7.47-17.89-7.46-6.58-18.76-5.58-41 3-89.31-24.03Q350-304.92 338-371.92q-2-10.23-8.58-16.08-6.57-5.85-15.65-5.85-10.92 0-18.19 8.2-7.27 8.19-4.66 21.03 16.23 87.16 78.47 124.62 62.23 37.46 120.46 33.85ZM480-100q-128.54 0-214.27-88.23Q180-276.46 180-408q0-93.08 74.5-204.04T480-853.84Q631-723 705.5-612.04 780-501.08 780-408q0 131.54-85.73 219.77Q608.54-100 480-100Z"/></symbol><symbol id="i-leak-retyping" viewBox="-4 -7 62 62"><path fill="currentColor" transform="matrix(0.05 0 0 0.05 0 48)" d="M290-260v-600h480v600H290Zm60-60h360v-480H350v480ZM150-120v-587.69h60V-180h407.69v60H150Zm200-200v-480 480Z"/><path class="drop" fill="#FF323C" stroke="none" transform="matrix(0.013372 0 0 0.013372 37.533 43.337)" d="M489.85-206.15q10.46-1 17.23-7.77t6.77-16.46q0-11.31-7.47-17.89-7.46-6.58-18.76-5.58-41 3-89.31-24.03Q350-304.92 338-371.92q-2-10.23-8.58-16.08-6.57-5.85-15.65-5.85-10.92 0-18.19 8.2-7.27 8.19-4.66 21.03 16.23 87.16 78.47 124.62 62.23 37.46 120.46 33.85ZM480-100q-128.54 0-214.27-88.23Q180-276.46 180-408q0-93.08 74.5-204.04T480-853.84Q631-723 705.5-612.04 780-501.08 780-408q0 131.54-85.73 219.77Q608.54-100 480-100Z"/></symbol></defs></svg>
-<div class="util"><div class="wrap util-in">
-  <p class="util-where">Gainesville; atendemos el condado de Alachua.</p>
-  <p class="util-call">Llame o escriba al <a class="tel" href="tel:+13522260681">(352) <span class="nw">226-0681</span></a></p>
-  <nav class="lang" aria-label="Idioma"><a href="../../../industries/roofing/" hreflang="en" lang="en" data-lang="en"><span aria-hidden="true">EN</span><span class="sr-only">English</span></a><span class="on" aria-current="true" lang="es"><span aria-hidden="true">ES</span><span class="sr-only">Español</span></span></nav>
-</div></div>
-<header class="bar"><div class="wrap bar-in">
-  <a class="brand" href="../../../es/" aria-label="Lumora, página de inicio"><svg viewBox="0 0 297 72" width="99" height="24" aria-hidden="true" focusable="false"><use href="#lm-word"/><use href="#lm-mark"/></svg></a>
-  <nav class="nav-main" aria-label="Principal"><ul><li><a href="../../../es/">Inicio</a></li><li><a href="../../../es/how-it-works/">Cómo funciona</a></li><li><a href="../../../es/industries/" aria-current="true">A quién atendemos</a></li><li><a href="../../../es/leak-check/">Calculadora de pérdidas</a></li><li><a href="../../../es/about/">Quiénes somos</a></li><li><a href="../../../es/articles/">Artículos</a></li><li><a href="../../../es/contact/">Contacto</a></li></ul></nav>
-  <a class="btn btn-bar" href="../../../es/contact/">Llamada sin costo</a>
-  <details class="menu">
-    <summary><span class="ico" aria-hidden="true"></span><span class="menu-t">Menú</span></summary>
-    <div class="menu-panel"><div class="wrap">
-      <nav aria-label="Principal"><ul><li><a href="../../../es/">Inicio</a></li><li><a href="../../../es/how-it-works/">Cómo funciona</a></li><li><a href="../../../es/industries/" aria-current="true">A quién atendemos</a></li><li><a href="../../../es/leak-check/">Calculadora de pérdidas</a></li><li><a href="../../../es/about/">Quiénes somos</a></li><li><a href="../../../es/articles/">Artículos</a></li><li><a href="../../../es/contact/">Contacto</a></li></ul></nav>
-      <a class="btn" href="../../../es/contact/">Llámenos o escríbanos</a>
-    </div></div>
-  </details>
-</div></header>
-<main id="main">
-<div class="page-head bone"><div class="wrap">
-  <nav class="crumbs" aria-label="Ruta de navegación"><ol><li><a href="../../../es/">Inicio</a></li><li><a href="../../../es/industries/">A quién atendemos</a></li><li><span aria-current="page">Dónde pierden dinero los techadores</span></li></ol></nav>
-  <div class="ph-main"><h1>Dónde pierden dinero los techadores</h1><div class="sstrip"><span class="ss-l">Cheques de depreciación que nadie pidió</span><span class="stamp">Ejemplo</span><b class="ss-v">$771 / mes</b><span class="ss-f">3 trabajos con seguro × 1 de cada 20 que nunca se pide (tasa de ejemplo) × $5,140 retenidos</span></div><p class="lede">Presupuestos grandes por los que nadie volvió a llamar. Llamadas que nadie contesta mientras el equipo está en un techo. Un depósito del 30 por ciento, y el plazo del permiso que nadie vigiló. Contamos cada uno a partir de sus propios registros, y trabajamos dentro de las reglas de Florida sobre trabajos por tormentas.</p><div class="actions"><a class="btn btn-hero" href="../../../es/contact/">Llámenos o escríbanos</a></div><p class="cta-note">Hasta 20 minutos, por teléfono, en español o en inglés. No cuesta nada, y si la visita no le conviene, se lo decimos claro.</p><p class="price-line"><b>La visita cuesta a partir de $500.</b> Si su negocio es más grande, le damos el precio en la llamada sin costo. Se descuenta de un arreglo de $1,500 o más que empiece dentro de los 30 días siguientes.</p><div class="mb"><p class="mb-h">Devolución del dinero</p><p><b>¿No le valió la pena?</b> Mándenos un texto o un correo dentro de los 7 días después de la llamada en que revisan su hoja, y le devolvemos <span class="red">lo que pagó por la visita</span>.</p><a class="tl" href="../../../es/how-it-works/#walk">Condiciones completas</a></div></div>
-  <div class="ph-aside"><details class="toc-fold toc-num"><summary>En esta página <span class="n">5 secciones</span></summary><nav aria-label="En esta página"><ul><li><a href="#looks-for">Lo que busca la visita</a></li><li><a href="#first-fix">Dónde probablemente empezará el primer arreglo</a></li><li><a href="#rules">Lo que nunca construimos para su negocio</a></li><li><a href="#season">La temporada</a></li><li class="toc-x"><a href="#read">Artículos sobre estas fugas</a></li></ul></nav></details><figure class="a-b a-fig"><div class="a-counter"><svg class="a-svg" viewBox="0 0 600 490" role="img" aria-label="Dibujo: una escalera contra el borde de un techo y una tabla con clip con un Presupuesto de Reparación de techo, marcado Sin respuesta y encerrado con bolígrafo rojo." focusable="false">
-<defs><filter id="site-fig-ladder-sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#3A2F1C" flood-opacity=".22"/></filter><filter id="site-fig-ladder-lg" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="6" dy="14" stdDeviation="12" flood-color="#3A2F1C" flood-opacity=".30"/></filter></defs>
-<path d="M0 160L230 40L360 110V470H0Z" fill="#FFFFFF" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/><path d="M-10 170L230 44L372 118" fill="none" stroke="#000000" stroke-width="10" stroke-linejoin="round"/><path d="M10 164.0l0 30" stroke="#D6CEBC" stroke-width="2"/><path d="M36 150.4l0 30" stroke="#D6CEBC" stroke-width="2"/><path d="M62 136.8l0 30" stroke="#D6CEBC" stroke-width="2"/><path d="M88 123.2l0 30" stroke="#D6CEBC" stroke-width="2"/><path d="M114 109.6l0 30" stroke="#D6CEBC" stroke-width="2"/><path d="M140 96.0l0 30" stroke="#D6CEBC" stroke-width="2"/><path d="M166 82.4l0 30" stroke="#D6CEBC" stroke-width="2"/><path d="M192 68.8l0 30" stroke="#D6CEBC" stroke-width="2"/><path d="M0 200L230 80L360 150" fill="none" stroke="#D6CEBC" stroke-width="2"/><rect x="0" y="210" width="360" height="260" fill="#F6F5F2" stroke="#000000" stroke-width="2.5"/><path d="M0 236H360" stroke="#D8D7D0" stroke-width="1.5"/><path d="M0 262H360" stroke="#D8D7D0" stroke-width="1.5"/><path d="M0 288H360" stroke="#D8D7D0" stroke-width="1.5"/><path d="M0 314H360" stroke="#D8D7D0" stroke-width="1.5"/><path d="M0 340H360" stroke="#D8D7D0" stroke-width="1.5"/><path d="M0 366H360" stroke="#D8D7D0" stroke-width="1.5"/><path d="M0 392H360" stroke="#D8D7D0" stroke-width="1.5"/><path d="M0 418H360" stroke="#D8D7D0" stroke-width="1.5"/><path d="M0 444H360" stroke="#D8D7D0" stroke-width="1.5"/><g transform="rotate(-12 200 280)"><g filter="url(#site-fig-ladder-sh)"><rect x="140" y="80" width="16" height="400" fill="#C9C9C4" stroke="#000000" stroke-width="2.5"/><rect x="240" y="80" width="16" height="400" fill="#C9C9C4" stroke="#000000" stroke-width="2.5"/><rect x="156" y="110" width="84" height="10" fill="#C9C9C4" stroke="#000000" stroke-width="2"/><rect x="156" y="158" width="84" height="10" fill="#C9C9C4" stroke="#000000" stroke-width="2"/><rect x="156" y="206" width="84" height="10" fill="#C9C9C4" stroke="#000000" stroke-width="2"/><rect x="156" y="254" width="84" height="10" fill="#C9C9C4" stroke="#000000" stroke-width="2"/><rect x="156" y="302" width="84" height="10" fill="#C9C9C4" stroke="#000000" stroke-width="2"/><rect x="156" y="350" width="84" height="10" fill="#C9C9C4" stroke="#000000" stroke-width="2"/><rect x="156" y="398" width="84" height="10" fill="#C9C9C4" stroke="#000000" stroke-width="2"/><rect x="156" y="446" width="84" height="10" fill="#C9C9C4" stroke="#000000" stroke-width="2"/></g></g><g transform="rotate(5 455.0 290)"><rect x="318" y="56" width="274" height="400" rx="12" fill="#7A5C3A" stroke="#000000" stroke-width="2.5" filter="url(#site-fig-ladder-sh)"/><rect x="330" y="80" width="250" height="364" fill="#FFFFFF" stroke="#000000" stroke-width="1.2"/><rect x="405.0" y="44" width="100" height="40" rx="8" fill="#C9C9C4" stroke="#000000" stroke-width="2.5"/><text x="350" y="136" font-size="28" font-weight="700">Presupuesto</text><text x="350" y="174" font-size="26" fill="#6E6D66">Reparación</text><text x="350" y="204" font-size="26" fill="#6E6D66">de techo</text><path d="M350 220H560" stroke="#000000" stroke-width="2"/><rect x="350" y="242" width="190" height="10" rx="5" fill="#D8D7D0"/><rect x="350" y="268" width="150" height="10" rx="5" fill="#D8D7D0"/><rect x="350" y="294" width="170" height="10" rx="5" fill="#D8D7D0"/><path d="M350 330H560" stroke="#000000" stroke-width="2"/><text x="354" y="386" font-size="28" font-weight="700">Sin respuesta</text><path d="M340 366C342 365 345 362 348 360C351 358 355 357 360 355C365 354 370 353 376 352C382 351 389 350 397 349C406 348 413 347 427 347C441 346 469 345 483 345C497 344 503 345 511 345C520 345 527 345 533 346C539 347 545 348 549 349C554 350 558 351 562 353C565 354 568 356 570 358C572 360 574 362 574 366C575 370 576 377 575 381C574 385 573 386 571 389C569 391 567 393 563 395C560 396 556 398 551 399C546 401 541 402 534 403C528 404 521 405 512 406C503 407 496 408 481 408C467 409 439 410 424 410C410 411 403 411 394 410C386 410 379 410 372 409C366 408 360 407 355 406C350 405 346 404 343 402C339 400 336 399 334 396C332 394 330 392 330 388C329 384 328 377 329 373C330 369 331 367 333 365C335 363 338 361 341 359C345 357 352 355 354 354" fill="none" stroke="#FF323C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></g>
-</svg></div><figcaption>La escalera en el borde del techo, y el presupuesto en la tabla con clip, sin respuesta.</figcaption></figure><nav class="toc toc-wide toc-num" aria-labelledby="toc-h"><p class="toc-h" id="toc-h">En esta página</p><ul><li><a href="#looks-for">Lo que busca la visita</a></li><li><a href="#first-fix">Dónde probablemente empezará el primer arreglo</a></li><li><a href="#rules">Lo que nunca construimos para su negocio</a></li><li><a href="#season">La temporada</a></li><li class="toc-x"><a href="#read">Artículos sobre estas fugas</a></li></ul></nav></div>
-</div></div>
-<div class="wrap ind-body">
-  <div class="ind-main">
-    <section id="looks-for" aria-labelledby="looks-for-h"><p class="x-n" aria-hidden="true">01</p><div class="sec-head"><h2 id="looks-for-h">Lo que busca la visita</h2></div><ul class="leaks"><li><svg class="ico leak-i" aria-hidden="true" focusable="false"><use href="#i-leak-followups"/></svg><div><h3>Presupuestos sin seguimiento</h3><p>En los trabajos particulares, un techo nuevo es el presupuesto más grande que usted hace, así que uno que se queda sin respuesta importa. En los trabajos con seguro, el precio lo fija la evaluación del ajustador, y el dinero que espera es el cheque de depreciación, que solo llega cuando alguien lo pide.</p><p>La hoja lo cuenta con sus propios registros. Los recordatorios le llegan a usted de forma predeterminada; un recordatorio al propietario necesita su consentimiento por escrito.</p></div></li><li><svg class="ico leak-i" aria-hidden="true" focusable="false"><use href="#i-leak-calls"/></svg><div><h3>Llamadas que nadie contesta desde el techo</h3><p>Nadie contesta desde una escalera. La hoja cuenta las llamadas que nunca se devolvieron, por hora y por día.</p></div></li><li><svg class="ico leak-i" aria-hidden="true" focusable="false"><use href="#i-leak-retyping"/></svg><div><h3>El mismo trabajo, anotado tres veces</h3><p>Las medidas, el presupuesto, el calendario, QuickBooks. La hoja mide el tiempo y pone la tarifa por hora en esa fila.</p></div></li><li><svg class="ico leak-i" aria-hidden="true" focusable="false"><use href="#i-leak-quotes"/></svg><div><h3>Fechas que nadie vigiló</h3><p>Un depósito de más del 10 por ciento obliga a pedir el permiso dentro de 30 días (F.S. 489.126), salvo que el propietario haya aceptado por escrito un plazo más largo.</p><p>En la parte no incorporada del condado de Alachua, si nadie pide la inspección de obra en proceso a tiempo, hay que volver a quitar parte del techo para que el inspector vea la base de madera. En trabajos con seguro, un suplemento presentado más de 18 meses después de la tormenta llega tarde (F.S. 627.70132). La hoja muestra cada trabajo abierto frente a sus fechas.</p></div></li></ul></section>
-    <section id="first-fix" aria-labelledby="first-fix-h"><p class="x-n" aria-hidden="true">02</p><div class="sec-head"><h2 id="first-fix-h">Dónde probablemente empezará el primer arreglo</h2></div><p class="firstfix">Una lista con las fechas de cada trabajo: el plazo del permiso después de un depósito, las inspecciones, el plazo para el suplemento y el pedido de la depreciación. O, donde su programa no lo haga ya, un recordatorio para usted cuando un presupuesto lleva cierto número de días sin respuesta. Los dos se arman con las herramientas que usan los techadores, como JobNimbus, AccuLynx, CompanyCam o QuickBooks Online.</p><p class="decides">Lo decide la hoja, no esta página. Elegimos la fuga que más dinero recupera en relación con el esfuerzo, una cuyo resultado usted pueda ver en sus propios registros en menos de 90 días.</p></section>
-    <section id="rules" aria-labelledby="rules-h"><div class="rulebox"><p class="x-n" aria-hidden="true">03</p><h2 id="rules-h">Lo que nunca construimos para su negocio</h2><p>Ningún mensaje, caja ni promoción le ofrece a un propietario un reembolso, regalo, tarjeta de regalo, efectivo, cupón, exención del deducible ni ninguna otra cosa de valor a cambio de una inspección del techo o de un reclamo al seguro.</p><p>Ninguna automatización paga una recompensa por recomendación en un trabajo pagado con dinero del seguro (F.S. 489.147, hasta $10,000 por infracción).</p><p>Todo volante, colgador de puerta o mensaje en el que ayudemos y que mencione un reclamo por el techo lleva el aviso que exige la ley, en letra de 12 puntos o más y de al menos la mitad del tamaño de la letra más grande del material: el propietario paga su deducible, no cobrarlo es fraude de seguros, y presentar un reclamo falso también lo es.</p></div></section>
-    <section id="season" aria-labelledby="season-h"><p class="x-n" aria-hidden="true">04</p><div class="sec-head"><h2 id="season-h">La temporada</h2></div>
-      <p class="firstfix">La temporada de huracanes, de junio a noviembre, es cuando más suenan los teléfonos de los techeros. También es cuando más importan las reglas de arriba.</p></section>
-    <section id="read" aria-labelledby="read-h"><div class="sec-head"><h2 id="read-h">Artículos sobre estas fugas</h2></div><ul class="linkrows"><li><a href="../../../es/articles/estimate-follow-up-florida/"><span>Cómo hacer seguimiento a una cotización en Florida, y cuándo un recordatorio por mensaje de texto necesita consentimiento</span></a></li><li><a href="../../../es/articles/texting-customers-in-florida/"><span>Mensajes de texto a sus clientes en Florida: cinco reglas en palabras sencillas</span></a></li></ul></section>
-  </div>
-  <aside class="ind-side"><div class="ind-side-in">
-    <nav class="side-nav" aria-labelledby="side-h"><h2 id="side-h">A quién atendemos</h2><ul><li><a href="../../../es/industries/plumbing/">Plomería</a></li><li><a href="../../../es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li><li><a href="../../../es/industries/electrical/">Electricidad</a></li><li><a href="../../../es/industries/water-damage-and-mold/">Daños por agua y moho</a></li><li><a href="../../../es/industries/pest-control/">Control de plagas</a></li><li><a href="../../../es/industries/roofing/" aria-current="page">Techos</a></li><li><a href="../../../es/industries/restaurants-and-bars/">Restaurantes y bares</a></li><li><a href="../../../es/industries/property-managers/">Administradores de propiedades</a></li><li><a href="../../../es/industries/">Todos los tipos de negocio</a></li></ul></nav>
-    <figure class="sheet home tsheet" aria-labelledby="ts-t">
-  <div class="sheet-head"><div><span class="sheet-title" id="ts-t">Hoja de visita</span><span class="sheet-sub">Techos, 2 cuadrillas, condado de Alachua</span></div><span class="stamp">Ejemplo</span></div>
-  <table>
-    <caption class="sr-only">Hoja de visita de ejemplo para un negocio como el suyo, con cifras ilustrativas: cada fuga, la fórmula detrás y lo que cuesta.</caption>
-    <thead><tr><th scope="col">Fuga</th><th scope="col" class="usd">Al mes</th></tr></thead>
-    <tbody><tr><th scope="row" class="leak" colspan="2"><span class="lk"><svg class="ico lk-i" aria-hidden="true" focusable="false"><use href="#i-leak-followups"/></svg><span class="lk-t"><span class="hl"><b>Cheques de depreciación que nadie pidió</b><span class="hv">$771</span></span><span class="f">3 trabajos con seguro × 1 de cada 20 que nunca se pide (tasa de ejemplo) × $5,140 retenidos</span></span></span></th></tr><tr><th scope="row" class="leak" colspan="2"><span class="lk"><svg class="ico lk-i" aria-hidden="true" focusable="false"><use href="#i-leak-quotes"/></svg><span class="lk-t"><span class="hl"><b>Base de madera podrida cambiada al quitar el techo, que nunca se cobró</b><span class="hv">$689</span></span><span class="f">2 trabajos con la base de madera podrida × 1 de cada 2 que nunca se cobra (tasa de ejemplo) × $688.80</span></span></span></th></tr><tr><th scope="row" class="leak" colspan="2"><span class="lk"><svg class="ico lk-i" aria-hidden="true" focusable="false"><use href="#i-leak-retyping"/></svg><span class="lk-t"><span class="hl"><b>Las medidas anotadas tres veces</b><span class="hv">$224</span></span><span class="f">30 min por trabajo × 16 trabajos × $28 la hora</span></span></span></th></tr></tbody>
-    <tfoot><tr><th scope="row">Pérdida al mes, antes de cualquier arreglo</th><td class="usd">$1,684</td></tr></tfoot>
-  </table>
-  <p class="tb">Tiempo que recuperan usted o su oficina: <b>unas 8 horas al mes</b></p>
-  <div class="sheet-end"><p class="sheet-note">Cifras ilustrativas. Su hoja se arma con sus facturas, su calendario y su registro de llamadas.</p><svg class="sheet-mark" viewBox="0 0 90 72" aria-hidden="true" focusable="false"><use href="#lm-mark"/></svg></div>
-  <p class="sheet-more"><a class="tl" href="../../../es/how-it-works/#sample">Vea la hoja de ejemplo completa, de un negocio de plomería</a></p>
-</figure>
-  </div></aside>
-</div>
-<section class="cta" aria-labelledby="cta-h"><div class="wrap cta-in">
-  <h2 id="cta-h">Vea sus propios números</h2><p class="cta-p">Empiece con una llamada sin costo de hasta 20 minutos, o ponga primero sus números en la calculadora de pérdidas.</p>
-  <div class="actions"><a class="btn" href="../../../es/contact/">Llámenos o escríbanos</a><a class="tl" href="../../../es/leak-check/">Pruebe la calculadora de pérdidas</a></div>
-</div></section>
 
+<div class="util">
+  <div class="wrap util-in">
+    <span>Gainesville; atendemos el condado de Alachua.</span>
+    <span class="util-r"><span class="lang" role="group" aria-label="Idioma"><a href="/industries/roofing/" lang="en" hreflang="en" aria-label="EN, English">EN</a><a href="/es/industries/roofing/" aria-current="page" aria-label="ES, español">ES</a></span></span>
+  </div>
+</div>
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="/es/" aria-label="Lumora, página de inicio"><img src="/v4/assets/logo.svg" alt="" width="124" height="30"></a>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <ul>
+        <li><a class="u" href="/es/">Inicio</a></li>
+        <li><a class="u" href="/es/how-it-works/">Cómo funciona</a></li>
+        <li><a class="u" href="/es/industries/" aria-current="true">A quién atendemos</a></li>
+        <li><a class="u" href="/es/leak-check/">Calculadora de pérdidas</a></li>
+        <li><a class="u" href="/es/about/">Quiénes somos</a></li>
+        <li><a class="u" href="/es/articles/">Artículos</a></li>
+        <li><a class="u" href="/es/contact/">Contacto</a></li>
+      </ul>
+    </nav>
+    <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
+    <a class="btn btn-sm" href="tel:+13522260681">Llámenos o escríbanos</a>
+    <span class="lang" role="group" aria-label="Idioma"><a href="/industries/roofing/" lang="en" hreflang="en" aria-label="EN, English">EN</a><a href="/es/industries/roofing/" aria-current="page" aria-label="ES, español">ES</a></span>
+    <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menú</button>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero hm4-hero" id="top" data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="sheet">
+  <div class="wrap hero-g">
+    <div class="hero-copy">
+      <p class="eyebrow">Operaciones y automatización para contratistas de techos de Gainesville y el condado de Alachua.</p>
+      <h1>Por dónde se le va el dinero a un techero</h1>
+      <p class="hero-one">La madera podrida que se cambió al quitar el techo viejo y nunca se cobró.</p>
+      <p class="t-lede"><span class="hm-recog">Depreciación que nadie pidió y el plazo de un permiso a punto de vencer.</span> Recorremos su negocio, le decimos cuánto le cuesta cada problema y lo arreglamos con lo que ya usa.</p>
+    </div>
+    <div class="hero-act">
+      <div class="cta">
+        <div class="cta-row">
+          <a class="btn btn-lg" href="tel:+13522260681">Llámenos o escríbanos</a>
+          <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
+          <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a>
+        </div>
+      </div>
+    </div>
+    <a class="hero-strip strip" href="#sheet" data-bind="strip">
+      <span class="strip-k" data-s="sub">Un pequeño negocio de techos con 2&nbsp;cuadrillas</span>
+      <span class="stamp">Ejemplo</span>
+      <span class="strip-b" data-s="leak">Cheques de depreciación que nadie pidió</span>
+      <span class="strip-usd" data-s="usd">$771 al mes</span><span class="sr">, vea la hoja de ejemplo completa</span>
+    </a>
+    <div class="hero-terms">
+      <p class="reply"><span data-shared="reply">Le contestamos o le devolvemos la llamada el mismo día hábil. Si llama después de las 5&nbsp;p.&nbsp;m. o en fin de semana, le respondemos a más tardar a las 10&nbsp;a.&nbsp;m. del próximo día hábil.</span> En español o en inglés.</p>
+      <p class="price"><span data-shared="price"><b>La visita cuesta a partir de $500.</b> Si su negocio es más grande, le damos el precio en la llamada sin costo. Se descuenta de un arreglo de $1,500 o más que empiece dentro de los 30 días siguientes.</span></p>
+      <p class="mb"><span data-shared="moneyback"><b>¿No le valió la pena?</b> Mándenos un mensaje de texto o un correo en los 7 días después de la llamada en que repasamos su hoja con usted, y le devolvemos <b class="red">lo que pagó por la visita</b>.</span> <a class="u" href="/es/how-it-works/#walk">Condiciones completas</a></p>
+    </div>
+    <div class="hero-tool">
+      <figure class="clip" aria-label="Hoja de visita de ejemplo">
+        <div class="board">
+          <span class="clamp" aria-hidden="true"><i></i></span>
+          <div class="sheet" id="sheet" data-bind="sheet" data-ring data-fill data-short>
+            <header class="sh-head">
+              <div><b class="sh-title">Hoja de visita</b><span class="sh-sub" data-f="sub">Techos, 2&nbsp;cuadrillas, condado de Alachua</span></div>
+              <span class="stamp">Ejemplo</span>
+            </header>
+            <p class="sr" aria-live="polite" data-f="live"></p>
+            <div class="sh-cols"><span>Problema</span><span data-f="per">Al mes</span></div>
+            <ol class="sh-rows" data-f="rows"><li style="--i:0" data-task="reminders"><div class="sh-l"><b>Cheques de depreciación que nadie pidió</b><small>3 trabajos × 1 de cada 20 × $5,140</small></div><span class="sh-usd">$771<svg class="pen-ring" viewBox="0 0 61 51" aria-hidden="true"><path pathLength="1" d="M8.5 11.7C8.9 11.2 9.9 9.8 10.8 9.0C11.7 8.2 12.7 7.3 13.8 6.6C14.8 5.9 16.0 5.2 17.2 4.6C18.4 4.1 19.6 3.6 20.9 3.2C22.2 2.9 23.7 2.6 25.1 2.4C26.4 2.3 27.8 2.2 29.2 2.3C30.6 2.4 32.0 2.6 33.3 2.8C34.6 3.1 35.9 3.4 37.1 3.8C38.4 4.2 39.6 4.7 40.7 5.2C41.9 5.7 43.0 6.3 44.1 6.9C45.1 7.5 46.1 8.2 47.1 8.9C48.0 9.6 49.0 10.3 49.9 11.0C50.8 11.8 51.6 12.6 52.4 13.4C53.3 14.2 54.1 15.0 54.8 15.9C55.5 16.8 56.2 17.8 56.8 18.8C57.3 19.8 57.9 20.8 58.2 21.9C58.6 22.9 59.0 24.1 59.1 25.2C59.3 26.3 59.4 27.4 59.3 28.6C59.2 29.7 59.0 30.9 58.6 32.0C58.2 33.1 57.8 34.2 57.2 35.2C56.6 36.3 55.8 37.2 55.0 38.1C54.2 39.1 53.3 39.9 52.3 40.7C51.3 41.5 50.2 42.2 49.1 42.8C48.0 43.5 46.9 44.1 45.7 44.6C44.5 45.1 43.3 45.6 42.1 46.0C40.9 46.4 39.7 46.8 38.5 47.1C37.2 47.4 36.0 47.7 34.7 48.0C33.4 48.2 32.2 48.4 30.9 48.6C29.6 48.7 28.2 48.8 26.9 48.8C25.5 48.8 24.1 48.8 22.8 48.7C21.4 48.6 20.1 48.4 18.7 48.1C17.4 47.8 16.0 47.4 14.8 46.9C13.5 46.4 12.2 45.8 11.1 45.1C10.0 44.4 9.0 43.6 8.0 42.8C7.1 41.9 6.2 41.0 5.4 40.0C4.7 39.0 4.1 38.0 3.6 36.9C3.2 35.9 2.8 34.8 2.5 33.7C2.2 32.6 2.1 31.4 2.0 30.3C1.9 29.2 1.9 28.1 2.0 27.1C2.0 26.0 2.2 24.9 2.4 23.8C2.6 22.8 2.9 21.7 3.2 20.7C3.5 19.7 3.8 18.7 4.2 17.6C4.7 16.6 5.2 15.6 5.7 14.6C6.3 13.6 6.9 12.6 7.6 11.7C8.3 10.7 9.1 9.8 10.0 8.9C10.9 8.0 11.8 7.2 12.9 6.4C13.9 5.6 15.1 4.9 16.3 4.3C17.5 3.7 19.5 3.0 20.2 2.8"></path></svg></span></li><li style="--i:1" data-task="quotes"><div class="sh-l"><b>Base de madera podrida cambiada al quitar el techo, que nunca se cobró</b><small>2 trabajos × 1 de cada 2 × $688.80</small></div><span class="sh-usd">$689</span></li><li style="--i:2" data-task="retyping"><div class="sh-l"><b>Las medidas anotadas tres veces</b><small>30 min × 16 trabajos × $28 la hora</small></div><span class="sh-usd">$224</span></li></ol>
+            <div class="sh-total"><span>Lo que pierde hoy</span><b data-f="total">$1,684 al mes</b></div>
+            <p class="sh-time" data-f="time">Usted o su oficina se ahorran <b>unas 8 horas al mes</b></p>
+            <p class="sh-note">La hoja de su negocio sale de su lista de trabajos, sus facturas y las cartas de la aseguradora.</p>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+  <div class="facts4">
+    <ul class="wrap" aria-label="Datos que puede comprobar">
+      <li>Empresa de Florida, aquí en Gainesville</li>
+      <li>En español o en inglés</li>
+      <li>Devolución del dinero hasta 7 días después de repasar su hoja con usted</li>
+      <li>No vendemos clientes potenciales ni lo amarramos a un contrato largo</li>
+    </ul>
+  </div>
+</section>
+
+<section class="band hm4-auto pl-auto" id="automate" data-ground="sheet" data-density="mid" data-width="split" data-loud="list" data-medium="list">
+  <div class="wrap pl-auto-g">
+    <h2>Lo que automatizamos en una compañía de techos</h2>
+    <p class="auto-tools"><span data-shared="tools">Todo queda en lo que ya usa: Excel, QuickBooks, la aplicación donde lleva sus trabajos o un formulario sencillo que le armamos.</span></p>
+    <div class="pl-auto-r">
+      <ul class="auto-list">
+        <li data-task="email">El correo de la aseguradora pasa solo al expediente del trabajo: la compañía, el número de reclamo, el deducible y el ajustador.</li>
+        <li data-task="bills">Las facturas de ABC Supply, SRS o Beacon, comparadas con lo que se pidió y lo que llegó.</li>
+        <li data-task="reminders">Los trabajos que necesitan el <span lang="en">Notice of Commencement</span> registrado quedan marcados hasta que esté en el expediente.</li>
+        <li data-task="calendar">La inspección de obra en proceso, anotada para el día en que se quita el techo viejo, para no tener que levantar tejas otra vez.</li>
+        <li data-task="invoices">Los cheques del seguro que esperan la firma del banco de la hipoteca, en una lista con lo que todavía pide cada banco.</li>
+        <li data-task="reminders">Después de cada inspección final, la garantía de las tejas y la inspección de mitigación de viento quedan en la lista de su oficina.</li>
+      </ul>
+      <p class="auto-close">En la visita vemos cuáles de estos problemas tiene su negocio.</p>
+      <div class="pl-who">
+        <p class="pl-who-line"><span data-shared="who.for">Para negocios que lleva el propio dueño, con una persona en la oficina o ninguna.</span></p>
+        <p class="who-not"><span class="t-label">Lo que no cambia</span> <span data-shared="notfor">Siga con JobNimbus, AccuLynx o el programa que ya usa para llevar sus trabajos. Nosotros nos encargamos de todo lo demás.</span></p>
+      </div>
+    </div>
+    <figure class="pic auto-pic pl-auto-pic" data-extra="computer only: on a computer the left column is empty under the heading, and row 1 as a picture breaks up two sections of text; on a phone it would add about 450px to a page near its height limit, and walk stop 1 shows the same insurance job in the shop's own list">
+      <div class="ap-stack" role="img" aria-label="Ejemplo: la liquidación del reclamo 0026-2219-4R de Northpine Mutual, que llega por correo en PDF: asegurado James Wilson, 143 Main St, daño por viento el 19 de julio de 2026; costo de reposición 17,242.74, depreciación retenida 5,140.00, deducible de 2,500.00 por todos los demás riesgos, y este pago, 9,602.74. Al lado, la pestaña Reclamos de la hoja Trabajos 2026 del negocio: el asegurado, el número de reclamo y los 5,140.00 retenidos pasan solos a la fila 38 como trabajo TR-26-118, marcado Sacado del PDF; nadie escribió nada.">
+        <div class="scr-win ap-pdf" lang="en">
+          <div class="win-tb"><i></i><i></i><i></i><span>Statement of loss 0026-2219-4R.pdf</span></div>
+          <div class="ap-page">
+            <p class="ap-co">Northpine Mutual</p>
+            <p class="ap-dt">Statement of loss</p>
+            <dl>
+              <div><dt>Insured</dt><dd><mark>James Wilson</mark></dd></div>
+              <div class="ap-hm"><dt>Property</dt><dd>143 Main St</dd></div>
+              <div><dt>Claim</dt><dd><mark>0026-2219-4R</mark></dd></div>
+              <div class="ap-hm"><dt>Loss</dt><dd>Wind, 07/19/2026</dd></div>
+              <div class="ap-hm"><dt>Replacement cost</dt><dd>17,242.74</dd></div>
+              <div><dt>Depreciation held</dt><dd><mark>5,140.00</mark></dd></div>
+              <div class="ap-hm"><dt>Deductible</dt><dd>2,500.00, all other perils</dd></div>
+              <div><dt>This payment</dt><dd>9,602.74</dd></div>
+            </dl>
+          </div>
+        </div>
+        <p class="ap-arrow">Pasa solo a su lista de trabajos</p>
+        <div class="scr-win ap-xl">
+          <div class="win-tb"><i></i><i></i><i></i><span>Trabajos 2026.xlsx</span></div>
+          <div class="win-b">
+            <div class="xl"><table>
+              <tr class="cl"><td></td><td>A</td><td>B</td><td class="hm">C</td><td>D</td><td>E</td></tr>
+              <tr><td>1</td><th>Trabajo</th><th>Asegurado</th><th class="hm">Reclamo</th><th>Retenido</th><th>Anotado</th></tr>
+              <tr class="on"><td>38</td><td>TR-26-118</td><td>Wilson, James</td><td class="hm">0026-2219-4R</td><td>5,140.00</td><td>Sacado del PDF</td></tr>
+            </table><div class="xl-tabs"><span>Trabajos</span><span class="on">Reclamos</span><span>Pedidos</span><span>Permisos</span><em>Listo</em></div></div>
+          </div>
+        </div>
+      </div>
+      <span class="samp">Ejemplo</span>
+    </figure>
+  </div>
+</section>
+
+<section class="band hm4-how" id="how" data-ground="paper" data-density="mid" data-width="wide" data-loud="steps" data-medium="timeline">
+  <div class="wrap">
+    <div class="how-h">
+      <h2>Cómo funciona</h2>
+      <p class="t-lede"><span data-shared="steps.stop">Puede parar en cualquier paso.</span></p>
+    </div>
+    <ol class="tl4">
+      <li>
+        <div class="tl-head"><h3><span data-shared="step1.when">Hoy</span></h3><span class="tl-tag free"><span data-shared="step1.cost">Sin costo</span></span></div>
+        <div class="tl-body"><p class="t-body"><span data-shared="step1.what">Una llamada sin costo, de hasta 20 minutos.</span> Le decimos claro si la visita le conviene.</p></div>
+      </li>
+      <li class="tl-big">
+        <div class="tl-head"><h3><span data-shared="step2.when">La visita</span></h3><span class="tl-tag"><span data-shared="step2.cost">Se paga</span></span></div>
+        <div class="tl-body">
+          <p class="t-body"><span data-shared="step2.what">Un recorrido a la medida de su negocio y una revisión de sus registros: facturas, calendario, lista de trabajos e historial de llamadas.</span> <span data-shared="step2.part">Usted firma una sola autorización para que podamos verlos.</span></p>
+          <p class="price"><span data-shared="price"><b>La visita cuesta a partir de $500.</b> Si su negocio es más grande, le damos el precio en la llamada sin costo. Se descuenta de un arreglo de $1,500 o más que empiece dentro de los 30 días siguientes.</span></p>
+          <p class="mb"><span data-shared="moneyback"><b>¿No le valió la pena?</b> Mándenos un mensaje de texto o un correo en los 7 días después de la llamada en que repasamos su hoja con usted, y le devolvemos <b class="red">lo que pagó por la visita</b>.</span></p>
+        </div>
+      </li>
+      <li>
+        <div class="tl-head"><h3><span data-shared="step3.when">Su hoja</span></h3></div>
+        <div class="tl-body"><p class="t-body"><span data-shared="step3.what">Cada problema con su cifra en dólares. La recibe unos 5&nbsp;días hábiles después de que nos llegan sus registros; a los negocios más grandes les damos el precio y una fecha en la llamada sin costo.</span> <span data-shared="step3.get">Es suya, decida lo que decida.</span></p></div>
+      </li>
+      <li>
+        <div class="tl-head"><h3><span data-shared="step4.when">Después, solo si usted quiere</span></h3><span class="tl-tag">Se paga</span></div>
+        <div class="tl-body">
+          <p class="t-body"><span data-shared="step4.what">Un arreglo, cotizado antes de empezar, y una revisión mensual que puede cancelar cualquier mes.</span></p>
+          <p class="t-small tl-ai">Reglas fijas que usted aprueba, inteligencia artificial o las dos cosas: usted decide. Todo lo que escriba esa herramienta espera su visto bueno, y nada de su negocio entra en ella sin su permiso.</p>
+        </div>
+      </li>
+    </ol>
+    <div class="cta-inline">
+      <a class="btn" href="tel:+13522260681">Llámenos o escríbanos</a>
+      <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
+      <p class="mb mb-s"><span data-shared="moneyback.short"><b>¿No le valió la pena?</b> Escríbanos en los 7 días después de que repasemos su hoja, y le devolvemos lo que pagó por la visita.</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="band pl-papers" id="deposit" data-ground="sheet" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
+  <div class="wrap pl-pw">
+    <div class="pl-pw-copy">
+      <h2>Día 28 de 30, y nadie ha solicitado el permiso.</h2>
+      <p class="pl-find">Un ejemplo: el trabajo TR-26-133, un techo nuevo que paga la dueña, sin seguro. Nancy Allen dejó un depósito del 30 por ciento el miércoles 9 de septiembre: $4,563.00 de un contrato de $15,210.00. Con más del 10 por ciento de depósito, hay que solicitar el permiso dentro de los 30 días siguientes al pago, salvo que ella haya aceptado por escrito un plazo más largo (F.S.&nbsp;489.126). En el día 28, el portal del condado no muestra ninguna solicitud. El estimador pensaba hacerla entre un trabajo y otro.</p>
+      <p class="pl-fix"><b>El arreglo:</b> cada depósito de más del 10 por ciento pone a correr un plazo en su lista de trabajos, con un aviso para usted el día 20 y los datos del permiso listos para que su oficina lo solicite. En su visita contamos los trabajos que pasaron el día 20 sin solicitud.</p>
+    </div>
+    <figure class="pic pl-docs-pic">
+      <div role="img" aria-label="Ejemplo: dos papeles del mismo techo nuevo, el trabajo TR-26-133. El contrato firmado de Turnstone Roofing, licencia CCC0000118: propietaria Nancy Allen, 137 Oak St, condado de Alachua, cambio de techo de 24.5 cuadros con tejas arquitectónicas, precio total 15,210.00, depósito de 4,563.00, el 30 por ciento, recibido el 9 de septiembre de 2026. Al lado, la búsqueda de permisos del condado para el 137 Oak St: No applications found, que quiere decir que no hay ninguna solicitud, encerrado a lápiz, y una fila de días desde el día 26, lunes 5 de octubre, hasta el día 30, viernes 9 de octubre, con hoy, el día 28, marcado. Un aviso arriba de la búsqueda: el depósito del 9 de septiembre pasa del 10 por ciento, no hay solicitud de permiso en el día 28, y hay que solicitarlo a más tardar el viernes 9 de octubre.">
+        <div class="pl-docs rf-docs">
+          <div class="doc rf-ct">
+            <div class="doc-h"><b>TURNSTONE ROOFING</b><span>CONTRATO TR-26-133</span></div>
+            <p class="doc-to">Lic. CCC0000118 · (352) 555-0150</p>
+            <dl class="rf-kv">
+              <div><dt>Propietaria</dt><dd>Allen, Nancy</dd></div>
+              <div><dt>Propiedad</dt><dd>137 Oak St, condado de Alachua</dd></div>
+              <div><dt>Trabajo</dt><dd>Techo nuevo, 24.5 cuadros, tejas arquitectónicas</dd></div>
+              <div><dt>Precio total</dt><dd>15,210.00</dd></div>
+              <div><dt>Depósito</dt><dd><b>4,563.00 (30%), 09/09/26</b></dd></div>
+            </dl>
+            <div class="rf-sig"><span>N. Allen, propietaria</span><span>M. Hale, por Turnstone Roofing</span></div>
+          </div>
+          <div class="scr-win pl-inv rf-ps">
+            <div class="win-tb"><i></i><i></i><i></i><span lang="en">Permit search</span></div>
+            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>El depósito del 9&nbsp;de&nbsp;sept. pasa del 10 por ciento y en el día 28 no hay solicitud. <b>Solicite el permiso a más tardar el vie.&nbsp;9&nbsp;de&nbsp;oct.</b></span></p>
+            <div class="rf-ps-b">
+              <p class="rf-q" lang="en"><span>Address</span><span>137 Oak St</span></p>
+              <p class="rf-none" lang="en"><span class="pc" data-draw>No applications found.</span></p>
+              <p class="rf-days-k">Días desde el depósito</p>
+              <ol class="rf-days">
+                <li><b>26</b><span>5 oct.</span></li>
+                <li><b>27</b><span>6 oct.</span></li>
+                <li class="on"><b>28</b><span>Hoy</span></li>
+                <li><b>29</b><span>8 oct.</span></li>
+                <li class="due"><b>30</b><span>9 oct.</span></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="samp">Ejemplo</span>
+    </figure>
+  </div>
+</section>
+
+<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" style="--hole:var(--sheet)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
+  <div class="wrap">
+    <h2 class="walk-h">Lo que encuentra una visita</h2>
+    <p class="walk-intro">Turnstone Roofing es un negocio de ejemplo con 2&nbsp;cuadrillas. En cada paso se ve la misma pantalla antes y después del arreglo, y la visita termina con el total de la hoja.</p>
+  </div>
+  <div class="wrap">
+    <div class="walk-grid">
+      <aside class="tally tally4" data-tally aria-label="La hoja de visita hasta ahora">
+        <div class="tally-card">
+          <p class="tally-h">Hoja de visita <span class="stamp">Ejemplo</span></p>
+          <p class="tally-sub" data-f="tsub">Turnstone Roofing, 2&nbsp;cuadrillas</p>
+          <ol><li data-i="0"><span>La lista de reclamos</span></li><li data-i="1"><span>La factura final</span></li><li data-i="2"><span>El Excel de los trabajos</span></li></ol>
+          <p class="tally-tot" data-f="tprog">Visita terminada, 3 de 3 pasos</p>
+        </div>
+        <p class="tally-bar" aria-hidden="true"><span data-f="bar-stop">Visita terminada</span><b data-f="bar-n">3 de 3</b></p>
+      </aside>
+      <ol class="stops" data-f="stops"><li class="stop page" id="stop-1" data-usd="771" data-place="La lista de reclamos" data-task="reminders"><div class="stop-h"><span class="tab-n">1</span><div class="stop-t"><h3><span class="sr">Paso 1: </span>La lista de reclamos</h3><p class="stop-leak">Cheques de depreciación que nadie pidió</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Ejemplo, después: la misma lista. Sin pedir está tachado a lápiz, y los 5,140.00 de James Wilson ahora dicen Listo el 7 de octubre. La línea de estado dice que los papeles de terminación van adjuntos para que su oficina los envíe: el certificado de terminación, la factura final, el resultado de la inspección y las fotos." data-label-before="Ejemplo, antes: los trabajos con seguro de Turnstone Roofing el miércoles 7 de octubre. Trabajo TR-26-104: la inspección final de Joan Baker se aprobó el 24 de agosto, y sus 3,980.00 retenidos se pagaron el 18 de septiembre. Trabajo TR-26-118: la final de James Wilson se aprobó el 21 de septiembre, y sus 5,140.00 retenidos dicen Sin pedir. El trabajo TR-26-126 de Ruth Carter, con 4,210.00 retenidos, no está terminado. La línea de estado dice que 1 final no tiene pedido y lleva 16 días esperando." data-label-after="Ejemplo, después: la misma lista. Sin pedir está tachado a lápiz, y los 5,140.00 de James Wilson ahora dicen Listo el 7 de octubre. La línea de estado dice que los papeles de terminación van adjuntos para que su oficina los envíe: el certificado de terminación, la factura final, el resultado de la inspección y las fotos."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Trabajos con seguro</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th class="hm">Trabajo</th><th>Propietario</th><th>Retenido</th><th>Estado</th></tr><tr><td class="hm nw">TR-26-104</td><td>Baker, Joan<small>Final aprobada el 24 de ago.</small></td><td class="nw">3,980.00</td><td><span class="st ok">Pagado el 18 de sept.</span></td></tr><tr class="n"><td class="hm nw">TR-26-118</td><td>Wilson, James<small>Final aprobada el 21 de sept.</small></td><td class="nw">5,140.00</td><td><span class="chg tr"><span class="was"><span class="st wt">Sin pedir</span></span><span class="now"><span class="st ok">Listo el 7&nbsp;de&nbsp;oct.</span></span></span></td></tr><tr><td class="hm nw">TR-26-126</td><td>Carter, Ruth<small>Sin final todavía</small></td><td class="nw">4,210.00</td><td><span class="st gy">Trabajo sin terminar</span></td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">Finales sin pedido: 1, con 16 días de espera</span><span class="now">Papeles de terminación adjuntos, para que su oficina los envíe</span></span></p></div></div></div><div class="seg" role="group" aria-label="Mostrar el paso 1"><button type="button" data-show="before" aria-pressed="false">Antes</button><button type="button" data-show="after" aria-pressed="true">Después</button></div><span class="samp">Ejemplo</span></div><div class="stop-notes"><p class="pencil">La inspección final se aprobó el 21 de septiembre. A los dieciséis días, nadie había pedido la depreciación.</p><p class="find"><span class="find-usd money">$771 al mes<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><li class="stop page" id="stop-2" data-usd="689" data-place="La factura final" data-task="quotes"><div class="stop-h"><span class="tab-n">2</span><div class="stop-t"><h3><span class="sr">Paso 2: </span>La factura final</h3><p class="stop-leak">Base de madera podrida cambiada al quitar el techo, que nunca se cobró</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Ejemplo, después: el mismo borrador. El 0 está tachado a lápiz y dice 6 hojas, 688.80, según el reporte de la cuadrilla del lunes 5 de octubre, con 6 fotos. El saldo a pagar es 10,082.80, y la línea de estado dice que espera su aprobación." data-label-before="Ejemplo, antes: la factura TR-26-139 de Turnstone Roofing para Frank Ross, 145 Main St, en borrador. El cambio de techo, 22 cuadros de tejas arquitectónicas, 13,420.00 según contrato. La línea de la madera podrida, de la página 2 del contrato, por hoja a 114.80, dice 0 hojas y 0.00. Menos el depósito recibido el 21 de septiembre, 4,026.00, el saldo a pagar es 9,394.00. La línea de estado dice que la madera no se comparó con el reporte de la cuadrilla." data-label-after="Ejemplo, después: el mismo borrador. El 0 está tachado a lápiz y dice 6 hojas, 688.80, según el reporte de la cuadrilla del lunes 5 de octubre, con 6 fotos. El saldo a pagar es 10,082.80, y la línea de estado dice que espera su aprobación."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Borrador de factura</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Concepto</th><th>Cant.</th><th>Importe</th></tr><tr><td>Cambio de techo, tejas arquitectónicas<small>22 cuadros, según contrato</small></td><td class="nw">1</td><td class="nw">13,420.00</td></tr><tr class="n"><td><span class="chg"><span class="was">Madera podrida cambiada, por hoja a 114.80<small>Contrato, página 2</small></span><span class="now">Madera podrida cambiada, por hoja a 114.80<small>Reporte de la cuadrilla, lun. 5 de oct.: 6 hojas, 6 fotos</small></span></span></td><td class="nw"><span class="chg tr"><span class="was">0</span><span class="now">6</span></span></td><td class="nw"><span class="chg tr"><span class="was">0.00</span><span class="now">688.80</span></span></td></tr><tr><td>Menos el depósito recibido el 21 de sept.</td><td class="nw"></td><td class="nw">(4,026.00)</td></tr><tr><td>Saldo a pagar</td><td class="nw"></td><td class="nw"><span class="chg tr"><span class="was">9,394.00</span><span class="now">10,082.80</span></span></td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">Ross, Frank, 145 Main St · madera sin comparar con el reporte de la cuadrilla</span><span class="now">Ross, Frank, 145 Main St · 6 hojas según el reporte de la cuadrilla, para su aprobación</span></span></p></div></div></div><div class="seg" role="group" aria-label="Mostrar el paso 2"><button type="button" data-show="before" aria-pressed="false">Antes</button><button type="button" data-show="after" aria-pressed="true">Después</button></div><span class="samp">Ejemplo</span></div><div class="stop-notes"><p class="pencil">El lunes se pusieron seis hojas nuevas. La factura no las muestra.</p><p class="find"><span class="find-usd money">$689 al mes<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><li class="stop page" id="stop-3" data-usd="224" data-place="El Excel de los trabajos" data-task="retyping"><div class="stop-h"><span class="tab-n">3</span><div class="stop-t"><h3><span class="sr">Paso 3: </span>El Excel de los trabajos</h3><p class="stop-leak">Las medidas anotadas tres veces</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Ejemplo, después: la misma hoja. La fila 148 se escribe una vez desde el reporte, las filas del pedido y del permiso dicen que salen de la fila 148, el 25.8 está tachado a lápiz y corregido a 28.5, y la barra de fórmulas muestra que la celda C149 dice =C148." data-label-before="Ejemplo, antes: la hoja Trabajos 2026 del negocio. El trabajo TR-26-147 de Doug Parker está anotado tres veces desde el reporte de medidas, en las filas 148 a 150: para el presupuesto, otra vez para el pedido de material y otra vez para la solicitud del permiso. La fila del pedido de material dice 25.8 cuadros en vez de 28.5." data-label-after="Ejemplo, después: la misma hoja. La fila 148 se escribe una vez desde el reporte, las filas del pedido y del permiso dicen que salen de la fila 148, el 25.8 está tachado a lápiz y corregido a 28.5, y la barra de fórmulas muestra que la celda C149 dice =C148."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Trabajos 2026.xlsx</span></div><div class="win-b"><div class="xl"><div class="xl-fx"><span class="fx-c">C149</span><b>fx</b><span class="chg"><span class="was">25.8</span><span class="now">=C148</span></span></div><table><tbody><tr class="cl"><td></td><td>A</td><td class="hm">B</td><td>C</td><td>D</td></tr><tr><td>1</td><th>Trabajo</th><th class="hm">Cliente</th><th>Cuadros</th><th>Anotado</th></tr><tr class="n"><td>148</td><td class="nw">TR-26-147</td><td class="hm">Parker, Doug</td><td>28.5</td><td><span class="chg"><span class="was">Presupuesto, a mano</span><span class="now"><span class="st ok">Escrito una vez, del reporte</span></span></span></td></tr><tr><td>149</td><td class="nw">TR-26-147</td><td class="hm">Parker, Doug</td><td><span class="chg tr"><span class="was">25.8</span><span class="now">28.5</span></span></td><td><span class="chg"><span class="was">Pedido de material, otra vez a mano</span><span class="now"><span class="st ok">Pedido de material, sale de la fila 148</span></span></span></td></tr><tr><td>150</td><td class="nw">TR-26-147</td><td class="hm">Parker, Doug</td><td>28.5</td><td><span class="chg"><span class="was">Solicitud del permiso, otra vez a mano</span><span class="now"><span class="st ok">Solicitud del permiso, sale de la fila 148</span></span></span></td></tr></tbody></table><div class="xl-tabs"><span class="on">Trabajos</span><span>Pedidos</span><span>Permisos</span><em>Listo</em></div></div></div></div></div><div class="seg" role="group" aria-label="Mostrar el paso 3"><button type="button" data-show="before" aria-pressed="false">Antes</button><button type="button" data-show="after" aria-pressed="true">Después</button></div><span class="samp">Ejemplo</span></div><div class="stop-notes"><p class="pencil">El reporte decía 28.5 cuadros y el pedido, 25.8. Al techo subieron nueve paquetes de menos.</p><p class="find"><span class="find-usd money">$224 al mes<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li></ol>
+    </div>
+    <div class="walk-end" data-bind="bigfig">
+      <p class="walk-total"><span>Lo que pierde hoy, antes de arreglar nada</span> <b><span data-f="n">$1,684</span> <span data-f="per">al mes</span></b></p>
+      <p class="walk-time" data-f="time">Usted o su oficina se ahorran <b>unas 8 horas al mes</b>.</p>
+      <div class="cta-row"><a class="btn" href="tel:+13522260681">Llámenos o escríbanos</a><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a></div>
+      <p class="mb mb-s"><span data-shared="moneyback.short"><b>¿No le valió la pena?</b> Escríbanos en los 7 días después de que repasemos su hoja, y le devolvemos lo que pagó por la visita.</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="band hm4-night pl-night" id="night" data-ground="night" data-density="mid" data-width="wide" data-loud="phone" data-medium="lock">
+  <div class="wrap n4">
+    <div class="n4-copy">
+      <h2>Las lonas de una noche de tormenta amanecen con precio y en el calendario de la cuadrilla.</h2>
+      <p class="t-lede">En temporada de huracanes, el teléfono del negocio pasa a quien esté de guardia, con una tarjeta en español y en inglés. Nadie se sube a un techo mojado de noche, así que las lonas quedan en el calendario de las 7&nbsp;a.&nbsp;m.</p>
+      <p class="pl-before"><b>Antes</b> Todas las llamadas de la tormenta le caen al celular, y las lonas se cobran cuando alguien se acuerda.</p>
+    </div>
+    <div class="n4-loop" data-loop data-steps>
+      <div class="n4-figs">
+        <div class="pic n4-phone"><div class="lk4 crop-m" data-day="lunes, 31 de agosto" data-eve="domingo, 30 de agosto" role="img" aria-label="Ejemplo: la pantalla de bloqueo del dueño a las 6:41 a. m., lunes, 31 de agosto. Lista de la mañana, 6:30 a. m.: hay 3 lonas en el calendario de las 7:00 a. m., y las facturas, en borrador con su precio de lona, esperan su visto bueno. De guardia, domingo, 5:00 p. m.: Eddie tiene el teléfono del negocio esta noche."><div class="ph4"><div class="ph4-scr dark"><div class="ph4-sb" aria-hidden="true"><span></span><span class="sb-ic"><svg viewBox="0 0 18 12" width="17" height="11"><rect x="0" y="8" width="3" height="4" rx=".7" fill="#fff"></rect><rect x="5" y="5.5" width="3" height="6.5" rx=".7" fill="#fff"></rect><rect x="10" y="3" width="3" height="9" rx=".7" fill="#fff"></rect><rect x="15" y="0" width="3" height="12" rx=".7" fill="#fff"></rect></svg><svg viewBox="0 0 16 12" width="15" height="11"><path d="M8 2.2c2.4 0 4.6.9 6.3 2.5l1.2-1.3C13.5 1.5 10.9.4 8 .4S2.5 1.5.5 3.4l1.2 1.3C3.4 3.1 5.6 2.2 8 2.2zm0 3.6c1.4 0 2.7.5 3.7 1.4l1.2-1.3C11.6 4.7 9.9 4 8 4s-3.6.7-4.9 1.9l1.2 1.3c1-.9 2.3-1.4 3.7-1.4zm0 3.5c-.6 0-1.2.2-1.6.6L8 11.6l1.6-1.7c-.4-.4-1-.6-1.6-.6z" fill="#fff"></path></svg><svg viewBox="0 0 27 12" width="24" height="11"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#fff" stroke-opacity=".45"></rect><rect x="2" y="2" width="17" height="8" rx="1.8" fill="#fff"></rect><path d="M24 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2z" fill="#fff" fill-opacity=".5"></path></svg></span></div><p class="lk4-d" aria-hidden="true">lunes, 31 de agosto</p><p class="lk4-t" aria-hidden="true">6:41</p><div class="lk4-nts" aria-hidden="true"><div class="lk4-nt on" data-n="6" data-t="6:30 AM" data-task="invoices"><span class="ap ap-list"><svg viewBox="0 0 16 16" width="16" height="16"><path fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" d="M5.5 4.5h7M5.5 8h7M5.5 11.5h7M2.8 4.5h.4M2.8 8h.4M2.8 11.5h.4"></path></svg></span><div><p class="nr"><b>Lista de la mañana</b><span>6:30&nbsp;a.&nbsp;m.</span></p><p>Hay 3 lonas en el calendario de las 7:00&nbsp;a.&nbsp;m. Las facturas, en borrador con su precio de lona, esperan su visto bueno.</p></div></div><div class="lk4-nt on" data-n="1" data-t="5:00 PM" data-task="calendar"><span class="ap ap-calendar"><svg viewBox="0 0 16 16" width="16" height="16"><rect x="2" y="3" width="12" height="11" rx="1.8" fill="none" stroke="#fff" stroke-width="1.5"></rect><path d="M2 6.5h12M5.2 1.8v2.6M10.8 1.8v2.6" stroke="#fff" stroke-width="1.5" stroke-linecap="round"></path></svg></span><div><p class="nr"><b>De guardia</b><span>dom. 5:00&nbsp;p.&nbsp;m.</span></p><p>Eddie tiene el teléfono del negocio esta noche.</p></div></div></div></div><svg class="ph4-f" viewBox="0 0 433 882" aria-hidden="true" focusable="false"><path fill="#232326" fill-rule="evenodd" d="M2 73C2 32.68 34.68 0 75 0H357C397.32 0 430 32.68 430 73V809C430 849.32 397.32 882 357 882H75C34.68 882 2 849.32 2 809V73ZM21.25 75C21.25 44.21 46.21 19.25 77 19.25H355C385.79 19.25 410.75 44.21 410.75 75V807C410.75 837.79 385.79 862.75 355 862.75H77C46.21 862.75 21.25 837.79 21.25 807V75Z"></path><path fill="#232326" d="M0 171C0 170.45.45 170 1 170H3V204H1C.45 204 0 203.55 0 203V171ZM1 234C1 233.45 1.45 233 2 233H3.5V300H2C1.45 300 1 299.55 1 299V234ZM1 319C1 318.45 1.45 318 2 318H3.5V385H2C1.45 385 1 384.55 1 384V319ZM430 279H432C432.55 279 433 279.45 433 280V384C433 384.55 432.55 385 432 385H430V279Z"></path><path fill="#0a0a0b" fill-rule="evenodd" d="M6 74C6 35.34 37.34 4 76 4H356C394.66 4 426 35.34 426 74V808C426 846.66 394.66 878 356 878H76C37.34 878 6 846.66 6 808V74ZM21.25 75C21.25 44.21 46.21 19.25 77 19.25H355C385.79 19.25 410.75 44.21 410.75 75V807C410.75 837.79 385.79 862.75 355 862.75H77C46.21 862.75 21.25 837.79 21.25 807V75Z"></path><path fill="none" stroke="#2c2c30" stroke-width=".5" d="M21.25 75C21.25 44.21 46.21 19.25 77 19.25H355C385.79 19.25 410.75 44.21 410.75 75V807C410.75 837.79 385.79 862.75 355 862.75H77C46.21 862.75 21.25 837.79 21.25 807V75Z"></path><path opacity=".5" fill="#3a3a3e" d="M174 5H258V5.5C258 6.6 257.1 7.5 256 7.5H176C174.9 7.5 174 6.6 174 5.5V5Z"></path><path class="ph4-isl" fill="#000" d="M154 48.5C154 38.28 162.28 30 172.5 30H259.5C269.72 30 278 38.28 278 48.5C278 58.72 269.72 67 259.5 67H172.5C162.28 67 154 58.72 154 48.5Z"></path><circle cx="259.5" cy="48.5" r="10.5" fill="#0c0c11"></circle><circle cx="259.5" cy="48.5" r="5.5" fill="#1b1b24"></circle></svg></div></div><span class="samp">Ejemplo</span></div>
+        <div class="pic n4-paper"><div class="np">
+          <div class="np-h"><b>Registro de la noche, Turnstone Roofing</b><span class="pl-after">Después</span></div>
+          <ol class="np-rows">
+            <li class="pl-dayrow">Domingo, 30 de ago.</li>
+            <li data-n="0" data-t="5:00 PM" data-task="calendar" class="on"><time>5:00&nbsp;p.&nbsp;m.</time><span>Las llamadas del negocio pasan a Eddie, que está de guardia.</span></li>
+            <li data-n="2" data-t="7:05 PM" data-task="calls" class="on"><time>7:05&nbsp;p.&nbsp;m.</time><span>Le entra agua a un cuarto por el techo en el 135 Oak St. Eddie sigue la tarjeta paso a paso y agenda una lona para las 7&nbsp;a.&nbsp;m.</span></li>
+            <li data-n="3" data-t="8:30 PM" data-task="reminders" class="on"><time>8:30&nbsp;p.&nbsp;m.</time><span>Dos pedidos más de lona por mensaje de texto, anotados en la lista de las 7&nbsp;a.&nbsp;m.</span></li>
+            <li class="pl-dayrow">Lunes, 31 de ago.</li>
+            <li data-n="4" data-t="5:40 AM" data-task="calendar" class="on"><time>5:40&nbsp;a.&nbsp;m.</time><span>En el calendario de la cuadrilla de las 7:00&nbsp;a.&nbsp;m.: 3 lonas, cada una con la dirección y el daño.</span></li>
+            <li data-n="5" data-t="5:45 AM" data-task="invoices" class="on"><time>5:45&nbsp;a.&nbsp;m.</time><span>Facturas de las lonas en borrador, para su visto bueno.</span></li>
+          </ol>
+          <div class="pl-card">
+            <p class="pl-card-h"><b>Tarjeta de guardia</b><span class="pl-card-tab">En inglés al reverso</span></p>
+            <p><b>Chispas, humo, olor a quemado o una emergencia médica:</b> llamar primero al 911.</p>
+            <p><b>Agua que entra por el techo de un cuarto:</b> sacar a las personas y las cosas, y no entrar a ningún cuarto donde el techo se vea hundido o el agua llegue a las luces o los enchufes. La lona se pone en cuanto amanezca.</p>
+          </div>
+        </div><span class="samp">Ejemplo</span></div>
+      </div>
+      <div class="loop-ctl">
+        <button class="pause" type="button"><span class="pi" aria-hidden="true"></span><span class="pt">Pausar</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band hm4-close" id="contact" data-ground="paper" data-density="mid" data-width="split" data-loud="close" data-medium="close">
+  <div class="wrap close-g">
+    <div class="c4-main">
+      <h2 class="t-close close-h">Hablemos de su negocio.</h2>
+      <div class="close-act">
+        <div class="arrow-to">
+          <a class="btn btn-lg" href="tel:+13522260681">Llámenos o escríbanos</a>
+          <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
+        </div>
+        <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a></p>
+      </div>
+      <dl class="c4-hours">
+        <div id="money-back"><dt>Devolución del dinero</dt><dd><p class="mb"><span data-shared="moneyback"><b>¿No le valió la pena?</b> Mándenos un mensaje de texto o un correo en los 7 días después de la llamada en que repasamos su hoja con usted, y le devolvemos <b class="red">lo que pagó por la visita</b>.</span> <a class="u" href="/es/how-it-works/#walk">Condiciones completas</a></p></dd></div>
+        <div><dt>Horario</dt><dd><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></dd></div>
+        <div><dt>Respuesta</dt><dd><span data-shared="reply">Le contestamos o le devolvemos la llamada el mismo día hábil. Si llama después de las 5&nbsp;p.&nbsp;m. o en fin de semana, le respondemos a más tardar a las 10&nbsp;a.&nbsp;m. del próximo día hábil.</span></dd></div>
+        <div><dt>Idioma</dt><dd>Español o inglés</dd></div>
+      </dl>
+      <p class="c4-llc">Lumora Group LLC, empresa de Florida.</p>
+    </div>
+    <div class="c4-card">
+      <figure class="contact-card">
+        <img class="cardino" src="/v4/assets/bird-cardino-perch.svg" alt="" width="74" height="60" loading="lazy">
+        <p class="t-label hm-cc-k">Por qué Lumora</p>
+        <blockquote class="signed"><p>“Antes de Lumora, me tocaba pasar a la computadora todo el papeleo de una empresa de daños por agua, y terminé automatizando casi todo. Ahora hacemos lo mismo en su negocio.”</p></blockquote>
+        <figcaption class="signed-by">Franco A. Soto, dueño</figcaption>
+        <dl class="cblock">
+          <div><dt>Dónde</dt><dd>Gainesville y el condado de Alachua. ¿Está en otra parte de Florida? Pregúntenos.</dd></div>
+        </dl>
+        <p class="t-small hm-about"><a class="u" href="/es/about/">Quiénes somos</a></p>
+      </figure>
+      <div class="c4-rules">
+        <h3>Reglas que respetamos</h3>
+        <ul>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>Trabajamos con las herramientas que ya paga.</li>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>No filmamos ni grabamos nada sin su permiso.</li>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>Con un solo “no”, ahí queda.</li>
+          <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>En los reclamos al seguro por un techo, nada de lo que redactamos ofrece un regalo a cambio de una inspección o de un reclamo (F.S.&nbsp;489.147), y todo lo que va para la aseguradora sale de su oficina, nunca de nosotros.</li>
+        </ul>
+      </div>
+    </div>
+    <nav class="pl-more" aria-labelledby="pl-more-k">
+      <p class="t-label" id="pl-more-k">Tipos de negocio que visitamos</p>
+      <ul class="pl-trades" data-trades>
+        <li><a href="/es/industries/plumbing/">Plomería</a></li>
+        <li><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li>
+        <li><a href="/es/industries/electrical/">Electricidad</a></li>
+        <li><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></li>
+        <li><a href="/es/industries/pest-control/">Control de plagas</a></li>
+        <li><a href="/es/industries/roofing/" aria-current="page">Techos</a></li>
+        <li><a href="/es/industries/restaurants-and-bars/">Restaurantes</a></li>
+        <li><a href="/es/industries/property-managers/">Administradores de propiedades</a></li>
+      </ul>
+    </nav>
+  </div>
+</section>
 </main>
-<div class="hem" aria-hidden="true"></div>
-<footer class="foot">
+
+<footer class="foot" data-ground="night">
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-lead">
-        <a class="foot-brand" href="../../../es/" aria-label="Lumora, página de inicio"><svg class="lk-line" viewBox="0 0 297 81.36" width="185" height="50.68" aria-hidden="true" focusable="false"><use href="#lm-word"/><use href="#lm-mark"/><path fill="currentColor" d="M104.388 78.375Q102.582 78.375 101.381 77.637Q100.179 76.898 99.59 75.54Q99 74.181 99 72.345Q99 70.495 99.59 69.144Q100.179 67.793 101.381 67.054Q102.582 66.316 104.388 66.316Q106.224 66.316 107.418 67.054Q108.612 67.793 109.201 69.144Q109.791 70.495 109.791 72.345Q109.791 74.181 109.201 75.54Q108.612 76.898 107.418 77.637Q106.224 78.375 104.388 78.375ZM104.403 76.763Q106.06 76.763 106.851 75.607Q107.642 74.45 107.642 72.345Q107.642 70.226 106.851 69.077Q106.06 67.928 104.403 67.928Q102.731 67.928 101.94 69.077Q101.149 70.226 101.149 72.345Q101.149 74.45 101.94 75.607Q102.731 76.763 104.403 76.763Z M111.522 81.151V69.211H113.358V70.375H113.716Q114 69.823 114.604 69.413Q115.209 69.002 116.224 69.002Q117.403 69.002 118.201 69.592Q119 70.181 119.41 71.241Q119.821 72.301 119.821 73.689Q119.821 75.092 119.41 76.144Q119 77.196 118.201 77.778Q117.403 78.36 116.239 78.36Q115.343 78.36 114.776 78.025Q114.209 77.689 113.896 77.137H113.537V81.151ZM115.731 76.838Q116.687 76.838 117.216 76.032Q117.746 75.226 117.746 73.689Q117.746 72.151 117.216 71.338Q116.687 70.525 115.731 70.525Q114.716 70.525 114.119 71.383Q113.522 72.241 113.522 73.689Q113.522 75.122 114.119 75.98Q114.716 76.838 115.731 76.838Z M125.179 78.39Q123.134 78.39 122.067 77.107Q121 75.823 121 73.674Q121 72.241 121.478 71.196Q121.955 70.151 122.881 69.569Q123.806 68.987 125.149 68.987Q127.075 68.987 128.09 70.189Q129.104 71.39 129.104 73.689V74.181H122.955Q123.03 75.405 123.59 76.151Q124.149 76.898 125.179 76.898Q125.955 76.898 126.433 76.45Q126.91 76.002 127.09 75.301H129Q128.836 76.166 128.381 76.86Q127.925 77.554 127.134 77.972Q126.343 78.39 125.179 78.39ZM122.97 72.838H127.134Q127.09 71.674 126.575 71.054Q126.06 70.435 125.134 70.435Q124.194 70.435 123.642 71.047Q123.09 71.659 122.97 72.838Z M130.851 78.166V69.211H132.672V70.793H133.03Q133.119 70.375 133.358 69.995Q133.597 69.614 134.097 69.368Q134.597 69.122 135.463 69.122H135.851V70.972H135.299Q134 70.972 133.433 71.637Q132.866 72.301 132.866 73.689V78.166Z M140.224 78.36Q139.015 78.36 138.209 77.771Q137.403 77.181 137 76.122Q136.597 75.062 136.597 73.674Q136.597 72.271 137.007 71.219Q137.418 70.166 138.224 69.584Q139.03 69.002 140.224 69.002Q141.209 69.002 141.813 69.398Q142.418 69.793 142.687 70.375H143.045V69.211H144.881V78.166H143.045V77.002H142.687Q142.418 77.554 141.813 77.957Q141.209 78.36 140.224 78.36ZM140.672 76.838Q141.687 76.838 142.291 75.98Q142.896 75.122 142.896 73.689Q142.896 72.241 142.291 71.383Q141.687 70.525 140.672 70.525Q139.716 70.525 139.194 71.338Q138.672 72.151 138.672 73.689Q138.672 75.226 139.194 76.032Q139.716 76.838 140.672 76.838Z M150.746 78.39Q148.731 78.39 147.701 77.107Q146.672 75.823 146.672 73.689Q146.672 71.465 147.746 70.226Q148.821 68.987 150.761 68.987Q152.433 68.987 153.418 69.89Q154.403 70.793 154.612 72.42H152.627Q152.507 71.495 152.037 70.995Q151.567 70.495 150.791 70.495Q149.761 70.495 149.254 71.338Q148.746 72.181 148.746 73.689Q148.746 75.196 149.254 76.04Q149.761 76.883 150.776 76.883Q151.567 76.883 152.037 76.375Q152.507 75.868 152.627 74.957H154.612Q154.388 76.569 153.396 77.48Q152.403 78.39 150.746 78.39Z M156.299 78.166V69.211H158.313V78.166ZM157.313 68.062Q156.761 68.062 156.47 67.763Q156.179 67.465 156.179 66.972Q156.179 66.48 156.47 66.174Q156.761 65.868 157.313 65.868Q157.881 65.868 158.172 66.174Q158.463 66.48 158.463 66.972Q158.463 67.465 158.172 67.763Q157.881 68.062 157.313 68.062Z M164.328 78.39Q162.194 78.39 161.149 77.114Q160.104 75.838 160.104 73.689Q160.104 71.54 161.149 70.263Q162.194 68.987 164.328 68.987Q166.463 68.987 167.507 70.263Q168.552 71.54 168.552 73.689Q168.552 75.838 167.507 77.114Q166.463 78.39 164.328 78.39ZM164.328 76.928Q165.433 76.928 165.955 76.084Q166.478 75.241 166.478 73.689Q166.478 72.122 165.955 71.286Q165.433 70.45 164.328 70.45Q163.209 70.45 162.694 71.286Q162.179 72.122 162.179 73.689Q162.179 75.241 162.694 76.084Q163.209 76.928 164.328 76.928Z M170.328 78.166V69.211H172.164V70.554H172.522Q172.791 69.838 173.381 69.413Q173.97 68.987 175 68.987Q176.537 68.987 177.261 69.935Q177.985 70.883 177.985 72.45V78.166H175.97V72.823Q175.97 71.778 175.597 71.219Q175.224 70.659 174.418 70.659Q173.433 70.659 172.888 71.428Q172.343 72.196 172.343 73.331V78.166Z M183.836 78.39Q181.791 78.39 180.724 77.107Q179.657 75.823 179.657 73.674Q179.657 72.241 180.134 71.196Q180.612 70.151 181.537 69.569Q182.463 68.987 183.806 68.987Q185.731 68.987 186.746 70.189Q187.761 71.39 187.761 73.689V74.181H181.612Q181.687 75.405 182.246 76.151Q182.806 76.898 183.836 76.898Q184.612 76.898 185.09 76.45Q185.567 76.002 185.746 75.301H187.657Q187.493 76.166 187.037 76.86Q186.582 77.554 185.791 77.972Q185 78.39 183.836 78.39ZM181.627 72.838H185.791Q185.746 71.674 185.231 71.054Q184.716 70.435 183.791 70.435Q182.851 70.435 182.299 71.047Q181.746 71.659 181.627 72.838Z M192.642 78.39Q191.284 78.39 190.433 77.935Q189.582 77.48 189.179 76.763Q188.776 76.047 188.716 75.301H190.657Q190.716 75.719 190.963 76.092Q191.209 76.465 191.642 76.689Q192.075 76.913 192.731 76.913Q193.478 76.913 193.851 76.622Q194.224 76.331 194.224 75.853Q194.224 75.435 193.91 75.144Q193.597 74.853 192.925 74.629L191.851 74.256Q191.104 73.987 190.493 73.666Q189.881 73.345 189.507 72.853Q189.134 72.36 189.134 71.584Q189.134 70.405 190 69.696Q190.866 68.987 192.418 68.987Q193.537 68.987 194.261 69.353Q194.985 69.719 195.358 70.338Q195.731 70.957 195.791 71.719H193.925Q193.866 71.166 193.485 70.793Q193.104 70.42 192.343 70.42Q191.701 70.42 191.366 70.681Q191.03 70.943 191.03 71.405Q191.03 71.853 191.366 72.144Q191.701 72.435 192.388 72.674L193.448 73.017Q194.194 73.271 194.806 73.592Q195.418 73.913 195.769 74.413Q196.119 74.913 196.119 75.689Q196.119 76.898 195.231 77.644Q194.343 78.39 192.642 78.39Z M201.866 81.151V81.092Q202.269 80.45 202.724 79.607Q203.179 78.763 203.537 77.928L200.388 69.301V69.211H202.388L203.687 72.793Q203.881 73.301 204.06 73.883Q204.239 74.465 204.433 75.331H204.791Q204.97 74.465 205.157 73.883Q205.343 73.301 205.522 72.793L206.821 69.211H208.701V69.301L205.791 77.151Q205.299 78.495 204.813 79.525Q204.328 80.554 203.97 81.151Z M216.597 78.166V68.211H212.94V66.525H222.343V68.211H218.687V78.166Z M226.672 78.39Q224.627 78.39 223.56 77.107Q222.493 75.823 222.493 73.674Q222.493 72.241 222.97 71.196Q223.448 70.151 224.373 69.569Q225.299 68.987 226.642 68.987Q228.567 68.987 229.582 70.189Q230.597 71.39 230.597 73.689V74.181H224.448Q224.522 75.405 225.082 76.151Q225.642 76.898 226.672 76.898Q227.448 76.898 227.925 76.45Q228.403 76.002 228.582 75.301H230.493Q230.328 76.166 229.873 76.86Q229.418 77.554 228.627 77.972Q227.836 78.39 226.672 78.39ZM224.463 72.838H228.627Q228.582 71.674 228.067 71.054Q227.552 70.435 226.627 70.435Q225.687 70.435 225.134 71.047Q224.582 71.659 224.463 72.838Z M235.821 78.39Q233.806 78.39 232.776 77.107Q231.746 75.823 231.746 73.689Q231.746 71.465 232.821 70.226Q233.896 68.987 235.836 68.987Q237.507 68.987 238.493 69.89Q239.478 70.793 239.687 72.42H237.701Q237.582 71.495 237.112 70.995Q236.642 70.495 235.866 70.495Q234.836 70.495 234.328 71.338Q233.821 72.181 233.821 73.689Q233.821 75.196 234.328 76.04Q234.836 76.883 235.851 76.883Q236.642 76.883 237.112 76.375Q237.582 75.868 237.701 74.957H239.687Q239.463 76.569 238.47 77.48Q237.478 78.39 235.821 78.39Z M241.373 78.166V69.211H243.209V70.554H243.567Q243.836 69.838 244.425 69.413Q245.015 68.987 246.045 68.987Q247.582 68.987 248.306 69.935Q249.03 70.883 249.03 72.45V78.166H247.015V72.823Q247.015 71.778 246.642 71.219Q246.269 70.659 245.463 70.659Q244.478 70.659 243.933 71.428Q243.388 72.196 243.388 73.331V78.166Z M254.925 78.39Q252.791 78.39 251.746 77.114Q250.701 75.838 250.701 73.689Q250.701 71.54 251.746 70.263Q252.791 68.987 254.925 68.987Q257.06 68.987 258.104 70.263Q259.149 71.54 259.149 73.689Q259.149 75.838 258.104 77.114Q257.06 78.39 254.925 78.39ZM254.925 76.928Q256.03 76.928 256.552 76.084Q257.075 75.241 257.075 73.689Q257.075 72.122 256.552 71.286Q256.03 70.45 254.925 70.45Q253.806 70.45 253.291 71.286Q252.776 72.122 252.776 73.689Q252.776 75.241 253.291 76.084Q253.806 76.928 254.925 76.928Z M261.627 78.166Q261.254 77.719 261.067 77.137Q260.881 76.554 260.881 75.495V66.226H262.896V75.256Q262.896 76.42 263.149 77.04Q263.403 77.659 263.806 78.077V78.166Z M268.985 78.39Q266.851 78.39 265.806 77.114Q264.761 75.838 264.761 73.689Q264.761 71.54 265.806 70.263Q266.851 68.987 268.985 68.987Q271.119 68.987 272.164 70.263Q273.209 71.54 273.209 73.689Q273.209 75.838 272.164 77.114Q271.119 78.39 268.985 78.39ZM268.985 76.928Q270.09 76.928 270.612 76.084Q271.134 75.241 271.134 73.689Q271.134 72.122 270.612 71.286Q270.09 70.45 268.985 70.45Q267.866 70.45 267.351 71.286Q266.836 72.122 266.836 73.689Q266.836 75.241 267.351 76.084Q267.866 76.928 268.985 76.928Z M278.567 81.36Q277.463 81.36 276.754 81.092Q276.045 80.823 275.627 80.398Q275.209 79.972 275.022 79.51Q274.836 79.047 274.791 78.659H276.776Q276.866 79.122 277.276 79.502Q277.687 79.883 278.597 79.883Q279.597 79.883 280.119 79.316Q280.642 78.748 280.642 77.584V76.554H280.284Q280.06 77.166 279.493 77.547Q278.925 77.928 277.97 77.928Q276.269 77.928 275.328 76.719Q274.388 75.51 274.388 73.435Q274.388 72.107 274.799 71.099Q275.209 70.092 276.015 69.54Q276.821 68.987 277.97 68.987Q278.955 68.987 279.515 69.368Q280.075 69.748 280.328 70.331H280.687V69.211H282.522V77.584Q282.522 79.405 281.53 80.383Q280.537 81.36 278.567 81.36ZM278.388 76.405Q279.403 76.405 279.97 75.592Q280.537 74.778 280.537 73.45Q280.537 72.122 279.97 71.316Q279.403 70.51 278.403 70.51Q277.463 70.51 276.94 71.263Q276.418 72.017 276.418 73.45Q276.418 74.913 276.94 75.659Q277.463 76.405 278.388 76.405Z M284.91 78.166V69.211H286.925V78.166ZM285.119 68.316V68.226L286.224 65.629H288.104V65.719L286.731 68.316Z M292.343 78.36Q291.134 78.36 290.328 77.771Q289.522 77.181 289.119 76.122Q288.716 75.062 288.716 73.674Q288.716 72.271 289.127 71.219Q289.537 70.166 290.343 69.584Q291.149 69.002 292.343 69.002Q293.328 69.002 293.933 69.398Q294.537 69.793 294.806 70.375H295.164V69.211H297V78.166H295.164V77.002H294.806Q294.537 77.554 293.933 77.957Q293.328 78.36 292.343 78.36ZM292.791 76.838Q293.806 76.838 294.41 75.98Q295.015 75.122 295.015 73.689Q295.015 72.241 294.41 71.383Q293.806 70.525 292.791 70.525Q291.836 70.525 291.313 71.338Q290.791 72.151 290.791 73.689Q290.791 75.226 291.313 76.032Q291.836 76.838 292.791 76.838Z"/></svg></a>
-        <p class="foot-line">Lumora se encarga de lo que hoy se vuelve a escribir, se queda esperando o se olvida.</p>
-        <p class="foot-about">Para contratistas, restaurantes y negocios locales de Gainesville.</p>
-        <p class="foot-price"><b>La visita cuesta a partir de $500.</b> Si su negocio es más grande, le damos el precio en la llamada sin costo. Se descuenta de un arreglo de $1,500 o más que empiece dentro de los 30 días siguientes.</p>
-        <a class="btn" href="../../../es/contact/">Llámenos o escríbanos</a>
+        <a class="foot-brand" href="/es/" aria-label="Lumora, página de inicio"><img src="/v4/assets/logo-white.svg" alt="" width="148" height="36"></a>
+        <p class="foot-line">Su negocio debería funcionar igual, esté usted o no.</p>
+        <a class="btn" href="tel:+13522260681">Llámenos o escríbanos</a>
       </div>
-      <nav class="foot-col c-how" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="../../../es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="../../../es/how-it-works/#walk">La visita</a></li><li><a href="../../../es/how-it-works/#fix">Un arreglo</a></li><li><a href="../../../es/how-it-works/#check">La revisión mensual</a></li><li><a href="../../../es/how-it-works/#price">De qué depende el precio</a></li><li><a href="../../../es/how-it-works/#sample">La hoja de ejemplo</a></li><li><a href="../../../es/how-it-works/#faq">Preguntas que nos hacen los dueños</a></li><li><a href="../../../es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
-      <nav class="foot-col c-ind" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">A quién atendemos</h2><ul><li><a href="../../../es/industries/plumbing/">Plomería</a></li><li><a href="../../../es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li><li><a href="../../../es/industries/electrical/">Electricidad</a></li><li><a href="../../../es/industries/water-damage-and-mold/">Daños por agua y moho</a></li><li><a href="../../../es/industries/pest-control/">Control de plagas</a></li><li><a href="../../../es/industries/roofing/">Techos</a></li><li><a href="../../../es/industries/restaurants-and-bars/">Restaurantes y bares</a></li><li><a href="../../../es/industries/property-managers/">Administradores de propiedades</a></li><li><a href="../../../es/industries/">Todos los tipos de negocio</a></li></ul></nav>
-      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li>Llame o escriba al <a class="tel" href="tel:+13522260681">(352) <span class="nw">226-0681</span></a></li><li>Contestamos o le devolvemos la llamada el mismo día hábil; después de las 5 p. m. o el fin de semana, a más tardar a las 10 a. m. del siguiente día hábil.</li><li><a class="mail" href="mailto:franco@lumorafl.com?subject=Solicitud%20de%20visita">franco@lumorafl.com</a></li><li>De lunes a viernes, de 9 a. m. a 5 p. m.</li><li>Gainesville; atendemos el condado de Alachua. Otras zonas de Florida, previo acuerdo.</li><li>Español o inglés</li></ul></div>
+      <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="/es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="/es/how-it-works/#walk">La visita</a></li><li><a href="/es/how-it-works/#fix">Un arreglo</a></li><li><a href="/es/how-it-works/#check">La revisión mensual</a></li><li><a href="/es/how-it-works/#faq">Preguntas de los dueños</a></li><li><a href="/es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
+      <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">A quién atendemos</h2><ul><li><a href="/es/industries/plumbing/">Plomería</a></li><li><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li><li><a href="/es/industries/electrical/">Electricidad</a></li><li><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></li><li><a href="/es/industries/pest-control/">Control de plagas</a></li><li><a href="/es/industries/roofing/">Techos</a></li><li><a href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a></li><li><a href="/es/industries/property-managers/">Administración de propiedades</a></li><li><a href="/es/industries/">Todos los rubros</a></li></ul></nav>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li>Llame o escriba al <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></li><li>Gainesville; atendemos el condado de Alachua</li><li>En inglés o en español</li></ul></div>
     </div>
     <div class="foot-base">
-      <p class="legal">Lumora es parte de Lumora Group LLC, una sociedad de responsabilidad limitada de Florida, n.º de documento L25000321722. Gainesville, Florida.</p>
-      <ul>
-        <li><a href="../../../es/about/">Quiénes somos</a></li>
-        <li><a href="../../../es/articles/">Artículos</a></li>
-        <li><a href="../../../es/privacy/">Privacidad</a></li>
-        <li><a href="../../../industries/roofing/" hreflang="en" lang="en" data-lang="en">Also in English</a></li>
-      </ul>
-      <p>© 2026 Lumora Group LLC</p>
-      <!-- Icons: Material Symbols by Google, Apache License 2.0. License: ../../../assets/icons/LICENSE.txt and ../../../assets/icons/NOTICE.txt -->
+      <p class="legal">Lumora Group LLC, empresa de Florida. Los negocios, nombres y números marcados como Ejemplo son ficticios.</p>
+      <ul><li><a href="/es/about/">Quiénes somos</a></li><li><a href="/es/articles/">Artículos</a></li><li><a href="/es/contact/">Contacto</a></li><li><a href="/es/privacy/">Privacidad</a></li></ul>
     </div>
   </div>
 </footer>
+
 <nav class="callbar" aria-label="Llámenos o escríbanos"><a href="tel:+13522260681">Llamar</a><a href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">Escribir</a></nav>
-<script src="../../../assets/site.js?v=b9cb9473" defer></script>
 </body>
 </html>
+
