@@ -88,7 +88,7 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
 .t-lede{font-size:clamp(17px,1.6vw,var(--fs-20));line-height:1.5}
 .t-body{font-size:17px}
 .t-small{font-size:15px;line-height:1.45}           /* the floor for key text at 390px */
-.t-label{font-size:15px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--pencil)}
+.t-label{font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--pencil)}   /* 2026-10-16: sentence case, no tracking (Franco: tracked capitals over a heading read as AI) */
 .two>span{color:var(--muted)}                         /* two-tone heading: claim in ink, explanation in muted, same size */
 [data-ground=night] .two,[data-ground=night] h2{color:#fff}
 [data-ground=night] .two>span{color:var(--muted-night)}
@@ -257,7 +257,7 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 .pic:has(>.samp){padding-bottom:28px}
 .samp{position:absolute;right:10px;bottom:0;z-index:3;font:600 15px/1.3 var(--font);letter-spacing:.04em;color:var(--pencil);background:rgba(255,254,251,.92);padding:1px 9px;border:1.6px solid var(--pencil);border-radius:3px}   /* 2026-10-15: the stamp's look (was 12px tracked capitals, a second Sample style); about 25px tall, inside the 28px band */
 [data-ground=night] .stamp{border-color:var(--on-night);color:var(--on-night)}
-.kicker{font-size:15px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--pencil);margin-bottom:12px}
+.kicker{font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--pencil);margin-bottom:12px}   /* 2026-10-16: sentence case, as .t-label */
 [data-ground=night] .kicker{color:var(--muted-night)}
 .cap{font-size:15px;color:var(--muted);margin-top:14px}
 [data-ground=night] .cap{color:var(--muted-night)}
@@ -268,13 +268,13 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 .page::before{content:"";position:absolute;left:0;right:0;top:0;height:11px;border-bottom:1px dashed rgba(17,17,16,.12);
   background:radial-gradient(circle at 7px 5px,var(--hole,var(--bone)) 2.6px,transparent 3.2px) 0 0/14px 11px repeat-x}
 @media (min-width:760px){.page{padding:44px 40px 34px}}
-/* the stop tab: a pencil-circled number and a small-caps label; a pencil tick lands once the stop is passed */
-.tab{display:inline-flex;align-items:center;gap:12px;font-size:15px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--pencil);margin-bottom:10px}
+/* the stop tab: a pencil-circled number and a plain-words label (2026-10-16: no longer tracked capitals); a pencil tick lands once the stop is passed */
+.tab{display:inline-flex;align-items:center;gap:12px;font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--pencil);margin-bottom:10px}
 .tab-n{position:relative;flex:none;width:36px;height:36px;display:grid;place-items:center;font-size:17px;letter-spacing:0;color:var(--ink);font-weight:600}
 .tab-n::before{content:"";position:absolute;inset:0;border:1.6px solid var(--pencil);border-radius:52% 48% 50% 46%/48% 52% 46% 54%;transform:rotate(-8deg)}
 /* the stop tick was removed 2026-10-08 (claim craft-e: it sat outside the circle and read as a misaligned icon) */
-/* the pencil: what we saw. Familjen's own italic, graphite, a degree off the line */
-.pencil{font-style:italic;font-weight:500;color:var(--pencil);font-size:var(--fs-20);line-height:1.35;transform:rotate(-1deg);transform-origin:left}
+/* the pencil: what we saw. Graphite and weight 500 say "note"; upright and level since 2026-10-16 (Franco: no angled text, no italic) */
+.pencil{font-weight:500;color:var(--pencil);font-size:var(--fs-20);line-height:1.35}
 .pc{position:relative}                                    /* pencil circle around evidence (an observation, never money) */
 .pc::after{content:"";position:absolute;inset:-3px -8px;border:2px solid var(--pencil);border-radius:48% 52% 46% 54%/56% 44% 56% 44%;transform:rotate(-1.5deg);pointer-events:none}
 /* the red pen: money only. One ring per page, underlines under money figures, its last mark an arrow to Call */
@@ -330,7 +330,7 @@ a.strip:focus-visible{outline-offset:3px}
   background:var(--sheet) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23111110' stroke-width='1.8'/%3E%3C/svg%3E") right 16px center/12px no-repeat}
 /* phones get the native select (the most legible picker); no-JS keeps the chips as plain links */
 @media (max-width:699px){html.js .picker .chips{display:none}html.js .picker-sel{display:block}}
-.your{display:inline-block;margin-left:10px;font-size:15px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;border:1.5px solid currentColor;border-radius:3px;padding:0 6px;line-height:20px;vertical-align:middle}
+.your{display:inline-block;margin-left:10px;font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;border:1.5px solid currentColor;border-radius:3px;padding:0 6px;line-height:20px;vertical-align:middle}
 
 /* ======================================================================= 11. the walk sheet on the clipboard */
 .clip{margin:0}
@@ -356,7 +356,7 @@ a.strip:focus-visible{outline-offset:3px}
 /* ======================================================================= 12. facts you can check */
 .facts{border-block:1px solid var(--ink);background:var(--paper)}
 .facts-in{display:grid;gap:8px;padding-block:14px}
-.facts-k{font-size:15px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.facts-k{font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted)}   /* 2026-10-16: sentence case, as .t-label */
 .facts ul{display:grid;gap:6px;font-size:15px;font-weight:500;color:var(--ink)}
 .facts li::before{content:"";display:inline-block;width:10px;height:6px;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(-48deg) translateY(-3px);margin-right:10px}
 @media (min-width:900px){.facts ul{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:20px}}
@@ -379,7 +379,7 @@ a.strip:focus-visible{outline-offset:3px}
 .pl-wall{fill:none;stroke:var(--ink);stroke-width:6;stroke-linecap:square}
 .pl-thin{fill:none;stroke:var(--ink);stroke-width:1.6}
 /* room labels are HTML over the drawing so they stay 13px+ at any width (svg text shrank to 9px at 390) */
-.plan-labs span{position:absolute;left:var(--x);top:var(--y);transform:translateY(-100%);font:italic 500 clamp(13px,2.6vw,20px)/1 var(--font);color:var(--pencil);white-space:nowrap}
+.plan-labs span{position:absolute;left:var(--x);top:var(--y);transform:translateY(-100%);font:500 clamp(13px,2.6vw,20px)/1 var(--font);color:var(--pencil);white-space:nowrap}   /* 2026-10-16: upright, as the pencil */
 .pl-route{fill:none;stroke:var(--pencil);stroke-width:2.6;stroke-dasharray:2 9;stroke-linecap:round}
 /* stop links are HTML over the drawing (not links inside an svg role=img): 44px hit circles, number inverts on focus */
 .plan-stops a{position:absolute;left:var(--x);top:var(--y);width:44px;height:44px;margin:-22px 0 0 -22px;display:grid;place-items:center;border-radius:50%;text-decoration:none}
@@ -491,15 +491,16 @@ html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs
 .bub.out{align-self:flex-end;background:#0a63d1;color:#fff;border-bottom-right-radius:5px}
 .sys{align-self:center;font-size:12px;color:#5f5f66;text-align:center}
 .sys.k{font-weight:600;color:#1b5e2c;background:#e3f1e6;border-radius:8px;padding:3px 8px}
-/* a window (grey title bar and frame; the Mac dots were dropped 2026-10-15), a spreadsheet grid, paper, a counter ticket, a clipboard doc */
+/* a window (grey title bar with the Mac buttons, and frame), a spreadsheet grid, paper, a counter ticket, a clipboard doc */
 .scr-win{background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--lift-hi);font-family:var(--sys);color:#1d1d1f}
 .win-tb{display:flex;align-items:center;gap:7px;height:32px;padding:0 12px;background:linear-gradient(#f1f1f1,#e4e4e4);border-bottom:1px solid #d0d0d0}
-.win-tb i{display:none}   /* 2026-10-15: the Mac traffic lights are a humanizer tell and the owners use Windows and Excel; hiding them frees about 80px, so titles fit at 320 */
-.win-tb span{flex:1;text-align:center;margin-right:0;font-size:13px;font-weight:600;color:#3a3a3a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.win-tb i{width:12px;height:12px;border-radius:50%;background:#ec6a5e /* ui-ok: terracotta the Mac close button's own red; Franco kept the buttons Oct 6 and Oct 16 */}.win-tb i+i{background:#f4bf4f}.win-tb i+i+i{background:#61c554}   /* 2026-10-16: back, Franco kept the Mac buttons (Oct 6, again Oct 16); the Oct 15 audit had hidden them */
+.win-tb span{flex:1;text-align:center;margin-right:46px;font-size:13px;font-weight:600;color:#3a3a3a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@container (max-width:340px){.win-tb span{margin-right:0;font-size:12px}}   /* 2026-10-16: phones keep the buttons; the title gives up its centring margin and a pixel of size, so the long ones fit at 320 to 390 */
 .win-b{padding:12px}
 .xl{font-family:var(--xls);color:#1f1f1f;background:#fff}
 .xl-fx{display:flex;gap:8px;align-items:center;font-size:13px;padding:6px 8px;border-bottom:1px solid #d6d6d6;background:#fafafa;white-space:nowrap;overflow:hidden}
-.xl-fx b{color:#666;font-weight:600;font-style:italic;font-family:Georgia,serif}
+.xl-fx b{color:#666;font-weight:600;font-family:Georgia,serif}   /* 2026-10-16: upright too; Franco's no-italic note reaches the pictures (Excel draws its fx in italic) */
 .xl-fx span{overflow:hidden;text-overflow:ellipsis}
 .xl table{width:100%;border-collapse:collapse;font-size:max(12px,min(3.4cqi,14px));font-variant-numeric:tabular-nums}
 .xl td,.xl th{border:1px solid #dcdcdc;padding:6px 7px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:0}
@@ -541,7 +542,7 @@ html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs
 .dhead b{display:block;font-size:16px;font-weight:700;color:#111}
 /* the whiteboard: live HTML hand lettering (not an svg), so the words stay 12px+ at 390; 3 days on narrow screens */
 .wb{position:relative;background:#cfd2d6;border:2px solid var(--ink);border-radius:8px;padding:8px;box-shadow:var(--lift)}
-.wb-in{position:relative;background:#fbfbf9;border:1.4px solid var(--ink);border-radius:4px;padding:14px 14px 40px;font-family:var(--font);font-style:italic;color:var(--ink)}
+.wb-in{position:relative;background:#fbfbf9;border:1.4px solid var(--ink);border-radius:4px;padding:14px 14px 40px;font-family:var(--font);color:var(--ink)}   /* 2026-10-16: upright, as the pencil */
 .wb-t{font-style:normal;font-weight:600;letter-spacing:.06em;font-size:max(15px,min(4.6cqi,24px));margin-bottom:8px}
 .wb-days{display:grid;grid-template-columns:repeat(5,1fr);border-top:2px solid var(--ink)}
 .wb-day{padding:8px 8px 0;border-left:2px solid var(--ink);min-height:150px}
@@ -635,7 +636,7 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .pad li{position:relative;font-size:17px;line-height:36px;margin-bottom:36px}
 .pad li:last-child{margin-bottom:0}
 .tick{position:absolute;left:-48px;top:7px;width:24px;height:20px;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
-.honest{margin-top:36px;font-style:italic;font-size:19px;line-height:36px;color:var(--ink)}
+.honest{margin-top:36px;font-size:19px;line-height:36px;color:var(--ink)}   /* 2026-10-16: upright, as the pencil */
 @media (min-width:700px){.pad-b{padding:18px 48px 36px 96px;background:linear-gradient(90deg,transparent 70px,var(--margin) 70px 71.5px,transparent 71.5px),repeating-linear-gradient(to bottom,transparent 0 35px,var(--ruled) 35px 36px);background-position:0 0,0 35px}.tick{left:-62px;width:26px}}
 
 /* ======================================================================= 19. step tickets (How it works): index cards torn from the pad */
@@ -723,7 +724,8 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 /* Cardino perches on the card (Home, Franco 2026-10-10: the full-frame drawing with a negative top floated above it). The perch
    drawing is cropped to the bird, so bottom:100% puts his feet on the card's top edge at any size; 2px down so he stands on it */
 .contact-card .cardino{position:absolute;right:36px;bottom:100%;margin-bottom:-2px;width:58px;height:auto}
-.signed{font-size:var(--fs-17);line-height:1.55;padding-left:16px;border-left:2px solid var(--ink);color:var(--ink)}
+.signed{font-size:var(--fs-17);line-height:1.55;font-weight:500;color:var(--ink)}
+.signed p{text-indent:-.42em}   /* 2026-10-16: the stripe down its left side is gone (a UI humanizer tell); the quotation marks set it off, the opening one hung in the margin so the words share the label's and the name's edge */
 .signed+figcaption,.signed-by{margin-top:10px;font-size:15px;color:var(--muted)}
 .cblock{margin-top:18px}
 .cblock div{display:grid;gap:2px;padding:12px 0;border-bottom:1px solid var(--rule)}
@@ -982,10 +984,12 @@ td .chg.tr{flex-direction:column;align-items:flex-start;gap:2px}   /* 2026-10-15
 .tl-tag.free{border-color:var(--rule);color:var(--muted)}
 .tl-body{display:grid;gap:8px;max-width:40em}
 .tl-body .t-body{color:var(--body)}
-.tl4>li.tl-big{margin:6px 0;padding:26px 22px;background:var(--sheet);box-shadow:var(--lift);border:0}
+.tl4>li.tl-big{--bleed:var(--g);margin:6px calc(-1*var(--bleed));padding:26px var(--bleed);background:var(--sheet);box-shadow:var(--lift);border:0}   /* 2026-10-16: the card bleeds out by its padding, so its words sit on the other rows' x; on phones by the whole gutter, edge to edge */
+@media (min-width:700px){.tl4>li.tl-big{--bleed:calc(var(--g) - 16px)}}   /* 2026-10-16: 16px out, so 16px of paper stays at 768 and 1024 (24 at 1280); 28px into the 32px gutter left a 4px sliver that read as a near miss */
+@media (min-width:1300px){.tl4>li.tl-big{--bleed:28px}}   /* 2026-10-16: from 1300 the side margin is 50px or more, so the card takes its full 28px and still keeps 22px of paper (92 at 1440) */
 .tl4>li.tl-big .tl-head h3{font-size:clamp(26px,2.6vw,32px)}
 .tl4>li.tl-big .tl-body>.t-body:first-child{font-size:clamp(18px,1.6vw,20px);color:var(--ink)}
-@media (min-width:900px){.tl4>li{grid-template-columns:minmax(0,15em) minmax(0,1fr) auto;align-items:start}.tl4>li.tl-big{padding:30px 28px;margin-inline:-28px}}
+@media (min-width:900px){.tl4>li{grid-template-columns:minmax(0,var(--tl-head,15em)) minmax(0,1fr) auto;align-items:start}.tl4>li.tl-big{padding-block:30px}}
 
 /* R9: the v4 tally names the stops and ticks each off in pencil as it passes; no dollar figures (the stops and the walk's
    one total line already carry them twice) */
@@ -1001,7 +1005,7 @@ td .chg.tr{flex-direction:column;align-items:flex-start;gap:2px}   /* 2026-10-15
 html.review .slot{display:grid;align-content:center;justify-items:center;gap:4px;padding:10px;border:1.5px dashed var(--pencil);border-radius:6px;
   background:repeating-linear-gradient(-45deg,transparent 0 9px,rgba(79,76,69,.07) 9px 10px),var(--sheet);color:var(--pencil);font-size:13px;line-height:1.3;text-align:center}
 .slot[data-shape="16:9"]{aspect-ratio:16/9}.slot[data-shape="1:1"]{aspect-ratio:1}.slot[data-shape="4:5"]{aspect-ratio:4/5}
-.slot-k{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.slot-k{font-size:12px;font-weight:600;letter-spacing:0;text-transform:none}   /* 2026-10-16: sentence case, as .t-label */
 .slot b{font-size:14px;color:var(--ink)}
 
 /* forced colours (Windows High Contrast): a pressed Before / After, the picked trade and the current language stay visible */

@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=0affe2ee">
-<link rel="stylesheet" href="/v4/trade-page.css?v=0affe2ee">
+<link rel="stylesheet" href="/v4/system.css?v=0b52c240">
+<link rel="stylesheet" href="/v4/trade-page.css?v=0b52c240">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=0affe2ee" defer></script>
-<script src="/v4/system.js?v=0affe2ee" defer></script>
+<script src="/v4/trades.js?v=0b52c240" defer></script>
+<script src="/v4/system.js?v=0b52c240" defer></script>
 <style>
 /* ===== How it works, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64), and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -49,13 +49,13 @@
 .hiw-tl .tl-stop{font-size:17px;color:var(--muted);padding-bottom:12px}
 .hiw-tl .tl4>li{grid-template-columns:none}
 .hiw-tl .tl-head{flex-direction:row;align-items:baseline}
-.hiw-tl .tl4>li.tl-big{margin-inline:0}
+/* 2026-10-16: the walk row's card bleeds out by its padding (system.css), so its words keep the other rows' x */
 .hiw-tl .tl4 .price,.hiw-tl .tl4 .mb{font-size:17px}
 .tl-go{justify-self:start;font-size:15px;padding-block:12px;margin-block:-10px -12px}   /* each row jumps to its step (H1); a 44px tall tap area without moving the layout */
 @media (min-width:900px){
   .hiw-g{grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:56px;align-items:start}
   .hiw-copy{position:sticky;top:112px}
-  .hiw-tl .tl4>li.tl-big{padding:26px 26px 24px}
+  .hiw-tl .tl4>li.tl-big{padding-block:26px 24px}
 }
 
 /* 2 the free call: the page's type-only rest (one big sentence, three short lines) */
@@ -180,7 +180,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
 .rp-h small{display:block;font-size:13px;color:#55555a}
 [data-ground=night] .report .stamp{border-color:var(--pencil);color:var(--pencil)}
 .rp-sec{padding:12px 0;border-bottom:1px solid #e2e0da}
-.rp-k{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#55555a}
+.rp-k{font-size:12px;font-weight:700;color:#55555a}   /* 2026-10-16: sentence case, no tracking, as About's .fd-k */
 .rp-big{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin-top:4px}
 .rp-big .money{font-family:var(--font);font-size:34px;font-weight:600;color:var(--red);line-height:1.05}
 .rp-big span{font-size:14px;color:#3a3a3f}
@@ -234,7 +234,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
   .hiw-hero{padding-bottom:36px}
   .hiw-g{gap:24px}
   .hiw-tl .tl4>li{padding-block:16px}
-  .hiw-tl .tl4>li.tl-big{padding:20px 16px}
+  .hiw-tl .tl4>li.tl-big{padding-block:20px}
   .step-h .tab-n{width:40px;height:40px}
   .fs-leak{display:contents}
   .fs-leak b{grid-column:1;grid-row:1}
@@ -247,7 +247,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
   .wstops li{padding:12px 0}
   .page.wk-page{padding:30px 16px 18px}
 }
-@media (min-width:900px){.hiw-tl{background:var(--paper);box-shadow:0 0 0 12px var(--paper)}}   /* 2026-10-15: the ruled ground's lines no longer run through the timeline rows */
+@media (min-width:900px){.hiw-tl{background:var(--paper);box-shadow:0 0 0 40px var(--paper)}}   /* 2026-10-15: the ruled ground's lines no longer run through the timeline rows; 2026-10-16: 40px, the walk card's 28px bleed plus the 12px of paper it had */
 /* Spanish additions (2026-10-16) */
 .close-h{margin:0 0 24px;font-size:clamp(40px,4.4vw,44px)}   /* Spanish Home's size (home.css), as on plumbing.es.html */
 @media (max-width:359px){.cta-row,.c4-tel{row-gap:18px}}   /* the number and the text link keep their tap areas apart, as on plumbing.es.html */

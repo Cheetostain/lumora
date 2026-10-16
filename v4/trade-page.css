@@ -69,7 +69,7 @@
 .ap-pdf{width:min(100%,430px)}
 .ap-page{margin:12px;padding:14px 16px 12px;background:#fff;border:1px solid #ececea;box-shadow:0 1px 3px rgba(0,0,0,.08);font-family:var(--sys);color:#1d1d1f}
 .ap-co{font-weight:700;font-size:max(14px,min(3.8cqi,17px))}
-.ap-dt{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#555;margin:2px 0 10px}
+.ap-dt{font-size:12px;color:#555;margin:2px 0 10px}   /* 2026-10-16: sentence case, no tracking (the document type read as a tracked capital label) */
 .ap-page dl div{display:grid;grid-template-columns:7em minmax(0,1fr);gap:8px;padding:4px 0;border-bottom:1px dotted #d6d6d6;font-size:max(12px,min(3.3cqi,14px));line-height:1.35}
 .ap-page dt{color:#555}
 .ap-page mark{background:#fde98a;color:#1d1d1f;padding:0 3px}
@@ -85,10 +85,12 @@
 .how-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 24px;margin-bottom:26px}
 .how-h .t-lede{color:var(--muted)}
 @media (min-width:900px){.hm4-how .tl-head{flex-direction:column;align-items:flex-start;gap:6px}}
+@media (min-width:900px){.hm4-how .how-h{display:grid;grid-template-columns:minmax(0,var(--tl-head,15em)) minmax(0,1fr);column-gap:28px}}   /* 2026-10-16: "You can stop after any of them." starts on the rows' text column (the rows' own grid) */
+:lang(es) .hm4-how{--tl-head:17em}   /* 2026-10-16: "Cómo funciona" is 282px at 44px; at 15em (255px) it broke onto two lines */
 .tl4 .price,.tl4 .mb{font-size:17px}
 .tl-ai{color:var(--muted);max-width:36em}
 .tl4 .slot{width:130px}
-@media (min-width:900px){.tl4 .slot{width:150px}.hm4-how .tl4>li.tl-big{margin-inline:0;padding:32px 28px}}
+@media (min-width:900px){.tl4 .slot{width:150px}.hm4-how .tl4>li.tl-big{padding-block:32px}}   /* 2026-10-16: the inline bleed comes from system.css, so the walk's words keep the rows' x */
 .hm4-how .cta-inline{margin-top:30px;border-top:0;padding-top:0}
 .cta-inline .mb-s{flex-basis:100%;font-size:15px;margin-top:-2px}
 .walk-end .mb-s{font-size:15px}
@@ -113,7 +115,7 @@
 .pl-docs .doc-bill b{color:#1d1d1f;font-weight:600}
 .pl-docs .doc-bill .pl-k{color:#555;margin-right:4px}
 .pl-docs .doc-tot{border-top:1.5px solid #1d1d1f;margin-top:2px}
-.pl-li-h{color:#555;font-size:12px!important;font-weight:600;letter-spacing:.04em;text-transform:uppercase;border-bottom:1.5px solid #1d1d1f!important}
+.pl-li-h{color:#555;font-size:12px!important;font-weight:600;border-bottom:1.5px solid #1d1d1f!important}   /* 2026-10-16: "Description" and "Amount" in sentence case, no tracking */
 .pl-due{font-size:12px;color:#555;text-align:right;margin-top:2px}
 /* a picture under 640px wide (phones, tablets, small laptops): the papers stack, the window laid over the ticket's torn edge; the
    papers' own type steps down to the 12px floor (inside a picture), as the screens kit does on phones; the account line, the column

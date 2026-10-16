@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=0affe2ee">
-<link rel="stylesheet" href="/v4/trade-page.css?v=0affe2ee">
+<link rel="stylesheet" href="/v4/system.css?v=0b52c240">
+<link rel="stylesheet" href="/v4/trade-page.css?v=0b52c240">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=0affe2ee" defer></script>
-<script src="/v4/system.js?v=0affe2ee" defer></script>
+<script src="/v4/trades.js?v=0b52c240" defer></script>
+<script src="/v4/system.js?v=0b52c240" defer></script>
 <style>
 /* ===== Contact, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24, 32, 44,
    64) outside the pictures, and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -83,7 +83,7 @@
 @media (min-width:900px){
   .ct-next-g{grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-areas:"fig h" "fig tl" "fig more";grid-template-rows:auto auto 1fr;column-gap:64px;row-gap:18px;align-items:start}
   .ct-fig{position:sticky;top:112px}
-  .ct-tl>li.tl-big{margin-inline:0}                                       /* flush with the column, as About and How it works */
+  /* 2026-10-16: the walk card bleeds out by its padding (system.css), so its words keep the other rows' x, as How it works */
   .ct-tl .tl-head{flex-direction:column;align-items:flex-start;gap:6px}   /* every tag under its heading, as plumbing's timeline */
 }
 
