@@ -636,7 +636,7 @@ main:has(>.cta:last-child)+.hem,main:has(>.lost:last-child)+.hem{border-top:0}
 .foot-col{grid-column:span 2}
 .foot-col.c-how{grid-column:6/span 2}
 .foot-col.c-contact{grid-column:span 3}
-.foot-brand svg{width:185px;height:auto;color:#FFFFFF}  
+.foot-brand svg{height:auto;color:#FFFFFF}  
 .foot-line{margin-top:28px;font-size:clamp(21px,2vw,26px);font-weight:600;line-height:1.2;letter-spacing:-0.015em;color:#FFFFFF;max-width:14em;text-wrap:balance}
 .foot-about{margin-top:14px;max-width:32em}
 .foot-price{margin-top:14px;max-width:32em}
