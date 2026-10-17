@@ -25,14 +25,17 @@
   --ink-x:#111110;          /* headings and every action. 17.3:1 on paper */
   --body:#2B2B29;         /* running text. 13.0:1 paper, 11.2:1 bone */
   --muted:#5F5D56;        /* captions, second tone of headings. 6.0:1 paper, 5.2:1 bone */
-  --pencil:#4F4C45;       /* what we saw: notes, pencil circles, stop tabs, Sample stamps. 7.9:1 paper, 6.8:1 bone */
+  --pencil:#4F4C45;       /* what we saw: notes, arrows, stop tabs, Sample stamps. 7.9:1 paper, 6.8:1 bone. Never a circle (2026-10-17: one red pen) */
   --red:#C81E28;          /* money as TEXT. 5.3:1 paper, 5.7:1 sheet; on bone only at 24px+ (4.5:1) */
-  --pen:#E3242E;          /* the red pen as STROKES: ring, underline, arrow (non-text, 3:1+) */
+  --pen:#E3242E;          /* the red pen as STROKES: every circle round a problem (money or evidence), underline, arrow (non-text, 3:1+) */
   --mark:#FF323C;         /* the logo mark only */
   /* the one dark band */
   --night:#141412; --on-night:#E9E4D8; --muted-night:#A7A194; --red-night:#FF5A60; /* 14.5 / 7.2 / 6.1 :1 */
   /* objects from the walk: only on those objects, never on text or buttons */
-  --board:#B39066; --board-edge:#8E6F4B; --clamp:#A4A7AC; --tape:#E6DCBC;
+  /* the hardboard (2026-10-17, Franco's iPhone: Safari showed the board pale, Chrome tan): one colour everywhere, #967E64 to the eye,
+     a muted mid-brown, lighter than masonite's deep brown and less orange than the old tan, so it reads as a clipboard and leaves
+     the red to the pen. --board / --board-lo are the flat boards' top and bottom; the grained board draws the same colour (11) */
+  --board:#9D8469; --board-lo:#8F7860; --board-edge:#72604D; --clamp:#A4A7AC; --tape:#E6DCBC;
   /* structure */
   --rule:#D8D5CC; --rule-bone:#C9C1AF; --ruled:rgba(17,17,16,.06); --margin:rgba(79,76,69,.38);
   --lift:0 1px 1px rgba(0,0,0,.12),0 10px 24px rgba(58,47,28,.14);
@@ -55,6 +58,10 @@
   --ease-out:cubic-bezier(.33,1,.68,1); --ease-move:cubic-bezier(.2,0,0,1); --ease-in:cubic-bezier(.3,0,1,1);
 }
 @media (min-width:700px){:root{--g:32px}}
+/* 2026-10-17 (Franco's iPhone: "some of the shadows are overbearing, over buttons and text"): a phone draws every object smaller,
+   so its shadow is smaller too. The computer's lifts reach 34 and 60px below an object; these reach about 12 and 16, softer, and
+   no shadow falls on words or a button outside its object at 375 or 393 (shadow_air.py, check.py SHADOWS) */
+@media (max-width:699px){:root{--lift:0 1px 1px rgba(0,0,0,.10),0 4px 10px -2px rgba(58,47,28,.12);--lift-hi:0 1px 2px rgba(0,0,0,.12),0 6px 12px -2px rgba(58,47,28,.16)}}
 
 /* ======================================================================= 2. base */
 *,*::before,*::after{box-sizing:border-box}
@@ -299,8 +306,10 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 /* the stop tick was removed 2026-10-08 (claim craft-e: it sat outside the circle and read as a misaligned icon) */
 /* the pencil: what we saw. Graphite and weight 500 say "note"; upright and level since 2026-10-16 (Franco: no angled text, no italic) */
 .pencil{font-weight:500;color:var(--pencil);font-size:var(--fs-20);line-height:1.35}
-.pc{position:relative}                                    /* pencil circle around evidence (an observation, never money) */
-.pc::after{content:"";position:absolute;inset:-3px -8px;border:2px solid var(--pencil);border-radius:48% 52% 46% 54%/56% 44% 56% 44%;pointer-events:none}   /* 2026-10-16: level, no rotate() */
+.pc{position:relative}                                    /* the circle round evidence of a problem (the missed call, the draft quote) */
+/* 2026-10-17 (Franco's iPhone: "why are they gray instead of red"): one red pen marks every problem, the evidence as well as the
+   money, so the circle is the pen's red; the notes and arrows beside it stay pencil (they are notes, not marks). check.py CIRCLE_JS */
+.pc::after{content:"";position:absolute;inset:-3px -8px;border:2px solid var(--pen);border-radius:48% 52% 46% 54%/56% 44% 56% 44%;pointer-events:none}   /* 2026-10-16: level, no rotate() */
 .sys.pc::after{inset:-4px -10px;border-radius:16px 18px 15px 17px/12px 13px 12px 13px}   /* 2026-10-16 repair: one line in a phone thread; the round ring ran through its first and last letters */
 /* 2026-10-17 polish (Franco's list, item 4): the loop system.js pencil() draws round words on one line, 4px off their own ink, in
    Home's hand (an inline SVG in real pixels, .pc-loop). The two rules above stay the picture with JS off, and the ring round a
@@ -364,11 +373,14 @@ a.strip:focus-visible{outline-offset:3px}
 
 /* ======================================================================= 11. the walk sheet on the clipboard */
 .clip{margin:0}
-.board{position:relative;border-radius:12px;padding:40px 12px 12px;background:linear-gradient(170deg,var(--board),#A9865C);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 1px 0 var(--board-edge),0 14px 30px rgba(58,47,28,.2)}
+.board{position:relative;border-radius:12px;padding:40px 12px 12px;background:linear-gradient(170deg,var(--board),var(--board-lo));box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 1px 0 var(--board-edge),0 14px 30px rgba(58,47,28,.2)}
 .clamp{position:absolute;left:50%;top:-10px;width:40%;max-width:170px;height:38px;transform:translateX(-50%);background:var(--clamp);border-radius:9px 9px 6px 6px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.14),0 2px 4px rgba(0,0,0,.18)}
-/* 2026-10-16 (the new Home's clipboard, every clipboard in Phase D): hardboard with its fibre. Here because the grain's url()
-   resolves from the stylesheet that uses var(--grain), so a page stylesheet can't paint it; home.css draws the rest of the board */
-.board[data-grain]{/* ui-ok: gradient is the hardboard's sheen under its fibre, as the clipboard has always been drawn */background:var(--grain) 0 0/180px 180px,linear-gradient(172deg,#B8946A,#A6814F);background-blend-mode:multiply,normal}
+/* 2026-10-16 (the new Home's clipboard, every clipboard in Phase D): hardboard with its fibre. Here because the url() resolves from
+   this stylesheet; home.css draws the rest of the board. 2026-10-17 (Franco's iPhone): the fibre was the grain multiplied over the
+   gradient (background-blend-mode), and iPhone Safari dropped the blend and painted the pale grain alone. grain-board.webp is the
+   same grain made into dark fibres with their own alpha (no blend mode), so every engine paints the same board: these two stops
+   under a fibre of 6.8% average dark give #967E64 to the eye, the flat boards' --board / --board-lo */
+.board[data-grain]{/* ui-ok: gradient is the hardboard's sheen under its fibre, as the clipboard has always been drawn */background:url(assets/grain-board.webp) 0 0/180px 180px,linear-gradient(172deg,#A88D70,#9A8166)}
 .clamp i{position:absolute;left:50%;top:9px;width:36%;height:10px;transform:translateX(-50%);border-radius:5px;background:#7c7f84}
 .sheet{position:relative;background:var(--sheet);padding:20px 16px 16px;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.16)}
 .sh-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
@@ -381,10 +393,11 @@ a.strip:focus-visible{outline-offset:3px}
 .sh-usd{position:relative;align-self:start;font-weight:600;font-size:19px;color:var(--red);white-space:nowrap}
 .sh-usd .pen-ring{left:-11px;top:-12px;width:calc(100% + 22px);height:calc(100% + 24px);stroke-width:2.3px}   /* 2026-10-16 (p1-final): with ring()'s level ellipse it keeps about 3.7px off the figure at every width (pencil_air.py); still inside the sheet at 390 */
 .sh-total{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;align-items:baseline;padding-top:12px;margin-top:-1px;border-top:2px solid var(--ink);font-weight:600;color:var(--ink)}
-.sh-total b{font-size:24px}
+.sh-total b{font-size:24px;color:var(--red)}   /* 2026-10-17: the total is a loss too, red like its rows */
 .sh-time{font-size:15px;margin-top:8px}
 .sh-note{font-size:15px;color:var(--muted);margin-top:10px}
 @media (min-width:600px){.board{padding:46px 18px 18px}.sheet{padding:24px 24px 18px}}
+@media (max-width:699px){.board{box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 1px 0 var(--board-edge),0 6px 12px -2px rgba(58,47,28,.16)}}   /* 2026-10-17: phone-size, as --lift-hi (it lay over the line under the clipboard) */
 
 /* ======================================================================= 12. facts you can check */
 .facts{border-block:1px solid var(--ink);background:var(--paper)}
@@ -432,7 +445,16 @@ a.strip:focus-visible{outline-offset:3px}
 .stop-body{display:grid;gap:24px}
 .stop-notes{display:grid;gap:14px;align-content:start}
 .find{display:grid;gap:6px;margin-top:4px}
+/* 2026-10-17 (Franco's iPhone: "$399 a month reads like not what we're losing"): every red dollar figure is a loss and says so in
+   its own line or its row's header: the stop's "Lost:" / "Won back:" (.find-k), a standalone figure's "Losing" (.loss-k beside a
+   .loss figure), the sheet's "Lost a month" column and its total. Our own prices are ink, never red. check.py MONEY_JS */
+.find-k,.loss-k{font-size:var(--fs-17);font-weight:600;color:var(--ink)}
+.loss{color:var(--red)}
 .find-usd{justify-self:start;font-size:clamp(30px,3.4vw,40px);font-weight:600;color:var(--red);line-height:1.05}
+/* After: a figure won back is ink and its underline pencil, so red only ever means money lost (a red "Won back: $1,900 a
+   month" read as our fee, 2026-10-17). check.py MONEY_JS */
+.stop[data-state=after] .find-usd{color:var(--ink)}
+.stop[data-state=after] .find-usd .pen-under{stroke:var(--pencil)}
 .find-f{font-size:15px;color:var(--muted)}
 .fixline{font-size:17px}
 @media (min-width:760px){
@@ -569,7 +591,7 @@ html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs
 .ticket th{font-weight:700;text-align:left;border-bottom:1px dashed #999;font-size:12px}
 .ticket td{padding:3px 4px 3px 0;vertical-align:top}.ticket .r{text-align:right}
 .tk-sum{display:flex;justify-content:space-between;font-size:12px}.tk-tot{font-weight:700;border-top:1px dashed #999;padding-top:3px;margin-top:3px}
-.doc-clip{position:relative;width:min(100%,320px);border-radius:14px;background:linear-gradient(170deg,var(--board),#A9865C);padding:40px 12px 12px;box-shadow:var(--lift-hi);margin-inline:auto}
+.doc-clip{position:relative;width:min(100%,320px);border-radius:14px;background:linear-gradient(170deg,var(--board),var(--board-lo));padding:40px 12px 12px;box-shadow:var(--lift-hi);margin-inline:auto}
 .doc-clip .clamp{width:96px}
 .doc-clip .doc{box-shadow:0 1px 2px rgba(0,0,0,.16);min-height:280px}
 .dt{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
@@ -823,12 +845,16 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .foot-col{grid-column:span 2}
 .foot-col:nth-child(2){grid-column:6/span 2}
 .foot-col.c-contact{grid-column:span 3}
-.foot-brand{display:inline-block;background:url(assets/logo-white-red.svg) 0 0/148px auto no-repeat}
+.foot-brand{position:relative;display:inline-block}
 .foot-brand img{display:block;width:148px;height:auto}
-/* hover or focus: the mark turns the logo's own red, as it is in the header (Franco 2026-10-15). The white logo fades out over
-   the white-and-red one behind it, so only the mark changes color */
+/* hover or focus: the mark turns the logo's own red, as it is in the header (Franco 2026-10-15). 2026-10-17 (Franco's iPhone: "you
+   can see the red logo behind the white one"): the white-and-red logo lay under the white one at rest, and at 2x and 3x its red
+   mark showed round the white mark's edge. Now nothing is behind the logo at rest: the white-and-red one is a layer on top, at 0,
+   that fades in on hover while the white one steps out once it is covered, and steps back at once when the hover ends */
+.foot-brand::after{content:"";position:absolute;inset:0;background:url(assets/logo-white-red.svg) 0 0/148px auto no-repeat;opacity:0;pointer-events:none}
+.foot-brand:hover::after,.foot-brand:focus-visible::after{opacity:1}
 .foot-brand:hover img,.foot-brand:focus-visible img{opacity:0}
-@media (prefers-reduced-motion:no-preference){.foot-brand img{transition:opacity var(--t-press) var(--ease-out)}.foot-brand:hover img,.foot-brand:focus-visible img{transition-duration:var(--t-hover)}}
+@media (prefers-reduced-motion:no-preference){.foot-brand::after{transition:opacity var(--t-press) var(--ease-out)}.foot-brand:hover::after,.foot-brand:focus-visible::after{transition-duration:var(--t-hover)}.foot-brand:hover img,.foot-brand:focus-visible img{transition:opacity 0s linear var(--t-hover)}}
 .foot-line{margin-top:24px;font-size:var(--fs-24);font-weight:600;line-height:1.2;letter-spacing:-.015em;color:#fff;max-width:14em;text-wrap:balance}
 .foot .btn{margin-top:24px}
 .foot .btn:hover{text-decoration:none;color:var(--night)}
@@ -916,6 +942,7 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .stop-h .tab-n{margin-top:-2px}
 .stop-h h3{margin:4px 0 0}
 .pic.has-seg{padding-bottom:64px}
+@media (max-width:699px){.pic.has-seg{padding-bottom:72px}}   /* 2026-10-17: 17px of air between the picture and Before / After, past its shadow (9px sat in it) */
 html:not(.js) .pic.has-seg{padding-bottom:28px}            /* no JS: no buttons, so no empty slot under the picture */
 .pic.has-seg>.seg{position:absolute;left:0;bottom:0}
 .pic.has-seg>.samp{bottom:13px}
@@ -1139,8 +1166,9 @@ html.review .slot{/* ui-ok: pattern-bg a review-only picture slot, never on the 
 .iph-qb .fl{width:calc(11.3 * var(--pt));height:calc(25.7 * var(--pt))}
 .iph-qb .cm{width:calc(22.3 * var(--pt));height:calc(17.7 * var(--pt))}
 .iph-home{position:absolute;z-index:6;left:50%;bottom:calc(6 * var(--pt));width:calc(139 * var(--pt));height:calc(5 * var(--pt));margin-left:calc(-69.5 * var(--pt));border-radius:9px;background:#fff}
-/* the pencil loop round a missed call: drawn level in iPhone points over the notification (pencil_paths.py draws and checks it) */
-.iph-ring{position:absolute;inset:0;width:100%;height:100%;z-index:2;fill:none;stroke:var(--pencil);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;overflow:visible;pointer-events:none;max-width:none}
+/* the loop round a missed call: drawn level in iPhone points over the notification (pencil_paths.py draws and checks it); the pen's
+   red since 2026-10-17 (one red pen marks every problem) */
+.iph-ring{position:absolute;inset:0;width:100%;height:100%;z-index:2;fill:none;stroke:var(--pen);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;overflow:visible;pointer-events:none;max-width:none}
 
 /* the night band's lock screen in the measured iPhone (data-iph on the band: Home since 2026-10-17, the trade pages in Phase D). One
    phone on the page (craft judge): the date and the big clock are the strip phone's (.iph-date, .iph-clock, the same Inter cut on

@@ -26,11 +26,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=a0bcdb13">
-<link rel="stylesheet" href="/v4/trade-page.css?v=a0bcdb13">
+<link rel="stylesheet" href="/v4/system.css?v=21ea1ed6">
+<link rel="stylesheet" href="/v4/trade-page.css?v=21ea1ed6">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=a0bcdb13" defer></script>
-<script src="/v4/system.js?v=a0bcdb13" defer></script>
+<script src="/v4/trades.js?v=21ea1ed6" defer></script>
+<script src="/v4/system.js?v=21ea1ed6" defer></script>
 <style>
 /* ===== Loss calculator, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64) outside the pictures; every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -254,7 +254,7 @@ html:not(.js) .lk-bar{display:none}
         <div class="lk-sheet">
           <div class="lk-sh-h"><h2>Your estimate</h2><span class="stamp" data-o="stamp">Sample</span></div>
           <div data-o="result">
-            <p class="lk-total"><span class="lk-about">About</span><span class="lk-usd" data-o="total">$1,540<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="lk-per">a month</span></p>
+            <p class="lk-total"><span class="lk-about">Losing about</span><span class="lk-usd" data-o="total">$1,540<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="lk-per">a month</span></p>
             <ol class="lk-lines">
               <li data-o="l-retype" data-name="Typing the same job twice" data-task="retyping"><span><b>Typing the same job twice</b>30 minutes a day × 22 days ÷ 60 = 11.0 hours × $25 an hour = $275 a month.</span><span class="v">$275</span></li>
               <li data-o="l-unbilled" data-name="Jobs never billed" data-task="invoices"><span class="off"><b>Jobs never billed</b>Left blank.</span></li>
@@ -281,7 +281,7 @@ html:not(.js) .lk-bar{display:none}
     <h2>Where to find your numbers</h2>
     <figure class="find-fig">
       <div class="pic">
-        <div class="scr-win" role="img" aria-label="Sample: a job list for the last 3 months beside the invoices. Job 4536 for Tom Davis, finished October 12, invoice sent. Job 4534 for David Wilson, finished October 9, no invoice, circled in pencil. Job 4533 for John Smith, finished October 9, invoice sent. Job 4531 for Mary Johnson, finished October 8, invoice paid.">
+        <div class="scr-win" role="img" aria-label="Sample: a job list for the last 3 months beside the invoices. Job 4536 for Tom Davis, finished October 12, invoice sent. Job 4534 for David Wilson, finished October 9, no invoice, circled in red. Job 4533 for John Smith, finished October 9, invoice sent. Job 4531 for Mary Johnson, finished October 8, invoice paid.">
           <div class="win-tb" aria-hidden="true" data-ui-ok="fake-chrome R6: the one window frame for computer tasks; Franco kept the Mac buttons (Oct 6)"><i></i><i></i><i></i><span>Jobs finished, last 3 months</span></div>
           <div class="win-b"><table class="dt">
             <tr><th>Job</th><th>Finished</th><th>Invoice</th></tr>

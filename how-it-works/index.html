@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=a0bcdb13">
-<link rel="stylesheet" href="/v4/trade-page.css?v=a0bcdb13">
+<link rel="stylesheet" href="/v4/system.css?v=21ea1ed6">
+<link rel="stylesheet" href="/v4/trade-page.css?v=21ea1ed6">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=a0bcdb13" defer></script>
-<script src="/v4/system.js?v=a0bcdb13" defer></script>
+<script src="/v4/trades.js?v=21ea1ed6" defer></script>
+<script src="/v4/system.js?v=21ea1ed6" defer></script>
 <style>
 /* ===== How it works, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64), and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -178,6 +178,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
 @media (min-width:1000px){.mcheck{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}}
 .report{background:var(--sheet);color:var(--body);box-shadow:0 30px 60px rgba(0,0,0,.45);padding:22px 18px 18px;font-family:var(--sys);max-width:520px;margin-inline:auto}
 @media (min-width:600px){.report{padding:28px 28px 22px}}
+@media (max-width:699px){.report{box-shadow:0 2px 4px rgba(0,0,0,.35),0 8px 14px -4px rgba(0,0,0,.4)}}   /* 2026-10-17 (Franco's iPhone): a phone-size shadow; the 60px one darkened the summary under the report (check.py SHADOWS) */
 .rp-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding-bottom:10px;border-bottom:2px solid #111}
 .rp-h b{display:block;font-family:var(--font);font-size:22px;color:#111;font-weight:600}
 .rp-h small{display:block;font-size:13px;color:#55555a}

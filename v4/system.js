@@ -98,6 +98,9 @@
       el.textContent = fmt(from + (to - from) * e); if (k < 1) requestAnimationFrame(step); })(t0);
   }
   L.ring = ring; L.draw = draw;
+  // 2026-10-17 (Franco's iPhone: "$399 a month reads like not what we're losing"): a figure that stands alone says it is a loss,
+  // "Losing $399 a month" / "Pierde $399 al mes" (per 'yr': a year / al año). Home types or binds the same words
+  L.losing = function (n, per) { return tr('Losing ', 'Pierde ') + money(n) + ' ' + (per === 'yr' ? tr('a year', 'al año') : tr('a month', 'al mes')); };
 
   /* ================================================================ the pencil */
   // 2026-10-17 polish (Franco's list item 4: every pencil mark 3 to 4.5px off what it holds, never crowding its neighbours; the
@@ -249,7 +252,7 @@
       '<svg class="wb-arrow narrow" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true"><path d="M250 6C230 60 90 62 50 14M40 26l10-14 14 10" vector-effect="non-scaling-stroke"/></svg>' +
       '</div><div class="wb-tray"></div></div>';
   }
-  function recentsHTML() {             // plumbing stop: the shop phone, the missed call circled in pencil
+  function recentsHTML() {             // plumbing stop: the shop phone, the missed call circled in red
     return '<div class="scr-phone tilt"><div class="ph"><div class="ph-sb"><span>6:58</span><i></i></div><div class="ph-body">' +
       '<div class="ph-seg"><span class="on">All</span><span>Missed</span></div><p class="ph-h">Recents</p><ul class="ph-list">' +
       '<li><b>Dave, truck 1</b><small>mobile</small><time>6:41 PM</time></li>' +
@@ -377,7 +380,8 @@
     sheet: function (el, t, animate) {
       var f = function (k) { return el.querySelector('[data-f="' + k + '"]'); };
       if (f('sub')) f('sub').textContent = t.sub.replace(/(\d) /g, '$1\u00a0');   // 2026-10-15: "2 / trucks" never splits (no-break space)
-      if (f('per')) f('per').textContent = t.per === 'yr' ? tr('A year', 'Al año') : tr('A month', 'Al mes');
+      // 2026-10-17: the money column says what its figures are, a loss ("A month" read as a price list)
+      if (f('per')) f('per').textContent = t.per === 'yr' ? tr('Lost a year', 'Pérdida al año') : tr('Lost a month', 'Pérdida al mes');
       var ringOn = el.hasAttribute('data-ring'), short = el.hasAttribute('data-short');   // data-short (v4, R9): the row's one short formula
       if (f('rows')) f('rows').innerHTML = t.rows.map(function (r, i) {
         // 2026-10-16 (p1-final): a count keeps its word, so "48+ hours" never splits over two lines
@@ -417,7 +421,9 @@
       }
       var s = function (k) { return el.querySelector('[data-s="' + k + '"]'); }, r = t.rows[0];
       if (s('sub')) s('sub').textContent = stripSize(t); if (s('leak')) s('leak').textContent = r.b;
-      if (s('usd')) s('usd').textContent = money(r.usd) + perShort(t); if (s('f')) s('f').textContent = r.f;
+      // 2026-10-17: "Losing" in ink beside the red figure, so the figure never reads as a price
+      // the figure keeps one line (no-break spaces); where it doesn't fit beside "Losing", it goes under it whole
+      if (s('usd')) s('usd').innerHTML = '<span class="loss-k">' + tr('Losing', 'Pierde') + '</span> ' + (money(r.usd) + perShort(t)).replace(/ /g, ' '); if (s('f')) s('f').textContent = r.f;
       if (el.tagName === 'A') el.href = '#' + ($('[data-bind=sheet]') ? $('[data-bind=sheet]').id || 'sheet' : 'sheet');
     },
     text: function (el, t) { var v = t[el.getAttribute('data-field')]; if (v != null) el.textContent = v; },
@@ -440,10 +446,11 @@
           var me = /, (\d+) (.+)$/.exec(t.short) || [], qui = t.per === 'yr' ? 'una administradora de propiedades con ' :
             /^Restaurante/.test(t.short) ? 'un restaurante y bar con capacidad para ' : 'un negocio con ';
           if (leak) leak.innerHTML = 'De la hoja de ejemplo de ' + qui + (me[1] ? me[1] + ' ' + (/^Restaurante/.test(t.short) ? 'personas' : me[2]) : '') + ': ' +
-            esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', <b>' + money(r.usd) + perShort(t) + '</b>.';
+            esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', una pérdida de <b class="loss">' + money(r.usd) + perShort(t) + '</b>.';
           return;
         }
-        if (leak) leak.innerHTML = 'From the sample sheet for a ' + (m[1] ? m[1] + '-' + m[2] + ' ' : '') + kind + ': ' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', <b>' + money(r.usd) + perShort(t) + '</b>.';
+        // 2026-10-17: the figure is red and says it is a loss ("losing"), so it never reads as the price of the line above
+        if (leak) leak.innerHTML = 'From the sample sheet for a ' + (m[1] ? m[1] + '-' + m[2] + ' ' : '') + kind + ': ' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', losing <b class="loss">' + money(r.usd) + perShort(t) + '</b>.';
       });
     },
     bigfig: function (el, t) {
@@ -593,6 +600,11 @@
     // "Stop 1:" (a lone "1" read as a step of one), and its find line says what the figure is in each state: Lost / Won back
     var most = +el.getAttribute('data-walk-rows') || 0; if (most) rows = rows.slice(0, most);
     var one = rows.length === 1;
+    // 2026-10-17 (Franco: "do we have to include them?"): a Sample tag sits by anything that looks like a real business's dollar
+    // results. A stop picture with no dollar figure leaves its tag off where the walk's own lead names the sample business
+    // ([data-sample-lead], "Dunlin Plumbing is a sample 2-truck shop."); its alt text still opens "Sample". Lint R8 holds it
+    var sec = el.closest('section') || el, led = !!sec.querySelector('[data-sample-lead]'),
+      usd = function (h) { return /\$\s?\d/.test(h.replace(/<[^>]*>/g, ' ')); };
     // a page's own stop (li.stop[data-own="ROW ID"], written in the page) stands where that row's stop would be: the row stays on
     // the sheet and its picture leaves the walk (PLUMBING-INTEGRATE item 37, C9; the AC page walks its change-out quote in place of
     // the phone, 2026-10-12). Read once from the page's own markup, so a re-render and the prerender keep it as written.
@@ -602,8 +614,9 @@
       if (own[r.id]) return own[r.id];
       var P = r.pair, n = i + 1, task = TASK[r.icon] || r.icon, place = (P && P.place) || r.place;
       var crop = (P ? P.frame : r.after.frame) === 'phone' ? ' crop-m' : '';   // R6 crop option: on a phone only the thread's part of the phone shows
-      var pic = P ? '<div class="pair' + crop + '" data-g2r data-pair data-state="after" role="img" aria-label="' + esc(P.alt.after) + '" data-label-before="' + esc(P.alt.before) + '" data-label-after="' + esc(P.alt.after) + '">' + pairHTML(P) + '</div>'
-        : '<div class="solo' + crop + '" role="img" aria-label="' + esc(altAfter(r.after)) + '">' + realHTML(r.after, true) + '</div>';
+      var inner = P ? pairHTML(P) : realHTML(r.after, true), tag = !led || usd(inner);
+      var pic = P ? '<div class="pair' + crop + '" data-g2r data-pair data-state="after" role="img" aria-label="' + esc(P.alt.after) + '" data-label-before="' + esc(P.alt.before) + '" data-label-after="' + esc(P.alt.after) + '">' + inner + '</div>'
+        : '<div class="solo' + crop + '" role="img" aria-label="' + esc(altAfter(r.after)) + '">' + inner + '</div>';
       // the stop's head is its pencil-circled number beside the PLACE in the shop ("The shop phone"), with the leak's name on
       // a plain line under it: a walk goes room by room, and a calls row never becomes a heading (R1; review 2026-10-10)
       // the Before / After buttons sit under the picture they switch, beside its Sample label
@@ -611,9 +624,10 @@
         '<div class="stop-h">' + (one ? '' : '<span class="tab-n">' + n + '</span>') + '<div class="stop-t"><h3>' + (one ? '' : '<span class="sr">' + tr('Stop ', 'Paso ') + n + ': </span>') + esc(place) + '</h3><p class="stop-leak">' + esc(r.b) + '</p></div></div>' +
         '<div class="stop-body"><div class="pic' + (P ? ' has-seg' : '') + '"' + (task === 'calls' ? ' data-pic="calls"' : '') + '>' + pic +
         (P ? '<div class="seg" role="group" aria-label="' + tr('Show stop ', 'Mostrar el paso ') + n + '"><button type="button" data-show="before" aria-pressed="false">' + tr('Before', 'Antes') + '</button><button type="button" data-show="after" aria-pressed="true">' + tr('After', 'Después') + '</button></div>' : '') +
-        '<span class="samp">' + tr('Sample', 'Ejemplo') + '</span></div>' +
+        (tag ? '<span class="samp">' + tr('Sample', 'Ejemplo') + '</span>' : '') + '</div>' +
         '<div class="stop-notes"><p class="pencil">' + esc(r.note) + '</p>' +
-        '<p class="find">' + (one && P ? '<span class="find-k"><span class="bo">' + tr('Lost:', 'Se pierde:') + '</span><span class="ao">' + tr('Won back:', 'Se recupera:') + '</span></span>' : '') +
+        // 2026-10-17: every stop's figure says what it is in each state, not only a one-stop walk's ("$399 a month" alone read as a price)
+        '<p class="find">' + (P ? '<span class="find-k"><span class="bo">' + tr('Lost:', 'Se pierde:') + '</span><span class="ao">' + tr('Won back:', 'Se recupera:') + '</span></span>' : '<span class="find-k">' + tr('Lost:', 'Se pierde:') + '</span>') +
         '<span class="find-usd money">' + money(r.usd) + ' ' + perWord(t) + UNDER_SVG + '</span>' + (noF ? '' : '<span class="find-f">' + esc(r.fs || r.f) + '</span>') + '</p>' +
         // no "Fix:" line on v4 stops: the After picture shows the fix in the shop's own screen, and the line only repeated it (R9)
         '</div></div></li>'; }).join('');
@@ -936,8 +950,13 @@
     shown('.stamp,.samp').forEach(function (s) { var tf = getComputedStyle(s).transform; if (tf && tf !== 'none' && tf !== 'matrix(1, 0, 0, 1, 0, 0)') E.push('R8: a tilted Sample stamp.'); });
     // papers sit straight too (PLUMBING-INTEGRATE item 42; system.css straightens .ticket and .doc.tilt-* on v4 pages): a move is fine, a turn is not
     shown('.ticket,.doc').forEach(function (d) { var tf = getComputedStyle(d).transform; if (tf && tf !== 'none' && !/^matrix\(1, 0, 0, 1,/.test(tf)) E.push('R8: a tilted paper (' + d.className + ').'); });
+    // 2026-10-17: one Sample label at most; none only on a picture with no dollar figure whose section's lead names the sample
+    // business ([data-sample-lead] saying sample / ejemplo). A picture with dollar figures or results always keeps its label
     shown('.pic').forEach(function (p) { var n = $$('.samp,.stamp', p).filter(function (s) { return vis(s) && /^(sample|ejemplo)$/i.test(s.textContent.trim()); }).length;
-      if (n !== 1) E.push('R8: a picture with ' + n + ' Sample labels (' + (p.className || p.id) + ').'); });
+      var sec = p.closest('section') || document.body, lead = shown('[data-sample-lead]', sec).some(function (l) { return /sample|ejemplo/i.test(l.innerText); });
+      if (n > 1) E.push('R8: a picture with ' + n + ' Sample labels (' + (p.className || p.id) + ').');
+      else if (!n && /\$\s?\d/.test(p.innerText)) E.push('R8: a picture with dollar figures and no Sample label (' + (p.className || p.id) + ').');
+      else if (!n && !lead) E.push('R8: a picture with no Sample label, and no lead in its section that names the sample business ([data-sample-lead]) (' + (p.className || p.id) + ').'); });
     $$('.slot').forEach(function (s) { if (['16:9', '1:1', '4:5'].indexOf(s.dataset.shape) < 0) E.push('R8: a picture slot that is not 16:9, 1:1 or 4:5.'); });
     // R9: no dollar figure more than twice, 16 or fewer, counted per width; the phone-only top-leak strip is the named exception.
     // The bound price sentence counts its bold price only: the plain words after it are the credit's terms, and their $1,500
@@ -1064,7 +1083,10 @@
     // WCAG 2.5.3: a pause button's accessible name starts with the words it shows ("Pausa" vs "Pausar la animación" missed it, 2026-10-10)
     $$('.pause').forEach(function (b) { var v = ((b.querySelector('.pt') || {}).textContent || '').trim(), a = (b.getAttribute('aria-label') || '').trim();
       if (v && a && a.toLowerCase().indexOf(v.toLowerCase()) !== 0) E.push('A pause button shows "' + v + '" but is named "' + a + '" (the name must start with the visible words).'); });
-    $$('.pic, .sheet, .morning').forEach(function (p) { if (!/sample|ejemplo/i.test(p.innerText + (p.getAttribute('aria-label') || ''))) W.push('Picture without a visible "Sample" label: ' + (p.id || p.className)); });
+    // 2026-10-17 iPhone round: a picture that drops its tag (R8, its section's lead names the sample) still says so in its alt
+    // text, which sits on the screen inside it ("Sample, after: ..."), so the alt text of what it holds counts too
+    $$('.pic, .sheet, .morning').forEach(function (p) { var alt = $$('[aria-label]', p).map(function (a) { return a.getAttribute('aria-label'); }).join(' ');
+      if (!/sample|ejemplo/i.test(p.innerText + (p.getAttribute('aria-label') || '') + ' ' + alt)) W.push('Picture without a visible "Sample" label: ' + (p.id || p.className)); });
     $$('a[href^="sms:"]').forEach(function (a) { if (!/body=/.test(a.getAttribute('href'))) W.push('sms: link without a prefilled body.'); });
     // type floors at the current width: 12px inside pictures always; 15px for key text outside pictures on phones
     if (innerWidth <= 430) {

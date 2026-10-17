@@ -39,8 +39,8 @@
    and the printed sheet: the mark beside "Walk sheet" with Sample on that line, the shop under them. No data-fill, so the sheet
    and its ring are there from the first frame (judge 2: an early look caught the ring half drawn); a pick redraws them (.swap) */
 .hm4-hero .clip{position:relative;padding-top:24px}
-.hm4-hero .board{position:relative;border-radius:14px;padding:30px 14px 22px;   /* its grained hardboard is system.css's .board[data-grain] */
-  box-shadow:inset 0 1px 0 rgba(255,244,222,.28),inset 0 0 0 1px rgba(70,48,20,.22),0 3px 0 #7E5F3B,0 4px 1px rgba(40,28,12,.22),0 46px 80px -28px rgba(58,47,28,.36),0 26px 40px -26px rgba(0,0,0,.34)}
+.hm4-hero .board{position:relative;border-radius:14px;padding:30px 14px 22px;   /* its grained hardboard is system.css's .board[data-grain]; the 3px edge under it is system.css's --board-edge, so it follows the board's colour (2026-10-17: one board colour in every engine) */
+  box-shadow:inset 0 1px 0 rgba(255,244,222,.28),inset 0 0 0 1px rgba(70,48,20,.22),0 3px 0 var(--board-edge),0 4px 1px rgba(40,28,12,.22),0 46px 80px -28px rgba(58,47,28,.36),0 26px 40px -26px rgba(0,0,0,.34)}
 .hm4-hero .clamp{position:absolute;left:50%;top:-14px;width:214px;max-width:none;height:66px;margin-left:-107px;transform:none;z-index:3;background:none;border-radius:0;box-shadow:none;filter:drop-shadow(0 2px 2px rgba(40,28,12,.28))}
 .hm4-hero .stack{position:relative;isolation:isolate}
 .hm4-hero .stack::before,.hm4-hero .stack::after{content:"";position:absolute;left:3px;right:2px;bottom:-4px;height:40px;background:#F7F4EC;border-radius:1px;box-shadow:0 1px 1px rgba(58,47,28,.22)}
@@ -61,7 +61,7 @@
 .hm4-hero .sh-usd{position:relative;color:var(--red);font-weight:600;font-size:20px;white-space:nowrap;align-self:flex-start}
 .hm4-hero .sh-total{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:2px 12px;border-top:2px solid var(--ink);margin-top:-1px;padding-top:10px}
 .hm4-hero .sh-total span{font-weight:600;color:var(--ink)}
-.hm4-hero .sh-total b{font-size:24px;font-weight:600;color:var(--ink);white-space:nowrap;line-height:1.25}
+.hm4-hero .sh-total b{font-size:24px;font-weight:600;white-space:nowrap;line-height:1.25}   /* red from system.css since 2026-10-17 (Franco on his iPhone): like the rows, so "$2,710 a month" reads as what the shop loses, never as a price */
 .hm4-hero .sh-time,.hm4-hero .sh-note{font-size:15px;margin-top:6px}
 .hm4-hero .sh-time b{color:var(--ink);white-space:nowrap}   /* "about 15 hours a month" stays together */
 .hm4-hero .sh-note{color:var(--muted)}
@@ -89,12 +89,13 @@ html.js .hm4-hero .sh-pick{container-type:inline-size}
 @container (max-width:329px){.hm4-hero .sh-pick .picker-sel{flex-wrap:wrap;row-gap:0}.hm4-hero .sh-pick select{flex-basis:100%}}
 
 /* ---- the strip: where three of the sheet's numbers come from, each in the shop's own tool, on plain paper (Franco's note 1: no
-   band, no lines behind it). Each item says its figure once and what its picture shows (note 2); each picture has its own Sample
-   label (R8). From 1080px three tools at three heights; 900 to 1079 the Excel sheet beside the whole phone; on a phone a lead
+   band, no lines behind it). Each item says its figure once and what its picture shows (note 2). The label over the strip names
+   the sample business ([data-sample-lead], 2026-10-17), so only the quotes slice, the one picture with dollar figures, keeps a
+   Sample stamp (R8). From 1080px three tools at three heights; 900 to 1079 the Excel sheet beside the whole phone; on a phone a lead
    line, then the Excel sheet, then the phone cut at its band's top edge */
 .recog{position:relative;display:grid;gap:14px}
 .rc-lead{display:none}
-.rc-k{font-size:17px;font-weight:600;color:var(--ink)}
+.rc-k{font-size:17px;font-weight:600;color:var(--ink);text-wrap:balance}   /* 2026-10-17: it names the sample business ("Dunlin Plumbing, a sample shop with 2 trucks"), so the Excel sheet and the phone carry no Sample tag */
 /* 2026-10-17 polish (craft judge: three items, three kinds of head): on a computer every item opens on its picture's name in ink,
    then its figure (red where it is money: the Excel sheet and the phone; the quotes slice keeps its ink "3 days in Drafts", since
    its dollars are stop 1's), then the caption. A phone keeps p1-final's figure first (data-extra) */
@@ -144,7 +145,8 @@ html.js .hm4-hero .sh-pick{container-type:inline-size}
 .av{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;font-size:12px;font-weight:700;letter-spacing:0}
 .av-jr{background:#dbe5f4;color:#284878}.av-dm{background:#efe2cd;color:#704d22}
 /* the Excel sheet: the window frame is the system's (.scr-win, Mac buttons, R6); inside, Excel's ribbon, an upright fx, numbers
-   set right, cells cut flat at the edge, the selection with its fill handle and the pencil loop round "465 Elm St" (note 6:
+   set right, cells cut flat at the edge, the selection with its fill handle and the red pen loop round "465 Elm St" (one red pen marks
+   every problem since 2026-10-17; note 6:
    column D says what each copy was for in words that fit; under a 380px picture column B, the same customer in every row, steps
    aside so D gets its room; a ribbon item that doesn't fit wraps out of sight, never cut mid-word) */
 .xls .xb{font-family:var(--xls);color:#1f1f1f;background:#fff}
@@ -162,7 +164,7 @@ html.js .hm4-hero .sh-pick{container-type:inline-size}
 .xg .sel{position:relative;outline:2px solid #1e6b41;outline-offset:-1px;background:#fff;overflow:visible}
 .xg .fh{position:absolute;z-index:2;right:-4px;bottom:-4px;width:7px;height:7px;background:#1e6b41;border:1.5px solid #fff}   /* Excel's fill handle */
 .xg .xpc{position:relative;display:inline-block}
-.xg .xl-ring{position:absolute;left:-4.5px;top:0;width:calc(100% + 9px);height:100%;fill:none;stroke:var(--pencil);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;overflow:visible;pointer-events:none;max-width:none}
+.xg .xl-ring{position:absolute;left:-4.5px;top:0;width:calc(100% + 9px);height:100%;fill:none;stroke:var(--pen);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;overflow:visible;pointer-events:none;max-width:none}
 .xg .xl-ring path{vector-effect:non-scaling-stroke}
 .xg .cl .ac,.xg td.rn.ac{background:#dfe9e2;color:#1e6b41;font-weight:700}
 .xls .xb-tabs{display:flex;align-items:center;gap:2px;height:28px;padding:0 8px;background:#f3f3f1;border-top:1px solid #dadad6;font-size:12px;color:#55554f}
@@ -172,11 +174,12 @@ html.js .hm4-hero .sh-pick{container-type:inline-size}
 @container (max-width:380px){.xg .c-b{display:none}.xg .cl .w-c{border-left:3px double #a3a3a3}}   /* as Excel marks a hidden column: a double line where B was */
 /* the shop phone: the measured iPhone 15 (system.css 28). A computer shows it whole at 256px, true iPhone scale. The pencil loop
    round the missed call is drawn four times (pencil_paths.py) and one shows per width: the computer's, and on a phone the one
-   drawn for that width's 12px type */
+   drawn for that width's 12px type. Red since 2026-10-17 (one red pen), the computer's loop is 1.8px, not 2: red reads bolder at
+   its soft edge than graphite did, and at 2px the Spanish loop measured 2.97px from the green icon (pencil air wants 3) */
 .rc-p .iph{width:min(100%,256px)}
 @media (min-width:900px){.rc-p .ph-band{background:none}}   /* the band is the phone's crop edge; a computer shows the whole phone on paper */
 .rc-p .iph-ring path{display:none}
-@media (min-width:900px){.rc-p .iph-ring{stroke-width:2}.rc-p .iph-ring .lp-pc{display:inline}}
+@media (min-width:900px){.rc-p .iph-ring{stroke-width:1.8}.rc-p .iph-ring .lp-pc{display:inline}}
 @media (min-width:375px) and (max-width:899px){.rc-p .iph-ring .lp-ph{display:inline}}
 @media (min-width:360px) and (max-width:374px){.rc-p .iph-ring .lp-ph-m{display:inline}}
 @media (max-width:359px){.rc-p .iph-ring .lp-ph-s{display:inline}}
@@ -307,8 +310,13 @@ html:not(.js) .bm-again,html:not(.js) .bm-foot{display:none}   /* both need JS (
 
 /* ======================================================= 3 who we work with: its own ground (bone), big short lines, wide trade links,
    each with its trade's biggest leak; what you keep under the heading on a computer */
-.who-g{display:grid;gap:24px;grid-template-areas:"h" "lines" "trades" "all" "not" "slot"}
-.who-g>h2{grid-area:h}.who-lines{grid-area:lines}.who-trades{grid-area:trades}.who-all{grid-area:all}.who-not{grid-area:not}.who-slot{grid-area:slot}
+.who-g{display:grid;gap:24px;grid-template-areas:"h" "one" "lines" "trades" "all" "not" "slot"}
+.who-g>h2{grid-area:h}.who-one{grid-area:one}.who-lines{grid-area:lines}.who-trades{grid-area:trades}.who-all{grid-area:all}.who-not{grid-area:not}.who-slot{grid-area:slot}
+/* 2026-10-17 (Franco on his iPhone: "a lot of words", and How it works follows right after): a phone says who in one line, then the
+   trades and the closing line; the three lines and What you keep are the computer's (data-extra) */
+.who-one{font-size:20px;font-weight:500;line-height:1.3;letter-spacing:-.015em;color:var(--ink);max-width:24em;text-wrap:balance}
+@media (max-width:899px){.who-g{grid-template-areas:"h" "one" "trades" "all" "slot"}.who-lines[data-extra],.who-not[data-extra]{display:none}}   /* their rows go too, or each left two gaps */
+@media (min-width:900px){.who-one{display:none}}
 .who-lines{display:grid;gap:12px}
 .who-lines li{font-size:24px;font-weight:500;line-height:1.2;letter-spacing:-.015em;color:var(--ink);max-width:24em}
 .who-lines li b{font-weight:600}
@@ -376,7 +384,7 @@ html:not(.js) .bm-again,html:not(.js) .bm-foot{display:none}   /* both need JS (
 .stop-leak{font-size:17px;font-weight:600;line-height:1.35;color:var(--body);max-width:30em;text-wrap:balance}
 .find-k{font-size:17px;font-weight:600;color:var(--ink)}
 .hm4-walk .find-usd{font-size:32px}
-.walk-more{margin-top:28px;font-size:17px;font-weight:600}
+.walk-more{margin-top:36px;font-size:17px;font-weight:600}   /* 2026-10-17: 36, not 28, so the link's 44px tap box starts under the stop card's shadow (shadow_air) */
 .hm4-walk .cta-inline{margin-top:24px}   /* button and number: money back is said in How it works and the close (2026-10-17, owner judge: once in one wording, twice) */
 /* a picked trade's own first row (the system's stop look) */
 .hm4-walk .stop:not(.stop-q) .ph4{width:min(var(--ph-w),100%);margin-inline:0}
@@ -511,10 +519,11 @@ html:not(.js) .hm4-walk .pic.has-seg>.samp{top:auto;bottom:0}
    with the row; in After it rises to make room for Sent under it. The two pills are one height, so half a pill and half the gap */
 .stop-q .pair[data-state=before] td .chg.tr>.was{transform:translateY(calc(50% + 1px))}
 @media screen and (prefers-reduced-motion:no-preference){.stop-q td .chg.tr>.was{transition:transform 220ms var(--ease-out)}}
-/* on a phone the window takes the page's side padding (the background bleeds, the words keep their column: Franco's rule for the
-   How it works card), so the customer column has room for a job on one line (2026-10-17 polish, owner judge at 375 to 430) */
-@media (max-width:759px){.stop-q .stage>.qa{margin-inline:-18px}}
-@media (max-width:399px){.stop-q .stage>.qa{margin-inline:-12px}}
+/* on a phone the window sits inside its stop card like every other window, its rounded corners and all three buttons showing
+   (2026-10-17, Franco on his iPhone: "the Mac window is cut off"; the polish had bled it into the card's side padding). In the
+   narrow window a job may take a second line, and a customer's name too rather than end in "..." (shared lane's tested patch) */
+@media (max-width:759px){.stop-q .stage>.qa{margin-inline:0}}
+@container (max-width:420px){.stop-q .qa .qt .cu{white-space:normal;overflow:visible;text-overflow:clip}}
 @media screen and (prefers-reduced-motion:no-preference){.stop-q .qt tr.n td{transition:background-color 220ms var(--ease-out)}}
 
 /* ======================================================= 6 the night band: phone and paper as one centred pair (layout a; b and c for
@@ -678,19 +687,32 @@ html:not(.js) .hm4-walk .pic.has-seg>.samp{top:auto;bottom:0}
   .rc-k{margin-bottom:22px}
   .rc+.rc{margin-top:48px}
   .rc-q+.rc{margin-top:0}   /* the quotes slice hides on a phone; the Excel item still followed it and took a 48px hole (p1-final has this line) */
-  .hm4-hero .hero-vision{margin-top:64px;font-size:24px;line-height:1.25;font-weight:600;letter-spacing:-.012em}
+  /* 2026-10-17 (Franco on his iPhone: the block "cuts off a little rough" and sits off centre): the vision line, the price and the
+     facts sit centred in their paper, 48px from the phone band's edge to the line and 48px from the last tick to What we automate
+     (it was 64 over and 26 under). iphone_check.py holds the two within 2px */
+  .hm4-hero .hero-vision{margin-top:48px;font-size:24px;line-height:1.25;font-weight:600;letter-spacing:-.012em}
   .hm4-hero .hero-terms{margin-top:22px;gap:12px}
-  .hm4-hero .facts4{margin-top:18px;padding-bottom:12px}   /* note 4: the ticks 32px under the price (it was a 72px hole) */
+  .hm4-hero .facts4{margin-top:18px;padding-bottom:34px}   /* note 4: the ticks 32px under the price (it was a 72px hole) */
   /* note 1: the shop phone sits in a full-bleed bone band whose top edge is the crop: the device keeps its lowest 321.2pt of 891.2
      (the missed call, flashlight, camera and home bar) at the column's width, its top runs out of the band, its side and bottom
      shadows fall on bone and end at the band's real edges (the screen's sides, the band's foot), the way Apple cuts a device at a
-     section edge. No clip-path, no seam round it. The Sample label sits in the band's bottom right */
-  .rc-p .ph-band{margin:22px calc(-1 * var(--g)) 0;padding:0 var(--g) 44px;overflow:hidden}   /* bone with its grain: data-ground="bone" (system.css) */
+     section edge. No clip-path, no seam round it, and since 2026-10-17 no Sample tag at its foot */
+  .rc-p .ph-band{margin:22px calc(-1 * var(--g)) 0;padding:0 var(--g) 44px;overflow:hidden}   /* bone with its grain: data-ground="bone" (system.css); it ends on bone alone, 44px under the phone, where its shadow has faded */
   .rc-p .ph-crop{position:relative;width:min(400px,100%);margin:0 auto;aspect-ratio:432.2/321.2}
   .rc-p .ph-crop .iph{position:absolute;left:0;right:0;bottom:0;width:100%}
-  .rc-p .ph-band>.samp{right:var(--g);bottom:10px;background:var(--bone)}
   /* the close keeps its one button; the bar carries the number and Text (data-extra) */
   .hm4-close .c4-tel{display:none}
+  /* 2026-10-17, shadows on a phone (Franco on his iPhone: "overbearing", "over buttons and text"): every picture's shadow fades out
+     before the next words or control. On a small screen a lift reads deeper, so Home's phone pictures take the shorter one
+     (system.css --lift, 34px of reach, faded by 19px) and keep their air: the clipboard's lift ends above the picker; the strip's
+     Excel window and the code window take --lift, and the code window's Your screen / The code buttons sit 20px under it; stop 1's
+     quote card, a window over a window, keeps --lift-hi without its deep layer, with 44px of paper before the margin note.
+     shadow_air.py measures every one at 375 and 393 in WebKit and Chromium */
+  .hm4-hero .board{box-shadow:inset 0 1px 0 rgba(255,244,222,.28),inset 0 0 0 1px rgba(70,48,20,.22),0 3px 0 var(--board-edge),0 4px 1px rgba(40,28,12,.22),0 16px 24px -10px rgba(58,47,28,.30),0 8px 12px -8px rgba(0,0,0,.26)}
+  .rc-x .scr-win,.bm-win{box-shadow:var(--lift)}
+  .bm-ctl{margin-top:20px}
+  .stop-q .qcard{box-shadow:var(--lift-hi)}
+  .stop-q .stop-body{gap:44px}
 }
 /* the Spanish letterhead (2026-10-17 polish, craft judge): "Plomería, 2 camionetas, condado de Alachua" (323px, the live sample's own
    words) hangs under the title in two lines, as the English and every computer view do. A short phone (under 701px tall) has no line
