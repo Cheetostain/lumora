@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=0b52c240">
-<link rel="stylesheet" href="/v4/trade-page.css?v=0b52c240">
+<link rel="stylesheet" href="/v4/system.css?v=cc54c7ee">
+<link rel="stylesheet" href="/v4/trade-page.css?v=cc54c7ee">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=0b52c240" defer></script>
-<script src="/v4/system.js?v=0b52c240" defer></script>
+<script src="/v4/trades.js?v=cc54c7ee" defer></script>
+<script src="/v4/system.js?v=cc54c7ee" defer></script>
 <style>
 /* ===== How it works, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64), and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -85,7 +85,7 @@
 .wk-lists h3{margin-bottom:6px}
 .checks li,.nevers li{position:relative;padding:9px 0 9px 32px;border-top:1px solid var(--rule-bone);font-size:17px}
 .checks li:first-child,.nevers li:first-child{border-top:0}
-.checks li::before{content:"";position:absolute;left:4px;top:15px;width:13px;height:7px;border-left:2.4px solid var(--ink);border-bottom:2.4px solid var(--ink);transform:rotate(-48deg)}
+.checks li::before{content:"";position:absolute;left:4px;top:15px;width:18px;height:15px;background:var(--ink);-webkit-mask:var(--tick) 0 0/100% 100% no-repeat;mask:var(--tick) 0 0/100% 100% no-repeat}   /* 2026-10-16 repair: the site's one drawn tick (system.css --tick), level; it was a CSS check turned -48deg */
 .nevers li::before,.nevers li::after{content:"";position:absolute;left:5px;top:21px;width:15px;height:2.4px;background:var(--ink);transform:rotate(45deg)}
 .nevers li::after{transform:rotate(-45deg)}
 .wk-lists .note-r{margin-top:8px;font-size:15px;color:var(--muted);max-width:34em}
@@ -205,7 +205,8 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
 @media (min-width:900px){.cover{grid-template-columns:1fr 1fr;gap:40px}}
 .cover h3{color:#fff;font-size:20px;margin-bottom:6px}
 .cover li{position:relative;padding:8px 0 8px 26px;border-top:1px solid rgba(233,228,216,.16);font-size:17px;color:var(--on-night)}
-.cover .yes li::before{content:"";position:absolute;left:2px;top:15px;width:12px;height:6px;border-left:2.2px solid var(--on-night);border-bottom:2.2px solid var(--on-night);transform:rotate(-48deg)}
+.cover .yes li::before{content:"";position:absolute;left:0;top:15px;width:16px;height:13px;background:var(--on-night);-webkit-mask:var(--tick) 0 0/100% 100% no-repeat;mask:var(--tick) 0 0/100% 100% no-repeat}   /* 2026-10-16 repair: the same drawn tick, on the dark band */
+@media (forced-colors:active){.checks li::before,.cover .yes li::before{forced-color-adjust:none;background:CanvasText}}
 .cover .no li::before{content:"";position:absolute;left:3px;top:20px;width:12px;height:2px;background:var(--muted-night)}
 
 /* 7 questions owners ask: native disclosures, so twelve answers fit a phone without a wall */
@@ -256,7 +257,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
 <div class="util">
   <div class="wrap util-in">
     <span>Gainesville, serving Alachua County</span>
-    <span class="util-r"><span class="lang" role="group" aria-label="Language"><a href="/how-it-works/" aria-current="true">EN</a><a href="/es/how-it-works/" lang="es" hreflang="es">ES</a></span></span>
+    <span class="util-r"><a href="/es/how-it-works/" lang="es" hreflang="es" class="lang">Español</a></span>
   </div>
 </div>
 <header class="hdr">
@@ -274,8 +275,8 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
       </ul>
     </nav>
     <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
-    <a class="btn btn-sm" href="tel:+13522260681">Call or text us</a>
-    <span class="lang" role="group" aria-label="Language"><a href="/how-it-works/" aria-current="true">EN</a><a href="/es/how-it-works/" lang="es" hreflang="es">ES</a></span>
+    <a class="btn btn-sm" href="tel:+13522260681">Call us</a>
+    <a href="/es/how-it-works/" lang="es" hreflang="es" class="lang">Español</a>
     <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   </div>
 </header>
@@ -289,7 +290,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
       <p class="t-lede">The free call tells us whether a walk fits your shop. The walk is the first paid step, and it ends in a sheet with a dollar figure on every problem.</p>
       <div class="cta">
         <div class="cta-row">
-          <a class="btn btn-lg" href="tel:+13522260681" data-first="the call button">Call or text us</a>
+          <a class="btn btn-lg" href="tel:+13522260681" data-first="the call button">Call us</a>
           <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
           <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
         </div>
@@ -465,7 +466,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
 <p class="note-r">On the pest control sheet, 1 in 2 and 20% are our own sample rates, and your walk puts your own numbers in their place: 1 in 2 lapsed termite renewals won back by a follow-up call, and 20% more declined autopay charges recovered once retries run on a schedule. For scale, Recurly's 2018 study of more than 1,300 subscription businesses found that over 45% of the charges declined for the three most common reasons were recovered (vendor data). $225 is a renewal's $271 average fee across $325 bait and $195 liquid agreements, less a $46 yearly inspection. On the pest control page, $7.50 a foot for trench-and-rod termite treatment sits inside two national cost guides, Fixr's $4 to $14.50 and Polyguard's $3 to $15.</p></div></details>
     </div>
     <div class="cta-inline">
-      <a class="btn" href="tel:+13522260681">Call or text us</a>
+      <a class="btn" href="tel:+13522260681">Call us</a>
       <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
       <p class="mb mb-s"><span data-shared="moneyback.short"><b>Not worth it to you?</b> Text or email us within 7 days after we go over your sheet, and you get the walk fee back.</span></p>
     </div>
@@ -595,7 +596,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
       </div>
     </details>
     <div class="cta-inline">
-      <a class="btn" href="tel:+13522260681">Call or text us</a>
+      <a class="btn" href="tel:+13522260681">Call us</a>
       <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
       <p class="mb mb-s"><span data-shared="moneyback.short"><b>Not worth it to you?</b> Text or email us within 7 days after we go over your sheet, and you get the walk fee back.</span></p>
     </div>
@@ -649,7 +650,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
       <h2 class="t-close close-h">Start with a free call.</h2>
       <div class="close-act">
         <div class="arrow-to">
-          <a class="btn btn-lg" href="tel:+13522260681">Call or text us</a>
+          <a class="btn btn-lg" href="tel:+13522260681">Call us</a>
           <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
         </div>
         <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
@@ -704,12 +705,12 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
     <div class="foot-grid">
       <div class="foot-lead">
         <a class="foot-brand" href="/" aria-label="Lumora, home page"><img src="/v4/assets/logo-white.svg" alt="" width="148" height="36"></a>
-        <p class="foot-line">Your shop should run the same whether you're there or not.</p>
-        <a class="btn" href="tel:+13522260681">Call or text us</a>
+        <p class="foot-line">Your business should run the same whether you're there or not.</p>
+        <a class="btn" href="tel:+13522260681" data-extra="computer: the call bar carries the number on a phone">Call us</a>
       </div>
       <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">How it works</h2><ul><li><a href="/how-it-works/#conversation">The free call</a></li><li><a href="/how-it-works/#walk">The walk</a></li><li><a href="/how-it-works/#fix">One fix</a></li><li><a href="/how-it-works/#check">The monthly check</a></li><li><a href="/how-it-works/#faq">Questions owners ask</a></li><li><a href="/what-we-automate/">What we automate</a></li><li><a href="/leak-check/">Loss calculator</a></li></ul></nav>
       <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">Industries</h2><ul><li><a href="/industries/plumbing/">Plumbing</a></li><li><a href="/industries/ac-and-heating/">AC and heating</a></li><li><a href="/industries/electrical/">Electrical</a></li><li><a href="/industries/water-damage-and-mold/">Water damage and mold</a></li><li><a href="/industries/pest-control/">Pest control</a></li><li><a href="/industries/roofing/">Roofing</a></li><li><a href="/industries/restaurants-and-bars/">Restaurants and bars</a></li><li><a href="/industries/property-managers/">Property managers</a></li><li><a href="/industries/">All industries</a></li></ul></nav>
-      <div class="foot-col c-contact"><h2 class="foot-h">Contact</h2><ul><li>Call or text <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">Monday to Friday, 9&nbsp;a.m. to 5&nbsp;p.m.</span></li><li>Gainesville, serving Alachua County</li><li>English or Spanish</li></ul></div>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contact</h2><ul><li data-extra="computer: the call bar carries the number on a phone">Call or text <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">Monday to Friday, 9&nbsp;a.m. to 5&nbsp;p.m.</span></li><li>Gainesville, serving Alachua County</li><li>English or Spanish</li></ul></div>
     </div>
     <div class="foot-base">
       <p class="legal">Lumora Group LLC, a Florida company. Every shop, name and number marked Sample is made up.</p>
@@ -718,7 +719,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
   </div>
 </footer>
 
-<nav class="callbar" aria-label="Call or text us"><a href="tel:+13522260681">Call</a><a href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text</a></nav>
+<nav class="callbar" aria-label="Call or text us"><a href="tel:+13522260681">Call <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text</a></nav>
 <script>
 (function () {
   function open(id) { var t = id && document.getElementById(id), d = t && t.closest('details'); if (d) d.open = true; }

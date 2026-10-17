@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=0b52c240">
-<link rel="stylesheet" href="/v4/trade-page.css?v=0b52c240">
+<link rel="stylesheet" href="/v4/system.css?v=cc54c7ee">
+<link rel="stylesheet" href="/v4/trade-page.css?v=cc54c7ee">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=0b52c240" defer></script>
-<script src="/v4/system.js?v=0b52c240" defer></script>
+<script src="/v4/trades.js?v=cc54c7ee" defer></script>
+<script src="/v4/system.js?v=cc54c7ee" defer></script>
 <style>
 /* ===== About, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24, 32, 44,
    64) outside the pictures, and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -73,9 +73,9 @@
 .fd-foot{margin-top:auto;padding-top:8px;border-top:1px dashed #b5b3ad;font-size:12px;color:#3a3a3f;line-height:1.35}
 .fd-foot .pc{display:inline-block;padding:1px 4px;margin:4px 0 0 6px;font-weight:700;color:#111;font-size:13px;white-space:nowrap}
 .fd-foot .pc::after{inset:-4px -8px}   /* the ring clears the first and last digits */
-.fd:nth-child(2) .pc::after{transform:rotate(1deg);border-radius:52% 48% 54% 46%/44% 56% 44% 56%}   /* four rings by one hand, never four copies */
-.fd:nth-child(3) .pc::after{transform:rotate(-2.5deg);border-radius:50% 50% 44% 56%/58% 42% 54% 46%}
-.fd:nth-child(4) .pc::after{transform:rotate(.5deg);border-radius:46% 54% 52% 48%/50% 50% 46% 54%}
+.fd:nth-child(2) .pc::after{border-radius:52% 48% 54% 46%/44% 56% 44% 56%}   /* four rings by one hand, never four copies: the shape varies, the ring stays level (2026-10-16) */
+.fd:nth-child(3) .pc::after{border-radius:50% 50% 44% 56%/58% 42% 54% 46%}
+.fd:nth-child(4) .pc::after{border-radius:46% 54% 52% 48%/50% 50% 46% 54%}
 @media (min-width:1000px){.fd-r li,.fd-l>p,.fd-foot{font-size:13px}.fd-k{font-size:13px}.fd-foot .pc::after{inset:-4px -10px}}   /* four papers a row on a computer have the room for a step up from the 12px floor */
 .ab-docs .pic{padding:30px 0 0}
 .ab-docs .samp{top:0;bottom:auto;left:0;right:auto}   /* the one Sample label sits over the papers, so it is read before them */
@@ -183,7 +183,7 @@
 <div class="util">
   <div class="wrap util-in">
     <span>Gainesville; atendemos el condado de Alachua.</span>
-    <span class="util-r"><span class="lang" role="group" aria-label="Idioma"><a href="/about/" lang="en" hreflang="en" aria-label="EN, English">EN</a><a href="/es/about/" aria-current="page" aria-label="ES, español">ES</a></span></span>
+    <span class="util-r"><a href="/about/" lang="en" hreflang="en" class="lang">English</a></span>
   </div>
 </div>
 <header class="hdr">
@@ -201,8 +201,8 @@
       </ul>
     </nav>
     <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
-    <a class="btn btn-sm" href="tel:+13522260681">Llámenos o escríbanos</a>
-    <span class="lang" role="group" aria-label="Idioma"><a href="/about/" lang="en" hreflang="en" aria-label="EN, English">EN</a><a href="/es/about/" aria-current="page" aria-label="ES, español">ES</a></span>
+    <a class="btn btn-sm" href="tel:+13522260681">Llámenos</a>
+    <a href="/about/" lang="en" hreflang="en" class="lang">English</a>
     <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menú</button>
   </div>
 </header>
@@ -217,7 +217,7 @@
       <div class="cta">
         <p class="ab-free"><span data-shared="step1.what">Una llamada sin costo, de hasta 20 minutos.</span> Le decimos claro si la visita le conviene.</p>
         <div class="cta-row">
-          <a class="btn btn-lg" href="tel:+13522260681" data-first="the call button">Llámenos o escríbanos</a>
+          <a class="btn btn-lg" href="tel:+13522260681" data-first="the call button">Llámenos</a>
           <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
           <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a>
         </div>
@@ -285,7 +285,7 @@
       </div>
       <div class="ops-find">
         <p class="pencil">La visita al cliente fue el martes. La cotización salió el viernes. Para entonces el cliente ya tenía otras dos.</p>
-        <p class="find"><span class="find-usd money">$1,900 al mes<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw><path pathLength="1" d="M2 6C28 2 60 9 98 4"/></svg></span><span class="find-f">En la hoja de ejemplo: cotizaciones enviadas más de 48 horas después de la visita al cliente, 5 trabajos × $380 de ganancia por trabajo.</span></p>
+        <p class="find"><span class="find-usd money">$1,900 al mes<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw><path pathLength="1" d="M2 6C28 2 60 9 98 4"/></svg></span><span class="find-f">En la hoja de ejemplo: cotizaciones que tardan más de 48 horas en salir, 5 trabajos × $380 de ganancia por trabajo.</span></p>
       </div>
     </figure>
     <div class="ops-list" id="automate">
@@ -321,7 +321,7 @@
       </div>
     </div>
     <div class="cta-inline">
-      <a class="btn" href="tel:+13522260681">Llámenos o escríbanos</a>
+      <a class="btn" href="tel:+13522260681">Llámenos</a>
       <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
       <p class="mb mb-s"><span data-shared="moneyback.short"><b>¿No le valió la pena?</b> Escríbanos en los 7 días después de que repasemos su hoja, y le devolvemos lo que pagó por la visita.</span> <a class="u" href="/es/how-it-works/#terms">Condiciones completas</a></p>
     </div>
@@ -369,7 +369,7 @@
       <h2 class="t-close close-h">Hablemos de su negocio.</h2>
       <div class="close-act">
         <div class="arrow-to">
-          <a class="btn btn-lg" href="tel:+13522260681">Llámenos o escríbanos</a>
+          <a class="btn btn-lg" href="tel:+13522260681">Llámenos</a>
           <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
         </div>
         <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a></p>
@@ -406,11 +406,11 @@
       <div class="foot-lead">
         <a class="foot-brand" href="/es/" aria-label="Lumora, página de inicio"><img src="/v4/assets/logo-white.svg" alt="" width="148" height="36"></a>
         <p class="foot-line">Su negocio debería funcionar igual, esté usted o no.</p>
-        <a class="btn" href="tel:+13522260681">Llámenos o escríbanos</a>
+        <a class="btn" href="tel:+13522260681" data-extra="computer: the call bar carries the number on a phone">Llámenos</a>
       </div>
       <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="/es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="/es/how-it-works/#walk">La visita</a></li><li><a href="/es/how-it-works/#fix">Un arreglo</a></li><li><a href="/es/how-it-works/#check">La revisión mensual</a></li><li><a href="/es/how-it-works/#faq">Preguntas de los dueños</a></li><li><a href="/es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
       <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">A quién atendemos</h2><ul><li><a href="/es/industries/plumbing/">Plomería</a></li><li><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li><li><a href="/es/industries/electrical/">Electricidad</a></li><li><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></li><li><a href="/es/industries/pest-control/">Control de plagas</a></li><li><a href="/es/industries/roofing/">Techos</a></li><li><a href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a></li><li><a href="/es/industries/property-managers/">Administradores de propiedades</a></li><li><a href="/es/industries/">Todos los tipos de negocio</a></li></ul></nav>
-      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li>Llame o escriba al <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></li><li>Gainesville; atendemos el condado de Alachua</li><li>En inglés o en español</li></ul></div>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li data-extra="computer: the call bar carries the number on a phone">Llame o escriba al <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></li><li>Gainesville; atendemos el condado de Alachua</li><li>En inglés o en español</li></ul></div>
     </div>
     <div class="foot-base">
       <p class="legal">Lumora Group LLC, empresa de Florida. Los negocios, nombres y números marcados como Ejemplo son ficticios.</p>
@@ -419,6 +419,6 @@
   </div>
 </footer>
 
-<nav class="callbar" aria-label="Llámenos o escríbanos"><a href="tel:+13522260681">Llamar</a><a href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">Escribir</a></nav>
+<nav class="callbar" aria-label="Llámenos o escríbanos"><a href="tel:+13522260681">Llamar <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">Escribir</a></nav>
 </body>
 </html>

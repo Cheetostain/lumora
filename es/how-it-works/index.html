@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=0b52c240">
-<link rel="stylesheet" href="/v4/trade-page.css?v=0b52c240">
+<link rel="stylesheet" href="/v4/system.css?v=cc54c7ee">
+<link rel="stylesheet" href="/v4/trade-page.css?v=cc54c7ee">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=0b52c240" defer></script>
-<script src="/v4/system.js?v=0b52c240" defer></script>
+<script src="/v4/trades.js?v=cc54c7ee" defer></script>
+<script src="/v4/system.js?v=cc54c7ee" defer></script>
 <style>
 /* ===== How it works, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64), and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -85,7 +85,7 @@
 .wk-lists h3{margin-bottom:6px}
 .checks li,.nevers li{position:relative;padding:9px 0 9px 32px;border-top:1px solid var(--rule-bone);font-size:17px}
 .checks li:first-child,.nevers li:first-child{border-top:0}
-.checks li::before{content:"";position:absolute;left:4px;top:15px;width:13px;height:7px;border-left:2.4px solid var(--ink);border-bottom:2.4px solid var(--ink);transform:rotate(-48deg)}
+.checks li::before{content:"";position:absolute;left:4px;top:15px;width:18px;height:15px;background:var(--ink);-webkit-mask:var(--tick) 0 0/100% 100% no-repeat;mask:var(--tick) 0 0/100% 100% no-repeat}   /* 2026-10-16 repair: the site's one drawn tick (system.css --tick), level; it was a CSS check turned -48deg */
 .nevers li::before,.nevers li::after{content:"";position:absolute;left:5px;top:21px;width:15px;height:2.4px;background:var(--ink);transform:rotate(45deg)}
 .nevers li::after{transform:rotate(-45deg)}
 .wk-lists .note-r{margin-top:8px;font-size:15px;color:var(--muted);max-width:34em}
@@ -205,7 +205,8 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
 @media (min-width:900px){.cover{grid-template-columns:1fr 1fr;gap:40px}}
 .cover h3{color:#fff;font-size:20px;margin-bottom:6px}
 .cover li{position:relative;padding:8px 0 8px 26px;border-top:1px solid rgba(233,228,216,.16);font-size:17px;color:var(--on-night)}
-.cover .yes li::before{content:"";position:absolute;left:2px;top:15px;width:12px;height:6px;border-left:2.2px solid var(--on-night);border-bottom:2.2px solid var(--on-night);transform:rotate(-48deg)}
+.cover .yes li::before{content:"";position:absolute;left:0;top:15px;width:16px;height:13px;background:var(--on-night);-webkit-mask:var(--tick) 0 0/100% 100% no-repeat;mask:var(--tick) 0 0/100% 100% no-repeat}   /* 2026-10-16 repair: the same drawn tick, on the dark band */
+@media (forced-colors:active){.checks li::before,.cover .yes li::before{forced-color-adjust:none;background:CanvasText}}
 .cover .no li::before{content:"";position:absolute;left:3px;top:20px;width:12px;height:2px;background:var(--muted-night)}
 
 /* 7 questions owners ask: native disclosures, so twelve answers fit a phone without a wall */
@@ -259,7 +260,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
 <div class="util">
   <div class="wrap util-in">
     <span>Gainesville; atendemos el condado de Alachua.</span>
-    <span class="util-r"><span class="lang" role="group" aria-label="Idioma"><a href="/how-it-works/" lang="en" hreflang="en" aria-label="EN, English">EN</a><a href="/es/how-it-works/" aria-current="page" aria-label="ES, español">ES</a></span></span>
+    <span class="util-r"><a href="/how-it-works/" lang="en" hreflang="en" class="lang">English</a></span>
   </div>
 </div>
 <header class="hdr">
@@ -277,8 +278,8 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
       </ul>
     </nav>
     <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
-    <a class="btn btn-sm" href="tel:+13522260681">Llámenos o escríbanos</a>
-    <span class="lang" role="group" aria-label="Idioma"><a href="/how-it-works/" lang="en" hreflang="en" aria-label="EN, English">EN</a><a href="/es/how-it-works/" aria-current="page" aria-label="ES, español">ES</a></span>
+    <a class="btn btn-sm" href="tel:+13522260681">Llámenos</a>
+    <a href="/how-it-works/" lang="en" hreflang="en" class="lang">English</a>
     <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menú</button>
   </div>
 </header>
@@ -292,7 +293,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
       <p class="t-lede">En la llamada sin costo vemos si una visita le conviene a su negocio. La visita es el primer paso que se paga, y termina en una hoja que le pone una cifra en dólares a cada problema.</p>
       <div class="cta">
         <div class="cta-row">
-          <a class="btn btn-lg" href="tel:+13522260681" data-first="the call button">Llámenos o escríbanos</a>
+          <a class="btn btn-lg" href="tel:+13522260681" data-first="the call button">Llámenos</a>
           <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
           <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a>
         </div>
@@ -432,7 +433,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
           <p class="fs-src">Hecha con el calendario, un archivo de cotizaciones y facturas exportado de QuickBooks, 30 días del historial de llamadas de la compañía telefónica y el recorrido.</p>
           <div class="fs-cols" aria-hidden="true" data-extra="computer: the column heads for effort and for how you will see it move; on a phone each row says both in its own words"><span>Problema y lo que vimos</span><span>Esfuerzo</span><span>Ganancia perdida al&nbsp;mes</span><span>Cómo verá el cambio</span></div>
           <ol class="fs-rows">
-            <li data-row="quotes" data-task="quotes"><div class="fs-leak"><b>Cotizaciones enviadas más de 48 horas después de la visita al cliente</b><p>De 22 cotizaciones, 9 salieron 2 días o más después de la visita. De esos clientes, 5 contrataron a otro.</p><small>5 trabajos × $380 de ganancia por trabajo</small></div>
+            <li data-row="quotes" data-task="quotes"><div class="fs-leak"><b>Cotizaciones que tardan más de 48 horas en salir</b><p>De 22 cotizaciones, 9 salieron 2 días o más después de la visita. De esos clientes, 5 contrataron a otro.</p><small>5 trabajos × $380 de ganancia por trabajo</small></div>
               <span class="fs-eff"><i>Esfuerzo: </i>Medio</span><span class="fs-usd">$1,900<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" data-draw><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="fs-move"><i>Cómo verá el cambio: </i>Días entre la visita y la cotización, en su archivo de cotizaciones.</span></li>
             <li data-row="retyping" data-task="retyping"><div class="fs-leak"><b>El mismo trabajo anotado en tres lugares</b><p>Orden en papel, calendario, QuickBooks.</p><small>40 min al día × 22 días × $28 la hora</small></div>
               <span class="fs-eff"><i>Esfuerzo: </i>Medio</span><span class="fs-usd">$411</span><span class="fs-move"><i>Cómo verá el cambio: </i>Minutos al día, medidos en el negocio antes y después.</span></li>
@@ -468,7 +469,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
 <p class="note-r">En la hoja de control de plagas, el 1 de cada 2 y el 20% son tasas de ejemplo nuestras, y su visita pone en su lugar los números de su negocio: 1 de cada 2 renovaciones de termitas vencidas que se recuperan con una llamada, y un 20% más de cobros automáticos rechazados que se recuperan cuando los reintentos se programan. Como referencia, el estudio de Recurly de 2018 con más de 1,300 negocios de suscripción encontró que se recuperó más del 45% de los cobros rechazados por las tres razones más comunes (datos de proveedor). Los $225 salen de la cuota promedio de una renovación, $271, entre contratos de cebo de $325 y de líquido de $195, menos una inspección anual de $46. En la página de control de plagas, los $7.50 por pie del tratamiento de termitas con zanja y varilla están dentro de dos guías nacionales de costos: Fixr, de $4 a $14.50, y Polyguard, de $3 a $15.</p></div></details>
     </div>
     <div class="cta-inline">
-      <a class="btn" href="tel:+13522260681">Llámenos o escríbanos</a>
+      <a class="btn" href="tel:+13522260681">Llámenos</a>
       <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
       <p class="mb mb-s"><span data-shared="moneyback.short"><b>¿No le valió la pena?</b> Escríbanos en los 7 días después de que repasemos su hoja, y le devolvemos lo que pagó por la visita.</span></p>
     </div>
@@ -570,7 +571,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
       </div>
       <figure class="mc-pic">
         <div class="pic">
-          <div class="report" role="img" aria-label="Ejemplo: una página de la revisión mensual de Dunlin Plumbing, septiembre. Lo que hizo el arreglo: 501 dólares encontrados en el mes, en piezas compradas para un trabajo que nunca llegaron a su factura. Los recibos sin número de trabajo bajaron de 14 al mes a 2, en barras por semana, las últimas cuatro después del arreglo, y aparecieron 11 piezas que faltaban en una factura. Qué falló: una factura del proveedor llegó con un formato nuevo; el revisor se detuvo, nos avisó y quedó resuelto a la mañana siguiente. Siguiente problema: cotizaciones enviadas más de 48 horas después de la visita, 1,900 dólares al mes. Cambios pequeños usados: 1 de 2.">
+          <div class="report" role="img" aria-label="Ejemplo: una página de la revisión mensual de Dunlin Plumbing, septiembre. Lo que hizo el arreglo: 501 dólares encontrados en el mes, en piezas compradas para un trabajo que nunca llegaron a su factura. Los recibos sin número de trabajo bajaron de 14 al mes a 2, en barras por semana, las últimas cuatro después del arreglo, y aparecieron 11 piezas que faltaban en una factura. Qué falló: una factura del proveedor llegó con un formato nuevo; el revisor se detuvo, nos avisó y quedó resuelto a la mañana siguiente. Siguiente problema: cotizaciones que tardan más de 48 horas en salir, 1,900 dólares al mes. Cambios pequeños usados: 1 de 2.">
             <div class="rp-h" aria-hidden="true"><div><b>Revisión mensual</b><small>Dunlin Plumbing, septiembre</small></div><span class="stamp">Ejemplo</span></div>
             <div aria-hidden="true">
               <div class="rp-sec"><p class="rp-k">Lo que hizo el arreglo</p><p class="rp-big"><span class="money">$501.00</span><span>encontrados este mes: piezas compradas para un trabajo que nunca llegaron a su factura</span></p></div>
@@ -581,7 +582,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
                 <p class="bars-key"><span><i></i>Recibos sin número de trabajo, antes del arreglo</span><span><i class="f"></i>Después</span></p>
               </div>
               <div class="rp-sec"><p class="rp-k">Qué falló</p><p class="rp-next">Una factura del proveedor llegó con un formato nuevo. El revisor se detuvo y nos avisó. Quedó resuelto a la mañana siguiente.</p></div>
-              <div class="rp-sec"><p class="rp-k">Siguiente problema</p><p class="rp-next">Cotizaciones enviadas más de 48 horas después de la visita: <b>$1,900 al mes</b></p></div>
+              <div class="rp-sec"><p class="rp-k">Siguiente problema</p><p class="rp-next">Cotizaciones que tardan más de 48 horas en salir: <b>$1,900 al mes</b></p></div>
               <p class="rp-foot"><span>Cambios pequeños usados: 1 de 2</span><span>Cancele cualquier mes, por correo</span></p>
             </div>
           </div>
@@ -598,7 +599,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
       </div>
     </details>
     <div class="cta-inline">
-      <a class="btn" href="tel:+13522260681">Llámenos o escríbanos</a>
+      <a class="btn" href="tel:+13522260681">Llámenos</a>
       <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
       <p class="mb mb-s"><span data-shared="moneyback.short"><b>¿No le valió la pena?</b> Escríbanos en los 7 días después de que repasemos su hoja, y le devolvemos lo que pagó por la visita.</span></p>
     </div>
@@ -652,7 +653,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
       <h2 class="t-close close-h">Empiece con una llamada sin costo.</h2>
       <div class="close-act">
         <div class="arrow-to">
-          <a class="btn btn-lg" href="tel:+13522260681">Llámenos o escríbanos</a>
+          <a class="btn btn-lg" href="tel:+13522260681">Llámenos</a>
           <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
         </div>
         <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a></p>
@@ -708,11 +709,11 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
       <div class="foot-lead">
         <a class="foot-brand" href="/es/" aria-label="Lumora, página de inicio"><img src="/v4/assets/logo-white.svg" alt="" width="148" height="36"></a>
         <p class="foot-line">Su negocio debería funcionar igual, esté usted o no.</p>
-        <a class="btn" href="tel:+13522260681">Llámenos o escríbanos</a>
+        <a class="btn" href="tel:+13522260681" data-extra="computer: the call bar carries the number on a phone">Llámenos</a>
       </div>
       <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="/es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="/es/how-it-works/#walk">La visita</a></li><li><a href="/es/how-it-works/#fix">Un arreglo</a></li><li><a href="/es/how-it-works/#check">La revisión mensual</a></li><li><a href="/es/how-it-works/#faq">Preguntas de los dueños</a></li><li><a href="/es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
       <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">A quién atendemos</h2><ul><li><a href="/es/industries/plumbing/">Plomería</a></li><li><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li><li><a href="/es/industries/electrical/">Electricidad</a></li><li><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></li><li><a href="/es/industries/pest-control/">Control de plagas</a></li><li><a href="/es/industries/roofing/">Techos</a></li><li><a href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a></li><li><a href="/es/industries/property-managers/">Administradores de propiedades</a></li><li><a href="/es/industries/">Todos los tipos de negocio</a></li></ul></nav>
-      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li>Llame o escriba al <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></li><li>Gainesville; atendemos el condado de Alachua</li><li>En inglés o en español</li></ul></div>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li data-extra="computer: the call bar carries the number on a phone">Llame o escriba al <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></li><li>Gainesville; atendemos el condado de Alachua</li><li>En inglés o en español</li></ul></div>
     </div>
     <div class="foot-base">
       <p class="legal">Lumora Group LLC, empresa de Florida. Los negocios, nombres y números marcados como Ejemplo son ficticios.</p>
@@ -721,7 +722,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
   </div>
 </footer>
 
-<nav class="callbar" aria-label="Llámenos o escríbanos"><a href="tel:+13522260681">Llamar</a><a href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">Escribir</a></nav>
+<nav class="callbar" aria-label="Llámenos o escríbanos"><a href="tel:+13522260681">Llamar <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">Escribir</a></nav>
 <script>
 (function () {
   function open(id) { var t = id && document.getElementById(id), d = t && t.closest('details'); if (d) d.open = true; }

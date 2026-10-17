@@ -17,7 +17,7 @@
 @font-face{font-family:"Familjen Grotesk";src:url(assets/fonts/FamiljenGrotesk-Italic.woff2) format("woff2");font-weight:400 600;font-style:italic;font-display:swap}
 
 /* ======================================================================= 1. tokens */
-:root{
+:root{/* ui-ok: cream the brand's paper since brand v2 (#F6F5F2, a cooler white than the flagged #F4F1EA) */
   /* grounds */
   --paper:#F6F5F2; --sheet:#FFFEFB; --bone:#E9E4D8; --bone-2:#DDD5C3;
   /* ink and the two writing tools */
@@ -38,6 +38,7 @@
   --lift:0 1px 1px rgba(0,0,0,.12),0 10px 24px rgba(58,47,28,.14);
   --lift-hi:0 2px 2px rgba(0,0,0,.12),0 20px 40px rgba(58,47,28,.22);
   --grain:url(assets/grain.webp);
+  --tick:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 20'%3E%3Cpath d='M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");   /* the one check mark (2026-10-16): Rules we keep's drawn tick, used as a mask in the ink or pencil of where it sits */
   /* type */
   --font:"Familjen Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   --sys:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;  /* inside real screens */
@@ -62,7 +63,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%;
   scroll-padding-top:calc(var(--hdr-h) + 16px);scroll-padding-bottom:calc(var(--bar-h) + 16px)}
 @media (min-width:900px){html{scroll-padding-bottom:16px}}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-body{margin:0;background:var(--paper);color:var(--body);font:400 17px/1.55 var(--font);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;overflow-x:clip}
+body{/* ui-ok: cream the brand's paper since brand v2 */margin:0;background:var(--paper);color:var(--body);font:400 17px/1.55 var(--font);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;overflow-x:clip}
 img,svg{display:block;max-width:100%}
 [hidden]{display:none!important}
 a{color:inherit}
@@ -73,6 +74,7 @@ button{font:inherit;color:inherit}
 h1,h2,h3{color:var(--ink);font-weight:600;letter-spacing:-.018em;line-height:1.1;text-wrap:balance}
 p,li,dd{text-wrap:pretty}
 :focus-visible{outline:3px solid var(--ink);outline-offset:2px;border-radius:2px}
+::selection{background:var(--bone);color:var(--ink)}   /* 2026-10-16 (p1-final): selected words take the desk's bone, not the browser's blue */
 [data-ground=night] :focus-visible,.on-night :focus-visible{outline-color:var(--on-night)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skip{position:absolute;left:8px;top:-80px;z-index:99;background:var(--ink);color:#fff;padding:12px 16px;text-decoration:none;border-radius:4px}
@@ -119,7 +121,7 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
 [data-ground=paper]{background:var(--paper)}
 [data-ground=sheet]{background:var(--sheet)}
 [data-ground=bone]{background:var(--grain) 0 0/160px 160px,var(--bone)}
-[data-ground=ruled]{background:repeating-linear-gradient(to bottom,transparent 0 31px,var(--ruled) 31px 32px),var(--paper)}
+[data-ground=ruled]{/* ui-ok: pattern-bg the notebook's ruled ground from 900px (A1); Phase D turns it off */background:repeating-linear-gradient(to bottom,transparent 0 31px,var(--ruled) 31px 32px),var(--paper)}
 [data-ground=graph]{background:linear-gradient(var(--ruled) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,var(--ruled) 1px,transparent 1px) 0 0/24px 24px,var(--paper)}
 /* 2026-10-15: under 900px the lines struck through hero text (its clamp() line heights share no 32px beat), so phones and
    tablets get plain paper; a hairline keeps the seam where a paper band follows. data-ground stays for Lumora.lint, and
@@ -136,18 +138,23 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
   background:radial-gradient(circle,var(--hole,var(--paper)) 3.2px,transparent 3.8px) 0 50%/16px 12px repeat-x}
 
 /* ======================================================================= 5. header, nav, phone call bar */
-.util{display:none;border-bottom:1px solid var(--rule);font-size:15px;color:var(--muted)}
+.util{display:none;font-size:15px;color:var(--muted)}   /* 2026-10-16 (the approved desktop, Franco's note 1 on v4): no rule under the util line; the one rule under the header is enough */
 .util-in{display:flex;justify-content:space-between;align-items:center;min-height:40px;gap:16px}
 .util-r{display:flex;align-items:center;gap:16px;color:var(--body)}
-.lang{display:inline-flex;border:1px solid var(--rule);border-radius:999px;padding:2px}
-.lang a{min-width:44px;min-height:36px;display:grid;place-items:center;border-radius:999px;font-size:15px;font-weight:600;text-decoration:none;color:var(--body)}
-.lang a[aria-current]{background:var(--ink);color:#fff}
-.lang:not(:has(a+a)){display:none}   /* 2026-10-15: a page with no Spanish twin showed a lone EN pill; golive never links ES to the Spanish home instead */
-.hdr .lang a{min-height:44px}.hdr .lang{margin-left:4px}   /* 2026-10-15: the phone header's switch reaches the 44px target (50px pill in the 64px header) */
-.hdr{position:sticky;top:0;z-index:40;background:rgba(246,245,242,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+/* 2026-10-16 (Franco's GO on the new Home, p1-final's list item 6): the EN / ES pill is one plain link to the other language,
+   "Español" on an English page and "English" on a Spanish one, with lang and hreflang set. It sits in the util bar on a
+   computer and beside Menu in the phone header. In its markup href comes first, then lang, so golive.py's Spanish-link rewrite
+   finds it. The pill's one-link hiding rule (A11) went with it; check.py fails a pill coming back */
+.lang{display:inline-flex;align-items:center;min-height:44px;padding-inline:4px;font-size:15px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap}
+@media (hover:hover) and (pointer:fine){.lang:hover{text-decoration:underline;text-underline-offset:3px}}
+.lang:focus-visible{text-decoration:underline;text-underline-offset:3px}
+.hdr .lang{margin-left:auto;margin-right:6px}
+.hdr .lang+.menu-b{margin-left:0}
+.hdr{/* ui-ok: glass the sticky header; the page does scroll under it, and the blur keeps its words readable (SYSTEM.md 12, kept in the 2026-10-16 merge) */position:sticky;top:0;z-index:40;background:rgba(246,245,242,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
 .hdr-in{display:flex;align-items:center;gap:12px;min-height:var(--hdr-h)}
 .brand{flex-shrink:0}   /* 2026-10-15: a full header row squeezed the logo first (Spanish, 1280: 28px of its 124); check.py fails a shrunk logo */
 .brand img{width:104px;height:auto}
+@media (min-width:360px){.brand img{width:124px}}   /* 2026-10-16 (p1-final): the phone header carries the logo, the language word and Menu, so the logo keeps its full 124px from 360; under 360 it stays 104 */
 .nav{position:absolute;top:100%;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--rule);display:none}
 .nav.open{display:block}
 .nav ul{display:grid;padding:8px var(--g) 18px}
@@ -167,16 +174,30 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
   .hdr-tel:focus-visible{background-size:100% 2px}
   .hdr .btn{display:inline-flex}
 }
-.callbar{position:fixed;left:0;right:0;bottom:0;z-index:45;display:grid;grid-template-columns:1fr 1fr;background:var(--ink);padding-bottom:env(safe-area-inset-bottom)}
-.callbar a{min-height:var(--bar-h);display:grid;place-items:center;color:#fff;font-weight:600;font-size:17px;text-decoration:none}
+/* 2026-10-16 (Franco's GO, p1-final): the bar says Call with the number, and Text, in 3 to 2, with a 1px paper-toned top edge
+   so it keeps its top over the dark footer. The dark footer runs under it (padded), so no strip of paper shows below the
+   footer. It steps aside on a short screen (a phone on its side, big zoom: CALLBAR-RESEARCH change 2); the page's own call
+   buttons stay, and the footer's button and number come back there */
+.callbar{position:fixed;left:0;right:0;bottom:0;z-index:45;display:grid;grid-template-columns:3fr 2fr;background:var(--ink);padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -1px 0 rgba(233,228,216,.42)}
+.callbar a{min-height:var(--bar-h);display:flex;align-items:center;justify-content:center;white-space:nowrap;color:#fff;font-weight:600;font-size:17px;text-decoration:none}
+.callbar .cb-n{font-weight:500;margin-left:.3em}
 .callbar a+a{border-left:1px solid rgba(255,255,255,.25)}
 .callbar a:focus-visible{outline-color:#fff;outline-offset:-5px}
 body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom))}
+@media (max-width:899px) and (min-height:501px){body:has(>.callbar):has(>.foot){padding-bottom:0}body:has(>.callbar)>.foot{padding-bottom:calc(32px + var(--bar-h) + env(safe-area-inset-bottom))}}
+@media (max-width:899px) and (max-height:500px){.callbar{display:none}body:has(.callbar){padding-bottom:0}}
+@media (max-width:339px){:lang(es) .callbar .cb-n{display:none}}   /* "Llamar (352) 226-0681" beside "Escribir", 3 to 2, does not fit at 320 */
 @media (min-width:900px){.callbar{display:none}body:has(.callbar){padding-bottom:0}}
 @media (max-width:899px){body:has(input:not([type=checkbox],[type=radio]):focus,textarea:focus) .callbar{display:none}}   /* 2026-10-15: three bars on screen while typing in a form; checkboxes and radios (the filter chips) keep it, and the body padding stays so nothing jumps */
 @media (hover:hover) and (pointer:fine){.hdr-tel:hover{background-size:100% 2px}}
 .hdr .btn{white-space:nowrap}
 @media (min-width:900px) and (max-width:1079px){.nav ul{gap:16px}.nav a{font-size:var(--fs-15)}}
+@media (min-width:900px){.nav a[aria-current]{font-weight:inherit}}   /* 2026-10-16 repair: the menu no longer shifts 4 to 5px between pages; the underline marks the page; HEADER_JS holds it */
+@media (min-width:900px) and (max-width:1023px){.nav ul{gap:14px}}   /* 2026-10-16 (p1-final): the English row ran 33px past the edge at 920 */
+/* 2026-10-16 (Franco's GO, note 10): the number shows from 1240px only. At 1024 it sat 12px after "Contact" and read as an eighth
+   menu item; under 1240 the header button, the hero and the call block carry it. check.py's HEADER_JS holds 32px on both sides */
+@media (max-width:1239px){.hdr-tel{display:none!important}}
+@media (min-width:900px) and (max-width:1239px){.hdr .btn{margin-left:12px}}   /* 2026-10-16 repair: 12 + the row's 12px gap = 24px after the last item (the approved desktop's 1024); HEADER_JS holds it */
 @media (min-width:1140px){.hdr-tel{margin-left:32px}}   /* 2026-10-15: at 24px the number read as one more menu item; from 1140, since under 1120 the extra room wrapped "How it works" */   /* room for "Call or text us" and the number on a small laptop */
 /* the header in Spanish (moved here from the two Spanish pages' own styles, 2026-10-15). Spanish runs about 23% longer
    (ES-VOICE) and a label never wraps. With "Artículos" added the row needs about 1194px at 15px with 14px between labels and
@@ -188,10 +209,13 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
   :lang(es) .nav.open{display:block}
   :lang(es) .nav ul{display:grid;gap:0;padding:8px var(--g) 18px}
   :lang(es) .nav a{font-size:19px;padding:12px 0}
-  :lang(es) .hdr-tel{margin-left:auto}
+  :lang(es) .hdr-tel{display:none!important}
+  :lang(es) .hdr .btn{margin-left:auto}   /* 2026-10-16 (p1-final round 2): "Llámenos" sits by Menu, not by the logo */
   :lang(es) .menu-b{display:inline-block;margin-left:0}
 }
-@media (min-width:1280px){:lang(es) .nav ul{gap:14px}:lang(es) .nav a{font-size:var(--fs-15)}:lang(es) .hdr-tel{margin-left:24px}}
+/* 2026-10-16 (note 10): with the pill gone and the button "Llámenos", the row has room; 18px between the logo, the nav and the
+   button, and the number 32px from "Contacto" (HEADER_JS measures it at 1280, 1366 and 1440) */
+@media (min-width:1280px){:lang(es) .hdr-in{gap:18px}:lang(es) .nav ul{gap:20px}:lang(es) .nav a{font-size:var(--fs-15)}:lang(es) .hdr-tel{margin-left:32px}}
 @media (prefers-reduced-motion:no-preference){.hdr-tel{transition:background-size var(--t-press) var(--ease-out)}.hdr-tel:hover,.hdr-tel:focus-visible{transition-duration:var(--t-hover)}}
 /* a phone turned sideways: the header scrolls away, so a sample screen is not squeezed between three fixed bars (the call bar stays) */
 @media (max-width:899px) and (max-height:500px){.hdr{position:static}}
@@ -271,12 +295,13 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 /* the stop tab: a pencil-circled number and a plain-words label (2026-10-16: no longer tracked capitals); a pencil tick lands once the stop is passed */
 .tab{display:inline-flex;align-items:center;gap:12px;font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--pencil);margin-bottom:10px}
 .tab-n{position:relative;flex:none;width:36px;height:36px;display:grid;place-items:center;font-size:17px;letter-spacing:0;color:var(--ink);font-weight:600}
-.tab-n::before{content:"";position:absolute;inset:0;border:1.6px solid var(--pencil);border-radius:52% 48% 50% 46%/48% 52% 46% 54%;transform:rotate(-8deg)}
+.tab-n::before{content:"";position:absolute;inset:0;border:1.6px solid var(--pencil);border-radius:52% 48% 50% 46%/48% 52% 46% 54%}   /* 2026-10-16: level, no rotate() (Franco: a pencil ring is level; the stroke may wobble, the ring never tilts) */
 /* the stop tick was removed 2026-10-08 (claim craft-e: it sat outside the circle and read as a misaligned icon) */
 /* the pencil: what we saw. Graphite and weight 500 say "note"; upright and level since 2026-10-16 (Franco: no angled text, no italic) */
 .pencil{font-weight:500;color:var(--pencil);font-size:var(--fs-20);line-height:1.35}
 .pc{position:relative}                                    /* pencil circle around evidence (an observation, never money) */
-.pc::after{content:"";position:absolute;inset:-3px -8px;border:2px solid var(--pencil);border-radius:48% 52% 46% 54%/56% 44% 56% 44%;transform:rotate(-1.5deg);pointer-events:none}
+.pc::after{content:"";position:absolute;inset:-3px -8px;border:2px solid var(--pencil);border-radius:48% 52% 46% 54%/56% 44% 56% 44%;pointer-events:none}   /* 2026-10-16: level, no rotate() */
+.sys.pc::after{inset:-4px -10px;border-radius:16px 18px 15px 17px/12px 13px 12px 13px}   /* 2026-10-16 repair: one line in a phone thread; the round ring ran through its first and last letters */
 /* the red pen: money only. One ring per page, underlines under money figures, its last mark an arrow to Call */
 .pen-ring,.pen-under,.pen-arrow{max-width:none;fill:none;stroke:var(--pen);stroke-linecap:round;stroke-linejoin:round;overflow:visible;pointer-events:none}
 /* no vector-effect on pen marks: with non-scaling-stroke the dash used to draw them breaks into pieces (B's two-segment underline) */
@@ -336,6 +361,9 @@ a.strip:focus-visible{outline-offset:3px}
 .clip{margin:0}
 .board{position:relative;border-radius:12px;padding:40px 12px 12px;background:linear-gradient(170deg,var(--board),#A9865C);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 1px 0 var(--board-edge),0 14px 30px rgba(58,47,28,.2)}
 .clamp{position:absolute;left:50%;top:-10px;width:40%;max-width:170px;height:38px;transform:translateX(-50%);background:var(--clamp);border-radius:9px 9px 6px 6px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.14),0 2px 4px rgba(0,0,0,.18)}
+/* 2026-10-16 (the new Home's clipboard, every clipboard in Phase D): hardboard with its fibre. Here because the grain's url()
+   resolves from the stylesheet that uses var(--grain), so a page stylesheet can't paint it; home.css draws the rest of the board */
+.board[data-grain]{/* ui-ok: gradient is the hardboard's sheen under its fibre, as the clipboard has always been drawn */background:var(--grain) 0 0/180px 180px,linear-gradient(172deg,#B8946A,#A6814F);background-blend-mode:multiply,normal}
 .clamp i{position:absolute;left:50%;top:9px;width:36%;height:10px;transform:translateX(-50%);border-radius:5px;background:#7c7f84}
 .sheet{position:relative;background:var(--sheet);padding:20px 16px 16px;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.16)}
 .sh-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
@@ -346,7 +374,7 @@ a.strip:focus-visible{outline-offset:3px}
 .sh-l b{display:block;font-size:17px;line-height:1.3}
 .sh-l small{display:block;font-size:15px;color:var(--muted);margin-top:4px;line-height:1.4}
 .sh-usd{position:relative;align-self:start;font-weight:600;font-size:19px;color:var(--red);white-space:nowrap}
-.sh-usd .pen-ring{left:-10px;width:calc(100% + 18px)}           /* stays inside the sheet at 390 (judge must-fix) */
+.sh-usd .pen-ring{left:-11px;top:-12px;width:calc(100% + 22px);height:calc(100% + 24px);stroke-width:2.3px}   /* 2026-10-16 (p1-final): with ring()'s level ellipse it keeps about 3.7px off the figure at every width (pencil_air.py); still inside the sheet at 390 */
 .sh-total{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;align-items:baseline;padding-top:12px;margin-top:-1px;border-top:2px solid var(--ink);font-weight:600;color:var(--ink)}
 .sh-total b{font-size:24px}
 .sh-time{font-size:15px;margin-top:8px}
@@ -365,11 +393,16 @@ a.strip:focus-visible{outline-offset:3px}
    Moved here from home.css and trade-page.css (trade-page.css item 40: it moves when Home next changes). A fact that wraps
    starts its second line under its words, not under the tick; 10px between facts on a phone (4px read as one block).
    .facts above stays for the retired .src.html drafts. */
-.facts4{margin-top:48px;border-block:1px solid var(--ink);background:var(--paper)}
+.facts4{margin-top:48px;background:var(--paper)}   /* 2026-10-16 (Franco's note 1 on v4, the approved desktop): no full-width rules above and below; space does the job */
 .facts4 ul{display:grid;gap:8px;padding-block:14px;font-size:15px;font-weight:500;color:var(--ink)}
-.facts4 li{position:relative;padding-left:22px}
-.facts4 li::before{content:"";position:absolute;left:1px;top:8px;width:10px;height:6px;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(-48deg) translateY(-3px)}
-@media (min-width:900px){.facts4 ul{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:24px}}
+.facts4 li{position:relative;padding-left:28px}
+/* 2026-10-16: one check mark on the site, the drawn tick of Rules we keep (24 x 20, here 18 x 15), as a mask in ink, level;
+   it replaced a CSS check turned -48deg. The tally (13) and How it works' lists use the same --tick. check.py's DESK_JS fails a
+   turned tick */
+.facts4 li::before{content:"";position:absolute;left:0;top:4px;width:18px;height:15px;background:var(--ink);
+  -webkit-mask:var(--tick) 0 0/100% 100% no-repeat;mask:var(--tick) 0 0/100% 100% no-repeat}
+@media (forced-colors:active){.facts4 li::before{forced-color-adjust:none;background:CanvasText}}
+@media (min-width:900px){.facts4 ul{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:16px}}   /* 2026-10-16 repair: 16px least between facts (space-between gives about 18 at 1280), so the four English facts keep one line with the bigger tick; check.py's DESK_JS holds it */
 @media (max-width:699px){.facts4{margin-top:36px}.facts4 ul{gap:10px}}
 
 /* ======================================================================= 13. the walk: floor plan, stops, tally */
@@ -413,7 +446,7 @@ a.strip:focus-visible{outline-offset:3px}
 @media (min-width:1080px){
   .tally{top:calc(var(--hdr-h) + 24px);margin:0}
   .tally-bar{display:none}
-  .tally-card{display:block;background:var(--sheet);box-shadow:var(--lift);padding:20px 18px;border-top:4px solid var(--ink)}
+  .tally-card{/* ui-ok: stripe the printed tally's heavy head rule, as a printed list has one */display:block;background:var(--sheet);box-shadow:var(--lift);padding:20px 18px;border-top:4px solid var(--ink)}
   .tally-h{display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:19px;color:var(--ink)}
   .tally-sub{font-size:15px;color:var(--muted);margin:2px 0 10px}
   .tally li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:15px}
@@ -493,7 +526,7 @@ html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs
 .sys.k{font-weight:600;color:#1b5e2c;background:#e3f1e6;border-radius:8px;padding:3px 8px}
 /* a window (grey title bar with the Mac buttons, and frame), a spreadsheet grid, paper, a counter ticket, a clipboard doc */
 .scr-win{background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--lift-hi);font-family:var(--sys);color:#1d1d1f}
-.win-tb{display:flex;align-items:center;gap:7px;height:32px;padding:0 12px;background:linear-gradient(#f1f1f1,#e4e4e4);border-bottom:1px solid #d0d0d0}
+.win-tb{/* ui-ok: fake-chrome Franco chose the Mac window buttons Oct 6 and again Oct 16; check.py fails them hidden */display:flex;align-items:center;gap:7px;height:32px;padding:0 12px;background:linear-gradient(#f1f1f1,#e4e4e4);border-bottom:1px solid #d0d0d0}
 .win-tb i{width:12px;height:12px;border-radius:50%;background:#ec6a5e /* ui-ok: terracotta the Mac close button's own red; Franco kept the buttons Oct 6 and Oct 16 */}.win-tb i+i{background:#f4bf4f}.win-tb i+i+i{background:#61c554}   /* 2026-10-16: back, Franco kept the Mac buttons (Oct 6, again Oct 16); the Oct 15 audit had hidden them */
 .win-tb span{flex:1;text-align:center;margin-right:46px;font-size:13px;font-weight:600;color:#3a3a3a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @container (max-width:340px){.win-tb span{margin-right:0;font-size:12px}}   /* 2026-10-16: phones keep the buttons; the title gives up its centring margin and a pixel of size, so the long ones fit at 320 to 390 */
@@ -520,8 +553,8 @@ html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs
 .doc-tot{display:flex;justify-content:space-between;font-weight:700;font-size:16px;padding-top:8px}
 .ok,.chip-ok{display:inline-block;margin-top:8px;font-size:13px;font-weight:600;color:#1b5e2c;background:#e3f1e6;padding:4px 9px;border-radius:6px}
 .wt{background:#fbefd2;color:#6b4800}.gy{background:#ececec;color:#3a3a3a}
-.st{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
-.ticket{position:relative;background:#fff;padding:16px 16px 18px;font:500 13px/1.45 var(--printer);color:#222;box-shadow:var(--lift);transform:rotate(-1.4deg);max-width:340px}
+.st{/* ui-ok: pill the software's own status labels, only inside pictures of real screens */display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.ticket{/* ui-ok: mono a supply-house counter ticket prints in its printer's face */position:relative;background:#fff;padding:16px 16px 18px;font:500 13px/1.45 var(--printer);color:#222;box-shadow:var(--lift);transform:rotate(-1.4deg);max-width:340px}
 .ticket::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:6px;background:radial-gradient(circle at 6px 0,#fff 5px,transparent 5.5px) 0 0/12px 6px repeat-x}
 .tk-co{font-weight:700;font-size:14px;text-align:center;margin-bottom:8px}.tk-co small{display:block;font-weight:500;font-size:12px}
 .tk-no{display:flex;justify-content:space-between;gap:8px;font-size:12px;border-top:1px dashed #999;padding-top:4px;margin-top:4px}
@@ -604,7 +637,7 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .tapes li{background:var(--tape);color:var(--ink);font-weight:600;font-size:16px;padding:10px 16px;transform:rotate(var(--r,-1deg));
   clip-path:polygon(1% 4%,99% 0,100% 30%,98.5% 62%,100% 100%,0 97%,1.5% 66%,0 34%)}
 /* the morning list: the "after" of the night, a printed list of what is waiting at 6:30 AM */
-.morning{background:var(--sheet);color:var(--body);box-shadow:var(--lift);padding:18px 18px 14px;border-top:4px solid var(--ink);max-width:420px;width:100%;position:relative}
+.morning{/* ui-ok: stripe the printed morning list's heavy head rule */background:var(--sheet);color:var(--body);box-shadow:var(--lift);padding:18px 18px 14px;border-top:4px solid var(--ink);max-width:420px;width:100%;position:relative}
 .mo-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline;padding-bottom:10px;border-bottom:2px solid var(--ink)}
 .mo-h b{font-size:17px;color:var(--ink)}.mo-h span{font-size:13px;color:var(--muted);white-space:nowrap}
 .mo-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:9px 0;border-bottom:1px solid var(--rule)}
@@ -630,20 +663,20 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .pad{max-width:820px;margin-inline:auto;background:var(--sheet);box-shadow:var(--lift);border-radius:3px}
 .pad-bind{height:18px;background:var(--body);border-radius:3px 3px 0 0}
 .pad-perf{height:12px;background:radial-gradient(circle,var(--hole,var(--paper)) 2.7px,transparent 3.3px) 3px 50%/13px 12px repeat-x,var(--sheet)}
-.pad-b{position:relative;padding:18px 18px 30px 58px;
+.pad-b{/* ui-ok: pattern-bg the ruled pad of Rules we keep, a real pad's lines */position:relative;padding:18px 18px 30px 58px;
   background:linear-gradient(90deg,transparent 40px,var(--margin) 40px 41.5px,transparent 41.5px),repeating-linear-gradient(to bottom,transparent 0 35px,var(--ruled) 35px 36px);background-position:0 0,0 35px}
 .pad-b h2{line-height:72px;margin-bottom:26px}
 .pad li{position:relative;font-size:17px;line-height:36px;margin-bottom:36px}
 .pad li:last-child{margin-bottom:0}
 .tick{position:absolute;left:-48px;top:7px;width:24px;height:20px;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
 .honest{margin-top:36px;font-size:19px;line-height:36px;color:var(--ink)}   /* 2026-10-16: upright, as the pencil */
-@media (min-width:700px){.pad-b{padding:18px 48px 36px 96px;background:linear-gradient(90deg,transparent 70px,var(--margin) 70px 71.5px,transparent 71.5px),repeating-linear-gradient(to bottom,transparent 0 35px,var(--ruled) 35px 36px);background-position:0 0,0 35px}.tick{left:-62px;width:26px}}
+@media (min-width:700px){.pad-b{/* ui-ok: pattern-bg the ruled pad of Rules we keep, a real pad's lines */padding:18px 48px 36px 96px;background:linear-gradient(90deg,transparent 70px,var(--margin) 70px 71.5px,transparent 71.5px),repeating-linear-gradient(to bottom,transparent 0 35px,var(--ruled) 35px 36px);background-position:0 0,0 35px}.tick{left:-62px;width:26px}}
 
 /* ======================================================================= 19. step tickets (How it works): index cards torn from the pad */
 .tickets{display:grid;gap:22px}
 @media (min-width:700px){.tickets{grid-template-columns:1fr 1fr}}
 @media (min-width:1100px){.tickets{grid-template-columns:repeat(4,1fr)}}
-.ticket-c{position:relative;background:var(--sheet);box-shadow:var(--lift);padding:30px 20px 22px;transform:rotate(var(--r,0deg));
+.ticket-c{/* ui-ok: pattern-bg an index card's printed lines (v3 step tickets) */position:relative;background:var(--sheet);box-shadow:var(--lift);padding:30px 20px 22px;transform:rotate(var(--r,0deg));
   background-image:repeating-linear-gradient(transparent 0 27px,var(--ruled) 27px 28px);background-position:0 96px;background-repeat:no-repeat;background-size:100% calc(100% - 96px)}
 .ticket-c::before{content:"";position:absolute;left:0;right:0;top:0;height:11px;border-bottom:1px dashed rgba(17,17,16,.12);background:radial-gradient(circle at 7px 5px,var(--hole,var(--bone)) 2.6px,transparent 3.2px) 0 0/14px 11px repeat-x}
 .ticket-c h3{margin:2px 0 8px}
@@ -689,7 +722,7 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 /* ======================================================================= 21. the leak check, started on the page */
 .leak{display:grid;gap:28px}
 @media (min-width:900px){.leak{grid-template-columns:1fr 1fr;gap:56px;align-items:start}}
-.calc{background:var(--sheet);box-shadow:var(--lift);padding:24px 20px;display:grid;gap:16px;border-radius:2px;
+.calc{/* ui-ok: pattern-bg the v3 loss calculator's graph paper */background:var(--sheet);box-shadow:var(--lift);padding:24px 20px;display:grid;gap:16px;border-radius:2px;
   background-image:linear-gradient(var(--ruled) 1px,transparent 1px),linear-gradient(90deg,var(--ruled) 1px,transparent 1px);background-size:24px 24px}
 .lf{display:grid;gap:8px}
 .lf label{font-weight:600;color:var(--ink);font-size:17px}
@@ -699,7 +732,7 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .stepb:active{transform:scale(.95);background:var(--bone)}
 .step input,.lf input{width:110px;height:56px;text-align:center;font:600 26px var(--font);border:2px solid var(--ink);border-radius:8px;background:var(--sheet);color:var(--ink)}
 .lf-err{font-size:15px;font-weight:600;color:var(--ink);min-height:0}
-.lf-err:not(:empty){padding:8px 12px;border-left:4px solid var(--ink);background:var(--bone)}
+.lf-err:not(:empty){/* ui-ok: stripe the rule beside a form error, GOV.UK's error pattern, with the words in the box */padding:8px 12px;border-left:4px solid var(--ink);background:var(--bone)}
 .out-usd{display:inline-block;font-size:clamp(48px,6vw,72px);font-weight:500;color:var(--red);letter-spacing:-.02em;line-height:1}
 .out small{font-size:19px;color:var(--body)}
 .dots{display:flex;flex-wrap:wrap;gap:6px;max-width:420px}
@@ -766,7 +799,7 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .booked{display:grid}
 .booked li{display:grid;grid-template-columns:44px 1fr;gap:4px 14px;padding:14px 0;border-top:1px solid var(--rule)}
 .booked .bn{grid-row:1/3;width:36px;height:36px;display:grid;place-items:center;font-weight:600;position:relative}
-.booked .bn::before{content:"";position:absolute;inset:0;border:1.6px solid var(--pencil);border-radius:52% 48% 50% 46%/48% 52% 46% 54%;transform:rotate(-8deg)}
+.booked .bn::before{content:"";position:absolute;inset:0;border:1.6px solid var(--pencil);border-radius:52% 48% 50% 46%/48% 52% 46% 54%}   /* 2026-10-16: level, no rotate() */
 .booked b{font-size:17px}.booked p{font-size:15px;color:var(--muted)}
 
 /* ======================================================================= 25. footer */
@@ -807,6 +840,10 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
   .foot-base ul a{display:inline-block;padding-block:13px}
 }
 .foot-col.c-contact li:not(:has(a)){color:var(--muted-night)}
+/* 2026-10-16 (Franco's GO, note 3: the number once on the last screen): on a phone, while the call bar shows, the footer's call
+   button and its "Call or text (352) 226-0681" line step aside (the bar has both). Each carries data-extra in the markup (R9), so
+   the rule keys on it; on a phone on its side the bar is gone and they come back */
+@media (max-width:899px) and (min-height:501px){.foot-lead>.btn[href^="tel:"][data-extra],.foot .c-contact li[data-extra]{display:none}}
 .foot-col.c-contact a[href^="mailto:"]{text-decoration:underline;text-decoration-color:var(--muted-night);text-underline-offset:3px}
 
 /* ======================================================================= 26. motion (everything below is extra; the still page above is complete) */
@@ -884,6 +921,9 @@ html:not(.js) .pic.has-seg{padding-bottom:28px}            /* no JS: no buttons,
 td .chg.tr{flex-direction:column;align-items:flex-start;gap:2px}   /* 2026-10-15: in a cell, old above new, never jumbled on one wrapped line */
 .chg.tr>.was::after{content:"";position:absolute;left:-3px;right:-3px;top:52%;height:2px;border-radius:1px;background:var(--pencil);transform:scaleX(0);transform-origin:left}
 .pair[data-state=before] .now,.pair[data-state=before] .add{visibility:hidden;opacity:0}
+/* 2026-10-16 (the new Home): words that belong to one state (.bo before, .ao after), inside a picture or in its stop's notes;
+   setG2R sets data-state on the stop too, so a margin note and a find label turn with the switch */
+.pair[data-state=before] .ao,.pair[data-state=after] .bo,.stop[data-state=before] .ao,.stop[data-state=after] .bo{display:none}
 .pair[data-state=after] .chg:not(.tr)>.was{visibility:hidden;opacity:0}
 .pair[data-state=after] .chg.tr>.was{color:var(--pencil)}
 .pair[data-state=after] .chg.tr>.was::after{transform:none}
@@ -909,7 +949,7 @@ td .chg.tr{flex-direction:column;align-items:flex-start;gap:2px}   /* 2026-10-15
 .xl-fx .chg{font-family:var(--xls);color:#1f1f1f}
 .xl-tabs{display:flex;align-items:center;gap:2px;padding:5px 6px 0;border-top:1px solid #d6d6d6;background:#f3f3f3;font-size:12px;color:#444}
 .xl-tabs span{padding:3px 10px;border-radius:0 0 4px 4px}
-.xl-tabs span.on{background:#fff;color:#1d6b38;font-weight:600;box-shadow:0 2px 0 #1d6b38 inset}
+.xl-tabs span.on{/* ui-ok: stripe Excel's own selected sheet tab, inside the picture */background:#fff;color:#1d6b38;font-weight:600;box-shadow:0 2px 0 #1d6b38 inset}
 .xl-tabs em{margin-left:auto;font-style:normal;color:#666}
 .win-st{margin:10px 0 0;padding-top:8px;border-top:1px solid #e5e5ea;font-size:12px;color:#55555a}
 @media screen and (prefers-reduced-motion:no-preference){
@@ -950,15 +990,15 @@ td .chg.tr{flex-direction:column;align-items:flex-start;gap:2px}   /* 2026-10-15
 .lk4-t{text-align:center;font-size:64px;font-weight:300;line-height:1.02;letter-spacing:-.02em}
 .lk4-nts{display:flex;flex-direction:column;gap:6px;padding:16px 8px 0}
 @media (min-width:900px){.lk4-nts{position:absolute;left:8px;right:8px;bottom:30px;padding:0}}
-.lk4-nt{display:grid;grid-template-columns:28px minmax(0,1fr);gap:9px;align-items:start;background:rgba(244,244,247,.94);color:#111;border-radius:16px;padding:8px 10px;font-size:13px;line-height:1.25}
-.lk4-nt .ap{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:#0a63d1}
+.lk4-nt{/* ui-ok: nested-card iOS draws each notification as a card on the lock screen, inside the drawn phone */display:grid;grid-template-columns:28px minmax(0,1fr);gap:9px;align-items:start;background:rgba(244,244,247,.94);color:#111;border-radius:16px;padding:8px 10px;font-size:13px;line-height:1.25}
+.lk4-nt .ap{/* ui-ok: icon-tile iOS draws each app's icon in its own coloured square, inside the drawn phone */width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:#0a63d1}
 .lk4-nt .ap-phone{background:#2f9e4b}.lk4-nt .ap-files{background:#2f7ae5}.lk4-nt .ap-mail{background:#1e6fe0}.lk4-nt .ap-calendar{background:#6b6f78}
 .lk4-nt .nr{display:flex;justify-content:space-between;gap:8px}
 .lk4-nt .nr b{color:#111}
 .lk4-nt .nr span{font-size:12px;color:#55555a;white-space:nowrap}
 .lk4-nt .fx{display:block;margin-top:3px;font-size:12px;font-weight:600;color:#1b5e2c;background:#dff0e3;border-radius:6px;padding:2px 7px;width:max-content;max-width:100%}
 /* the paper night log beside it: every row in place from the first frame (it never jumps), filling in row by row */
-.np{background:var(--sheet);color:var(--body);box-shadow:var(--lift);padding:16px 18px 12px;border-top:4px solid var(--ink)}
+.np{/* ui-ok: stripe the printed night log's heavy head rule */background:var(--sheet);color:var(--body);box-shadow:var(--lift);padding:16px 18px 12px;border-top:4px solid var(--ink)}
 .np .np-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline;padding-bottom:10px;border-bottom:2px solid var(--ink)}
 .np .np-h b{font-size:16px;color:var(--ink)}
 .np .np-h b{text-wrap:balance}   /* 2026-10-15: a lone word on the head's second line */
@@ -994,19 +1034,113 @@ td .chg.tr{flex-direction:column;align-items:flex-start;gap:2px}   /* 2026-10-15
 /* R9: the v4 tally names the stops and ticks each off in pencil as it passes; no dollar figures (the stops and the walk's
    one total line already carry them twice) */
 .tally4 li{position:relative}
-.tally4 li::after{content:"";width:12px;height:7px;border-left:2px solid var(--pencil);border-bottom:2px solid var(--pencil);transform:translateY(-2px) rotate(-48deg) scale(0);flex:none}
-.tally4 li.on::after,html:not(.js) .tally4 li::after{transform:translateY(-2px) rotate(-48deg)}
+.tally4 li::after{content:"";width:14px;height:12px;align-self:center;background:var(--pencil);-webkit-mask:var(--tick) 0 0/100% 100% no-repeat;mask:var(--tick) 0 0/100% 100% no-repeat;transform:scale(0);flex:none}   /* 2026-10-16 repair: the one drawn tick, level (it was a CSS check turned -48deg) */
+.tally4 li.on::after,html:not(.js) .tally4 li::after{transform:none}
+@media (forced-colors:active){.tally4 li::after{forced-color-adjust:none;background:CanvasText}}
 @media (prefers-reduced-motion:no-preference){.tally4 li::after{transition:transform var(--t-small) var(--ease-out) 120ms}}
 .tally4 .tally-tot{font-size:15px;font-weight:600}
 
 /* R8: a picture slot (what to shoot or build, in one of 3 shapes). It shows only in review (html.review: a file opened on
    this computer, the local check server, or ?review); on the live site an empty slot shows nothing. */
 .slot{display:none}
-html.review .slot{display:grid;align-content:center;justify-items:center;gap:4px;padding:10px;border:1.5px dashed var(--pencil);border-radius:6px;
+html.review .slot{/* ui-ok: pattern-bg a review-only picture slot, never on the live site */display:grid;align-content:center;justify-items:center;gap:4px;padding:10px;border:1.5px dashed var(--pencil);border-radius:6px;
   background:repeating-linear-gradient(-45deg,transparent 0 9px,rgba(79,76,69,.07) 9px 10px),var(--sheet);color:var(--pencil);font-size:13px;line-height:1.3;text-align:center}
 .slot[data-shape="16:9"]{aspect-ratio:16/9}.slot[data-shape="1:1"]{aspect-ratio:1}.slot[data-shape="4:5"]{aspect-ratio:4/5}
 .slot-k{font-size:12px;font-weight:600;letter-spacing:0;text-transform:none}   /* 2026-10-16: sentence case, as .t-label */
 .slot b{font-size:14px;color:var(--ink)}
 
-/* forced colours (Windows High Contrast): a pressed Before / After, the picked trade and the current language stay visible */
-@media (forced-colors:active){.seg button[aria-pressed=true],.lang a[aria-current],.chip[aria-checked=true],.tabs [role=tab][aria-selected=true]{forced-color-adjust:none;background:Highlight;color:HighlightText}}
+/* ======================================================================= 28. the measured iPhone 15, lock screen (2026-10-16)
+   Franco's GO on the new Home: the shop phone in Home's strip is the measured iPhone 15 from the phone research
+   (sophistication-2026-10-16/phone/phone-mockup, assets/phone/phone.css; its NOTES.md has the measurement table). Only the lock
+   screen part is here; the Messages part is unused. Every size is an iPhone 15 measurement in points (screen 393 x 852 pt)
+   times --pt, the rendered device width over 432.2 (393 + 2 x 19.6 bezel), so a page sets only the width of .iph.
+   Sources: Apple's iPhone 15 specs and HIG device table; pixels measured from real iPhone 15 iOS 17 screenshots; side button
+   positions from devices.css by picturepan2 (MIT); type Inter 4.0 by Rasmus Andersson (SIL OFL 1.1, assets/fonts/Inter-OFL.txt),
+   cut to Basic Latin. Apple devices use their own SF. R6 makes it the one phone in Phase D. Home shows it in the strip and, since the 2026-10-17
+   polish, in the night band too (data-iph, the rules after .iph-ring); the trade pages keep the drawn .ph4 until Phase D
+   (Lumora.lint warns there and fails a data-iph page that shows both). On a computer it keeps true iPhone scale (about 8.5px type at 256px
+   wide, Franco's own note: the old phone's text was 19 to 59% too big), R6's one exception; its words are in the aria-label.
+   Under 900px the notification's type meets the 12px floor. */
+@font-face{font-family:"Phone Inter";src:url(assets/fonts/InterVariable-phone.woff2) format("woff2-variations"),url(assets/fonts/InterVariable-phone.woff2) format("woff2");font-weight:100 900;font-display:block}
+.iph{--ios-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Phone Inter",system-ui,sans-serif;
+  --ios-clock:-apple-system,BlinkMacSystemFont,"SF Pro Display","Phone Inter",system-ui,sans-serif;
+  container-type:inline-size;position:relative;width:300px;max-width:100%;
+  -webkit-text-size-adjust:100%;text-size-adjust:100%;font-optical-sizing:auto;line-height:normal;letter-spacing:normal;text-align:left}
+.iph *,.iph *::before,.iph *::after{box-sizing:border-box}
+:where(.iph) p{margin:0}
+.iph-dev{--pt:calc(100cqw / 432.2);position:relative;width:100%;aspect-ratio:432.2/891.2;
+  border-radius:calc(74.6 * var(--pt));background:#0b0b0c;
+  box-shadow:inset 0 0 0 calc(1.2 * var(--pt)) #55555a,inset 0 0 0 calc(4 * var(--pt)) #2c2c2e,0 0 0 calc(.6 * var(--pt)) #111,var(--lift-hi)}
+.iph-dev>i{position:absolute;width:calc(3 * var(--pt));background:#2c2c2e;border-radius:calc(1.5 * var(--pt))}
+.iph-dev>i:nth-child(1){left:calc(-2.4 * var(--pt));top:13.2%;height:3.7%}
+.iph-dev>i:nth-child(2){left:calc(-2.4 * var(--pt));top:20.2%;height:7.1%}
+.iph-dev>i:nth-child(3){left:calc(-2.4 * var(--pt));top:29.4%;height:7.1%}
+.iph-dev>i:nth-child(4){right:calc(-2.4 * var(--pt));top:23%;height:11.5%}
+.iph-scr{position:absolute;left:calc(19.6 * var(--pt));top:calc(19.6 * var(--pt));width:calc(393 * var(--pt));height:calc(852 * var(--pt));
+  border-radius:calc(55 * var(--pt));overflow:hidden;font-family:var(--ios-font);font-variant-numeric:normal;color:#000;background:#fff}
+.iph-isl{position:absolute;z-index:5;left:50%;top:calc(11 * var(--pt));width:calc(125 * var(--pt));height:calc(37 * var(--pt));
+  margin-left:calc(-62.5 * var(--pt));border-radius:calc(18.5 * var(--pt));background:#000}
+.iph-sb{position:absolute;z-index:4;inset:0 0 auto 0;height:calc(54 * var(--pt));color:#fff;pointer-events:none}
+.iph-sb-r{position:absolute;left:calc(321.5 * var(--pt));top:calc(29.5 * var(--pt));transform:translate(-50%,-50%);display:flex;align-items:center;gap:calc(6.9 * var(--pt))}
+.iph-sb-r svg{display:block;fill:currentColor;overflow:visible}
+.iph-cell{width:calc(19.2 * var(--pt));height:calc(12.33 * var(--pt))}
+.iph-wifi{width:calc(17.14 * var(--pt));height:calc(12.33 * var(--pt))}
+.iph-batt{width:calc(27.33 * var(--pt));height:calc(13 * var(--pt))}
+.iph-grab{position:absolute;left:calc(321.5 * var(--pt));top:calc(43.3 * var(--pt));width:calc(77 * var(--pt));height:calc(2.4 * var(--pt));
+  margin-left:calc(-38.5 * var(--pt));border-radius:9px;background:rgba(255,255,255,.42)}
+.iph-lock{/* ui-ok: glow the wallpaper's low sun, inside the phone screen only */color:#fff;
+  /* ui-ok: gradient is the lock screen wallpaper, a dusk photo look, inside the screen only (v3's wallpaper) */
+  background:radial-gradient(120% 70% at 70% 100%,#b48356 0%,rgba(180,131,86,0) 60%),radial-gradient(90% 60% at 10% 0%,#4d6178 0%,rgba(77,97,120,0) 70%),linear-gradient(180deg,#34404f 0%,#262c36 52%,#5a4637 100%)}
+.iph-padlock{position:absolute;left:50%;top:calc(55 * var(--pt));width:calc(11 * var(--pt));height:calc(15 * var(--pt));margin-left:calc(-5.5 * var(--pt))}
+.iph-date{position:absolute;left:0;right:0;top:calc(81.3 * var(--pt));text-align:center;font-size:calc(21.6 * var(--pt));font-weight:590;letter-spacing:calc(-.42 * var(--pt));line-height:1;
+  margin-top:calc(-21.6 * .136 * var(--pt));color:rgba(255,255,255,.88)}
+.iph-clock{position:absolute;left:0;right:0;top:calc(120.6 * var(--pt));text-align:center;font-family:var(--ios-clock);font-size:calc(97.7 * var(--pt));font-weight:600;letter-spacing:calc(-1 * var(--pt));line-height:1;
+  margin-top:calc(-97.7 * .136 * var(--pt));color:rgba(255,255,255,.92)}
+.iph-notes{position:absolute;left:calc(14 * var(--pt));right:calc(14 * var(--pt));bottom:calc(120 * var(--pt))}
+.iph-note{/* ui-ok: glass iOS's own notification material, inside the drawn phone only */position:relative;z-index:3;display:grid;grid-template-columns:calc(37.7 * var(--pt)) minmax(0,1fr) auto;column-gap:calc(13 * var(--pt));
+  align-items:center;min-height:calc(65.3 * var(--pt));padding:calc(13.8 * var(--pt)) calc(15 * var(--pt)) calc(15.2 * var(--pt)) calc(14.7 * var(--pt));
+  border-radius:calc(23 * var(--pt));color:#000;font-size:calc(14.4 * var(--pt));line-height:calc(18 * var(--pt));
+  background:rgba(250,250,250,.62);-webkit-backdrop-filter:blur(calc(30 * var(--pt))) saturate(1.6);backdrop-filter:blur(calc(30 * var(--pt))) saturate(1.6)}
+.iph-note .ic{grid-row:1/3;width:calc(37.7 * var(--pt));height:calc(37.7 * var(--pt));border-radius:calc(8.5 * var(--pt));display:grid;place-items:center;background:#34C759}
+.iph-note .ic svg{width:62%;height:62%}
+.iph-note b{font-weight:600;color:#000;white-space:nowrap;align-self:end}
+.iph-note time{align-self:end;font-size:calc(13 * var(--pt));color:rgba(40,40,45,.62);white-space:nowrap}
+.iph-note .bd{grid-column:2/4;align-self:start;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:899px){.iph-note{font-size:max(12px,calc(14.4 * var(--pt)))}.iph-note time{font-size:max(12px,calc(13 * var(--pt)))}}   /* the 12px floor for words in a picture (R6, lint at 390) */
+.iph-plate{/* ui-ok: glass the stacked notifications behind, iOS material */position:relative;display:block;margin:calc(-15 * var(--pt)) calc(9 * var(--pt)) 0;height:calc(22.5 * var(--pt));
+  border-radius:0 0 calc(19 * var(--pt)) calc(19 * var(--pt));background:rgba(250,250,250,.44);z-index:2;-webkit-backdrop-filter:blur(calc(30 * var(--pt)));backdrop-filter:blur(calc(30 * var(--pt)))}
+.iph-plate+.iph-plate{margin-inline:calc(18 * var(--pt));background:rgba(250,250,250,.3);z-index:1}
+.iph-qb{/* ui-ok: glass the lock screen's flashlight and camera buttons, iOS material */position:absolute;bottom:calc(50.5 * var(--pt));width:calc(50 * var(--pt));height:calc(50 * var(--pt));border-radius:50%;display:grid;place-items:center;
+  background:rgba(0,0,0,.3);-webkit-backdrop-filter:blur(calc(20 * var(--pt)));backdrop-filter:blur(calc(20 * var(--pt)))}
+.iph-qb.l{left:calc(46 * var(--pt))}.iph-qb.r{right:calc(46 * var(--pt))}
+.iph-qb .fl{width:calc(11.3 * var(--pt));height:calc(25.7 * var(--pt))}
+.iph-qb .cm{width:calc(22.3 * var(--pt));height:calc(17.7 * var(--pt))}
+.iph-home{position:absolute;z-index:6;left:50%;bottom:calc(6 * var(--pt));width:calc(139 * var(--pt));height:calc(5 * var(--pt));margin-left:calc(-69.5 * var(--pt));border-radius:9px;background:#fff}
+/* the pencil loop round a missed call: drawn level in iPhone points over the notification (pencil_paths.py draws and checks it) */
+.iph-ring{position:absolute;inset:0;width:100%;height:100%;z-index:2;fill:none;stroke:var(--pencil);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;overflow:visible;pointer-events:none;max-width:none}
+
+/* the night band's lock screen in the measured iPhone (data-iph on the band: Home since 2026-10-17, the trade pages in Phase D). One
+   phone on the page (craft judge): the date and the big clock are the strip phone's (.iph-date, .iph-clock, the same Inter cut on
+   Windows), each notification is iOS's own card (.iph-note's material, radius and type, in iPhone points) with its app's icon, newest
+   on top, stacked above the flashlight and camera on a computer and right under the clock in a phone's crop (.crop-m keeps the top).
+   The wallpaper is the strip phone's too: it is the same shop phone at 6:41 a.m. On a phone the words keep the 12px floor */
+.lk4>.iph{width:100%}
+.iph .lk4-d{opacity:1}
+.iph .lk4-nts{position:absolute;left:calc(14 * var(--pt));right:calc(14 * var(--pt));bottom:calc(120 * var(--pt));display:flex;flex-direction:column;gap:calc(8 * var(--pt));padding:0;z-index:3}
+.iph .lk4-nt{/* ui-ok: glass iOS's own notification material, inside the drawn phone only */grid-template-columns:calc(37.7 * var(--pt)) minmax(0,1fr);column-gap:calc(13 * var(--pt));align-items:center;
+  padding:calc(13.8 * var(--pt)) calc(15 * var(--pt)) calc(15.2 * var(--pt)) calc(14.7 * var(--pt));border-radius:calc(23 * var(--pt));color:#000;font-size:calc(14.4 * var(--pt));line-height:calc(18 * var(--pt));
+  background:rgba(250,250,250,.62);-webkit-backdrop-filter:blur(calc(30 * var(--pt))) saturate(1.6);backdrop-filter:blur(calc(30 * var(--pt))) saturate(1.6)}
+.iph .lk4-nt .ap{width:calc(37.7 * var(--pt));height:calc(37.7 * var(--pt));border-radius:calc(8.5 * var(--pt))}
+.iph .lk4-nt .ap svg{width:58%;height:58%}
+.iph .lk4-nt .nr{gap:calc(8 * var(--pt))}
+.iph .lk4-nt .nr b{color:#000;font-weight:600}
+.iph .lk4-nt .nr span{font-size:calc(13 * var(--pt));color:rgba(40,40,45,.62)}
+.iph .lk4-nt .fx{font-size:calc(13 * var(--pt))}
+@media (max-width:899px){
+  .iph .lk4-nts{top:calc(232 * var(--pt));bottom:auto}
+  .iph .lk4-nt{font-size:max(12px,calc(14.4 * var(--pt)));line-height:1.3}
+  .iph .lk4-nt .nr span,.iph .lk4-nt .fx{font-size:max(12px,calc(13 * var(--pt)))}
+}
+
+/* forced colours (Windows High Contrast): a pressed Before / After, the picked trade and the selected tab stay visible */
+@media (forced-colors:active){.seg button[aria-pressed=true],.chip[aria-checked=true],.tabs [role=tab][aria-selected=true]{forced-color-adjust:none;background:Highlight;color:HighlightText}}

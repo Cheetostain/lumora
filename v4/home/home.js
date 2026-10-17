@@ -16,15 +16,20 @@
   function intro(key, t) {
     var p = document.querySelector('[data-walk-intro]'); if (!p || !t || !t.rows) return;
     var pairs = t.rows.some(function (r) { return r.pair; });
+    // the new Home (2026-10-16, Franco's GO): the walk shows one stop (data-walk-rows="1"), so the intro says so and the link under
+    // it opens the picked trade's page, where the whole walk is (a restaurant owner who picks Restaurants gets there in one tap)
+    var walk = p.closest('[data-walk-rows]'), more = document.querySelector('[data-f="walk-more"]');
+    if (walk && walk.getAttribute('data-walk-rows') === '1') {
+      var same = t.rows[0] && t.rows[0].pair;
+      p.textContent = ES ? t.shop + ' es ' + sizeEs(t) + '. Este es un paso de su visita: ' + (same ? 'la misma pantalla, antes y después del arreglo.' : 'el arreglo en la pantalla del propio negocio.')
+        : t.shop + ' is a sample ' + size(t) + '. Here is the first stop from its walk: ' + (same ? 'the same screen before and after the fix.' : 'the fix on the shop\'s own screen.');
+      if (more) { more.href = t.href; more.textContent = ES ? 'La visita completa, en la página de ' + t.name : 'The full walk, on the ' + t.name + ' page'; }
+      return;
+    }
     if (ES) { p.textContent = t.shop + ' es ' + sizeEs(t) + '. ' + (pairs ? 'En cada paso se ve la misma pantalla antes y después del arreglo, y la visita termina con el total de la hoja.'
       : 'En cada paso se ve el arreglo en la pantalla del propio negocio, y la visita termina con el total de la hoja.'); return; }   // "paso", never "parada" (a bus stop; native read 2026-10-10)
     p.textContent = t.shop + ' is a sample ' + size(t) + '. ' + (pairs ? 'Each stop shows the same screen before and after the fix, and the walk ends on the sheet\'s total.'
       : 'Each stop shows the fix on the shop\'s own screen, and the walk ends on the sheet\'s total.');
-  }
-  // job: cause and effect. On a phone the strip sits above the sheet's trade menu, so it rises once when a pick rewrites it
-  function cue(key, t, animate) {
-    var s = document.querySelector('.hero-strip'); if (!s || !animate || Lumora.still) return;
-    s.classList.remove('swapping'); void s.offsetWidth; s.classList.add('swapping');
   }
   // Who we work with: under each trade link, that trade's biggest leak (its sample sheet's first row), no dollar figure, so the
   // index shows what a walk finds in each trade (review 2026-10-10, Franco's note 12 "bland"). Prerendered by prerender.py.
@@ -101,12 +106,32 @@
     var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); run(); } }, { threshold: 0.6 });
     io.observe(fig);
   }
+  // stop 1 on a computer: the quote card hangs over the list's last rows; its top edge lands on a row line, never through a row's
+  // words (2026-10-17 polish, owner judge: at 1440 the Spanish card cut "Aceptada $4,105.60" in half). The card hangs from the
+  // stage's foot, so the stage's bottom padding moves it to the nearest line (--qc-nudge, set on the section, outside the
+  // prerendered stop). Measured again when the window or the card changes size (Before and After, a trade, the fonts)
+  var seatObs = 'ResizeObserver' in window ? new ResizeObserver(function () { seat(); }) : null;
+  function seat() {
+    var walk = document.getElementById('walk'), st = walk && walk.querySelector('.stop-q .stage'), qc = st && st.querySelector('.qcard'), qa = st && st.querySelector('.qa');
+    if (!qc || !qa) return;
+    if (seatObs && !qc._seat) { qc._seat = 1; seatObs.observe(qc); seatObs.observe(qa); }
+    if (getComputedStyle(qc).position !== 'absolute') { walk.style.removeProperty('--qc-nudge'); return; }
+    var now = parseFloat(walk.style.getPropertyValue('--qc-nudge')) || 0, top = qc.getBoundingClientRect().top - now, best = null;
+    Array.prototype.forEach.call(qa.querySelectorAll('.qt tbody tr'), function (tr) {
+      if (!tr.getClientRects().length) return; var d = tr.getBoundingClientRect().bottom - top; if (d >= -48 && (best === null || Math.abs(d) < Math.abs(best))) best = d; });   // the card keeps 24px or more below the window
+    if (best === null) return;
+    var nudge = Math.round(best * 10) / 10;
+    if (Math.abs(nudge - now) > 0.4) walk.style.setProperty('--qc-nudge', nudge + 'px');
+  }
   function start() {
     codeDemo();
     if (!window.Lumora) return;
-    Lumora.on(intro); Lumora.on(cue);
+    Lumora.on(intro);   // cue() went with the hero strip (2026-10-16): the sheet itself rises on a pick (system.css .sheet.swap)
+    Lumora.on(function () { seat(); });
     if (Lumora.trade) intro(Lumora.trade, Lumora.trades[Lumora.trade]);
-    who(); variants();
+    who(); variants(); seat();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(seat);
+    addEventListener('resize', seat);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();

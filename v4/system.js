@@ -58,15 +58,21 @@
     on: function (fn) { listeners.push(fn); } };
 
   /* ================================================================ the red pen */
-  // The ring is redrawn in real pixels (Catmull-Rom through hand-drawn points) so the stroke never stretches.
-  var RING = [[14.2,22.4],[18.1,17.3],[23,12.7],[28.7,8.9],[35,6.2],[41.9,4.7],[48.8,4.4],[55.7,5.4],[62.1,7.3],[68.1,10],[73.7,13.3],[78.7,17.1],[83.4,21.2],[87.7,25.7],[91.6,30.6],[94.9,36.1],[97.4,42],[98.9,48.4],[99.2,54.9],[98,61.5],[95.6,67.7],[92,73.3],[87.4,78.2],[82.1,82.3],[76.4,85.7],[70.4,88.4],[64.3,90.5],[58,92.2],[51.6,93.3],[44.9,93.8],[38.1,93.6],[31.3,92.4],[24.7,90.1],[18.6,86.7],[13.4,82.2],[9.1,76.9],[6.1,71],[4.2,64.7],[3.3,58.3],[3.3,52],[4,45.8],[5.3,39.8],[7.1,33.9],[9.6,28],[12.7,22.4],[16.7,17.1],[21.5,12.3],[27.3,8.3],[33.7,5.3]];
+  // The ring is redrawn in real pixels so the stroke never stretches. 2026-10-16 (Franco's GO on the new Home, his note 3: a pen
+  // ring is level): the hand-drawn point list, which leaned, became p1-final's level ellipse, built the way build.py ring()
+  // builds it: the long axis level, a 2.2% pressure wobble, 1.08 turns so the end passes just inside the start, a 4.5% drift
+  // in as the pen closes. In the .sh-usd box (system.css section 11) it keeps about 3.7px off the figure (pencil_air.py).
   function ring(svg) {
     if (!svg) return;
     var w = svg.clientWidth || svg.getBoundingClientRect().width, h = svg.clientHeight || svg.getBoundingClientRect().height;
     if (!w || !h) return;
     w = Math.round(w); h = Math.round(h);
     svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h); svg.removeAttribute('preserveAspectRatio');
-    var P = RING.map(function (p) { return [p[0] / 102 * w, p[1] / 98 * h]; }), f = function (n) { return n.toFixed(1); };
+    var P = [], f = function (n) { return n.toFixed(1); }, cx = w * .5, cy = h * 26 / 52, rx = w * .46, ry = h * 22.5 / 52;
+    for (var j = 0; j <= 48; j++) {
+      var q = j / 48, a = 200 * Math.PI / 180 + q * 1.08 * 2 * Math.PI, k = 1 + .022 * Math.sin(2 * a + .7) - .045 * q;
+      P.push([cx + rx * k * Math.cos(a), cy + ry * k * Math.sin(a)]);
+    }
     var d = 'M' + f(P[0][0]) + ' ' + f(P[0][1]);
     for (var i = 0; i < P.length - 1; i++) {
       var a = P[i - 1] || P[i], b = P[i], c = P[i + 1], e = P[i + 2] || c;
@@ -241,6 +247,14 @@
     return '<div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>' + esc(P.title) + '</span></div><div class="win-b">' + (P.xls ? '<div class="xl">' + fx + '<table>' + head + body + '</table>' + tabs + '</div>' : '<div class="ptbl"><table>' + head + body + '</table></div>') + status + badge + '</div></div>';
   }
   L.render = { ghost: ghostSVG, real: realHTML, whiteboard: whiteboardHTML, recents: recentsHTML, pair: pairHTML, phone: ph4 };
+  // the measured iPhone 15 (system.css 28) round a lock screen's own words: Home's night band since 2026-10-17 (data-iph on the band),
+  // so Home shows one phone, the same device as its strip (craft judge: the strip's iPhone and the night band's drawn frame, four
+  // screens apart, read as two phones). The status bar, padlock, flashlight, camera and home bar are the strip phone's markup.
+  // The trade pages keep the drawn .ph4 until Phase D.
+  var IPH_TOP = '<span class="iph-isl"></span><div class="iph-sb"><span class="iph-sb-r"><svg class="iph-cell" viewBox="0 0 19.2 12.33" aria-hidden="true"><rect x="0" y="7.33" width="3" height="5" rx=".9"/><rect x="5.4" y="5.33" width="3" height="7" rx=".9"/><rect x="10.8" y="2.66" width="3" height="9.67" rx=".9"/><rect x="16.2" y="0" width="3" height="12.33" rx=".9"/></svg><svg class="iph-wifi" viewBox="0 0 17.14 12.33" aria-hidden="true"><g stroke="currentColor" stroke-width=".6" stroke-linejoin="round"><path d="M0.30 3.73A11.70 11.70 0 0 1 16.84 3.73L15.46 5.11A9.75 9.75 0 0 0 1.68 5.11Z"/><path d="M2.98 6.41A7.90 7.90 0 0 1 14.16 6.41L12.78 7.79A5.95 5.95 0 0 0 4.36 7.79Z"/><path d="M8.57 12.00L5.67 9.10A4.10 4.10 0 0 1 11.47 9.10Z"/></g></svg><svg class="iph-batt" viewBox="0 0 27.33 13" aria-hidden="true"><rect x=".5" y=".5" width="24" height="12" rx="3.8" fill="none" stroke="currentColor" stroke-opacity=".35"/><rect x="2" y="2" width="16.4" height="9" rx="2.4"/><path d="M25.83 4.5v4c.8-.34 1.33-1.1 1.33-2s-.53-1.66-1.33-2z" fill-opacity=".4"/></svg></span><i class="iph-grab"></i></div><svg class="iph-padlock" viewBox="0 0 11 15" aria-hidden="true"><path d="M2.7 6.6V4.4a2.8 2.8 0 0 1 5.6 0v2.2" fill="none" stroke="#fff" stroke-width="1.5"/><rect x=".5" y="6.3" width="10" height="8.2" rx="1.8" fill="#fff"/></svg>',
+    IPH_FOOT = '<span class="iph-qb l"><svg class="fl" viewBox="0 0 11.3 25.7" aria-hidden="true"><path fill="#fff" fill-rule="evenodd" d="M1.2 0h8.9c.7 0 1.2.5 1.2 1.2v2.6H0V1.2C0 .5.5 0 1.2 0zM0 4.8h11.3l-1.6 3.6v15.3c0 1.1-.9 2-2 2H3.6c-1.1 0-2-.9-2-2V8.4zM5.65 11.6c-.7 0-1.2.5-1.2 1.2v3.4c0 .7.5 1.2 1.2 1.2s1.2-.5 1.2-1.2v-3.4c0-.7-.5-1.2-1.2-1.2z"/></svg></span><span class="iph-qb r"><svg class="cm" viewBox="0 0 22.3 17.7" aria-hidden="true"><path fill="#fff" fill-rule="evenodd" d="M7.6 0h7.1c.6 0 1.1.3 1.4.8l1.1 1.8h2.1c1.7 0 3 1.3 3 3v9.1c0 1.7-1.3 3-3 3H3c-1.7 0-3-1.3-3-3V5.6c0-1.7 1.3-3 3-3h2.1L6.2.8C6.5.3 7 0 7.6 0zM11.15 4.6a5.6 5.6 0 1 0 0 11.2a5.6 5.6 0 1 0 0-11.2zM11.15 6.3a3.9 3.9 0 1 1 0 7.8a3.9 3.9 0 1 1 0-7.8zM18.6 5.1a1.05 1.05 0 1 0 0 2.1a1.05 1.05 0 1 0 0-2.1z"/></svg></span><i class="iph-home"></i>';
+  function iph(inner) { return '<div class="iph" aria-hidden="true"><div class="iph-dev"><i></i><i></i><i></i><i></i><div class="iph-scr iph-lock">' + IPH_TOP + inner + IPH_FOOT + '</div></div></div>'; }
+  L.render.iph = iph;
 
   /* ================================================================ binders: everything the trade choice rewrites */
   var shown = {};
@@ -251,12 +265,18 @@
       if (f('per')) f('per').textContent = t.per === 'yr' ? tr('A year', 'Al año') : tr('A month', 'Al mes');
       var ringOn = el.hasAttribute('data-ring'), short = el.hasAttribute('data-short');   // data-short (v4, R9): the row's one short formula
       if (f('rows')) f('rows').innerHTML = t.rows.map(function (r, i) {
-        return '<li style="--i:' + i + '" data-task="' + (TASK[r.icon] || r.icon) + '"><div class="sh-l"><b>' + esc(r.b) + '</b><small>' + esc(short && r.fs ? r.fs : r.f) + '</small></div><span class="sh-usd">' + money(r.usd) + (i === 0 && ringOn ? RING_SVG : '') + '</span></li>'; }).join('');
+        // 2026-10-16 (p1-final): a count keeps its word, so "48+ hours" never splits over two lines
+        return '<li style="--i:' + i + '" data-task="' + (TASK[r.icon] || r.icon) + '"><div class="sh-l"><b>' + esc(r.b).replace(/(\d\+?) (?=\S)/g, '$1\u00a0') + '</b><small>' + esc(short && r.fs ? r.fs : r.f) + '</small></div><span class="sh-usd">' + money(r.usd) + (i === 0 && ringOn ? RING_SVG : '') + '</span></li>'; }).join('');
       if (f('total')) f('total').textContent = money(total(t)) + perShort(t);
       // one short line for screen readers when the owner picks another trade (the sheet itself is not a live region: a pick
       // used to read out about 50 changed words). Empty on load, so nothing is announced before he chooses.
       if (f('live') && animate) f('live').textContent = tr('Sample business: ', 'Negocio de ejemplo: ') + t.name + ', ' + money(total(t)) + ' ' + perWord(t) + tr(' lost before any fix.', ' que pierde hoy, antes de arreglar nada.');
       var tm = f('time'); if (tm) { tm.hidden = !t.time; if (t.time) tm.innerHTML = tr('Time back for you or your office: ', 'Usted o su oficina se ahorran ') + '<b>' + esc(t.time) + '</b>'; }
+      // 2026-10-16 (the new Home, p1-final round 2): the line about where the numbers come from names the trade's own records,
+      // from its morning list's foot (morning.src); a trade without one keeps the page's own line
+      var nt = f('note'); if (nt) { if (nt._base == null) nt._base = nt.textContent;
+        var src = t.morning && t.morning.src;
+        nt.textContent = !src ? nt._base : ES ? 'La hoja de su negocio sale de ' + src.replace(/^De /, '') + '.' : 'Yours is built from your own ' + src.replace(/^From (?:your own |your )/, '') + '.'; }
       $$('.pen-ring', el).forEach(ring);
       if (animate && !still) { el.classList.remove('writing', 'swap'); void el.offsetWidth; el.classList.add('swap'); } // job: cause and effect
     },
@@ -411,9 +431,9 @@
         // data-day / data-eve: the loop ticks the big clock through the night (9:40 ... 6:41) and the date line with it
         lock = '<div class="pic n4-phone"><div class="lk4 crop-m" data-day="' + esc(day) + '" data-eve="' + esc(eve) + '" role="img" aria-label="' + esc(tr('Sample: the shop phone\'s lock screen at 6:41 a.m., ', 'Ejemplo: la pantalla de bloqueo del teléfono del negocio a las 6:41 a. m., ') + day + '. ' +
           nts.map(function (o) { return o.x.t + ', ' + hora(o.x.at) + ': ' + o.x.p + (o.x.fx ? '. ' + o.x.fx : ''); }).join('. ') + '.') + '">' +
-          ph4('<p class="lk4-d" aria-hidden="true">' + esc(day) + '</p><p class="lk4-t" aria-hidden="true">6:41</p><div class="lk4-nts" aria-hidden="true">' + nts.map(function (o) {
+          (el.hasAttribute('data-iph') ? iph : function (s) { return ph4(s, '', true); })('<p class="lk4-d' + (el.hasAttribute('data-iph') ? ' iph-date' : '') + '" aria-hidden="true">' + esc(day) + '</p><p class="lk4-t' + (el.hasAttribute('data-iph') ? ' iph-clock' : '') + '" aria-hidden="true">6:41</p><div class="lk4-nts" aria-hidden="true">' + nts.map(function (o) {
             var x = o.x; return '<div class="lk4-nt" data-n="' + nNt[o.i] + '" data-t="' + esc(x.at) + '" data-task="' + x.task + '"><span class="ap ap-' + x.app.toLowerCase() + '">' + (APPS[x.app] || APPS.List) + '</span><div><p class="nr"><b>' + esc(x.t) + '</b><span>' + esc(hora(x.at)) + '</span></p><p>' + esc(x.p) + '</p>' +
-              (x.fx ? '<span class="fx">↩ ' + esc(x.fx) + '</span>' : '') + '</div></div>'; }).join('') + '</div>', '', true) + '</div>' + SAMP + '</div>';
+              (x.fx ? '<span class="fx">↩ ' + esc(x.fx) + '</span>' : '') + '</div></div>'; }).join('') + '</div>') + '</div>' + SAMP + '</div>';
       }
       figs.innerHTML = lock + '<div class="pic n4-paper"><div class="np"><div class="np-h"><b>' + esc(N.paper + ', ' + t.shop) + '</b><span>' + esc(logDate) + '</span></div><ol class="np-rows">' +
         N.rows.map(function (r, i) { return '<li data-n="' + nRow[i] + '" data-t="' + esc(r[0]) + '" data-task="' + r[2] + '"><time>' + esc(hora(r[0])) + '</time><span>' + esc(r[1]) + '</span></li>'; }).join('') +
@@ -454,6 +474,10 @@
     // data-walk-skip="ROW ID ..." on the walk: rows the page leaves off its walk and its tally. They stay on the sheet, and the
     // page's total line under the stops names them (property managers, 2026-10-12: the vendor bills row, for the 11,000px budget)
     var skip = (el.getAttribute('data-walk-skip') || '').split(/\s+/), rows = t.rows.filter(function (r) { return skip.indexOf(r.id) < 0; });
+    // data-walk-rows="N" (the new Home, 2026-10-16): the walk shows the first N rows only. One stop has no number beside it and no
+    // "Stop 1:" (a lone "1" read as a step of one), and its find line says what the figure is in each state: Lost / Won back
+    var most = +el.getAttribute('data-walk-rows') || 0; if (most) rows = rows.slice(0, most);
+    var one = rows.length === 1;
     // a page's own stop (li.stop[data-own="ROW ID"], written in the page) stands where that row's stop would be: the row stays on
     // the sheet and its picture leaves the walk (PLUMBING-INTEGRATE item 37, C9; the AC page walks its change-out quote in place of
     // the phone, 2026-10-12). Read once from the page's own markup, so a re-render and the prerender keep it as written.
@@ -468,13 +492,14 @@
       // the stop's head is its pencil-circled number beside the PLACE in the shop ("The shop phone"), with the leak's name on
       // a plain line under it: a walk goes room by room, and a calls row never becomes a heading (R1; review 2026-10-10)
       // the Before / After buttons sit under the picture they switch, beside its Sample label
-      return '<li class="stop page" id="stop-' + n + '" data-usd="' + r.usd + '" data-place="' + esc(place) + '" data-task="' + task + '">' +
-        '<div class="stop-h"><span class="tab-n">' + n + '</span><div class="stop-t"><h3><span class="sr">' + tr('Stop ', 'Paso ') + n + ': </span>' + esc(place) + '</h3><p class="stop-leak">' + esc(r.b) + '</p></div></div>' +
+      return '<li class="stop page" id="stop-' + n + '" data-usd="' + r.usd + '" data-place="' + esc(place) + '" data-task="' + task + '"' + (P ? ' data-state="after"' : '') + '>' +
+        '<div class="stop-h">' + (one ? '' : '<span class="tab-n">' + n + '</span>') + '<div class="stop-t"><h3>' + (one ? '' : '<span class="sr">' + tr('Stop ', 'Paso ') + n + ': </span>') + esc(place) + '</h3><p class="stop-leak">' + esc(r.b) + '</p></div></div>' +
         '<div class="stop-body"><div class="pic' + (P ? ' has-seg' : '') + '"' + (task === 'calls' ? ' data-pic="calls"' : '') + '>' + pic +
         (P ? '<div class="seg" role="group" aria-label="' + tr('Show stop ', 'Mostrar el paso ') + n + '"><button type="button" data-show="before" aria-pressed="false">' + tr('Before', 'Antes') + '</button><button type="button" data-show="after" aria-pressed="true">' + tr('After', 'Después') + '</button></div>' : '') +
         '<span class="samp">' + tr('Sample', 'Ejemplo') + '</span></div>' +
         '<div class="stop-notes"><p class="pencil">' + esc(r.note) + '</p>' +
-        '<p class="find"><span class="find-usd money">' + money(r.usd) + ' ' + perWord(t) + UNDER_SVG + '</span>' + (noF ? '' : '<span class="find-f">' + esc(r.fs || r.f) + '</span>') + '</p>' +
+        '<p class="find">' + (one && P ? '<span class="find-k"><span class="bo">' + tr('Lost:', 'Se pierde:') + '</span><span class="ao">' + tr('Won back:', 'Se recupera:') + '</span></span>' : '') +
+        '<span class="find-usd money">' + money(r.usd) + ' ' + perWord(t) + UNDER_SVG + '</span>' + (noF ? '' : '<span class="find-f">' + esc(r.fs || r.f) + '</span>') + '</p>' +
         // no "Fix:" line on v4 stops: the After picture shows the fix in the shop's own screen, and the line only repeated it (R9)
         '</div></div></li>'; }).join('');
     var tl = el.querySelector('[data-tally]');
@@ -537,11 +562,14 @@
   /* ================================================================ ghost to real */
   function setG2R(g, state) {
     g.dataset.state = state;
+    // 2026-10-16 (the new Home): the stop takes the state too, so its margin note and find label (.bo / .ao, system.css) turn with it
+    var stop = g.closest('.stop'); if (stop) stop.setAttribute('data-state', state);
     var lab = g.getAttribute('data-label-' + state); if (lab) g.setAttribute('aria-label', lab);
     var scope = g.closest('.stop, [data-g2r-scope]') || g.parentNode;
     $$('[data-show]', scope).forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.show === state ? 'true' : 'false'); });
     // job: cause and effect. The stop's money underline draws as the fix lands, not before it (it waits; see initG2R)
-    if (state === 'after') $$('[data-draw]', g.closest('.stop, [data-g2r-scope]') || g).forEach(function (p) { p.removeAttribute('data-wait'); draw(p, 380); });
+    // data-draw="view" (2026-10-16 repair, Home's stop 1): that mark draws when it comes into view, in Before too, as on the approved desktop
+    if (state === 'after') $$('[data-draw]:not([data-draw=view])', g.closest('.stop, [data-g2r-scope]') || g).forEach(function (p) { p.removeAttribute('data-wait'); draw(p, 380); });
   }
   // job: state change. History: 55% and 600ms showed the "before" for ~1.3 s; then 95% held 2.5 s, and a timed owner skim
   // on a phone (review 2026-10-10, 470px a flick) left every stop on Before the whole way: he saw only the problems.
@@ -559,12 +587,17 @@
       if (g.dataset.ready) return; g.dataset.ready = '1';
       var sc = g.closest('.stop, [data-g2r-scope]') || g.parentNode;
       $$('[data-show]', sc).forEach(function (b) { b.addEventListener('click', function () { g.dataset.touched = '1'; setG2R(g, b.dataset.show); }); });
+      // data-g2r-hold (Home's stop 1, 2026-10-17): a computer with motion opens it on Before and keeps it there until the owner turns
+      // it, as the approved desktop meant (owner judge: "Visit Tuesday. Quote Friday." turned away after 0.9 s, before anyone read it).
+      // No hover turn either. Phones, reduced motion and ?still open on After, as every stop does
+      var hold = g.hasAttribute('data-g2r-hold');
       // job: signifier. Hover a ghost and it comes to life, unless the owner chose "As we find it" himself: then the
       // cursor reaching the paper to read it must not undo his choice (trades-2 review, 2026-10-07)
-      g.addEventListener('pointerenter', function () { if (fine.matches && g.dataset.state === 'before' && !g.dataset.touched) setG2R(g, 'after'); });
+      g.addEventListener('pointerenter', function () { if (fine.matches && !hold && g.dataset.state === 'before' && !g.dataset.touched) setG2R(g, 'after'); });
       if (redraw && !still) $$('.ghost', g).forEach(function (x) { x.classList.add('draw'); });
       // the still default is the fixed state; with motion allowed, figures below the fold start as found and turn real in view
-      if (!still && g2rIO && !narrow.matches && g.getBoundingClientRect().top > innerHeight * 0.8) { setG2R(g, 'before'); g2rIO.observe(g); $$('[data-draw]', g.closest('.stop, [data-g2r-scope]') || g).forEach(function (p) { p.setAttribute('data-wait', ''); }); }
+      if (hold && !still && !narrow.matches) setG2R(g, 'before');
+      else if (!still && g2rIO && !narrow.matches && g.getBoundingClientRect().top > innerHeight * 0.8) { setG2R(g, 'before'); g2rIO.observe(g); $$('[data-draw]:not([data-draw=view])', g.closest('.stop, [data-g2r-scope]') || g).forEach(function (p) { p.setAttribute('data-wait', ''); }); }
       else setG2R(g, g.dataset.state || 'after');
     });
   }
@@ -734,10 +767,20 @@
   /* ================================================================ header menu */
   function initMenu() {
     var b = $('.menu-b'), nav = $('#nav'); if (!b || !nav) return;
-    var set = function (o) { nav.classList.toggle('open', o); b.setAttribute('aria-expanded', o ? 'true' : 'false'); b.textContent = o ? tr('Close', 'Cerrar') : tr('Menu', 'Menú'); };
-    b.addEventListener('click', function () { set(!nav.classList.contains('open')); });
+    // 2026-10-16 repair: #nav comes before the button in the header, so Tab from Close skipped all seven links and landed on the
+    // hero's button, hidden behind the open sheet. Now Tab from the button goes to the first link and Shift+Tab from the first link
+    // comes back (the header's language link closes the loop), and the page behind is inert until the menu closes. check.py's
+    // MENU_JS holds it on every page
+    var open = function () { return nav.classList.contains('open'); };
+    var set = function (o) { nav.classList.toggle('open', o); b.setAttribute('aria-expanded', o ? 'true' : 'false'); b.textContent = o ? tr('Close', 'Cerrar') : tr('Menu', 'Menú');
+      $$('body > main, body > .foot, body > .callbar').forEach(function (el) { el.inert = o; }); };
+    b.addEventListener('click', function () { set(!open()); });
     nav.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && nav.classList.contains('open')) { set(false); b.focus(); } });
+    b.addEventListener('keydown', function (e) { var a = $('a', nav); if (e.key === 'Tab' && !e.shiftKey && open() && a) { e.preventDefault(); a.focus(); } });
+    nav.addEventListener('keydown', function (e) { if (e.key === 'Tab' && e.shiftKey && open() && e.target === $('a', nav)) { e.preventDefault(); b.focus(); } });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open()) { set(false); b.focus(); } });
+    document.addEventListener('click', function (e) { if (open() && !e.target.closest('.hdr')) set(false); });   // a tap on the page under a dropdown (Spanish, 900 to 1279px) closes it
+    addEventListener('resize', function () { if (open() && !b.getClientRects().length) set(false); });   // the window grew past the Menu button: never leave the page inert
   }
 
   // test hook (E10): put every Before / After picture in one state, as if the visitor had pressed the button, so check.py can
@@ -783,8 +826,11 @@
     // R9: no dollar figure more than twice, 16 or fewer, counted per width; the phone-only top-leak strip is the named exception.
     // The bound price sentence counts its bold price only: the plain words after it are the credit's terms, and their $1,500
     // floor (Franco, 2026-10-13, premortem item 9) is a condition the law needs beside the credit, not a figure on show.
+    // 2026-10-16 (Franco's GO on the new Home; a budget, BIG-PLAN-DETAIL R9's table "Dollar figures 16 or fewer"): R9 counts the
+    // page's own words. Text inside a .pic Sample picture is the shop's own screen (the quotes app alone brings about 32 figures,
+    // $1,912.40 three times) and is not counted; the copy stays held to 16 and to twice each
     var seen = {}, total = 0;
-    texts(function (s, pe) { if (pe.closest('.hero-strip') || pe.matches('[data-shared="price"]')) return; (s.match(/\$\d[\d,]*(?:\.\d+)?/g) || []).forEach(function (m) { var k = m.replace(/\.0+$/, ''); seen[k] = (seen[k] || 0) + 1; total++; }); });
+    texts(function (s, pe) { if (pe.closest('.hero-strip') || pe.closest('.pic') || pe.matches('[data-shared="price"]')) return; (s.match(/\$\d[\d,]*(?:\.\d+)?/g) || []).forEach(function (m) { var k = m.replace(/\.0+$/, ''); seen[k] = (seen[k] || 0) + 1; total++; }); });
     Object.keys(seen).forEach(function (k) { if (seen[k] > 2) B.push('R9: ' + k + ' shows ' + seen[k] + ' times (twice at most).'); });
     if (total > 16) B.push('R9: ' + total + ' dollar figures on the page (16 or fewer).');
     // R11: the picked chip is never filled black on a computer screen
@@ -817,6 +863,13 @@
     if (/no (?:client )?reviews here yet|no hay rese[ñn]as de clientes/i.test(text)) E.push('R9: the retired no-reviews line ("Lumora is new, so there are no client reviews here yet.") is back; say it only when someone asks.');
     // R6: one phone component (the drawn frame with its camera island), never rotated, one width on a computer, .491 wide to tall
     if (shown('.scr-phone, .scr-lock').length) E.push('R6: an old phone style (.scr-phone or .scr-lock) on a v4 page.');
+    // 2026-10-16 (the new Home): the measured iPhone 15 (.iph, system.css section 28) is a phone component too: the device keeps its
+    // 432.2 x 891.2 shape and is never turned. A page that shows it and the drawn frame (.ph4) warns until Phase D makes them one
+    shown('.iph-dev').forEach(function (p) { var tf = getComputedStyle(p).transform;
+      if (Math.abs(p.offsetWidth / p.offsetHeight - 432.2 / 891.2) > 0.01) E.push('R6: a measured phone ' + (p.offsetWidth / p.offsetHeight).toFixed(3) + ' wide to tall (0.485).');
+      if (tf && tf !== 'none' && tf !== 'matrix(1, 0, 0, 1, 0, 0)') E.push('R6: a rotated phone.'); });
+    // 2026-10-17 polish: a page whose night band shows the measured iPhone (data-iph: Home) fails a second drawing; elsewhere it warns
+    if (shown('.iph-dev').length && shown('.ph4').length) (document.querySelector('[data-iph]') ? E : W).push('R6: two phone drawings on the page (the measured .iph and the drawn .ph4); Phase D makes them one.');
     var phs = shown('.ph4'), widths = {};
     phs.forEach(function (p) { var r = p.getBoundingClientRect(), tf = getComputedStyle(p).transform;
       if (!p.querySelector('.ph4-f .ph4-isl')) E.push('R6: a phone without the drawn frame and camera island.');
@@ -906,7 +959,7 @@
         if (!vis(el)) continue;
         var fs = parseFloat(getComputedStyle(el).fontSize);
         if (el instanceof SVGElement && el.getScreenCTM) { var m = el.getScreenCTM(); if (m) fs *= Math.hypot(m.a, m.b); }   // svg text: the size it renders at
-        var inPic = el.closest('.pic,.plan,.inpic,.fn,.ghost,.scr-lock,.morning,.wb,.ticket,.doc,.xl,.county,.samp,.slot');   // .slot: review-only placeholder
+        var inPic = el.closest('.pic,.clip,.plan,.inpic,.fn,.ghost,.scr-lock,.morning,.wb,.ticket,.doc,.xl,.county,.samp,.slot');   // .slot: review-only placeholder; .clip (2026-10-16): the printed sheet is a picture, as BUDGET_JS counts it
         if (fs < 12) tiny.push(n.nodeValue.trim().slice(0, 30) + ' (' + fs + 'px)');
         else if (fs < 15 && !inPic) small.push(n.nodeValue.trim().slice(0, 30) + ' (' + fs + 'px)');
       }
