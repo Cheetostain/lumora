@@ -26,11 +26,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=21ea1ed6">
-<link rel="stylesheet" href="/v4/trade-page.css?v=21ea1ed6">
+<link rel="stylesheet" href="/v4/system.css?v=a5355fc1">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a5355fc1">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=21ea1ed6" defer></script>
-<script src="/v4/system.js?v=21ea1ed6" defer></script>
+<script src="/v4/trades.js?v=a5355fc1" defer></script>
+<script src="/v4/system.js?v=a5355fc1" defer></script>
 <style>
 /* ===== Loss calculator, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64) outside the pictures; every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -74,6 +74,7 @@ html:not(.js) .lk-bar{display:none}
 .lk-about{font-size:24px;font-weight:600;color:var(--ink)}
 .lk-usd{position:relative;display:inline-block;margin:0 6px;padding:2px 8px;font-size:44px;font-weight:500;line-height:1.1;letter-spacing:-.02em;color:var(--red);white-space:nowrap}
 .lk-per{font-size:20px;color:var(--body)}
+.lk-fig{display:inline-flex;align-items:baseline;gap:12px;white-space:nowrap}   /* 2026-10-17 round 2: the figure and its period stay together; where the line is short the loss words sit above them (at 1024 "a month" fell to a line of its own) */
 .lk-lines li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:11px 0;border-top:1px solid var(--rule);font-size:15px;line-height:1.45}
 .lk-lines li b{display:block;font-size:17px;color:var(--ink)}
 .lk-lines .v{font-size:20px;font-weight:600;color:var(--ink);white-space:nowrap}
@@ -254,7 +255,7 @@ html:not(.js) .lk-bar{display:none}
         <div class="lk-sheet">
           <div class="lk-sh-h"><h2>Your estimate</h2><span class="stamp" data-o="stamp">Sample</span></div>
           <div data-o="result">
-            <p class="lk-total"><span class="lk-about">Losing about</span><span class="lk-usd" data-o="total">$1,540<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="lk-per">a month</span></p>
+            <p class="lk-total"><span class="lk-about">Losing about</span><span class="lk-fig"><span class="lk-usd" data-o="total">$1,540<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="lk-per">a month</span></span></p>
             <ol class="lk-lines">
               <li data-o="l-retype" data-name="Typing the same job twice" data-task="retyping"><span><b>Typing the same job twice</b>30 minutes a day × 22 days ÷ 60 = 11.0 hours × $25 an hour = $275 a month.</span><span class="v">$275</span></li>
               <li data-o="l-unbilled" data-name="Jobs never billed" data-task="invoices"><span class="off"><b>Jobs never billed</b>Left blank.</span></li>

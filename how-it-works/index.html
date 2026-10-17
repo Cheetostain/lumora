@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=21ea1ed6">
-<link rel="stylesheet" href="/v4/trade-page.css?v=21ea1ed6">
+<link rel="stylesheet" href="/v4/system.css?v=a5355fc1">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a5355fc1">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=21ea1ed6" defer></script>
-<script src="/v4/system.js?v=21ea1ed6" defer></script>
+<script src="/v4/trades.js?v=a5355fc1" defer></script>
+<script src="/v4/system.js?v=a5355fc1" defer></script>
 <style>
 /* ===== How it works, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64), and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -110,10 +110,11 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
 
 /* 4 your sheet: the full sample on the clipboard; four columns on a computer, folded rows on a phone */
 .fs-board{margin-top:28px}
-.fs .sheet{padding:22px 16px 18px}
-@media (min-width:700px){.fs .sheet{padding:30px 32px 24px}}
+.fs .sheet{padding-inline:16px;padding-bottom:18px}   /* the top is system.css's, under the clip (2026-10-17 round 2) */
+@media (min-width:700px){.fs .sheet{padding-inline:32px;padding-bottom:24px}}
 .fs-src{font-size:15px;color:var(--muted);padding:10px 0 2px}
-.fs-cols{display:flex;justify-content:space-between;font-size:15px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--rule)}
+.fs-cols{display:flex;justify-content:space-between;gap:12px;font-size:15px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--rule)}
+.fs-cols span:nth-child(3){text-align:right}   /* 2026-10-17 round 2: the money head sits over its figures, 12px from the first head (in Spanish at 320 the two touched) */
 .fs-cols span:nth-child(2),.fs-cols span:nth-child(4){display:none}   /* a phone folds effort and "how you will see it move" into each row, so only two heads apply */
 .fs-rows>li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;padding:16px 0;border-bottom:1px solid var(--rule)}
 .fs-leak b{display:block;font-size:17px;line-height:1.3;color:var(--ink)}
@@ -298,7 +299,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
           <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
           <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
         </div>
-        <p class="reply"><span data-shared="reply">We answer or call back the same business day; after 5&nbsp;p.m. or on weekends, by 10&nbsp;a.m. the next business day.</span> English or Spanish.</p>
+        <p class="reply">We call back the same business day.</p>
       </div>
     </div>
     <div class="hiw-tl">
@@ -317,7 +318,6 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
           <div class="tl-body">
             <p class="t-body"><span data-shared="step2.what">A visit sized to your shop, plus your records: invoices, calendar, job list and call history.</span> <span data-shared="step2.part">You sign one OK so we can look at them.</span></p>
             <p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward a fix of $1,500 or more that starts within 30 days.</span></p>
-            <p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> <a class="u" href="#terms">Full terms</a></p>
             <a class="u tl-go" href="#walk">What the walk covers</a>
           </div>
         </li>
@@ -373,7 +373,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
           <li data-task="quotes"><span class="tab-n">1</span><b>The whiteboard <small>in the office</small></b><p class="pencil">Visit Tuesday. Quote Friday.</p></li>
           <li data-task="bills"><span class="tab-n">2</span><b>The trucks <small>in the lot</small></b><p class="pencil">Supply ticket in the door pocket. No job number.</p></li>
           <li data-task="retyping"><span class="tab-n">3</span><b>The invoice pile <small>on the desk</small></b><p class="pencil">Paper ticket, calendar, QuickBooks. Same job, three times.</p></li>
-          <li data-task="calls"><span class="tab-n">4</span><b>The phone <small>at the counter</small></b><p class="pencil">11:20 AM, both techs on jobs. Nobody called back.</p></li>
+          <li data-task="calls"><span class="tab-n">4</span><b>The phone <small>at the counter</small></b><p class="pencil">11:20&nbsp;AM, both techs on jobs. Nobody called back.</p></li>
         </ol>
         <p class="wk-follow">Then we follow one job from the first call to the paid invoice and the next visit.</p>
       </div>
@@ -422,7 +422,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
 <section class="band fs-band" id="sample" data-ground="paper" data-density="high" data-width="wide" data-loud="sheet" data-medium="sheet">
   <div class="wrap">
     <h2 class="step-h"><span class="tab-n" aria-hidden="true">3</span><span><span class="sr">Step 3: </span>Your sheet</span></h2>
-    <p class="step-meta">A full sample for a <span class="nw">2-truck</span> plumbing shop. Every priced row shows its formula, so you can check the math.</p>
+    <p class="step-meta"><span>A full sample for a <span class="nw">2-truck</span> plumbing shop. Every priced row shows its formula, so you can check the math.</span></p>
     <figure class="clip fs fs-board" aria-label="Sample walk sheet, in full">
       <div class="board">
         <span class="clamp" aria-hidden="true"><i></i></span>
@@ -472,7 +472,6 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
     <div class="cta-inline">
       <a class="btn" href="tel:+13522260681">Call us</a>
       <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
-      <p class="mb mb-s"><span data-shared="moneyback.short"><b>Not worth it to you?</b> Text or email us within 7 days after we go over your sheet, and you get the walk fee back.</span></p>
     </div>
   </div>
 </section>
@@ -544,7 +543,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
         </div>
         <div class="pic" role="tabpanel" id="tp3" aria-labelledby="tb3" hidden>
           <div class="doc" role="img" aria-label="Sample: the morning email from a small tool. Supplier bills checked: Oak Street Supply bill 30172, 5 lines read, 4 on their job's invoice, 1 to decide: the relief valve, 41 dollars 20, job 4471.">
-            <div class="doc-h"><b>Supplier bills, checked</b><span>Thu 6:30 AM</span></div>
+            <div class="doc-h"><b>Supplier bills, checked</b><span>Thu 6:30&nbsp;AM</span></div>
             <ul class="doc-li">
               <li><span>Oak Street Supply, bill 30172</span><span>5 lines read</span></li>
               <li><span>On their job's invoice</span><span>4 of 5</span></li>
@@ -599,10 +598,9 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
           <li>New fixes, each quoted on its own</li><li>Copying a fix to a new location or moving it to new software, each quoted on its own</li><li>Rebuilding a fix after another company removes something it needs, quoted with the options</li><li>Software subscriptions, in your name and at cost</li><li>Hardware</li><li>Time when another company's software is down</li><li>Marketing or ads</li><li>Dispatch software</li></ul></div>
       </div>
     </details>
-    <div class="cta-inline">
+    <div class="cta-inline" data-extra="computer: the call bar is on screen the whole time on a phone">
       <a class="btn" href="tel:+13522260681">Call us</a>
       <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
-      <p class="mb mb-s"><span data-shared="moneyback.short"><b>Not worth it to you?</b> Text or email us within 7 days after we go over your sheet, and you get the walk fee back.</span></p>
     </div>
   </div>
 </section>

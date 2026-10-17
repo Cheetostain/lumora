@@ -94,6 +94,9 @@
 .hm4-how .cta-inline{margin-top:30px;border-top:0;padding-top:0}
 .cta-inline .mb-s{flex-basis:100%;font-size:15px;margin-top:-2px}
 .walk-end .mb-s{font-size:15px}
+/* 2026-10-17 round 2 (owner judge: the walk's price twice and money back three times on Plumbing's phone): as on Home, the call
+   block after How it works steps aside on a phone, where the call bar is on screen the whole time (data-extra in the markup) */
+@media (max-width:899px) and (min-height:501px){main .cta-inline[data-extra]{display:none}}
 
 /* ===== PL. the supply-house ticket and the invoice: one job's two papers, straight. The counter ticket is paper; the invoice
    is the job tool's draft in the one window frame (R6), and the flag is a row inside it, under its title bar (design review:
@@ -223,8 +226,9 @@
 .np-rows li.pl-dayrow{display:block;padding:12px 0 3px;border-bottom:0;font-size:15px;font-weight:600;line-height:1.3;color:var(--ink)}
 .np-rows li.pl-dayrow:first-child{padding-top:2px}
 .pl-card{position:relative;margin-top:20px;padding:16px 14px 10px;background:#fff;border:1.5px solid var(--ink);border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.14);font-size:15px;line-height:1.4;color:#1d1d1f}
-.pl-card::before{content:"";position:absolute;left:50%;top:-9px;width:64px;height:16px;margin-left:-32px;border-radius:4px 4px 3px 3px;background:var(--clamp);box-shadow:inset 0 -2px 0 rgba(0,0,0,.16),0 1px 2px rgba(0,0,0,.2)}   /* the clip */
-.pl-card::after{content:"";position:absolute;left:50%;top:-5px;width:24px;height:5px;margin-left:-12px;border-radius:3px;background:#7c7f84}   /* its slot, as on the hero clipboard's clamp (design review: the plain pill read as a phone's sheet handle) */
+.pl-card::before{content:"";position:absolute;left:50%;top:-14px;width:84px;height:26px;margin-left:-42px;background:url(assets/clip.svg) 0 0/100% 100% no-repeat;filter:drop-shadow(0 1px 1px rgba(40,28,12,.28))}
+/* the clip: the clipboards' lever clip, small, its jaw over the card's top edge (2026-10-17 round 2; it was a pill with a slot drawn to
+   match the old clamp, and the design review had read a plain pill as a phone's sheet handle) */
 .pl-card-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-bottom:8px;margin-bottom:6px;border-bottom:1px solid #d8d5cc}
 .pl-card-h b{font-size:15px;color:#111}
 .pl-card-tab{font-size:13px;color:#55555a;white-space:nowrap}   /* plain words, as a printed card says it; no tab, no underline (it read as a switch that did nothing) */

@@ -57,6 +57,12 @@
       if (k && T[k].rows && T[k].rows[0]) a.innerHTML = '<b>' + esc(name) + '</b><small>' + esc(T[k].rows[0].b) + '</small>';
     });
   }
+  // the night band (round 2, 2026-10-17, judges: two Sample tags side by side): the phone and the log are one picture with one tag,
+  // under the log; home.css hides the phone's. The binder writes the pair again on every pick, so the log's tag is marked again each
+  // time as the section's sample lead ([data-sample-lead], Lumora.lint R8): it labels the phone beside it, and the log's head names the shop
+  function nightTag() {
+    var t = document.querySelector('[data-bind=night4] .n4-paper > .samp'); if (t) t.setAttribute('data-sample-lead', '');
+  }
   // review only: the night band's other two layouts and its other headline, for Franco's pick on the section card (outline 6)
   function variants() {
     var q = new URLSearchParams(location.search), n4 = document.querySelector('.n4');
@@ -143,9 +149,9 @@
     codeDemo();
     if (!window.Lumora) return;
     Lumora.on(intro); Lumora.on(picked);   // cue() went with the hero strip (2026-10-16): the sheet itself rises on a pick (system.css .sheet.swap)
-    Lumora.on(function () { seat(); });
+    Lumora.on(function () { seat(); nightTag(); });
     if (Lumora.trade) { intro(Lumora.trade, Lumora.trades[Lumora.trade]); picked(Lumora.trade, Lumora.trades[Lumora.trade]); }
-    who(); variants(); seat();
+    who(); variants(); seat(); nightTag();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(seat);
     addEventListener('resize', seat);
   }

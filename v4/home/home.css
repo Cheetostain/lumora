@@ -15,6 +15,12 @@
 .hm4-hero .eyebrow{max-width:36em;margin-bottom:18px}
 :lang(es) .hm4-hero .eyebrow{text-wrap:balance}   /* "y más." never sits alone (its words also hold with no-break spaces) */
 .hm4-hero h1{font-size:clamp(38px,5.2vw,64px);line-height:1.02;letter-spacing:-.022em;max-width:11.5em}
+/* the Spanish headline (round 2, 2026-10-17, judges: on a computer "y ponemos" sat alone on line three of four). Three lines cannot
+   hold it at 64px: its shortest possible first line, "Automatizamos el trabajo", is 689px and the column is 624 at 1280 and 1440.
+   Making room would take the clipboard under 480px, which puts the sheet's calls formula on two lines, and the type scale has
+   nothing between 44 and 64. So it keeps four lines and an even edge: the no-break space in "su negocio" went (index.es.html), and
+   every width that sets four lines reads "Automatizamos el / trabajo repetitivo / y ponemos su / negocio en orden." (phones 320 to
+   430 too, where the same short line sat); widths that set three are unchanged. iphone_check.py holds the edge */
 .hm4-hero .t-lede{font-size:clamp(18px,1.6vw,20px);line-height:1.5;margin-top:22px;max-width:34em}
 .hm-recog{font-weight:600;color:var(--ink)}
 .hm4-hero .hero-vision{grid-area:vision;font-size:20px;font-weight:500;line-height:1.35;color:var(--ink);max-width:22em;text-wrap:balance}
@@ -97,16 +103,17 @@ html.js .hm4-hero .sh-pick{container-type:inline-size}
 .rc-lead{display:none}
 .rc-k{font-size:17px;font-weight:600;color:var(--ink);text-wrap:balance}   /* 2026-10-17: it names the sample business ("Dunlin Plumbing, a sample shop with 2 trucks"), so the Excel sheet and the phone carry no Sample tag */
 /* 2026-10-17 polish (craft judge: three items, three kinds of head): on a computer every item opens on its picture's name in ink,
-   then its figure (red where it is money: the Excel sheet and the phone; the quotes slice keeps its ink "3 days in Drafts", since
-   its dollars are stop 1's), then the caption. A phone keeps p1-final's figure first (data-extra) */
+   then its figure, then the caption. A phone keeps p1-final's figure first (data-extra). Round 2 (2026-10-17, judges: the quotes
+   slice opened on "3 days in Drafts" while the other two opened on their loss): all three say "Losing $X a month", the figure red
+   and "Losing" in ink (.loss-k / .loss). "3 days in Drafts" went: the ringed pill under it already says "Draft, 3 days". So on a
+   computer $1,900 shows big twice after the sheet, here as where it comes from and in stop 1 as what the fix wins back */
 .rc-t{display:none}
 @media (min-width:900px){
   .rc-lead{display:block;grid-column:1/-1;font-size:24px;line-height:1.25;font-weight:600;color:var(--ink);letter-spacing:-.012em;max-width:34em;text-wrap:balance}
   .rc-t{display:block;margin-bottom:6px;font-size:17px;font-weight:600;line-height:1.3;color:var(--ink)}
   .rc-k{grid-column:1/-1;margin:-6px 0 22px;font-weight:400;color:var(--muted)}
 }
-.rc-usd,.rc-h{font-size:24px;font-weight:600;line-height:1.2;color:var(--red)}
-.rc-h{color:var(--ink)}
+.rc-usd{font-size:24px;font-weight:600;line-height:1.2;color:var(--red)}
 .rc-c{font-size:17px;line-height:1.4;color:var(--body);margin-top:4px;max-width:26em}
 .rc-pic{margin-top:16px}
 .rc-q{display:none}
@@ -314,7 +321,11 @@ html:not(.js) .bm-again,html:not(.js) .bm-foot{display:none}   /* both need JS (
 .who-g>h2{grid-area:h}.who-one{grid-area:one}.who-lines{grid-area:lines}.who-trades{grid-area:trades}.who-all{grid-area:all}.who-not{grid-area:not}.who-slot{grid-area:slot}
 /* 2026-10-17 (Franco on his iPhone: "a lot of words", and How it works follows right after): a phone says who in one line, then the
    trades and the closing line; the three lines and What you keep are the computer's (data-extra) */
-.who-one{font-size:20px;font-weight:500;line-height:1.3;letter-spacing:-.015em;color:var(--ink);max-width:24em;text-wrap:balance}
+.who-one{font-size:20px;font-weight:500;line-height:1.3;letter-spacing:-.025em;color:var(--ink);max-width:24em;text-wrap:balance}
+/* round 2 (2026-10-17, judges: at 375 the Spanish line set as three short lines, a third of the row empty): its second line,
+   "donde el papeleo se queda para la noche.", was 3px too long for 343px, so balance split the whole line in three. -.025em, about
+   the headlines' own tracking, gives 8px back: two lines from 375, broken at the comma. Balance stays: pretty moved the break off the
+   comma at 390 and left "la noche." alone at 360; under 375 three lines are the most the column holds anyway, and balance keeps them even */
 @media (max-width:899px){.who-g{grid-template-areas:"h" "one" "trades" "all" "slot"}.who-lines[data-extra],.who-not[data-extra]{display:none}}   /* their rows go too, or each left two gaps */
 @media (min-width:900px){.who-one{display:none}}
 .who-lines{display:grid;gap:12px}
@@ -337,7 +348,8 @@ html:not(.js) .bm-again,html:not(.js) .bm-foot{display:none}   /* both need JS (
 @media (hover:hover) and (pointer:fine){.who-trades a:hover{background-size:100% 2px}}
 @media (prefers-reduced-motion:no-preference){.who-trades a{transition:background-size var(--t-press) var(--ease-out)}.who-trades a:hover,.who-trades a:focus-visible{transition-duration:var(--t-hover)}}
 .who-all{font-size:17px;font-weight:600}
-.who-all span{font-weight:400;color:var(--body)}   /* 2026-10-17 (owner judge): an office or a clinic finds itself here */
+.who-all span{display:block;margin-bottom:8px;font-weight:400;color:var(--body)}   /* 2026-10-17 (owner judge): an office or a clinic finds itself here.
+   Round 2 (judges: "All industries Not on the list?" read as one run-on line): the sentence first, the link on its own line under it, every width */
 .who-not{font-size:17px;max-width:44em}
 .who-not .t-label{display:block;margin-bottom:4px}
 .who-slot{width:160px}
@@ -418,7 +430,7 @@ html:not(.js) .hm4-walk .pic.has-seg{padding:0 0 28px}
 html:not(.js) .hm4-walk .pic.has-seg>.samp{top:auto;bottom:0}
 .stop-q .stage{position:relative;padding:0}
 .stop-q .wire{display:none}
-.stop-q .qcard{position:relative;z-index:2;margin:-28px 0 0 18px;background:#fff;border-radius:10px;box-shadow:var(--lift-hi),0 30px 60px -20px rgba(58,47,28,.26);font-family:var(--sys);color:var(--app-ink);padding:16px 18px 14px}
+.stop-q .qcard{position:relative;z-index:2;margin:-28px 0 0;background:#fff;border-radius:10px;box-shadow:var(--lift-hi),0 30px 60px -20px rgba(58,47,28,.26);font-family:var(--sys);color:var(--app-ink);padding:16px 18px 14px}
 @media (min-width:1000px){
   .stop-q .stage{padding:108px 0 calc(72px + var(--qc-nudge,0px)) 72px}   /* --qc-nudge: home.js seats the quote card's top on a row line */
   .stop-q .wire{display:block;position:absolute;z-index:0;left:0;top:0;width:76%;height:72%;border:1px solid var(--wire);border-radius:10px;overflow:hidden;font-family:var(--sys)}
@@ -521,13 +533,24 @@ html:not(.js) .hm4-walk .pic.has-seg>.samp{top:auto;bottom:0}
 @media screen and (prefers-reduced-motion:no-preference){.stop-q td .chg.tr>.was{transition:transform 220ms var(--ease-out)}}
 /* on a phone the window sits inside its stop card like every other window, its rounded corners and all three buttons showing
    (2026-10-17, Franco on his iPhone: "the Mac window is cut off"; the polish had bled it into the card's side padding). In the
-   narrow window a job may take a second line, and a customer's name too rather than end in "..." (shared lane's tested patch) */
+   narrow window a job may take a second line, and a customer's name too rather than end in "..." (shared lane's tested patch).
+   Round 2 (2026-10-17, judges): under 1000px the quote card sits 18px in from the window's left edge no more; it covers the window's
+   whole bottom edge, its left and right edges on the window's, so no sliver of the window's corner or of its footer band shows beside
+   it. The footer's own line ("11 quotes, all sent") stays whole above the card: the card covers only its 40px foot, now at every width
+   the card stacks (it was a 560px-window rule, so from 760 to 999 the card hid the line and the quoted total) */
+@media (max-width:999px){.stop-q .qfoot{padding-bottom:40px}}
 @media (max-width:759px){.stop-q .stage>.qa{margin-inline:0}}
 @container (max-width:420px){.stop-q .qa .qt .cu{white-space:normal;overflow:visible;text-overflow:clip}}
 @media screen and (prefers-reduced-motion:no-preference){.stop-q .qt tr.n td{transition:background-color 220ms var(--ease-out)}}
 
 /* ======================================================= 6 the night band: phone and paper as one centred pair (layout a; b and c for
-   Franco's pick). The paper runs the phone's full height so the pair ends on one line, both Sample labels level. */
+   Franco's pick). Round 2 (2026-10-17, judges): the paper ran the phone's full height and left about 200px of blank paper above its
+   footnote at 1440 (60 in Spanish), and two Sample tags sat side by side. Now the log is as tall as its rows, its source line right
+   under the last one, as a printout is, and the pair has one tag, under the log; the phone's own tag hides at every width. That tag
+   is the section's sample lead for the phone beside it (home.js marks it [data-sample-lead], R8), and the log's head names the shop.
+   The phone shows no dollar figure, so R8 lets it go untagged */
+.n4-phone>.samp{display:none}
+@media (max-width:899px){.n4-figs>.n4-phone{padding-bottom:0}}   /* on a phone the band its tag sat in goes too, so the log follows the cropped phone 16px under it; a computer keeps it for Pause */
 .n4{display:grid;gap:26px}
 .n4-copy h2{max-width:16em}
 .n4-copy .t-lede{margin-top:14px;max-width:34em;color:var(--on-night)}
@@ -549,10 +572,8 @@ html:not(.js) .hm4-walk .pic.has-seg>.samp{top:auto;bottom:0}
   .n4-copy h2,.n4-copy .t-lede,.n4-trust{margin-inline:auto}
   .n4 .cta-inline{justify-content:center}
   .n4-loop{width:100%;max-width:804px}
-  .n4-figs{grid-template-columns:var(--ph-w) minmax(0,440px);justify-content:center;align-items:stretch;gap:24px;text-align:left}   /* tops lined up, 24px apart */
-  .n4-figs>.n4-paper{width:100%;display:flex;flex-direction:column}
-  .n4-paper .np{flex:1;display:flex;flex-direction:column}
-  .n4-paper .np-rows{flex:1;align-content:start}   /* 2026-10-17 polish: rows packed under the head, as a printed log; the foot keeps the bottom (they spread before, each with a gap above) */
+  .n4-figs{grid-template-columns:var(--ph-w) minmax(0,440px);justify-content:center;align-items:start;gap:24px;text-align:left}   /* tops lined up, 24px apart; the log as tall as its rows (round 2) */
+  .n4-figs>.n4-paper{width:100%}
   .n4-figs.nolock{grid-template-columns:minmax(0,440px)}
   /* layout b (review variant ?n4=b): the paper overlaps the phone's lower right corner, clear of the clock */
   .n4[data-layout=b] .n4-figs{grid-template-columns:var(--ph-w) 400px;gap:0}
@@ -733,9 +754,13 @@ html:not(.js) .hm4-walk .pic.has-seg>.samp{top:auto;bottom:0}
 /* the Spanish headline runs four lines at 38px, so the gaps above the sheet tighten; each gap is set so the bar's top edge lands in
    the white between two lines of the sheet (p1-final, measured at 390 x 844, 375 x 667, 393 x 659 and 430 x 932) */
 @media (max-width:899px) and (min-height:701px) and (max-height:899px){
-  :lang(es) .hm4-hero{padding-top:10px}   /* 2026-10-17: 16 and 24 before the shop line went back under the title (two lines), 12px given back */
-  :lang(es) .hm4-hero .eyebrow{margin-bottom:14px}
-  :lang(es) .hm4-hero .hero-act{margin-top:22px}
+  /* round 2 (2026-10-17): the short-phone fix below, applied where it also fits. Here the Spanish eyebrow sat 16px under the header
+     (English 32), on the commonest iPhones (390 x 844, 393 x 852). It gets 28: 12px more on top, taken back from a 36px headline (still
+     four lines) and 2px less under the eyebrow and over the button, so the ringed row ends where it did (755 to 756px at 390 x 844) */
+  :lang(es) .hm4-hero{padding-top:22px}   /* 10 before round 2; 16 and 24 before the shop line went back under the title */
+  :lang(es) .hm4-hero h1{font-size:36px}
+  :lang(es) .hm4-hero .eyebrow{margin-bottom:12px}
+  :lang(es) .hm4-hero .hero-act{margin-top:20px}
   :lang(es) .hm4-hero .hero-tool{margin-top:18px}
 }
 @media (max-width:899px) and (min-height:900px){:lang(es) .hm4-hero .hero-act{margin-top:40px}:lang(es) .hm4-hero .hero-tool{margin-top:44px}}   /* 2026-10-17: 56 before the shop line's second line */
@@ -743,16 +768,20 @@ html:not(.js) .hm4-walk .pic.has-seg>.samp{top:auto;bottom:0}
    says Gainesville instead (said once: where the eyebrow shows, it says Gainesville) */
 @media (max-width:899px) and (max-height:700px){
   .rs-g{display:inline}
-  .hm4-hero{padding-top:8px}   /* p1-final took these 8px from a 56px header on short phones; the site keeps one 64px header */
+  /* round 2 (2026-10-17, judges, seen in Spanish; the English measured the same): with the eyebrow gone the headline's first line
+     sat 15 to 16px under the header. It gets 28 to 30px, the air a taller phone's first line has under it, and the walk sheet does
+     not move: the 14px come from a 30px headline (still three lines in both languages) and 2px less between the lines and the
+     button, over the clamp and under it. The ringed row ends where it did (576 to 577px), the bar still lands between two lines */
+  .hm4-hero{padding-top:22px}   /* p1-final took 8px from a 56px header on short phones; the site keeps one 64px header */
   .hm4-hero .eyebrow{display:none}
-  .hm4-hero h1{font-size:32px}
-  .hm4-hero .t-lede{font-size:16px;margin-top:10px}
-  .hm4-hero .hero-act{margin-top:14px}
+  .hm4-hero h1{font-size:30px}
+  .hm4-hero .t-lede{font-size:16px;margin-top:8px}
+  .hm4-hero .hero-act{margin-top:12px}
   .hm4-hero .cta-row{gap:12px}
   .hm4-hero .hero-act .btn{padding:0 22px}
   .hm4-hero .hero-tool{margin-top:10px}
-  .hm4-hero .clip{padding-top:12px}
-  .hm4-hero .sheet{padding-top:42px}
+  .hm4-hero .clip{padding-top:11px}   /* the clamp's lever rises 11px over the board */
+  .hm4-hero .sheet{padding-top:40px}
   .hm4-hero .board{padding-top:24px}
   /* note 7: beside "Llámenos" the Spanish line ran four lines and crowded the clip. Since the 2026-10-17 polish (owner judge) it keeps
      the free call, the reason to call, and drops the city instead (the facts under the price say Gainesville; the English keeps
@@ -763,5 +792,5 @@ html:not(.js) .hm4-walk .pic.has-seg>.samp{top:auto;bottom:0}
      line (it sat 10px under it, with the clamp 5px higher) and the sheet's top margin gives those 6px back, so row 1's formula
      still ends above the bar at 393 x 659 */
   :lang(es) .hm4-hero .hero-tool{margin-top:16px}
-  :lang(es) .hm4-hero .sheet{padding-top:36px}
+  :lang(es) .hm4-hero .sheet{padding-top:34px}   /* 36 before round 2 (see the headline's air above) */
 }

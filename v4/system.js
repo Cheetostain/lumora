@@ -46,6 +46,11 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var esc = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); };
+  // a phone number and a clock time stay on one line where the system writes them into words (round 2 of Franco's iPhone review,
+  // 2026-10-17: WebKit broke "(352) 555- / 0148" in Home's night log and "Thu 9:00 / AM" in the plumbing quotes window). It takes
+  // escaped text: a number goes in a span.nw (system.css; a no-break space alone still lets it break after the hyphen) and a time
+  // gets no-break spaces ("6:39 AM", "12:30 p.m.", "6:39 a. m."). Used on the night log, a window's status line and a phone thread
+  var whole = function (s) { return s.replace(/\(\d{3}\) \d{3}-\d{4}/g, '<span class="nw">$&</span>').replace(/(\d) (?=[AP]M\b|[ap]\.[ \u00a0]?m\.)/g, '$1\u00a0').replace(/(\d\u00a0[ap]\.) (m\.)/g, '$1\u00a0$2'); };
   var money = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
   var total = function (t) { return t.rows.reduce(function (a, r) { return a + r.usd; }, 0); };
   var perWord = function (t) { return t.per === 'yr' ? tr('a year', 'al año') : tr('a month', 'al mes'); };
@@ -284,7 +289,7 @@
       // R4: the text right after a missed call is an SMS text-back, so it shows green (.sms), never blue
       var th = '<div class="ph-who"><i></i>' + esc(R.who) + '</div><div class="thread">' + R.msgs.map(function (m, i) {
         var tb = m[0] === 'out' && i > 0 && /^(Missed call|Llamada perdida)/.test(R.msgs[i - 1][1]);
-        return '<p class="' + (m[0] === 'sys' ? 'sys' + (i === R.msgs.length - 1 ? ' k' : '') : 'bub ' + m[0] + (tb ? ' sms' : '')) + '">' + esc(m[1]) + '</p>'; }).join('') + '</div>';
+        return '<p class="' + (m[0] === 'sys' ? 'sys' + (i === R.msgs.length - 1 ? ' k' : '') : 'bub ' + m[0] + (tb ? ' sms' : '')) + '">' + whole(esc(m[1])) + '</p>'; }).join('') + '</div>';
       return v4 ? ph4(th, R.clock || '9:41') : '<div class="scr-phone"><div class="ph"><div class="ph-sb"><span>9:41</span><i></i></div>' + th + '</div></div>';
     }
     if (R.frame === 'clip') return '<div class="doc-clip"><span class="clamp" aria-hidden="true"><i></i></span><div class="doc">' + docBody(R, true) + '</div></div>';
@@ -344,12 +349,12 @@
   }
   // two layers for one spot (the window's status line, the formula bar): the old value, then the new one in its place; with tr
   // (a status line, restaurants 2026-10-12) the old words stay, struck in pencil, as a cell's do: the pair's one pencil trace (R7)
-  var was2 = function (v) { return typeof v === 'object' ? '<span class="chg' + (v.tr ? ' tr' : '') + '"><span class="was">' + esc(v.was) + '</span><span class="now">' + esc(v.now) + '</span></span>' : esc(v); };
+  var was2 = function (v) { return typeof v === 'object' ? '<span class="chg' + (v.tr ? ' tr' : '') + '"><span class="was">' + whole(esc(v.was)) + '</span><span class="now">' + whole(esc(v.now)) + '</span></span>' : whole(esc(v)); };
   function pairHTML(P) {
     // P.line: the app's own label over the caller (a business phone line shows calls and texts in one thread)
     if (P.frame === 'phone') return ph4('<div class="ph-who">' + (P.line ? '<small class="ph-line">' + esc(P.line) + '</small>' : '') + '<i></i>' + esc(P.who) + '</div><div class="thread">' + P.msgs.map(function (m) {
       var o = m[2] || {}, cls = m[0] === 'sys' ? 'sys' + (o.k ? ' k' : '') : 'bub ' + (m[0] === 'sms' ? 'out sms' : m[0]);
-      return '<p class="' + cls + (o.add ? ' add' : '') + (o.pc ? ' pc' : '') + '">' + esc(m[1]) + '</p>'; }).join('') + '</div>', P.clock || '9:41');
+      return '<p class="' + cls + (o.add ? ' add' : '') + (o.pc ? ' pc' : '') + '">' + whole(esc(m[1])) + '</p>'; }).join('') + '</div>', P.clock || '9:41');
     // hm: a column (or, on a row, the row) the picture crops on a narrow container, as the screens kit does; nw: never wraps
     var cl = function (i, th) { var c = ((P.hm || []).indexOf(i) > -1 ? 'hm ' : '') + (!th && (P.nw || []).indexOf(i) > -1 ? 'nw' : ''); return c.trim() ? ' class="' + c.trim() + '"' : ''; };
     var head = (P.xls ? '<tr class="cl"><td></td>' + P.cols.map(function (c, i) { return '<td' + cl(i, 1) + '>' + 'ABCDEFG'.charAt(i) + '</td>'; }).join('') + '</tr>' : '') +
@@ -390,7 +395,8 @@
       // one short line for screen readers when the owner picks another trade (the sheet itself is not a live region: a pick
       // used to read out about 50 changed words). Empty on load, so nothing is announced before he chooses.
       if (f('live') && animate) f('live').textContent = tr('Sample business: ', 'Negocio de ejemplo: ') + t.name + ', ' + money(total(t)) + ' ' + perWord(t) + tr(' lost before any fix.', ' que pierde hoy, antes de arreglar nada.');
-      var tm = f('time'); if (tm) { tm.hidden = !t.time; if (t.time) tm.innerHTML = tr('Time back for you or your office: ', 'Usted o su oficina se ahorran ') + '<b>' + esc(t.time) + '</b>'; }
+      // 2026-10-17 round 2 (Franco's iPhone): "your office:" keeps together (WebKit broke it "your / office:"); system.css keeps the figure whole
+      var tm = f('time'); if (tm) { tm.hidden = !t.time; if (t.time) tm.innerHTML = tr('Time back for you or your\u00a0office: ', 'Usted o su oficina se ahorran ') + '<b>' + esc(t.time) + '</b>'; }
       // 2026-10-16 (the new Home, p1-final round 2): the line about where the numbers come from names the trade's own records,
       // from its morning list's foot (morning.src); a trade without one keeps the page's own line
       var nt = f('note'); if (nt) { if (nt._base == null) nt._base = nt.textContent;
@@ -458,7 +464,7 @@
       rollTo(f('n'), shown.big, sum, money); shown.big = sum;
       if (f('per')) f('per').textContent = perWord(t);
       if (f('sub')) f('sub').textContent = t.sub.replace(/(\d) /g, '$1\u00a0');   // 2026-10-15: no-break space after a count
-      if (f('time')) { f('time').hidden = !t.time; if (t.time) f('time').innerHTML = tr('Time back for you or your office: ', 'Usted o su oficina se ahorran ') + '<b>' + esc(t.time) + '</b>.'; }
+      if (f('time')) { f('time').hidden = !t.time; if (t.time) f('time').innerHTML = tr('Time back for you or your\u00a0office: ', 'Usted o su oficina se ahorran ') + '<b>' + esc(t.time) + '</b>.'; }
       if (f('eq')) f('eq').innerHTML = t.rows.map(function (r, i) { return (i ? '<i>+</i>' : '') + '<span>' + money(r.usd) + ' <small>' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1)) + '</small></span>'; }).join('') +
         '<i>=</i><span class="r">' + money(sum) + ' <small>' + perWord(t) + '</small></span>';
       $$('.pen-ring', el).forEach(function (s) { requestAnimationFrame(function () { ring(s); }); });
@@ -558,7 +564,7 @@
               (x.fx ? '<span class="fx">↩ ' + esc(x.fx) + '</span>' : '') + '</div></div>'; }).join('') + '</div>') + '</div>' + SAMP + '</div>';
       }
       figs.innerHTML = lock + '<div class="pic n4-paper"><div class="np"><div class="np-h"><b>' + esc(N.paper + ', ' + t.shop) + '</b><span>' + esc(logDate) + '</span></div><ol class="np-rows">' +
-        N.rows.map(function (r, i) { return '<li data-n="' + nRow[i] + '" data-t="' + esc(r[0]) + '" data-task="' + r[2] + '"><time>' + esc(hora(r[0])) + '</time><span>' + esc(r[1]) + '</span></li>'; }).join('') +
+        N.rows.map(function (r, i) { return '<li data-n="' + nRow[i] + '" data-t="' + esc(r[0]) + '" data-task="' + r[2] + '"><time>' + esc(hora(r[0])) + '</time><span>' + whole(esc(r[1])) + '</span></li>'; }).join('') +
         '</ol><p class="np-foot">' + esc((t.morning && t.morning.src) || tr('From your own job list, invoices, bills and email', 'De su lista de trabajos, sus facturas, las facturas de proveedores y su correo')) + '</p></div>' + SAMP + '</div>';
       figs.classList.toggle('nolock', !N.lock);
       loops.forEach(function (lp) { if (lp.el === el || el.contains(lp.el) || lp.el.contains(el)) lp.reset(); });
@@ -965,7 +971,9 @@
     // page's own words. Text inside a .pic Sample picture is the shop's own screen (the quotes app alone brings about 32 figures,
     // $1,912.40 three times) and is not counted; the copy stays held to 16 and to twice each
     var seen = {}, total = 0;
-    texts(function (s, pe) { if (pe.closest('.hero-strip') || pe.closest('.pic') || pe.matches('[data-shared="price"]')) return; (s.match(/\$\d[\d,]*(?:\.\d+)?/g) || []).forEach(function (m) { var k = m.replace(/\.0+$/, ''); seen[k] = (seen[k] || 0) + 1; total++; }); });
+    // Round 2 (2026-10-17, judges): Home's strip under the sheet (.recog) says where each of the sheet's figures comes from, so like
+    // the old phone-only strip it repeats the sheet by design and is not counted
+    texts(function (s, pe) { if (pe.closest('.hero-strip, .recog') || pe.closest('.pic') || pe.matches('[data-shared="price"]')) return; (s.match(/\$\d[\d,]*(?:\.\d+)?/g) || []).forEach(function (m) { var k = m.replace(/\.0+$/, ''); seen[k] = (seen[k] || 0) + 1; total++; }); });
     Object.keys(seen).forEach(function (k) { if (seen[k] > 2) B.push('R9: ' + k + ' shows ' + seen[k] + ' times (twice at most).'); });
     if (total > 16) B.push('R9: ' + total + ' dollar figures on the page (16 or fewer).');
     // R11: the picked chip is never filled black on a computer screen
