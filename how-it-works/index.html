@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=cc54c7ee">
-<link rel="stylesheet" href="/v4/trade-page.css?v=cc54c7ee">
+<link rel="stylesheet" href="/v4/system.css?v=a0bcdb13">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a0bcdb13">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=cc54c7ee" defer></script>
-<script src="/v4/system.js?v=cc54c7ee" defer></script>
+<script src="/v4/trades.js?v=a0bcdb13" defer></script>
+<script src="/v4/system.js?v=a0bcdb13" defer></script>
 <style>
 /* ===== How it works, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64), and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -70,6 +70,7 @@
 .wk-page .wk-ph{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .wk-page h3{margin-bottom:4px}
 .wk-page .wk-sub{font-size:17px;color:var(--body);max-width:30em}
+.nw{white-space:nowrap}   /* 2026-10-17 polish: "2-truck" broke at its hyphen at 1024 ("2-" at a line end) */
 .wstops{margin-top:14px;border-top:1px solid var(--rule)}
 .wstops li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:2px 12px;padding:14px 0;border-bottom:1px solid var(--rule)}
 .wstops .tab-n{grid-row:1/3}
@@ -91,9 +92,11 @@
 .wk-lists .note-r{margin-top:8px;font-size:15px;color:var(--muted);max-width:34em}
 .wk-lists .note-r a{display:inline-block;padding-block:12px;margin-block:-12px}   /* a 44px tall tap area without moving the layout */
 @media (min-width:900px){
-  .wk-top{grid-template-columns:minmax(0,1fr) minmax(0,26em);gap:56px}
-  .wk-parts{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:56px;align-items:start}
-  .wk-lists{grid-template-columns:1fr 1fr;gap:56px}
+  /* 2026-10-17 polish: the price, Your records and What the walk never does start on one x. The three rows had three right
+     columns (26em, .92fr and 1fr), so their left edges sat up to 130px apart at 1440; one column pair now sets all three */
+  .wk{--wk-cols:minmax(0,1.08fr) minmax(0,.92fr)}
+  .wk-top,.wk-parts,.wk-lists{grid-template-columns:var(--wk-cols);gap:56px}
+  .wk-parts{align-items:start}
 }
 
 /* a native disclosure (Full terms, the sources, the cover lists): the facts stay one tap away without a wall of text */
@@ -364,7 +367,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
     <div class="wk-parts">
       <div class="page wk-page" style="--hole:var(--bone)">
         <div class="wk-ph"><h3>The visit</h3><span class="stamp">Sample</span></div>
-        <p class="wk-sub">We come in the first week after booking. At a sample 2-truck plumbing shop, it stops here:</p>
+        <p class="wk-sub">We come in the first week after booking. At a sample <span class="nw">2-truck</span> plumbing shop, it stops here:</p>
         <ol class="wstops">
           <li data-task="quotes"><span class="tab-n">1</span><b>The whiteboard <small>in the office</small></b><p class="pencil">Visit Tuesday. Quote Friday.</p></li>
           <li data-task="bills"><span class="tab-n">2</span><b>The trucks <small>in the lot</small></b><p class="pencil">Supply ticket in the door pocket. No job number.</p></li>
@@ -418,7 +421,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
 <section class="band fs-band" id="sample" data-ground="paper" data-density="high" data-width="wide" data-loud="sheet" data-medium="sheet">
   <div class="wrap">
     <h2 class="step-h"><span class="tab-n" aria-hidden="true">3</span><span><span class="sr">Step 3: </span>Your sheet</span></h2>
-    <p class="step-meta">A full sample for a 2-truck plumbing shop. Every priced row shows its formula, so you can check the math.</p>
+    <p class="step-meta">A full sample for a <span class="nw">2-truck</span> plumbing shop. Every priced row shows its formula, so you can check the math.</p>
     <figure class="clip fs fs-board" aria-label="Sample walk sheet, in full">
       <div class="board">
         <span class="clamp" aria-hidden="true"><i></i></span>

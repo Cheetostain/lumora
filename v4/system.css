@@ -302,6 +302,11 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 .pc{position:relative}                                    /* pencil circle around evidence (an observation, never money) */
 .pc::after{content:"";position:absolute;inset:-3px -8px;border:2px solid var(--pencil);border-radius:48% 52% 46% 54%/56% 44% 56% 44%;pointer-events:none}   /* 2026-10-16: level, no rotate() */
 .sys.pc::after{inset:-4px -10px;border-radius:16px 18px 15px 17px/12px 13px 12px 13px}   /* 2026-10-16 repair: one line in a phone thread; the round ring ran through its first and last letters */
+/* 2026-10-17 polish (Franco's list, item 4): the loop system.js pencil() draws round words on one line, 4px off their own ink, in
+   Home's hand (an inline SVG in real pixels, .pc-loop). The two rules above stay the picture with JS off, and the ring round a
+   pill, a box or a block keeps its page's own CSS loop. pencil_air.py measures every ring on every page (check.py) */
+.pc[data-fit]::after{visibility:hidden!important}
+.pc-loop{position:absolute;max-width:none;overflow:visible;pointer-events:none;fill:none;stroke-linecap:round;stroke-linejoin:round}   /* max-width: the base svg rule held it to the words' width */
 /* the red pen: money only. One ring per page, underlines under money figures, its last mark an arrow to Call */
 .pen-ring,.pen-under,.pen-arrow{max-width:none;fill:none;stroke:var(--pen);stroke-linecap:round;stroke-linejoin:round;overflow:visible;pointer-events:none}
 /* no vector-effect on pen marks: with non-scaling-stroke the dash used to draw them breaks into pieces (B's two-segment underline) */
@@ -516,6 +521,7 @@ html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs
 .ph-list b{font-weight:600;color:#000}.ph-list small{grid-row:2;color:#6c6c70;font-size:13px}
 .ph-list time{grid-row:1/3;grid-column:2;align-self:center;color:#6c6c70;font-size:14px}
 .ph-list .miss b{color:#c4001a}
+.ph-list li.pc::after{inset:7px -5px 4px -7px;border-radius:14px 17px 15px 18px/15px 14px 17px 15px}   /* 2026-10-17 polish: a loop round the missed call's row, 4px off its number, place and time (the ellipse ran through them) */
 .ph-who{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 10px 10px;border-bottom:1px solid #e5e5ea;background:#f7f7f9;font-size:13px;font-weight:600}
 .ph-who i{width:36px;height:36px;border-radius:50%;background:linear-gradient(#a8adb7,#868b95)}
 .thread{display:flex;flex-direction:column;gap:7px;padding:12px 12px;font-size:15px;line-height:1.3}
@@ -551,7 +557,8 @@ html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs
 .doc-li li span:last-child{white-space:nowrap}
 .doc-li li.new{background:#eef6ee}
 .doc-tot{display:flex;justify-content:space-between;font-weight:700;font-size:16px;padding-top:8px}
-.ok,.chip-ok{display:inline-block;margin-top:8px;font-size:13px;font-weight:600;color:#1b5e2c;background:#e3f1e6;padding:4px 9px;border-radius:6px}
+.ok,.chip-ok{color:#1b5e2c;background:#e3f1e6}   /* the done green: a chip's, and an app's own status pill's (.st.ok) */
+.ok:where(:not(.st)),.chip-ok{display:inline-block;margin-top:8px;font-size:13px;font-weight:600;padding:4px 9px;border-radius:6px}   /* 2026-10-17 polish: the chip's box alone; a pill took its 8px top margin and sat 8px low (patched three times, .pair .st, .pe-job .st and .wt-row .st) */
 .wt{background:#fbefd2;color:#6b4800}.gy{background:#ececec;color:#3a3a3a}
 .st{/* ui-ok: pill the software's own status labels, only inside pictures of real screens */display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
 .ticket{/* ui-ok: mono a supply-house counter ticket prints in its printer's face */position:relative;background:#fff;padding:16px 16px 18px;font:500 13px/1.45 var(--printer);color:#222;box-shadow:var(--lift);transform:rotate(-1.4deg);max-width:340px}
@@ -584,7 +591,8 @@ html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs
 .wb-day p{font-weight:500;font-size:max(15px,min(3.8cqi,21px));line-height:1.15;margin-bottom:10px}
 .wb-day small{display:block;font-size:max(13px,min(3.2cqi,17px));color:var(--pencil)}
 .wb-late{font-weight:600}
-.wb-day p.pc{display:inline-block;padding:2px 6px;margin-left:-4px}
+.wb-day p.pc{display:block;width:fit-content;max-width:calc(100% + 4px);padding:5px 7px;margin:4px 0 8px -7px}
+.wb-day p.pc::after{inset:0;border-radius:14px 17px 15px 18px/15px 14px 17px 15px}   /* 2026-10-17 polish: a loop round the note's two lines in a narrow day, 3.5 to 4.5px off them (the ellipse cut Quote and Garcia); on one line system.js pencil() draws it */
 .wb-arrow{position:absolute;left:0;right:0;bottom:4px;height:64px;width:100%;fill:none;stroke:var(--pencil);stroke-width:2.6;stroke-linecap:round}
 .wb-arrow.narrow{display:none}
 .wb-tray{height:10px;margin:8px 12% 0;border-radius:5px;background:var(--ink)}
@@ -765,7 +773,9 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .cblock dt{font-size:15px;font-weight:600;color:var(--muted)}
 .cblock dd{font-size:17px;color:var(--ink)}
 .cblock .big-tel{font-size:26px;font-weight:600;text-decoration:none;white-space:nowrap}
-@media (min-width:700px){.contact-card{padding:44px 32px 28px}.contact-card .cardino{width:74px;right:56px}.cblock div{grid-template-columns:160px 1fr;align-items:baseline}}
+@media (min-width:700px){.contact-card{padding:44px 32px 28px}.contact-card .cardino{width:74px;right:56px}}
+.cblock{container-type:inline-size}
+@container (min-width:430px){.cblock div{grid-template-columns:160px 1fr;align-items:baseline}}   /* 2026-10-17 polish: the label beside its answer only where the answer keeps 270px; on the 340px card at 1024 "Where" ran to four lines, so there the label sits over its answer */
 .close-h{margin:10px 0 24px}
 .close-act{display:grid;gap:14px;justify-items:start}
 /* the pen's last mark (Home, Franco 2026-10-10): it comes down from under the heading's last words and lands pointing left at
@@ -919,6 +929,20 @@ html:not(.js) .pic.has-seg{padding-bottom:28px}            /* no JS: no buttons,
 .chg.tr{display:inline-flex;flex-wrap:wrap;align-items:center;gap:3px 6px}
 .chg.tr>.was{position:relative;white-space:nowrap}   /* 2026-10-15: a wrapped old value left a stray strike bar on its first line */
 td .chg.tr{flex-direction:column;align-items:flex-start;gap:2px}   /* 2026-10-15: in a cell, old above new, never jumbled on one wrapped line */
+/* 2026-10-17 polish (the Oct 16 desktop check): in a cell the shorter layer sat on the first line of the two layers' height, so in Before
+   "Calendar, typed again" or "465 Elm St" floated above the middle of its row. Each layer now sits where the row's own words sit:
+   in the middle of a spreadsheet's cell (Excel centres it), on the first line of an app list, a document table or a ticket (set from
+   the top). An app list puts the struck old value and its fix on one line where both fit (electrical's job numbers doubled the
+   height of every row); a spreadsheet keeps old above new, and in Before the old value spans both lines, centred, while the cell
+   keeps its After height (R7: the frame never changes size; the ::before holds the first line's height) */
+td .chg:not(.tr)>*{align-self:center}
+:is(.ptbl,.dt,.ticket) td .chg:not(.tr)>*{align-self:start}
+:is(.ptbl,.dt) td .chg.tr{flex-direction:row;align-items:baseline;column-gap:6px}
+.xl td .chg.tr{display:inline-grid;grid-template-rows:auto auto;row-gap:2px;justify-items:start;align-items:start}
+.xl td .chg.tr::before{content:"";grid-area:1/1;height:1lh}
+.xl td .chg.tr>.was{grid-area:1/1}
+.xl td .chg.tr>.now{grid-area:2/1}
+.pair[data-state=before] .xl td .chg.tr>.was{grid-row:1/3;align-self:center}
 .chg.tr>.was::after{content:"";position:absolute;left:-3px;right:-3px;top:52%;height:2px;border-radius:1px;background:var(--pencil);transform:scaleX(0);transform-origin:left}
 .pair[data-state=before] .now,.pair[data-state=before] .add{visibility:hidden;opacity:0}
 /* 2026-10-16 (the new Home): words that belong to one state (.bo before, .ao after), inside a picture or in its stop's notes;
@@ -928,7 +952,6 @@ td .chg.tr{flex-direction:column;align-items:flex-start;gap:2px}   /* 2026-10-15
 .pair[data-state=after] .chg.tr>.was{color:var(--pencil)}
 .pair[data-state=after] .chg.tr>.was::after{transform:none}
 .pair[data-state=after] .chg.tr>.was .st{background:none;color:var(--pencil);box-shadow:inset 0 0 0 1px rgba(79,76,69,.4)}
-.pair .st{margin-top:0}
 .pair[data-state=after] .ptbl tr.n td{background:#eef7f0}
 .pair[data-state=after] .xl tr.n td:not(:first-child){background:#e9f5ec}
 .pair[data-state=after] .xl tr.n td:first-child{background:#dedede;color:#111;font-weight:700}

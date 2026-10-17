@@ -27,8 +27,8 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=cc54c7ee">
-<link rel="stylesheet" href="/v4/trade-page.css?v=cc54c7ee">
+<link rel="stylesheet" href="/v4/system.css?v=a0bcdb13">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a0bcdb13">
 <style>
 /* WT: water's own extras. Section 2's computer-only picture (one search by claim number) and section 4's two screens (the
    adjuster's email and the claim file it waits on). Section 4 reuses plumbing's paper pair (.pl-docs, .pl-inv, .pl-flag): side
@@ -55,7 +55,7 @@
 .wt-ck-h{padding-bottom:6px;font-size:13px;color:#3a3a3c}
 .wt-ck-h b{color:#1d1d1f}
 .wt-row{display:grid;grid-template-columns:5.4em minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:6px 0;border-top:1px solid #efeff2;font-size:14px;line-height:1.3;color:#1d1d1f}
-.wt-row .st{margin-top:0;justify-self:start}
+.wt-row .st{justify-self:start}
 .wt-row small{display:block;font-size:12px;color:#6e6e73}
 .wt-row .r{font-variant-numeric:tabular-nums}
 .wt-row .nw{white-space:nowrap}   /* an estimate number never splits at its hyphen (320) */
@@ -64,7 +64,7 @@
 .wt-miss+.wt-row{border-top-color:transparent}
 /* the ring goes round a two-row block, so its corners are squarer than the shared ellipse: the shared radius cut through the
    first Missing chip at every width (review 2026-10-12) */
-.wt-docs .pc::after{inset:-4px -9px;border-radius:18px 24px 20px 26px/24px 18px 26px 20px}
+.wt-docs .pc::after{inset:.75px -3.25px 4.5px -5.25px;border-radius:14px 17px 15px 18px/15px 14px 17px 15px}   /* 2026-10-17 polish: 4px off the Missing pills and the words (it sat 9 to 12px off them); then 0.75px tighter so a sub-pixel shift on the published page keeps it under 4.5 */
 @container (max-width:640px){
   .wt-docs .wt-mail{width:90%;justify-self:start}
   .wt-docs .wt-mb{padding-bottom:28px}
@@ -72,11 +72,12 @@
   .wt-mb,.wt-row{font-size:13px}
   .wt-ck{padding:6px 12px 8px}
   .wt-row{grid-template-columns:5.6em minmax(0,1fr) auto;gap:6px;padding-block:5px}
+  .wt-docs .pc::after{bottom:3.25px}   /* the rows are 1px shorter here; the loop keeps its 4px */
 }
 </style>
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=cc54c7ee" defer></script>
-<script src="/v4/system.js?v=cc54c7ee" defer></script>
+<script src="/v4/trades.js?v=a0bcdb13" defer></script>
+<script src="/v4/system.js?v=a0bcdb13" defer></script>
 </head>
 <body data-trade="water" data-trade-lock data-rules="v4">
 <a class="skip" href="#main">Skip to content</a>
@@ -142,7 +143,7 @@
       <figure class="clip" aria-label="Sample walk sheet">
         <div class="board">
           <span class="clamp" aria-hidden="true"><i></i></span>
-          <div class="sheet" id="sheet" data-bind="sheet" data-ring data-fill data-short>
+          <div class="sheet" id="sheet" data-bind="sheet" data-ring data-fill data-short data-ui-ok="nested-card the printed sheet on its clipboard, as on Home">
             <header class="sh-head">
               <div><b class="sh-title">Walk sheet</b><span class="sh-sub" data-f="sub">Restoration, 2&nbsp;crews, Alachua County</span></div>
               <span class="stamp">Sample</span>

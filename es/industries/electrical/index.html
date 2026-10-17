@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=cc54c7ee">
-<link rel="stylesheet" href="/v4/trade-page.css?v=cc54c7ee">
+<link rel="stylesheet" href="/v4/system.css?v=a0bcdb13">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a0bcdb13">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=cc54c7ee" defer></script>
-<script src="/v4/system.js?v=cc54c7ee" defer></script>
+<script src="/v4/trades.js?v=a0bcdb13" defer></script>
+<script src="/v4/system.js?v=a0bcdb13" defer></script>
 <style>
 /* Electrical only, after trade-page.css: the English page's rules, unchanged. Section 4: the price list is a spreadsheet in the
    job tool's window, so its cells keep the screens kit's spreadsheet look; the bill is the counter-ticket paper. */
@@ -41,6 +41,7 @@
 .el-pl .xl td.r,.el-pl .xl th.r{text-align:right}
 @container (max-width:300px){.el-pl .win-b{padding:8px 6px 10px}.el-pl .xl td,.el-pl .xl th{padding-inline:5px}}
 #wire .pl-docs .pc::after{inset:-4px -10px}
+#wire .pl-docs .pc{display:inline-block;margin:4px 0 3px}   /* 2026-10-17 polish: the pencil loop round the price (system.js pencil()) ran 1.7px from "12/2 NM-B 250'" above it; now 5.7px */
 .el-util{margin-top:8px;max-width:34em;font-size:15px;color:var(--muted-night)}
 @media (min-width:900px){.el-util{margin-inline:auto}}
 /* ES, from plumbing.es.html and ac-and-heating.es.html: the close heading's Spanish size (one line from 700 to 1440, so the
@@ -120,7 +121,7 @@
       <figure class="clip" aria-label="Hoja de visita de ejemplo">
         <div class="board">
           <span class="clamp" aria-hidden="true"><i></i></span>
-          <div class="sheet" id="sheet" data-bind="sheet" data-ring data-fill data-short>
+          <div class="sheet" id="sheet" data-bind="sheet" data-ring data-fill data-short data-ui-ok="nested-card the printed sheet on its clipboard, as on Home">
             <header class="sh-head">
               <div><b class="sh-title">Hoja de visita</b><span class="sh-sub" data-f="sub">Electricidad, 3&nbsp;camionetas, condado de Alachua</span></div>
               <span class="stamp">Ejemplo</span>

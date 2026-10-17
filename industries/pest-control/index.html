@@ -27,12 +27,12 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=cc54c7ee">
-<link rel="stylesheet" href="/v4/trade-page.css?v=cc54c7ee">
+<link rel="stylesheet" href="/v4/system.css?v=a0bcdb13">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a0bcdb13">
 
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=cc54c7ee" defer></script>
-<script src="/v4/system.js?v=cc54c7ee" defer></script>
+<script src="/v4/trades.js?v=a0bcdb13" defer></script>
+<script src="/v4/system.js?v=a0bcdb13" defer></script>
 <style>
 /* Pest only, after trade-page.css. Section 4: the state's termite report (FDACS-13645, page 1) as plain printed paper beside the
    job record window, in plumbing's paper pair (.pl-docs, .pl-inv, .pl-flag). The form keeps its own section bars, boxed fields
@@ -50,13 +50,13 @@
 .pe-ck .bx.on::before{content:"X"}
 .pe-ck em{font-style:normal;color:#1d1d1f}
 .pe-ff{display:flex;justify-content:space-between;gap:8px;margin-top:6px;padding-top:5px;border-top:1px solid #dcdcd8;font-size:12px;color:#555}
-#report .pl-docs .pe-ck.pc::after{inset:-3px -6px -3px -8px;border-radius:16px 22px 18px 24px/20px 16px 22px 18px}   /* the ring
+#report .pe-ck.pc{margin:3px 0}
+#report .pl-docs .pe-ck.pc::after{inset:1.5px -5px 1.5px -4px;border-radius:10px 13px 11px 14px/12px 10px 13px 11px}   /* 2026-10-17 polish: 4px off the two lines and the box, 8px from box 1 below (it was 7 to 9px off and 1.3px from box 1) */   /* the ring
    round box B's two lines; squarer than the shared ellipse, whose top edge cut through the check box (as water's block ring) */
 .pe-job{padding:6px 14px 12px}
 .pe-job div{display:grid;grid-template-columns:8.4em minmax(0,1fr);gap:8px;padding:6px 0;border-bottom:1px solid #efeff2;font-size:14px;line-height:1.35}
 .pe-job div:last-child{border-bottom:0}
 .pe-job dt{color:#6e6e73}
-.pe-job .st{margin-top:0}
 @container (max-width:640px){
   .pl-docs .pe-form{width:88%;justify-self:start;padding:10px 12px 22px}
   .pe-form .pe-hm,.pe-job .pe-hm{display:none}
@@ -134,7 +134,7 @@
       <figure class="clip" aria-label="Sample walk sheet">
         <div class="board">
           <span class="clamp" aria-hidden="true"><i></i></span>
-          <div class="sheet" id="sheet" data-bind="sheet" data-ring data-fill data-short>
+          <div class="sheet" id="sheet" data-bind="sheet" data-ring data-fill data-short data-ui-ok="nested-card the printed sheet on its clipboard, as on Home">
             <header class="sh-head">
               <div><b class="sh-title">Walk sheet</b><span class="sh-sub" data-f="sub">Pest control, 3&nbsp;routes, Alachua County</span></div>
               <span class="stamp">Sample</span>

@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=cc54c7ee">
-<link rel="stylesheet" href="/v4/trade-page.css?v=cc54c7ee">
+<link rel="stylesheet" href="/v4/system.css?v=a0bcdb13">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a0bcdb13">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=cc54c7ee" defer></script>
-<script src="/v4/system.js?v=cc54c7ee" defer></script>
+<script src="/v4/trades.js?v=a0bcdb13" defer></script>
+<script src="/v4/system.js?v=a0bcdb13" defer></script>
 <style>
 /* ===== Contact, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24, 32, 44,
    64) outside the pictures, and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -85,6 +85,14 @@
   .ct-fig{position:sticky;top:112px}
   /* 2026-10-16: the walk card bleeds out by its padding (system.css), so its words keep the other rows' x, as How it works */
   .ct-tl .tl-head{flex-direction:column;align-items:flex-start;gap:6px}   /* every tag under its heading, as plumbing's timeline */
+  .ct-tl>li{grid-template-columns:minmax(0,var(--tl-head,15em)) minmax(0,1fr)}   /* 2026-10-17 polish: two tracks, not three. Nothing here sits right of the words, and the empty third track still took a 28px gap from them */
+}
+/* 2026-10-17 polish: from 900 to 1199 the timeline's column is 450 to 625px wide, and beside the 255px heading column its words
+   got 139 to 314px (212 at 1024, three or four words a line). There each row stacks, as How it works' timeline does: the tag
+   beside its heading, the words under them across the whole column */
+@media (min-width:900px) and (max-width:1199px){
+  .ct-tl>li{grid-template-columns:none}
+  .ct-tl .tl-head{flex-direction:row;align-items:baseline;gap:6px 12px}
 }
 
 /* 4 we drive to you (K3): the county map, then money back, language, the calculator and privacy as rows, and a last call */

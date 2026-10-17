@@ -2,7 +2,7 @@
    Every motion names its job in a comment (feedback, state change, cause and effect, show our work, one-time focus).
    The page is complete without this file: chips are links, sheets are prerendered, ghost-to-real figures show the fixed
    state, the night band shows its finished frame, the tally shows the full sheet.
-   Public API on window.Lumora: trade, trades, money(n), setTrade(key), on(fn), draw(el), ring(svg), lint(). */
+   Public API on window.Lumora: trade, trades, money(n), setTrade(key), on(fn), draw(el), ring(svg), pencil(scope), lint(). */
 (function () {
   'use strict';
   var D = window.LUMORA_TRADES || {}, ORDER = window.LUMORA_ORDER || Object.keys(D);
@@ -12,7 +12,8 @@
   // page's own words for what this file writes itself. EN keeps the English data for lint()'s Spanish checks.
   var ES = /^es\b/i.test(root.getAttribute('lang') || ''), EN = {}, ESMISS = [];
   var tr = function (en, es) { return ES ? es : en; };
-  if (ES) ORDER.forEach(function (k) { if (D[k]) { EN[k] = D[k]; D[k] = localize(k, D[k]); } });
+  // every trade in the data, not only LUMORA_ORDER's eight: Home's offices and clinics sample is homeOnly (2026-10-17 polish)
+  if (ES) Object.keys(D).forEach(function (k) { EN[k] = D[k]; D[k] = localize(k, D[k]); });
   function localize(k, t) {            // anything missing stays English and is listed for lint()
     var e = t.es, o = {}, q, n = t.night4; if (!e) { ESMISS.push(k + ': no Spanish block'); return t; }
     for (q in t) if (q !== 'es') o[q] = t[q];
@@ -97,6 +98,120 @@
       el.textContent = fmt(from + (to - from) * e); if (k < 1) requestAnimationFrame(step); })(t0);
   }
   L.ring = ring; L.draw = draw;
+
+  /* ================================================================ the pencil */
+  // 2026-10-17 polish (Franco's list item 4: every pencil mark 3 to 4.5px off what it holds, never crowding its neighbours; the
+  // CSS ring, inset -3px -8px, ran through the first and last letters of a wide line and into the p of "Llamada perdida"). A pencil
+  // circle round words on one line (.pc) is drawn here in real pixels, in Home's hand (pencil_paths.py: level, a light pressure
+  // wobble, 1.06 turns so the end passes just inside the start), 4px off the words' own ink: their top and bottom measured on a
+  // drawing of the very string, so "Llamada perdida" gets room for its p and "Missed call" gets none (canvas text metrics come
+  // rounded to whole pixels on Windows, which put a ring 1.5px into a "(" or a "p"). Its ends are round and a straight run follows
+  // the words, so a long line gets the same ends as a short one. The loop is an inline SVG in the .pc (.pc-loop); the .pc's ::after,
+  // the page's CSS ring, steps aside and stays the picture with JS off (a paper's one-time draw reveals either, trade-page.css).
+  // A ring round a pill or a box, or round more than one
+  // line, keeps its page's own loop (Home's Draft pill, the pest form's box, the water checklist). pencil_air.py measures every
+  // ring on every page (check.py PENCIL_ALL).
+  var PC_AIR = 4, pcCtx = null, pcInk = {};
+  function glyphInk(cs, txt) {         // the ink of a string: drawn 4 times up, scanned for any pixel past a tenth of ink
+    var key = [cs.fontStyle, cs.fontWeight, cs.fontSize, cs.fontFamily, cs.letterSpacing, txt].join('|');
+    if (pcInk[key]) return pcInk[key];
+    var S = 4, fs = parseFloat(cs.fontSize), font = function (sz) { return cs.fontStyle + ' ' + cs.fontWeight + ' ' + sz + 'px ' + cs.fontFamily; };
+    pcCtx = pcCtx || document.createElement('canvas').getContext('2d', { willReadFrequently: true });
+    var c = pcCtx.canvas; pcCtx.font = font(fs);
+    var m = pcCtx.measureText(txt), pad = Math.ceil(fs * S), by = pad * 2;
+    c.width = Math.ceil(m.width * S + 2 * pad); c.height = Math.ceil(fs * S * 3);
+    pcCtx.font = font(fs * S); pcCtx.textBaseline = 'alphabetic'; pcCtx.fillStyle = '#000';
+    if ('letterSpacing' in pcCtx) pcCtx.letterSpacing = cs.letterSpacing === 'normal' ? '0px' : parseFloat(cs.letterSpacing) * S + 'px';
+    pcCtx.clearRect(0, 0, c.width, c.height); pcCtx.fillText(txt, pad, by);
+    var d = pcCtx.getImageData(0, 0, c.width, c.height).data, W = c.width, H = c.height, t = H, b = -1, l = W, r = -1, x, y;
+    for (y = 0; y < H; y++) for (x = 0; x < W; x++) if (d[(y * W + x) * 4 + 3] > 24) { if (y < t) t = y; if (y > b) b = y; if (x < l) l = x; if (x > r) r = x; }
+    return (pcInk[key] = b < 0 ? null : { asc: (by - t) / S, desc: (b + 1 - by) / S, l: (l - pad) / S, r: (r + 1 - pad) / S, adv: m.width, fa: m.fontBoundingBoxAscent });
+  }
+  function pcInkBox(e) {               // the words' ink, in the .pc's own px; null for a pill, a box or more than one line
+    var er = e.getBoundingClientRect(); if (!er.width || !er.height) return null;
+    var sx = e.offsetWidth ? e.offsetWidth / er.width : 1; if (Math.abs(sx - 1) < .05) sx = 1;   // offsetWidth is a whole px: only a real transform scales
+    var sy = sx, k = { t: 1e9, b: -1e9, l: 1e9, r: -1e9 }, tops = [], w, n;
+    if ($$('*', e).some(function (c) { var s = getComputedStyle(c); return c.getClientRects().length && (!/^(transparent|rgba\(0, 0, 0, 0\))$/.test(s.backgroundColor) || parseFloat(s.borderTopWidth) > 0 || s.boxShadow !== 'none'); })) return null;
+    w = document.createTreeWalker(e, NodeFilter.SHOW_TEXT);
+    while ((n = w.nextNode())) {
+      var v = n.nodeValue, i0 = v.search(/\S/); if (i0 < 0) continue;
+      var i1 = v.length - v.match(/\s*$/)[0].length, cs = getComputedStyle(n.parentElement); if (cs.visibility === 'hidden') continue;
+      var rg = document.createRange(); rg.setStart(n, i0); rg.setEnd(n, i1);
+      var rs = Array.prototype.filter.call(rg.getClientRects(), function (q) { return q.width > 0; }); if (!rs.length) continue;
+      if (rs.length > 1) return null;
+      var q = rs[0], g = glyphInk(cs, v.slice(i0, i1)); if (!g) continue;
+      // the baseline where the glyphs are drawn: on the device pixel grid (at 1x a ring could sit a whole px off its words)
+      var dpr = window.devicePixelRatio || 1, base = Math.round((q.top + g.fa) * dpr) / dpr, same = Math.abs(g.adv - q.width) < 1.5;   // tabular figures or tracking: keep the box's own sides
+      tops.push(q.top);
+      k.t = Math.min(k.t, base - g.asc); k.b = Math.max(k.b, base + g.desc);
+      k.l = Math.min(k.l, same ? q.left + g.l : q.left); k.r = Math.max(k.r, same ? q.left + g.r : q.right);
+    }
+    if (k.t > k.b || Math.max.apply(null, tops) - Math.min.apply(null, tops) > (parseFloat(getComputedStyle(e).fontSize) || 16) * .9) return null;
+    return { t: (k.t - er.top) * sy, b: (k.b - er.top) * sy, l: (k.l - er.left) * sx, r: (k.r - er.left) * sx, w: er.width * sx, h: er.height * sy };
+  }
+  function pcLoop(cx, cy, L, rx, b) {  // round ends (superellipse halves, n 2.5), a straight run between them; points even along it
+    var B = [], C = [0], P = [], i, T, se = function (v) { return (v < 0 ? -1 : 1) * Math.pow(Math.abs(v), 2 / 2.5); };
+    for (i = 0; i <= 45; i++) { var p = (-90 + i * 4) * Math.PI / 180; B.push([L + rx * se(Math.cos(p)), b * se(Math.sin(p))]); }
+    for (i = 1; i < 20; i++) B.push([L - 2 * L * i / 20, b]);
+    for (i = 0; i <= 45; i++) { var o = (90 + i * 4) * Math.PI / 180; B.push([-L + rx * se(Math.cos(o)), b * se(Math.sin(o))]); }
+    for (i = 1; i < 20; i++) B.push([-L + 2 * L * i / 20, -b]);
+    for (i = 1; i <= B.length; i++) C.push(C[i - 1] + Math.hypot(B[i % B.length][0] - B[i - 1][0], B[i % B.length][1] - B[i - 1][1]));
+    T = C[B.length];
+    var at = function (s) { s = ((s % T) + T) % T; var j = 1; while (C[j] < s) j++; var u = (s - C[j - 1]) / (C[j] - C[j - 1]), a = B[j - 1], z = B[j % B.length];
+      return [a[0] + (z[0] - a[0]) * u, a[1] + (z[1] - a[1]) * u]; };
+    var s0 = C[14], N = Math.max(72, Math.round(T * 1.06 / 5));   // B[14]: 34 degrees above the right end's middle, where Home's loop starts
+    for (i = 0; i <= N; i++) {
+      var f = i / N, s = s0 + f * 1.06 * T, xy = at(s), th = 2 * Math.PI * (s - s0) / T - 35 * Math.PI / 180,
+        k = 1 + .012 * Math.sin(2 * th + .7) - .035 * Math.max(0, (f - .86) / .14), x = xy[0], ax = Math.abs(x);
+      P.push([cx + (ax > L ? (x < 0 ? -1 : 1) * (L + (ax - L) * k) : x), cy + xy[1] * k]);
+    }
+    return P;
+  }
+  function pcAir(P, R, half) {         // the closest the stroke's inner edge comes to the ink box
+    var m = 1e9, i, j;
+    for (i = 0; i < P.length - 1; i++) for (j = 0; j < 8; j++) {
+      var x = P[i][0] + (P[i + 1][0] - P[i][0]) * j / 8, y = P[i][1] + (P[i + 1][1] - P[i][1]) * j / 8;
+      m = Math.min(m, Math.hypot(Math.max(R.l - x, 0, x - R.r), Math.max(R.t - y, 0, y - R.b)) - half);
+    }
+    return m;
+  }
+  function fitRing(e) {
+    if (!e.getClientRects().length) return;
+    var A = getComputedStyle(e, '::after'); if (A.content === 'none' || A.display === 'none') return;
+    if (!e.hasAttribute('data-fit')) { e._pcInk = A.borderTopColor; e._pcW = parseFloat(A.borderTopWidth) || 2; }
+    var k = pcInkBox(e); if (!k) { e.removeAttribute('data-fit'); if (e._pcSvg) e._pcSvg.remove(); return; }
+    var sw = e._pcW, half = sw / 2, cx = (k.l + k.r) / 2, cy = (k.t + k.b) / 2, hw = (k.r - k.l) / 2, hh = (k.b - k.t) / 2;
+    var b = (hh + PC_AIR + half) / (1 - .012), P, pass, m;
+    // the ends start 1px past the words: a corner letter (the M of "Missed call") measured up to 1px closer than the top on some widths
+    for (pass = 0; pass < 4; pass++) { P = pcLoop(cx, cy, hw + 1, b * .8, b); m = pcAir(P, k, half); if (m >= PC_AIR - .02) break; b += PC_AIR - m; }
+    var x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9, i;
+    P.forEach(function (p) { x0 = Math.min(x0, p[0]); y0 = Math.min(y0, p[1]); x1 = Math.max(x1, p[0]); y1 = Math.max(y1, p[1]); });
+    x0 -= half + 1; y0 -= half + 1; x1 += half + 1; y1 += half + 1;
+    var f = function (v) { return v.toFixed(1); }, d = 'M' + f(P[0][0] - x0) + ' ' + f(P[0][1] - y0);
+    for (i = 0; i < P.length - 1; i++) {   // Catmull-Rom to cubic Bezier, as ring() and pencil_paths.py
+      var p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2;
+      d += 'C' + f(p1[0] + (p2[0] - p0[0]) / 6 - x0) + ' ' + f(p1[1] + (p2[1] - p0[1]) / 6 - y0) + ' ' + f(p2[0] - (p3[0] - p1[0]) / 6 - x0) + ' ' +
+        f(p2[1] - (p3[1] - p1[1]) / 6 - y0) + ' ' + f(p2[0] - x0) + ' ' + f(p2[1] - y0);
+    }
+    // an inline SVG, drawn at its exact sub-pixel place (an SVG background image was snapped to whole px and sat up to .5px off)
+    var NS = 'http://www.w3.org/2000/svg', s = e._pcSvg;
+    if (!s || s.parentNode !== e) {
+      s = e._pcSvg = document.createElementNS(NS, 'svg'); s.setAttribute('class', 'pc-loop'); s.setAttribute('aria-hidden', 'true'); s.setAttribute('focusable', 'false');
+      s.appendChild(document.createElementNS(NS, 'path')); e.appendChild(s);
+    }
+    s.setAttribute('viewBox', '0 0 ' + f(x1 - x0) + ' ' + f(y1 - y0));
+    s.style.cssText = 'left:' + f(x0) + 'px;top:' + f(y0) + 'px;width:' + f(x1 - x0) + 'px;height:' + f(y1 - y0) + 'px';
+    s.firstChild.setAttribute('d', d); s.firstChild.setAttribute('pathLength', '1');
+    s.firstChild.setAttribute('stroke', e._pcInk); s.firstChild.setAttribute('stroke-width', sw);
+    e.setAttribute('data-fit', '');
+  }
+  // a ring that turns up later (a Before layer, a tab, a stop drawn for another trade) is fitted when it comes into view
+  var pcIO = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) { es.forEach(function (x) { if (x.isIntersecting) fitRing(x.target); }); }) : null;
+  function pencil(scope, fresh) {      // fresh: the fonts or the sizes changed, so the words are measured again
+    if (fresh) pcInk = {};
+    $$('.pc', scope || document).forEach(function (e) { if (pcIO && !e._pcSeen) { e._pcSeen = 1; pcIO.observe(e); } fitRing(e); });
+  }
+  L.pencil = pencil;
 
   /* ================================================================ pictures: before (as we find it) and after (fixed) */
   var txt = function (x, y, s, size, cls, anchor) {
@@ -507,7 +622,7 @@
       var ol = tl.querySelector('ol'); if (ol) ol.innerHTML = rows.map(function (r, i) { return '<li data-i="' + i + '"><span>' + (ownPlace(r.id) || esc((r.pair && r.pair.place) || r.place)) + '</span></li>'; }).join('');
       var sub = tl.querySelector('[data-f="tsub"]'); if (sub) sub.textContent = (t.shop + ', ' + t.short.split(', ').slice(1).join(', ')).replace(/(\d) /g, '$1\u00a0');   // 2026-10-15: no-break space after a count
     }
-    initG2R(list, animate); initDraw(list); tally.bind(el, t); fitCrops();
+    initG2R(list, animate); initDraw(list); tally.bind(el, t); fitCrops(); pencil(el);
   }
   function showFig(el, key, preview) {
     var box = el.querySelector('[data-f="fig"]'); if (!box || !D[key]) return;
@@ -570,6 +685,7 @@
     // job: cause and effect. The stop's money underline draws as the fix lands, not before it (it waits; see initG2R)
     // data-draw="view" (2026-10-16 repair, Home's stop 1): that mark draws when it comes into view, in Before too, as on the approved desktop
     if (state === 'after') $$('[data-draw]:not([data-draw=view])', g.closest('.stop, [data-g2r-scope]') || g).forEach(function (p) { p.removeAttribute('data-wait'); draw(p, 380); });
+    pencil(g.closest('.stop, [data-g2r-scope]') || g);   // a ring in the layer just shown is fitted to it
   }
   // job: state change. History: 55% and 600ms showed the "before" for ~1.3 s; then 95% held 2.5 s, and a timed owner skim
   // on a phone (review 2026-10-10, 470px a flick) left every stop on Before the whole way: he saw only the problems.
@@ -639,7 +755,7 @@
   };
   var tick = 0;
   addEventListener('scroll', function () { if (tick) return; tick = requestAnimationFrame(function () { tick = 0; tally.update(); }); }, { passive: true });
-  addEventListener('resize', function () { clearTimeout(L._rz); L._rz = setTimeout(function () { $$('.pen-ring').forEach(ring); tally.update(); fitCrops(); }, 150); });
+  addEventListener('resize', function () { clearTimeout(L._rz); L._rz = setTimeout(function () { $$('.pen-ring').forEach(ring); tally.update(); fitCrops(); pencil(document, true); }, 150); });
 
   /* ================================================================ loops: the night band (pause control, off-screen pause) */
   var loops = [];
@@ -998,6 +1114,7 @@
   if (start) setTrade(start, false);
   initG2R(document, false);
   initDraw(document);
+  pencil(document);
   $$('[data-leak]').forEach(initLeak);
   $$('[data-tabs]').forEach(initTabs);
   // job: show our work, once on load (no loop, so no pause is needed)
@@ -1013,6 +1130,6 @@
     io.observe(s);
   });
   $$('.pen-ring').forEach(ring);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { $$('.pen-ring').forEach(ring); tally.update(); fitCrops(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { $$('.pen-ring').forEach(ring); tally.update(); fitCrops(); pencil(document, true); });
   if (qs.has('lint')) { var r = L.lint(); console.log('Lumora lint', r); }
 })();

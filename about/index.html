@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=cc54c7ee">
-<link rel="stylesheet" href="/v4/trade-page.css?v=cc54c7ee">
+<link rel="stylesheet" href="/v4/system.css?v=a0bcdb13">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a0bcdb13">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=cc54c7ee" defer></script>
-<script src="/v4/system.js?v=cc54c7ee" defer></script>
+<script src="/v4/trades.js?v=a0bcdb13" defer></script>
+<script src="/v4/system.js?v=a0bcdb13" defer></script>
 <style>
 /* ===== About, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24, 32, 44,
    64) outside the pictures, and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -71,7 +71,7 @@
 .fd-n li{justify-content:flex-start}
 .fd-n li::before{counter-increment:fdn;content:counter(fdn) ".";font-weight:600;color:#111;flex:none;width:14px}
 .fd-foot{margin-top:auto;padding-top:8px;border-top:1px dashed #b5b3ad;font-size:12px;color:#3a3a3f;line-height:1.35}
-.fd-foot .pc{display:inline-block;padding:1px 4px;margin:4px 0 0 6px;font-weight:700;color:#111;font-size:13px;white-space:nowrap}
+.fd-foot .pc{display:inline-block;padding:1px 4px;margin:10px 0 0 6px;font-weight:700;color:#111;font-size:13px;white-space:nowrap}   /* 2026-10-17 polish: 10px above, so the ring (4px out) keeps 6px of air under "Your contact:"; at 4px it touched the y */
 .fd-foot .pc::after{inset:-4px -8px}   /* the ring clears the first and last digits */
 .fd:nth-child(2) .pc::after{border-radius:52% 48% 54% 46%/44% 56% 44% 56%}   /* four rings by one hand, never four copies: the shape varies, the ring stays level (2026-10-16) */
 .fd:nth-child(3) .pc::after{border-radius:50% 50% 44% 56%/58% 42% 54% 46%}

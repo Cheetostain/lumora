@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=cc54c7ee">
-<link rel="stylesheet" href="/v4/trade-page.css?v=cc54c7ee">
+<link rel="stylesheet" href="/v4/system.css?v=a0bcdb13">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a0bcdb13">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=cc54c7ee" defer></script>
-<script src="/v4/system.js?v=cc54c7ee" defer></script>
+<script src="/v4/trades.js?v=a0bcdb13" defer></script>
+<script src="/v4/system.js?v=a0bcdb13" defer></script>
 <style>
 /* Electrical only. Section 4: the price list is a spreadsheet in the job tool's window (plumbing's invoice slot), so its cells keep
    the screens kit's spreadsheet look; the bill is the counter-ticket paper, five lines long. */
@@ -45,6 +45,7 @@
 /* the bill line names the coil length (250', as the price list row does), so the unit price prints on its own line under it, as
    counter tickets do, and the pencil ring goes around the price alone: on one line the ring ran into 786.40 at 360 and 1280 */
 #wire .pl-docs .pc::after{inset:-4px -10px}
+#wire .pl-docs .pc{display:inline-block;margin:4px 0 3px}   /* 2026-10-17 polish: the pencil loop round the price (system.js pencil()) ran 1.7px from "12/2 NM-B 250'" above it; now 5.7px */
 /* the band's line on the other utilities sits under the Before line, in the band's quiet ink */
 .el-util{margin-top:8px;max-width:34em;font-size:15px;color:var(--muted-night)}
 @media (min-width:900px){.el-util{margin-inline:auto}}
@@ -114,7 +115,7 @@
       <figure class="clip" aria-label="Sample walk sheet">
         <div class="board">
           <span class="clamp" aria-hidden="true"><i></i></span>
-          <div class="sheet" id="sheet" data-bind="sheet" data-ring data-fill data-short>
+          <div class="sheet" id="sheet" data-bind="sheet" data-ring data-fill data-short data-ui-ok="nested-card the printed sheet on its clipboard, as on Home">
             <header class="sh-head">
               <div><b class="sh-title">Walk sheet</b><span class="sh-sub" data-f="sub">Electrical, 3&nbsp;trucks, Alachua County</span></div>
               <span class="stamp">Sample</span>

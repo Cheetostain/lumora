@@ -26,11 +26,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=cc54c7ee">
-<link rel="stylesheet" href="/v4/trade-page.css?v=cc54c7ee">
+<link rel="stylesheet" href="/v4/system.css?v=a0bcdb13">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a0bcdb13">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=cc54c7ee" defer></script>
-<script src="/v4/system.js?v=cc54c7ee" defer></script>
+<script src="/v4/trades.js?v=a0bcdb13" defer></script>
+<script src="/v4/system.js?v=a0bcdb13" defer></script>
 <style>
 /* ===== Loss calculator, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64) outside the pictures; every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -96,6 +96,17 @@ html:not(.js) .lk-bar{display:none}
   .lk{padding:48px 0 96px}
   .lk-g{grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:48px;align-items:start}
   .lk-out{position:sticky;top:calc(var(--hdr-h) + 24px)}
+}
+/* 2026-10-17 polish: from 900 to 1199 the form was 410 to 560px wide, so beside the 244px box column the words got 86 to 240px
+   (150 at 1024: labels and help three or four words a line, 62px empty beside each one-box line). There the estimate takes the
+   width its total line needs ("About $1,540" on one line at 900, the whole line from 1024) and the form the rest, the padding
+   and gaps step in, and each help line runs under its line across the form. The boxes keep their one column on the right */
+@media (min-width:900px) and (max-width:1199px){
+  .lk-g{grid-template-columns:minmax(0,1fr) calc(345px + (100vw - 900px) * .65);gap:32px}
+  .lk-form{padding:0 22px 24px}
+  .lk-form .lf{column-gap:16px}
+  .lk-form .lf>.unit,.lk-form .lf>.step{grid-row:1}
+  .lk-form .lf>.lf-h,.lk-form .lf>.lf-err{grid-column:1/-1}
 }
 
 /* 2 where to find your numbers (L3): the one window, then a row per group of boxes, the records first and call history last */

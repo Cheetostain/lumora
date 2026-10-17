@@ -3,15 +3,31 @@
    own Before / After pictures, the plan's R7 fallback). v3's Home script is kept in "backup ORIGINAL-2026-10-10/". */
 (function () {
   function size(t) {                       // "Plumbing, 2 trucks" -> "2-truck shop"; "Property manager, 212 doors" -> "212-door property manager"
-    var m = /, (\d+) (\w+?)s?$/.exec(t.short) || [], kind = t.per === 'yr' ? 'property manager' : /^Restaurant/.test(t.short) ? 'restaurant and bar' : 'shop';
+    var m = /, (\d+) (\w+?)s?$/.exec(t.short) || [], kind = t.per === 'yr' ? 'property manager' : /^Restaurant/.test(t.short) ? 'restaurant and bar' :
+      /office|clinic/i.test(t.short) ? 'office' : 'shop';   // "Dental office, 2 dentists" -> "2-dentist office" (offices and clinics, 2026-10-17)
     return m[1] ? m[1] + '-' + m[2] + ' ' + kind : kind;
   }
   // the tally no longer counts dollars (R9) and is not shown on phones, so the intro promises the end total, not a running sum
   // The Spanish Home (index.es.html, 2026-10-10) says it in Spanish, from the trade's Spanish short line ("Plomería, 2 camionetas")
   var ES = /^es\b/i.test(document.documentElement.getAttribute('lang') || '');
   function sizeEs(t) {                     // "un negocio de ejemplo con 2 camionetas"; "una administradora de propiedades de ejemplo con 212 unidades"
-    var m = /, (\d+ .+)$/.exec(t.short) || [], kind = t.per === 'yr' ? 'una administradora de propiedades' : /^Restaurante/.test(t.short) ? 'un restaurante y bar' : 'un negocio';
+    var m = /, (\d+ .+)$/.exec(t.short) || [], kind = t.per === 'yr' ? 'una administradora de propiedades' : /^Restaurante/.test(t.short) ? 'un restaurante y bar' :
+      /^Consultorio/.test(t.short) ? 'un ' + t.short.split(',')[0].toLowerCase() : 'un negocio';   // "un consultorio dental de ejemplo con 2 dentistas"
     return kind + ' de ejemplo' + (m[1] ? ' con ' + m[1].replace(' ', ' ') : '');   // "2 camionetas" never splits over two lines
+  }
+  // where the picked sample's whole walk is: its trade page, or How it works for a sample with no page yet (offices and clinics,
+  // 2026-10-17 polish). The line under the picker and the line under the walk's stop say it the same way
+  function walkLink(t) {
+    if (t.href) return { href: t.href, text: ES ? 'La visita completa, en la página de ' + t.name : 'The full walk, on the ' + t.name + ' page' };
+    return { href: ES ? '/es/how-it-works/#walk' : '/how-it-works/#walk', text: ES ? 'Cómo es la visita, en la página Cómo funciona' : 'How a walk goes, on the How it works page' };
+  }
+  // the hero under the sheet (2026-10-17 polish, both judges): the strip's three pictures are the plumbing sample's own screens, so
+  // with another sample picked its label says where they come from; and one line under the picker opens the picked sample's walk
+  function picked(key, t) {
+    var k = document.querySelector('[data-rc-k]'), a = document.querySelector('[data-f="pick-walk"]');
+    if (k) { if (k._base == null) k._base = k.innerHTML;
+      if (key === 'plumbing') k.innerHTML = k._base; else k.textContent = ES ? 'Del negocio de ejemplo de plomería, Dunlin Plumbing' : 'From the plumbing sample, Dunlin Plumbing'; }
+    if (a && t) { var w = walkLink(t); a.href = w.href; a.textContent = w.text; }
   }
   function intro(key, t) {
     var p = document.querySelector('[data-walk-intro]'); if (!p || !t || !t.rows) return;
@@ -23,7 +39,7 @@
       var same = t.rows[0] && t.rows[0].pair;
       p.textContent = ES ? t.shop + ' es ' + sizeEs(t) + '. Este es un paso de su visita: ' + (same ? 'la misma pantalla, antes y después del arreglo.' : 'el arreglo en la pantalla del propio negocio.')
         : t.shop + ' is a sample ' + size(t) + '. Here is the first stop from its walk: ' + (same ? 'the same screen before and after the fix.' : 'the fix on the shop\'s own screen.');
-      if (more) { more.href = t.href; more.textContent = ES ? 'La visita completa, en la página de ' + t.name : 'The full walk, on the ' + t.name + ' page'; }
+      if (more) { var w = walkLink(t); more.href = w.href; more.textContent = w.text; }
       return;
     }
     if (ES) { p.textContent = t.shop + ' es ' + sizeEs(t) + '. ' + (pairs ? 'En cada paso se ve la misma pantalla antes y después del arreglo, y la visita termina con el total de la hoja.'
@@ -126,9 +142,9 @@
   function start() {
     codeDemo();
     if (!window.Lumora) return;
-    Lumora.on(intro);   // cue() went with the hero strip (2026-10-16): the sheet itself rises on a pick (system.css .sheet.swap)
+    Lumora.on(intro); Lumora.on(picked);   // cue() went with the hero strip (2026-10-16): the sheet itself rises on a pick (system.css .sheet.swap)
     Lumora.on(function () { seat(); });
-    if (Lumora.trade) intro(Lumora.trade, Lumora.trades[Lumora.trade]);
+    if (Lumora.trade) { intro(Lumora.trade, Lumora.trades[Lumora.trade]); picked(Lumora.trade, Lumora.trades[Lumora.trade]); }
     who(); variants(); seat();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(seat);
     addEventListener('resize', seat);

@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=cc54c7ee">
-<link rel="stylesheet" href="/v4/trade-page.css?v=cc54c7ee">
+<link rel="stylesheet" href="/v4/system.css?v=a0bcdb13">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a0bcdb13">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=cc54c7ee" defer></script>
-<script src="/v4/system.js?v=cc54c7ee" defer></script>
+<script src="/v4/trades.js?v=a0bcdb13" defer></script>
+<script src="/v4/system.js?v=a0bcdb13" defer></script>
 <style>
 /* ===== How it works, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64), and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -91,9 +91,11 @@
 .wk-lists .note-r{margin-top:8px;font-size:15px;color:var(--muted);max-width:34em}
 .wk-lists .note-r a{display:inline-block;padding-block:12px;margin-block:-12px}   /* a 44px tall tap area without moving the layout */
 @media (min-width:900px){
-  .wk-top{grid-template-columns:minmax(0,1fr) minmax(0,26em);gap:56px}
-  .wk-parts{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:56px;align-items:start}
-  .wk-lists{grid-template-columns:1fr 1fr;gap:56px}
+  /* 2026-10-17 polish: the price, Your records and What the walk never does start on one x. The three rows had three right
+     columns (26em, .92fr and 1fr), so their left edges sat up to 130px apart at 1440; one column pair now sets all three */
+  .wk{--wk-cols:minmax(0,1.08fr) minmax(0,.92fr)}
+  .wk-top,.wk-parts,.wk-lists{grid-template-columns:var(--wk-cols);gap:56px}
+  .wk-parts{align-items:start}
 }
 
 /* a native disclosure (Full terms, the sources, the cover lists): the facts stay one tap away without a wall of text */

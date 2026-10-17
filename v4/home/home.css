@@ -22,7 +22,7 @@
 .hm4-hero .hero-act{grid-area:act}
 .hm4-hero .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px}
 .hm-sms{font-size:17px}
-.hm-sms,.c4-sms,.who-all a,.hm-about a,.walk-more a{display:inline-block;padding-block:12px;margin-block:-12px}   /* a 44px tall tap area without moving the layout (WCAG 2.5.8) */
+.hm-sms,.c4-sms,.who-all a,.hm-about a,.walk-more a,.pk-walk a,.c4-hours .mb a{display:inline-block;padding-block:12px;margin-block:-12px}   /* 2026-10-17: Full terms too (owner judge) */   /* a 44px tall tap area without moving the layout (WCAG 2.5.8) */
 .cta-tel{padding-block:5px;margin-block:-5px}
 .reply-s{font-size:15px;line-height:1.35;color:var(--pencil);text-wrap:balance}   /* one shade darker than muted (7.9:1 on paper). 2026-10-17 polish: the
    hero says the reply this short at every width (the owner judge found the Spanish price under the first screen at 1280 x 800,
@@ -77,6 +77,16 @@ html.js .hm4-hero .sh-pick{display:flex;flex-wrap:wrap;align-items:center;gap:6p
 .hm4-hero .sh-pick select{flex:1;min-width:10em;min-height:44px;border:0;border-bottom:1.5px solid var(--ink);border-radius:0;padding:0 28px 0 2px;font:600 17px var(--font);color:var(--ink);cursor:pointer;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1.5 1.5L6 6l4.5-4.5' fill='none' stroke='%23111110' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") right 6px center/12px 8px no-repeat transparent}
 .hm4-hero .sh-pick small{flex-basis:100%;margin-top:0;font-size:15px;font-weight:400;color:var(--muted)}
+/* 2026-10-17 polish (both judges): one line under the picker opens the picked sample's whole walk, its trade page, or How it works
+   for offices and clinics, which has none yet (home.js walkLink); the strip's label says when its pictures are another sample's */
+.hm4-hero .sh-pick .pk-walk{flex-basis:100%;margin-top:6px;font-size:15px;font-weight:600;color:var(--ink)}
+/* the label goes on its own line wherever the select beside it would cut a name (2026-10-17 polish, owner judge): Spanish under a
+   410px picker ("Negocio de ejemplo" and "Aire acondicionado y calefacción": every phone, and the 380px clipboard column from 900 to
+   1079px), English under 330px ("Restaurants and bars" at 320). The picker is the container, so this holds at any width; check.py
+   measures every option against its select */
+html.js .hm4-hero .sh-pick{container-type:inline-size}
+@container (max-width:409px){:lang(es) .hm4-hero .sh-pick .picker-sel{flex-wrap:wrap;row-gap:0}:lang(es) .hm4-hero .sh-pick select{flex-basis:100%}}
+@container (max-width:329px){.hm4-hero .sh-pick .picker-sel{flex-wrap:wrap;row-gap:0}.hm4-hero .sh-pick select{flex-basis:100%}}
 
 /* ---- the strip: where three of the sheet's numbers come from, each in the shop's own tool, on plain paper (Franco's note 1: no
    band, no lines behind it). Each item says its figure once and what its picture shows (note 2); each picture has its own Sample
@@ -85,18 +95,26 @@ html.js .hm4-hero .sh-pick{display:flex;flex-wrap:wrap;align-items:center;gap:6p
 .recog{position:relative;display:grid;gap:14px}
 .rc-lead{display:none}
 .rc-k{font-size:17px;font-weight:600;color:var(--ink)}
+/* 2026-10-17 polish (craft judge: three items, three kinds of head): on a computer every item opens on its picture's name in ink,
+   then its figure (red where it is money: the Excel sheet and the phone; the quotes slice keeps its ink "3 days in Drafts", since
+   its dollars are stop 1's), then the caption. A phone keeps p1-final's figure first (data-extra) */
+.rc-t{display:none}
+@media (min-width:900px){
+  .rc-lead{display:block;grid-column:1/-1;font-size:24px;line-height:1.25;font-weight:600;color:var(--ink);letter-spacing:-.012em;max-width:34em;text-wrap:balance}
+  .rc-t{display:block;margin-bottom:6px;font-size:17px;font-weight:600;line-height:1.3;color:var(--ink)}
+  .rc-k{grid-column:1/-1;margin:-6px 0 22px;font-weight:400;color:var(--muted)}
+}
 .rc-usd,.rc-h{font-size:24px;font-weight:600;line-height:1.2;color:var(--red)}
 .rc-h{color:var(--ink)}
 .rc-c{font-size:17px;line-height:1.4;color:var(--body);margin-top:4px;max-width:26em}
 .rc-pic{margin-top:16px}
 .rc-q{display:none}
 @media (min-width:900px) and (max-width:1079px){
-  .recog{grid-template-columns:minmax(0,1fr) 256px;column-gap:56px;align-items:start;margin-top:36px}
+  .recog{grid-template-columns:minmax(0,1fr) 256px;column-gap:56px;align-items:start;margin-top:48px}
   .rc-k{grid-column:1/-1}
 }
 @media (min-width:1080px){
-  .recog{grid-template-columns:minmax(0,1.12fr) minmax(0,1.08fr) minmax(0,.7fr);column-gap:56px;align-items:start;padding:72px 0 8px;margin-top:64px}
-  .rc-k{grid-column:1/-1;position:absolute;top:24px;left:0}
+  .recog{grid-template-columns:minmax(0,1.12fr) minmax(0,1.08fr) minmax(0,.7fr);column-gap:56px;align-items:start;padding:0 0 8px;margin-top:72px}
   .rc-q{display:block}
   .rc-x{margin-top:56px}
 }
@@ -369,8 +387,7 @@ html:not(.js) .bm-again,html:not(.js) .bm-foot{display:none}   /* both need JS (
 .hm4-walk .stop:not(.stop-q) .find{margin-top:10px}
 
 /* ---- the quotes list (.stop-q): the pencil Schedule wire behind (computers), the shop's quotes app in the system window frame
-   with its plain title (note 9: no browser bar, no made-up address), the quote over it. Phones put Before / After above the window
-   (Franco's list item 6); computers keep it under the stage, 72px in, beside the Sample label */
+   with its plain title (note 9: no browser bar, no made-up address), the quote over it. Before / After sit above it at every width */
 .stop-q{margin-top:0}
 .stop-q .stop-h{display:flex;gap:16px;align-items:flex-start;margin-bottom:0}
 .stop-q .stop-h h3{font-size:24px;line-height:1.2}
@@ -383,11 +400,14 @@ html:not(.js) .bm-again,html:not(.js) .bm-foot{display:none}   /* both need JS (
 .stop-q .find-usd{position:relative;display:inline-block;line-height:1.15}
 .stop-q .find-usd .pen-under{left:0;bottom:-9px;width:100%;height:8px;stroke-width:2.2px}
 .stop-q .find-f{display:block;font-size:15px;color:var(--muted);margin-top:12px}
-.stop-q .pic.has-seg{padding:0 0 76px}
-.stop-q .pic.has-seg>.seg{left:0;bottom:0}
-.stop-q .pic.has-seg>.samp{right:0;bottom:15px}
-@media (min-width:1000px){.stop-q .pic.has-seg{padding-bottom:12px}.stop-q .pic.has-seg>.seg{left:72px}.stop-q .pic.has-seg>.samp{right:300px}}
-html:not(.js) .stop-q .pic.has-seg{padding-bottom:28px}
+/* Before / After sit above the window they change, the Sample label on their line: phones since Franco's list item 6, computers
+   since the 2026-10-17 polish (both judges: under the window, the switch was found after the picture had been read), on every
+   sample's stop, plumbing's printed list and the others' */
+.hm4-walk .pic.has-seg{padding:66px 0 0}
+.hm4-walk .pic.has-seg>.seg{top:0;bottom:auto;left:0}
+.hm4-walk .pic.has-seg>.samp{top:15px;bottom:auto;right:0}
+html:not(.js) .hm4-walk .pic.has-seg{padding:0 0 28px}
+html:not(.js) .hm4-walk .pic.has-seg>.samp{top:auto;bottom:0}
 .stop-q .stage{position:relative;padding:0}
 .stop-q .wire{display:none}
 .stop-q .qcard{position:relative;z-index:2;margin:-28px 0 0 18px;background:#fff;border-radius:10px;box-shadow:var(--lift-hi),0 30px 60px -20px rgba(58,47,28,.26);font-family:var(--sys);color:var(--app-ink);padding:16px 18px 14px}
@@ -460,7 +480,8 @@ html:not(.js) .stop-q .pic.has-seg{padding-bottom:28px}
    six names ended in "..." while 60 to 90px sat empty), cells 6px apart, every Total 12px inside the window */
 @container (max-width:420px){
   .stop-q .qa .qt td.qid,.stop-q .qa .qt th.qh,.stop-q .qa .newq{display:none}
-  .stop-q .qa .qt td,.stop-q .qa .qt th{padding-inline:6px}
+  .stop-q .qa .qt td,.stop-q .qa .qt th{padding-inline:4px}   /* 2026-10-17 polish: 4px, so a job keeps one line where it can */
+  .stop-q .qa .qt td.stc{padding-right:8px}   /* the pencil ring round "Draft, 3 days" reaches 7px past its pill: 5px of air before the Total */
   .stop-q .qa .qt td:first-child,.stop-q .qa .qt th:first-child{padding-left:12px}
   .stop-q .qa .qt td.num,.stop-q .qa .qt th.num{padding-right:12px}
   .stop-q .qa .qt .cu{width:100%;max-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -486,6 +507,14 @@ html:not(.js) .stop-q .pic.has-seg{padding-bottom:28px}
 .stop-q .pair[data-state=after] .chg.tr .pc::after{display:none}
 .stop-q .pair[data-state=after] .qt tr.n td{background:#eef7f0}
 .stop-q .pair[data-state=before] .qt tr.n td{background:#f4f7fd}
+/* 2026-10-17 polish (owner judge): in Before only "Draft, 3 days" shows, so it sits in the middle of the two layers' height, level
+   with the row; in After it rises to make room for Sent under it. The two pills are one height, so half a pill and half the gap */
+.stop-q .pair[data-state=before] td .chg.tr>.was{transform:translateY(calc(50% + 1px))}
+@media screen and (prefers-reduced-motion:no-preference){.stop-q td .chg.tr>.was{transition:transform 220ms var(--ease-out)}}
+/* on a phone the window takes the page's side padding (the background bleeds, the words keep their column: Franco's rule for the
+   How it works card), so the customer column has room for a job on one line (2026-10-17 polish, owner judge at 375 to 430) */
+@media (max-width:759px){.stop-q .stage>.qa{margin-inline:-18px}}
+@media (max-width:399px){.stop-q .stage>.qa{margin-inline:-12px}}
 @media screen and (prefers-reduced-motion:no-preference){.stop-q .qt tr.n td{transition:background-color 220ms var(--ease-out)}}
 
 /* ======================================================= 6 the night band: phone and paper as one centred pair (layout a; b and c for
@@ -497,6 +526,10 @@ html:not(.js) .stop-q .pic.has-seg{padding-bottom:28px}
 .n4-figs{display:grid;gap:20px;justify-items:center;margin-top:18px}
 .n4-figs>.pic{width:min(var(--ph-w),100%)}                   /* a .pic needs a definite width (container-type) */
 .n4-figs>.n4-paper{width:min(440px,100%)}
+/* 2026-10-17 polish (craft judge): the time column is as wide as the longest time in either language ("10:05 p. m." sat on its
+   words in Spanish, 4.6em was cut for "10:05 PM"), and every row has the same 12px after it: one grid for the log, each row on it */
+.hm4-night .np-rows{display:grid;grid-template-columns:max-content minmax(0,1fr);column-gap:12px}
+.hm4-night .np-rows li{grid-column:1/-1;grid-template-columns:subgrid;column-gap:12px}
 .n4 .loop-ctl{position:relative;z-index:4;margin-top:-12px;justify-content:flex-start}   /* 2026-10-15: -12px, not -28px, so Pause has 16px of air above it */   /* small, in the Sample labels' band at the pair's bottom left, clear of both labels */
 .n4 .pause{min-height:44px;padding:0 14px 0 12px;gap:8px;border-color:rgba(233,228,216,.45);font-size:15px;color:var(--muted-night)}
 .n4 .pause .pi{width:10px;height:12px;border-left-width:3px;border-right-width:3px}
@@ -510,7 +543,7 @@ html:not(.js) .stop-q .pic.has-seg{padding-bottom:28px}
   .n4-figs{grid-template-columns:var(--ph-w) minmax(0,440px);justify-content:center;align-items:stretch;gap:24px;text-align:left}   /* tops lined up, 24px apart */
   .n4-figs>.n4-paper{width:100%;display:flex;flex-direction:column}
   .n4-paper .np{flex:1;display:flex;flex-direction:column}
-  .n4-paper .np-rows{flex:1;display:flex;flex-direction:column;justify-content:space-between}
+  .n4-paper .np-rows{flex:1;align-content:start}   /* 2026-10-17 polish: rows packed under the head, as a printed log; the foot keeps the bottom (they spread before, each with a gap above) */
   .n4-figs.nolock{grid-template-columns:minmax(0,440px)}
   /* layout b (review variant ?n4=b): the paper overlaps the phone's lower right corner, clear of the clock */
   .n4[data-layout=b] .n4-figs{grid-template-columns:var(--ph-w) 400px;gap:0}
@@ -656,12 +689,6 @@ html:not(.js) .stop-q .pic.has-seg{padding-bottom:28px}
   .rc-p .ph-crop{position:relative;width:min(400px,100%);margin:0 auto;aspect-ratio:432.2/321.2}
   .rc-p .ph-crop .iph{position:absolute;left:0;right:0;bottom:0;width:100%}
   .rc-p .ph-band>.samp{right:var(--g);bottom:10px;background:var(--bone)}
-  /* stop 1: Before and After sit above the window they change, the Sample label on their line */
-  .stop-q .pic.has-seg{padding:66px 0 0}
-  .stop-q .pic.has-seg>.seg{top:0;bottom:auto}
-  .stop-q .pic.has-seg>.samp{top:15px;bottom:auto}
-  html:not(.js) .stop-q .pic.has-seg{padding:0 0 28px}
-  html:not(.js) .stop-q .pic.has-seg>.samp{top:auto;bottom:0}
   /* the close keeps its one button; the bar carries the number and Text (data-extra) */
   .hm4-close .c4-tel{display:none}
 }
@@ -705,9 +732,11 @@ html:not(.js) .stop-q .pic.has-seg{padding-bottom:28px}
   .hm4-hero .clip{padding-top:12px}
   .hm4-hero .sheet{padding-top:42px}
   .hm4-hero .board{padding-top:24px}
-  /* note 7: beside "Llámenos" the Spanish line ran four lines and crowded the clip; it drops the free-call sentence here (the price
-     sentence and the timeline say it) and keeps three: "Empresa de Gainesville. Le respondemos el mismo día hábil." */
-  :lang(es) .rs-f{display:none}
+  /* note 7: beside "Llámenos" the Spanish line ran four lines and crowded the clip. Since the 2026-10-17 polish (owner judge) it keeps
+     the free call, the reason to call, and drops the city instead (the facts under the price say Gainesville; the English keeps
+     all three in its three lines): three
+     lines, "La primera llamada es sin costo. Le respondemos el mismo día hábil." */
+  :lang(es) .rs-g{display:none}
   /* with three lines beside the button, as in English, the Spanish keeps the English spacing, but the clip starts 16px under the
      line (it sat 10px under it, with the clamp 5px higher) and the sheet's top margin gives those 6px back, so row 1's formula
      still ends above the bar at 393 x 659 */

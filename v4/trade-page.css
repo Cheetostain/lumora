@@ -128,7 +128,7 @@
   .pl-docs .ticket table{font-size:12px;margin:6px 0}
   .pl-docs .ticket tr:has(.pc),.pl-docs .tk-tot{font-size:13px}   /* the circled tank line and the total a step over the 12px floor (phone-access review: the point of the picture sat at 12px) */
   .pl-docs .tk-co{font-size:13px;margin-bottom:6px}
-  .pl-docs .pl-inv{position:relative;z-index:2;width:90%;max-width:440px;justify-self:end;margin-top:-16px}
+  .pl-docs .pl-inv{position:relative;z-index:2;width:90%;max-width:440px;justify-self:end;margin-top:-8px}   /* 2026-10-17 polish: over the torn edge only (-16px ran the window 2 to 3px under the receipt's last line on restaurants, plumbing and electrical at 1024 and 390); every first paper keeps 10px or more of air above it */
   .pl-inv .doc{padding:10px 14px 14px}
   .pl-docs .doc-h b{font-size:14px}.pl-docs .doc-h span,.pl-docs .doc-to{font-size:12px}
   .pl-docs .doc-li li{font-size:13px;padding:5px 0}
@@ -144,8 +144,8 @@
    flagged). The .pc carries data-draw only as the in-view trigger (system.js adds .drawn; it has no path of its own). Static
    with reduced motion, with JS off and in print. */
 @media screen and (prefers-reduced-motion:no-preference){
-  html.js .pl-docs .pc[data-draw]::after{clip-path:inset(-4px -4px -4px -4px);transition:clip-path 600ms var(--ease-move) 150ms}
-  html.js .pl-docs .pc[data-draw]:not(.drawn)::after{clip-path:inset(-4px 100% -4px -4px)}
+  html.js .pl-docs .pc[data-draw]::after,html.js .pl-docs .pc[data-draw]>.pc-loop{clip-path:inset(-4px -4px -4px -4px);transition:clip-path 600ms var(--ease-move) 150ms}
+  html.js .pl-docs .pc[data-draw]:not(.drawn)::after,html.js .pl-docs .pc[data-draw]:not(.drawn)>.pc-loop{clip-path:inset(-4px 100% -4px -4px)}   /* .pc-loop: system.js pencil()'s loop (2026-10-17) */
   html.js .pl-docs .pl-flag{transition:opacity 220ms var(--ease-out) 900ms}
   html.js .pl-docs:has(.pc[data-draw]:not(.drawn)) .pl-flag{opacity:0}
 }
@@ -160,7 +160,8 @@
 .stop-leak{font-size:17px;font-weight:500;line-height:1.35;color:var(--body);max-width:30em}
 .stop .ph4{width:min(var(--ph-w),100%);margin-inline:0}
 .stop .crop-m{--crop-h:476px;height:var(--crop-h);overflow:hidden;-webkit-mask-image:linear-gradient(#000 calc(100% - 24px),transparent);mask-image:linear-gradient(#000 calc(100% - 24px),transparent)}
-.find-usd{font-size:32px}
+.find{container-type:inline-size}
+.find-usd{font-size:min(32px,14.2cqi)}   /* 2026-10-17 polish: 32px, stepping down only where its column is narrower than the figure ("$1,900 a month" ran 33px out of the notes at 768, where the white-space:nowrap of .money held it on one line) */
 /* PL: with JS off on a phone under 380px the fixed crop cut stop 3's payoff line ("On the 12:30 PM callback list") or left it in
    the fade (phone-access review: 320, 340, 360). With JS on, fitCrops' measured height overrides this, so the page height holds. */
 @media (max-width:379px){html:not(.js) .stop .crop-m{--crop-h:508px}html:not(.js) .n4 .crop-m{--crop-h:352px}}   /* and the night phone: its on-call line wraps under 380px */
@@ -206,6 +207,16 @@
   .n4-paper .np{flex:1;display:flex;flex-direction:column}
   .n4-paper .np-rows{flex:1;display:flex;flex-direction:column;justify-content:flex-start}   /* 2026-10-15: rows from the top (space-between spread them apart); flex:1 keeps the paper the phone's height */
 }
+/* 2026-10-17 polish (the Oct 16 desktop check): in one column Pause sits centred right under the picture it runs (the phone; the restaurant's
+   tape; the log on a page with no phone), in that picture's Sample band, not under the log at the band's edge, 180px off the phone at 768 */
+@media (max-width:899px){
+  .n4-loop{display:grid;justify-items:center;row-gap:20px;margin-top:18px}
+  .n4-figs{display:contents}
+  .n4-figs>*{order:3}
+  .n4-figs>:first-child{order:1}
+  .n4 .loop-ctl{order:2}
+}
+@media (max-width:699px){.n4-loop{row-gap:14px;margin-top:8px}}
 .pl-before{margin-top:12px;max-width:34em;font-size:15px;color:var(--muted-night)}
 .pl-before b{color:var(--on-night);margin-right:4px}
 .np .np-h .pl-after{align-self:center;font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--pencil)}   /* 2026-10-15: plain words, as the Sample stamp now reads (was 12px tracked capitals) */   /* R5's plain label, in the log head where the dates used to be (the day rows carry them now) */
