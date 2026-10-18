@@ -45,7 +45,13 @@
   var fine = matchMedia('(hover: hover) and (pointer: fine)');
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
-  var esc = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); };
+  // 2026-10-17 round 3 (judges): a line never starts with "·" and an address never ends a line on its bare house number (Water damage
+  // ES at 375 opened a line with "· se revisan cada mañana"; "123 / Oak St." split in Plumbing's thread). Every word the system writes
+  // passes through esc(), so the fix lives here once: the middle dot binds to the word before it with a no-break space, and a house
+  // number, its street and the suffix ("129 Oak St") stay one unit. The pages' own copy says it the same way by hand (&nbsp;).
+  // check.py WHOLE_JS fails either, in Chromium from 320 to 430 and in WebKit at 320, 375 and 393
+  var keep = function (s) { return s.replace(/ \u00b7 /g, '\u00a0\u00b7 ').replace(/\b(\d{1,5}) ([A-Z][a-z]+(?: [A-Z][a-z]+)?) (St|Ave|Rd|Blvd|Dr|Ln|Way|Ct|Pl|Hwy|Pkwy|Ter|Cir)\b/g, function (m, n, st, sx) { return n + '\u00a0' + st.replace(/ /g, '\u00a0') + '\u00a0' + sx; }).replace(/(\d) (?=[AP]M\b|[ap]\.[ \u00a0]?m\.)/g, '$1\u00a0').replace(/(\d\u00a0[ap]\.) (m\.)/g, '$1\u00a0$2'); };   // and a clock time ("4:12 PM" split in a badge at 320), as whole() does
+  var esc = function (s) { return keep(String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')); };
   // a phone number and a clock time stay on one line where the system writes them into words (round 2 of Franco's iPhone review,
   // 2026-10-17: WebKit broke "(352) 555- / 0148" in Home's night log and "Thu 9:00 / AM" in the plumbing quotes window). It takes
   // escaped text: a number goes in a span.nw (system.css; a no-break space alone still lets it break after the hyphen) and a time
@@ -237,7 +243,7 @@
       s = '<rect class="gs f" pathLength="1" x="30" y="22" width="240" height="420" rx="14"/><rect class="gs f" pathLength="1" x="104" y="8" width="92" height="34" rx="8"/><rect class="gs" pathLength="1" x="46" y="54" width="208" height="372" rx="2"/>' +
         txt(64, 94, g[0], 20, 'h') + '<path class="gs" pathLength="1" d="M64 108h172"/>' + txt(64, 146, g[1], 18) + txt(64, 214, g[2], 18) + scrib(64, 290, [150, 120, 160, 90]);
     } else if (kind === 'pile') {
-      [[48, 64, -7, g[0]], [82, 132, 5, g[1]], [58, 204, -2, g[2]]].forEach(function (q) {
+      [[48, 64, 0, g[0]], [82, 132, 0, g[1]], [58, 204, 0, g[2]]].forEach(function (q) {   // 2026-10-17 round 3: a pile of straight papers (no words turned off the line; it was -7, 5, -2 degrees)
         s += '<g transform="rotate(' + q[2] + ' ' + (q[0] + 92) + ' ' + (q[1] + 115) + ')"><rect class="gs f pf" pathLength="1" x="' + q[0] + '" y="' + q[1] + '" width="186" height="226" rx="2"/>' + txt(q[0] + 18, q[1] + 34, q[3], 18, 'h') + scrib(q[0] + 18, q[1] + 100, [130, 100, 140]) + '</g>'; });
     } else {
       s = '<rect class="gs f" pathLength="1" x="10" y="92" width="280" height="262" rx="10"/><path class="gs" pathLength="1" d="M10 124h280"/>' + txt(150, 114, g[0], 15, 'h', 'middle') +
@@ -290,7 +296,7 @@
       var th = '<div class="ph-who"><i></i>' + esc(R.who) + '</div><div class="thread">' + R.msgs.map(function (m, i) {
         var tb = m[0] === 'out' && i > 0 && /^(Missed call|Llamada perdida)/.test(R.msgs[i - 1][1]);
         return '<p class="' + (m[0] === 'sys' ? 'sys' + (i === R.msgs.length - 1 ? ' k' : '') : 'bub ' + m[0] + (tb ? ' sms' : '')) + '">' + whole(esc(m[1])) + '</p>'; }).join('') + '</div>';
-      return v4 ? ph4(th, R.clock || '9:41') : '<div class="scr-phone"><div class="ph"><div class="ph-sb"><span>9:41</span><i></i></div>' + th + '</div></div>';
+      return v4 ? phoneOf()(th, R.clock || '9:41') : '<div class="scr-phone"><div class="ph"><div class="ph-sb"><span>9:41</span><i></i></div>' + th + '</div></div>';
     }
     if (R.frame === 'clip') return '<div class="doc-clip"><span class="clamp" aria-hidden="true"><i></i></span><div class="doc">' + docBody(R, true) + '</div></div>';
     if (R.frame === 'paper') return '<div class="doc tilt-r">' + docBody(R, true) + '</div>';
@@ -350,17 +356,25 @@
   // two layers for one spot (the window's status line, the formula bar): the old value, then the new one in its place; with tr
   // (a status line, restaurants 2026-10-12) the old words stay, struck in pencil, as a cell's do: the pair's one pencil trace (R7)
   var was2 = function (v) { return typeof v === 'object' ? '<span class="chg' + (v.tr ? ' tr' : '') + '"><span class="was">' + whole(esc(v.was)) + '</span><span class="now">' + whole(esc(v.now)) + '</span></span>' : whole(esc(v)); };
+  // 2026-10-17 round 3 (judges): a column of money, quantities or short counts is set right (.num, system.css), as .dt sets its
+  // amounts, so decimals stack (Water damage stop 1's invoice). An ID (a ticket or job number, four digits or more) stays left. The
+  // After values decide, since a Before value may be words ("Not added" in the markup column)
+  var NUMV = /^[(\u2212-]?\$?\d[\d,]*(?:\.\d+)?\)?%?$/;
+  var cellNow = function (v) { return v && typeof v === 'object' ? ('was' in v || 'now' in v ? cellNow(v.now) : String(v.t == null ? '' : v.t)) : String(v == null ? '' : v); };
+  var numCol = function (P, i) { var vals = P.rows.map(function (r) { return cellNow(r.c[i]).trim(); }).filter(Boolean);
+    return vals.length > 0 && vals.every(function (s) { return NUMV.test(s) && (/[.,%$(\u2212-]/.test(s) || /^\d{1,3}$/.test(s)); }); };
   function pairHTML(P) {
     // P.line: the app's own label over the caller (a business phone line shows calls and texts in one thread)
-    if (P.frame === 'phone') return ph4('<div class="ph-who">' + (P.line ? '<small class="ph-line">' + esc(P.line) + '</small>' : '') + '<i></i>' + esc(P.who) + '</div><div class="thread">' + P.msgs.map(function (m) {
+    if (P.frame === 'phone') return phoneOf()('<div class="ph-who">' + (P.line ? '<small class="ph-line">' + esc(P.line) + '</small>' : '') + '<i></i>' + esc(P.who) + '</div><div class="thread">' + P.msgs.map(function (m) {
       var o = m[2] || {}, cls = m[0] === 'sys' ? 'sys' + (o.k ? ' k' : '') : 'bub ' + (m[0] === 'sms' ? 'out sms' : m[0]);
       return '<p class="' + cls + (o.add ? ' add' : '') + (o.pc ? ' pc' : '') + '">' + whole(esc(m[1])) + '</p>'; }).join('') + '</div>', P.clock || '9:41');
     // hm: a column (or, on a row, the row) the picture crops on a narrow container, as the screens kit does; nw: never wraps
-    var cl = function (i, th) { var c = ((P.hm || []).indexOf(i) > -1 ? 'hm ' : '') + (!th && (P.nw || []).indexOf(i) > -1 ? 'nw' : ''); return c.trim() ? ' class="' + c.trim() + '"' : ''; };
+    var NUM = P.cols.map(function (c, i) { return numCol(P, i); });
+    var cl = function (i, th, num) { var c = ((P.hm || []).indexOf(i) > -1 ? 'hm ' : '') + (!th && (P.nw || []).indexOf(i) > -1 ? 'nw ' : '') + (num && NUM[i] ? 'num' : ''); return c.trim() ? ' class="' + c.trim() + '"' : ''; };
     var head = (P.xls ? '<tr class="cl"><td></td>' + P.cols.map(function (c, i) { return '<td' + cl(i, 1) + '>' + 'ABCDEFG'.charAt(i) + '</td>'; }).join('') + '</tr>' : '') +
-      '<tr>' + (P.xls ? '<td>1</td>' : '') + P.cols.map(function (c, i) { return '<th' + cl(i, 1) + '>' + esc(c) + '</th>'; }).join('') + '</tr>';
+      '<tr>' + (P.xls ? '<td>1</td>' : '') + P.cols.map(function (c, i) { return '<th' + cl(i, 1, 1) + '>' + esc(c) + '</th>'; }).join('') + '</tr>';
     var body = P.rows.map(function (r) { var rc = ((r.n ? 'n ' : '') + (r.hm ? 'hm' : '')).trim(); return '<tr' + (rc ? ' class="' + rc + '"' : '') + '>' + (P.xls ? '<td>' + esc(r.r) + '</td>' : '') +
-      r.c.map(function (v, i) { return '<td' + cl(i) + '>' + cell(v) + '</td>'; }).join('') + '</tr>'; }).join('');
+      r.c.map(function (v, i) { return '<td' + cl(i, 0, 1) + '>' + cell(v) + '</td>'; }).join('') + '</tr>'; }).join('');
     var badge = P.badge ? '<p class="pair-badge">' + (P.badge.was ? '<span class="was">' + esc(P.badge.was) + '</span>' : '') + (P.badge.now ? '<span class="now ok">✓ ' + esc(P.badge.now) + '</span>' : '') + '</p>' : '';
     // the software's own furniture, present in both states so the frame never has an empty band (design review 2026-10-10):
     // a spreadsheet's formula bar (the selected cell, then "fx") and its sheet tabs with "Ready"; an app list's status line
@@ -378,6 +392,13 @@
     IPH_FOOT = '<span class="iph-qb l"><svg class="fl" viewBox="0 0 11.3 25.7" aria-hidden="true"><path fill="#fff" fill-rule="evenodd" d="M1.2 0h8.9c.7 0 1.2.5 1.2 1.2v2.6H0V1.2C0 .5.5 0 1.2 0zM0 4.8h11.3l-1.6 3.6v15.3c0 1.1-.9 2-2 2H3.6c-1.1 0-2-.9-2-2V8.4zM5.65 11.6c-.7 0-1.2.5-1.2 1.2v3.4c0 .7.5 1.2 1.2 1.2s1.2-.5 1.2-1.2v-3.4c0-.7-.5-1.2-1.2-1.2z"/></svg></span><span class="iph-qb r"><svg class="cm" viewBox="0 0 22.3 17.7" aria-hidden="true"><path fill="#fff" fill-rule="evenodd" d="M7.6 0h7.1c.6 0 1.1.3 1.4.8l1.1 1.8h2.1c1.7 0 3 1.3 3 3v9.1c0 1.7-1.3 3-3 3H3c-1.7 0-3-1.3-3-3V5.6c0-1.7 1.3-3 3-3h2.1L6.2.8C6.5.3 7 0 7.6 0zM11.15 4.6a5.6 5.6 0 1 0 0 11.2a5.6 5.6 0 1 0 0-11.2zM11.15 6.3a3.9 3.9 0 1 1 0 7.8a3.9 3.9 0 1 1 0-7.8zM18.6 5.1a1.05 1.05 0 1 0 0 2.1a1.05 1.05 0 1 0 0-2.1z"/></svg></span><i class="iph-home"></i>';
   function iph(inner) { return '<div class="iph" aria-hidden="true"><div class="iph-dev"><i></i><i></i><i></i><i></i><div class="iph-scr iph-lock">' + IPH_TOP + inner + IPH_FOOT + '</div></div></div>'; }
   L.render.iph = iph;
+  // 2026-10-17 round 3 (Phase D's one phone, done early on the trade pages): a page that shows the measured iPhone in its night band
+  // ([data-iph]) draws its stop phones in it too, as a light Messages screen with the status bar's time, the same thread as before
+  // (system.css .iph-msg). Lumora.lint fails a [data-iph] page that still shows the drawn .ph4
+  var IPH_SBR = IPH_TOP.slice(IPH_TOP.indexOf('<span class="iph-sb-r">'), IPH_TOP.indexOf('<i class="iph-grab">'));
+  function iphMsg(inner, clock) { return '<div class="iph" aria-hidden="true"><div class="iph-dev"><i></i><i></i><i></i><i></i><div class="iph-scr iph-msg" data-ui-ok="nested-card a text thread: the bubbles are the messages on the one phone screen (R6), not boxes around content"><span class="iph-isl"></span><div class="iph-sb"><time>' + esc(clock || '9:41') + '</time>' + IPH_SBR + '</div>' + inner + '<i class="iph-home"></i></div></div></div>'; }
+  L.render.iphMsg = iphMsg;
+  var phoneOf = function () { return document.querySelector('[data-iph]') ? iphMsg : ph4; };
 
   /* ================================================================ binders: everything the trade choice rewrites */
   var shown = {};
@@ -560,11 +581,11 @@
         lock = '<div class="pic n4-phone"><div class="lk4 crop-m" data-day="' + esc(day) + '" data-eve="' + esc(eve) + '" role="img" aria-label="' + esc(tr('Sample: the shop phone\'s lock screen at 6:41 a.m., ', 'Ejemplo: la pantalla de bloqueo del teléfono del negocio a las 6:41 a. m., ') + day + '. ' +
           nts.map(function (o) { return o.x.t + ', ' + hora(o.x.at) + ': ' + o.x.p + (o.x.fx ? '. ' + o.x.fx : ''); }).join('. ') + '.') + '">' +
           (el.hasAttribute('data-iph') ? iph : function (s) { return ph4(s, '', true); })('<p class="lk4-d' + (el.hasAttribute('data-iph') ? ' iph-date' : '') + '" aria-hidden="true">' + esc(day) + '</p><p class="lk4-t' + (el.hasAttribute('data-iph') ? ' iph-clock' : '') + '" aria-hidden="true">6:41</p><div class="lk4-nts" aria-hidden="true">' + nts.map(function (o) {
-            var x = o.x; return '<div class="lk4-nt" data-n="' + nNt[o.i] + '" data-t="' + esc(x.at) + '" data-task="' + x.task + '"><span class="ap ap-' + x.app.toLowerCase() + '">' + (APPS[x.app] || APPS.List) + '</span><div><p class="nr"><b>' + esc(x.t) + '</b><span>' + esc(hora(x.at)) + '</span></p><p>' + esc(x.p) + '</p>' +
+            var x = o.x; return '<div class="lk4-nt" data-n="' + nNt[o.i] + '" data-t="' + esc(x.at) + '" data-task="' + x.task + '"><span class="ap ap-' + x.app.toLowerCase() + '">' + (APPS[x.app] || APPS.List) + '</span><div><p class="nr"><b>' + esc(x.t) + '</b><span>' + whole(esc(hora(x.at))) + '</span></p><p>' + esc(x.p) + '</p>' +
               (x.fx ? '<span class="fx">↩ ' + esc(x.fx) + '</span>' : '') + '</div></div>'; }).join('') + '</div>') + '</div>' + SAMP + '</div>';
       }
       figs.innerHTML = lock + '<div class="pic n4-paper"><div class="np"><div class="np-h"><b>' + esc(N.paper + ', ' + t.shop) + '</b><span>' + esc(logDate) + '</span></div><ol class="np-rows">' +
-        N.rows.map(function (r, i) { return '<li data-n="' + nRow[i] + '" data-t="' + esc(r[0]) + '" data-task="' + r[2] + '"><time>' + esc(hora(r[0])) + '</time><span>' + whole(esc(r[1])) + '</span></li>'; }).join('') +
+        N.rows.map(function (r, i) { return '<li data-n="' + nRow[i] + '" data-t="' + esc(r[0]) + '" data-task="' + r[2] + '"><time>' + whole(esc(hora(r[0]))) + '</time><span>' + whole(esc(r[1])) + '</span></li>'; }).join('') +
         '</ol><p class="np-foot">' + esc((t.morning && t.morning.src) || tr('From your own job list, invoices, bills and email', 'De su lista de trabajos, sus facturas, las facturas de proveedores y su correo')) + '</p></div>' + SAMP + '</div>';
       figs.classList.toggle('nolock', !N.lock);
       loops.forEach(function (lp) { if (lp.el === el || el.contains(lp.el) || lp.el.contains(el)) lp.reset(); });
@@ -642,7 +663,27 @@
       var ol = tl.querySelector('ol'); if (ol) ol.innerHTML = rows.map(function (r, i) { return '<li data-i="' + i + '"><span>' + (ownPlace(r.id) || esc((r.pair && r.pair.place) || r.place)) + '</span></li>'; }).join('');
       var sub = tl.querySelector('[data-f="tsub"]'); if (sub) sub.textContent = (t.shop + ', ' + t.short.split(', ').slice(1).join(', ')).replace(/(\d) /g, '$1\u00a0');   // 2026-10-15: no-break space after a count
     }
-    initG2R(list, animate); initDraw(list); tally.bind(el, t); fitCrops(); pencil(el);
+    initG2R(list, animate); initDraw(list); tally.bind(el, t); $$('.pair[data-pair]', list).forEach(fitPair); fitCrops(); pencil(el);
+  }
+  // 2026-10-17 round 3 (judges): on the trade pages (html.fit-pairs) a plain stack shows only its state's layer, so each row is as tall as
+  // what it shows (a one-line "Escrito una vez" had sat in a 56px row). The frame keeps its size (R7): the table is measured in both
+  // states and the shorter one gets the difference under its table's last row (--fit-pad), so nothing below it moves when the state turns
+  function fitPair(p) {
+    if (!root.classList.contains('fit-pairs')) return;
+    var tb = p.querySelector('.win-b table'); p.classList.toggle('fit', !!tb && !!p.querySelector('.chg:not(.tr)')); if (!p.classList.contains('fit')) return;   // a window's table (a page's own paper pair keeps both layers)
+    p.style.removeProperty('--fit-pad');
+    var st = p.getAttribute('data-state') || 'after', h = function () { return p.getBoundingClientRect().height; };   // the whole frame: a status line's stack counts too
+    p.classList.add('measuring');
+    var here = h(); p.setAttribute('data-state', st === 'after' ? 'before' : 'after'); var other = h(); p.setAttribute('data-state', st); h();
+    p.classList.remove('measuring');
+    if (other > here + 0.5) p.style.setProperty('--fit-pad', (other - here).toFixed(2) + 'px');
+    // in a spreadsheet the room under the last row reads as Excel's next empty rows: its row lines at the height of a one-line row,
+    // the grey row-number column beside them (system.css paints them from these measures)
+    var xl = tb.closest('.xl'); if (!xl || !(other > here + 0.5)) return;
+    var rows = [].filter.call(tb.rows, function (r) { return !r.classList.contains('cl') && r.querySelector('td') && r.getClientRects().length; }), rn = tb.rows[0] && tb.rows[0].cells[0];   // a row hidden on a narrow picture has no height
+    p.style.setProperty('--fit-top', (tb.getBoundingClientRect().bottom - xl.getBoundingClientRect().top).toFixed(2) + 'px');
+    p.style.setProperty('--fit-rowh', Math.min.apply(null, rows.map(function (r) { return r.getBoundingClientRect().height; })).toFixed(2) + 'px');
+    if (rn) p.style.setProperty('--fit-rn', rn.getBoundingClientRect().width.toFixed(2) + 'px');
   }
   function showFig(el, key, preview) {
     var box = el.querySelector('[data-f="fig"]'); if (!box || !D[key]) return;
@@ -654,6 +695,7 @@
 
   /* ================================================================ the trade picker */
   var locked = document.body.hasAttribute('data-trade-lock');
+  if (locked) root.classList.add('fit-pairs');   // round 3 (system.css): each Before / After stack fits the state it shows (fitPair)
   function setTrade(key, animate) {
     if (!D[key]) return;
     var changed = key !== L.trade; L.trade = key;
@@ -705,6 +747,7 @@
     // job: cause and effect. The stop's money underline draws as the fix lands, not before it (it waits; see initG2R)
     // data-draw="view" (2026-10-16 repair, Home's stop 1): that mark draws when it comes into view, in Before too, as on the approved desktop
     if (state === 'after') $$('[data-draw]:not([data-draw=view])', g.closest('.stop, [data-g2r-scope]') || g).forEach(function (p) { p.removeAttribute('data-wait'); draw(p, 380); });
+    if (g.hasAttribute('data-pair')) fitPair(g);   // round 3: the rows take the shown layer's height, the frame keeps its own
     pencil(g.closest('.stop, [data-g2r-scope]') || g);   // a ring in the layer just shown is fitted to it
   }
   // job: state change. History: 55% and 600ms showed the "before" for ~1.3 s; then 95% held 2.5 s, and a timed owner skim
@@ -774,8 +817,84 @@
     }
   };
   var tick = 0;
-  addEventListener('scroll', function () { if (tick) return; tick = requestAnimationFrame(function () { tick = 0; tally.update(); }); }, { passive: true });
-  addEventListener('resize', function () { clearTimeout(L._rz); L._rz = setTimeout(function () { $$('.pen-ring').forEach(ring); tally.update(); fitCrops(); pencil(document, true); }, 150); });
+  addEventListener('scroll', function () { if (tick) return; tick = requestAnimationFrame(function () { tick = 0; tally.update(); padTally(); }); }, { passive: true });
+  // 2026-10-17 round 3: while a walk's sticky tally bar is stuck under the header, the page's scroll padding takes its height too, so the
+  // browser's own focus scroll (smooth, so the focus handler's one frame came too early) stops a control under the bar, not under the tally
+  function padTally() { var hdr = $('.hdr'), top = hdr ? hdr.getBoundingClientRect().bottom : 0, pad = 0;
+    $$('.tally').forEach(function (t) { if (!t.getClientRects().length || getComputedStyle(t).position !== 'sticky') return; var q = t.getBoundingClientRect(); if (q.height && q.top <= top + 1 && q.bottom > top) pad = Math.max(pad, q.bottom); });
+    if (pad) root.style.scrollPaddingTop = Math.ceil(pad + 16) + 'px'; else root.style.removeProperty('scroll-padding-top'); }
+  addEventListener('resize', function () { clearTimeout(L._rz); L._rz = setTimeout(function () { $$('.pen-ring').forEach(ring); tally.update(); $$('.pair[data-pair]').forEach(fitPair); fitCrops(); pencil(document, true); seatBar(); }, 150); });
+
+  /* ================================================================ the phone call bar lands between two lines (round 3, 2026-10-17)
+     Franco's iPhone review, after Home's p1-final rule: the call bar's top edge lands between two lines of the first screen, never
+     across a line, a figure or a button. A page opts in with data-bar-seat on its first section (every page but Home, whose hero
+     is tuned by hand in home.css). On load, when the fonts settle and when the width changes (never on a height change alone, so
+     iPhone Safari's toolbar can't make the page jump), the block that holds the cut line moves the least it can: up into the air
+     above it (12px at most, keeping 8px of that air) or down until the line clears the bar, and never so far that the page's
+     first-screen musts ([data-first], the strip's figure, the headline) leave the screen. check.py BAR_JS measures every page that
+     opts in, and every trade page, at 393 x 659, 375 x 667, 375 x 812 and 320 x 568 in WebKit and Chromium */
+  var seatW = 0, SEAT_ATOM = '.strip, .cta-row, .lf, label, ul, ol, dl, table, figure, .pic, .clip, .facts4, .btn';
+  function seatBar(force) {
+    var sec = $('main > section[data-bar-seat]'), bar = $('.callbar');
+    if (!sec || (!force && innerWidth === seatW)) return; seatW = innerWidth;
+    $$('[data-seated]', sec).forEach(function (e) { e.style.marginTop = ''; e.removeAttribute('data-seated'); });
+    if (!bar || !bar.getClientRects().length || scrollY > 0) return;
+    var B = bar.getBoundingClientRect().top, hdr = $('.hdr'), floor = hdr ? hdr.getBoundingClientRect().bottom + 28 : 0, TOL = 0.5;
+    var shown = function (e) { var s = getComputedStyle(e); return e.getClientRects().length > 0 && s.visibility !== 'hidden' && +s.opacity > 0; };
+    // every line of words, and every box the bar must not cross; a button or a field keeps 8px from the bar (a black button on the black
+    // bar read as one shape), a line or a small box 2px. y is where it starts, before that room
+    var lines = function () { var out = [], tw = document.createTreeWalker(sec, NodeFilter.SHOW_TEXT), n;
+      while ((n = tw.nextNode())) { var e = n.parentElement; if (!n.nodeValue.trim() || !e || e.closest('.sr') || !shown(e)) continue;
+        var r = document.createRange(); r.selectNodeContents(n); [].forEach.call(r.getClientRects(), function (q) { if (q.width > 0.5) out.push({ e: e, t: q.top, b: q.bottom, y: q.top }); }); }
+      $$('.btn, .stamp, .samp, .seg, select, input:not([type=radio]):not([type=checkbox])', sec).forEach(function (e) { if (!shown(e)) return;
+        var q = e.getBoundingClientRect(), p = e.matches('.btn, .seg, select, input') ? 6 : 0; if (q.height > 4) out.push({ e: e, t: q.top - p, b: q.bottom + p, y: q.top }); });
+      return out; };
+    var cut = function (o, s) { return o.t + s < B + TOL && o.b + s > B - TOL; };   // a line within half a pixel of the edge counts as cut
+    var mustBoxes = function () { return $$('[data-first], .hero-strip .strip-usd, h1', sec).filter(shown).map(function (e) {   // by the words' own boxes
+      var r = document.createRange(); r.selectNodeContents(e); var q = r.getBoundingClientRect(); return q.height ? q : e.getBoundingClientRect(); }); };
+    var unitOf = function (e) { var c = e, a = c.closest(SEAT_ATOM);
+      while (a && sec.contains(a)) { c = a; a = a.parentElement && a.parentElement.closest(SEAT_ATOM); }   // the outermost unit that holds it
+      while (c.parentElement && c.parentElement !== sec && /^inline/.test(getComputedStyle(c).display)) c = c.parentElement;
+      return c; };
+    for (var pass = 0; pass < 3; pass++) {
+      var L = lines(), first = L.filter(function (o) { return cut(o, 0); }).sort(function (a, b) { return a.t - b.t; })[0]; if (!first) return;
+      // the unit that holds the cut line, and up to two blocks before it in the same column. A push down happens at that unit alone; a
+      // lift is shared by them in proportion to the air over each (each keeps 6px of it, a card with a shadow 16, and gives 16px at most), so no one gap closes
+      var units = [unitOf(first.e)], x = units[0];   // a unit with nothing before it in its box takes its box's place: the button row is the first thing in its call block
+      while (units.length < 3) { var pv = x.previousElementSibling; while (!pv && x.parentElement && x.parentElement !== sec) { x = x.parentElement; pv = x.previousElementSibling; }
+        if (!pv) break; x = pv; if (shown(pv) && getComputedStyle(pv).position !== 'absolute') units.push(pv); }
+      var tops = units.map(function (c) { return c.getBoundingClientRect().top; });
+      // a card with a shadow above a block counts down to its shadow's reach (12px under its edge), so a lift never sets words in it
+      var cards = $$('.strip, .clip, .board, .contact-card, .sheet, .page, .card', sec).filter(function (e) { return shown(e) && getComputedStyle(e).boxShadow !== 'none'; }).map(function (e) { var q = e.getBoundingClientRect(); return { y: q.top, b: q.bottom + 12 }; });
+      var caps = units.map(function (c, i) { var air = tops[i] - Math.max.apply(null, L.concat(cards).filter(function (o) { return o.y < tops[i] - 0.5; }).map(function (o) { return o.b; }).concat([floor])); return Math.max(0, Math.min(16, air - (getComputedStyle(c).boxShadow !== 'none' ? 16 : 6))); });   // a card keeps 16px, clear of its own shadow
+      var room = caps.reduce(function (a, b) { return a + b; }, 0);
+      var after = L.filter(function (o) { return o.y >= tops[0] - 0.5; }).sort(function (x, y) { return x.t - y.t; });
+      var musts = mustBoxes().filter(function (q) { return q.top >= tops[0] - 0.5 && q.bottom <= B - TOL; });
+      var moved = function (o, s) { if (s >= 0) return o.y >= tops[0] - 0.5 ? s : 0;   // how far a line moves when the units move by s
+        var d = 0; for (var i = 0; i < units.length; i++) if (o.y >= tops[i] - 0.5) d += s * caps[i] / room; return d; };
+      // where the bar's edge can land: 2px over or under any line (clear of a descender), or the middle of a gap of 2.5px or more
+      // between two lines (a narrower one left WebKit's sub-pixel layout too little room; Home's sheet rule); the smallest move wins,
+      // a lift on a tie, and a push down never sends a first-screen must under the bar
+      var iv = []; after.forEach(function (o) { var l = iv[iv.length - 1]; if (l && o.t < l.b) l.b = Math.max(l.b, o.b); else iv.push({ t: o.t, b: o.b }); });
+      var spots = []; iv.forEach(function (v) { spots.push(v.t - 2, v.b + 2); });
+      for (var k = 0; k + 1 < iv.length; k++) if (iv[k + 1].t - iv[k].b >= 2.5) spots.push((iv[k].b + iv[k + 1].t) / 2);
+      var best = null;
+      spots.forEach(function (y) { var s = B - y;   // s > 0 moves the unit down, s < 0 lifts it
+        if (s > 0 && musts.some(function (q) { return q.bottom + s > B - TOL; })) return;
+        if (s < 0 && -s > room) return;
+        if (L.some(function (o) { return cut(o, moved(o, s)); })) return;
+        if (best === null || Math.abs(s) < Math.abs(best) - 0.01 || (Math.abs(Math.abs(s) - Math.abs(best)) <= 0.01 && s < 0 && best > 0)) best = s; });
+      if (best === null) return;
+      // each unit's margin moves it by its share, or by less where a float's clearance takes some of it (the Loss calculator's first
+      // field): so it is set, measured and set again until the unit has moved that far
+      (best > 0 ? [[units[0], best]] : units.map(function (c, i) { return [c, best * caps[i] / room]; })).forEach(function (cs) {
+        var c = cs[0], d = cs[1]; if (Math.abs(d) < 0.25) return;
+        var want = c.getBoundingClientRect().top + d, m = parseFloat(getComputedStyle(c).marginTop);
+        for (var t = 0; t < 4 && Math.abs(d) > 0.25; t++) { m += d; c.style.marginTop = m.toFixed(2) + 'px'; d = want - c.getBoundingClientRect().top; }
+        c.setAttribute('data-seated', ''); });
+    }
+  }
+  L.seatBar = seatBar;
 
   /* ================================================================ loops: the night band (pause control, off-screen pause) */
   var loops = [];
@@ -1126,11 +1245,16 @@
   document.addEventListener('focusin', function (e) {
     var el = e.target; if (!el || !el.getBoundingClientRect || el.closest('.hdr, .callbar')) return;
     el = ringBox(el);
-    requestAnimationFrame(function () {
+    var fix = function () {
       var r = el.getBoundingClientRect(), hdr = $('.hdr'), bar = $('.callbar');
       var top = hdr ? hdr.getBoundingClientRect().bottom : 0, bottom = bar && bar.getClientRects().length ? bar.getBoundingClientRect().top : innerHeight;
-      if (r.top < top || r.bottom > bottom) el.scrollIntoView({ block: 'nearest', behavior: 'instant' });
-    });
+      // 2026-10-17 round 3: a walk's sticky tally bar stuck under the header covers focus too (Shift+Tab left Before / After 66% under it)
+      $$('.tally').forEach(function (t) { if (t.contains(el) || !t.getClientRects().length || getComputedStyle(t).position !== 'sticky') return; var q = t.getBoundingClientRect();
+        if (q.height && q.top <= top + 1 && q.bottom > top && q.left < r.right && q.right > r.left) top = q.bottom; });
+      if (r.top < top) scrollBy({ top: r.top - top - 8, behavior: 'instant' }); else if (r.bottom > bottom) el.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+    };
+    // round 3: the browser's own focus scroll can land after the first frame (a long Shift+Tab jump into the walk), so the test runs again
+    requestAnimationFrame(fix); setTimeout(fix, 60);
   });
 
   /* ================================================================ start */
@@ -1160,6 +1284,7 @@
     io.observe(s);
   });
   $$('.pen-ring').forEach(ring);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { $$('.pen-ring').forEach(ring); tally.update(); fitCrops(); pencil(document, true); });
+  seatBar(true);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { $$('.pen-ring').forEach(ring); tally.update(); $$('.pair[data-pair]').forEach(fitPair); fitCrops(); pencil(document, true); seatBar(true); });
   if (qs.has('lint')) { var r = L.lint(); console.log('Lumora lint', r); }
 })();

@@ -137,6 +137,19 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
   [data-ground=ruled],[data-ground=graph]{background:var(--paper)}
   [data-ground=ruled]+[data-ground=paper],[data-ground=graph]+[data-ground=paper]{border-top:1px solid var(--rule)}
 }
+/* 2026-10-17 round 3 (judges): from 900px the 32px rules crossed the hero's headline and its 30px body lines at random heights.
+   Snapping the type to the rules would hold only while every line height, gap, button and wrap of the hero sat on one 32px beat
+   at every width and zoom, in two languages, which section 13 already found breaks on any wrap (the 2026-10-15 phone note). So
+   the ruled paper stays where nothing is written: the hero's word column is plain paper from the window's left edge to the middle
+   of the column gap, top to bottom of the band, and the rules show beside it, round the clipboard, the contact card or the signed
+   note. Where both columns are words (How it works' timeline, the full list's finder) both are plain and the rules keep to the
+   margins. The band clips the paper to itself (overflow:clip, which also keeps it out of the page's width). check.py RULED_JS fails a rule through a line of words at 1024 and 1440 */
+@media (min-width:900px){
+  .hero[data-ground=ruled]{overflow:clip;isolation:isolate}   /* the paper under the words stays inside the band (no sideways scroll from it), over the band's own ground */
+  .hero[data-ground=ruled] :is(.hero-copy,.ct-copy,.ab-copy,.hiw-copy,.hiw-tl,.wa-find){position:relative}
+  .hero[data-ground=ruled] :is(.hero-copy,.ct-copy,.ab-copy,.hiw-copy)::before{content:"";position:absolute;z-index:-1;top:-600px;bottom:-600px;left:-50vw;right:-28px;background:var(--paper);pointer-events:none}
+  .hero[data-ground=ruled] :is(.hiw-tl,.wa-find)::before{content:"";position:absolute;z-index:-1;top:-600px;bottom:-600px;left:-28px;right:-50vw;background:var(--paper);pointer-events:none}
+}
 [data-ground=night]{background:radial-gradient(rgba(233,228,216,.05) 1px,transparent 1.2px) 0 0/5px 5px,var(--night);color:var(--on-night)}
 [data-ground=night] b{color:#fff}
 /* the perforated seam: a row of punched holes where one band tears from the next (2 or 3 per page) */
@@ -274,7 +287,13 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 [data-ground=night] .reply{color:var(--muted-night)}
 .price{font-size:var(--fs-17);max-width:36em}
 .mb{font-size:var(--fs-17);max-width:36em}                       /* the money-back sentence, bound from shared-text.json "moneyback" */
-.mb b.red{font-weight:inherit}                                      /* "the walk fee back" in red, not bold (the question before it is bold) */
+/* 2026-10-17 round 3 (judges after Franco's iPhone review): "the walk fee back" is money returned, a gain, so it is ink with the pencil
+   underline a figure won back wears (.stop[data-state=after] .find-usd), never red: red only ever means money lost. The stroke is the
+   pen-under path drawn in pencil (#4F4C45, on the ink band #A7A194), one per line where the words wrap. It was red, not bold, since
+   2026-10-10. Not bold: the question before it is bold. check.py MONEY_JS fails red inside money back */
+.won{font-weight:inherit;color:inherit;padding-bottom:6px;-webkit-box-decoration-break:clone;box-decoration-break:clone;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6C28 2 60 9 98 4' fill='none' stroke='%234F4C45' stroke-width='2.2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") 0 100%/100% 8px no-repeat}
+[data-ground=night] .won{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6C28 2 60 9 98 4' fill='none' stroke='%23A7A194' stroke-width='2.2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E")}
 .mb-box{border-top:2px solid var(--ink);padding-top:12px;max-width:34em}
 .mb-box h3{font-size:19px;margin-bottom:4px}
 [data-ground=night] .mb-box{border-color:var(--on-night)}
@@ -543,7 +562,7 @@ html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs
 .pic-c{display:grid;justify-items:center}
 /* the phone: a live HTML screen (Recents, a text thread) */
 .scr-phone{width:min(300px,100%);aspect-ratio:9/16.5;background:#1b1b1d;border-radius:44px;padding:10px;box-shadow:var(--lift-hi);font-family:var(--sys);color:#000;margin-inline:auto}
-.scr-phone.tilt{transform:rotate(-2deg)}
+.scr-phone.tilt{transform:none}   /* 2026-10-17 round 3: level (was -2deg); no words turned off the line, pictures included (section 4) */
 .ph{position:relative;height:100%;background:#fff;border-radius:35px;overflow:hidden}
 .ph-sb{display:flex;justify-content:space-between;padding:14px 24px 6px;font-size:14px;font-weight:600}
 .ph-sb i{width:26px;height:11px;border:1.5px solid #111;border-radius:3px}
@@ -617,7 +636,7 @@ html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs
 /* the whiteboard: live HTML hand lettering (not an svg), so the words stay 12px+ at 390; 3 days on narrow screens */
 .wb{position:relative;background:#cfd2d6;border:2px solid var(--ink);border-radius:8px;padding:8px;box-shadow:var(--lift)}
 .wb-in{position:relative;background:#fbfbf9;border:1.4px solid var(--ink);border-radius:4px;padding:14px 14px 40px;font-family:var(--font);color:var(--ink)}   /* 2026-10-16: upright, as the pencil */
-.wb-t{font-style:normal;font-weight:600;letter-spacing:.06em;font-size:max(15px,min(4.6cqi,24px));margin-bottom:8px}
+.wb-t{font-style:normal;font-weight:600;letter-spacing:0;font-size:max(15px,min(4.6cqi,24px));margin-bottom:8px}
 .wb-days{display:grid;grid-template-columns:repeat(5,1fr);border-top:2px solid var(--ink)}
 .wb-day{padding:8px 8px 0;border-left:2px solid var(--ink);min-height:150px}
 .wb-day:first-child{border-left:0}
@@ -885,7 +904,10 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 @media (max-width:899px){
   .foot-col a{padding-block:5px;margin-block:-5px}
   .foot-base ul{gap:0 24px}
-  .foot-base ul a{display:inline-block;padding-block:13px}
+  /* 2026-10-17 round 3 (judges): the legal rows sat 50px apart under link lists that step 33px. Each row takes the lists' 5px above
+     and below and each link keeps a 44px tap height with padding that does not move the layout (it was 13px of padding, 49px rows) */
+  .foot-base li{padding-block:5px}
+  .foot-base ul a{display:inline-block;padding-block:10.4px;margin-block:-10.4px}
 }
 /* 2026-10-17 round 2 (owner judge: in Spanish at 375 "Privacidad" dropped to a row of its own): on a phone the four legal links
    sit in two even rows on the two columns of the link lists above (the same grid and gap), in both languages at every width
@@ -957,7 +979,7 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .stop-h{display:flex;align-items:flex-start;gap:12px;margin-bottom:18px}
 .stop-h .tab-n{margin-top:-2px}
 .stop-h h3{margin:4px 0 0}
-.pic.has-seg{padding-bottom:64px}
+.pic.has-seg{padding-bottom:73px}   /* 2026-10-17 round 3 (judges): 18px between the picture and Before / After (the 55px switch); 64 left 9px on a computer against 17 on a phone */
 @media (max-width:699px){.pic.has-seg{padding-bottom:72px}}   /* 2026-10-17: 17px of air between the picture and Before / After, past its shadow (9px sat in it) */
 html:not(.js) .pic.has-seg{padding-bottom:28px}            /* no JS: no buttons, so no empty slot under the picture */
 .pic.has-seg>.seg{position:absolute;left:0;bottom:0}
@@ -992,6 +1014,16 @@ td .chg:not(.tr)>*{align-self:center}
    setG2R sets data-state on the stop too, so a margin note and a find label turn with the switch */
 .pair[data-state=before] .ao,.pair[data-state=after] .bo,.stop[data-state=before] .ao,.stop[data-state=after] .bo{display:none}
 .pair[data-state=after] .chg:not(.tr)>.was{visibility:hidden;opacity:0}
+/* 2026-10-17 round 3 (judges): a plain stack kept the hidden layer's height, so a one-line "Escrito una vez" sat in a 56px row (Plumbing
+   ES stop 2, row 972). On the trade pages (html.fit-pairs, system.js) each stack is as tall as the layer the state shows, so rows
+   come out even, and the frame keeps its size (R7): fitPair measures the table in both states and gives the shorter state the
+   difference under its last row (--fit-pad). Struck stacks (.tr) keep both lines, as before. Without JS both layers stay laid out */
+html.fit-pairs .pair.fit[data-state=after] .chg:not(.tr)>.was,html.fit-pairs .pair.fit[data-state=before] .chg:not(.tr)>.now{display:none}
+html.fit-pairs .pair.fit .ptbl::after{content:"";display:block;height:var(--fit-pad,0px)}   /* a block of its own: a table's margin collapsed into the status line's 10px */
+html.fit-pairs .pair.fit .xl>table{margin-bottom:var(--fit-pad,0px)}
+html.fit-pairs .pair.fit .xl{/* ui-ok: pattern-bg Excel's own empty rows under the last one, inside the picture */background:linear-gradient(90deg,#f3f3f3 calc(var(--fit-rn,31px) - 1px),#dcdcdc 0 var(--fit-rn,31px),transparent 0) 0 var(--fit-top,0px)/100% var(--fit-pad,0px) no-repeat,
+  repeating-linear-gradient(transparent 0 calc(var(--fit-rowh,37px) - 1px),#dcdcdc 0 var(--fit-rowh,37px)) 0 var(--fit-top,0px)/100% var(--fit-pad,0px) no-repeat,#fff}   /* the room reads as Excel's next empty rows */
+html.fit-pairs .pair.measuring,html.fit-pairs .pair.measuring *{transition:none!important}
 .pair[data-state=after] .chg.tr>.was{color:var(--pencil)}
 .pair[data-state=after] .chg.tr>.was::after{transform:none}
 .pair[data-state=after] .chg.tr>.was .st{background:none;color:var(--pencil);box-shadow:inset 0 0 0 1px rgba(79,76,69,.4)}
@@ -1005,6 +1037,15 @@ td .chg:not(.tr)>*{align-self:center}
 .ptbl table{width:100%;border-collapse:collapse;font-size:max(12px,min(3.3cqi,14px));font-variant-numeric:tabular-nums}
 .ptbl th{font-size:12px;font-weight:600;color:#6e6e73;text-align:left;padding:0 8px 7px 0;border-bottom:1px solid #e5e5ea}
 .ptbl td{padding:9px 8px 9px 0;border-bottom:1px solid #efeff2;vertical-align:top;line-height:1.3}
+/* 2026-10-17 round 3 (judges): the last row's rule and the status line's rule drew two hairlines 11px apart (Plumbing quotes, Water
+   invoice and receivables); the last row has none, as an app list ends. A numeric column (system.js pairHTML marks it .num: money,
+   quantities and short counts, never an ID) is set right, as .dt does, so decimals stack; a struck or swapped value aligns to the end */
+.ptbl tr:last-child td{border-bottom:0}
+:is(.ptbl,.xl) :is(td,th).num{text-align:right}
+.ptbl :is(td,th).num:not(:last-child){padding-right:14px}   /* a figure set right keeps air before the words of the next column ("5,140.00 Not asked" touched) */
+:is(.ptbl,.xl) td.num .chg:not(.tr){justify-items:end}
+.ptbl td.num .chg.tr{justify-content:flex-end}
+.xl td.num .chg.tr{justify-items:end}
 .ptbl td small{display:block;font-size:12px;color:#6e6e73;margin-top:1px}
 @container (max-width:420px){.ptbl .hm{display:none}}
 .ptbl td.nw,.xl td.nw{white-space:nowrap}
@@ -1091,7 +1132,11 @@ td .chg:not(.tr)>*{align-self:center}
 .tl-tag.free{border-color:var(--rule);color:var(--muted)}
 .tl-body{display:grid;gap:8px;max-width:40em}
 .tl-body .t-body{color:var(--body)}
-.tl4>li.tl-big{--bleed:var(--g);margin:6px calc(-1*var(--bleed));padding:26px var(--bleed);background:var(--sheet);box-shadow:var(--lift);border:0}   /* 2026-10-16: the card bleeds out by its padding, so its words sit on the other rows' x; on phones by the whole gutter, edge to edge */
+.tl4>li.tl-big{--bleed:var(--g);margin:0 calc(-1*var(--bleed));padding:26px var(--bleed);background:var(--sheet);box-shadow:var(--lift);border:0}   /* 2026-10-16: the card bleeds out by its padding, so its words sit on the other rows' x; on phones by the whole gutter, edge to edge */
+/* 2026-10-17 round 3 (judges): the row above's hairline floated 6px over the raised card and read as a double edge, on phones and
+   computers. The card has no block margin and the row above drops its rule, so the card's own edge is the line between the rows.
+   check.py DESK_JS fails a 1px border within 8px above the card */
+.tl4>li:has(+li.tl-big){border-bottom-color:transparent}
 @media (min-width:700px){.tl4>li.tl-big{--bleed:calc(var(--g) - 16px)}}   /* 2026-10-16: 16px out, so 16px of paper stays at 768 and 1024 (24 at 1280); 28px into the 32px gutter left a 4px sliver that read as a near miss */
 @media (min-width:1300px){.tl4>li.tl-big{--bleed:28px}}   /* 2026-10-16: from 1300 the side margin is 50px or more, so the card takes its full 28px and still keeps 22px of paper (92 at 1440) */
 .tl4>li.tl-big .tl-head h3{font-size:clamp(26px,2.6vw,32px)}
@@ -1183,6 +1228,17 @@ html.review .slot{/* ui-ok: pattern-bg a review-only picture slot, never on the 
 .iph-qb .fl{width:calc(11.3 * var(--pt));height:calc(25.7 * var(--pt))}
 .iph-qb .cm{width:calc(22.3 * var(--pt));height:calc(17.7 * var(--pt))}
 .iph-home{position:absolute;z-index:6;left:50%;bottom:calc(6 * var(--pt));width:calc(139 * var(--pt));height:calc(5 * var(--pt));margin-left:calc(-69.5 * var(--pt));border-radius:9px;background:#fff}
+/* 2026-10-17 round 3 (Phase D's one phone, done early on the trade pages): a stop phone and Contact's thread in the measured iPhone,
+   a light Messages screen. The status bar's time and its place are the phone research's (iOS 17: centred at 71.5 pt, level with the
+   island's middle); the thread under it keeps the drawn phone's sizes, so its words and crop read as before (system.js iphMsg) */
+.iph-sb time{position:absolute;left:calc(71.5 * var(--pt));top:calc(29.5 * var(--pt));transform:translate(-50%,-50%);font-size:calc(17 * var(--pt));font-weight:600;letter-spacing:calc(-.15 * var(--pt));line-height:1}
+.iph-msg{background:#fff;color:#000;padding-top:calc(54 * var(--pt))}
+.iph-msg .iph-sb{color:#000}
+.iph-msg .iph-home{background:#000}
+@media (max-width:899px){.iph-sb time{font-size:max(12px,calc(17 * var(--pt)))}}   /* the 12px floor for words in a picture, as the notifications have it */
+.iph .thread{padding:10px 10px;gap:6px;font-size:14px}
+.iph-msg>.ph-who,.iph-msg>.thread{font-family:var(--sys)}   /* the thread keeps the drawn phone's system font (SF on an iPhone either way), so its lines wrap as they did; Inter, the stand-in for SF elsewhere, ran the Spanish text-back two lines longer at 320 */
+.iph .sys.k{font-size:13px}
 /* the loop round a missed call: drawn level in iPhone points over the notification (pencil_paths.py draws and checks it); the pen's
    red since 2026-10-17 (one red pen marks every problem) */
 .iph-ring{position:absolute;inset:0;width:100%;height:100%;z-index:2;fill:none;stroke:var(--pen);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;overflow:visible;pointer-events:none;max-width:none}

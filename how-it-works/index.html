@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=a5355fc1">
-<link rel="stylesheet" href="/v4/trade-page.css?v=a5355fc1">
+<link rel="stylesheet" href="/v4/system.css?v=80039fe8">
+<link rel="stylesheet" href="/v4/trade-page.css?v=80039fe8">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=a5355fc1" defer></script>
-<script src="/v4/system.js?v=a5355fc1" defer></script>
+<script src="/v4/trades.js?v=80039fe8" defer></script>
+<script src="/v4/system.js?v=80039fe8" defer></script>
 <style>
 /* ===== How it works, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64), and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -84,10 +84,10 @@
 .wk-keep{font-size:20px!important;font-weight:600;color:var(--ink);line-height:1.35}
 .wk-lists{display:grid;gap:28px;margin-top:40px}
 .wk-lists h3{margin-bottom:6px}
-.checks li,.nevers li{position:relative;padding:9px 0 9px 32px;border-top:1px solid var(--rule-bone);font-size:17px}
+.checks li,.nevers li{position:relative;padding:9px 0 9px 28px;border-top:1px solid var(--rule-bone);font-size:17px}
 .checks li:first-child,.nevers li:first-child{border-top:0}
-.checks li::before{content:"";position:absolute;left:4px;top:15px;width:18px;height:15px;background:var(--ink);-webkit-mask:var(--tick) 0 0/100% 100% no-repeat;mask:var(--tick) 0 0/100% 100% no-repeat}   /* 2026-10-16 repair: the site's one drawn tick (system.css --tick), level; it was a CSS check turned -48deg */
-.nevers li::before,.nevers li::after{content:"";position:absolute;left:5px;top:21px;width:15px;height:2.4px;background:var(--ink);transform:rotate(45deg)}
+.checks li::before{content:"";position:absolute;left:0;top:15px;width:18px;height:15px;background:var(--ink);-webkit-mask:var(--tick) 0 0/100% 100% no-repeat;mask:var(--tick) 0 0/100% 100% no-repeat}   /* 2026-10-16 repair: the site's one drawn tick (system.css --tick), level; it was a CSS check turned -48deg */
+.nevers li::before,.nevers li::after{content:"";position:absolute;left:1.5px;top:21px;width:15px;height:2.4px;background:var(--ink);transform:rotate(45deg)}
 .nevers li::after{transform:rotate(-45deg)}
 .wk-lists .note-r{margin-top:8px;font-size:15px;color:var(--muted);max-width:34em}
 .wk-lists .note-r a{display:inline-block;padding-block:12px;margin-block:-12px}   /* a 44px tall tap area without moving the layout */
@@ -209,8 +209,8 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
 .cover{display:grid;gap:18px;margin-top:6px}
 @media (min-width:900px){.cover{grid-template-columns:1fr 1fr;gap:40px}}
 .cover h3{color:#fff;font-size:20px;margin-bottom:6px}
-.cover li{position:relative;padding:8px 0 8px 26px;border-top:1px solid rgba(233,228,216,.16);font-size:17px;color:var(--on-night)}
-.cover .yes li::before{content:"";position:absolute;left:0;top:15px;width:16px;height:13px;background:var(--on-night);-webkit-mask:var(--tick) 0 0/100% 100% no-repeat;mask:var(--tick) 0 0/100% 100% no-repeat}   /* 2026-10-16 repair: the same drawn tick, on the dark band */
+.cover li{position:relative;padding:8px 0 8px 28px;border-top:1px solid rgba(233,228,216,.16);font-size:17px;color:var(--on-night)}
+.cover .yes li::before{content:"";position:absolute;left:0;top:14px;width:18px;height:15px;background:var(--on-night);-webkit-mask:var(--tick) 0 0/100% 100% no-repeat;mask:var(--tick) 0 0/100% 100% no-repeat}   /* 2026-10-16 repair: the same drawn tick, on the dark band */
 @media (forced-colors:active){.checks li::before,.cover .yes li::before{forced-color-adjust:none;background:CanvasText}}
 .cover .no li::before{content:"";position:absolute;left:3px;top:20px;width:12px;height:2px;background:var(--muted-night)}
 
@@ -246,7 +246,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
   .fs-leak b{grid-column:1;grid-row:1}
   .fs-leak p,.fs-leak small{grid-column:1/-1;margin-top:0}   /* what we saw runs the full width under the name and the figure */
   .fs-rows>li{gap:4px 12px;padding:14px 0}
-  .checks li,.nevers li{padding:7px 0 7px 30px}
+  .checks li,.nevers li{padding:7px 0 7px 28px}   /* 2026-10-17 round 3 (judges): every checklist takes the facts' tick, 18 x 15 with its words at 28px */
   .checks li::before{top:13px}.nevers li::before,.nevers li::after{top:19px}
   .wk-lists{margin-top:30px}
   .wk-parts{margin-top:28px}
@@ -288,7 +288,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
 
 <main id="main">
 
-<section class="hero hiw-hero" id="top" data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="timeline">
+<section class="hero hiw-hero" id="top" data-bar-seat data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="timeline">
   <div class="wrap hiw-g">
     <div class="hiw-copy">
       <h1>What happens after you call us</h1>
@@ -361,7 +361,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
       </div>
       <div class="wk-price">
         <p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward a fix of $1,500 or more that starts within 30 days.</span></p>
-        <p class="mb" id="money-back"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span></p>
+        <p class="mb" id="money-back"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="won">the walk fee back</b>.</span></p>
       </div>
     </div>
 
@@ -658,7 +658,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
         <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
       </div>
       <dl class="c4-hours">
-        <div><dt>Money back</dt><dd><p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="red">the walk fee back</b>.</span> <a class="u" href="#terms">Full terms</a></p></dd></div>
+        <div><dt>Money back</dt><dd><p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="won">the walk fee back</b>.</span> <a class="u" href="#terms">Full terms</a></p></dd></div>
         <div><dt>Hours</dt><dd><span data-shared="hours">Monday to Friday, 9&nbsp;a.m. to 5&nbsp;p.m.</span></dd></div>
         <div><dt>Reply time</dt><dd><span data-shared="reply">We answer or call back the same business day; after 5&nbsp;p.m. or on weekends, by 10&nbsp;a.m. the next business day.</span></dd></div>
         <div><dt>Language</dt><dd>English or Spanish</dd></div>
@@ -672,7 +672,7 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
         <blockquote class="signed"><p>“Before Lumora, I typed up the paperwork at a water damage company, then automated most of it. Now we do the same for your business.”</p></blockquote>
         <figcaption class="signed-by">Franco A. Soto, Owner</figcaption>
         <dl class="cblock">
-          <div><dt>Where</dt><dd>Gainesville, serving Alachua County. Farther in Florida by arrangement.</dd></div>
+          <div><dt>Where</dt><dd>Gainesville and Alachua County. Elsewhere in Florida? Ask us.</dd></div>
         </dl>
         <p class="t-small hm-about"><a class="u" href="/about/">About Lumora</a></p>
       </figure>

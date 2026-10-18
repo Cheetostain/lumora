@@ -189,8 +189,8 @@ html:not(.js) .wa-filter{display:none}
 .c4-llc{margin-top:10px;font-size:15px;color:var(--muted)}
 .c4-rules{margin-top:30px}
 .c4-rules h3{margin-bottom:6px;font-size:24px}
-.c4-rules li{position:relative;padding:9px 0 9px 36px;font-size:17px;font-weight:500;color:var(--ink)}
-.c4-rules .tick{left:0;top:11px;width:22px;height:18px}
+.c4-rules li{position:relative;padding:9px 0 9px 28px;font-size:17px;font-weight:500;color:var(--ink)}
+.c4-rules .tick{left:0;top:15px;width:18px;height:15px}   /* 2026-10-17 round 3 (judges): every checklist takes the facts' tick, 18 x 15 with its words at 28px */
 .wa-cc-k{margin-bottom:12px}
 .wa-about{margin-top:16px}
 .cc-slot{width:120px;margin:0 0 14px}
