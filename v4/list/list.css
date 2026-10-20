@@ -8,7 +8,6 @@
 .wa-hero .hero-g{grid-template-areas:"copy" "act" "tool";row-gap:18px}
 .hero .cta-row .wa-sms{font-size:17px}
 .wa-sms,.c4-sms,.wa-about a,.mb a.u,.wa-how a{display:inline-block;padding-block:12px;margin-block:-12px}   /* 44px tall tap areas, no layout change */
-.cta-tel{padding-block:10.5px;margin-block:-10.5px}                                                         /* the number beside a call button: 52px tall */
 @media (min-width:900px){
   .wa-hero .hero-g{grid-template-areas:"copy tool" "act tool";grid-template-rows:auto 1fr}
   .wa-hero h1{max-width:none}
@@ -26,9 +25,10 @@ html:not(.js) .wa-filter{display:none}
 .wa-chip span{background:var(--paper)}   /* 2026-10-15: no ground lines through a chip; a checked chip keeps --sheet (the rule below wins) */
 .wa-chip input:checked+span{background:var(--sheet);border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}   /* ringed, never filled (R11); same weight, so no chip moves */
 .wa-chip input:focus-visible+span{outline:3px solid var(--ink);outline-offset:2px}
-@media (hover:hover) and (pointer:fine){.wa-chip:hover input:not(:checked)+span{border-color:var(--ink)}}
-.wa-chip input:active+span{transform:scale(.97)}
-@media (prefers-reduced-motion:no-preference){.wa-chip span{transition:border-color var(--t-hover),transform var(--t-press)}}
+/* Franco 2026-10-19: hover is the 8% ink tint (solid over paper, so no ground line shows through), never the ink border: a picked chip
+   is the ink border plus its ring, so a hovered chip read as a second pick. Picking fades the ground, border and ring together */
+@media (hover:hover) and (pointer:fine){.wa-chip:hover input:not(:checked)+span{background-color:#E4E3E0}}
+@media (prefers-reduced-motion:no-preference){.wa-chip span{transition:background-color var(--t-hover),border-color var(--t-hover),box-shadow var(--t-hover),transform var(--t-press)}.wa-chip input:active+span{transform:var(--press)}}
 /* Windows high contrast drops the ring (box-shadow) and repaints borders, so the picked chip fills with the system highlight */
 @media (forced-colors:active){.wa-chip input:checked+span{forced-color-adjust:none;background:Highlight;color:HighlightText;border-color:Highlight}}
 /* the filter's result line, between the legend and the chips: the words a tap changes, in view above whichever chip was tapped */
@@ -40,17 +40,15 @@ html:not(.js) .wa-filter{display:none}
 .wa-index-k{margin-bottom:8px;font-size:15px;font-weight:600;color:var(--muted)}
 .wa-index ol{display:block;columns:2;column-gap:28px;border-top:2px solid var(--ink)}
 .wa-index li{break-inside:avoid}
-.wa-index a{display:flex;justify-content:space-between;align-items:baseline;gap:12px;min-height:44px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:17px;color:var(--ink);text-decoration:none;
-  background:linear-gradient(var(--pen),var(--pen)) 0 calc(100% - 1px)/0 2px no-repeat}
-.wa-index a:focus-visible{background-size:100% 2px}
-@media (hover:hover) and (pointer:fine){.wa-index a:hover{background-size:100% 2px}}
-@media (prefers-reduced-motion:no-preference){.wa-index a{transition:background-size var(--t-press) var(--ease-out)}.wa-index a:hover,.wa-index a:focus-visible{transition-duration:var(--t-hover)}}
+.wa-index a{display:flex;justify-content:space-between;align-items:baseline;gap:12px;min-height:44px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:17px;color:var(--ink);text-decoration:none}   /* hover: system.css's row links (2026-10-19) */
 .wa-ni{font-size:15px;color:var(--muted)}
 @media (min-width:900px){.wa-index{display:block;margin-top:32px}}
 
 /* ======================================================= 2 the list: Home's ruled rows, one stage after another. The grey trade names
    follow each line; once a trade is picked they go (every line left is for that trade). On a computer the stage name rides
    beside its lines. */
+.wa-reach{margin:0 0 28px;font-size:17px;color:var(--body);max-width:42em}   /* agency pass 2026-10-18 (rank 19, the operations consultant): what we can connect, said once where the list starts */
+@media (min-width:900px){.wa-reach{margin-bottom:48px;margin-left:calc((100% - 48px) / 3 + 48px)}}   /* over the lines' column, beside the stage names */
 .wa-stage+.wa-stage{margin-top:32px}
 .wa-sh{margin-bottom:10px;font-size:24px;line-height:1.2}
 /* 2026-10-15: on phones each stage name stays in view under the header while its lines scroll (a long list lost its place) */
@@ -73,12 +71,8 @@ html:not(.js) .wa-filter{display:none}
 .wa-top{margin-bottom:36px}
 .wa-top-k{margin-bottom:10px;font-size:20px;font-weight:600;line-height:1.3;color:var(--ink)}
 .wa-top ol{border-top:2px solid var(--ink)}
-.wa-top a{display:flex;justify-content:space-between;align-items:baseline;gap:12px;min-height:44px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:17px;font-weight:600;color:var(--ink);text-decoration:none;
-  background:linear-gradient(var(--pen),var(--pen)) 0 calc(100% - 1px)/0 2px no-repeat}
+.wa-top a{display:flex;justify-content:space-between;align-items:baseline;gap:12px;min-height:44px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:17px;font-weight:600;color:var(--ink);text-decoration:none}   /* hover: system.css's row links (2026-10-19) */
 .wa-top a span{flex:none;font-size:15px;font-weight:400;color:var(--muted)}
-.wa-top a:focus-visible{background-size:100% 2px}
-@media (hover:hover) and (pointer:fine){.wa-top a:hover{background-size:100% 2px}}
-@media (prefers-reduced-motion:no-preference){.wa-top a{transition:background-size var(--t-press) var(--ease-out)}.wa-top a:hover,.wa-top a:focus-visible{transition-duration:var(--t-hover)}}
 @media (min-width:900px){
   .wa-top{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);column-gap:48px;align-items:start;margin-bottom:64px}
   .wa-top-k{margin:0;padding-top:12px;border-top:2px solid var(--ink)}
@@ -167,41 +161,30 @@ html:not(.js) .wa-filter{display:none}
 .wa-skip{font-size:14px;color:#0b57a8}
 
 /* ======================================================= 4 the close: not on the list, the walk, Home's close parts, every trade */
-.close-g{display:grid;gap:44px}
-@media (min-width:900px){.close-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:start}.c4-card{padding-top:84px;position:sticky;top:96px}}
+/* agency pass 2026-10-18: the close's shared rules (.close-g, .close-act, .c4-tel, .c4-hours, .c4-rules, the card's Cardino) live once in
+   system.css section 23; what follows is this page's own spacing */
 .close-h{margin:0 0 20px;font-size:clamp(44px,5.4vw,64px)}
 .wa-cl{font-size:17px;max-width:34em}
 .wa-cl+.wa-cl{margin-top:12px}
 .wa-honest{margin-top:12px;font-size:15px;color:var(--muted);max-width:34em}   /* holds only the free-call line since the no-reviews line was cut (2026-10-13) */
 .wa-terms{display:grid;gap:10px;justify-items:start;margin:20px 0 26px}
 .wa-terms .price b{color:var(--ink)}
-.close-act{gap:12px}
-.close-act .arrow-to{position:relative;display:inline-flex;width:max-content}
-.close-act .arrow-to .pen-arrow{position:absolute;left:100%;top:-26px;width:110px;height:84px;margin-left:8px}
-.c4-tel{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 20px;font-size:17px}
 .wa-how{font-size:17px;font-weight:600}
-.c4-hours{margin-top:30px;border-top:1px solid var(--rule)}
-.c4-hours div{display:grid;gap:2px;padding:11px 0;border-bottom:1px solid var(--rule)}
-.c4-hours dt{font-size:15px;font-weight:600;color:var(--muted)}
-.c4-hours dd{font-size:17px;color:var(--ink)}
-@media (min-width:700px){.c4-hours div{grid-template-columns:8.5em minmax(0,1fr);align-items:baseline;column-gap:16px}}
 .wa-also{margin-top:18px;font-size:15px;color:var(--muted);max-width:34em}
-.c4-llc{margin-top:10px;font-size:15px;color:var(--muted)}
 .c4-rules{margin-top:30px}
-.c4-rules h3{margin-bottom:6px;font-size:24px}
-.c4-rules li{position:relative;padding:9px 0 9px 28px;font-size:17px;font-weight:500;color:var(--ink)}
-.c4-rules .tick{left:0;top:15px;width:18px;height:15px}   /* 2026-10-17 round 3 (judges): every checklist takes the facts' tick, 18 x 15 with its words at 28px */
 .wa-cc-k{margin-bottom:12px}
 .wa-about{margin-top:16px}
-.cc-slot{width:120px;margin:0 0 14px}
 .wa-more{display:grid;gap:6px;padding-top:18px;border-top:1px solid var(--rule)}
 @media (min-width:900px){.c4-main{grid-column:1;grid-row:1}.wa-more{grid-column:1;grid-row:2;align-self:start;margin-top:-20px}.c4-card{grid-column:2;grid-row:1/3}.close-g{grid-template-rows:auto 1fr}}
 .wa-trades{display:flex;flex-wrap:wrap;column-gap:20px}
 .wa-trades a{display:inline-flex;align-items:center;min-height:44px;font-size:17px;color:var(--body);text-decoration:underline;text-decoration-color:var(--muted);text-decoration-thickness:1px;text-underline-offset:4px}
-@media (hover:hover) and (pointer:fine){.wa-trades a:hover{color:var(--ink);text-decoration-color:var(--pen)}}
+/* states sweep TL-7 (Franco 2026-10-19): hover was a thin red line and focus added nothing to the words. Hover and a press: the words
+   turn ink and their own underline turns ink and 2px, at its resting depth; focus: the words turn ink inside the ring, with the
+   resting underline (the ring is the mark). Red only means money lost. Plumbing's twin is trade-page.css .pl-trades */
+.wa-trades a:is(:focus-visible,:active){color:var(--ink)}
+.wa-trades a:active{text-decoration-color:var(--ink);text-decoration-thickness:2px}
+@media (hover:hover) and (pointer:fine){.wa-trades a:hover:not(:focus-visible){color:var(--ink);text-decoration-color:var(--ink);text-decoration-thickness:2px}}
 /* Cardino perches on the contact card (Home, Franco 2026-10-10) */
-.contact-card .cardino{top:auto;bottom:100%;margin-bottom:-2px;width:58px;right:36px}
-@media (min-width:700px){.contact-card .cardino{top:auto;width:74px;right:56px}}
 
 /* ======================================================= band padding by role */
 @media (min-width:700px){

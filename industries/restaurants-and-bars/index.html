@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="format-detection" content="telephone=no">   
-<title>Restaurants and bars | Lumora, Gainesville FL</title>
-<meta name="description" content="For restaurants and bars in Gainesville and Alachua County: cases billed but never delivered, distributor prices that rise while the menu stays put, slow nights staffed like busy ones and delivery-app charges nobody disputed, found in your own records.">
+<title>Restaurant and bar automation in Gainesville, FL | Lumora</title>
+<meta name="description" content="Gainesville restaurants and bars: we find cases billed but never delivered and distributor prices that rise past the menu. The first call is free.">
 <link rel="canonical" href="https://lumorafl.com/industries/restaurants-and-bars/">
 <link rel="alternate" hreflang="en" href="https://lumorafl.com/industries/restaurants-and-bars/">
 <link rel="alternate" hreflang="es" href="https://lumorafl.com/es/industries/restaurants-and-bars/">
 <link rel="alternate" hreflang="x-default" href="https://lumorafl.com/industries/restaurants-and-bars/">
-<meta property="og:title" content="Restaurants and bars | Lumora">
-<meta property="og:description" content="For Gainesville restaurants and bars: supplier invoices checked line by line against last week’s price, staff hours against sales, food cost and what delivery apps really keep, in English or Spanish.">
+<meta property="og:title" content="Restaurant and bar automation in Gainesville, FL | Lumora">
+<meta property="og:description" content="Gainesville restaurants and bars: we find cases billed but never delivered and distributor prices that rise past the menu. The first call is free.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lumorafl.com/industries/restaurants-and-bars/">
 <meta property="og:image" content="https://lumorafl.com/assets/share-card-en.png">
@@ -22,13 +22,14 @@
 <meta property="og:site_name" content="Lumora">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="es_US">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Lumora", "item": "https://lumorafl.com/"}, {"@type": "ListItem", "position": 2, "name": "Industries", "item": "https://lumorafl.com/industries/"}, {"@type": "ListItem", "position": 3, "name": "Restaurants and bars", "item": "https://lumorafl.com/industries/restaurants-and-bars/"}]}</script>
 <meta name="theme-color" content="#F6F5F2">
 <meta name="color-scheme" content="only light">
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=80039fe8">
-<link rel="stylesheet" href="/v4/trade-page.css?v=80039fe8">
+<link rel="stylesheet" href="/v4/system.css?v=85f32fc0">
+<link rel="stylesheet" href="/v4/trade-page.css?v=85f32fc0">
 <style>
 /* the page's own extras; the shared trade-page blocks are in trade-page.css */
 /* 4. the distributor's customer copy: a full invoice cut to its lines, so a little wider than a counter ticket. The cook's
@@ -77,10 +78,14 @@
   .rb-mo .mo-row .l,.rb-mo .mo-row .v{font-size:14px}
   .rb-tape{padding:12px 14px 14px;font-size:12px}
 }
+/* round 4 (2026-10-18): stop 2's Coastway bill gives its Line column the width ("Fryer / oil, a / jug" took three lines at 393 beside
+   "Last price 10/01", now headed by its date alone), so each item takes one or two lines from 360 */
+.hm4-walk .stop:is([data-place="The bills in your books"],[data-place="Las facturas en sus libros"]) .ptbl th:first-child{width:42%}
 </style>
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=80039fe8" defer></script>
-<script src="/v4/system.js?v=80039fe8" defer></script>
+<script src="/v4/trades.js?v=85f32fc0" defer></script>
+<script src="/v4/system.js?v=85f32fc0" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Office automation for restaurants and bars","serviceType":"Business process automation","provider":{"@type":"ProfessionalService","@id":"https://lumorafl.com/#business","name":"Lumora","url":"https://lumorafl.com/","telephone":"+1-352-226-0681"},"areaServed":[{"@type":"AdministrativeArea","name":"Alachua County, FL"},{"@type":"City","name":"Gainesville, FL"},{"@type":"City","name":"Alachua, FL"},{"@type":"City","name":"Archer, FL"},{"@type":"City","name":"Hawthorne, FL"},{"@type":"City","name":"High Springs, FL"},{"@type":"City","name":"La Crosse, FL"},{"@type":"City","name":"Micanopy, FL"},{"@type":"City","name":"Newberry, FL"},{"@type":"City","name":"Waldo, FL"}],"audience":{"@type":"BusinessAudience","audienceType":"Restaurants and bars"},"availableLanguage":["en","es"],"url":"https://lumorafl.com/industries/restaurants-and-bars/"}</script>
 </head>
 <body data-trade="food" data-trade-lock data-rules="v4">
 <a class="skip" href="#main">Skip to content</a>
@@ -88,7 +93,7 @@
 <div class="util">
   <div class="wrap util-in">
     <span>Gainesville, serving Alachua County</span>
-    <span class="util-r"><a href="/es/industries/restaurants-and-bars/" lang="es" hreflang="es" class="lang">Español</a></span>
+    <span class="util-r"><span data-shared="hours">Monday to Friday, 9&nbsp;a.m. to 5&nbsp;p.m.</span><a href="/es/industries/restaurants-and-bars/" lang="es" hreflang="es" class="lang">Español</a></span>
   </div>
 </div>
 <header class="hdr">
@@ -118,18 +123,18 @@
   <div class="wrap hero-g">
     <div class="hero-copy">
       <p class="eyebrow">Operations and automation for restaurants and bars in Gainesville and Alachua County.</p>
-      <h1>Where restaurants and bars lose money</h1>
+      <h1>We find where your restaurant loses money</h1>
       <p class="hero-one">The case on the invoice that never came off the truck.</p>
-      <p class="t-lede"><span class="hm-recog">Distributor prices that climb while the menu stays put.</span> We walk your place, put a dollar figure on each problem, then fix it inside the tools you already use.</p>
+      <p class="t-lede"><span class="hm-recog">Distributor prices that climb while the menu stays put.</span> <span class="t-do">We walk your place, put a dollar figure on each problem, then fix it inside the tools you already use.</span></p>
     </div>
     <div class="hero-act">
       <div class="cta">
         <div class="cta-row">
           <a class="btn btn-lg" href="tel:+13522260681">Call us</a>
           <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
-          <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
+          <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20restaurants%20and%20bars%20page.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
         </div>
-        <p class="reply">The first call is free. We call back the same business day.</p>
+        <p class="reply"><span class="rs-town">A Gainesville company. </span>The first call is free<span class="rs-lang">, in English or Spanish</span>. We call back the same business&nbsp;day.</p>
       </div>
     </div>
     <a class="hero-strip strip" href="#sheet" data-bind="strip">
@@ -139,32 +144,30 @@
       <span class="strip-usd" data-s="usd"><span class="loss-k">Losing</span> $1,153&nbsp;a&nbsp;month</span><span class="sr">, see it on the sample sheet below</span>
     </a>
     <div class="hero-terms">
-      <p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward a fix of $1,500 or more that starts within 30 days.</span></p>
+      <p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger businesses get a quote on the free call. Start a fix of $1,500 or more within 30&nbsp;days and the walk&nbsp;fee comes off its price.</span></p>
     </div>
     <div class="hero-tool">
       <figure class="clip" aria-label="Sample walk sheet">
         <div class="board">
           <span class="clamp" aria-hidden="true"><i></i></span>
           <div class="sheet" id="sheet" data-bind="sheet" data-ring data-fill data-short data-ui-ok="nested-card the printed sheet on its clipboard, as on Home">
-            <header class="sh-head">
-              <div><b class="sh-title">Walk sheet</b><span class="sh-sub" data-f="sub">Restaurant and bar, 110&nbsp;seats, Gainesville</span></div>
-              <span class="stamp">Sample</span>
-            </header>
+            <header class="lh"><img src="/v4/assets/mark.svg" alt="Lumora" width="34" height="27"><b class="sh-title">Walk sheet</b><span class="stamp">Sample</span><span class="sh-sub" data-f="sub">Restaurant and bar, 110&nbsp;seats<span class="sh-at">, Gainesville</span></span></header>
             <p class="sr" aria-live="polite" data-f="live"></p>
             <div class="sh-cols"><span>Problem</span><span data-f="per">Lost a month</span></div>
-            <ol class="sh-rows" data-f="rows"><li style="--i:0" data-task="reminders"><div class="sh-l"><b>A slow Tuesday staffed like a busy night</b><small>$266 extra labor a Tuesday × 52 weeks ÷ 12</small></div><span class="sh-usd">$1,153<svg class="pen-ring" viewBox="0 0 80 53" aria-hidden="true"><path pathLength="1" d="M4.7 18.5C5.0 18.0 6.0 16.4 6.9 15.5C7.7 14.5 8.7 13.6 9.8 12.7C10.8 11.8 12.0 11.0 13.3 10.3C14.5 9.5 15.9 8.8 17.3 8.2C18.8 7.5 20.3 7.0 21.8 6.5C23.4 6.0 25.0 5.6 26.6 5.2C28.3 4.9 30.0 4.6 31.6 4.4C33.3 4.2 35.0 4.1 36.7 4.1C38.4 4.0 40.1 4.1 41.8 4.2C43.5 4.2 45.2 4.4 46.8 4.6C48.5 4.9 50.1 5.2 51.7 5.5C53.2 5.9 54.8 6.3 56.3 6.8C57.7 7.3 59.2 7.8 60.6 8.4C61.9 9.0 63.3 9.6 64.5 10.3C65.7 11.1 66.9 11.8 68.0 12.6C69.1 13.4 70.1 14.3 71.0 15.2C71.9 16.0 72.7 17.0 73.4 18.0C74.1 18.9 74.8 19.9 75.2 20.9C75.7 22.0 76.1 23.0 76.3 24.1C76.6 25.1 76.7 26.2 76.7 27.3C76.6 28.4 76.5 29.5 76.2 30.5C75.9 31.6 75.5 32.6 75.0 33.7C74.5 34.7 73.8 35.7 73.0 36.7C72.2 37.6 71.3 38.6 70.3 39.4C69.3 40.3 68.2 41.1 67.0 41.9C65.8 42.7 64.5 43.4 63.1 44.0C61.7 44.7 60.3 45.3 58.8 45.8C57.3 46.3 55.7 46.7 54.2 47.1C52.6 47.4 50.9 47.7 49.3 48.0C47.7 48.2 46.0 48.3 44.3 48.4C42.7 48.5 41.0 48.5 39.3 48.4C37.7 48.4 36.0 48.2 34.4 48.0C32.8 47.8 31.2 47.6 29.6 47.3C28.1 46.9 26.5 46.5 25.1 46.1C23.6 45.7 22.2 45.2 20.8 44.6C19.4 44.0 18.1 43.4 16.8 42.8C15.6 42.1 14.4 41.4 13.3 40.6C12.2 39.8 11.2 39.0 10.3 38.2C9.3 37.3 8.5 36.4 7.7 35.5C7.0 34.6 6.4 33.6 5.8 32.6C5.3 31.6 4.9 30.6 4.6 29.6C4.3 28.5 4.2 27.5 4.1 26.4C4.1 25.4 4.2 24.3 4.4 23.3C4.6 22.2 4.9 21.2 5.4 20.2C5.9 19.1 6.5 18.1 7.2 17.2C7.9 16.2 8.7 15.3 9.7 14.4C10.6 13.5 11.7 12.7 12.8 11.9C13.9 11.1 15.9 10.1 16.5 9.8"></path></svg></span></li><li style="--i:1" data-task="quotes"><div class="sh-l"><b>Supplier price rises never questioned or passed to the menu</b><small>$106.70 a week in price rises × 52 weeks ÷ 12</small></div><span class="sh-usd">$462</span></li><li style="--i:2" data-task="quotes"><div class="sh-l"><b>Delivery-app error charges never disputed</b><small>$96.40 a week in app errors × 60% won back × 52 weeks ÷ 12</small></div><span class="sh-usd">$251</span></li></ol>
+            <ol class="sh-rows" data-f="rows"><li style="--i:0" data-task="reminders"><div class="sh-l"><b>A slow Tuesday staffed like a busy night</b><small>$266 extra labor a Tuesday&nbsp;×&nbsp;52&nbsp;weeks&nbsp;÷&nbsp;12</small></div><span class="sh-usd">$1,153<svg class="pen-ring" viewBox="0 0 80 53" aria-hidden="true"><path pathLength="1" d="M4.7 18.5C5.0 18.0 6.0 16.4 6.9 15.5C7.7 14.5 8.7 13.6 9.8 12.7C10.8 11.8 12.0 11.0 13.3 10.3C14.5 9.5 15.9 8.8 17.3 8.2C18.8 7.5 20.3 7.0 21.8 6.5C23.4 6.0 25.0 5.6 26.6 5.2C28.3 4.9 30.0 4.6 31.6 4.4C33.3 4.2 35.0 4.1 36.7 4.1C38.4 4.0 40.1 4.1 41.8 4.2C43.5 4.2 45.2 4.4 46.8 4.6C48.5 4.9 50.1 5.2 51.7 5.5C53.2 5.9 54.8 6.3 56.3 6.8C57.7 7.3 59.2 7.8 60.6 8.4C61.9 9.0 63.3 9.6 64.5 10.3C65.7 11.1 66.9 11.8 68.0 12.6C69.1 13.4 70.1 14.3 71.0 15.2C71.9 16.0 72.7 17.0 73.4 18.0C74.1 18.9 74.8 19.9 75.2 20.9C75.7 22.0 76.1 23.0 76.3 24.1C76.6 25.1 76.7 26.2 76.7 27.3C76.6 28.4 76.5 29.5 76.2 30.5C75.9 31.6 75.5 32.6 75.0 33.7C74.5 34.7 73.8 35.7 73.0 36.7C72.2 37.6 71.3 38.6 70.3 39.4C69.3 40.3 68.2 41.1 67.0 41.9C65.8 42.7 64.5 43.4 63.1 44.0C61.7 44.7 60.3 45.3 58.8 45.8C57.3 46.3 55.7 46.7 54.2 47.1C52.6 47.4 50.9 47.7 49.3 48.0C47.7 48.2 46.0 48.3 44.3 48.4C42.7 48.5 41.0 48.5 39.3 48.4C37.7 48.4 36.0 48.2 34.4 48.0C32.8 47.8 31.2 47.6 29.6 47.3C28.1 46.9 26.5 46.5 25.1 46.1C23.6 45.7 22.2 45.2 20.8 44.6C19.4 44.0 18.1 43.4 16.8 42.8C15.6 42.1 14.4 41.4 13.3 40.6C12.2 39.8 11.2 39.0 10.3 38.2C9.3 37.3 8.5 36.4 7.7 35.5C7.0 34.6 6.4 33.6 5.8 32.6C5.3 31.6 4.9 30.6 4.6 29.6C4.3 28.5 4.2 27.5 4.1 26.4C4.1 25.4 4.2 24.3 4.4 23.3C4.6 22.2 4.9 21.2 5.4 20.2C5.9 19.1 6.5 18.1 7.2 17.2C7.9 16.2 8.7 15.3 9.7 14.4C10.6 13.5 11.7 12.7 12.8 11.9C13.9 11.1 15.9 10.1 16.5 9.8"></path></svg></span></li><li style="--i:1" data-task="quotes"><div class="sh-l"><b>Supplier price rises never questioned or passed to the menu</b><small>$106.70 a week in price rises&nbsp;×&nbsp;52&nbsp;weeks&nbsp;÷&nbsp;12</small></div><span class="sh-usd">$462</span></li><li style="--i:2" data-task="quotes"><div class="sh-l"><b>Delivery-app error charges never disputed</b><small>$96.40 a week in app errors ×&nbsp;60% won back&nbsp;×&nbsp;52&nbsp;weeks&nbsp;÷&nbsp;12</small></div><span class="sh-usd">$251</span></li></ol>
             <div class="sh-total"><span>Lost before any fix</span><b data-f="total">$1,866 a month</b></div>
             <p class="sh-note">Yours is built from your own point-of-sale reports, schedule, invoices and app statements. 60% is a sample win rate, one owner's figure in Restaurant Business.</p>
+            <p class="sh-foot"><span><span>lumorafl.com</span><span>(352) 226-0681</span></span><span>Page&nbsp;1&nbsp;of&nbsp;1</span></p>
           </div>
         </div>
       </figure>
     </div>
   </div>
   <div class="facts4">
-    <ul class="wrap" aria-label="Facts you can check">
+    <ul data-part="facts" class="wrap" aria-label="Facts you can check">
       <li>A Florida company, based in Gainesville</li>
       <li>English and Spanish</li>
-      <li>Money back up to 7 days after we go over your sheet</li>
+      <li data-shared="moneyback.short">Walk fee back if you ask within 7&nbsp;days</li>
       <li>We don't sell leads, and there's no long contract</li>
     </ul>
   </div>
@@ -181,7 +184,7 @@
         <li data-task="numbers">Tip-outs worked out from each server's sales the way your pool rule says, ready before payroll.</li>
         <li data-task="retyping">Sunday's inventory count typed once from the clipboard, next to what it should have been.</li>
         <li data-task="numbers">Each app's payout matched to the bank deposit, with its real cut after promotions and ads.</li>
-        <li data-task="calendar">Food handler training due 60 days after each hire, license renewals and grease trap pump-outs, on one calendar.</li>
+        <li data-task="calendar">Food handler training due 60&nbsp;days after each hire, license renewals and grease trap pump-outs, on one calendar.</li>
       </ul>
       <p class="auto-close">On the walk, we find which of these your place has. <a class="u" href="/what-we-automate/?trade=food">See the full list for restaurants and bars</a></p>
       <div class="pl-who">
@@ -223,19 +226,19 @@
     <ol class="tl4">
       <li>
         <div class="tl-head"><h3><span data-shared="step1.when">Today</span></h3><span class="tl-tag free"><span data-shared="step1.cost">Free</span></span></div>
-        <div class="tl-body"><p class="t-body"><span data-shared="step1.what">A free call, up to 20 minutes.</span> We tell you plainly whether a walk fits.</p></div>
+        <div class="tl-body"><p class="t-body"><span data-shared="step1.what">A free call, by phone.</span> You tell us where the week goes. We tell you plainly whether a walk would pay for itself.</p></div>
       </li>
       <li class="tl-big">
         <div class="tl-head"><h3><span data-shared="step2.when">The walk</span></h3><span class="tl-tag"><span data-shared="step2.cost">Paid</span></span></div>
         <div class="tl-body">
           <p class="t-body"><span data-shared="step2.what">A visit sized to your place, plus your records: distributor invoices, point-of-sale reports, the schedule and app statements.</span> <span data-shared="step2.part">You sign one OK so we can look at them.</span></p>
-          <p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger shops get a quote on the free call. Counts toward a fix of $1,500 or more that starts within 30 days.</span></p>
-          <p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="won">the walk fee back</b>.</span></p>
+          <p class="price"><span data-shared="price"><b>The walk starts at $500.</b> Bigger businesses get a quote on the free call. Start a fix of $1,500 or more within 30&nbsp;days and the walk&nbsp;fee comes off its price.</span></p>
+          <p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7&nbsp;days of the call where you go over your sheet, and you get <b class="won">the walk fee back</b>.</span></p>
         </div>
       </li>
       <li>
         <div class="tl-head"><h3><span data-shared="step3.when">Your sheet</span></h3></div>
-        <div class="tl-body"><p class="t-body"><span data-shared="step3.what">Every problem in dollars. About 5 business days after we have your records; bigger places get a quote and a date on the free call.</span> <span data-shared="step3.get">You keep it either way.</span></p></div>
+        <div class="tl-body"><p class="t-body"><span data-shared="step3.what">Every problem in dollars. About 5&nbsp;business days after we have your records; bigger places get a quote and a date on the free call.</span> <span data-shared="step3.get">You keep it either way.</span></p></div>
       </li>
       <li>
         <div class="tl-head"><h3><span data-shared="step4.when">Then, only if you want</span></h3><span class="tl-tag">Paid</span></div>
@@ -256,7 +259,7 @@
   <div class="wrap pl-pw">
     <div class="pl-pw-copy">
       <h2>A case of fries on the invoice never came off the truck.</h2>
-      <p class="pl-find">Monday's delivery, a sample. Coastway's invoice bills 10 cases of fries. Nine came in. The cook wrote the 9 in pencil after the driver left, so the driver's copy says nothing, and nobody asked for the credit.</p>
+      <p class="pl-find">Monday's delivery, a sample. Coastway's invoice bills 10&nbsp;cases of fries. Nine came in. The cook wrote the 9&nbsp;in pencil after the driver left, so the driver's copy says nothing, and nobody asked for the credit.</p>
       <p class="pl-fix"><b>The fix:</b> the count at the back door goes into a photo or a short form, each invoice is checked against it, and a credit request is drafted for your OK by the next morning. On your walk, we check your marked copies for shorts with no credit.</p>
     </div>
     <figure class="pic pl-docs-pic">
@@ -266,18 +269,18 @@
             <p class="tk-co">COASTWAY BROADLINE FOODS<small>Ocala FL, (352) 555-0181</small></p>
             <p class="tk-no pl-wide"><span>ACCT 512077</span><span>WHIMBREL KITCHEN &amp; TAP</span></p>
             <p class="tk-no"><span>INVOICE 7041152203</span><span>MON 10/05/26</span></p>
-            <p class="tk-no pl-wide"><span>RTE 214 STOP 09</span><span>NET 7</span></p>
-            <table><tr><th>QTY</th><th>DESCRIPTION</th><th class="r">EXT</th></tr><tr><td>318.4 LB</td><td>WING CHKN JMBO</td><td class="r">1,076.19</td></tr><tr><td><span class="pc" data-draw>10 CS<i class="rb-9">9</i></span></td><td>FRY 3/8 SKIN-ON</td><td class="r">387.50</td></tr><tr><td>6 CS</td><td>OIL CANOLA 35LB JUG</td><td class="r">281.10</td></tr><tr><td>5 CS</td><td>PATTY BEEF 80/20</td><td class="r">948.00</td></tr><tr><td></td><td>3 MORE LINES, FUEL</td><td class="r">504.05</td></tr></table>
+            <p class="tk-no pl-wide"><span>RTE 214&nbsp;STOP 09</span><span>NET 7</span></p>
+            <table><tr><th>QTY</th><th>DESCRIPTION</th><th class="r">EXT</th></tr><tr><td>318.4 LB</td><td>WING CHKN JMBO</td><td class="r">1,076.19</td></tr><tr><td><span class="pc" data-draw>10&nbsp;CS<i class="rb-9">9</i></span></td><td>FRY 3/8 SKIN-ON</td><td class="r">387.50</td></tr><tr><td>6&nbsp;CS</td><td>OIL CANOLA 35LB JUG</td><td class="r">281.10</td></tr><tr><td>5&nbsp;CS</td><td>PATTY BEEF 80/20</td><td class="r">948.00</td></tr><tr><td></td><td>3&nbsp;MORE LINES, FUEL</td><td class="r">504.05</td></tr></table>
             <p class="tk-sum tk-tot"><span>INVOICE TOTAL</span><span>3,196.84</span></p>
             <p class="tk-no rb-sig"><span>RECEIVED BY<i class="rb-hand">R. Ortiz</i></span><span>SHORTS<span class="rb-box"></span></span></p>
           </div>
           <div class="scr-win pl-inv">
             <div class="win-tb"><i></i><i></i><i></i><span>Credit request, draft</span></div>
-            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>Photo of the customer copy read: 10 cases of fries billed, <b>9 marked received.</b></span></p>
+            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>Photo of the customer copy read: 10&nbsp;cases of fries billed, <b>9&nbsp;marked received.</b></span></p>
             <div class="rb-ml">
               <p class="rb-f"><span>To</span>Sam Evans, Coastway Broadline Foods</p>
               <p class="rb-f"><span>Subject</span>Credit request, invoice 7041152203</p>
-              <div class="rb-body"><p>Hi Sam,</p><p>On Monday's delivery we received 9 of 10 cases of FRY 3/8 SKIN-ON. Please credit $38.75 to account 512077.</p><p>Thanks,<br>Greg Nelson, Whimbrel Kitchen &amp; Tap</p></div>
+              <div class="rb-body"><p>Hi Sam,</p><p>On Monday's delivery we received 9&nbsp;of 10&nbsp;cases of FRY 3/8 SKIN-ON. Please credit $38.75 to account 512077.</p><p>Thanks,<br>Greg Nelson, Whimbrel Kitchen &amp; Tap</p></div>
               <p class="rb-send"><span>Drafted for your OK. Nothing sent.</span><span class="rb-btn">Send</span></p>
             </div>
           </div>
@@ -290,8 +293,8 @@
 
 <section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" style="--hole:var(--sheet)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
   <div class="wrap">
-    <h2 class="walk-h">What a walk finds</h2>
-    <p class="walk-intro" data-sample-lead>Whimbrel Kitchen &amp; Tap is a sample 110-seat restaurant and bar. Each stop shows the same screen before and after the fix, and the walk ends on the sheet's total.</p>
+    <h2 class="walk-h" data-walk-head data-sample-lead>Our sample restaurant, Whimbrel Kitchen &amp; Tap, loses <span class="walk-h-usd">$1,866&nbsp;a&nbsp;month</span>. Here's where.</h2>
+    <p class="walk-intro">A 110-seat restaurant and bar. Each stop shows the same screen before and after the fix, and the walk ends on the sheet's total.</p>
   </div>
   <div class="wrap">
     <div class="walk-grid">
@@ -300,14 +303,16 @@
           <p class="tally-h">Walk sheet <span class="stamp">Sample</span></p>
           <p class="tally-sub" data-f="tsub">Whimbrel Kitchen &amp; Tap, 110&nbsp;seats</p>
           <ol><li data-i="0"><span>The schedule</span></li><li data-i="1"><span>The bills in your books</span></li><li data-i="2"><span>The payout report</span></li></ol>
-          <p class="tally-tot" data-f="tprog">Walk done, 3 of 3 stops</p>
+          <p class="tally-tot" data-f="tprog">Walk done, 3&nbsp;of 3&nbsp;stops</p>
         </div>
-        <p class="tally-bar" aria-hidden="true"><span data-f="bar-stop">Walk done</span><b data-f="bar-n">3 of 3</b></p>
+        <p class="tally-bar" aria-hidden="true"><span data-f="bar-stop">Walk done</span><b data-f="bar-n">3&nbsp;of 3</b></p>
       </aside>
-      <ol class="stops" data-f="stops"><li class="stop page" id="stop-1" data-usd="1153" data-place="The schedule" data-task="reminders" data-state="after"><div class="stop-h"><span class="tab-n">1</span><div class="stop-t"><h3><span class="sr">Stop 1: </span>The schedule</h3><p class="stop-leak">A slow Tuesday staffed like a busy night</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair fit" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same schedule with last week's sales and labor % under each night. Tuesday sold 2,100 with labor at 47%, flagged against the 34% target; Monday at 1,880 and Wednesday at 2,650 sit at 34%, and Thursday at 3,120 at 31%. Posted Sun 4:00&nbsp;PM is struck through in pencil and replaced by Checked against last week's sales." data-label-before="Sample, before: the posted schedule for the week of Oct 12, crew by night. Tuesday has 10 on, the same crew as Thursday. The rows for last week's sales and labor % are empty, and the status line says Posted Sun 4:00&nbsp;PM." data-label-after="Sample, after: the same schedule with last week's sales and labor % under each night. Tuesday sold 2,100 with labor at 47%, flagged against the 34% target; Monday at 1,880 and Wednesday at 2,650 sit at 34%, and Thursday at 3,120 at 31%. Posted Sun 4:00&nbsp;PM is struck through in pencil and replaced by Checked against last week's sales."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Schedule, week of Oct 12</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Crew</th><th class="num">Mon</th><th class="num">Tue</th><th class="num">Wed</th><th class="num">Thu</th></tr><tr><td>Servers</td><td class="num">3</td><td class="num">4</td><td class="num">4</td><td class="num">4</td></tr><tr><td>Bar</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num">2</td></tr><tr><td>Line</td><td class="num">2</td><td class="num">3</td><td class="num">3</td><td class="num">3</td></tr><tr><td>Dish</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td></tr><tr><td>Sales last wk</td><td class="num"><span class="chg"><span class="was"></span><span class="now">1,880</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">2,100</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">2,650</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">3,120</span></span></td></tr><tr class="n"><td>Labor %</td><td class="num"><span class="chg"><span class="was"></span><span class="now">34%</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now"><span class="st wt">47%</span></span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">34%</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">31%</span></span></td></tr></tbody></table></div><p class="win-st"><span class="chg tr"><span class="was">Posted Sun 4:00&nbsp;PM</span><span class="now">Checked against last week's sales, target 34%</span></span></p></div></div></div><div class="seg" role="group" aria-label="Show stop 1"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button></div></div><div class="stop-notes"><p class="pencil">Tuesday slow. Full crew on anyway.</p><p class="find"><span class="find-k"><span class="bo">Lost:</span><span class="ao">Won back:</span></span><span class="find-usd money">$1,153 a month<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><li class="stop page" id="stop-2" data-usd="462" data-place="The bills in your books" data-task="quotes" data-state="after"><div class="stop-h"><span class="tab-n">2</span><div class="stop-t"><h3><span class="sr">Stop 2: </span>The bills in your books</h3><p class="stop-leak">Supplier price rises never questioned or passed to the menu</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair fit" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same bill with its lines read from the emailed copy. Wings at 3.38 a pound against 3.12 on the 10/01 bill, up 0.26, and fryer oil at 46.85 a jug against 41.20, up 5.65, both flagged; beef patties the same at 189.60. Total only is struck through in pencil." data-label-before="Sample, before: Coastway Broadline Foods bill 7041152203 in the books, delivered Mon 10/05. One line, Food purchases, 3,196.84, marked Total only: the item lines were never entered." data-label-after="Sample, after: the same bill with its lines read from the emailed copy. Wings at 3.38 a pound against 3.12 on the 10/01 bill, up 0.26, and fryer oil at 46.85 a jug against 41.20, up 5.65, both flagged; beef patties the same at 189.60. Total only is struck through in pencil."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Bill 7041152203, Coastway</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Line</th><th class="num">This bill</th><th class="num">Last price 10/01</th><th>Check</th></tr><tr class="n"><td>Food purchases</td><td class="nw num">3,196.84</td><td class="num"></td><td><span class="chg tr"><span class="was"><span class="st gy">Total&nbsp;only</span></span><span class="now">Lines read</span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">Wings, a lb</span></span></td><td class="nw num"><span class="chg"><span class="was"></span><span class="now">3.38</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">3.12</span></span></td><td><span class="chg"><span class="was"></span><span class="now"><span class="st wt">Up 0.26</span></span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">Fryer oil, a jug</span></span></td><td class="nw num"><span class="chg"><span class="was"></span><span class="now">46.85</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">41.20</span></span></td><td><span class="chg"><span class="was"></span><span class="now"><span class="st wt">Up 5.65</span></span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">Beef patties, a case</span></span></td><td class="nw num"><span class="chg"><span class="was"></span><span class="now">189.60</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">189.60</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Same</span></span></td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">Entered from the paper copy on Mon 10/05, total only</span><span class="now">Read from the emailed copy, 2 price rises flagged</span></span></p></div></div></div><div class="seg" role="group" aria-label="Show stop 2"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button></div></div><div class="stop-notes"><p class="pencil">Wings up 26 cents a pound. Menu price the same.</p><p class="find"><span class="find-k"><span class="bo">Lost:</span><span class="ao">Won back:</span></span><span class="find-usd money">$462 a month<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li><li class="stop page" id="stop-3" data-usd="251" data-place="The payout report" data-task="quotes" data-state="after"><div class="stop-h"><span class="tab-n">3</span><div class="stop-t"><h3><span class="sr">Stop 3: </span>The payout report</h3><p class="stop-leak">Delivery-app error charges never disputed</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair fit" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same statement with the error charges opened. Order #8F3K2, missing item, minus 18.40, send by Tuesday 10/13; #2RZ9P, item incorrect, minus 31.25, by Friday 10/16; #7HD4W, wrong order, minus 46.75, by Saturday 10/17. Unread is struck through in pencil, and the status line says the 3 disputes are ready for you to send." data-label-before="Sample, before: the delivery app's weekly payout statement for Sept 28 to Oct 4. One line, Error charges on 3 orders, minus 96.40, marked Unread." data-label-after="Sample, after: the same statement with the error charges opened. Order #8F3K2, missing item, minus 18.40, send by Tuesday 10/13; #2RZ9P, item incorrect, minus 31.25, by Friday 10/16; #7HD4W, wrong order, minus 46.75, by Saturday 10/17. Unread is struck through in pencil, and the status line says the 3 disputes are ready for you to send."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Weekly payout, Sept 28 to Oct 4</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Order</th><th>Reason</th><th class="num">Charge</th><th>Status</th></tr><tr class="n"><td>3 orders</td><td>Error charges</td><td class="nw num">−96.40</td><td><span class="chg tr"><span class="was"><span class="st gy">Unread</span></span><span class="now">Opened</span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">#8F3K2</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Missing item</span></span></td><td class="nw num"><span class="chg"><span class="was"></span><span class="now">−18.40</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Send by Tue 10/13</span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">#2RZ9P</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Item incorrect</span></span></td><td class="nw num"><span class="chg"><span class="was"></span><span class="now">−31.25</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Send by Fri 10/16</span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">#7HD4W</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Wrong order</span></span></td><td class="nw num"><span class="chg"><span class="was"></span><span class="now">−46.75</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Send by Sat 10/17</span></span></td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">Paid to your bank account</span><span class="now">3 disputes ready for you to send</span></span></p></div></div></div><div class="seg" role="group" aria-label="Show stop 3"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button></div></div><div class="stop-notes"><p class="pencil">Error charges taken out. Nobody opened them.</p><p class="find"><span class="find-k"><span class="bo">Lost:</span><span class="ao">Won back:</span></span><span class="find-usd money">$251 a month<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></p></div></div></li></ol>
+      <ol class="stops" data-f="stops"><li class="stop page" id="stop-1" data-usd="1153" data-place="The schedule" data-task="reminders" data-state="after"><div class="stop-h"><span class="tab-n">1</span><div class="stop-t"><h3><span class="sr">Stop 1: </span>The schedule</h3><p class="stop-leak">A slow Tuesday staffed like a busy night</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair fit" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same schedule with last week's sales and labor % under each night. Tuesday sold 2,100 with labor at 47%, flagged against the 34% target; Monday at 1,880 and Wednesday at 2,650 sit at 34%, and Thursday at 3,120 at 31%. Posted Sun 4:00&nbsp;PM is struck through in pencil and replaced by Checked against last week's sales." data-label-before="Sample, before: the posted schedule for the week of Oct 12, crew by night. Tuesday has 10&nbsp;on, the same crew as Thursday. The rows for last week's sales and labor % are empty, and the status line says Posted Sun 4:00&nbsp;PM." data-label-after="Sample, after: the same schedule with last week's sales and labor % under each night. Tuesday sold 2,100 with labor at 47%, flagged against the 34% target; Monday at 1,880 and Wednesday at 2,650 sit at 34%, and Thursday at 3,120 at 31%. Posted Sun 4:00&nbsp;PM is struck through in pencil and replaced by Checked against last week's sales."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Schedule, week of Oct 12</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Crew</th><th class="num">Mon</th><th class="num">Tue</th><th class="num">Wed</th><th class="num">Thu</th></tr><tr><td>Servers</td><td class="num">3</td><td class="num">4</td><td class="num">4</td><td class="num">4</td></tr><tr><td>Bar</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num">2</td></tr><tr><td>Line</td><td class="num">2</td><td class="num">3</td><td class="num">3</td><td class="num">3</td></tr><tr><td>Dish</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td></tr><tr><td>Sales last wk</td><td class="num"><span class="chg"><span class="was"></span><span class="now">1,880</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">2,100</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">2,650</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">3,120</span></span></td></tr><tr class="n"><td>Labor %</td><td class="num"><span class="chg"><span class="was"></span><span class="now">34%</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now"><span class="st wt">47%</span></span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">34%</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">31%</span></span></td></tr></tbody></table></div><p class="win-st"><span class="chg tr"><span class="was">Posted Sun 4:00&nbsp;PM</span><span class="now">Checked against last week's sales, target 34%</span></span></p></div></div></div><div class="seg th go" role="group" aria-label="Show stop 1: The schedule" data-on="1"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button><span class="seg-th" aria-hidden="true"><span class="seg-tx"><span>Before</span><span>After</span></span></span></div></div><div class="stop-notes"><p class="pencil">Tuesday slow. Full crew on anyway.</p><p class="find"><span class="find-l"><span class="find-k"><span class="bo">Lost</span><span class="ao">Won back</span></span> <span class="find-usd money">$1,153 a month<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></span><span class="find-f">From your sales report and timecards: Tuesday's labor against your 34% target.</span></p></div></div></li><li class="stop page" id="stop-2" data-usd="462" data-place="The bills in your books" data-task="quotes" data-state="after"><div class="stop-h"><span class="tab-n">2</span><div class="stop-t"><h3><span class="sr">Stop 2: </span>The bills in your books</h3><p class="stop-leak">Supplier price rises never questioned or passed to the menu</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair fit" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same bill with its lines read from the emailed copy. Wings at 3.38 a pound against 3.12 on the 10/01 bill, up 0.26, and fryer oil at 46.85 a jug against 41.20, up 5.65, both flagged; beef patties the same at 189.60. Total only is struck through in pencil." data-label-before="Sample, before: Coastway Broadline Foods bill 7041152203 in the books, delivered Mon 10/05. One line, Food purchases, 3,196.84, marked Total only: the item lines were never entered." data-label-after="Sample, after: the same bill with its lines read from the emailed copy. Wings at 3.38 a pound against 3.12 on the 10/01 bill, up 0.26, and fryer oil at 46.85 a jug against 41.20, up 5.65, both flagged; beef patties the same at 189.60. Total only is struck through in pencil."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Bill 7041152203, Coastway</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Line</th><th class="num">This bill</th><th class="num">10/01</th><th>Check</th></tr><tr class="n"><td>Food purchases</td><td class="nw num">3,196.84</td><td class="num"></td><td><span class="chg tr"><span class="was"><span class="st gy">Total&nbsp;only</span></span><span class="now">Lines read</span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">Wings, a lb</span></span></td><td class="nw num"><span class="chg"><span class="was"></span><span class="now">3.38</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">3.12</span></span></td><td><span class="chg"><span class="was"></span><span class="now"><span class="st wt">Up 0.26</span></span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">Fryer oil, a jug</span></span></td><td class="nw num"><span class="chg"><span class="was"></span><span class="now">46.85</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">41.20</span></span></td><td><span class="chg"><span class="was"></span><span class="now"><span class="st wt">Up 5.65</span></span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">Beef patties, a case</span></span></td><td class="nw num"><span class="chg"><span class="was"></span><span class="now">189.60</span></span></td><td class="num"><span class="chg"><span class="was"></span><span class="now">189.60</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Same</span></span></td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">Entered from the paper copy on Mon 10/05, total only</span><span class="now">Read from the emailed copy, 2&nbsp;price rises flagged</span></span></p></div></div></div><div class="seg th go" role="group" aria-label="Show stop 2: The bills in your books" data-on="1"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button><span class="seg-th" aria-hidden="true"><span class="seg-tx"><span>Before</span><span>After</span></span></span></div></div><div class="stop-notes"><p class="pencil">Wings up 26&nbsp;cents a pound. Menu price the same.</p><p class="find"><span class="find-l"><span class="find-k"><span class="bo">Lost</span><span class="ao">Won back</span></span> <span class="find-usd money">$462 a month<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></span><span class="find-f">From your distributor invoices, checked against the menu: the price rises on 280&nbsp;pounds of wings and 6&nbsp;jugs of oil a week.</span></p></div></div></li><li class="stop page" id="stop-3" data-usd="251" data-place="The payout report" data-task="quotes" data-state="after"><div class="stop-h"><span class="tab-n">3</span><div class="stop-t"><h3><span class="sr">Stop 3: </span>The payout report</h3><p class="stop-leak">Delivery-app error charges never disputed</p></div></div><div class="stop-body"><div class="pic has-seg"><div class="pair fit" data-g2r="" data-pair="" data-state="after" role="img" aria-label="Sample, after: the same statement with the error charges opened. Order #8F3K2, missing item, minus 18.40, send by Tuesday 10/13; #2RZ9P, item incorrect, minus 31.25, by Friday 10/16; #7HD4W, wrong order, minus 46.75, by Saturday 10/17. Unread is struck through in pencil, and the status line says the 3&nbsp;disputes are ready for you to send." data-label-before="Sample, before: the delivery app's weekly payout statement for Sept 28&nbsp;to Oct 4. One line, Error charges on 3&nbsp;orders, minus 96.40, marked Unread." data-label-after="Sample, after: the same statement with the error charges opened. Order #8F3K2, missing item, minus 18.40, send by Tuesday 10/13; #2RZ9P, item incorrect, minus 31.25, by Friday 10/16; #7HD4W, wrong order, minus 46.75, by Saturday 10/17. Unread is struck through in pencil, and the status line says the 3&nbsp;disputes are ready for you to send."><div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>Weekly payout, Sept 28&nbsp;to Oct 4</span></div><div class="win-b"><div class="ptbl"><table><tbody><tr><th>Order</th><th>Reason</th><th class="num">Charge</th><th>Status</th></tr><tr class="n"><td>3&nbsp;orders</td><td>Error charges</td><td class="nw num">−96.40</td><td><span class="chg tr"><span class="was"><span class="st gy">Unread</span></span><span class="now">Opened</span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">#8F3K2</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Missing item</span></span></td><td class="nw num"><span class="chg"><span class="was"></span><span class="now">−18.40</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Send by Tue 10/13</span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">#2RZ9P</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Item incorrect</span></span></td><td class="nw num"><span class="chg"><span class="was"></span><span class="now">−31.25</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Send by Fri 10/16</span></span></td></tr><tr><td><span class="chg"><span class="was"></span><span class="now">#7HD4W</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Wrong order</span></span></td><td class="nw num"><span class="chg"><span class="was"></span><span class="now">−46.75</span></span></td><td><span class="chg"><span class="was"></span><span class="now">Send by Sat 10/17</span></span></td></tr></tbody></table></div><p class="win-st"><span class="chg"><span class="was">Paid to your bank account</span><span class="now">3&nbsp;disputes ready for you to send</span></span></p></div></div></div><div class="seg th go" role="group" aria-label="Show stop 3: The payout report" data-on="1"><button type="button" data-show="before" aria-pressed="false">Before</button><button type="button" data-show="after" aria-pressed="true">After</button><span class="seg-th" aria-hidden="true"><span class="seg-tx"><span>Before</span><span>After</span></span></span></div></div><div class="stop-notes"><p class="pencil">Error charges taken out, and no dispute opened.</p><p class="find"><span class="find-l"><span class="find-k"><span class="bo">Lost</span><span class="ao">Won back</span></span> <span class="find-usd money">$251 a month<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw=""><path pathLength="1" d="M2 6C28 2 60 9 98 4"></path></svg></span></span><span class="find-f">From your delivery-app statements: every error charge of the week, matched to its order. 60% of disputes won is a sample rate.</span></p></div></div></li></ol>
     </div>
     <div class="walk-end" data-bind="bigfig">
-      <p class="walk-total"><span>Lost before any fix</span> <b><span data-f="n">$1,866</span> <span data-f="per">a month</span></b></p>
+      <p class="t-small walk-season">Game weekends, UF breaks and the summer swing your covers, so we count from a year of your sales.</p>
+      <p class="t-small pl-art"><a class="u" href="/articles/restaurant-dead-nights/">Our article</a> shows how to find your slowest nights in Toast or Square.</p>
+      <p class="walk-total"><span>Lost before any fix</span> <b><span data-f="n">$1,866</span> <span data-f="per">a month</span></b> <span class="stamp">Sample</span></p>
       <div class="cta-row"><a class="btn" href="tel:+13522260681">Call us</a><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a></div>
     </div>
   </div>
@@ -335,18 +340,18 @@
           <div class="np-h"><b>Night log, Whimbrel Kitchen &amp; Tap</b><span class="pl-after">After</span></div>
           <ol class="np-rows">
             <li class="pl-dayrow">Monday, Oct 5</li>
-            <li data-n="0" data-t="10:58 PM" data-task="numbers" class="on"><time>10:58&nbsp;PM</time><span>Read Monday's point-of-sale report and the delivery-app statement. 3 error charges, listed and ready for you to send.</span></li>
+            <li data-n="0" data-t="10:58 PM" data-task="numbers" class="on"><time>10:58&nbsp;PM</time><span>Read Monday's point-of-sale report and the delivery-app statement. 3&nbsp;error charges, listed and ready for you to send.</span></li>
             <li class="pl-dayrow">Tuesday, Oct 6</li>
-            <li data-n="1" data-t="5:30 AM" data-task="bills" class="on"><time>5:30&nbsp;AM</time><span>Checked 3 supplier invoices against last week's prices. 2 price rises.</span></li>
+            <li data-n="1" data-t="5:30 AM" data-task="bills" class="on"><time>5:30&nbsp;AM</time><span>Checked 3&nbsp;supplier invoices against last week's prices. 2&nbsp;price rises.</span></li>
             <li data-n="2" data-t="5:45 AM" data-task="numbers" class="on"><time>5:45&nbsp;AM</time><span>Checked Tuesday's schedule against expected sales. Over the labor target.</span></li>
-            <li data-n="3" data-t="6:10 AM" data-task="bills" class="on"><time>6:10&nbsp;AM</time><span>Credit request drafted for 1 short case of fries, for your OK.</span></li>
+            <li data-n="3" data-t="6:10 AM" data-task="bills" class="on"><time>6:10&nbsp;AM</time><span>Credit request drafted for 1&nbsp;short case of fries, for your OK.</span></li>
             <li data-n="4" data-t="6:30 AM" data-task="reminders" data-cue class="on"><time>6:30&nbsp;AM</time><span>Morning list sent to your phone.</span></li>
           </ol>
           <div class="pl-card rb-mo">
             <div class="mo-h"><b>Morning list</b><span>Tue Oct 6, 6:30&nbsp;AM</span></div>
             <div class="mo-row flag"><span class="l">Tuesday's schedule</span><span class="v">47%, target 34%</span></div>
             <div class="mo-row"><span class="l">Supplier price rises</span><span class="v">Wings, fryer oil</span></div>
-            <div class="mo-row"><span class="l">Credit to request</span><span class="v">1 case of fries</span><span class="d">Invoice 7041152203, drafted for your OK</span></div>
+            <div class="mo-row"><span class="l">Credit to request</span><span class="v">1&nbsp;case of fries</span><span class="d">Invoice 7041152203, drafted for your OK</span></div>
             <div class="mo-row"><span class="l">App charges to dispute</span><span class="v">3</span><span class="d">Ready for you to send</span></div>
           </div>
         </div><span class="samp">Sample</span></div>
@@ -362,30 +367,34 @@
   <div class="wrap close-g">
     <div class="c4-main">
       <h2 class="t-close close-h">Let's talk shop.</h2>
+      <p class="close-lede"><span>Tell us what eats your week.</span> <span>If a walk wouldn't pay for itself, we'll say so on the call.</span></p>
       <div class="close-act">
         <div class="arrow-to">
           <a class="btn btn-lg" href="tel:+13522260681">Call us</a>
           <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
         </div>
-        <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
+        <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20restaurants%20and%20bars%20page.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
       </div>
-      <dl class="c4-hours">
-        <div><dt>Money back</dt><dd><p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7 days of the call where you go over your sheet, and you get <b class="won">the walk fee back</b>.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p></dd></div>
+      <dl class="c4-hours" data-part="close-rows">
+        <div><dt>Money back</dt><dd><p class="mb"><span data-shared="moneyback"><b>Not worth it to you?</b> Text or email us within 7&nbsp;days of the call where you go over your sheet, and you get <b class="won">the walk fee back</b>.</span> <a class="u" href="/how-it-works/#terms">Full terms</a></p></dd></div>
         <div><dt>Hours</dt><dd><span data-shared="hours">Monday to Friday, 9&nbsp;a.m. to 5&nbsp;p.m.</span></dd></div>
         <div><dt>Reply time</dt><dd><span data-shared="reply">We answer or call back the same business day; after 5&nbsp;p.m. or on weekends, by 10&nbsp;a.m. the next business day.</span></dd></div>
         <div><dt>Language</dt><dd>English or Spanish</dd></div>
+        <div class="c4-where"><dt>Where</dt><dd>Gainesville and Alachua County. Elsewhere in Florida? Ask us.</dd></div>
+        <div class="c4-calc"><dt>Not ready to call?</dt><dd>Put your own numbers in the <a class="u" href="/leak-check/">loss calculator</a> first. It runs on your device and sends us nothing.</dd></div>
       </dl>
-      <p class="c4-llc">Lumora Group LLC, a Florida company.</p>
+
     </div>
     <div class="c4-card">
       <figure class="contact-card">
         <img class="cardino" src="/v4/assets/bird-cardino-perch.svg" alt="" width="74" height="60" loading="lazy">
-        <p class="t-label hm-cc-k">Why Lumora</p>
-        <blockquote class="signed"><p>“Before Lumora, I typed up the paperwork at a water damage company, then automated most of it. Now we do the same for your business.”</p></blockquote>
-        <figcaption class="signed-by">Franco A. Soto, Owner</figcaption>
-        <dl class="cblock">
-          <div><dt>Where</dt><dd>Gainesville and Alachua County. Elsewhere in Florida? Ask us.</dd></div>
-        </dl>
+        <article class="letter" aria-labelledby="letter-h">
+          <h3 class="letter-h" id="letter-h">Who walks your business</h3>
+          <p>Most owners I meet lose their evenings to the same few jobs: the quote typed up at night, the invoice that never went out, the call nobody got back to.</p>
+          <p>Before Lumora I did the paperwork at a water damage company, and I automated most of it. Now Lumora walks businesses around Gainesville and does the same.</p>
+          <p>I speak English and Spanish, so your office can work in either.</p>
+          <p class="letter-sig">Franco A. Soto<span>Owner</span></p>
+        </article>
         <p class="t-small hm-about"><a class="u" href="/about/">About Lumora</a></p>
       </figure>
       <div class="c4-rules">
@@ -398,7 +407,7 @@
       </div>
     </div>
     <nav class="pl-more" aria-labelledby="pl-more-k">
-      <p class="t-label" id="pl-more-k">Every trade we walk</p>
+      <p class="t-label" id="pl-more-k">Kinds of business we walk</p>
       <ul class="pl-trades" data-trades>
         <li><a href="/industries/plumbing/">Plumbing</a></li>
         <li><a href="/industries/ac-and-heating/">AC and heating</a></li>
@@ -414,7 +423,7 @@
 </section>
 </main>
 
-<footer class="foot" data-ground="night">
+<footer class="foot" data-part="foot" data-ground="night">
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-lead">
@@ -424,15 +433,15 @@
       </div>
       <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">How it works</h2><ul><li><a href="/how-it-works/#conversation">The free call</a></li><li><a href="/how-it-works/#walk">The walk</a></li><li><a href="/how-it-works/#fix">One fix</a></li><li><a href="/how-it-works/#check">The monthly check</a></li><li><a href="/how-it-works/#faq">Questions owners ask</a></li><li><a href="/what-we-automate/">What we automate</a></li><li><a href="/leak-check/">Loss calculator</a></li></ul></nav>
       <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">Industries</h2><ul><li><a href="/industries/plumbing/">Plumbing</a></li><li><a href="/industries/ac-and-heating/">AC and heating</a></li><li><a href="/industries/electrical/">Electrical</a></li><li><a href="/industries/water-damage-and-mold/">Water damage and mold</a></li><li><a href="/industries/pest-control/">Pest control</a></li><li><a href="/industries/roofing/">Roofing</a></li><li><a href="/industries/restaurants-and-bars/">Restaurants and bars</a></li><li><a href="/industries/property-managers/">Property managers</a></li><li><a href="/industries/">All industries</a></li></ul></nav>
-      <div class="foot-col c-contact"><h2 class="foot-h">Contact</h2><ul><li data-extra="computer: the call bar carries the number on a phone">Call or text <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">Monday to Friday, 9&nbsp;a.m. to 5&nbsp;p.m.</span></li><li>Gainesville, serving Alachua County</li><li>English or Spanish</li></ul></div>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contact</h2><ul><li>Call or text <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">Monday to Friday, 9&nbsp;a.m. to 5&nbsp;p.m.</span></li><li>Gainesville, serving Alachua County</li><li>English or Spanish</li></ul></div>
     </div>
     <div class="foot-base">
-      <p class="legal">Lumora Group LLC, a Florida company. Every shop, name and number marked Sample is made up.</p>
+      <p class="legal">&copy; 2026 Lumora Group LLC, a Florida company. Every business, name and number marked Sample is made up.</p>
       <ul><li><a href="/about/">About</a></li><li><a href="/articles/">Articles</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy</a></li></ul>
     </div>
   </div>
 </footer>
 
-<nav class="callbar" aria-label="Call or text us"><a href="tel:+13522260681">Call <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text</a></nav>
+<nav class="callbar" aria-label="Call or text us"><a href="tel:+13522260681">Call <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20restaurants%20and%20bars%20page.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text</a></nav>
 </body>
 </html>

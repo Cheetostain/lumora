@@ -24,9 +24,8 @@
 .hero-terms .price b{color:var(--ink)}
 .hero .cta-row .hm-sms{font-size:17px}
 .hm-sms,.c4-sms,.hm-about a,.mb a.u{display:inline-block;padding-block:12px;margin-block:-12px}   /* a 44px tall tap area without moving the layout; PL adds "Full terms" (phone-access review: 70 x 23 px) */
-.cta-tel{padding-block:10.5px;margin-block:-10.5px}
 .cta-row,.c4-tel{row-gap:24px}   /* 2026-10-15: wrapped, the number's and the text link's padded tap areas overlapped by up to 16px */
-@media (max-width:899px){.hero .cta-row{row-gap:12px}}   /* 2026-10-15: the phone hero hides its text link (system.css), so only the button and the number wrap and 12px clears them; 24px put the top-leak row under the call bar at 360 x 780 */   /* PL: the number beside every call button gets a 52px tall target (SYSTEM.md call targets), no layout change; Home's is 5px (INTEGRATE) */
+@media (max-width:899px){.hero .cta-row{row-gap:12px}}   /* 2026-10-15: the phone hero hides its text link (system.css), so only the button and the number wrap and 12px clears them; 24px put the top-leak row under the call bar at 360 x 780 */   /* PL: the number beside every call button gets a 52px tall target (SYSTEM.md call targets), no layout change; since 2026-10-19 one rule in system.css serves every page */
 .sh-sub{text-wrap:balance}
 /* a long trade noun: the hero opts in with data-hero-long. Under 380px its h1 steps down so the headline keeps two lines, and
    the hero rows sit 6px closer. AC at 38px took three lines at 360 and pushed the top-leak strip under the call bar at
@@ -37,6 +36,29 @@
   .hm4-hero .hero-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);grid-template-areas:"copy tool" "act tool" "terms tool";grid-template-rows:auto auto 1fr;row-gap:24px}
   .hm4-hero h1{max-width:11.5em}
 }
+/* round 4 (2026-10-18): Home's round 3 laptop step on every Spanish trade hero. The Spanish headline takes three or four lines at
+   64px (Property managers four), and on a laptop under 861px tall the price sentence ended 2 to 71px under the first screen at
+   1280 x 800 and 1366 x 768. The hero gives that back from its own air, the words unchanged: 12px over the eyebrow, leading .94 in
+   the headline, 16px between the blocks, the lede at 1.4. check.py DESK_FIRST_JS holds the price on the first screen at 1280 x 800
+   and 1366 x 768 on every trade page in both languages */
+@media (min-width:900px) and (max-height:860px){
+  :lang(es) .hm4-hero{padding-top:12px}
+  :lang(es) .hm4-hero .eyebrow{margin-bottom:12px}
+  :lang(es) .hm4-hero h1{line-height:.94}
+  :lang(es) body[data-trade-lock] .hm4-hero h1{font-size:clamp(38px,5.2vw,58px)}   /* resume pass 2026-10-19: the trade nouns ("a su negocio
+     de plomería", "en sus trabajos de daños por agua") took a fourth line at 64px and put the price at 787px on 1366 x 768; at 58px
+     Plumbing, Electrical and Roofing keep three lines (710px), Pest and Water four (764px). Measures: agency build
+     resume-measure-h1-css.log */
+  :lang(es) .hm4-hero .hero-one{margin-top:10px}
+  :lang(es) .hm4-hero .t-lede{margin-top:12px;line-height:1.4}
+  :lang(es) .hm4-hero .hero-g{row-gap:16px}
+  :lang(es) .hm4-hero .hero-tool{margin-top:28px}   /* the clipboard stays where it was, its clip 28px under the header, not on its edge */
+}
+/* round 4 (2026-10-18): on a phone a Spanish trade hero says the free call under its button, Home's short line ("Primera llamada sin
+   costo. Respuesta el mismo día hábil."), as the English says it under its own; the long line stays with the terms on a computer,
+   where it reads under the button already. The call bar is seated again by seatBar. check.py FREE_JS */
+.hm4-hero .reply-ph{display:none}
+@media (max-width:899px){.hm4-hero .cta .reply-ph{display:block}.hm4-hero:has(.reply-ph) .hero-terms .reply{display:none}}
 /* the facts strip (.facts4) moved to system.css section 12b on 2026-10-15, with Home's copy (item 40) */
 
 /* ===== B. what we automate: Home's tools line and ruled rows. PL: on a computer the heading, the tools line and row 1 as a
@@ -177,14 +199,21 @@ html:not(.js) .stop .crop-m{height:calc(var(--crop-h) + var(--crop-air-t))}
    picture is the phone's width and sits in the middle of its half, Before / After and the Sample label under it */
 @media (min-width:760px){.hm4-walk .stop-body>.pic:has(.ph4,.iph){width:min(var(--ph-w),100%);justify-self:center}}
 .find{container-type:inline-size}
-.find-usd{font-size:min(32px,14.2cqi)}   /* 2026-10-17 polish: 32px, stepping down only where its column is narrower than the figure ("$1,900 a month" ran 33px out of the notes at 768, where the white-space:nowrap of .money held it on one line) */
+.find-usd{font-size:min(32px,14.2cqi)}
+/* round 4 (2026-10-18): on a computer the label sits beside the figure ("Won back $1,900 a month"), so the figure is 24px there, the
+   size of Home's "Losing $1,900 a month", and the notes column takes .05fr from the picture: 264px at 1280 and 1440 where the line
+   needs about 251. At 760 to 899 the column is under 200px and the figure drops under its label */
+@media (min-width:760px){.hm4-walk .find-usd{font-size:min(24px,14.2cqi)}}
+/* on a phone the figure keeps 32px from 390 and steps down only as far as the line needs, so "Won back $1,900 a month" stays one line
+   at 360 and 320 too (about 6.9em of figure beside the label's 84px) */
+@media (max-width:759px){.hm4-walk .find-usd{font-size:clamp(24px,calc((100cqi - 84px) / 6.9),32px)}}   /* 2026-10-17 polish: 32px, stepping down only where its column is narrower than the figure ("$1,900 a month" ran 33px out of the notes at 768, where the white-space:nowrap of .money held it on one line) */
 /* PL: with JS off on a phone under 380px the fixed crop cut stop 3's payoff line ("On the 12:30 PM callback list") or left it in
    the fade (phone-access review: 320, 340, 360). With JS on, fitCrops' measured height overrides this, so the page height holds. */
 @media (max-width:379px){html:not(.js) .stop .crop-m{--crop-h:508px}html:not(.js) .n4 .crop-m{--crop-h:352px}}   /* and the night phone: its on-call line wraps under 380px */
 @container (min-width:421px){.hm4-walk .pair .xl td{white-space:nowrap}}
 @media (min-width:760px){
-  .hm4-walk .stop-body{grid-template-columns:minmax(0,1.5fr) minmax(0,.7fr)}
-  .hm4-walk .stop:nth-child(even) .stop-body{grid-template-columns:minmax(0,.7fr) minmax(0,1.5fr)}
+  .hm4-walk .stop-body{grid-template-columns:minmax(0,1.45fr) minmax(0,.75fr)}
+  .hm4-walk .stop:nth-child(even) .stop-body{grid-template-columns:minmax(0,.75fr) minmax(0,1.45fr)}
 }
 @media (max-width:1079px){.hm4-walk .tally4{display:none}}
 .walk-end{display:grid;gap:10px;justify-items:start;margin-top:clamp(36px,5vw,56px);padding-top:16px;border-top:2px solid var(--ink)}
@@ -215,14 +244,24 @@ html:not(.js) .stop .crop-m{height:calc(var(--crop-h) + var(--crop-air-t))}
 .n4 .cta-inline .mb-s{color:var(--on-night)}
 @media (min-width:900px){
   .n4{justify-items:center;text-align:center}
-  .n4-copy h2,.n4-copy .t-lede,.pl-before{margin-inline:auto}
+  .n4-copy h2,.n4-copy .t-lede,.pl-before,.pl-permit{margin-inline:auto}
   .n4 .cta-inline{justify-content:center}
   .n4-loop{width:100%;max-width:804px}
   .n4-figs{grid-template-columns:var(--ph-w) minmax(0,440px);justify-content:center;align-items:stretch;gap:24px;text-align:left}
   .n4-figs>.n4-paper{width:100%;display:flex;flex-direction:column}
   .n4-paper .np{flex:1;display:flex;flex-direction:column}
   .n4-paper .np-rows{flex:1;display:flex;flex-direction:column;justify-content:flex-start}   /* 2026-10-15: rows from the top (space-between spread them apart); flex:1 keeps the paper the phone's height */
+  /* round 4 (2026-10-18, judges): the paper ran the phone's height, so on Plumbing about 80px of empty paper sat between the log's last
+     row and the on-call card's clip (Electrical 116, Roofing 102, Water 60). The log is as tall as its rows, as Home's has been since
+     round 2, and the card's clip sits 32px under the last row on every page; the pictures' boxes still share a height, so the two
+     Sample tags stay level under them */
+  .pl-night .n4-paper .np,.pl-night .n4-paper .np-rows{flex:none}
+  .pl-night .n4-paper .pl-card{margin-top:46px}   /* 32px to the clip, which stands 14px over the card */
 }
+/* round 4 (2026-10-18, judges): on the night band the log's heavy ink head rule (system.css .np) disappears into the band's near-black,
+   so the paper showed 4px under the picture beside it (Restaurants' Z report at 705, the log at 709; the phone on the others). The
+   rule goes on the night band, and the log's paper starts level with the picture beside it */
+.pl-night .np{border-top:0}
 /* 2026-10-17 polish (the Oct 16 desktop check): in one column Pause sits centred right under the picture it runs (the phone; the restaurant's
    tape; the log on a page with no phone), in that picture's Sample band, not under the log at the band's edge, 180px off the phone at 768 */
 @media (max-width:899px){
@@ -234,6 +273,7 @@ html:not(.js) .stop .crop-m{height:calc(var(--crop-h) + var(--crop-air-t))}
 }
 @media (max-width:699px){.n4-loop{row-gap:14px;margin-top:8px}}
 .pl-before{margin-top:12px;max-width:34em;font-size:15px;color:var(--muted-night)}
+.pl-permit{margin-top:8px;max-width:34em;font-size:15px;color:var(--muted-night)}   /* resume pass 2026-10-19 (craft judge): the permit lines under Before take its type and centred measure; they ran full width, bright, louder than the headline */
 .pl-before b{color:var(--on-night);margin-right:4px}
 .np .np-h .pl-after{align-self:center;font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--pencil)}   /* 2026-10-15: plain words, as the Sample stamp now reads (was 12px tracked capitals) */   /* R5's plain label, in the log head where the dates used to be (the day rows carry them now) */
 .np-rows li.pl-dayrow{display:block;padding:12px 0 3px;border-bottom:0;font-size:15px;font-weight:600;line-height:1.3;color:var(--ink)}
@@ -253,29 +293,9 @@ html:not(.js) .stop .crop-m{height:calc(var(--crop-h) + var(--crop-air-t))}
 }
 @keyframes pl-card-cue{0%,100%{border-color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.14)}30%{border-color:#b07800;box-shadow:0 0 0 4px rgba(201,138,0,.4)}}
 
-/* ===== F. rules and contact (Home's, re-copied as of 19:11: the pen arrow comes down from the heading's words, Cardino perches
-   on the card). PL: one wrapped line of every trade's page (this one in ink, not underlined) at the bottom */
-.close-g{display:grid;gap:44px}
-@media (min-width:900px){.close-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:start}.c4-card{padding-top:84px;position:sticky;top:96px}}
-.close-h{margin:0 0 24px;font-size:clamp(44px,5.4vw,64px)}
-.close-act{gap:12px}
-.close-act .arrow-to{position:relative;display:inline-flex;width:max-content}
-.close-act .arrow-to .pen-arrow{position:absolute;left:100%;top:-26px;width:110px;height:84px;margin-left:8px}   /* Franco 2026-10-10 (Home): it comes down from the heading's words and lands level with the button's middle */
-.c4-tel{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 20px;font-size:17px}
-.c4-hours{margin-top:30px;border-top:1px solid var(--rule)}
-.c4-hours div{display:grid;gap:2px;padding:11px 0;border-bottom:1px solid var(--rule)}
-.c4-hours dt{font-size:15px;font-weight:600;color:var(--muted)}
-.c4-hours dd{font-size:17px;color:var(--ink)}
-.c4-hours .mb{font-size:17px;color:var(--ink)}
-@media (min-width:700px){.c4-hours div{grid-template-columns:8.5em minmax(0,1fr);align-items:baseline;column-gap:16px}}
+/* ===== F. rules and contact. The close itself is system.css's since the agency pass (2026-10-18, section 23); here only this
+   file's own: Rules we keep inside the card. PL: one wrapped line of every trade's page (this one in ink, not underlined) at the bottom */
 .c4-rules{margin-top:30px}
-.c4-rules h3{margin-bottom:6px;font-size:24px}
-.c4-rules li{position:relative;padding:9px 0 9px 28px;font-size:17px;font-weight:500;color:var(--ink)}
-.c4-rules .tick{left:0;top:15px;width:18px;height:15px}   /* 2026-10-17 round 3 (judges): every checklist takes the facts' tick, 18 x 15 with the words at 28px (it was 22 x 18 at 36px); level with the line's middle */
-.c4-llc{margin-top:18px;font-size:15px;color:var(--muted)}
-.hm-cc-k{margin-bottom:12px}
-.hm-about{margin-top:16px}
-.cc-slot{width:120px;margin:0 0 14px}
 .pl-more{display:grid;gap:6px;padding-top:18px;border-top:1px solid var(--rule)}
 /* on a computer the trade links sit under the hours in the left column, and the contact card keeps the full height for its
    sticky ride (a full-width row under it let the card slide over the links) */
@@ -283,11 +303,34 @@ html:not(.js) .stop .crop-m{height:calc(var(--crop-h) + var(--crop-air-t))}
 .pl-trades{display:flex;flex-wrap:wrap;column-gap:20px}
 .pl-trades a{display:inline-flex;align-items:center;min-height:44px;font-size:17px;color:var(--body);text-decoration:underline;text-decoration-color:var(--muted);text-decoration-thickness:1px;text-underline-offset:4px}
 .pl-trades a[aria-current=page]{color:var(--ink);font-weight:600;text-decoration:none}
-@media (hover:hover) and (pointer:fine){.pl-trades a:not([aria-current]):hover{color:var(--ink);text-decoration-color:var(--pen)}}
+/* states sweep TL-7 (Franco 2026-10-19): hover was a thin red line and keyboard focus added nothing to the words. Hover and a press: the
+   words turn ink and their own underline turns ink and 2px, at its resting depth (a background stroke would sit at the 44px box's
+   foot, 8px lower); focus: the words turn ink inside the ring, with the resting underline. Red only means money lost. The full
+   list's twin is list.css .wa-trades */
+.pl-trades a:not([aria-current]):is(:focus-visible,:active){color:var(--ink)}
+.pl-trades a:not([aria-current]):active{text-decoration-color:var(--ink);text-decoration-thickness:2px}
+@media (hover:hover) and (pointer:fine){.pl-trades a:not([aria-current]):hover:not(:focus-visible){color:var(--ink);text-decoration-color:var(--ink);text-decoration-thickness:2px}}
+/* Industries' trade list, EN and ES (its states moved here from the two pages' own styles, Franco 2026-10-19). The whole row is the
+   link (the name's a::after covers it), and hover, keyboard focus and a press show one mark: from 1200px the dotted leader beside the
+   name turns solid ink, under 1200px (no leader) the name takes a 2px ink underline; focus adds the ring round the row. It was a red
+   underline under the name beside the grey leader (two lines at two heights, red next to the red loss figure), the arrow sliding
+   into the leader, focus with the ring alone and a tap with nothing. Rows mark in ink, as Home's trade list does */
+.ix-n a:focus-visible{outline:none}
+.ix-n a:focus-visible::after{outline:3px solid var(--ink);outline-offset:2px;border-radius:2px}
+@media (max-width:1199px){
+  .ix-list li:is(:active,:has(.ix-n a:focus-visible)) .ix-n a{text-decoration:underline;text-decoration-color:var(--ink);text-decoration-thickness:2px;text-underline-offset:4px}
+  @media (hover:hover) and (pointer:fine){.ix-list li:hover .ix-n a{text-decoration:underline;text-decoration-color:var(--ink);text-decoration-thickness:2px;text-underline-offset:4px}}
+}
+@media (min-width:1200px){
+  .ix-list li:is(:active,:has(.ix-n a:focus-visible)) .ix-n::before{border-bottom-style:solid;border-bottom-color:var(--ink)}
+  @media (hover:hover) and (pointer:fine){.ix-list li:hover .ix-n::before{border-bottom-style:solid;border-bottom-color:var(--ink)}}
+}
+/* the note's link keeps a 44px tall tap area from a layer, not padding: on an inline link the padding grew its paint box, so the
+   ring crossed the lines above and below (2026-10-19) */
+.ix-note a{position:relative}
+.ix-note a::before{content:"";position:absolute;inset:-12px 0}
 /* Cardino perches on the contact card (Home, Franco 2026-10-10: he floated above it). The perch drawing is cropped to the bird, so
    bottom:100% puts his feet on the card's top edge at any size; 2px down so he stands on it. Overrides system.css's top offsets. */
-.contact-card .cardino{top:auto;bottom:100%;margin-bottom:-2px;width:58px;right:36px}
-@media (min-width:700px){.contact-card .cardino{top:auto;width:74px;right:56px}}
 
 /* ===== phone length (budget 11,000px at 390; Home's band padding by role) */
 @media (min-width:700px){
@@ -350,3 +393,65 @@ html:not(.js) .stop .crop-m{height:calc(var(--crop-h) + var(--crop-air-t))}
    line), so the call bar's edge has room to land between two of them; with 1 to 2px it could land only above the card, which opened
    a 70px gap over it on AC and pest control at 375 x 667 (system.js seatBar) */
 @media (max-width:899px){.hero-strip.strip{row-gap:4px}.hero-strip .strip-k,.hero-strip .strip-b{line-height:1.45}}
+
+/* ===== Design round picks, 2026-10-19 (Franco, Oct 19: "do 1 to 13"; built in picks-build-2026-10-19)
+   Item 1, a trade page on a phone opens on the sheet (UX's version with UI's measurements; Motion's pen loop round "never reached
+   the invoice" left out, since it would be a second red mark beside the ringed figure). Under 900px the hero reads: the headline,
+   the one-problem line, Call us with the reply line beside it (the town, the free call, the same-day reply; the number and Text sit
+   in the call bar the whole time), then the clipboard, whose row 1 writes in and is ringed above the call bar. The eyebrow's town
+   moves into the reply line (span.rs-town), the hero card that repeated row 1 steps aside, the letterhead shows the short business
+   line (span.sh-at holds the place), and under the sheet the lede opens on what we do (span.t-do) before the problems it names,
+   then the price. Computers are unchanged. On a phone 700px tall or less the headline is 30px, as on Home's short phones, so a
+   four-line Spanish trade noun still leaves row 1 above the bar. Measured on all 16 trade pages in WebKit and Chromium at
+   393 x 659, 375 x 667, 390 x 844, 375 x 812, 430 x 932 and 360 x 780 (picks-build-2026-10-19/logs): the ring ends above the bar
+   and the bar cuts no line. check.py TRADE_FIRST_JS */
+.hm4-hero .rs-town{display:none}
+@media (max-width:899px){
+  body[data-trade-lock] .hm4-hero .hero-g{grid-template-areas:"h1" "one" "act" "tool" "lede" "terms";row-gap:0}
+  body[data-trade-lock] .hm4-hero .hero-copy{display:contents}
+  body[data-trade-lock] .hm4-hero .eyebrow,body[data-trade-lock] .hm4-hero .hero-strip{display:none}
+  body[data-trade-lock] .hm4-hero h1{grid-area:h1;margin:0}
+  body[data-trade-lock] .hm4-hero .hero-one{grid-area:one;margin:12px 0 0}
+  body[data-trade-lock] .hm4-hero .hero-act{margin-top:20px}
+  body[data-trade-lock] .hm4-hero .hero-tool{margin-top:22px}
+  body[data-trade-lock] .hm4-hero .t-lede{grid-area:lede;margin-top:24px;display:flex;flex-direction:column;gap:10px}
+  body[data-trade-lock] .hm4-hero .t-lede .t-do{order:-1;color:var(--ink)}
+  body[data-trade-lock] .hm4-hero .hero-terms{margin-top:16px}
+  /* Home's phone call block: the button with the reply line beside it */
+  body[data-trade-lock] .hm4-hero .cta{display:flex;align-items:center;gap:16px}
+  body[data-trade-lock] .hm4-hero .cta-row{flex:none}
+  body[data-trade-lock] .hm4-hero .cta .btn{padding:0 26px}
+  body[data-trade-lock] .hm4-hero .cta-tel{display:none}
+  body[data-trade-lock] .hm4-hero .cta .reply{margin:0;font-size:15px;line-height:1.35;color:var(--pencil);text-wrap:balance}
+  body[data-trade-lock] .hm4-hero .rs-town{display:inline}
+  body[data-trade-lock] .hm4-hero .lh .sh-at{display:none}
+}
+/* under 390px the language steps aside from the reply line, as on Home (the header's language link stays); under 360px the line
+   goes under the button, where beside it the Spanish took six lines */
+@media (max-width:389px){body[data-trade-lock] .hm4-hero .rs-lang{display:none}}
+/* under 390px the button is 22px a side and the gap 14, as on Home's short phones: the Spanish line beside it took four lines at 375 and
+   the clamp's shadow fell on its last one (shadow_air); it keeps three */
+@media (max-width:389px){body[data-trade-lock] .hm4-hero .cta{gap:14px}body[data-trade-lock] .hm4-hero .cta .btn{padding:0 22px}}
+@media (max-width:359px){body[data-trade-lock] .hm4-hero .cta{flex-wrap:wrap;row-gap:10px}body[data-trade-lock] .hm4-hero .cta .reply{flex-basis:100%}}
+@media (max-width:899px) and (max-height:700px){
+  body[data-trade-lock] .hm4-hero h1{font-size:30px}
+  body[data-trade-lock] .hm4-hero .hero-one{font-size:18px;margin-top:10px}
+  body[data-trade-lock] .hm4-hero .hero-act{margin-top:16px}
+  body[data-trade-lock] .hm4-hero .hero-tool{margin-top:16px}
+}
+/* Item 6, Spanish headlines set by phrase: each Spanish trade h1 is written in phrases (span.phr: "Encontramos por dónde / se le
+   va el dinero / a su negocio de plomería"). From 1240px, where the longest phrase fits its column at 58px (597px of 616), each
+   phrase holds together, so no line breaks inside "se le va" or ends on "a su". 58px is today's short-laptop size and the floor
+   (craft judge); under 1240 the headline keeps its size, and its short words are bound in the source (resume pass), so it breaks
+   only between word groups there too. A phrase too long for one line at 58px is two phrases ("a su negocio
+   / de electricidad"). check.py H1_PHRASE_JS at 1180, 1240, 1280, 1366, 1440 and 1920 */
+@media (min-width:1240px){
+  :lang(es) body[data-trade-lock] .hm4-hero h1{font-size:58px;max-width:none}
+  :lang(es) body[data-trade-lock] .hm4-hero h1 .phr{white-space:nowrap}
+}
+/* Agency leftover M26: Plumbing's and Electrical's one-problem line names a problem their sheet now carries as a row, counted and
+   not priced (How it works' sample sheet carries the ticket row the same way, "not priced" / "sin cifra"), set like a row with its
+   figure column in muted words, never red, and outside the total. It writes in with the total */
+.sheet .sh-unp{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.sheet .sh-usd.unp{color:var(--muted);font-weight:500;font-size:15px;padding-top:2px}
+@media screen and (prefers-reduced-motion:no-preference){html.js .sheet[data-fill]:not(.swap):not(.still) .sh-unp{animation:write 380ms var(--ease-out) both;animation-delay:1500ms}}

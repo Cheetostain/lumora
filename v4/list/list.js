@@ -5,7 +5,8 @@
    so Home and the trade pages open on it, and a pick made there opens this page on it. While a trade is picked: its 5 read-first
    rows show as jump links above the list (items.json "top"), the papers picture turns into that trade's own when there is one
    (AC: Kestrel Air), and on a phone one line under the header says which trade is showing once the filter has scrolled away.
-   No animation. Without JS the filter, the links and the line are hidden and every line shows with its trade names (list.css). */
+   No animation. Without JS the filter, the links and the line are hidden and every line shows with its trade names (list.css).
+   The Spanish page (what-we-automate.es.html, agency pass 2026-10-18) runs the same file; only the three lines it writes change words. */
 (function () {
   var box = document.querySelector('.wa-filter'); if (!box) return;
   var root = document.documentElement, hdr = document.querySelector('.hdr'), list = document.getElementById('automate');
@@ -13,7 +14,7 @@
   var stages = [].slice.call(document.querySelectorAll('.wa-stage'));
   var pics = [].slice.call(document.querySelectorAll('[data-pic-for]'));
   var count = document.getElementById('wa-count'), top = document.getElementById('wa-top'), now = document.getElementById('wa-now');
-  var phone = window.matchMedia('(max-width:899px) and (min-height:501px)'), cur = 'all';
+  var phone = window.matchMedia('(max-width:899px) and (min-height:501px)'), cur = 'all', es = root.lang === 'es';
   var hdrBottom = function () { return hdr ? hdr.getBoundingClientRect().bottom : 0; };
   var barTop = function () { var b = document.querySelector('.callbar'); return b && b.getClientRects().length ? b.getBoundingClientRect().top : innerHeight; };
 
@@ -26,7 +27,7 @@
       s.textContent = li.closest('.wa-stage').querySelector('.wa-sh').textContent;
       a.appendChild(s); x.appendChild(a); ol.appendChild(x);
     });
-    top.querySelector('.wa-top-k').textContent = 'For ' + who + ', read these first:';
+    top.querySelector('.wa-top-k').textContent = es ? 'Para ' + who + ', lea primero estos:' : 'For ' + who + ', read these first:';
     top.hidden = !picks.length;
   }
 
@@ -52,9 +53,9 @@
     });
     root.classList.toggle('wa-one', !all);
     var who = radio.getAttribute('data-who');
-    count.textContent = all ? 'All ' + items.length + ' on the list, in ' + stages.length + ' stages of the job.'
-      : n + ' of the ' + items.length + ' are for ' + who + '.';
-    document.getElementById('wa-now-t').textContent = all ? '' : radio.nextElementSibling.textContent + ', ' + n + ' of ' + items.length + '.';
+    count.textContent = es ? (all ? 'Los ' + items.length + ' de la lista, en ' + stages.length + ' etapas del trabajo.' : n + ' de los ' + items.length + ' son para ' + who + '.')
+      : all ? 'All ' + items.length + ' on the list, in ' + stages.length + ' stages of the job.' : n + ' of the ' + items.length + ' are for ' + who + '.';
+    document.getElementById('wa-now-t').textContent = all ? '' : radio.nextElementSibling.textContent + ', ' + n + (es ? ' de ' : ' of ') + items.length + '.';
     readFirst(key, who);
     var own = pics.some(function (p) { return p.getAttribute('data-pic-for') === key; });
     pics.forEach(function (p) { p.hidden = p.getAttribute('data-pic-for') !== (own ? key : 'default'); });

@@ -1,27 +1,10 @@
 /* Lumora, lumorafl.com. Small helpers shared by every page. Nothing here calls the network.
-   1. The phone menu closes on Escape, on a link and on a tap outside it.
+   1. The header and its phone menu are the v4 Home's since 2026-10-20; /v4/system.js runs them.
    2. The language switch remembers the choice in this browser only ("lumora-lang"), so the
       home page can open in that language next time. The overnight phone remembers a pause
       ("lumora-feed"). Those are the two values the site stores (privacy page, section 1). */
 (function () {
   "use strict";
-
-  var menu = document.querySelector("details.menu");
-  if (menu) {
-    var summary = menu.querySelector("summary");
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && menu.open) {
-        menu.open = false;
-        if (summary) summary.focus();
-      }
-    });
-    menu.addEventListener("click", function (e) {
-      if (e.target.closest && e.target.closest(".menu-panel a")) menu.open = false;
-    });
-    document.addEventListener("click", function (e) {
-      if (menu.open && !menu.contains(e.target)) menu.open = false;
-    });
-  }
 
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest("a[data-lang]");

@@ -50,8 +50,21 @@
   // passes through esc(), so the fix lives here once: the middle dot binds to the word before it with a no-break space, and a house
   // number, its street and the suffix ("129 Oak St") stay one unit. The pages' own copy says it the same way by hand (&nbsp;).
   // check.py WHOLE_JS fails either, in Chromium from 320 to 430 and in WebKit at 320, 375 and 393
-  var keep = function (s) { return s.replace(/ \u00b7 /g, '\u00a0\u00b7 ').replace(/\b(\d{1,5}) ([A-Z][a-z]+(?: [A-Z][a-z]+)?) (St|Ave|Rd|Blvd|Dr|Ln|Way|Ct|Pl|Hwy|Pkwy|Ter|Cir)\b/g, function (m, n, st, sx) { return n + '\u00a0' + st.replace(/ /g, '\u00a0') + '\u00a0' + sx; }).replace(/(\d) (?=[AP]M\b|[ap]\.[ \u00a0]?m\.)/g, '$1\u00a0').replace(/(\d\u00a0[ap]\.) (m\.)/g, '$1\u00a0$2'); };   // and a clock time ("4:12 PM" split in a badge at 320), as whole() does
+  // Round 4 (2026-10-18, Franco's iPhone: "10 / cases", "20 / days.", "El día 30 / es", "de 2 / galones"): a bare count keeps the word
+  // after it, and a formula's operator keeps its number ("× 24%"); the last factors join the one before them ("Tuesday × 52 weeks ÷ 12",
+  // "book × $151"), so no line starts with "÷ 12" alone (Restaurants' app errors row at 1280 to 1440). keepCounts() is the same rule
+  // the pages' own copy follows by hand (&nbsp;). check.py WHOLE_JS fails a count split from its word and a line of an operator and one token
+  var keepCounts = function (s) { return s.replace(/(^|[\s(])(\d{1,4}) (?=[A-Za-z\u00c0-\u00ff])/g, '$1$2\u00a0').replace(/([\u00d7\u00f7]) /g, '$1\u00a0')
+    .replace(/ ([\u00d7\u00f7]\u00a0(?:[^\s]|\u00a0)+)$/, '\u00a0$1').replace(/ ([\u00d7\u00f7]\u00a0(?:[^\s]|\u00a0)+)$/, '\u00a0$1'); };
+  var keep = function (s) { return keepCounts(s.replace(/ \u00b7 /g, '\u00a0\u00b7 ').replace(/\b(\d{1,5}) ([A-Z][a-z]+(?: [A-Z][a-z]+)?) (St|Ave|Rd|Blvd|Dr|Ln|Way|Ct|Pl|Hwy|Pkwy|Ter|Cir)\b/g, function (m, n, st, sx) { return n + '\u00a0' + st.replace(/ /g, '\u00a0') + '\u00a0' + sx; }).replace(/(\d) (?=[AP]M\b|[ap]\.[ \u00a0]?m\.)/g, '$1\u00a0').replace(/(\d\u00a0[ap]\.) (m\.)/g, '$1\u00a0$2')); };   // keepCounts last, so the address and clock rules see plain spaces; and a clock time ("4:12 PM" split in a badge at 320), as whole() does
   var esc = function (s) { return keep(String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')); };
+  // design round picks, 2026-10-19 (item 6): on a Spanish page a heading the system writes (a walk stop's place) never ends a
+  // line on a short word (a, de, su, y...): it is bound to the next word with a no-break space, as the page's own headings are
+  // written in its source (check.py picks_problems). Split on plain spaces, so no lookbehind (older iPhone Safari lacks it).
+  // Every Spanish page since the picks follow-up (same day): Home's picker rewrites its stops too, and its headings joined the rule
+  var SHORT_ES = /^(?:a|al|de|del|el|la|las|los|lo|le|se|su|sus|y|e|o|u|en|con|por|que|un|una|no|mi)$/i;
+  var headEs = function (s) { if (!ES) return s; var w = String(s).split(' ');
+    return w.map(function (x, i) { return x + (i < w.length - 1 ? (SHORT_ES.test(x.split('\u00a0').pop()) ? '\u00a0' : ' ') : ''); }).join(''); };
   // a phone number and a clock time stay on one line where the system writes them into words (round 2 of Franco's iPhone review,
   // 2026-10-17: WebKit broke "(352) 555- / 0148" in Home's night log and "Thu 9:00 / AM" in the plumbing quotes window). It takes
   // escaped text: a number goes in a span.nw (system.css; a no-break space alone still lets it break after the hyphen) and a time
@@ -295,7 +308,7 @@
       // R4: the text right after a missed call is an SMS text-back, so it shows green (.sms), never blue
       var th = '<div class="ph-who"><i></i>' + esc(R.who) + '</div><div class="thread">' + R.msgs.map(function (m, i) {
         var tb = m[0] === 'out' && i > 0 && /^(Missed call|Llamada perdida)/.test(R.msgs[i - 1][1]);
-        return '<p class="' + (m[0] === 'sys' ? 'sys' + (i === R.msgs.length - 1 ? ' k' : '') : 'bub ' + m[0] + (tb ? ' sms' : '')) + '">' + whole(esc(m[1])) + '</p>'; }).join('') + '</div>';
+        return '<p class="' + (m[0] === 'sys' ? 'sys' + (i === R.msgs.length - 1 ? ' k' : '') : 'bub ' + m[0] + (tb ? ' sms' : '')) + '"' + (m[0] === 'sys' ? '' : ' data-ui-ok="nested-card a text bubble on the phone screen (R6): a message, not a box around content"') + '>' + whole(esc(m[1])) + '</p>'; }).join('') + '</div>';
       return v4 ? phoneOf()(th, R.clock || '9:41') : '<div class="scr-phone"><div class="ph"><div class="ph-sb"><span>9:41</span><i></i></div>' + th + '</div></div>';
     }
     if (R.frame === 'clip') return '<div class="doc-clip"><span class="clamp" aria-hidden="true"><i></i></span><div class="doc">' + docBody(R, true) + '</div></div>';
@@ -367,7 +380,7 @@
     // P.line: the app's own label over the caller (a business phone line shows calls and texts in one thread)
     if (P.frame === 'phone') return phoneOf()('<div class="ph-who">' + (P.line ? '<small class="ph-line">' + esc(P.line) + '</small>' : '') + '<i></i>' + esc(P.who) + '</div><div class="thread">' + P.msgs.map(function (m) {
       var o = m[2] || {}, cls = m[0] === 'sys' ? 'sys' + (o.k ? ' k' : '') : 'bub ' + (m[0] === 'sms' ? 'out sms' : m[0]);
-      return '<p class="' + cls + (o.add ? ' add' : '') + (o.pc ? ' pc' : '') + '">' + whole(esc(m[1])) + '</p>'; }).join('') + '</div>', P.clock || '9:41');
+      return '<p class="' + cls + (o.add ? ' add' : '') + (o.pc ? ' pc' : '') + '"' + (m[0] === 'sys' ? '' : ' data-ui-ok="nested-card a text bubble on the phone screen (R6): a message, not a box around content"') + '>' + whole(esc(m[1])) + '</p>'; }).join('') + '</div>', P.clock || '9:41');
     // hm: a column (or, on a row, the row) the picture crops on a narrow container, as the screens kit does; nw: never wraps
     var NUM = P.cols.map(function (c, i) { return numCol(P, i); });
     var cl = function (i, th, num) { var c = ((P.hm || []).indexOf(i) > -1 ? 'hm ' : '') + (!th && (P.nw || []).indexOf(i) > -1 ? 'nw ' : '') + (num && NUM[i] ? 'num' : ''); return c.trim() ? ' class="' + c.trim() + '"' : ''; };
@@ -401,11 +414,31 @@
   var phoneOf = function () { return document.querySelector('[data-iph]') ? iphMsg : ph4; };
 
   /* ================================================================ binders: everything the trade choice rewrites */
+  // the walk opens on its number (Franco 2026-10-19, design round item 3; carried from Home to the eight trade pages by the picks
+  // follow-up the same day): "Our sample shop, Dunlin Plumbing, loses $2,710 a month. Here's where." One writer for Home's picker
+  // and every trade page, reading the sheet's own total, so the heading can't drift from the sheet under it. The word sample sits
+  // in the heading (it is the section's sample lead, Lumora.lint R8; owner judge: a skim of the headings never reached the intro),
+  // the figure is red with its loss word beside it (check.py MONEY_JS), and each business is called what its page calls it
+  // (lane 3b, 2026-10-18: roofers, pest control and restoration owners say company). The Spanish is written in Spanish, usted, its
+  // short words bound (item 6). check.py: Home's item 3 checks and walk_head_problems on the trade pages
+  function walkHead(el, t) {
+    var h = el.querySelector('[data-walk-head]'); if (!h || !t || !t.rows) return;
+    var s = (t.short || '').split(',')[0], hx = function (x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+    var who = ES ? (/^Restaurante/.test(s) ? 'Nuestro restaurante' : /^Agencia/.test(s) ? 'Nuestra agencia' : /^Control de plagas/.test(s) ? 'Nuestra compañía'
+      : /^Daños/.test(s) ? 'Nuestra empresa' : 'Nuestro negocio') + ' de\u00a0ejemplo'
+      : 'Our sample ' + (t.per === 'yr' ? 'business' : /^Restaurant/.test(s) ? 'restaurant' : / agency$/i.test(s) ? 'agency'
+      : /^(?:Roofing|Pest control|Restoration)$/.test(s) ? 'company' : 'shop');
+    h.innerHTML = who + ', ' + hx(t.shop) + (ES ? ', pierde ' : ', loses ') + '<span class="walk-h-usd">' + money(total(t)) + '\u00a0' + perWord(t).replace(/ /g, '\u00a0') + '</span>' +
+      (ES ? '. Le\u00a0mostramos dónde.' : '. Here\'s where.');
+  }
   var shown = {};
   var BIND = {
     sheet: function (el, t, animate) {
       var f = function (k) { return el.querySelector('[data-f="' + k + '"]'); };
-      if (f('sub')) f('sub').textContent = t.sub.replace(/(\d) /g, '$1\u00a0');   // 2026-10-15: "2 / trucks" never splits (no-break space)
+      // 2026-10-15: "2 / trucks" never splits (no-break space). Design round picks, 2026-10-19 (item 1): the place after the short
+      // business line sits in span.sh-at, so a trade page's phone reads "Plumbing, 2 trucks" and the Spanish line keeps one line
+      if (f('sub')) { var sb = t.sub.replace(/(\d) /g, '$1\u00a0'), so = (t.short || '').replace(/(\d) /g, '$1\u00a0'), hx = function (s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+        if (so && sb.length > so.length && sb.indexOf(so) === 0) f('sub').innerHTML = hx(so) + '<span class="sh-at">' + hx(sb.slice(so.length)) + '</span>'; else f('sub').textContent = sb; }
       // 2026-10-17: the money column says what its figures are, a loss ("A month" read as a price list)
       if (f('per')) f('per').textContent = t.per === 'yr' ? tr('Lost a year', 'Pérdida al año') : tr('Lost a month', 'Pérdida al mes');
       var ringOn = el.hasAttribute('data-ring'), short = el.hasAttribute('data-short');   // data-short (v4, R9): the row's one short formula
@@ -436,6 +469,7 @@
           if (t.per === 'yr') return 'Una administradora de propiedades con ' + e[2] + ' unidades';
           if (/^Restaurante/.test(e[1])) return 'Un restaurante y bar con capacidad para ' + e[2] + ' personas';
           if (/^Daños/.test(e[1])) return 'Una pequeña empresa de daños por agua con ' + e[2] + ' ' + e[3];
+          if (/^Control de plagas$/.test(e[1])) return 'Una pequeña compañía de ' + e[1].toLowerCase() + ' con ' + e[2] + ' ' + e[3];   // lane 3b, 2026-10-18
           return 'Un pequeño negocio de ' + e[1].charAt(0).toLowerCase() + e[1].slice(1) + ' con ' + e[2] + ' ' + e[3];
         }
         var m = /^(.*), (\d+) (\w+?)s?$/.exec(t.short); if (!m) return t.short;
@@ -444,13 +478,16 @@
         var trade = /^[A-Z]{2}/.test(m[1]) ? m[1] : m[1].charAt(0).toLowerCase() + m[1].slice(1);
         if (t.per === 'yr') return 'A property manager with ' + m[2] + '\u00a0rentals';   // 2026-10-15: no-break space, the count stays with its noun
         if (/^Restaurant/.test(m[1])) return (/^(8\d*|11|18)$/.test(m[2]) ? 'An ' : 'A ') + m[2] + '-' + m[3] + ' restaurant and bar';
-        return 'A small ' + trade + ' shop with ' + m[2] + '\u00a0' + m[3] + (m[2] === '1' ? '' : 's');
+        // agency pass 2026-10-18 (lane 3b): roofers, pest control operators and restoration owners call their business a company
+        return 'A small ' + trade + (/^(Roofing|Pest control|Restoration)$/.test(m[1]) ? ' company' : ' shop') + ' with ' + m[2] + '\u00a0' + m[3] + (m[2] === '1' ? '' : 's');
       }
       var s = function (k) { return el.querySelector('[data-s="' + k + '"]'); }, r = t.rows[0];
-      if (s('sub')) s('sub').textContent = stripSize(t); if (s('leak')) s('leak').textContent = r.b;
+      if (s('sub')) s('sub').textContent = stripSize(t); if (s('leak')) s('leak').textContent = keepCounts(r.b);
       // 2026-10-17: "Losing" in ink beside the red figure, so the figure never reads as a price
+      // resume pass 2026-10-19 (both judges: a trade hero on a phone stood still for its first 4 s): the figure wears the walk's red pen
+      // underline, drawn once when the card is in view (initDraw; system.css delays it to 0.8 s). One pen ring a page still holds
       // the figure keeps one line (no-break spaces); where it doesn't fit beside "Losing", it goes under it whole
-      if (s('usd')) s('usd').innerHTML = '<span class="loss-k">' + tr('Losing', 'Pierde') + '</span> ' + (money(r.usd) + perShort(t)).replace(/ /g, ' '); if (s('f')) s('f').textContent = r.f;
+      if (s('usd')) s('usd').innerHTML = '<span class="loss-k">' + tr('Losing', 'Pierde') + '</span> <span class="su">' + (money(r.usd) + perShort(t)).replace(/ /g, ' ') + UNDER_SVG + '</span>'; if (s('f')) s('f').textContent = keepCounts(r.f);
       if (el.tagName === 'A') el.href = '#' + ($('[data-bind=sheet]') ? $('[data-bind=sheet]').id || 'sheet' : 'sheet');
     },
     text: function (el, t) { var v = t[el.getAttribute('data-field')]; if (v != null) el.textContent = v; },
@@ -466,6 +503,8 @@
         var t = D[li.getAttribute('data-t')], r = t && t.rows[0]; if (!r) return;
         var one = li.querySelector('[data-f="one"]'), leak = li.querySelector('[data-f="leak"]'), m = /, (\d+) (\w+?)s?$/.exec(t.short) || [],
           kind = t.per === 'yr' ? 'property manager' : /^Restaurant/.test(t.short) ? 'restaurant and bar' : 'shop';
+        // round 4 (2026-10-18): the property manager's units are rentals, said as the strip says them, never "a 212-rental property manager"
+        var who = t.per === 'yr' && m[1] ? 'property manager with ' + m[1] + '\u00a0' + m[2] + 's' : (m[1] ? m[1] + '-' + m[2] + ' ' : '') + kind;
         li.setAttribute('data-task', TASK[r.icon] || r.icon);
         if (one) one.textContent = t.line;
         // Spanish (Friday run, 2026-10-16): trades-src-es.json now carries each trade's line, so the index binds in both
@@ -477,7 +516,7 @@
           return;
         }
         // 2026-10-17: the figure is red and says it is a loss ("losing"), so it never reads as the price of the line above
-        if (leak) leak.innerHTML = 'From the sample sheet for a ' + (m[1] ? m[1] + '-' + m[2] + ' ' : '') + kind + ': ' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', losing <b class="loss">' + money(r.usd) + perShort(t) + '</b>.';
+        if (leak) leak.innerHTML = 'From the sample sheet for a ' + who + ': ' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', losing <b class="loss">' + money(r.usd) + perShort(t) + '</b>.';
       });
     },
     bigfig: function (el, t) {
@@ -491,7 +530,10 @@
       $$('.pen-ring', el).forEach(function (s) { requestAnimationFrame(function () { ring(s); }); });
     },
     walk: function (el, t, animate) {
-      if (el.getAttribute('data-walk') === 'pairs') return walkPairs(el, t, animate);   // v4 (R7): same-object stops
+      walkHead(el, t);
+      // v4 (R7): same-object stops. Picks gate 2026-10-19: a trade with pairs only (property managers, offices) has no ghost to real
+      // picture, so it is walked as pairs on the old walk too (the catalog threw on Property managers)
+      if (el.getAttribute('data-walk') === 'pairs' || t.rows.some(function (r) { return !r.after; })) return walkPairs(el, t, animate);
       var list = el.querySelector('[data-f="stops"]'); if (!list) return;
       list.innerHTML = t.rows.map(function (r, i) {
         var id = 'stop-' + (i + 1);
@@ -648,14 +690,18 @@
       // a plain line under it: a walk goes room by room, and a calls row never becomes a heading (R1; review 2026-10-10)
       // the Before / After buttons sit under the picture they switch, beside its Sample label
       return '<li class="stop page" id="stop-' + n + '" data-usd="' + r.usd + '" data-place="' + esc(place) + '" data-task="' + task + '"' + (P ? ' data-state="after"' : '') + '>' +
-        '<div class="stop-h">' + (one ? '' : '<span class="tab-n">' + n + '</span>') + '<div class="stop-t"><h3>' + (one ? '' : '<span class="sr">' + tr('Stop ', 'Paso ') + n + ': </span>') + esc(place) + '</h3><p class="stop-leak">' + esc(r.b) + '</p></div></div>' +
+        '<div class="stop-h">' + (one ? '' : '<span class="tab-n">' + n + '</span>') + '<div class="stop-t"><h3>' + (one ? '' : '<span class="sr">' + tr('Stop ', 'Paso ') + n + ': </span>') + esc(headEs(place)) + '</h3><p class="stop-leak">' + esc(r.b) + '</p></div></div>' +
         '<div class="stop-body"><div class="pic' + (P ? ' has-seg' : '') + '"' + (task === 'calls' ? ' data-pic="calls"' : '') + '>' + pic +
-        (P ? '<div class="seg" role="group" aria-label="' + tr('Show stop ', 'Mostrar el paso ') + n + '"><button type="button" data-show="before" aria-pressed="false">' + tr('Before', 'Antes') + '</button><button type="button" data-show="after" aria-pressed="true">' + tr('After', 'Después') + '</button></div>' : '') +
+        (P ? '<div class="seg" role="group" aria-label="' + tr('Show stop ', 'Mostrar el paso ') + n + ': ' + esc(place) + '"><button type="button" data-show="before" aria-pressed="false">' + tr('Before', 'Antes') + '</button><button type="button" data-show="after" aria-pressed="true">' + tr('After', 'Después') + '</button></div>' : '') +
         (tag ? '<span class="samp">' + tr('Sample', 'Ejemplo') + '</span>' : '') + '</div>' +
         '<div class="stop-notes"><p class="pencil">' + esc(r.note) + '</p>' +
         // 2026-10-17: every stop's figure says what it is in each state, not only a one-stop walk's ("$399 a month" alone read as a price)
-        '<p class="find">' + (P ? '<span class="find-k"><span class="bo">' + tr('Lost:', 'Se pierde:') + '</span><span class="ao">' + tr('Won back:', 'Se recupera:') + '</span></span>' : '<span class="find-k">' + tr('Lost:', 'Se pierde:') + '</span>') +
-        '<span class="find-usd money">' + money(r.usd) + ' ' + perWord(t) + UNDER_SVG + '</span>' + (noF ? '' : '<span class="find-f">' + esc(r.fs || r.f) + '</span>') + '</p>' +
+        // round 4 (2026-10-18): the label sits on the figure's line, "Won back $1,900 a month", as a loss reads "Losing $1,900 a month";
+        // "$1,900 a month" alone in big ink under a small label read as a monthly price. It wraps only where the line can't hold both
+        '<p class="find"><span class="find-l">' + (P ? '<span class="find-k"><span class="bo">' + tr('Lost', 'Pierde') + '</span><span class="ao">' + tr('Won back', 'Recupera') + '</span></span>' : '<span class="find-k">' + tr('Lost', 'Pierde') + '</span>') + ' ' +
+        '<span class="find-usd money">' + money(r.usd) + ' ' + perWord(t) + UNDER_SVG + '</span></span>' + (noF ? (r.count ? '<span class="find-f">' + esc(r.count) + '</span>' : '') : '<span class="find-f">' + esc(r.fs || r.f) + '</span>') + '</p>' +
+        // agency pass 2026-10-18 (rank 8): with no formula under the stops, a row's counting line (trades-src "count") says which of the
+        // owner's own records the figure comes from, and names an outside rate once, so a $1,900 never reads as made up for the pitch
         // no "Fix:" line on v4 stops: the After picture shows the fix in the shop's own screen, and the line only repeated it (R9)
         '</div></div></li>'; }).join('');
     var tl = el.querySelector('[data-tally]');
@@ -761,7 +807,38 @@
       if (g._g2r) return;   // still in view, only crossed another threshold: keep the clock running, don't restart it
       g._g2r = setTimeout(function () { g2rIO.unobserve(g); if (!g.dataset.touched) setG2R(g, 'after'); }, 900); });
   }, { threshold: [0, 0.25, 0.5, 0.75, 1] }) : null;
+  /* the Before / After switch's marker (Franco 2026-10-19, design round item 5; system.css .seg-th). Every two-button .seg gets one
+     ink marker holding white copies of its two words; data-on says which half it covers and follows aria-pressed, whoever sets it
+     (a stop's switch, the walk's 0.9 s turn, Home's code demo). With a mouse the marker starts on the press, so it and the money it
+     changes move together (craft judge: the money swapped at once and the marker got there 260ms later); a press that ends off the
+     button puts it back. A touch moves it on the tap, since a touch that starts a scroll is no tap. The arrow keys move it too. A
+     marker a prerender copied into the page is replaced, never doubled */
+  function segs(scope) {
+    $$('.seg', scope).forEach(function (seg) {
+      var bs = $$(':scope > button', seg); if (seg._th || bs.length !== 2) return; seg._th = 1;
+      $$(':scope > .seg-th', seg).forEach(function (x) { x.remove(); });
+      var th = document.createElement('span'); th.className = 'seg-th'; th.setAttribute('aria-hidden', 'true');
+      th.innerHTML = '<span class="seg-tx"><span>' + esc(bs[0].textContent.trim()) + '</span><span>' + esc(bs[1].textContent.trim()) + '</span></span>';
+      seg.appendChild(th);
+      var sync = function () { seg.setAttribute('data-on', bs[1].getAttribute('aria-pressed') === 'true' ? '1' : '0'); };
+      sync(); seg.classList.add('th');
+      new MutationObserver(sync).observe(seg, { attributes: true, subtree: true, attributeFilter: ['aria-pressed'] });
+      requestAnimationFrame(function () { requestAnimationFrame(function () { seg.classList.add('go'); }); });   // no slide on the first paint
+      bs.forEach(function (b, i) {
+        b.addEventListener('pointerdown', function (e) {
+          if (e.pointerType === 'touch' || e.button !== 0) return;
+          seg.setAttribute('data-on', String(i));
+          addEventListener('pointerup', function () { setTimeout(sync, 0); }, { once: true });   // after the click, or back if there was none
+        });
+      });
+      seg.addEventListener('keydown', function (e) {
+        var d = { ArrowLeft: 0, ArrowRight: 1 }[e.key]; if (d == null || e.altKey || e.ctrlKey || e.metaKey) return;
+        e.preventDefault(); if (bs[d].getAttribute('aria-pressed') !== 'true') bs[d].click(); bs[d].focus();
+      });
+    });
+  }
   function initG2R(scope, redraw) {
+    segs(scope);
     $$('[data-g2r]', scope).forEach(function (g) {
       if (g.dataset.ready) return; g.dataset.ready = '1';
       var sc = g.closest('.stop, [data-g2r-scope]') || g.parentNode;
@@ -800,9 +877,10 @@
           var nx = stops[Math.min(n, stops.length - 1)], lc = function (s) { return s.charAt(0).toLowerCase() + s.slice(1); };
           var pg = walk.querySelector('[data-tally] [data-f="tprog"]'), b1 = walk.querySelector('[data-f="bar-stop"]'), b2 = walk.querySelector('[data-f="bar-n"]');
           var of = tr(' of ', ' de '), st = tr(' stops', ' pasos');   // Spanish "paso": a "parada" is a bus stop (native read 2026-10-10)
-          if (pg) pg.textContent = all ? tr('Walk done, ', 'Visita terminada, ') + n + of + n + st : n ? n + of + stops.length + st : stops.length + tr(' stops on this walk', ' pasos en esta visita');
-          if (b1) b1.textContent = all ? tr('Walk done', 'Visita terminada') : n ? tr('Next: ', 'Sigue: ') + lc(nx ? nx.dataset.place : '') : tr('The walk, ', 'La visita, ') + stops.length + st;
-          if (b2) b2.textContent = n ? n + of + stops.length : tr('Sample business', 'Negocio de ejemplo');
+          // round 4: the counts keep their words here too ("3 of 3 stops"), as keepCounts() writes them everywhere else
+          if (pg) pg.textContent = keepCounts(all ? tr('Walk done, ', 'Visita terminada, ') + n + of + n + st : n ? n + of + stops.length + st : stops.length + tr(' stops on this walk', ' pasos en esta visita'));
+          if (b1) b1.textContent = keepCounts(all ? tr('Walk done', 'Visita terminada') : n ? tr('Next: ', 'Sigue: ') + lc(nx ? nx.dataset.place : '') : tr('The walk, ', 'La visita, ') + stops.length + st);
+          if (b2) b2.textContent = keepCounts(n ? n + of + stops.length : tr('Sample business', 'Negocio de ejemplo'));
           return;
         }
         var tot = walk.querySelector('[data-tally] [data-f="tot"]'), tper = walk.querySelector('[data-tally] [data-f="tper"]');
@@ -811,7 +889,7 @@
         var bs = walk.querySelector('[data-f="bar-stop"]'), bu = walk.querySelector('[data-f="bar-usd"]');
         var next = stops[Math.min(n, stops.length - 1)];
         // one line on a phone at the start, and it names the NEXT stop (the counted one can still be on screen)
-        if (bs) bs.textContent = all ? 'Walk done, ' + n + ' of ' + n + ' stops' : n ? 'Next: ' + (next ? next.dataset.place : '') : 'The walk, ' + stops.length + ' stops';
+        if (bs) bs.textContent = keepCounts(all ? 'Walk done, ' + n + ' of ' + n + ' stops' : n ? 'Next: ' + (next ? next.dataset.place : '') : 'The walk, ' + stops.length + ' stops');
         if (bu) bu.textContent = n ? money(sum) + ' ' + perWord(t) + (all ? '' : ' so far') : 'Sample business';  // never "$0 so far"
       });
     }
@@ -840,17 +918,22 @@
     $$('[data-seated]', sec).forEach(function (e) { e.style.marginTop = ''; e.removeAttribute('data-seated'); });
     if (!bar || !bar.getClientRects().length || scrollY > 0) return;
     var B = bar.getBoundingClientRect().top, hdr = $('.hdr'), floor = hdr ? hdr.getBoundingClientRect().bottom + 28 : 0, TOL = 0.5;
-    var shown = function (e) { var s = getComputedStyle(e); return e.getClientRects().length > 0 && s.visibility !== 'hidden' && +s.opacity > 0; };
+    // design round picks, 2026-10-19 (item 1): a line in a sheet that writes itself in ([data-fill]) counts while it is still at
+    // opacity 0, since it lands in that place a moment later (the bar was seated, then "$411" wrote in under its edge)
+    var shown = function (e) { var s = getComputedStyle(e); return e.getClientRects().length > 0 && s.visibility !== 'hidden' && (+s.opacity > 0 || !!e.closest('.sheet[data-fill]')); };
     // every line of words, and every box the bar must not cross; a button or a field keeps 8px from the bar (a black button on the black
     // bar read as one shape), a line or a small box 2px. y is where it starts, before that room
     var lines = function () { var out = [], tw = document.createTreeWalker(sec, NodeFilter.SHOW_TEXT), n;
       while ((n = tw.nextNode())) { var e = n.parentElement; if (!n.nodeValue.trim() || !e || e.closest('.sr') || !shown(e)) continue;
         var r = document.createRange(); r.selectNodeContents(n); [].forEach.call(r.getClientRects(), function (q) { if (q.width > 0.5) out.push({ e: e, t: q.top, b: q.bottom, y: q.top }); }); }
-      $$('.btn, .stamp, .samp, .seg, select, input:not([type=radio]):not([type=checkbox])', sec).forEach(function (e) { if (!shown(e)) return;
-        var q = e.getBoundingClientRect(), p = e.matches('.btn, .seg, select, input') ? 6 : 0; if (q.height > 4) out.push({ e: e, t: q.top - p, b: q.bottom + p, y: q.top }); });
+      // round 4 (2026-10-18): a filter chip is a button too (What we automate at 375 x 667: the bar sat on the second row of chips with
+      // their top 8px showing), so it keeps a button's 8px
+      $$('.btn, .stamp, .samp, .seg, select, input:not([type=radio]):not([type=checkbox]), .wa-chip, .chip', sec).forEach(function (e) { if (!shown(e)) return;
+        var q = e.getBoundingClientRect(), p = e.matches('.btn, .seg, select, input, .wa-chip, .chip') ? 6 : 0; if (q.height > 4) out.push({ e: e, t: q.top - p, b: q.bottom + p, y: q.top }); });
       return out; };
     var cut = function (o, s) { return o.t + s < B + TOL && o.b + s > B - TOL; };   // a line within half a pixel of the edge counts as cut
-    var mustBoxes = function () { return $$('[data-first], .hero-strip .strip-usd, h1', sec).filter(shown).map(function (e) {   // by the words' own boxes
+    // design round picks, 2026-10-19 (item 1): a trade page's phone opens on the sheet, so its ringed row 1 is a must too
+    var mustBoxes = function () { return $$('[data-first], .hero-strip .strip-usd, h1, [data-bind=sheet][data-ring] .sh-rows > li:first-child .pen-ring', sec).filter(shown).map(function (e) {   // by the words' own boxes
       var r = document.createRange(); r.selectNodeContents(e); var q = r.getBoundingClientRect(); return q.height ? q : e.getBoundingClientRect(); }); };
     var unitOf = function (e) { var c = e, a = c.closest(SEAT_ATOM);
       while (a && sec.contains(a)) { c = a; a = a.parentElement && a.parentElement.closest(SEAT_ATOM); }   // the outermost unit that holds it
@@ -1054,7 +1137,10 @@
     var tasks = {}; shown('[data-task]').forEach(function (x) { tasks[x.dataset.task] = 1; });
     if (Object.keys(tasks).length < 6) E.push('R1: ' + Object.keys(tasks).length + ' kinds of task in view (6 at least).');
     $$('ul,ol,.lk4-nts').forEach(function (l) { var c = $$(':scope > [data-task="calls"]', l).filter(vis).length; if (c > 1) E.push('R1: a list or stack with ' + c + ' calls.'); });
-    var cp = shown('[data-pic="calls"]').length; if (cp > 1) E.push('R1: ' + cp + ' calls pictures (one per page).');
+    // motion restore, 2026-10-18: Home's hero strip shows the walk's three problems at a glance and the walk fixes each one, so the
+    // strip's cropped phone previews stop 3, as its quotes slice previews stop 1; it counts only on a page whose walk has no calls stop
+    var cs = !!document.querySelector('.stop [data-pic="calls"]'), cp = shown('[data-pic="calls"]').filter(function (x) { return !(cs && x.closest('.recog')); }).length;
+    if (cp > 1) E.push('R1: ' + cp + ' calls pictures (one per page).');
     shown('h1,h2,h3').forEach(function (h) { if (/missed call|voicemail|text ?back|rang out|ring out|calls after hours|after-hours call|calls that ring|llamadas? perdidas?|buz[oó]n de voz|mensaje de voz|fuera de horario/i.test(h.innerText)) E.push('R1: call words in a heading: ' + h.innerText.slice(0, 50)); });
     // R4: nothing incoming stamped 11 p.m. to 5 a.m.; a text-back is a green SMS bubble (Spanish pages write "11:48 p. m.")
     shown('.lk4-nt, [data-task="calls"], .bub.in').forEach(function (x) { if (/\b(11:\d\d\s?(?:PM\b|p\.\s?m\.)|12:\d\d\s?(?:AM\b|a\.\s?m\.)|[1-4]:\d\d\s?(?:AM\b|a\.\s?m\.))/i.test(x.innerText)) E.push('R4: something incoming between 11 p.m. and 5 a.m.: ' + x.innerText.slice(0, 50)); });
@@ -1092,7 +1178,10 @@
     var seen = {}, total = 0;
     // Round 2 (2026-10-17, judges): Home's strip under the sheet (.recog) says where each of the sheet's figures comes from, so like
     // the old phone-only strip it repeats the sheet by design and is not counted
-    texts(function (s, pe) { if (pe.closest('.hero-strip, .recog') || pe.closest('.pic') || pe.matches('[data-shared="price"]')) return; (s.match(/\$\d[\d,]*(?:\.\d+)?/g) || []).forEach(function (m) { var k = m.replace(/\.0+$/, ''); seen[k] = (seen[k] || 0) + 1; total++; }); });
+    // Design round picks on Home's walk (Franco 2026-10-19, items 3 and 13): the walk heading opens on the sheet's total, the
+    // number its end pays off, and on a computer the adding slip lists the three stops it adds up. Both repeat by design, as the
+    // strip does, so neither is counted
+    texts(function (s, pe) { if (pe.closest('.hero-strip, .recog, .walk-h-usd, .walk-slip') || pe.closest('.pic') || pe.matches('[data-shared="price"]')) return; (s.match(/\$\d[\d,]*(?:\.\d+)?/g) || []).forEach(function (m) { var k = m.replace(/\.0+$/, ''); seen[k] = (seen[k] || 0) + 1; total++; }); });
     Object.keys(seen).forEach(function (k) { if (seen[k] > 2) B.push('R9: ' + k + ' shows ' + seen[k] + ' times (twice at most).'); });
     if (total > 16) B.push('R9: ' + total + ' dollar figures on the page (16 or fewer).');
     // R11: the picked chip is never filled black on a computer screen
@@ -1120,7 +1209,8 @@
     // money back names the walk fee (hard rule 2026-10-10); the old line, "every dollar back", read as the fix money too, right after the price sentence.
     // Spanish: "lo que pagó por la visita", never "todo su dinero" (the old Spanish line) and never a figure
     if (/every dollar back|todo su dinero/i.test(text)) E.push('Money back: "every dollar back" is retired; the line says "the walk fee".');
-    shown('.mb').forEach(function (m) { if (!/the walk fee|lo que pagó por la visita/i.test(m.innerText)) E.push('Money back: a money-back line without "the walk fee": ' + m.innerText.slice(0, 50)); });
+    // agency pass 2026-10-18 (rank 5): the bound short fact too; the old one, "Money back up to 7 days...", sat under the $1,500 floor and read as the fix money
+    shown('.mb, [data-shared^=moneyback]').forEach(function (m) { if (!/walk fee|lo que pagó por la visita/i.test(m.innerText)) E.push('Money back: a money-back line without "the walk fee": ' + m.innerText.slice(0, 50)); });
     // R9 bans the no-reviews line (Franco 2026-10-13: never volunteer what Lumora lacks; say it only when someone asks). Until then R9 required it
     if (/no (?:client )?reviews here yet|no hay rese[ñn]as de clientes/i.test(text)) E.push('R9: the retired no-reviews line ("Lumora is new, so there are no client reviews here yet.") is back; say it only when someone asks.');
     // R6: one phone component (the drawn frame with its camera island), never rotated, one width on a computer, .491 wide to tall
@@ -1155,7 +1245,10 @@
     if (innerWidth >= 1280) {
       var SCALE = [15, 17, 20, 24, 32, 44, 64], odd = {};
       texts(function (s, pe) { if (pe.closest('.pic,.clip,.np,.ph4,.scr-win,.slot,.samp,.stamp,.tally,svg,.util,.foot,.skip')) return;
-        var fs = parseFloat(getComputedStyle(pe).fontSize); if (!SCALE.some(function (v) { return Math.abs(v - fs) < 0.6; })) odd[Math.round(fs * 10) / 10 + 'px'] = s.trim().slice(0, 24); });
+        var fs = parseFloat(getComputedStyle(pe).fontSize);
+        if (pe.closest('h1 .phr') && Math.abs(fs - 58) < 0.6) return;
+        if (pe.closest('.walk-sum .walk-total > b') && Math.abs(fs - 120) < 0.6) return;   // design round item 13 (2026-10-19): the walk end's one display figure (SYSTEM.md 4)   // design round picks, 2026-10-19 (item 6): the Spanish trade h1 set by phrase, the 64 role's one step (SYSTEM.md)
+        if (!SCALE.some(function (v) { return Math.abs(v - fs) < 0.6; })) odd[Math.round(fs * 10) / 10 + 'px'] = s.trim().slice(0, 24); });
       Object.keys(odd).forEach(function (k) { E.push('Type: ' + k + ' is off the scale (15, 17, 20, 24, 32, 44, 64): "' + odd[k] + '"'); });
     }
     // papers from outside the shop keep their English (lang="en", as they arrive), so the Spanish checks skip them (2026-10-16)
@@ -1215,6 +1308,10 @@
     $$('.pic, .sheet, .morning').forEach(function (p) { var alt = $$('[aria-label]', p).map(function (a) { return a.getAttribute('aria-label'); }).join(' ');
       if (!/sample|ejemplo/i.test(p.innerText + (p.getAttribute('aria-label') || '') + ' ' + alt)) W.push('Picture without a visible "Sample" label: ' + (p.id || p.className)); });
     $$('a[href^="sms:"]').forEach(function (a) { if (!/body=/.test(a.getAttribute('href'))) W.push('sms: link without a prefilled body.'); });
+    // agency pass 2026-10-18 (rank 22): a trade page's texts say which page they came from ("Hi, I saw your plumbing page."), so the
+    // generic website body on a page locked to one trade is a slip
+    if (document.body.hasAttribute('data-trade-lock')) $$('a[href^="sms:"]').forEach(function (a) { var b = decodeURIComponent((a.getAttribute('href').split('body=')[1] || ''));
+      if (/saw your website|vi su página web/i.test(b)) W.push('sms: a trade page texts the generic website body; name the trade (SYSTEM 11).'); });
     // type floors at the current width: 12px inside pictures always; 15px for key text outside pictures on phones
     if (innerWidth <= 430) {
       var small = [], tiny = [];
@@ -1235,13 +1332,131 @@
     return { errors: E, warnings: W };
   };
 
+  /* ================================================================ the call card (design round item 2, Franco 2026-10-19)
+     On a computer a tel: link opens an app picker, FaceTime or nothing, and an sms: link does nothing at all. With a mouse from 900px,
+     Call us, the number beside it and "Or send a text" open a small card under the control instead: whether someone picks up now on
+     Gainesville's clock, a code the phone's camera reads to call or text (QR version 2, level M, written by segno; check.py decodes
+     it back), the number, "Call from this computer" and the email. Phones keep the dialer exactly as before. Nothing here touches
+     the clipboard: the number is plain text. An sms: link whose words the page rewrote since it loaded (the calculator's estimate)
+     is left alone, so the visitor's own figure is never dropped on the way to his phone */
+  var QR = { tel: 'M0 0.5h7M8 0.5h3M14 0.5h3M18 0.5h7M0 1.5h1M6 1.5h1M8 1.5h1M10 1.5h2M18 1.5h1M24 1.5h1M0 2.5h1M2 2.5h3M6 2.5h1M8 2.5h1M12 2.5h1M15 2.5h2M18 2.5h1M20 2.5h3M24 2.5h1M0 3.5h1M2 3.5h3M6 3.5h1M11 3.5h1M16 3.5h1M18 3.5h1M20 3.5h3M24 3.5h1M0 4.5h1M2 4.5h3M6 4.5h1M8 4.5h4M14 4.5h2M18 4.5h1M20 4.5h3M24 4.5h1M0 5.5h1M6 5.5h1M10 5.5h1M18 5.5h1M24 5.5h1M0 6.5h7M8 6.5h1M10 6.5h1M12 6.5h1M14 6.5h1M16 6.5h1M18 6.5h7M10 7.5h1M13 7.5h1M0 8.5h1M3 8.5h7M12 8.5h2M15 8.5h1M17 8.5h1M20 8.5h1M22 8.5h3M0 9.5h2M3 9.5h1M8 9.5h2M11 9.5h1M13 9.5h1M15 9.5h3M20 9.5h2M0 10.5h1M2 10.5h1M5 10.5h3M9 10.5h1M13 10.5h1M15 10.5h1M17 10.5h2M21 10.5h1M24 10.5h1M2 11.5h1M8 11.5h2M11 11.5h1M13 11.5h1M16 11.5h2M22 11.5h1M24 11.5h1M0 12.5h2M3 12.5h2M6 12.5h1M9 12.5h2M12 12.5h2M17 12.5h2M24 12.5h1M0 13.5h1M3 13.5h1M7 13.5h1M10 13.5h1M13 13.5h3M17 13.5h1M19 13.5h2M22 13.5h1M0 14.5h4M6 14.5h1M9 14.5h5M15 14.5h2M18 14.5h1M21 14.5h1M23 14.5h2M0 15.5h1M2 15.5h1M4 15.5h1M8 15.5h1M10 15.5h2M15 15.5h1M19 15.5h2M22 15.5h1M24 15.5h1M0 16.5h1M2 16.5h1M4 16.5h4M14 16.5h9M24 16.5h1M8 17.5h2M11 17.5h6M20 17.5h1M0 18.5h7M8 18.5h1M11 18.5h1M16 18.5h1M18 18.5h1M20 18.5h1M24 18.5h1M0 19.5h1M6 19.5h1M8 19.5h1M10 19.5h1M12 19.5h1M14 19.5h1M16 19.5h1M20 19.5h1M24 19.5h1M0 20.5h1M2 20.5h3M6 20.5h1M8 20.5h1M12 20.5h9M24 20.5h1M0 21.5h1M2 21.5h3M6 21.5h1M8 21.5h3M14 21.5h1M16 21.5h1M18 21.5h2M22 21.5h3M0 22.5h1M2 22.5h3M6 22.5h1M9 22.5h2M12 22.5h1M14 22.5h2M20 22.5h1M23 22.5h2M0 23.5h1M6 23.5h1M9 23.5h2M14 23.5h2M18 23.5h3M22 23.5h3M0 24.5h7M8 24.5h1M10 24.5h1M13 24.5h5M19 24.5h2M24 24.5h1', sms: 'M0 0.5h7M8 0.5h1M12 0.5h1M14 0.5h1M18 0.5h7M0 1.5h1M6 1.5h1M10 1.5h2M18 1.5h1M24 1.5h1M0 2.5h1M2 2.5h3M6 2.5h1M12 2.5h2M15 2.5h2M18 2.5h1M20 2.5h3M24 2.5h1M0 3.5h1M2 3.5h3M6 3.5h1M8 3.5h4M14 3.5h3M18 3.5h1M20 3.5h3M24 3.5h1M0 4.5h1M2 4.5h3M6 4.5h1M8 4.5h2M11 4.5h4M18 4.5h1M20 4.5h3M24 4.5h1M0 5.5h1M6 5.5h1M8 5.5h1M10 5.5h1M12 5.5h3M16 5.5h1M18 5.5h1M24 5.5h1M0 6.5h7M8 6.5h1M10 6.5h1M12 6.5h1M14 6.5h1M16 6.5h1M18 6.5h7M8 7.5h2M14 7.5h3M0 8.5h1M4 8.5h1M6 8.5h3M13 8.5h2M16 8.5h6M24 8.5h1M0 9.5h2M3 9.5h3M7 9.5h2M10 9.5h1M15 9.5h1M17 9.5h1M19 9.5h2M23 9.5h1M1 10.5h1M4 10.5h1M6 10.5h1M8 10.5h1M10 10.5h1M13 10.5h5M20 10.5h1M0 11.5h1M3 11.5h2M7 11.5h3M13 11.5h1M15 11.5h4M21 11.5h2M0 12.5h2M6 12.5h1M8 12.5h1M12 12.5h2M15 12.5h2M18 12.5h1M21 12.5h3M0 13.5h1M3 13.5h1M7 13.5h1M9 13.5h2M13 13.5h3M17 13.5h1M19 13.5h2M22 13.5h1M2 14.5h1M6 14.5h1M8 14.5h1M10 14.5h1M15 14.5h3M19 14.5h1M21 14.5h1M2 15.5h1M4 15.5h1M7 15.5h1M10 15.5h1M12 15.5h1M14 15.5h1M17 15.5h3M21 15.5h2M24 15.5h1M0 16.5h2M5 16.5h2M8 16.5h4M13 16.5h2M16 16.5h5M22 16.5h1M24 16.5h1M8 17.5h3M12 17.5h1M15 17.5h2M20 17.5h1M22 17.5h2M0 18.5h7M8 18.5h2M11 18.5h4M16 18.5h1M18 18.5h1M20 18.5h1M0 19.5h1M6 19.5h1M9 19.5h1M11 19.5h1M13 19.5h1M15 19.5h2M20 19.5h4M0 20.5h1M2 20.5h3M6 20.5h1M8 20.5h1M10 20.5h1M12 20.5h2M16 20.5h7M24 20.5h1M0 21.5h1M2 21.5h3M6 21.5h1M9 21.5h2M13 21.5h2M18 21.5h1M23 21.5h2M0 22.5h1M2 22.5h3M6 22.5h1M9 22.5h1M15 22.5h2M18 22.5h1M22 22.5h2M0 23.5h1M6 23.5h1M12 23.5h1M14 23.5h1M19 23.5h5M0 24.5h7M8 24.5h1M10 24.5h2M13 24.5h2M19 24.5h6' };
+  // closed days besides the weekend: the holidays Lumora keeps, on the Friday or Monday when one falls on a weekend, and OUT, the
+  // days Franco is away (YYYY-MM-DD on Gainesville's calendar). On those the card never says "Open now"
+  var OUT = [];
+  var WEEK_EN = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  function gnvNow() {
+    var p = {}; new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', hourCycle: 'h23' })
+      .formatToParts(new Date()).forEach(function (x) { p[x.type] = +x.value; });
+    return { y: p.year, m: p.month, d: p.day, h: p.hour % 24 };
+  }
+  function closedDay(y, m, d) {
+    var t = new Date(Date.UTC(y, m - 1, d)), wd = t.getUTCDay();
+    if (wd === 0 || wd === 6) return true;
+    var iso = t.toISOString().slice(0, 10); if (OUT.indexOf(iso) > -1) return true;
+    var md = function (k) { var u = new Date(t.getTime() + k * 864e5); return (u.getUTCMonth() + 1) * 100 + u.getUTCDate(); };
+    var fixed = [101, 704, 1225], obs = function (v) { return md(0) === v || (wd === 5 && md(1) === v) || (wd === 1 && md(-1) === v); };
+    if (fixed.some(obs)) return true;
+    if (m === 5 && wd === 1 && d + 7 > 31) return true;              // Memorial Day, the last Monday of May
+    if (m === 9 && wd === 1 && d <= 7) return true;                  // Labor Day
+    if (m === 11 && ((wd === 4 && d >= 22 && d <= 28) || (wd === 5 && d >= 23 && d <= 29))) return true;   // Thanksgiving and the day after
+    return false;
+  }
+  function callStatus() {   // the bound reply promise (shared-text.json reply), said for right now
+    var n = gnvNow(), today = !closedDay(n.y, n.m, n.d);
+    if (today && n.h >= 9 && n.h < 17) return tr('<b>Open now, until 5 p.m.</b> We answer or call you back today.',
+      '<b>Abiertos ahora, hasta las 5 p. m.</b> Le contestamos o le devolvemos la llamada hoy mismo.');
+    if (today && n.h < 9) return tr('<b>We open at 9 a.m. today.</b> Leave a message, and we\'ll call you back today.',
+      '<b>Abrimos hoy a las 9 a. m.</b> Déjenos un mensaje y le devolvemos la llamada hoy mismo.');
+    var k = 1, u; for (; k < 15; k++) { u = new Date(Date.UTC(n.y, n.m - 1, n.d + k)); if (!closedDay(u.getUTCFullYear(), u.getUTCMonth() + 1, u.getUTCDate())) break; }
+    var wd = u.getUTCDay();
+    return tr('<b>Closed now.</b> Leave a message or a text, and we\'ll call you back by 10 a.m. ' + (k === 1 ? 'tomorrow' : WEEK_EN[wd]) + '.',
+      '<b>Ahora estamos cerrados.</b> Déjenos un mensaje de voz o de texto y le devolvemos la llamada a más tardar a las 10 a. m. ' + (k === 1 ? 'de mañana' : 'del ' + DIAS[wd]) + '.');
+  }
+  L.callStatus = callStatus;   // test hook: check.py reads the line the card would show
+  function initCallCard() {
+    if (!('popover' in HTMLElement.prototype)) return;   // an older browser: the links dial, as on a phone
+    var fine = matchMedia('(hover: hover) and (pointer: fine) and (min-width: 900px)');
+    var card = null, anchor = null, closedAt = 0, closedFrom = null, first = new WeakMap();
+    var links = function () { return $$('a[href^="tel:"], a[href^="sms:"]').filter(function (a) { return !a.closest('.callcard, .callbar'); }); };
+    links().forEach(function (a) { first.set(a, a.getAttribute('href')); });
+    var own = function (a) { return /^sms:/.test(a.getAttribute('href')) && first.has(a) && first.get(a) !== a.getAttribute('href'); };
+    function mark() {   // the controls say they open a dialog only where they do
+      links().forEach(function (a) {
+        if (fine.matches && !own(a)) { a.setAttribute('aria-haspopup', 'dialog'); a.setAttribute('aria-controls', 'callcard'); a.setAttribute('aria-expanded', card && a === anchor && card.matches(':popover-open') ? 'true' : 'false'); }
+        else ['aria-haspopup', 'aria-controls', 'aria-expanded'].forEach(function (n) { a.removeAttribute(n); });
+      });
+    }
+    function build() {
+      var mail = 'franco@lumorafl.com';
+      card = document.createElement('div');
+      card.className = 'callcard'; card.id = 'callcard'; card.tabIndex = -1;
+      card.setAttribute('popover', 'auto'); card.setAttribute('role', 'dialog');
+      card.setAttribute('aria-label', tr('Call or text us', 'Llámenos o escríbanos')); card.setAttribute('aria-describedby', 'cc-st');
+      card.innerHTML = '<p class="cc-st" id="cc-st"></p>' +
+        '<div class="cc-qr"><svg viewBox="-2 -2 29 29" aria-hidden="true" focusable="false"><path d=""/></svg><p class="cc-qc"></p></div>' +
+        '<p class="cc-n">(352) 226-0681</p>' +
+        '<p class="cc-tel"><a class="u" href="tel:+13522260681">' + tr('Call from this computer', 'Llamar desde esta computadora') + '</a></p>' +
+        '<p class="cc-mail">' + tr('Or email ', 'O mándenos un correo a ') + '<a class="u" href="mailto:' + mail + '">' + mail + '</a></p>';
+      document.body.appendChild(card);
+      card.addEventListener('toggle', function (e) {
+        if (e.newState === 'closed') {
+          closedAt = performance.now(); closedFrom = anchor; mark();
+          var a = document.activeElement; if (anchor && (!a || a === document.body || card.contains(a))) anchor.focus({ preventScroll: true });
+        }
+      });
+      card.addEventListener('focusout', function (e) {   // Tab past the last link: the card steps aside and focus goes on
+        if (e.relatedTarget && !card.contains(e.relatedTarget) && e.relatedTarget !== anchor && card.matches(':popover-open')) { anchor = null; card.hidePopover(); }
+      });
+    }
+    function place() {
+      var r = anchor.getBoundingClientRect(), hdr = anchor.closest('.hdr'), pin = pinned(anchor), w = card.offsetWidth, vw = document.documentElement.clientWidth;
+      var x = r.left + r.width / 2 > vw / 2 ? r.right - w : r.left;   // its edge on the control's edge, on the control's side
+      x = Math.max(16, Math.min(x, vw - w - 16));
+      var top = hdr ? hdr.getBoundingClientRect().bottom + 8 : r.bottom + 10;
+      if (pin && !hdr && top + card.offsetHeight > innerHeight - 16) top = Math.max(16, r.top - card.offsetHeight - 10);   // pinned and no room under it: above, never off the screen
+      card.style.position = pin ? 'fixed' : 'absolute';
+      card.style.left = (x + (pin ? 0 : scrollX)) + 'px';
+      card.style.top = (top + (pin ? 0 : scrollY)) + 'px';
+      var over = top + card.offsetHeight + 16 - innerHeight;   // under the control, never over the headline: the page moves up instead
+      if (!pin && over > 0 && !noScroll) scrollBy({ top: over, behavior: still ? 'instant' : 'smooth' });
+    }
+    // a control that rides the screen (the header, the calculator's sticky estimate): the card is fixed to the screen too, and
+    // follows it on scroll, since the page moving under it would leave the card behind
+    function pinned(a) { for (var e = a.parentElement; e && e !== document.body; e = e.parentElement) { var p = getComputedStyle(e).position; if (p === 'fixed' || p === 'sticky') return e; } return null; }
+    var noScroll = false;
+    addEventListener('scroll', function () { if (card && anchor && card.matches(':popover-open') && pinned(anchor)) { noScroll = true; place(); noScroll = false; } }, { passive: true });
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="tel:"], a[href^="sms:"]');
+      if (!a || !fine.matches || a.closest('.callcard, .callbar') || own(a) || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      if (closedFrom === a && performance.now() - closedAt < 400) { closedFrom = null; return; }   // the press that closed it was on this control
+      if (!card) build();
+      var text = /^sms:/.test(a.getAttribute('href'));
+      anchor = a;
+      $('.cc-st', card).innerHTML = callStatus();
+      $('.cc-qr path', card).setAttribute('d', QR[text ? 'sms' : 'tel']);
+      $('.cc-qc', card).textContent = text
+        ? tr('Point your phone\'s camera at this code to text us. It opens a new message to our number.', 'Apunte la cámara de su celular a este código para escribirnos. Se abre un mensaje nuevo a nuestro número.')
+        : tr('Point your phone\'s camera at this code to call. It opens your dialer with our number in it.', 'Apunte la cámara de su celular a este código para llamarnos. Se abre el teclado con nuestro número ya marcado.');
+      $('.cc-tel', card).hidden = text;
+      if (card.matches(':popover-open')) card.hidePopover();
+      card.showPopover(); place(); mark();
+      card.focus({ preventScroll: true });
+    });
+    addEventListener('resize', function () { if (!card || !card.matches(':popover-open')) return; if (fine.matches) place(); else card.hidePopover(); });
+    if (fine.addEventListener) fine.addEventListener('change', mark);
+    mark();
+  }
+
   /* ================================================================ focus never hides under the sticky header or the call bar (WCAG 2.4.11) */
   // Browsers do not scroll an element that is already "in view" but sits under a fixed bar; scrollIntoView honours scroll-padding.
   // Industries review (2026-10-12): the call bar is position:fixed, so its offsetParent is always null and this never saw it
   // (the close's phone link sat 18px under it at 390); a bar counts when it has a box. A stretched link (its ::after covers the
   // whole row, the Industries index) draws its ring on that row, so the row is what must show. The test waits one frame, until
   // the browser's own focus scroll is done. check.py's FOCUS_JS measures the same box (ringBox).
-  var ringBox = function (el) { var a = getComputedStyle(el, '::after'); return a.position === 'absolute' && a.content !== 'none' && a.top === '0px' && a.bottom === '0px' && el.offsetParent || el; };
+  // Agency pass 2026-10-18 (QA, WCAG 2.4.7): only a link that is not positioned itself is a stretched row link. The footer logo's
+  // ::after is its red layer at inset 0 on a position:relative link, its offsetParent the body, so Tab to it threw the page to the top
+  var ringBox = function (el) { var a = getComputedStyle(el, '::after'); return a.position === 'absolute' && a.content !== 'none' && a.top === '0px' && a.bottom === '0px' && getComputedStyle(el).position === 'static' && el.offsetParent || el; };
   document.addEventListener('focusin', function (e) {
     var el = e.target; if (!el || !el.getBoundingClientRect || el.closest('.hdr, .callbar')) return;
     el = ringBox(el);
@@ -1258,8 +1473,12 @@
   });
 
   /* ================================================================ start */
+  // Franco 2026-10-19: each nav link carries its own label, so .nav a::after reserves its semibold width and the row never shifts
+  // between pages (with JS off only that reserve goes, never the mark)
+  $$('.nav a').forEach(function (a) { a.dataset.label = a.textContent.trim(); });
   initMenu();
   initPickers();
+  initCallCard();   // design round item 2 (2026-10-19)
   var start = [qs.get('trade'), locked ? null : store.get('lumora.trade'), document.body.dataset.trade, 'plumbing'].filter(function (k) { return k && D[k]; })[0];
   if (locked) start = document.body.dataset.trade;
   // a choice already made: this trade's own page, ?trade= or a pick stored on an earlier page (trades-1 fix, 2026-10-07)
@@ -1267,20 +1486,25 @@
   $$('[data-loop]').forEach(function (el) { loops.push(new Loop(el)); });
   if (start) setTrade(start, false);
   initG2R(document, false);
+  // item 5 (2026-10-19): iPhone Safari shows a control's :active press only when the page listens for touches; one passive listener
+  // turns on the press states the system already defines (the switch, the call bar, the buttons)
+  document.addEventListener('touchstart', function () {}, { passive: true });
   initDraw(document);
   pencil(document);
   $$('[data-leak]').forEach(initLeak);
   $$('[data-tabs]').forEach(initTabs);
   // job: show our work, once on load (no loop, so no pause is needed)
   // The writing is CSS on .sheet[data-fill] (so prerendered rows never flash before it starts). On a phone the sheet
-  // sits below the fold, so it holds its first frame (.wait) until it is a third in view, instead of writing unseen.
+  // sits below the fold, so it holds its first frame (.wait) until it comes into view, instead of writing unseen. Resume pass
+  // 2026-10-19 (craft judge: on Plumbing's phone the sheet arrived with a blank band where its total writes in, 600ms after the
+  // scroll stopped): it starts when its top passes 85% of the screen, so the total has landed by the time the sheet is in view.
   $$('.sheet[data-fill]').forEach(function (s) {
     if (still) { s.classList.add('still'); return; }
     s.classList.add('writing');
     if (!('IntersectionObserver' in window) || s.getBoundingClientRect().top < innerHeight * 0.8) return;
     s.classList.add('wait');
-    var io = new IntersectionObserver(function (es) { if (es[0].intersectionRatio < 0.33 && es[0].intersectionRect.height < innerHeight * 0.4) return;
-      io.disconnect(); s.classList.remove('wait'); }, { threshold: [0, 0.33, 0.6] });
+    var io = new IntersectionObserver(function (es) { if (!es[0].isIntersecting) return;
+      io.disconnect(); s.classList.remove('wait'); }, { rootMargin: '0px 0px -15% 0px', threshold: 0 });
     io.observe(s);
   });
   $$('.pen-ring').forEach(ring);

@@ -6,7 +6,8 @@
    - The still page is complete. Every movement sits inside prefers-reduced-motion: no-preference, and hidden start
      states apply only under html.js (added by an inline script in <head>) and only on screen (@media screen and ...),
      so a printed or saved-as-PDF page never shows a blank first frame.
-   - Hover effects sit inside (hover:hover) and (pointer:fine); focus gets the same state plus a 3px ring.
+   - Hover effects sit inside (hover:hover) and (pointer:fine); focus gets the hover's colour or fill plus a 3px ring, and a hover
+     line the ring would run beside is not repeated under it (Franco 2026-10-19). One mark per state; a press takes the hover's colour.
    - Pictures sit in .pic (a container-query wrapper), so their text never shrinks under 12px in a narrow column.
    - Red is text only for money (--red), strokes only for the pen (--pen). Actions are always ink. */
 
@@ -52,7 +53,7 @@
   --gap-in:clamp(20px,2.6vw,32px); --gap-between:clamp(72px,9vw,128px);
   --hdr-h:64px; --bar-h:56px; --ph-w:340px;  /* R6: the one phone width */
   /* motion (playbook 2.2). Nothing over 700ms except the pen and the night loop. Exits shorter than entrances. */
-  --t-press:90ms; --t-hover:150ms; --t-small:220ms; --t-enter:320ms; --t-exit:200ms; --t-chart:500ms; --t-draw:800ms;
+  --t-press:90ms; --t-hover:150ms; --t-small:220ms; --t-enter:320ms; --t-exit:200ms; --t-chart:500ms; --t-draw:800ms; --press:scale(.98);   /* the one press (row 12), used only inside prefers-reduced-motion: no-preference (2026-10-19) */
   /* one type scale outside the pictures (Home review 2026-10-10: 16 sizes at 1280). Fluid sizes clamp to a step at their top. */
   --fs-15:15px; --fs-17:17px; --fs-20:20px; --fs-24:24px; --fs-32:32px; --fs-44:44px; --fs-64:64px;
   --ease-out:cubic-bezier(.33,1,.68,1); --ease-move:cubic-bezier(.2,0,0,1); --ease-in:cubic-bezier(.3,0,1,1);
@@ -81,6 +82,7 @@ button{font:inherit;color:inherit}
 h1,h2,h3{color:var(--ink);font-weight:600;letter-spacing:-.018em;line-height:1.1;text-wrap:balance}
 p,li,dd{text-wrap:pretty}
 :focus-visible{outline:3px solid var(--ink);outline-offset:2px;border-radius:2px}
+:is(input:not([type=radio],[type=checkbox]),select,textarea):focus-visible{outline-offset:0}   /* Franco 2026-10-19: on a field the ring thickens its own edge; 2px out it drew a second line beside the field's border or underline */
 ::selection{background:var(--bone);color:var(--ink)}   /* 2026-10-16 (p1-final): selected words take the desk's bone, not the browser's blue */
 [data-ground=night] :focus-visible,.on-night :focus-visible{outline-color:var(--on-night)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -149,6 +151,13 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
   .hero[data-ground=ruled] :is(.hero-copy,.ct-copy,.ab-copy,.hiw-copy,.hiw-tl,.wa-find){position:relative}
   .hero[data-ground=ruled] :is(.hero-copy,.ct-copy,.ab-copy,.hiw-copy)::before{content:"";position:absolute;z-index:-1;top:-600px;bottom:-600px;left:-50vw;right:-28px;background:var(--paper);pointer-events:none}
   .hero[data-ground=ruled] :is(.hiw-tl,.wa-find)::before{content:"";position:absolute;z-index:-1;top:-600px;bottom:-600px;left:-28px;right:-50vw;background:var(--paper);pointer-events:none}
+  /* round 4 (2026-10-18, judges): beside a picture (the clipboard, the contact card, the signed note) the plain paper ended in a hard
+     vertical cut 28px into the gap, so a 28px sliver of rules stood between the words and the picture. The paper now fades out over
+     64px from the words' edge, and the lined pad comes in under the picture with no edge. Where both columns are words (How it
+     works, the full list) both stay plain */
+  .hero[data-ground=ruled] .hero-tool.ix{position:relative}   /* Industries: words in both columns, so both are plain paper, as How it works and the full list */
+  .hero[data-ground=ruled] .hero-tool.ix::before{content:"";position:absolute;z-index:-1;top:-600px;bottom:-600px;left:-28px;right:-50vw;background:var(--paper);pointer-events:none}
+  .hero[data-ground=ruled]:not(:has(.hiw-tl,.wa-find,.hero-tool.ix)) :is(.hero-copy,.ct-copy,.ab-copy)::before{right:-64px;background:linear-gradient(90deg,var(--paper) calc(100% - 64px),transparent)}
 }
 [data-ground=night]{background:radial-gradient(rgba(233,228,216,.05) 1px,transparent 1.2px) 0 0/5px 5px,var(--night);color:var(--on-night)}
 [data-ground=night] b{color:#fff}
@@ -165,22 +174,45 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
    "Español" on an English page and "English" on a Spanish one, with lang and hreflang set. It sits in the util bar on a
    computer and beside Menu in the phone header. In its markup href comes first, then lang, so golive.py's Spanish-link rewrite
    finds it. The pill's one-link hiding rule (A11) went with it; check.py fails a pill coming back */
-.lang{display:inline-flex;align-items:center;min-height:44px;padding-inline:4px;font-size:15px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap}
-@media (hover:hover) and (pointer:fine){.lang:hover{text-decoration:underline;text-underline-offset:3px}}
-.lang:focus-visible{text-decoration:underline;text-underline-offset:3px}
+.lang{display:inline-flex;align-items:center;min-height:44px;padding-inline:4px;font-size:15px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;border-radius:999px}
+/* Franco 2026-10-19 (the header review): the language word and the header number answer like the Menu button, an 8% ink tint with
+   no line, beside a nav that marks its states by ink and weight alone. In the util bar the word gets 7px each side (the margin keeps
+   it in place) and its ring is drawn inside its own 44px box: outside it, the page top and the sticky header cut the ring to two side bars */
+@media (hover:hover) and (pointer:fine){.lang:hover{background:rgba(17,17,16,.08)}}
+.lang:is(:focus-visible,:active){background:rgba(17,17,16,.08)}
+.util .lang{padding-inline:7px;margin-inline:-3px}
+.util .lang:focus-visible{outline-offset:-3px}
+@media (prefers-reduced-motion:no-preference){.lang{transition:background-color var(--t-press) var(--ease-out)}.lang:hover,.lang:focus-visible{transition-duration:var(--t-hover)}}
 .hdr .lang{margin-left:auto;margin-right:6px}
 .hdr .lang+.menu-b{margin-left:0}
-.hdr{/* ui-ok: glass the sticky header; the page does scroll under it, and the blur keeps its words readable (SYSTEM.md 12, kept in the 2026-10-16 merge) */position:sticky;top:0;z-index:40;background:rgba(246,245,242,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.hdr{/* ui-ok: glass the sticky header; the page does scroll under it, and the blur keeps its words readable (SYSTEM.md 12, kept in the 2026-10-16 merge; resume pass 2026-10-19, craft judge: headings showed through it behind the logo, so .985 and 12px) */position:sticky;top:0;z-index:40;background:rgba(246,245,242,.985);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
 .hdr-in{display:flex;align-items:center;gap:12px;min-height:var(--hdr-h)}
-.brand{flex-shrink:0}   /* 2026-10-15: a full header row squeezed the logo first (Spanish, 1280: 28px of its 124); check.py fails a shrunk logo */
+.brand{flex-shrink:0;display:flex;align-items:center;min-height:44px}   /* 2026-10-15: a full header row squeezed the logo first (Spanish, 1280: 28px of its 124); check.py fails a shrunk logo. 2026-10-19: 44px tall, the one small target in the phone header (the 64px row, so nothing moves) */
 .brand img{width:104px;height:auto}
 @media (min-width:360px){.brand img{width:124px}}   /* 2026-10-16 (p1-final): the phone header carries the logo, the language word and Menu, so the logo keeps its full 124px from 360; under 360 it stays 104 */
 .nav{position:absolute;top:100%;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--rule);display:none}
 .nav.open{display:block}
 .nav ul{display:grid;padding:8px var(--g) 18px}
 .nav a{display:block;padding:12px 0;font-size:19px;text-decoration:none}
-.nav a[aria-current]{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--pen);text-decoration-thickness:2px;text-underline-offset:6px}   /* 2026-10-15: nothing marked the page you are on; text-decoration, since a background stroke runs edge to edge on the phone menu's block links */
-.menu-b{margin-left:auto;min-height:44px;padding:0 16px;border:1.5px solid var(--ink);border-radius:999px;background:none;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer}
+/* Franco 2026-10-19 (the header review: "when you underline... and you hover your mouse over it, there's another line under the selected
+   underline, which is weird UI... I was thinking maybe like bolding"): the nav marks its states with ink and weight only, one mark per
+   state, no line and no red (red is for money lost). Rest: muted. The page you are on: ink and semibold (the weight is the cue that is
+   not colour). Hover, focus and press: ink; focus adds the ring. Every label reserves its semibold width under itself (::after, from the
+   data-label system.js copies in), so the right-set row never shifts from page to page, and the same rules serve the computer row,
+   the phone sheet and the Spanish dropdown. This replaces the 2026-10-15 pen underline on the page you are on (with the .u stroke on
+   hover it drew two red lines at two depths) and the 2026-10-16 row weight. check.py HEADER_JS and nav_state_problems hold it */
+.nav a{color:var(--muted);background:none}
+.nav a::after{content:attr(data-label);content:attr(data-label) / "";display:block;height:0;overflow:hidden;visibility:hidden;font-weight:600;pointer-events:none;user-select:none}
+.nav a[aria-current]{color:var(--ink);font-weight:600}
+@media (hover:hover) and (pointer:fine){.nav a:hover{color:var(--ink)}}
+.nav a:is(:focus-visible,:active){color:var(--ink)}
+@media (prefers-reduced-motion:no-preference){.nav a{transition:color var(--t-press) var(--ease-out)}.nav a:hover,.nav a:focus-visible{transition-duration:var(--t-hover)}}
+.menu-b{margin-left:auto;min-height:44px;min-width:5.75em;padding:0 16px;border:1.5px solid var(--ink);border-radius:999px;background:none;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer}
+/* 2026-10-19: wide enough for "Cerrar", so the label swap never moves the language word; hover and open take the outline button's
+   8% tint (row 12), and a press its scale */
+@media (hover:hover) and (pointer:fine){.menu-b:hover{background:rgba(17,17,16,.08)}}
+.menu-b[aria-expanded=true],.menu-b:active{background:rgba(17,17,16,.08)}
+@media (prefers-reduced-motion:no-preference){.menu-b{transition:background-color var(--t-press) var(--ease-out)}.menu-b:hover{transition-duration:var(--t-hover)}.menu-b:active{transform:var(--press)}}
 .hdr-tel,.hdr .btn{display:none}
 @media (min-width:900px){
   .util{display:block}
@@ -190,8 +222,10 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
   .nav ul{display:flex;gap:24px;padding:0}
   .nav a{font-size:var(--fs-17);padding:6px 0}
   /* the number stays readable in the sticky header on desktop (conversion graft from C) */
-  .hdr-tel{display:inline-block;font-weight:600;font-size:17px;color:var(--ink);white-space:nowrap;text-decoration:none;background:linear-gradient(var(--pen),var(--pen)) 0 100%/0 2px no-repeat;padding-bottom:2px}
-  .hdr-tel:focus-visible{background-size:100% 2px}
+  .hdr-tel{display:inline-block;font-weight:600;font-size:17px;color:var(--ink);white-space:nowrap;text-decoration:none;padding-bottom:2px;border-radius:999px}
+  /* 2026-10-19: the 8% tint, spread 8px past the number by a shadow so no gap in the row moves; the ring goes round the tint */
+  .hdr-tel:is(:focus-visible,:active){background-color:rgba(17,17,16,.08);box-shadow:0 0 0 8px rgba(17,17,16,.08)}
+  .hdr-tel:focus-visible{outline-offset:8px}
   .hdr .btn{display:inline-flex}
 }
 /* 2026-10-16 (Franco's GO, p1-final): the bar says Call with the number, and Text, in 3 to 2, with a 1px paper-toned top edge
@@ -203,16 +237,19 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
 .callbar .cb-n{font-weight:500;margin-left:.3em}
 .callbar a+a{border-left:1px solid rgba(255,255,255,.25)}
 .callbar a:focus-visible{outline-color:#fff;outline-offset:-5px}
+.callbar a:is(:focus-visible,:active){background:var(--ink-hover)}   /* 2026-10-19: the bar's halves step one shade lighter, as a filled button (row 12); it had no hover or press */
+@media (hover:hover) and (pointer:fine){.callbar a:hover{background:var(--ink-hover)}}
 body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom))}
 @media (max-width:899px) and (min-height:501px){body:has(>.callbar):has(>.foot){padding-bottom:0}body:has(>.callbar)>.foot{padding-bottom:calc(32px + var(--bar-h) + env(safe-area-inset-bottom))}}
 @media (max-width:899px) and (max-height:500px){.callbar{display:none}body:has(.callbar){padding-bottom:0}}
-@media (max-width:339px){:lang(es) .callbar .cb-n{display:none}}   /* "Llamar (352) 226-0681" beside "Escribir", 3 to 2, does not fit at 320 */
+@media (max-width:339px){:lang(es) .callbar a:first-child{font-size:15px}}   /* round 4 (2026-10-18): "Llamar (352) 226-0681" is 175px at 17px, 7px over its 192px half with
+   12px each side; at 15px (154px) it fits, so the Spanish bar keeps the number at 320 as the English does (it dropped it until today) */
 @media (min-width:900px){.callbar{display:none}body:has(.callbar){padding-bottom:0}}
 @media (max-width:899px){body:has(input:not([type=checkbox],[type=radio]):focus,textarea:focus) .callbar{display:none}}   /* 2026-10-15: three bars on screen while typing in a form; checkboxes and radios (the filter chips) keep it, and the body padding stays so nothing jumps */
-@media (hover:hover) and (pointer:fine){.hdr-tel:hover{background-size:100% 2px}}
+@media (hover:hover) and (pointer:fine){.hdr-tel:hover{background-color:rgba(17,17,16,.08);box-shadow:0 0 0 8px rgba(17,17,16,.08)}}
 .hdr .btn{white-space:nowrap}
 @media (min-width:900px) and (max-width:1079px){.nav ul{gap:16px}.nav a{font-size:var(--fs-15)}}
-@media (min-width:900px){.nav a[aria-current]{font-weight:inherit}}   /* 2026-10-16 repair: the menu no longer shifts 4 to 5px between pages; the underline marks the page; HEADER_JS holds it */
+@media (min-width:900px) and (pointer:coarse){.nav a{padding-block:11px}}   /* 2026-10-19: on an iPad's row each link is 45 to 48px tall, not 35 to 38 (a mouse keeps the slim row) */
 @media (min-width:900px) and (max-width:1023px){.nav ul{gap:14px}}   /* 2026-10-16 (p1-final): the English row ran 33px past the edge at 920 */
 /* 2026-10-16 (Franco's GO, note 10): the number shows from 1240px only. At 1024 it sat 12px after "Contact" and read as an eighth
    menu item; under 1240 the header button, the hero and the call block carry it. check.py's HEADER_JS holds 32px on both sides */
@@ -235,8 +272,8 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 }
 /* 2026-10-16 (note 10): with the pill gone and the button "Llámenos", the row has room; 18px between the logo, the nav and the
    button, and the number 32px from "Contacto" (HEADER_JS measures it at 1280, 1366 and 1440) */
-@media (min-width:1280px){:lang(es) .hdr-in{gap:18px}:lang(es) .nav ul{gap:20px}:lang(es) .nav a{font-size:var(--fs-15)}:lang(es) .hdr-tel{margin-left:32px}}
-@media (prefers-reduced-motion:no-preference){.hdr-tel{transition:background-size var(--t-press) var(--ease-out)}.hdr-tel:hover,.hdr-tel:focus-visible{transition-duration:var(--t-hover)}}
+@media (min-width:1280px){:lang(es) .hdr-in{gap:18px}:lang(es) .nav ul{gap:16px}:lang(es) .nav a{font-size:var(--fs-15)}:lang(es) .hdr-tel{margin-left:32px}}
+@media (prefers-reduced-motion:no-preference){.hdr-tel{transition:background-color var(--t-press) var(--ease-out),box-shadow var(--t-press) var(--ease-out)}.hdr-tel:hover,.hdr-tel:focus-visible{transition-duration:var(--t-hover)}}
 /* a phone turned sideways: the header scrolls away, so a sample screen is not squeezed between three fixed bars (the call bar stays) */
 @media (max-width:899px) and (max-height:500px){.hdr{position:static}}
 /* 2026-10-15: the open phone menu is a full sheet under the header, so the page under it neither shows nor scrolls. No scrim
@@ -247,40 +284,51 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 }
 
 /* ======================================================================= 6. links, buttons, the call block */
-/* job: signifier. A real underline at rest; hover or focus swaps it for a red pen stroke drawn left to right. */
-.u{color:inherit;text-decoration:underline;text-decoration-color:var(--muted);text-decoration-thickness:1px;text-underline-offset:4px;
-  background:linear-gradient(var(--pen),var(--pen)) 0 100%/0 2px no-repeat;padding-bottom:2px}
-.u:focus-visible{background-size:100% 2px;text-decoration-color:transparent}
-@media (hover:hover) and (pointer:fine){.u:hover{background-size:100% 2px;text-decoration-color:transparent}}
+/* row links (Home's trade list, the full list's index and read-first rows). Franco 2026-10-19: hover turns the row's own bottom rule ink,
+   2px with no shift (the inset shadow is the second pixel); it drew a red stroke 1px over that rule, two lines on one edge. Focus is the
+   ring, which runs along that edge, so the hover's line is not repeated under it */
+@media (hover:hover) and (pointer:fine){:is(.who-trades,.wa-index,.wa-top) a:hover:not(:focus-visible){border-bottom-color:var(--ink);box-shadow:inset 0 -1px 0 var(--ink)}}
+@media (prefers-reduced-motion:no-preference){:is(.who-trades,.wa-index,.wa-top) a{transition:border-color var(--t-press) var(--ease-out),box-shadow var(--t-press) var(--ease-out)}:is(.who-trades,.wa-index,.wa-top) a:hover{transition-duration:var(--t-hover)}}
+/* job: signifier. A real underline at rest; on hover that same line turns ink and 2px, at the same depth (on the ink band, white).
+   Franco 2026-10-19, the states call: it turned pen red, and red only ever means money lost, so links go ink like the nav. Franco 2026-10-19 (the
+   header review: two lines at two depths on one element is weird UI): the hover and focus mark was a background stroke at the bottom
+   of the padding box, so on links with a 44px tap padding it floated 13px under the words, on the ink band it stacked under the grey
+   line, and on focus it stacked over the ring. Every mark is now the text's own underline, 4px under the letters whatever the padding,
+   and focus is the ring with the resting underline (a hover line never stacks under the ring) */
+.u{color:inherit;text-decoration:underline;text-decoration-color:var(--muted);text-decoration-thickness:1px;text-underline-offset:4px}
 [data-ground=night] .u{text-decoration-color:var(--muted-night)}
-@media (prefers-reduced-motion:no-preference){.u{transition:background-size var(--t-press) var(--ease-out),text-decoration-color var(--t-press)}.u:hover,.u:focus-visible{transition-duration:var(--t-hover)}}   /* 150 ms in, 90 ms out (claim interaction-b) */
+@media (hover:hover) and (pointer:fine){.u:hover:not(:focus-visible){text-decoration-color:var(--ink);text-decoration-thickness:2px}[data-ground=night] .u:hover:not(:focus-visible){color:#fff;text-decoration-color:#fff}}
+@media (prefers-reduced-motion:no-preference){.u{transition:text-decoration-color var(--t-press) var(--ease-out)}.u:hover{transition-duration:var(--t-hover)}}   /* 150 ms in, 90 ms out (claim interaction-b) */
 /* job: feedback. Ink is the colour of every action; hover lightens the fill one step and the label never changes (claim interaction-a, 2026-10-08: the old paper wipe made buttons look disabled). */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:10px 26px;border-radius:999px;border:2px solid var(--ink);
   background:var(--ink);color:#fff;font-weight:600;font-size:17px;line-height:1.2;text-decoration:none;text-align:center;cursor:pointer}
 .btn-o{background:transparent;color:var(--ink)}
 .btn-sm{min-height:44px;padding:6px 18px;font-size:15px}
 .btn-lg{min-height:58px;padding:12px 32px;font-size:var(--fs-20)}
-.btn:focus-visible{background:var(--ink-hover);border-color:var(--ink-hover)}.btn-o:focus-visible{background:rgba(17,17,16,.08);border-color:var(--ink)}
+.btn:is(:focus-visible,:active){background:var(--ink-hover);border-color:var(--ink-hover)}.btn-o:is(:focus-visible,:active){background:rgba(17,17,16,.08);border-color:var(--ink)}   /* 2026-10-19: a press takes the hover's colour, so it still answers with reduced motion (no scale) */
 @media (hover:hover) and (pointer:fine){.btn:hover{background:var(--ink-hover);border-color:var(--ink-hover)}.btn-o:hover{background:rgba(17,17,16,.08);border-color:var(--ink)}}
 /* 2026-10-15: on a ruled or graph ground the outline button is filled with paper, so the lines never run through its label;
    #E4E3E0 is the 8% ink tint over paper as a solid colour (section 9's hover) */
 [data-ground=ruled] .btn-o,[data-ground=graph] .btn-o{background:var(--paper)}
-[data-ground=ruled] .btn-o:focus-visible,[data-ground=graph] .btn-o:focus-visible{background:#E4E3E0}
+[data-ground=ruled] .btn-o:is(:focus-visible,:active),[data-ground=graph] .btn-o:is(:focus-visible,:active){background:#E4E3E0}
 @media (hover:hover) and (pointer:fine){[data-ground=ruled] .btn-o:hover,[data-ground=graph] .btn-o:hover{background:#E4E3E0}}
-.btn:active{transform:scale(.98)}
 [data-ground=night] .btn{border-color:var(--on-night);background:var(--on-night);color:var(--night)}
-[data-ground=night] .btn:focus-visible{background:var(--sheet);border-color:var(--sheet)}
+[data-ground=night] .btn:is(:focus-visible,:active){background:var(--sheet);border-color:var(--sheet)}
 @media (hover:hover) and (pointer:fine){[data-ground=night] .btn:hover{background:var(--sheet);border-color:var(--sheet)}}
-@media (prefers-reduced-motion:no-preference){.btn{transition:background-color var(--t-hover) var(--ease-out),border-color var(--t-hover) var(--ease-out),transform var(--t-press)}}
+@media (prefers-reduced-motion:no-preference){.btn{transition:background-color var(--t-press) var(--ease-out),border-color var(--t-press) var(--ease-out),transform var(--t-press)}.btn:hover,.btn:focus-visible{transition-duration:var(--t-hover),var(--t-hover),var(--t-press)}.btn:active{transform:var(--press)}}   /* 2026-10-19: 150 ms in, 90 ms out, as the links (row 12); the press scale only with motion on */
 /* the call block: button + the number as readable, tappable text + reply time (+ money back where booking happens) */
 .cta{display:grid;gap:10px;justify-items:start}
 .cta>.reply+.mb,.cta>.cta-row+.mb{margin-top:14px}   /* 2026-10-15: groups 24px apart, lines inside a group 10px (the call block read as one tight stack) */
-@media (max-width:899px){.hero .cta-row a.u[href^="sms:"]{display:none}}   /* 2026-10-15: texting was offered three times on the first phone screen; the call bar's Text keeps its prefilled body. By its sms: link, not .hm-sms (the list page's is .wa-sms); a button is never hidden */
+@media (max-width:899px){.hero .cta-row a.u[href^="sms:"]:not(.lk-sms){display:none}}   /* 2026-10-15: texting was offered three times on the first phone screen; the call bar's Text keeps its prefilled body. By its sms: link, not .hm-sms (the list page's is .wa-sms); a button is never hidden. Agency pass 2026-10-18 (rank 3): never the calculator's "Text us this estimate" (.lk-sms), about four screens down, which carries the owner's own estimate; check.py calc_webkit_problems */
 .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
-.cta-tel{font-size:var(--fs-20);font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;background:linear-gradient(var(--pen),var(--pen)) 0 100%/0 2px no-repeat;padding-bottom:2px}
-.cta-tel:focus-visible{background-size:100% 2px}
-@media (hover:hover) and (pointer:fine){.cta-tel:hover{background-size:100% 2px}}
-@media (prefers-reduced-motion:no-preference){.cta-tel{transition:background-size var(--t-press) var(--ease-out)}.cta-tel:hover,.cta-tel:focus-visible{transition-duration:var(--t-hover)}}
+/* Franco 2026-10-19: the number's hover mark is its own 2px underline, 4px under the digits like a link's, in ink (pen red until the
+   states call of the same day: red only means money lost); it was a background
+   stroke at the bottom of the tap padding, 6px under the digits on Home and 11.5px elsewhere, and on focus it sat 2px over the ring,
+   which is now the focus mark alone. One tap area on every page, 52px tall (SYSTEM.md call targets): Home's 5px copy and the
+   trade and list pages' 10.5px copies went */
+.cta-tel{font-size:var(--fs-20);font-weight:600;color:var(--ink);white-space:nowrap;text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:2px;text-underline-offset:4px;padding-block:10.5px;margin-block:-10.5px}
+@media (hover:hover) and (pointer:fine){.cta-tel:hover:not(:focus-visible){text-decoration-color:var(--ink)}[data-ground=night] .cta-tel:hover:not(:focus-visible){text-decoration-color:#fff}}
+@media (prefers-reduced-motion:no-preference){.cta-tel{transition:text-decoration-color var(--t-press) var(--ease-out)}.cta-tel:hover{transition-duration:var(--t-hover)}}
 [data-ground=night] .cta-tel{color:#fff}
 .cta-note,.reply{font-size:15px;max-width:36em}
 .reply{color:var(--muted)}
@@ -361,8 +409,10 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 .strip .stamp{grid-column:2;grid-row:1;justify-self:end;align-self:start}
 .strip-b{grid-column:1/-1;font-weight:600;color:var(--ink);font-size:17px;line-height:1.3;text-wrap:balance}
 .strip-usd{grid-column:1/-1;font-size:30px;font-weight:600;color:var(--red);line-height:1.1}
+.strip-usd .su{position:relative;display:inline-block}   /* resume pass 2026-10-19: the figure stays whole and carries its pen underline (system.js strip) */
 .strip-f{grid-column:1/-1;font-size:15px;color:var(--muted)}
-a.strip:active{transform:scale(.99)}                       /* job: feedback. A tap on the strip jumps to the full sheet */
+@media (prefers-reduced-motion:no-preference){a.strip:active{transform:scale(.99)}}   /* job: feedback. A tap on the strip jumps to the full sheet; .99, not --press: it is nearly the screen's width */
+@media (hover:hover) and (pointer:fine){a.strip:hover{box-shadow:var(--lift-hi)}}   /* 2026-10-19: a mouse under 900px gets a cue too; the higher lift, nothing moves */
 a.strip:focus-visible{outline-offset:3px}
 @media (prefers-reduced-motion:no-preference){a.strip{transition:transform var(--t-press)}}
 /* 2026-10-15: from 360 to 899 the Sample stamp moves onto the dollar row, so the label gets the full width and one line (the
@@ -381,7 +431,7 @@ a.strip:focus-visible{outline-offset:3px}
 .chip{display:inline-flex;align-items:center;min-height:44px;padding:0 15px;border:1.5px solid rgba(17,17,16,.3);border-radius:999px;background:var(--sheet);font-size:15px;font-weight:600;color:var(--ink);text-decoration:none;cursor:pointer}
 .chip[aria-checked=true],.chip[aria-current=true]{background:var(--ink);border-color:var(--ink);color:#fff}
 @media (hover:hover) and (pointer:fine){.chip:not([aria-checked=true]):hover{border-color:var(--ink)}}
-.chip:active{transform:scale(.97)}
+@media (prefers-reduced-motion:no-preference){.chip:active{transform:var(--press)}}
 @media (prefers-reduced-motion:no-preference){.chip{transition:background-color var(--t-hover),color var(--t-hover),border-color var(--t-hover),transform var(--t-press)}}
 .picker-sel{display:none}
 .picker-sel select{width:100%;min-height:52px;border:1.5px solid var(--ink);border-radius:12px;padding:0 44px 0 16px;font:500 17px var(--font);color:var(--ink);-webkit-appearance:none;appearance:none;
@@ -414,6 +464,16 @@ a.strip:focus-visible{outline-offset:3px}
 .board{/* ui-ok: gradient is the hardboard's sheen under its fibre, as the clipboard has always been drawn */background:url(assets/grain-board.webp) 0 0/180px 180px,linear-gradient(172deg,#A88D70,#9A8166)}
 .sheet{position:relative;background:var(--sheet);padding:20px 16px 16px;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.16)}
 .sh-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+/* agency pass 2026-10-18 (rank 28, UI designer, lane 3b): one board looks like one board (SYSTEM 3, Oct 17), so every walk sheet
+   carries Home's letterhead (header.lh: the mark, Walk sheet, the stamp, the business line) and its page foot (p.sh-foot). Home's
+   rules from home.css, no new values; home.css keeps its own copy under .hm4-hero until lane 2 drops it */
+.sheet .lh{display:grid;grid-template-columns:auto minmax(0,1fr) auto;column-gap:14px;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.sheet .lh img{width:34px;height:auto}
+.sheet .lh .sh-sub{grid-column:2/-1;margin-top:2px}
+.sheet .sh-foot{display:flex;justify-content:space-between;gap:12px;margin-top:14px;padding-top:8px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted)}
+.sheet .sh-foot>span:first-child{display:flex;gap:14px;flex-wrap:wrap}
+@media (max-width:899px){.sheet .lh{padding-bottom:10px}}
+@media (max-width:359px){.sheet .lh{column-gap:8px}.sheet .lh .stamp{font-size:13px;padding:1px 6px}}
 .sh-title{display:block;font-size:21px;font-weight:600;color:var(--ink)}
 .sh-sub{display:block;font-size:15px;color:var(--muted)}
 .sh-cols{display:flex;justify-content:space-between;font-size:15px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--rule)}
@@ -453,6 +513,12 @@ a.strip:focus-visible{outline-offset:3px}
 @media (forced-colors:active){.facts4 li::before{forced-color-adjust:none;background:CanvasText}}
 @media (min-width:900px){.facts4 ul{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:16px}}   /* 2026-10-16 repair: 16px least between facts (space-between gives about 18 at 1280), so the four English facts keep one line with the bigger tick; check.py's DESK_JS holds it */
 @media (max-width:699px){.facts4{margin-top:36px}.facts4 ul{gap:10px}}
+/* agency pass 2026-10-18 (rank 5): the shared four-fact strip (system/parts/facts.*.html) says "Walk fee back up to 7 days after we go
+   over your sheet", 3 characters longer than the old money back fact, so the English four needed 1,206px of a 1,200px row and the
+   first fact wrapped at 1280 and 1440. 12px least between facts gives them about 14px there; Home's own three facts keep 16.
+   Resume pass 2026-10-19: "Walk fee back if you ask within 7 days after your sheet" is one character longer and leaves 7px of the
+   row (build/resume-measure-mb2.log); the editor's "...after we go over your sheet" put all four facts on two lines */
+@media (min-width:900px){.facts4 ul[data-part=facts]{column-gap:12px}}
 
 /* ======================================================================= 13. the walk: floor plan, stops, tally */
 .plan{position:relative;background:var(--sheet);box-shadow:var(--lift);padding:14px;border-radius:2px;max-width:820px}
@@ -480,6 +546,11 @@ a.strip:focus-visible{outline-offset:3px}
    its own line or its row's header: the stop's "Lost:" / "Won back:" (.find-k), a standalone figure's "Losing" (.loss-k beside a
    .loss figure), the sheet's "Lost a month" column and its total. Our own prices are ink, never red. check.py MONEY_JS */
 .find-k,.loss-k{font-size:var(--fs-17);font-weight:600;color:var(--ink)}
+/* round 4 (2026-10-18): a stop's label and its figure share one line, "Won back $1,900 a month" ("Se recupera $1,620 al año"), the way
+   a loss reads "Losing $1,900 a month"; the figure (.money: inline-block, no wrap) drops under its label only where the line can't hold
+   both. check.py MONEY_JS */
+.find-l{display:block}
+.find-l .find-k{margin-right:2px}
 .loss{color:var(--red)}
 .find-usd{justify-self:start;font-size:clamp(30px,3.4vw,40px);font-weight:600;color:var(--red);line-height:1.05}
 /* After: a figure won back is ink and its underline pencil, so red only ever means money lost (a red "Won back: $1,900 a
@@ -535,17 +606,28 @@ a.strip:focus-visible{outline-offset:3px}
 /* button.flip only: .flip alone is also the .ar-split modifier, and an unscoped rule drew a pill border round a whole section and hid it with JS off */
 button.flip{justify-self:start;min-height:44px;padding:0 18px;border-radius:999px;border:1.5px solid var(--ink);background:var(--sheet);font-weight:600;font-size:15px;color:var(--ink);cursor:pointer}
 button.flip[aria-pressed=true]{background:var(--ink);color:#fff}
-button.flip:active{transform:scale(.97)}
+@media (prefers-reduced-motion:no-preference){button.flip:active{transform:var(--press)}}
 html:not(.js) button.flip{display:none}
-.seg{justify-self:start;align-self:start;display:inline-flex;gap:8px;border:1.5px solid var(--ink);border-radius:999px;padding:4px;background:var(--sheet)}
-.seg button{min-height:44px;padding:0 16px;border:0;border-radius:999px;background:none;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer}
-.seg button[aria-pressed=true]{background:var(--ink);color:#fff}
-.seg button:active{transform:scale(.97)}
-/* Franco 2026-10-10: the two pills must never touch. A ring, then a soft fill, both read as one shape beside the filled pressed pill,
-   so hover is no shape at all: the word underlines. 8px between the pills. */
-@media (hover:hover) and (pointer:fine){.seg button[aria-pressed=false]:hover{background:none;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}}
-/* job: feedback. The switch follows the picture: the pressed side fills with ink as the layers cross-fade */
-@media (prefers-reduced-motion:no-preference){.seg button{transition:background-color var(--t-hover) var(--ease-out),color var(--t-hover) var(--ease-out),box-shadow var(--t-hover),transform var(--t-press)}}
+.seg{position:relative;justify-self:start;align-self:start;display:inline-grid;grid-template-columns:1fr 1fr;gap:8px;border:1.5px solid var(--ink);border-radius:999px;padding:4px;background:var(--sheet)}
+.seg button{min-height:44px;padding:0 16px;border:0;border-radius:999px;background:none;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.seg:not(.th) button[aria-pressed=true]{background:var(--ink);color:#fff}   /* until system.js segs() gives the switch its marker */
+/* the marker (Franco 2026-10-19, design round item 5; Interaction's switch with the craft judge's fixes). One ink marker slides to the
+   word picked (transform only, 260ms), so the switch reads as one control, not two buttons that swap their fill. The marker carries
+   white copies of both words, clipped to it and moved against it, so the word under the ink is white the whole way across and the
+   word beside it stays dark: no grey frame mid slide (craft judge, dk-switch-switch.png). Equal halves, so the marker is one size.
+   The words beside the marker rest in --muted (6:1 on the sheet) */
+.seg.th button{color:var(--muted)}
+.seg-th{position:absolute;z-index:1;top:4px;bottom:4px;left:4px;width:calc((100% - 16px) / 2);overflow:hidden;border-radius:999px;background:var(--ink);pointer-events:none}
+.seg-tx{position:absolute;top:0;bottom:0;left:0;width:calc(200% + 8px);display:grid;grid-template-columns:1fr 1fr;column-gap:8px;align-items:center;justify-items:center;font-weight:600;font-size:15px;color:#fff;white-space:nowrap}
+.seg[data-on="1"] .seg-th{transform:translateX(calc(100% + 8px))}
+.seg[data-on="1"] .seg-tx{transform:translateX(calc(-50% - 4px))}
+/* job: state change. The marker travels on the press with a mouse (system.js), so it and the money move together; reduced motion: it jumps */
+@media (prefers-reduced-motion:no-preference){.seg button:active{transform:var(--press)}.seg.go .seg-th,.seg.go .seg-tx{transition:transform 260ms var(--ease-move)}}
+/* hover, one mark (Franco 2026-10-19, design round item 5, answering the states sweep's last question): the word not picked turns from
+   grey to ink at its normal weight, as a nav link does. No line (it was the site's last underline hover) and no tint beside the ink
+   half (Franco 2026-10-10: a ring or a soft fill read as one shape with the filled pill). Focus adds the ring; the press is the marker */
+@media (hover:hover) and (pointer:fine){.seg button[aria-pressed=false]:hover{background:none;color:var(--ink)}}
+@media (prefers-reduced-motion:no-preference){.seg button{transition:color var(--t-hover) var(--ease-out),transform var(--t-press)}}
 html:not(.js) .seg{display:none}
 html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs cannot switch, so only the first panel shows, with no dead buttons (list review 2026-10-11) */
 /* ink ghosts: thin graphite lines, the shop's own scribbles */
@@ -690,8 +772,11 @@ html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs
 .pause{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 18px 0 14px;border:1.5px solid currentColor;border-radius:999px;background:none;font-weight:600;font-size:15px;cursor:pointer}
 .pause .pi{width:12px;height:14px;border-left:4px solid currentColor;border-right:4px solid currentColor}
 .pause[aria-pressed=true] .pi{width:0;height:0;border:0;border-left:12px solid currentColor;border-top:7px solid transparent;border-bottom:7px solid transparent}
-.pause:active{transform:scale(.98)}
-@media (hover:hover) and (pointer:fine){.pause:hover{background:var(--on-night);color:var(--night)}}
+/* Franco 2026-10-19: hover, focus and a press take one light step, the ink band's version of an outline button's 8% tint; the full
+   bone fill read as Pause switched on (a filled pill means picked on this site), and focus had no step at all */
+[data-ground=night] .pause:is(:focus-visible,:active){background:rgba(233,228,216,.12);color:var(--on-night);border-color:var(--on-night)}
+@media (hover:hover) and (pointer:fine){[data-ground=night] .pause:hover{background:rgba(233,228,216,.12);color:var(--on-night);border-color:var(--on-night)}}
+@media (prefers-reduced-motion:no-preference){.pause:active{transform:var(--press)}}
 html:not(.js) .pause{display:none}
 html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the footer carries every link (phone-access review 2026-10-10) */
 .tapes{display:flex;flex-wrap:wrap;gap:14px 18px;margin-bottom:40px}
@@ -757,19 +842,26 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .idx .dots{display:none}
 .idx-p{font-size:16px;color:var(--body)}
 /* job: signifier and feedback. The row fills with ink from the bottom; the drawing beside it changes to that trade */
-.idx a:focus-visible::before,.idx a.pv::before,.idx a:active::before{transform:scaleY(1)}
-.idx a:focus-visible b,.idx a:focus-visible .idx-p,.idx a.pv b,.idx a.pv .idx-p{color:#fff}
-.idx a:focus-visible{outline-offset:-4px;outline-color:#fff}
+/* Franco 2026-10-19: every state that fills the row turns its words white (a tap filled it and left them ink on ink); the fine-pointer
+   hover lives here (two pages carried it as a copy); and the white ring sits on the fill, 5px inside it, so on a phone it no longer
+   runs through the first letter. .pv is system.js's preview of a trade on the index (showFig) */
+.idx a:is(:focus-visible,:active,.pv)::before{transform:scaleY(1)}
+.idx a:is(:focus-visible,:active,.pv) :is(b,.idx-p){color:#fff}
+@media (hover:hover) and (pointer:fine){.idx a:hover::before{transform:scaleY(1)}.idx a:hover :is(b,.idx-p){color:#fff}}
+.idx a:focus-visible{outline:none}
+.idx a:focus-visible::before{outline:3px solid #fff;outline-offset:-5px}
 @media (prefers-reduced-motion:no-preference){.idx a::before{transition:transform var(--t-hover) var(--ease-out)}.idx b,.idx-p{transition:color var(--t-hover)}}
 /* 2026-10-15: on phones the row names are underlined (they did not read as links) and the divider lines stop at the text;
    the ink fill on a tap still bleeds 10px into the gutter */
 @media (max-width:899px){
   .idx b{text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:var(--muted);text-underline-offset:4px}
-  .idx a.pv b,.idx a:focus-visible b{text-decoration-color:currentColor}
+  .idx a:is(:focus-visible,:active,.pv) b{text-decoration-color:currentColor}
+  @media (hover:hover) and (pointer:fine){.idx a:hover b{text-decoration-color:currentColor}}
   .idx a{margin-inline:0;padding-inline:0}
   .idx a::before{inset:0 -10px}
 }
-@media (min-width:900px){.idx a{grid-template-columns:auto 1fr minmax(0,24em);align-items:baseline;gap:12px}.idx .dots{display:block;border-bottom:2px dotted rgba(17,17,16,.35);transform:translateY(-4px)}.idx a.pv .dots{border-color:rgba(255,255,255,.5)}}
+@media (min-width:900px){.idx a{grid-template-columns:auto 1fr minmax(0,24em);align-items:baseline;gap:12px}.idx .dots{display:block;border-bottom:2px dotted rgba(17,17,16,.35);transform:translateY(-4px)}.idx a:is(:focus-visible,:active,.pv) .dots{border-color:rgba(255,255,255,.5)}}
+@media (min-width:900px) and (hover:hover) and (pointer:fine){.idx a:hover .dots{border-color:rgba(255,255,255,.5)}}
 /* a pinned print: tape at a corner, a few degrees off; holds a drawing now, a photo once Franco's shoot exists */
 .print{position:relative;background:var(--sheet);padding:12px 12px 14px;box-shadow:var(--lift);transform:rotate(1.2deg);max-width:460px}
 .print::before{content:"";position:absolute;left:18px;top:-12px;width:86px;height:26px;background:var(--tape);opacity:.92;transform:rotate(-6deg);clip-path:polygon(2% 8%,98% 0,100% 92%,0 100%)}
@@ -790,7 +882,11 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .lf-h{font-size:15px;color:var(--muted)}
 .step{display:flex;align-items:center;gap:10px}
 .stepb{width:52px;height:52px;border-radius:50%;border:2px solid var(--ink);background:var(--sheet);font:600 26px/1 var(--font);color:var(--ink);cursor:pointer}
-.stepb:active{transform:scale(.95);background:var(--bone)}
+/* Franco 2026-10-19: the steppers answer the pointer like every outline control (row 12's 8% ink tint, solid over the sheet so the
+   graph lines stay out: #ECEBE8); focus and a press take it too, and the press scale is the shared .98 (it was .95 with a bone fill) */
+.stepb:is(:focus-visible,:active){background:#ECEBE8}
+@media (hover:hover) and (pointer:fine){.stepb:hover{background:#ECEBE8}}
+@media (prefers-reduced-motion:no-preference){.stepb{transition:background-color var(--t-press) var(--ease-out)}.stepb:hover,.stepb:focus-visible{transition-duration:var(--t-hover)}.stepb:active{transform:var(--press)}}
 .step input,.lf input{width:110px;height:56px;text-align:center;font:600 26px var(--font);border:2px solid var(--ink);border-radius:8px;background:var(--sheet);color:var(--ink)}
 .lf-err{font-size:15px;font-weight:600;color:var(--ink);min-height:0}
 .lf-err:not(:empty){/* ui-ok: stripe the rule beside a form error, GOV.UK's error pattern, with the words in the box */padding:8px 12px;border-left:4px solid var(--ink);background:var(--bone)}
@@ -847,13 +943,78 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .county .tw.big::before{width:12px;height:12px;background:var(--sheet);border:3px solid var(--ink)}
 .town-list{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:17px;color:var(--ink);font-weight:500}
 
+/* the close, one component (agency pass, 2026-10-18, rank 1): these rules were two hand copies, home.css and trade-page.css
+   ("re-copied as of 19:11"), and on a phone Home hid its number and "Or send a text" while every trade page showed them. One
+   copy now, one phone behaviour: the number shows at every width. The rows come from system/parts/close-rows.*.html (Money back,
+   Hours, Reply time, Language, and the plain calculator link for a reader not ready to call). Page CSS keeps only its own
+   spacing: where Rules we keep sits and the band padding */
+.close-g{display:grid;gap:44px}
+@media (min-width:900px){.close-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:start}.c4-card{padding-top:84px;position:sticky;top:96px}}
+.close-act{gap:12px}
+.close-act .arrow-to{position:relative;display:inline-flex;width:max-content}
+.close-h{margin:0 0 24px;font-size:clamp(44px,5.4vw,64px)}   /* one step above nothing: the same top step as the H1; the Spanish runs balanced on two lines, "Hablemos de / su negocio." */
+.close-act .arrow-to .pen-arrow{position:absolute;left:100%;top:-26px;width:110px;height:84px;margin-left:8px}   /* Franco 2026-10-10: it comes down from the heading's words and lands level with the button's middle */
+.c4-tel{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 20px;font-size:17px}
+.c4-hours{margin-top:30px;border-top:1px solid var(--rule)}
+.c4-hours div{display:grid;gap:2px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.c4-hours dt{font-size:15px;font-weight:600;color:var(--muted)}
+.c4-hours dd{font-size:17px;color:var(--ink)}
+.c4-hours .mb{font-size:17px;color:var(--ink)}
+@media (min-width:700px){.c4-hours div{grid-template-columns:8.5em minmax(0,1fr);align-items:baseline;column-gap:16px}}
+.c4-rules h3{margin-bottom:6px;font-size:24px}
+.c4-rules li{position:relative;padding:9px 0 9px 28px;font-size:17px;font-weight:500;color:var(--ink)}
+.c4-rules .tick{left:0;top:15px;width:18px;height:15px}   /* 2026-10-17 round 3 (judges, S9): the facts' tick, 18 x 15 with the words at 28px, as on every page */
+.hm-cc-k{margin-bottom:12px}
+.hm-about{margin-top:16px}
+.cc-slot{width:120px;margin:0 0 14px}
+.contact-card .cardino{top:auto;bottom:100%;margin-bottom:-2px;width:58px;right:36px}
+@media (min-width:700px){.contact-card .cardino{top:auto;width:74px;right:56px}}
+/* design round item 9 (Franco 2026-10-19): with no reviews yet, the close card is a short letter from the owner (Basecamp's signed
+   letter, on Lumora's sheet): the evenings owners lose, the paperwork he automated for himself, the two languages, signed in type
+   (his own hand once he signs on paper, a scanned drawing, never a script font). One voice in body type; the name at 400, so it
+   reads as a sign-off, not a form label. The photo slot is out until a real photo exists; then it sits small beside the name */
+.letter-h{margin-bottom:12px}
+.letter p{font-size:var(--fs-17);line-height:1.55;color:var(--body)}
+.letter p+p{margin-top:10px}
+.letter .letter-sig{margin-top:18px;font-size:var(--fs-20);line-height:1.3;color:var(--ink)}
+.letter-sig span{display:block;margin-top:2px;font-size:var(--fs-15);color:var(--muted)}
+.letter+.cblock{margin-top:14px}
+/* design round item 10 (Franco 2026-10-19): what happens on the call, between the close's head and its button, one sentence a line at
+   every width (the craft judge: on a phone 'If a walk' hung at the end of line 1). One rhythm: 12px under the head, 24px to the
+   button. The pen arrow still comes down from above the button and clears the line by 12px or more (check.py close_runtime) */
+.close-h:has(+.close-lede){margin-bottom:12px}
+.close-lede{max-width:30em;margin:0 0 24px;font-size:var(--fs-17);line-height:1.45;color:var(--ink)}
+.close-lede span{display:block;text-wrap:balance}
+@media (min-width:700px){.close-lede{font-size:var(--fs-20);line-height:1.4}}
+/* design round item 2 (Franco 2026-10-19): on a computer (a mouse, 900px and up) Call us, the number beside it and "Or send a text"
+   open this card under the control, its edge on the control's edge (the header's: 8px under the header's rule): whether someone
+   picks up now on Gainesville's clock, a code the phone's camera reads to call or text, the number, a line that still calls from
+   the computer and the email. A paper object, so the paper shadow and no border (the judges: one edge, not two). Phones keep the
+   dialer. No copy button: nothing on the site touches the clipboard */
+.callcard{position:absolute;inset:auto;margin:0;width:340px;max-width:calc(100vw - 32px);padding:20px 22px 18px;border:0;border-radius:12px;background:var(--sheet);color:var(--body);box-shadow:var(--lift-hi);overflow:visible}
+.callcard:focus{outline:none}   /* the dialog itself takes focus on open so a screen reader reads its status; the links inside keep the ring */
+.callcard p{margin:0}
+.cc-st{font-size:var(--fs-15);line-height:1.45;color:var(--body)}
+.cc-st b{display:block;font-size:var(--fs-17);color:var(--ink)}
+.cc-qr{display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px;align-items:center;margin:14px 0 12px}
+.cc-qr svg{display:block;width:112px;height:112px;background:#fff}
+.cc-qr path{fill:none;stroke:#000;stroke-width:1;shape-rendering:crispEdges}
+.cc-qc{font-size:var(--fs-15);line-height:1.45}
+.cc-n{font-size:var(--fs-20);font-weight:600;color:var(--ink);white-space:nowrap}
+.cc-tel{margin-top:6px!important}
+.cc-tel a,.cc-mail a{display:inline-block;padding-block:12px;margin-block:-12px}   /* 44px tall to tap, no layout change */
+.cc-mail{margin-top:10px!important;font-size:var(--fs-15);color:var(--muted)}
+.btn[aria-expanded=true]:not(:focus-visible,:active){background:var(--ink);border-color:var(--ink)}   /* the judges: while its card is open the button stays ink, never the grey that reads as off */
+[data-ground=night] .btn[aria-expanded=true]:not(:focus-visible,:active){background:var(--on-night);border-color:var(--on-night)}
+@media screen and (prefers-reduced-motion:no-preference){.callcard:popover-open{animation:cc-in var(--t-small) var(--ease-out)}}   /* job: enter, from the control it came from */
+@keyframes cc-in{from{opacity:0;transform:translateY(-6px)}}
 /* ======================================================================= 24. tabs ("Pick your tool"), footnotes, after-you-book list */
 .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
 .tabs [role=tab]{min-height:44px;padding:0 16px;border:1.5px solid rgba(17,17,16,.3);border-radius:999px;background:var(--sheet);font-weight:600;font-size:15px;color:var(--ink);cursor:pointer}
 .tabs [role=tab][aria-selected=true]{background:var(--ink);border-color:var(--ink);color:#fff}
 /* job: feedback. Same vocabulary as the chips: the border turns ink on hover, a press scales to .98 (tabs had no hover) */
 @media (hover:hover) and (pointer:fine){.tabs [role=tab]:not([aria-selected=true]):hover{border-color:var(--ink)}}
-.tabs [role=tab]:active{transform:scale(.98)}
+@media (prefers-reduced-motion:no-preference){.tabs [role=tab]:active{transform:var(--press)}}
 @media (prefers-reduced-motion:no-preference){.tabs [role=tab]{transition:background-color var(--t-hover),color var(--t-hover),border-color var(--t-hover),transform var(--t-press)}}
 .fn{font-size:13px;vertical-align:super;line-height:0;text-decoration:none;font-weight:600;padding:0 2px}
 .sources{font-size:15px;color:var(--muted)}
@@ -870,7 +1031,11 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
    so its colors, links, focus ring and button come from that ground. Sizes stay on the scale: 15, 17, 24. */
 .foot{font-size:var(--fs-15);line-height:1.55;padding:clamp(56px,7vw,88px) 0 32px}
 .foot a{color:var(--on-night);text-decoration:none}
-.foot a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+/* Franco 2026-10-19: the footer's links follow row 12 like every other link: hover only on a fine pointer (it stuck after a tap on a
+   phone), focus takes the hover's white plus the ring (the hover's line is not repeated under it), and the button and the logo keep
+   their own states, so no footer patch has to win them back */
+@media (hover:hover) and (pointer:fine){.foot a:not(.btn,.foot-brand):hover{color:#fff;text-decoration:underline;text-decoration-color:currentColor;text-underline-offset:3px}}
+.foot a:not(.btn,.foot-brand):focus-visible{color:#fff}
 .foot-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);row-gap:40px}
 .foot-lead{grid-column:1/span 4}
 .foot-col{grid-column:span 2}
@@ -882,13 +1047,14 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
    can see the red logo behind the white one"): the white-and-red logo lay under the white one at rest, and at 2x and 3x its red
    mark showed round the white mark's edge. Now nothing is behind the logo at rest: the white-and-red one is a layer on top, at 0,
    that fades in on hover while the white one steps out once it is covered, and steps back at once when the hover ends */
-.foot-brand::after{content:"";position:absolute;inset:0;background:url(assets/logo-white-red.svg) 0 0/148px auto no-repeat;opacity:0;pointer-events:none}
-.foot-brand:hover::after,.foot-brand:focus-visible::after{opacity:1}
-.foot-brand:hover img,.foot-brand:focus-visible img{opacity:0}
+.foot-brand::after{content:"";position:absolute;inset:0;background:url(assets/logo-white-red.svg) 0 50%/148px auto no-repeat;opacity:0;pointer-events:none}
+.foot-brand:focus-visible::after{opacity:1}
+.foot-brand:focus-visible img{opacity:0}
+@media (hover:hover) and (pointer:fine){.foot-brand:hover::after{opacity:1}.foot-brand:hover img{opacity:0}}
+@media (pointer:coarse){.foot-brand{padding-block:4.1px;margin-block:-4.1px}}   /* 2026-10-19: 44px tall on touch, no layout change; the red layer sits at 0 50%, so it stays on the white mark */
 @media (prefers-reduced-motion:no-preference){.foot-brand::after{transition:opacity var(--t-press) var(--ease-out)}.foot-brand:hover::after,.foot-brand:focus-visible::after{transition-duration:var(--t-hover)}.foot-brand:hover img,.foot-brand:focus-visible img{transition:opacity 0s linear var(--t-hover)}}
 .foot-line{margin-top:24px;font-size:var(--fs-24);font-weight:600;line-height:1.2;letter-spacing:-.015em;color:#fff;max-width:14em;text-wrap:balance}
 .foot .btn{margin-top:24px}
-.foot .btn:hover{text-decoration:none;color:var(--night)}
 .foot-h{font-size:var(--fs-15);font-weight:500;letter-spacing:0;color:#fff;padding-bottom:10px;margin-bottom:6px;border-bottom:1px solid rgba(233,228,216,.22)}
 .foot-col li{padding:5px 0}
 .foot-col a{display:inline-block;min-height:24px}
@@ -900,14 +1066,24 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 @media (max-width:699px){.foot-col,.foot-col:nth-child(2){grid-column:span 6}.foot-col.c-contact{grid-column:1/-1}}
 @media (max-width:359px){.foot-col,.foot-col:nth-child(2){grid-column:1/-1}}
 /* 2026-10-15: on phones the column links fill their 34px pitch and the bottom row's links are 44px tall, with no layout change;
-   in the contact column the plain lines step back to muted so the number and the email lead, and the email reads as a link */
+   in the contact column the plain lines step back to muted so the number and the email lead, and the email reads as a link.
+   Franco 2026-10-19: the number in "Call or text" too (it differed from its sentence by colour alone, 1.3:1, WCAG 1.4.1) */
 @media (max-width:899px){
-  .foot-col a{padding-block:5px;margin-block:-5px}
+  /* states sweep FOOT-5 (Franco 2026-10-19): the tap height comes from a layer, not padding, so every focus ring hugs its words at one
+     height (it was 43px on the column links and 54px on the legal links and the number, crossing the next row). The hit areas and
+     the rhythm stay as they were: 34px on the column links, 44px on the legal links and the number (check.py PHONE_LINES_JS) */
+  .foot-col a{position:relative}
+  .foot-col a::before{content:"";position:absolute;inset:-5px 0}
   .foot-base ul{gap:0 24px}
   /* 2026-10-17 round 3 (judges): the legal rows sat 50px apart under link lists that step 33px. Each row takes the lists' 5px above
      and below and each link keeps a 44px tap height with padding that does not move the layout (it was 13px of padding, 49px rows) */
   .foot-base li{padding-block:5px}
-  .foot-base ul a{display:inline-block;padding-block:10.4px;margin-block:-10.4px}
+  .foot-base ul a{display:inline-block;position:relative}
+  .foot-base ul a::before{content:"";position:absolute;inset:-10.4px 0}
+  /* WebKit draws an outline round a link's positioned layers too, so Safari's ring took the 44px layer's height again: here the
+     ring is the link's own ::after, on its box (3px, 2px out, the ink band's bone), in every engine */
+  :is(.foot-col a,.foot-base ul a):focus-visible{outline:none}
+  :is(.foot-col a,.foot-base ul a):focus-visible::after{content:"";position:absolute;inset:0;border-radius:2px;outline:3px solid var(--on-night);outline-offset:2px;pointer-events:none}
 }
 /* 2026-10-17 round 2 (owner judge: in Spanish at 375 "Privacidad" dropped to a row of its own): on a phone the four legal links
    sit in two even rows on the two columns of the link lists above (the same grid and gap), in both languages at every width
@@ -915,10 +1091,14 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 @media (max-width:699px){.foot-base ul{flex-basis:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--g)}}
 .foot-col.c-contact li:not(:has(a)){color:var(--muted-night)}
 /* 2026-10-16 (Franco's GO, note 3: the number once on the last screen): on a phone, while the call bar shows, the footer's call
-   button and its "Call or text (352) 226-0681" line step aside (the bar has both). Each carries data-extra in the markup (R9), so
-   the rule keys on it; on a phone on its side the bar is gone and they come back */
-@media (max-width:899px) and (min-height:501px){.foot-lead>.btn[href^="tel:"][data-extra],.foot .c-contact li[data-extra]{display:none}}
-.foot-col.c-contact a[href^="mailto:"]{text-decoration:underline;text-decoration-color:var(--muted-night);text-underline-offset:3px}
+   button steps aside (the bar has it). It carries data-extra in the markup (R9), so the rule keys on it; on a phone on its side
+   the bar is gone and it comes back.
+   2026-10-18, agency pass (Franco: "why remove some info too? like the footer stuff"): the Contact list keeps "Call or text
+   (352) 226-0681" on a phone. Without it the list was an email and the hours; name, place and number read together at the end of
+   every page. The number is a tel: link with a 44px tap height (check.py PHONE_LINES_JS, FOOT_JS) */
+@media (max-width:899px) and (min-height:501px){.foot-lead>.btn[href^="tel:"][data-extra]{display:none}}
+@media (max-width:899px){.foot .c-contact a.tel{display:inline-block;position:relative}.foot .c-contact a.tel::before{inset:-10.4px 0}}   /* FOOT-5: the layer, as the legal links */
+.foot-col.c-contact a{text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:var(--muted-night);text-underline-offset:3px}
 
 /* ======================================================================= 26. motion (everything below is extra; the still page above is complete) */
 @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
@@ -950,6 +1130,7 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
   html.js [data-draw]:not(.drawn) path{visibility:hidden}   /* an undrawn stroke with a round cap still paints a red dot (a waiting walk stop's money line); hide it until it draws (trades-1 fix, 2026-10-07) */
   html.js [data-draw].drawn path{animation:draw 700ms var(--ease-move) 150ms both}
   html.js [data-draw].drawn path+path{animation-delay:750ms;animation-duration:250ms}
+  html.js .hero-strip [data-draw].drawn path{animation-delay:800ms}   /* resume pass 2026-10-19: the trade hero card's underline, after the words have settled (both judges: a still first screen) */
   html.js .plan:not(.drawn) .pl-route{opacity:0}
   html.js .plan.drawn .pl-route{animation:fadein 900ms var(--ease-out) both}
 }
@@ -984,7 +1165,7 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 html:not(.js) .pic.has-seg{padding-bottom:28px}            /* no JS: no buttons, so no empty slot under the picture */
 .pic.has-seg>.seg{position:absolute;left:0;bottom:0}
 .pic.has-seg>.samp{bottom:13px}
-@media (max-width:359px){.seg button{padding:0 12px}.pic.has-seg>.samp{right:0}}   /* 2026-10-15: at 320 the bigger Sample label ("Ejemplo") ran 11px into Antes / Después; now 15px clear (English 37px) */
+@media (max-width:359px){.seg button{padding:0 8px}.pic.has-seg>.samp{right:0}}   /* 2026-10-15: at 320 the bigger Sample label ("Ejemplo") ran 11px into Antes / Después; now 15px clear (English 37px). Picks gate 2026-10-19 (Franco 2026-10-19, design round item 5): equal halves for the marker made the Spanish switch two "Después" wide, and the label sat on it again (AC stop 1, -4px in Chrome, -6px in WebKit), so 8px a side here, not 12: 12px clear in Chrome, 10 in WebKit, buttons 72 x 44 */
 .pair .st,.solo .st{white-space:normal}   /* a status that is the fix wraps rather than being cut (Water stop 2 at 320 to 360) */
 .chg.tr>.was .st{white-space:nowrap}   /* 2026-10-15: a struck old pill on one line ("Draft, 3 / days" put the strike between its lines) */
 @container (max-width:300px){.ptbl td:last-child{padding-right:0}.ptbl .chg.tr>.was .st{padding-inline:5px}}   /* 2026-10-15: so "Borrador, 3 días" fits unwrapped at 320 (it ran 7px past the window) */
@@ -1267,4 +1448,7 @@ html.review .slot{/* ui-ok: pattern-bg a review-only picture slot, never on the 
 }
 
 /* forced colours (Windows High Contrast): a pressed Before / After, the picked trade and the selected tab stay visible */
-@media (forced-colors:active){.seg button[aria-pressed=true],.chip[aria-checked=true],.tabs [role=tab][aria-selected=true]{forced-color-adjust:none;background:Highlight;color:HighlightText}}
+@media (forced-colors:active){.seg button[aria-pressed=true],.chip[aria-checked=true],.tabs [role=tab][aria-selected=true]{forced-color-adjust:none;background:Highlight;color:HighlightText}.seg-th{display:none}}
+/* the walk opens on its number (Franco 2026-10-19, design round item 3; Home's rule until the picks follow-up carried the heading to
+   the trade pages): the figure is money lost, so it is red, with its loss word beside it; heading size on bone, over the 24px floor */
+.walk-h-usd{color:var(--red)}

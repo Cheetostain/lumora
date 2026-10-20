@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calculadora de pérdidas | Lumora</title>
-<meta name="description" content="¿Cuánto le cuesta el papeleo a su negocio? Ponga sus números: el mismo trabajo anotado dos veces, trabajos sin facturar, cotizaciones que se enfriaron y llamadas que nadie devolvió. Funciona en su teléfono o computadora y no nos manda nada.">
+<title>Calculadora de pérdidas para su negocio | Lumora</title>
+<meta name="description" content="¿Cuánto le cuesta el papeleo a su negocio? Ponga sus números. Funciona en su teléfono o computadora y no nos manda nada. La primera llamada no tiene costo.">
 <link rel="canonical" href="https://lumorafl.com/es/leak-check/">
 <link rel="alternate" hreflang="en" href="https://lumorafl.com/leak-check/">
 <link rel="alternate" hreflang="es" href="https://lumorafl.com/es/leak-check/">
 <link rel="alternate" hreflang="x-default" href="https://lumorafl.com/leak-check/">
-<meta property="og:title" content="Calculadora de pérdidas | Lumora">
-<meta property="og:description" content="¿Cuánto le cuestan a su negocio las llamadas perdidas, las cotizaciones que salen tarde y anotar lo mismo dos veces? Ponga sus propios números y obtenga una cifra mensual aproximada. Funciona en su dispositivo y no nos envía nada.">
+<meta property="og:title" content="Calculadora de pérdidas para su negocio | Lumora">
+<meta property="og:description" content="¿Cuánto le cuesta el papeleo a su negocio? Ponga sus números. Funciona en su teléfono o computadora y no nos manda nada. La primera llamada no tiene costo.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lumorafl.com/es/leak-check/">
 <meta property="og:image" content="https://lumorafl.com/assets/share-card-es.png">
@@ -26,15 +26,15 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=80039fe8">
-<link rel="stylesheet" href="/v4/trade-page.css?v=80039fe8">
+<link rel="stylesheet" href="/v4/system.css?v=85f32fc0">
+<link rel="stylesheet" href="/v4/trade-page.css?v=85f32fc0">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=80039fe8" defer></script>
-<script src="/v4/system.js?v=80039fe8" defer></script>
+<script src="/v4/trades.js?v=85f32fc0" defer></script>
+<script src="/v4/system.js?v=85f32fc0" defer></script>
 <style>
 /* ===== Loss calculator, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64) outside the pictures; every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
-.lk-sms,.find-rows a.u,.lk-cta .mb a.u,.auto-close a.u,.lk-rows .mb a.u{display:inline-block;padding-block:12px;margin-block:-12px;position:relative;z-index:1}   /* a 44px tall tap area without moving the layout */
+.lk-sms,.find-rows a.u,.lk-cta .mb a.u,.auto-close a.u,.lk-rows .mb a.u,.lk-route a.u,.how-steps a.u{display:inline-block;padding-block:12px;margin-block:-12px;position:relative;z-index:1}   /* a 44px tall tap area without moving the layout */
 
 /* 1 the calculator (L1, L2): the boxes on a sheet, the estimate beside them on a computer, under them on a phone. On a phone an ink
    bar holds the figure in view while he types (sticky inside the form only, so it leaves with the form) */
@@ -63,7 +63,7 @@ html:not(.js) .stepb,html:not(.js) .lk-btns{display:none}
 .lk-bar{margin:0 -18px}
 .lk-bar .tally-bar{min-height:40px;padding:6px 18px}   /* 2026-10-15: slimmer, it shows only under 900px and holds no control */
 .lk-bar span{white-space:nowrap}
-.lk-bar b{font-size:17px;white-space:nowrap}
+.lk-bar b{font-size:17px;white-space:normal;text-align:right}   /* agency pass 2026-10-18: the loss words stay on; only the space before the figure may break, where a phone under 360px can't hold the line (the figure and its period never part) */
 .lk-bar.bad b{white-space:normal;text-align:right;font-size:15px}   /* what is wrong may wrap; it never hides */
 html:not(.js) .lk-bar{display:none}
 @media (min-width:900px){.lk-bar{display:none}}
@@ -83,6 +83,7 @@ html:not(.js) .lk-bar{display:none}
 .lk-note{margin-top:12px;font-size:15px;color:var(--muted)}
 .lk-cta{margin-top:20px;gap:12px}
 .lk-cta .mb{font-size:15px}
+.lk-route{margin-top:16px;font-size:15px;color:var(--body);max-width:34em}   /* agency pass 2026-10-18 (rank 13): where a restaurant or a property manager goes next */
 @media (min-width:600px){
   .lk-form{padding:0 28px 28px}.lk-bar{margin:0 -28px}.lk-bar .tally-bar{padding-inline:28px}.lk-sheet{padding:22px 26px 24px}
   /* a worksheet on a wider screen: the line's words on the left, its box on the right, every box in one column (a one-box line
@@ -169,8 +170,8 @@ html:not(.js) .lk-bar{display:none}
 
 <div class="util">
   <div class="wrap util-in">
-    <span>Gainesville; atendemos el condado de Alachua.</span>
-    <span class="util-r"><a href="/leak-check/" lang="en" hreflang="en" class="lang">English</a></span>
+    <span>Desde Gainesville atendemos el condado de Alachua.</span>
+    <span class="util-r"><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span><a href="/leak-check/" lang="en" hreflang="en" class="lang">English</a></span>
   </div>
 </div>
 <header class="hdr">
@@ -198,12 +199,12 @@ html:not(.js) .lk-bar{display:none}
 
 <section class="hero lk" id="top" data-bar-seat data-ground="graph" data-density="high" data-width="split" data-loud="estimate" data-medium="calc">
   <div class="wrap">
-    <h1>¿Cuánto le cuesta el papeleo?</h1>
+    <h1>¿Cuánto le&nbsp;cuesta el&nbsp;papeleo?</h1>
     <p class="t-lede">Ponga sus números y vea, más o menos, cuánto le cuestan al mes cuatro tareas de oficina. Le toma como un minuto.</p>
     <p class="lk-priv" data-first="the privacy line">Funciona en su teléfono o computadora y no nos manda nada. Cuando cierra la página, sus números se borran.</p>
     <div class="lk-g">
       <form class="lk-form" id="lk" novalidate autocomplete="off" aria-label="Calculadora de pérdidas">
-        <div class="tally lk-bar" aria-hidden="true"><div class="tally-bar"><span data-o="barl">Ejemplo</span><b data-o="bar">Unos $1,540 al mes</b></div></div>
+        <div class="tally lk-bar" aria-hidden="true"><div class="tally-bar"><span data-o="barl">Ejemplo</span><b data-o="bar">Pierde&nbsp;unos $1,540&nbsp;al&nbsp;mes</b></div></div>
         <p class="lk-ex">Cambie los ejemplos por sus números. Lo que no sepa, déjelo en blanco.</p>
         <fieldset data-task="retyping">
           <legend>Anotar el mismo trabajo dos&nbsp;veces</legend>
@@ -218,19 +219,19 @@ html:not(.js) .lk-bar{display:none}
         </fieldset>
         <fieldset data-task="invoices">
           <legend>Trabajos terminados que nunca se facturaron</legend>
-          <div class="lf"><label for="lk-unbilled">Trabajos terminados sin factura en los últimos 3 meses</label>
+          <div class="lf"><label for="lk-unbilled">Trabajos terminados sin factura en los últimos 3&nbsp;meses</label>
             <div class="step"><button type="button" class="stepb" data-step="-1" data-for="unbilled" aria-label="Un trabajo menos">−</button><input id="lk-unbilled" name="unbilled" inputmode="decimal" value="" aria-describedby="h-unbilled"><button type="button" class="stepb" data-step="1" data-for="unbilled" aria-label="Un trabajo más">+</button></div>
             <p class="lf-h" id="h-unbilled">No cuente los que decidió no cobrar. ¿Todavía no los ha contado? Déjelo para después.</p></div>
           <div class="lf"><label for="lk-avg">Su factura promedio <span class="ex" data-ex="avg">Ejemplo</span></label>
             <div class="unit"><input id="lk-avg" name="avg" inputmode="decimal" value="$341" aria-describedby="h-avg"></div>
-            <p class="lf-h" id="h-avg">Lo que facturó el mes pasado ÷ el número de facturas.</p></div>
+            <p class="lf-h" id="h-avg">Lo que facturó el mes pasado ÷&nbsp;el número de facturas.</p></div>
         </fieldset>
         <fieldset data-task="quotes">
           <legend>Cotizaciones que se enfriaron</legend>
           <div class="lf"><label for="lk-quotes">Cotizaciones al mes que se perdieron por mandarlas tarde o no volver a llamar <span class="ex" data-ex="quotes">Ejemplo</span></label>
             <div class="step"><button type="button" class="stepb" data-step="-1" data-for="quotes" aria-label="Una cotización menos">−</button><input id="lk-quotes" name="quotes" inputmode="decimal" value="2" aria-describedby="h-quotes"><button type="button" class="stepb" data-step="1" data-for="quotes" aria-label="Una cotización más">+</button></div>
             <p class="lf-h" id="h-quotes">No cuente las que perdió por el precio.</p></div>
-          <div class="lf"><label for="lk-qprofit">Lo que le queda en un trabajo cotizado típico <span class="ex" data-ex="qprofit">Ejemplo</span></label>
+          <div class="lf"><label for="lk-qprofit">Ganancia en un trabajo cotizado típico <span class="ex" data-ex="qprofit">Ejemplo</span></label>
             <div class="unit"><input id="lk-qprofit" name="qprofit" inputmode="decimal" value="$400" aria-describedby="h-qprofit"></div>
             <p class="lf-h" id="h-qprofit">Después de materiales y mano de obra, no el total de la cotización.</p></div>
         </fieldset>
@@ -238,13 +239,13 @@ html:not(.js) .lk-bar{display:none}
           <legend>Llamadas que nadie devolvió</legend>
           <div class="lf"><label for="lk-rang">Llamadas por semana de números nuevos que nadie contestó o que cayeron al buzón de voz <span class="ex" data-ex="rang">Ejemplo</span></label>
             <div class="step"><button type="button" class="stepb" data-step="-1" data-for="rang" aria-label="Una llamada menos">−</button><input id="lk-rang" name="rang" inputmode="decimal" value="6" aria-describedby="h-rang"><button type="button" class="stepb" data-step="1" data-for="rang" aria-label="Una llamada más">+</button></div>
-            <p class="lf-h" id="h-rang">No cuente los números que ya tiene en sus contactos o en su lista de clientes. Si calcula a ojo, quédese corto.</p></div>
+            <p class="lf-h" id="h-rang">No cuente el spam ni los números que ya tiene en sus contactos o en su lista de clientes. Si calcula a ojo, quédese corto.</p></div>
           <div class="lf"><label for="lk-back">De esas, cuántas devolvió <span class="ex" data-ex="back">Ejemplo</span></label>
             <div class="step"><button type="button" class="stepb" data-step="-1" data-for="back" aria-label="Una llamada devuelta menos">−</button><input id="lk-back" name="back" inputmode="decimal" value="3"><button type="button" class="stepb" data-step="1" data-for="back" aria-label="Una llamada devuelta más">+</button></div></div>
           <div class="lf"><label for="lk-book">Porcentaje que se habría convertido en trabajo (%) <span class="ex" data-ex="book">Ejemplo</span></label>
             <div class="unit"><input id="lk-book" name="book" inputmode="decimal" value="24%" aria-describedby="h-book"></div>
-            <p class="lf-h" id="h-book">Si fueran 3 de cada 10, ponga 30%. ¿No está seguro? Los negocios con menos de 5 técnicos convirtieron en trabajo el 24% de sus llamadas (blog de ServiceTitan, 2022, datos de proveedor).</p></div>
-          <div class="lf"><label for="lk-profit">Lo que le queda en un trabajo típico <span class="ex" data-ex="profit">Ejemplo</span></label>
+            <p class="lf-h" id="h-book">Si fueran 3&nbsp;de cada 10, ponga 30%. ¿No está seguro? Los contratistas pequeños convirtieron en trabajo el 24% de sus llamadas (ServiceTitan, 2022, datos de proveedor). Si su negocio es de otro tipo, ponga su propio cálculo, siempre por lo bajo.</p></div>
+          <div class="lf"><label for="lk-profit">Ganancia en un trabajo típico <span class="ex" data-ex="profit">Ejemplo</span></label>
             <div class="unit"><input id="lk-profit" name="profit" inputmode="decimal" value="$150" aria-describedby="h-profit"></div>
             <p class="lf-h" id="h-profit">Después de materiales y mano de obra, no el precio que cobra.</p></div>
         </fieldset>
@@ -253,14 +254,14 @@ html:not(.js) .lk-bar{display:none}
 
       <div class="lk-out">
         <div class="lk-sheet">
-          <div class="lk-sh-h"><h2>Su cálculo</h2><span class="stamp" data-o="stamp">Ejemplo</span></div>
+          <div class="lk-sh-h"><h2>Su&nbsp;cálculo</h2><span class="stamp" data-o="stamp">Ejemplo</span></div>
           <div data-o="result">
             <p class="lk-total"><span class="lk-about">Pierde unos</span><span class="lk-fig"><span class="lk-usd" data-o="total">$1,540<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="lk-per">al mes</span></span></p>
             <ol class="lk-lines">
-              <li data-o="l-retype" data-name="Anotar el mismo trabajo dos&nbsp;veces" data-task="retyping"><span><b>Anotar el mismo trabajo dos&nbsp;veces</b>30 minutos al día × 22 días ÷ 60 = 11.0 horas × $25 la hora =&nbsp;$275&nbsp;al&nbsp;mes.</span><span class="v">$275</span></li>
+              <li data-o="l-retype" data-name="Anotar el mismo trabajo dos&nbsp;veces" data-task="retyping"><span><b>Anotar el mismo trabajo dos&nbsp;veces</b>30&nbsp;minutos al día ×&nbsp;22&nbsp;días ÷&nbsp;60 = 11.0 horas ×&nbsp;$25 la hora =&nbsp;$275&nbsp;al&nbsp;mes.</span><span class="v">$275</span></li>
               <li data-o="l-unbilled" data-name="Trabajos sin facturar" data-task="invoices"><span class="off"><b>Trabajos sin facturar</b>Lo dejó en blanco.</span></li>
-              <li data-o="l-quotes" data-name="Cotizaciones que se enfriaron" data-task="quotes"><span><b>Cotizaciones que se enfriaron</b>2 al mes × $400 de ganancia por trabajo =&nbsp;$800&nbsp;al&nbsp;mes.</span><span class="v">$800</span></li>
-              <li data-o="l-calls" data-name="Llamadas que nadie devolvió" data-task="calls"><span><b>Llamadas que nadie devolvió</b>6 sin contestar − 3 devueltas = 3 por semana × 52 ÷ 12 = 13.0 al mes × 24% convertidas en trabajo = 3.12 trabajos × $150 de ganancia por trabajo =&nbsp;$468&nbsp;al&nbsp;mes.</span><span class="v">$468</span></li>
+              <li data-o="l-quotes" data-name="Cotizaciones que se enfriaron" data-task="quotes"><span><b>Cotizaciones que se enfriaron</b>2&nbsp;al mes ×&nbsp;$400 de ganancia por trabajo =&nbsp;$800&nbsp;al&nbsp;mes.</span><span class="v">$800</span></li>
+              <li data-o="l-calls" data-name="Llamadas que nadie devolvió" data-task="calls"><span><b>Llamadas que nadie devolvió</b>6&nbsp;sin contestar − 3&nbsp;devueltas = 3&nbsp;por semana ×&nbsp;52&nbsp;÷&nbsp;12 = 13.0 al mes ×&nbsp;24% convertidas en trabajo = 3.12 trabajos ×&nbsp;$150 de ganancia por trabajo =&nbsp;$468&nbsp;al&nbsp;mes.</span><span class="v">$468</span></li>
             </ol>
           </div>
           <p class="lk-empty" data-o="empty" hidden>Llene un grupo de casillas para ver su cálculo.</p>
@@ -268,9 +269,10 @@ html:not(.js) .lk-bar{display:none}
           <noscript><p class="lk-note">Con JavaScript desactivado, las casillas no pueden sumar sus números, así que esto es el ejemplo. Cada paso está en Cómo contamos.</p></noscript>
         </div>
         <div class="cta lk-cta">
-          <div class="cta-row"><a class="btn" href="tel:+13522260681">Llámenos</a><a class="u lk-sms" data-o="sms" href="sms:+13522260681?&amp;body=Hola%2C%20us%C3%A9%20la%20calculadora%20de%20p%C3%A9rdidas%20de%20su%20p%C3%A1gina%3A%20unos%20%241%2C540%20al%20mes.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">Mándenos este cálculo por mensaje</a></div>
-          <p class="mb"><span data-shared="moneyback.short"><b>¿No le valió la pena?</b> Escríbanos en los 7 días después de que repasemos su hoja, y le devolvemos lo que pagó por la visita.</span> <a class="u" href="/es/how-it-works/#terms">Condiciones completas</a></p>
+          <div class="cta-row"><a class="btn" href="tel:+13522260681">Llámenos</a><a class="u lk-sms" data-o="sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a></div>
+          <p class="mb"><span data-shared="moneyback.short">Le devolvemos lo que pagó por la visita si nos avisa dentro de los 7&nbsp;días siguientes a repasar su hoja</span>. <a class="u" href="/es/how-it-works/#terms">Condiciones completas</a></p>
         </div>
+        <p class="lk-route">Los restaurantes y los administradores de propiedades pierden dinero en otras cosas. Vea sus hojas de ejemplo: <a class="u" href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a> o <a class="u" href="/es/industries/property-managers/">Administradores de propiedades</a>.</p>
         <p class="sr" aria-live="polite" data-o="live"></p>
       </div>
     </div>
@@ -279,28 +281,28 @@ html:not(.js) .lk-bar{display:none}
 
 <section class="band seam lk-find" id="find" style="--hole:var(--paper)" data-ground="sheet" data-density="mid" data-width="split" data-loud="picture" data-medium="grid">
   <div class="wrap find-g">
-    <h2>Dónde encontrar sus números</h2>
+    <h2>Dónde encontrar sus&nbsp;números</h2>
     <figure class="find-fig">
       <div class="pic">
         <div class="scr-win" role="img" aria-label="Ejemplo: la lista de trabajos de los últimos 3 meses junto a las facturas. Trabajo 4536 de Tom Davis, terminado el 12 de octubre, factura enviada. Trabajo 4534 de David Wilson, terminado el 9 de octubre, sin factura, marcado con un círculo a lápiz. Trabajo 4533 de John Smith, terminado el 9 de octubre, factura enviada. Trabajo 4531 de Mary Johnson, terminado el 8 de octubre, factura pagada.">
-          <div class="win-tb" aria-hidden="true" data-ui-ok="fake-chrome R6: the one window frame for computer tasks; Franco kept the Mac buttons (Oct 6)"><i></i><i></i><i></i><span>Trabajos terminados, últimos 3 meses</span></div>
+          <div class="win-tb" aria-hidden="true" data-ui-ok="fake-chrome R6: the one window frame for computer tasks; Franco kept the Mac buttons (Oct 6)"><i></i><i></i><i></i><span>Trabajos terminados, últimos 3&nbsp;meses</span></div>
           <div class="win-b"><table class="dt">
             <tr><th>Trabajo</th><th>Terminado</th><th>Factura</th></tr>
-            <tr><td>4536<br>Davis, Tom</td><td>12 oct.</td><td>Enviada</td></tr>
-            <tr><td>4534<br>Wilson, David</td><td>9 oct.</td><td><span class="pc">Ninguna</span></td></tr>
-            <tr><td>4533<br>Smith, John</td><td>9 oct.</td><td>Enviada</td></tr>
-            <tr><td>4531<br>Johnson, Mary</td><td>8 oct.</td><td>Pagada</td></tr>
+            <tr><td>4536<br>Davis, Tom</td><td>12&nbsp;oct.</td><td>Enviada</td></tr>
+            <tr><td>4534<br>Wilson, David</td><td>9&nbsp;oct.</td><td><span class="pc">Ninguna</span></td></tr>
+            <tr><td>4533<br>Smith, John</td><td>9&nbsp;oct.</td><td>Enviada</td></tr>
+            <tr><td>4531<br>Johnson, Mary</td><td>8&nbsp;oct.</td><td>Pagada</td></tr>
           </table></div>
         </div>
         <span class="samp" aria-hidden="true">Ejemplo</span>
       </div>
-      <figcaption class="cap">Un trabajo terminado sin factura. Cuente todos los que encuentre así en 3 meses.</figcaption>
+      <figcaption class="cap">Un trabajo terminado sin factura. Cuente todos los que encuentre así en 3&nbsp;meses.</figcaption>
     </figure>
     <ol class="find-rows">
-      <li data-task="invoices"><b>Trabajos sin facturar</b>Su lista de trabajos junto a sus facturas de los últimos 3 meses, en QuickBooks o en la aplicación de trabajos que use.</li>
+      <li data-task="invoices"><b>Trabajos sin facturar</b>Su lista de trabajos junto a sus facturas de los últimos 3&nbsp;meses, en QuickBooks o en la aplicación de trabajos que use.</li>
       <li data-task="quotes"><b>Cotizaciones que se enfriaron</b>Su lista de cotizaciones, ordenada por estado.</li>
       <li data-task="retyping"><b>Anotar el mismo trabajo dos&nbsp;veces</b>Un cronómetro, en un día cualquiera.</li>
-      <li data-task="calls"><b>Llamadas que nadie devolvió</b>El historial de llamadas de su teléfono, en la pestaña Perdidas, o la cuenta en internet de la línea del negocio. <a class="u" href="/es/articles/call-history-from-your-phone-company/">Cómo descargar 30 días de historial de llamadas</a></li>
+      <li data-task="calls"><b>Llamadas que nadie devolvió</b>El historial de llamadas de su teléfono, en la pestaña Perdidas, o la cuenta en internet de la línea del negocio. <a class="u" href="/es/articles/call-history-from-your-phone-company/">Cómo descargar 30&nbsp;días de historial de llamadas</a></li>
     </ol>
   </div>
 </section>
@@ -310,27 +312,27 @@ html:not(.js) .lk-bar{display:none}
     <div class="how-main">
       <h2>Cómo contamos</h2>
       <ol class="how-steps">
-        <li data-task="retyping"><b>Anotar el mismo trabajo dos&nbsp;veces.</b> Minutos al día × días hábiles ÷ 60 × el costo por hora. Si no pone un costo por hora, queda en horas y no entra en el total.</li>
-        <li data-task="invoices"><b>Trabajos sin facturar.</b> Los trabajos de 3 meses ÷ 3 × su factura promedio. Se cuenta la factura completa, porque los materiales y las horas ya se gastaron.</li>
-        <li data-task="quotes"><b>Cotizaciones que se enfriaron.</b> Cotizaciones al mes × lo que le queda en un trabajo cotizado.</li>
-        <li data-task="calls"><b>Llamadas que nadie devolvió.</b> (Números nuevos que nadie contestó − los que usted devolvió) × 52 semanas ÷ 12 meses × el porcentaje que se habría convertido en trabajo × lo que le queda en un trabajo.</li>
+        <li data-task="retyping"><b>Anotar el mismo trabajo dos&nbsp;veces.</b> Minutos al día ×&nbsp;días hábiles ÷&nbsp;60&nbsp;×&nbsp;el costo por hora. Si no pone un costo por hora, queda en horas y no entra en el total.</li>
+        <li data-task="invoices"><b>Trabajos sin facturar.</b> Los trabajos de 3&nbsp;meses ÷&nbsp;3&nbsp;×&nbsp;su factura promedio. Se cuenta la factura completa, porque los materiales y las horas ya se gastaron.</li>
+        <li data-task="quotes"><b>Cotizaciones que se enfriaron.</b> Cotizaciones al mes ×&nbsp;la ganancia de un trabajo cotizado.</li>
+        <li data-task="calls"><b>Llamadas que nadie devolvió.</b> (Números nuevos que nadie contestó − los que usted devolvió) ×&nbsp;52&nbsp;semanas ÷&nbsp;12&nbsp;meses ×&nbsp;el porcentaje que se habría convertido en trabajo ×&nbsp;la ganancia de un trabajo. <a class="u" href="/es/articles/missed-call-cost/">Nuestro artículo</a> explica cómo contarlo con un mes de historial de llamadas.</li>
       </ol>
       <p class="how-sum">El total suma las líneas que llenó y se redondea a la decena de dólares más cercana.</p>
     </div>
     <div class="how-auto" id="automate">
-        <h3>Lo que esto no cuenta</h3>
+        <h3>Lo&nbsp;que&nbsp;esto no&nbsp;cuenta</h3>
         <ul class="auto-list">
-          <li data-task="bills">Facturas de proveedores que no cuadran con la cotización.</li>
+          <li data-task="bills">Facturas de proveedores que no cuadran con lo que pidió.</li>
           <li data-task="bills">Material sacado del proveedor sin número de trabajo.</li>
           <li data-task="email">Leer los correos y guardar los adjuntos a mano.</li>
           <li data-task="reminders">Mandarles recordatorios a su equipo y a sus clientes, uno por uno.</li>
           <li data-task="calendar">Mantener al día todos los calendarios a mano.</li>
           <li data-task="numbers">Sumar los números de fin de mes.</li>
         </ul>
-        <p class="auto-close">En la visita revisamos todo eso.</p>
+        <p class="auto-close">En la visita revisamos todo eso. <a class="u" href="/es/what-we-automate/">Vea la lista completa</a></p>
     </div>
     <div class="why">
-            <div class="src"><h3>De dónde salen los números de ejemplo</h3><ul><li>El 24% es lo que convirtieron en trabajo los negocios con menos de 5 técnicos, en un estudio de más de 3,000 empresas contratistas de EE.&nbsp;UU. y Canadá. El promedio de todas fue el 42% (blog de ServiceTitan, 2022, datos de proveedor).</li><li>Los $150 de ganancia por trabajo: $341, la visita promedio de un plomero en el país según HomeAdvisor (2026), × 44.3%, el margen bruto mediano por trabajo según Level (datos de proveedor), redondeado.</li><li>Los demás ejemplos son números redondos, no datos.</li></ul></div>
+            <div class="src"><h3>De&nbsp;dónde salen los&nbsp;números de&nbsp;ejemplo</h3><ul><li>El 24% es lo que convirtieron en trabajo los negocios con menos de 5&nbsp;técnicos, en un estudio de más de 3,000 empresas contratistas de EE.&nbsp;UU. y Canadá. El promedio de todas fue el 42% (blog de ServiceTitan, 2022, datos de proveedor).</li><li>Los $150 de ganancia por trabajo: $341, la visita promedio de un plomero en el país según HomeAdvisor (2026), ×&nbsp;44.3%, el margen bruto mediano por trabajo según Level (datos de proveedor), redondeado.</li><li>Los demás ejemplos son números redondos, no datos.</li></ul></div>
     </div>
   </div>
 </section>
@@ -338,7 +340,7 @@ html:not(.js) .lk-bar{display:none}
 <section class="band seam hm4-close lk-close" id="contact" style="--hole:var(--paper)" data-ground="bone" data-density="mid" data-width="split" data-loud="close" data-medium="close">
   <div class="wrap close-g">
     <div class="c4-main">
-      <h2 class="t-close close-h">¿Quiere los números reales?</h2>
+      <h2 class="t-close close-h">¿Quiere los&nbsp;números reales?</h2>
       <div class="close-act">
         <div class="arrow-to">
           <a class="btn btn-lg" href="tel:+13522260681">Llámenos</a>
@@ -346,11 +348,11 @@ html:not(.js) .lk-bar{display:none}
         </div>
         <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a></p>
       </div>
-      <p class="lk-close-p"><span data-shared="step1.what">Una llamada sin costo, de hasta 20 minutos.</span> Tenga a mano su cálculo y le decimos si la visita le conviene a su negocio y cuánto le costaría. Los arreglos los hacemos dentro de las herramientas que ya usa.</p>
+      <p class="lk-close-p"><span data-shared="step1.what">Una llamada sin costo, por teléfono.</span> Tenga a mano su cálculo y le decimos si la visita se pagaría sola y cuánto le costaría. Los arreglos los hacemos dentro de las herramientas que ya usa.</p>
     </div>
     <dl class="c4-hours lk-rows">
-      <div><dt>La visita</dt><dd><p class="price"><span data-shared="price"><b>La visita cuesta a partir de $500.</b> Si su negocio es más grande, le damos el precio en la llamada sin costo. Se descuenta de un arreglo de $1,500 o más que empiece dentro de los 30 días siguientes.</span></p></dd></div>
-      <div><dt>Devolución del dinero</dt><dd><p class="mb"><span data-shared="moneyback"><b>¿No le valió la pena?</b> Mándenos un mensaje de texto o un correo en los 7 días después de la llamada en que repasamos su hoja con usted, y le devolvemos <b class="won">lo que pagó por la visita</b>.</span> La hoja es suya. <a class="u" href="/es/how-it-works/#terms">Condiciones completas</a></p></dd></div>
+      <div><dt>La visita</dt><dd><p class="price"><span data-shared="price"><b>La visita cuesta a partir de $500.</b> Si su negocio es más grande, le damos el precio en la llamada sin costo. Se descuenta de un arreglo de $1,500 o más que empiece dentro de los 30&nbsp;días siguientes.</span></p></dd></div>
+      <div><dt>Devolución del dinero</dt><dd><p class="mb"><span data-shared="moneyback"><b>¿No le valió la pena?</b> Mándenos un mensaje de texto o un correo dentro de los 7&nbsp;días siguientes a la llamada en que repasamos su hoja con usted, y le devolvemos <b class="won">lo que pagó por la visita</b>.</span> La hoja es suya. <a class="u" href="/es/how-it-works/#terms">Condiciones completas</a></p></dd></div>
       <div><dt>Horario</dt><dd><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></dd></div>
       <div><dt>Tiempo de respuesta</dt><dd><span data-shared="reply">Le contestamos o le devolvemos la llamada el mismo día hábil. Si llama después de las 5&nbsp;p.&nbsp;m. o en fin de semana, le respondemos a más tardar a las 10&nbsp;a.&nbsp;m. del próximo día hábil.</span></dd></div>
       <div><dt>Idioma</dt><dd>Español o inglés</dd></div>
@@ -373,7 +375,7 @@ html:not(.js) .lk-bar{display:none}
 </section>
 </main>
 
-<footer class="foot" data-ground="night">
+<footer class="foot" data-part="foot" data-ground="night">
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-lead">
@@ -381,12 +383,12 @@ html:not(.js) .lk-bar{display:none}
         <p class="foot-line">Su negocio debería funcionar igual, esté usted o no.</p>
         <a class="btn" href="tel:+13522260681" data-extra="computer: the call bar carries the number on a phone">Llámenos</a>
       </div>
-      <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="/es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="/es/how-it-works/#walk">La visita</a></li><li><a href="/es/how-it-works/#fix">Un arreglo</a></li><li><a href="/es/how-it-works/#check">La revisión mensual</a></li><li><a href="/es/how-it-works/#faq">Preguntas de los dueños</a></li><li><a href="/es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
+      <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="/es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="/es/how-it-works/#walk">La visita</a></li><li><a href="/es/how-it-works/#fix">Un arreglo</a></li><li><a href="/es/how-it-works/#check">La revisión mensual</a></li><li><a href="/es/how-it-works/#faq">Preguntas de los dueños</a></li><li><a href="/es/what-we-automate/">Lo que automatizamos</a></li><li><a href="/es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
       <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">A quién atendemos</h2><ul><li><a href="/es/industries/plumbing/">Plomería</a></li><li><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li><li><a href="/es/industries/electrical/">Electricidad</a></li><li><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></li><li><a href="/es/industries/pest-control/">Control de plagas</a></li><li><a href="/es/industries/roofing/">Techos</a></li><li><a href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a></li><li><a href="/es/industries/property-managers/">Administradores de propiedades</a></li><li><a href="/es/industries/">Todos los tipos de negocio</a></li></ul></nav>
-      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li data-extra="computer: the call bar carries the number on a phone">Llame o escriba al <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></li><li>Gainesville; atendemos el condado de Alachua</li><li>En inglés o en español</li></ul></div>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li>Llame o escriba al <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></li><li>Desde Gainesville atendemos el condado de Alachua</li><li>En español o en inglés</li></ul></div>
     </div>
     <div class="foot-base">
-      <p class="legal">Lumora Group LLC, empresa de Florida. Los negocios, nombres y números marcados como Ejemplo son ficticios.</p>
+      <p class="legal">&copy; 2026 Lumora Group LLC, empresa de Florida. Los negocios, nombres y números marcados como Ejemplo son ficticios.</p>
       <ul><li><a href="/es/about/">Quiénes somos</a></li><li><a href="/es/articles/">Artículos</a></li><li><a href="/es/contact/">Contacto</a></li><li><a href="/es/privacy/">Privacidad</a></li></ul>
     </div>
   </div>
@@ -407,7 +409,7 @@ html:not(.js) .lk-bar{display:none}
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var F = ['minutes', 'days', 'rate', 'unbilled', 'avg', 'quotes', 'qprofit', 'rang', 'back', 'book', 'profit'];
   var NAMES = { minutes: 'los minutos al día', days: 'los días hábiles', rate: 'el costo por hora', unbilled: 'los trabajos sin factura', avg: 'la factura promedio',
-    quotes: 'las cotizaciones', qprofit: 'lo que le queda en un trabajo cotizado', rang: 'las llamadas sin contestar', back: 'las llamadas devueltas', book: 'el porcentaje', profit: 'lo que le queda en un trabajo' };
+    quotes: 'las cotizaciones', qprofit: 'la ganancia de un trabajo cotizado', rang: 'las llamadas sin contestar', back: 'las llamadas devueltas', book: 'el porcentaje', profit: 'la ganancia de un trabajo' };
   var LEFT = 'No se incluye: llene sus casillas para sumarlo.';
   var inp = function (n) { return form.elements[n]; };
   var o = function (k) { return $('[data-o="' + k + '"]'); };
@@ -418,6 +420,11 @@ html:not(.js) .lk-bar{display:none}
   var one = function (n) { return (Math.round(n * 10) / 10).toFixed(1); };
   var plain = function (n) { return String(+n.toFixed(2)); };
   var SMS = 'sms:+13522260681?&body=';
+  // agency pass 2026-10-18 (rank 3): every text link on the page (the estimate's, the close's and the call bar's Text) carries the
+  // owner's own estimate once he has changed a box; before that, and while a box is wrong or empty, the usual message. The
+  // examples alone are not his numbers, so a text never claims an estimate he didn't make
+  var smsAll = function (body) { $$('a[href^="sms:"]').forEach(function (a) { a.href = SMS + encodeURIComponent(body); }); };
+  var HELLO = 'Hola, vi su página web. ¿Cuándo podemos hablar por teléfono?';
   var EX = {}, shown = null, firstRun = true, liveT = 0, deb = 0;
   F.forEach(function (n) { EX[n] = inp(n).value; });   // the examples are the markup's own values, so the two can't drift
 
@@ -448,6 +455,8 @@ html:not(.js) .lk-bar{display:none}
   }
   function line(key, text, value) {
     var li = o(key);
+    // round 4 (2026-10-18): a count keeps its word and an operator its number, as system.js keepCounts() writes them ("3 a week")
+    text = text.replace(/(^|[\s(])(\d{1,4}) (?=[A-Za-z\u00c0-\u00ff])/g, '$1$2\u00a0').replace(/([\u00d7\u00f7]) /g, '$1\u00a0');
     li.innerHTML = '<span' + (value ? '' : ' class="off"') + '><b>' + li.getAttribute('data-name') + '</b>' + text + '</span>' + (value ? '<span class="v">' + value + '</span>' : '');
   }
   function roll(el, from, to) {   // job: cause and effect. The figure moves only because the owner changed a box.
@@ -480,14 +489,15 @@ html:not(.js) .lk-bar{display:none}
     o('result').hidden = !ok; o('empty').hidden = ok;
     bar.closest('.lk-bar').classList.toggle('bad', !!err);
     o('barl').textContent = err ? 'Revise:' : o('stamp').hidden ? 'Su cálculo' : 'Ejemplo';
-    o('sms').textContent = ok ? 'Mándenos este cálculo por mensaje' : 'O mándenos un mensaje';
+    var mine = ok && o('stamp').hidden;   // his own numbers, not the examples
+    o('sms').textContent = mine ? 'Mándenos este cálculo por mensaje' : 'O mándenos un mensaje';
     if (!ok) {
       var only = !err && hours !== null;   // typing hours with no hourly cost, and nothing else yet: say the hours, not an error
       var msg = only ? 'Anotar el mismo trabajo dos veces le toma ' + one(hours) + ' horas al mes. Ponga un costo por hora, u otro grupo de casillas, para verlo en dólares.'
         : 'Llene un grupo de casillas para ver su cálculo.';
       o('empty').textContent = err ? 'Corrija la casilla marcada para ver su cálculo.' : msg;
       bar.textContent = err ? err[2] : only ? one(hours) + ' horas al mes' : 'Llene un grupo de casillas';
-      o('sms').href = SMS + encodeURIComponent('Hola, vi su página web. ¿Cuándo podemos hablar por teléfono?');
+      smsAll(HELLO);
       return err ? err[1] : msg;
     }
     if (retype !== null) line('l-retype', plain(v.minutes) + ' minutos al día × ' + plain(v.days) + ' días ÷ 60 = ' + one(hours) + ' horas × ' + cash(v.rate) + ' la hora = ' + usd(retype) + ' al mes.', usd(retype));
@@ -501,10 +511,11 @@ html:not(.js) .lk-bar{display:none}
     else line('l-calls', LEFT);
     var total = parts.reduce(function (a, b) { return a + b; }, 0), r10 = Math.round(total / 10) * 10, moved = !firstRun && r10 !== shown;
     roll(o('total'), firstRun ? null : shown, r10); shown = r10; firstRun = false;
-    bar.textContent = 'Unos ' + usd(r10) + ' al mes';
+    // the owner judge, 2026-10-18: "Unos $1,540 al mes" in a dark band read like a monthly price; the bar names the loss, as the sheet does
+    bar.textContent = 'Pierde unos ' + usd(r10) + ' al mes';
     if (moved && !still) { bar.classList.remove('bump'); void bar.offsetWidth; bar.classList.add('bump'); }
-    o('sms').href = SMS + encodeURIComponent('Hola, usé la calculadora de pérdidas de su página: unos ' + usd(r10) + ' al mes. ¿Cuándo podemos hablar por teléfono?');
-    return 'Su cálculo: unos ' + usd(r10) + ' al mes.';
+    smsAll(mine ? 'Hola, usé la calculadora de pérdidas de su página: unos ' + usd(r10) + ' al mes. ¿Cuándo podemos hablar por teléfono?' : HELLO);
+    return 'Su cálculo: pierde unos ' + usd(r10) + ' al mes.';
   }
 
   function announce(msg) {   // one polite announcement once he stops typing, not one per keystroke

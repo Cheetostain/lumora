@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="format-detection" content="telephone=no">   
-<title>A quién atendemos | Lumora, Gainesville FL</title>
-<meta name="description" content="Los negocios con los que trabajamos en Gainesville y el condado de Alachua, y por dónde se le va el dinero a cada uno: plomería, aire acondicionado y calefacción, electricidad, daños por agua, control de plagas, techos, restaurantes y administración de propiedades. Llamada sin costo de hasta 20 minutos.">
+<title>Automatización por tipo de negocio en Gainesville | Lumora</title>
+<meta name="description" content="Por dónde se le va el dinero a cada tipo de negocio en Gainesville, de la plomería a los restaurantes. La primera llamada no tiene costo.">
 <link rel="canonical" href="https://lumorafl.com/es/industries/">
 <link rel="alternate" hreflang="en" href="https://lumorafl.com/industries/">
 <link rel="alternate" hreflang="es" href="https://lumorafl.com/es/industries/">
 <link rel="alternate" hreflang="x-default" href="https://lumorafl.com/industries/">
-<meta property="og:title" content="A quién atendemos | Lumora">
-<meta property="og:description" content="Plomería, aire acondicionado y calefacción, electricidad, daños por agua y moho, control de plagas, techos, restaurantes y bares, y administradores de propiedades en Gainesville y el condado de Alachua.">
+<meta property="og:title" content="Automatización por tipo de negocio en Gainesville | Lumora">
+<meta property="og:description" content="Por dónde se le va el dinero a cada tipo de negocio en Gainesville, de la plomería a los restaurantes. La primera llamada no tiene costo.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lumorafl.com/es/industries/">
 <meta property="og:image" content="https://lumorafl.com/assets/share-card-es.png">
@@ -27,8 +27,8 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=80039fe8">
-<link rel="stylesheet" href="/v4/trade-page.css?v=80039fe8">
+<link rel="stylesheet" href="/v4/system.css?v=85f32fc0">
+<link rel="stylesheet" href="/v4/trade-page.css?v=85f32fc0">
 <style>
 /* ===== the trade index, as industries.html has it (rule for rule), then the Spanish additions at the end */
 .ix-hero .hero-g{grid-template-areas:"copy" "act" "tool" "terms"}
@@ -40,20 +40,13 @@
 .ix-n a{color:var(--ink);text-decoration:none}
 .ix-n a::after{content:"";position:absolute;inset:0}
 .ix-n::after{content:"→";content:"→" / "";display:inline-block;margin-left:8px;font-weight:500;color:var(--pencil)}   /* decoration: no alt text */
-.ix-n a:focus-visible{outline:none}
-.ix-n a:focus-visible::after{outline:3px solid var(--ink);outline-offset:2px;border-radius:2px}
 .ix-b{display:grid;gap:4px}
 .ix-one{font-size:17px;line-height:1.4;color:var(--ink)}
 .ix-leak{font-size:15px;line-height:1.4;color:var(--muted)}
 .ix-leak b{font-weight:600;color:var(--red);white-space:nowrap}   /* 2026-10-17: a loss, red, after its loss word (system.js index binder) */
 .ix-also{margin-top:16px;font-size:17px;max-width:34em}
 .ix-note{margin-top:10px;font-size:15px;color:var(--muted);max-width:40em}
-.ix-note a{padding-block:12px;margin-block:-12px}   /* a 44px tall tap area without moving the layout */
-@media (hover:hover) and (pointer:fine){
-  .ix-list li:hover .ix-n a{text-decoration:underline;text-decoration-color:var(--pen);text-decoration-thickness:2px;text-underline-offset:5px}
-  .ix-list li:hover .ix-n::after{transform:translateX(3px)}
-}
-@media (prefers-reduced-motion:no-preference){.ix-n::after{transition:transform var(--t-hover) var(--ease-out)}}
+/* the list's states and the note link's tap area live in trade-page.css (2026-10-19) */
 @media (min-width:900px){
   .ix-hero .hero-g{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);grid-template-areas:"copy tool" "act tool" "terms tool";grid-template-rows:auto auto 1fr}
   .ix-h{font-size:24px}
@@ -65,21 +58,23 @@
   .ix-n::before{content:"";order:2;flex:1 0 24px;margin-left:12px;border-bottom:2px dotted rgba(17,17,16,.35);transform:translateY(-4px)}
 }
 @media (min-width:900px){.ix-hero .hero-tool.ix{background:var(--paper);box-shadow:0 0 0 12px var(--paper)}}
+@media (min-width:900px){.ix-hero .hero-terms{align-self:stretch;position:relative}
+  .ix-hero[data-ground=ruled] .hero-terms::before{content:"";position:absolute;z-index:-1;top:-600px;bottom:-600px;left:-50vw;right:-28px;background:var(--paper);pointer-events:none}}   /* agency pass 2026-10-18 (4b.6): no stray rules under the left column */
 /* ES. The close heading at the Spanish Home's size (plumbing.es.html): "Hablemos de su negocio." stays on one line from 700 to 1440 */
 .close-h{margin:0 0 24px;font-size:clamp(40px,4.4vw,44px)}
 @media (max-width:359px){.cta-row,.c4-tel{row-gap:18px}}
 </style>
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=80039fe8" defer></script>
-<script src="/v4/system.js?v=80039fe8" defer></script>
+<script src="/v4/trades.js?v=85f32fc0" defer></script>
+<script src="/v4/system.js?v=85f32fc0" defer></script>
 </head>
 <body data-rules="v4">
 <a class="skip" href="#main">Saltar al contenido</a>
 
 <div class="util">
   <div class="wrap util-in">
-    <span>Gainesville; atendemos el condado de Alachua.</span>
-    <span class="util-r"><a href="/industries/" lang="en" hreflang="en" class="lang">English</a></span>
+    <span>Desde Gainesville atendemos el condado de Alachua.</span>
+    <span class="util-r"><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span><a href="/industries/" lang="en" hreflang="en" class="lang">English</a></span>
   </div>
 </div>
 <header class="hdr">
@@ -108,9 +103,9 @@
 <section class="hero hm4-hero ix-hero" id="top" data-bar-seat data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="index">
   <div class="wrap hero-g">
     <div class="hero-copy">
-      <p class="eyebrow">Contratistas, restaurantes y administradoras de propiedades de Gainesville y el condado de Alachua.</p>
-      <h1>A quién atendemos</h1>
-      <p class="t-lede">Entre la primera llamada y la factura cobrada, ningún negocio tiene tantos pasos como el de un contratista. A los restaurantes y a las administradoras de propiedades se les va el dinero en el mismo tipo de papeleo, desde las facturas de los proveedores hasta los reclamos de depósito.</p>
+      <p class="eyebrow">Contratistas, restaurantes y administradores de propiedades de Gainesville y el condado de Alachua.</p>
+      <h1>A&nbsp;quién atendemos</h1>
+      <p class="t-lede">Encontramos el papeleo que le hace perder dinero a cada uno de estos negocios, desde el recibo del proveedor hasta el reclamo del depósito, y lo arreglamos con las herramientas que ya usa.</p>
     </div>
     <div class="hero-act">
       <div class="cta">
@@ -122,33 +117,33 @@
       </div>
     </div>
     <div class="hero-tool ix">
-      <h2 class="ix-h" id="ix-h" data-first="the trade list's heading">Elija su tipo de negocio</h2>
+      <h2 class="ix-h" id="ix-h" data-first="the trade list's heading">Elija su&nbsp;tipo de&nbsp;negocio</h2>
       <nav aria-labelledby="ix-h">
-        <ul class="ix-list" data-trades data-bind="index"><li data-t="plumbing" data-task="quotes"><h3 class="ix-n" data-first="the first trade"><a href="/es/industries/plumbing/">Plomería</a></h3><div class="ix-b"><p class="ix-one" data-f="one">La pieza del recibo del proveedor que nunca pasó a la factura.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de un negocio con 2&nbsp;camionetas: cotizaciones que tardan más de 48 horas en salir, una pérdida de <b class="loss">$1,900 al mes</b>.</p></div></li><li data-t="ac" data-task="reminders"><h3 class="ix-n"><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Mantenimientos que los clientes con plan ya pagaron y nadie agendó.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de un negocio con 3&nbsp;camionetas: planes de mantenimiento que vencieron sin que nadie llamara, una pérdida de <b class="loss">$331 al mes</b>.</p></div></li><li data-t="electrical" data-task="retyping"><h3 class="ix-n"><a href="/es/industries/electrical/">Electricidad</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Cotizaciones que siguen con el precio del cobre de enero.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de un negocio con 3&nbsp;camionetas: material sacado del proveedor sin número de trabajo, que nunca se cobró al cliente, una pérdida de <b class="loss">$574 al mes</b>.</p></div></li><li data-t="water" data-task="invoices"><h3 class="ix-n"><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Cuatro días de deshumidificador en el registro, tres en la factura.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de un negocio con 2&nbsp;cuadrillas: días de secado que nadie cobró, una pérdida de <b class="loss">$1,026 al mes</b>.</p></div></li><li data-t="pest" data-task="reminders"><h3 class="ix-n"><a href="/es/industries/pest-control/">Control de plagas</a></h3><div class="ix-b"><p class="ix-one" data-f="one">La renovación contra termitas que venció sin que nadie llamara.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de un negocio con 3&nbsp;rutas: renovaciones del servicio contra termitas que vencieron sin que nadie llamara, una pérdida de <b class="loss">$675 al mes</b>.</p></div></li><li data-t="roofing" data-task="reminders"><h3 class="ix-n"><a href="/es/industries/roofing/">Techos</a></h3><div class="ix-b"><p class="ix-one" data-f="one">La madera podrida que se cambió al quitar el techo viejo y nunca se cobró.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de un negocio con 2&nbsp;cuadrillas: cheques de depreciación que nadie pidió, una pérdida de <b class="loss">$771 al mes</b>.</p></div></li><li data-t="food" data-task="reminders"><h3 class="ix-n"><a href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a></h3><div class="ix-b"><p class="ix-one" data-f="one">La caja que aparece en la factura y nunca bajó del camión.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de un restaurante y bar con capacidad para 110&nbsp;personas: un martes flojo con tanto personal como una noche llena, una pérdida de <b class="loss">$1,153 al mes</b>.</p></div></li><li data-t="rentals" data-task="reminders"><h3 class="ix-n"><a href="/es/industries/property-managers/">Administradores de propiedades</a></h3><div class="ix-b"><p class="ix-one" data-f="one">El aviso de reclamo del depósito que salió el día&nbsp;31.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de una administradora de propiedades con 212&nbsp;unidades: reclamos de depósito enviados después del día&nbsp;30, una pérdida de <b class="loss">$2,700 al año</b>.</p></div></li></ul>
+        <ul class="ix-list" data-trades data-bind="index"><li data-t="plumbing" data-task="quotes"><h3 class="ix-n" data-first="the first trade"><a href="/es/industries/plumbing/">Plomería</a></h3><div class="ix-b"><p class="ix-one" data-f="one">La pieza del recibo del proveedor que nunca pasó a la factura.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de un negocio con 2&nbsp;camionetas: cotizaciones que tardan más de 48&nbsp;horas en salir, una pérdida de <b class="loss">$1,900 al mes</b>.</p></div></li><li data-t="ac" data-task="quotes"><h3 class="ix-n"><a href="/es/industries/ac-and-heating/">Aire acondicionado y&nbsp;calefacción</a></h3><div class="ix-b"><p class="ix-one" data-f="one">La cotización que salió nueve días tarde.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de un negocio con 3&nbsp;camionetas: cambios de equipo cotizados tarde, una pérdida de <b class="loss">$1,100 al mes</b>.</p></div></li><li data-t="electrical" data-task="retyping"><h3 class="ix-n"><a href="/es/industries/electrical/">Electricidad</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Cotizaciones que siguen con el precio del cobre de enero.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de un negocio con 3&nbsp;camionetas: material sacado del proveedor sin número de trabajo, que nunca se cobró al cliente, una pérdida de <b class="loss">$574 al mes</b>.</p></div></li><li data-t="water" data-task="invoices"><h3 class="ix-n"><a href="/es/industries/water-damage-and-mold/">Daños por&nbsp;agua y&nbsp;moho</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Seis días de deshumidificador en el registro, cinco en la factura.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de un negocio con 2&nbsp;cuadrillas: días de secado sin facturar, una pérdida de <b class="loss">$1,026 al mes</b>.</p></div></li><li data-t="pest" data-task="reminders"><h3 class="ix-n"><a href="/es/industries/pest-control/">Control de&nbsp;plagas</a></h3><div class="ix-b"><p class="ix-one" data-f="one">La renovación contra termitas que venció sin una llamada.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de un negocio con 3&nbsp;rutas: renovaciones contra termitas vencidas, todavía sin llamada, una pérdida de <b class="loss">$675 al mes</b>.</p></div></li><li data-t="roofing" data-task="reminders"><h3 class="ix-n"><a href="/es/industries/roofing/">Techos</a></h3><div class="ix-b"><p class="ix-one" data-f="one">La madera podrida que se cambió al quitar el techo viejo y nunca se cobró.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de un negocio con 2&nbsp;cuadrillas: depreciación todavía retenida, una pérdida de <b class="loss">$771 al mes</b>.</p></div></li><li data-t="food" data-task="reminders"><h3 class="ix-n"><a href="/es/industries/restaurants-and-bars/">Restaurantes y&nbsp;bares</a></h3><div class="ix-b"><p class="ix-one" data-f="one">La caja que aparece en la factura y nunca bajó del camión.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de un restaurante y bar con capacidad para 110&nbsp;personas: un martes flojo con tanto personal como una noche llena, una pérdida de <b class="loss">$1,153 al mes</b>.</p></div></li><li data-t="rentals" data-task="reminders"><h3 class="ix-n"><a href="/es/industries/property-managers/">Administradores de&nbsp;propiedades</a></h3><div class="ix-b"><p class="ix-one" data-f="one">El aviso de reclamo del depósito que salió el día&nbsp;31.</p><p class="ix-leak" data-f="leak">De la hoja de ejemplo de una administradora de propiedades con 212&nbsp;unidades: reclamos de depósito enviados después del día&nbsp;30, una pérdida de <b class="loss">$2,700 al año</b>.</p></div></li></ul>
       </nav>
-      <p class="ix-also">También visitamos negocios de limpieza, mantenimiento de piscinas, lavado a presión y talleres mecánicos. La visita funciona igual.</p>
-      <p class="ix-note">Los negocios y las cifras de esta lista son de ejemplo. En la página de cada tipo de negocio está la hoja de ejemplo completa, con la cuenta de cada línea (<a class="u" href="/es/how-it-works/#sample">de dónde salen las cifras de ejemplo</a>). La hoja de su negocio sale de sus facturas, su calendario y su historial de llamadas.</p>
+      <p class="ix-also">También visitamos oficinas, negocios de limpieza y de mantenimiento de piscinas, y talleres mecánicos. La visita funciona igual.</p>
+      <p class="ix-note">Los negocios y las cifras de esta lista son de ejemplo. En la página de cada tipo de negocio está la hoja de ejemplo completa, con la cuenta de cada línea (<a class="u" href="/es/how-it-works/#sample">de dónde salen las cifras de ejemplo</a>). La hoja de su negocio sale de sus facturas, su calendario y su historial de llamadas, porque el calor, las tormentas y las semanas en que llegan los estudiantes de UF cambian cuánto trabajo entra cada mes.</p>
     </div>
     <div class="hero-terms">
       <p class="reply"><span data-shared="reply">Le contestamos o le devolvemos la llamada el mismo día hábil. Si llama después de las 5&nbsp;p.&nbsp;m. o en fin de semana, le respondemos a más tardar a las 10&nbsp;a.&nbsp;m. del próximo día hábil.</span> En español o en inglés.</p>
-      <p class="price"><span data-shared="price"><b>La visita cuesta a partir de $500.</b> Si su negocio es más grande, le damos el precio en la llamada sin costo. Se descuenta de un arreglo de $1,500 o más que empiece dentro de los 30 días siguientes.</span></p>
-      <p class="mb"><span data-shared="moneyback"><b>¿No le valió la pena?</b> Mándenos un mensaje de texto o un correo en los 7 días después de la llamada en que repasamos su hoja con usted, y le devolvemos <b class="won">lo que pagó por la visita</b>.</span> <a class="u" href="/es/how-it-works/#terms">Condiciones completas</a></p>
+      <p class="price"><span data-shared="price"><b>La visita cuesta a partir de $500.</b> Si su negocio es más grande, le damos el precio en la llamada sin costo. Se descuenta de un arreglo de $1,500 o más que empiece dentro de los 30&nbsp;días siguientes.</span></p>
+      <p class="mb"><span data-shared="moneyback"><b>¿No le valió la pena?</b> Mándenos un mensaje de texto o un correo dentro de los 7&nbsp;días siguientes a la llamada en que repasamos su hoja con usted, y le devolvemos <b class="won">lo que pagó por la visita</b>.</span> <a class="u" href="/es/how-it-works/#terms">Condiciones completas</a></p>
     </div>
   </div>
   <div class="facts4">
-    <ul class="wrap" aria-label="Datos que puede comprobar">
+    <ul data-part="facts" class="wrap" aria-label="Datos que puede comprobar">
       <li>Empresa de Florida, aquí en Gainesville</li>
       <li>En español o en inglés</li>
-      <li>Devolución del dinero hasta 7 días después de repasar su hoja con usted</li>
-      <li>No vendemos clientes potenciales ni lo amarramos a un contrato largo</li>
+      <li data-shared="moneyback.short">Le devolvemos lo que pagó por la visita si nos avisa dentro de los 7&nbsp;días siguientes a repasar su hoja</li>
+      <li>No le vendemos clientes ni lo amarramos a un contrato largo</li>
     </ul>
   </div>
 </section>
 
 <section class="band hm4-auto pl-auto" id="automate" data-ground="sheet" data-density="mid" data-width="split" data-loud="list" data-medium="list">
   <div class="wrap pl-auto-g">
-    <h2>Lo que automatizamos en cualquier negocio</h2>
-    <p class="auto-tools"><span data-shared="tools">Todo queda en lo que ya usa: Excel, QuickBooks, la aplicación donde lleva sus trabajos o un formulario sencillo que le armamos.</span></p>
+    <h2>Lo&nbsp;que&nbsp;automatizamos en&nbsp;cualquier negocio</h2>
+    <p class="auto-tools"><span data-shared="tools">Todo queda en lo que ya usa: Excel, QuickBooks, la aplicación donde lleva su agenda o un formulario sencillo que le armamos.</span></p>
     <div class="pl-auto-r">
       <ul class="auto-list">
         <li data-task="email">Una primera respuesta ya escrita en el idioma del cliente, español o inglés, lista para que usted la mande.</li>
@@ -158,7 +153,7 @@
         <li data-task="reminders">Todo el año en un solo calendario, con recordatorios: renovación de licencias y seguros, fechas de impuestos, certificados e inspecciones.</li>
         <li data-task="email">Accesos dados de baja cuando alguien se va, y correos que piden cambiar los datos del banco marcados antes de que nadie pague.</li>
       </ul>
-      <p class="auto-close">La página de cada tipo de negocio suma el trabajo que solo ese negocio tiene, como el permiso del calentador o el plazo para reclamar el depósito. En la visita vemos cuáles tiene su negocio. <a class="u" href="/what-we-automate/" hreflang="en">Vea la lista completa (en inglés)</a></p>
+      <p class="auto-close">La página de cada tipo de negocio suma el trabajo que solo ese negocio tiene, como el permiso del calentador o el plazo para reclamar el depósito. En la visita vemos cuáles tiene su negocio. <a class="u" href="/es/what-we-automate/">Vea la lista completa</a></p>
       <div class="pl-who">
         <p class="pl-who-line"><span data-shared="who.for">Para negocios que lleva el propio dueño, con una oficina pequeña o sin oficina.</span></p>
         <p class="who-not"><span class="t-label">Lo que no cambia</span> <span data-shared="notfor">Siga con Jobber, Square, su agenda de citas o el programa que ya usa todos los días. Nosotros nos encargamos de todo lo demás.</span></p>
@@ -170,7 +165,8 @@
 <section class="band hm4-close" id="contact" data-ground="paper" data-density="mid" data-width="split" data-loud="close" data-medium="close">
   <div class="wrap close-g">
     <div class="c4-main">
-      <h2 class="t-close close-h">Hablemos de su negocio.</h2>
+      <h2 class="t-close close-h">Hablemos de&nbsp;su&nbsp;negocio.</h2>
+      <p class="close-lede"><span>Cuéntenos en qué se le va la semana.</span> <span>Si la visita no se va a pagar sola, se lo decimos en la llamada.</span></p>
       <div class="close-act">
         <div class="arrow-to">
           <a class="btn btn-lg" href="tel:+13522260681">Llámenos</a>
@@ -178,27 +174,29 @@
         </div>
         <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a></p>
       </div>
-      <dl class="c4-hours">
-        <div><dt>Devolución del dinero</dt><dd><p class="mb"><span data-shared="moneyback"><b>¿No le valió la pena?</b> Mándenos un mensaje de texto o un correo en los 7 días después de la llamada en que repasamos su hoja con usted, y le devolvemos <b class="won">lo que pagó por la visita</b>.</span> <a class="u" href="/es/how-it-works/#terms">Condiciones completas</a></p></dd></div>
+      <dl class="c4-hours" data-part="close-rows">
+        <div><dt>Devolución del dinero</dt><dd><p class="mb"><span data-shared="moneyback"><b>¿No le valió la pena?</b> Mándenos un mensaje de texto o un correo dentro de los 7&nbsp;días siguientes a la llamada en que repasamos su hoja con usted, y le devolvemos <b class="won">lo que pagó por la visita</b>.</span> <a class="u" href="/es/how-it-works/#terms">Condiciones completas</a></p></dd></div>
         <div><dt>Horario</dt><dd><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></dd></div>
         <div><dt>Respuesta</dt><dd><span data-shared="reply">Le contestamos o le devolvemos la llamada el mismo día hábil. Si llama después de las 5&nbsp;p.&nbsp;m. o en fin de semana, le respondemos a más tardar a las 10&nbsp;a.&nbsp;m. del próximo día hábil.</span></dd></div>
         <div><dt>Idioma</dt><dd>Español o inglés</dd></div>
+        <div class="c4-where"><dt>Dónde</dt><dd>Gainesville y el condado de Alachua. ¿Está en otra parte de Florida? Pregúntenos.</dd></div>
+        <div class="c4-calc"><dt>¿Todavía no quiere llamar?</dt><dd>Pruebe antes la <a class="u" href="/es/leak-check/">calculadora de pérdidas</a> con sus números. Funciona en su teléfono o computadora y no nos manda nada.</dd></div>
       </dl>
-      <p class="c4-llc">Lumora Group LLC, empresa de Florida.</p>
     </div>
     <div class="c4-card">
       <figure class="contact-card">
         <img class="cardino" src="/v4/assets/bird-cardino-perch.svg" alt="" width="74" height="60" loading="lazy">
-        <p class="t-label hm-cc-k">Por qué Lumora</p>
-        <blockquote class="signed"><p>“Antes de Lumora, me tocaba pasar a la computadora todo el papeleo de una empresa de daños por agua, y terminé automatizando casi todo. Ahora hacemos lo mismo en su negocio.”</p></blockquote>
-        <figcaption class="signed-by">Franco A. Soto, dueño</figcaption>
-        <dl class="cblock">
-          <div><dt>Dónde</dt><dd>Gainesville y el condado de Alachua. ¿Está en otra parte de Florida? Pregúntenos.</dd></div>
-        </dl>
+        <article class="letter" aria-labelledby="letter-h">
+          <h3 class="letter-h" id="letter-h">Quién recorre su&nbsp;negocio</h3>
+          <p>Casi todos los dueños con los que hablo pierden sus noches en las mismas tareas: la cotización que escriben después de cenar, la factura que nunca salió, la llamada que nadie devolvió.</p>
+          <p>Antes de Lumora me tocaba pasar a la computadora todo el papeleo de una empresa de daños por agua, y terminé automatizando casi todo. Ahora Lumora recorre negocios en Gainesville y sus alrededores, y hace lo mismo.</p>
+          <p>Hablo español e inglés, así que todo puede ser en español.</p>
+          <p class="letter-sig">Franco A. Soto<span>Dueño</span></p>
+        </article>
         <p class="t-small hm-about"><a class="u" href="/es/about/">Quiénes somos</a></p>
       </figure>
       <div class="c4-rules">
-        <h3>Reglas que respetamos</h3>
+        <h3>Reglas que&nbsp;respetamos</h3>
         <ul>
           <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>Trabajamos con las herramientas que ya paga.</li>
           <li><svg class="tick" viewBox="0 0 24 20" aria-hidden="true" data-draw><path pathLength="1" d="M2 11.5C5 13 7 15.5 8.6 18 11.5 11 15.5 5.6 22 1.8"/></svg>No filmamos ni grabamos nada sin su permiso.</li>
@@ -210,7 +208,7 @@
 </section>
 </main>
 
-<footer class="foot" data-ground="night">
+<footer class="foot" data-part="foot" data-ground="night">
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-lead">
@@ -218,12 +216,12 @@
         <p class="foot-line">Su negocio debería funcionar igual, esté usted o no.</p>
         <a class="btn" href="tel:+13522260681" data-extra="computer: the call bar carries the number on a phone">Llámenos</a>
       </div>
-      <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="/es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="/es/how-it-works/#walk">La visita</a></li><li><a href="/es/how-it-works/#fix">Un arreglo</a></li><li><a href="/es/how-it-works/#check">La revisión mensual</a></li><li><a href="/es/how-it-works/#faq">Preguntas de los dueños</a></li><li><a href="/es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
+      <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="/es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="/es/how-it-works/#walk">La visita</a></li><li><a href="/es/how-it-works/#fix">Un arreglo</a></li><li><a href="/es/how-it-works/#check">La revisión mensual</a></li><li><a href="/es/how-it-works/#faq">Preguntas de los dueños</a></li><li><a href="/es/what-we-automate/">Lo que automatizamos</a></li><li><a href="/es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
       <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">A quién atendemos</h2><ul><li><a href="/es/industries/plumbing/">Plomería</a></li><li><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li><li><a href="/es/industries/electrical/">Electricidad</a></li><li><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></li><li><a href="/es/industries/pest-control/">Control de plagas</a></li><li><a href="/es/industries/roofing/">Techos</a></li><li><a href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a></li><li><a href="/es/industries/property-managers/">Administradores de propiedades</a></li><li><a href="/es/industries/">Todos los tipos de negocio</a></li></ul></nav>
-      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li data-extra="computer: the call bar carries the number on a phone">Llame o escriba al <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></li><li>Gainesville; atendemos el condado de Alachua</li><li>En inglés o en español</li></ul></div>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li>Llame o escriba al <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></li><li>Desde Gainesville atendemos el condado de Alachua</li><li>En español o en inglés</li></ul></div>
     </div>
     <div class="foot-base">
-      <p class="legal">Lumora Group LLC, empresa de Florida. Los negocios, nombres y números marcados como Ejemplo son ficticios.</p>
+      <p class="legal">&copy; 2026 Lumora Group LLC, empresa de Florida. Los negocios, nombres y números marcados como Ejemplo son ficticios.</p>
       <ul><li><a href="/es/about/">Quiénes somos</a></li><li><a href="/es/articles/">Artículos</a></li><li><a href="/es/contact/">Contacto</a></li><li><a href="/es/privacy/">Privacidad</a></li></ul>
     </div>
   </div>
