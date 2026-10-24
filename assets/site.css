@@ -3,7 +3,7 @@
 @font-face{font-family:"Familjen Grotesk";font-style:normal;font-weight:600;font-display:swap;src:url("fonts/FamiljenGrotesk-SemiBold.woff2") format("woff2")}
 @font-face{font-family:"Familjen Grotesk";font-style:normal;font-weight:700;font-display:swap;src:url("fonts/FamiljenGrotesk-Bold.woff2") format("woff2")}
 :root{
-  --paper:#F6F5F2;          
+  --paper:#F5F2EA;          
   --sheet:#FFFFFF;
   --ink:#000000;
   --body:#2B2B29;

@@ -401,7 +401,7 @@ html:not(.js) .stop .crop-m{height:calc(var(--crop-h) + var(--crop-air-t))}
    in the call bar the whole time), then the clipboard, whose row 1 writes in and is ringed above the call bar. The eyebrow's town
    moves into the reply line (span.rs-town), the hero card that repeated row 1 steps aside, the letterhead shows the short business
    line (span.sh-at holds the place), and under the sheet the lede opens on what we do (span.t-do) before the problems it names,
-   then the price. Computers are unchanged. On a phone 700px tall or less the headline is 30px, as on Home's short phones, so a
+   then the price. Computers are unchanged. On a phone 700px tall or less the headline is 30px (Home's was too; 32px since the alive build, 2026-10-24), so a
    four-line Spanish trade noun still leaves row 1 above the bar. Measured on all 16 trade pages in WebKit and Chromium at
    393 x 659, 375 x 667, 390 x 844, 375 x 812, 430 x 932 and 360 x 780 (picks-build-2026-10-19/logs): the ring ends above the bar
    and the bar cuts no line. check.py TRADE_FIRST_JS */

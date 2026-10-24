@@ -42,6 +42,9 @@
   var hora = function (s) { return ES ? String(s).replace(/\b(\d{1,2}:\d\d) ?([AP])M\b/g, function (m, h, a) { return h + ' ' + a.toLowerCase() + '. m.'; }) : s; };
   var qs = new URLSearchParams(location.search);
   var still = qs.has('still') || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // alive build 2026-10-24 (Franco's pick how-spine): ?still reaches the CSS once, on <html>, for motion that only CSS runs (Home's
+  // spine down How it works). Until then it reached CSS per element only (.sheet.still). Reduced motion is the media query's own
+  if (qs.has('still')) root.classList.add('still');
   var fine = matchMedia('(hover: hover) and (pointer: fine)');
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -117,11 +120,95 @@
   function rollTo(el, from, to, fmt) { // job: cause and effect. A number moves only when the owner's own choice changed it.
     if (!el) return;
     if (still || from === to || from == null) { el.textContent = fmt(to); return; }
+    if (rolling && el.closest('#walk, .hm4-hero')) { el.textContent = fmt(to); return; }   // digits-roll: Home's walk total rolls with the other figures (rollFigures), not by counting
     var t0 = performance.now();
     (function step(now) { var k = Math.min(1, (now - t0) / 500), e = 1 - Math.pow(1 - k, 3);
       el.textContent = fmt(from + (to - from) * e); if (k < 1) requestAnimationFrame(step); })(t0);
   }
   L.ring = ring; L.draw = draw;
+
+  /* ================================================================ the figures roll (alive build 2026-10-24) */
+  // Franco's pick digits-roll (alive round item 7, Oct 23: "a little more alive", calm). When the owner picks another sample
+  // business, each money figure that changes rolls from its old value to its new one, 400ms on the house ease-out: the sheet's rows
+  // and total, the walk's heading, each stop's figure, the adding slip and the walk's total. NumberFlow 0.6.2 turns the digits (MIT,
+  // Maxwell Barvian; self-hosted in assets/vendor beside this file with its licence, number-flow.LICENSE.md, and esm-env's; SYSTEM.md
+  // section 2). It loads on the page's first touch on a phone, or when the pointer, focus or a key first reaches the picker or the
+  // walk's line naming the other samples (caught before the chip's own handler), so a page nobody touches loads no extra bytes, and
+  // never under reduced motion or ?still, which keep plain figures. It is one file, esm-env's one flag written into it (checkers'
+  // pass 2026-10-24): a tap's click comes about 50ms after its pointerdown, and three requests in a row made a phone's first pick
+  // miss its roll. setTrade() writes the new figures first, as plain text; rollFigures() then puts a NumberFlow
+  // element where each one's digits are, starting from the figure it replaced, and hands the figure back as plain text when the roll
+  // ends (animationsfinish, or 1200ms if it never ran). NumberFlow keeps its digits in a shadow root, so until then the page text, a
+  // copy and a screen reader find nothing where the number is: the round's own check logged the figures empty. The sheet's live
+  // region says the new total once, as before. The pen ring on row 1 hides while its row rolls and draws again after, at the figure's
+  // new width. A roll starts in the pick's own frame or not at all: a pick that comes before the module is ready, after a frame has
+  // shown its new figures, keeps them without a roll (a WebKit tap painted the new figures, then rolled back from the old ones). check.py
+  // roll_problems holds it: no request at load, the roll on a real click, no NumberFlow left after it and every figure trades.js's
+  var NF_SRC = (function () { var s = document.currentScript && document.currentScript.src; try { return s ? new URL('assets/vendor/number-flow.mjs', s).href : ''; } catch (e) { return ''; } })();
+  var ROLL = ['.hm4-hero .sheet .sh-rows > li .sh-usd', '.hm4-hero .sheet [data-f="total"]', '#walk [data-walk-head] .walk-h-usd',
+    '#walk .stops > .stop .find-usd', '#walk [data-f="slip"] li > b', '#walk [data-bind="bigfig"] [data-f="n"]'];
+  var nfLoad = null, rolling = false;
+  function loadFlow() {
+    if (!nfLoad && NF_SRC) nfLoad = import(NF_SRC).catch(function () { nfLoad = null; });   // a failed load leaves the figures plain
+    return nfLoad || Promise.resolve();
+  }
+  function rollWatch() {
+    if (still || !NF_SRC || !$('[data-picker]') || !$(ROLL.join(','))) return;
+    var go = function () { loadFlow(); };
+    $$('[data-picker], [data-walk-also]').forEach(function (el) {
+      ['pointerover', 'pointerdown', 'focusin', 'keydown'].forEach(function (t) { el.addEventListener(t, go, { once: true, passive: true, capture: true }); });
+    });
+    addEventListener('touchstart', go, { once: true, passive: true, capture: true });   // a thumb scrolling to the picker starts the load
+  }
+  function rollAmount(el) {
+    var nf = el.querySelector('number-flow'); if (nf && nf._to != null) return nf._to;   // a figure still rolling: where it is going
+    var m = /\$([\d,]+)/.exec(el.textContent); return m ? +m[1].replace(/,/g, '') : null;
+  }
+  function rollSnap() { return ROLL.map(function (s) { return $$(s).map(rollAmount); }); }
+  function rollOne(el, from, to) {
+    var tn = Array.prototype.filter.call(el.childNodes, function (n) { return n.nodeType === 3 && /\$[\d,]+/.test(n.nodeValue); })[0];
+    if (!tn) return null;
+    var v = tn.nodeValue, m = /\$[\d,]+/.exec(v), nf = document.createElement('number-flow'), done = false;
+    nf.locales = 'en-US'; nf.format = { style: 'currency', currency: 'USD', maximumFractionDigits: 0 };   // every figure is written "$1,900", on the Spanish pages too
+    nf.transformTiming = nf.spinTiming = { duration: 400, easing: 'cubic-bezier(.33,1,.68,1)' };          // the house ease-out
+    nf.opacityTiming = { duration: 200, easing: 'ease-out' };
+    nf._to = to;
+    if (m.index) el.insertBefore(document.createTextNode(v.slice(0, m.index)), tn);
+    el.insertBefore(nf, tn); tn.nodeValue = v.slice(m.index + m[0].length);
+    nf.update(from);
+    function end() {   // the figure as plain text again, the page's own words; a figure a later pick rewrote is gone already
+      if (done) return; done = true;
+      var p = nf.parentNode; if (!p || !nf.isConnected) return;
+      p.replaceChild(document.createTextNode(money(nf._to)), nf); p.normalize();
+      if (nf._after) nf._after();
+    }
+    requestAnimationFrame(function () { if (!nf.isConnected) return; nf.addEventListener('animationsfinish', end, { once: true }); nf.update(to); });
+    setTimeout(end, 1200);   // a roll that never ran (the tab hidden): the figure still comes back as text
+    return nf;
+  }
+  function rollRing(nf) {   // the pen ring on row 1 waits for its row's roll, then draws again round the figure's new width
+    var usd = nf.parentNode, svg = usd && usd.querySelector('.pen-ring'), sheet = usd && usd.closest('.sheet'); if (!svg || !sheet) return;
+    sheet.classList.add('nf-roll');
+    nf._after = function () {
+      sheet.classList.remove('nf-roll'); ring(svg);
+      var p = svg.querySelector('path'); if (p) { p.style.animation = 'none'; void p.getBoundingClientRect(); p.style.animation = ''; }
+    };
+  }
+  function rollFigures(was) {
+    var ready = function () { return !!(window.customElements && customElements.get('number-flow')); }, shown = false, rolled = false;
+    function go() {
+      var now = rollSnap();
+      ROLL.forEach(function (s, k) { $$(s).forEach(function (el, i) {
+        var from = was[k][i], to = now[k][i]; if (from == null || to == null || from === to || !el.getClientRects().length) return;   // a figure not shown (the slip on a phone) just changes
+        var nf = rollOne(el, from, to); if (nf && k === 0) rollRing(nf);
+      }); });
+    }
+    if (ready()) return go();   // loaded: the roll starts in the pick's own frame
+    // a frame is about to show the new figures: with no roll started, the sheet rises as a plain pick's does (the sheet binder held
+    // it still for the roll, .nf-still)
+    requestAnimationFrame(function () { shown = true; if (!rolled) $$('.sheet.nf-still').forEach(function (s) { s.classList.remove('nf-still'); }); });
+    loadFlow().then(function () { if (ready() && !shown) { rolled = true; go(); } });   // too late once one has: a roll from the old figures would show the number jump back
+  }
   // 2026-10-17 (Franco's iPhone: "$399 a month reads like not what we're losing"): a figure that stands alone says it is a loss,
   // "Losing $399 a month" / "Pierde $399 al mes" (per 'yr': a year / al año). Home types or binds the same words
   L.losing = function (n, per) { return tr('Losing ', 'Pierde ') + money(n) + ' ' + (per === 'yr' ? tr('a year', 'al año') : tr('a month', 'al mes')); };
@@ -451,13 +538,15 @@
       if (f('live') && animate) f('live').textContent = tr('Sample business: ', 'Negocio de ejemplo: ') + t.name + ', ' + money(total(t)) + ' ' + perWord(t) + tr(' lost before any fix.', ' que pierde hoy, antes de arreglar nada.');
       // 2026-10-17 round 2 (Franco's iPhone): "your office:" keeps together (WebKit broke it "your / office:"); system.css keeps the figure whole
       var tm = f('time'); if (tm) { tm.hidden = !t.time; if (t.time) tm.innerHTML = tr('Time back for you or your\u00a0office: ', 'Usted o su oficina se ahorran ') + '<b>' + esc(t.time) + '</b>'; }
-      // 2026-10-16 (the new Home, p1-final round 2): the line about where the numbers come from names the trade's own records,
-      // from its morning list's foot (morning.src); a trade without one keeps the page's own line
-      var nt = f('note'); if (nt) { if (nt._base == null) nt._base = nt.textContent;
-        var src = t.morning && t.morning.src;
-        nt.textContent = !src ? nt._base : ES ? 'La hoja de su negocio sale de ' + src.replace(/^De /, '') + '.' : 'Yours is built from your own ' + src.replace(/^From (?:your own |your )/, '') + '.'; }
+      // the line about where the numbers come from. 2026-10-16 (p1-final round 2) it named each trade's own records from its
+      // morning list's foot; since the promise audit (2026-10-23, D38) it says "your own records" for every pick, because a list of
+      // record types read as a method he is bound to. Each trade's records stay in its night log's foot, a sample picture
+      var nt = f('note'); if (nt) { if (nt._base == null) nt._base = nt.textContent; nt.textContent = nt._base; }
       $$('.pen-ring', el).forEach(ring);
-      if (animate && !still) { el.classList.remove('writing', 'swap'); void el.offsetWidth; el.classList.add('swap'); } // job: cause and effect
+      // checkers' pass (2026-10-24): when the figures roll (digits-roll) the sheet holds still and the digits are the one motion. Its
+      // rise starts at opacity 0, so the roll's first 100ms showed the brown board through a dark sheet. A pick that changes plainly
+      // (NumberFlow not ready in time) still rises: rollFigures() takes .nf-still off then
+      if (animate && !still) { el.classList.remove('writing', 'swap'); void el.offsetWidth; el.classList.add('swap'); el.classList.toggle('nf-still', rolling); } // job: cause and effect
     },
     // the hero strip has no shop name beside it, so "Plumbing, 2 trucks" read as a list (Franco 2026-10-15: "whats meant by
     // plumbing 2 trucks"). Both languages say the size as a phrase; the Spanish one is written from the idea (Friday run,
@@ -677,10 +766,14 @@
     // a page's own stop (li.stop[data-own="ROW ID"], written in the page) stands where that row's stop would be: the row stays on
     // the sheet and its picture leaves the walk (PLUMBING-INTEGRATE item 37, C9; the AC page walks its change-out quote in place of
     // the phone, 2026-10-12). Read once from the page's own markup, so a re-render and the prerender keep it as written.
-    if (!el._own) { el._own = {}; $$(':scope > li[data-own]', list).forEach(function (li) { el._own[li.getAttribute('data-own')] = li.outerHTML; }); }
-    var own = el._own, ownPlace = function (id) { var m = own[id] && /data-place="([^"]*)"/.exec(own[id]); return m && m[1]; };
+    // Checkers' pass (2026-10-24): an own stop marked data-own-trade belongs to that sample alone (Home's printed quotes list is
+    // plumbing's). Keyed by row id only, Offices, whose first row is also "quotes", walked Plumbing's quotes list as its second stop,
+    // numbered 1 and titled for Dunlin Plumbing, and its stops no longer added up to its total. A trade page's own stop has no mark
+    if (!el._own) { el._own = {}; el._ownT = {}; $$(':scope > li[data-own]', list).forEach(function (li) { var id = li.getAttribute('data-own'); el._own[id] = li.outerHTML; el._ownT[id] = li.getAttribute('data-own-trade'); }); }
+    var ownFor = function (id) { return el._own[id] && (!el._ownT[id] || el._ownT[id] === L.trade) ? el._own[id] : null; },
+      ownPlace = function (id) { var m = ownFor(id) && /data-place="([^"]*)"/.exec(ownFor(id)); return m && m[1]; };
     list.innerHTML = rows.map(function (r, i) {
-      if (own[r.id]) return own[r.id];
+      if (ownFor(r.id)) return ownFor(r.id);
       var P = r.pair, n = i + 1, task = TASK[r.icon] || r.icon, place = (P && P.place) || r.place;
       var crop = (P ? P.frame : r.after.frame) === 'phone' ? ' crop-m' : '';   // R6 crop option: on a phone only the thread's part of the phone shows
       var inner = P ? pairHTML(P) : realHTML(r.after, true), tag = !led || usd(inner);
@@ -752,8 +845,15 @@
       var sel = p.querySelector('select'); if (sel) sel.value = key;
     });
     var t = D[key];
+    // digits-roll (alive build 2026-10-24): what the figures say before the pick, when a roll can follow it (the module is loading
+    // or loaded); a ring still waiting on an earlier pick's roll comes back, since that row is rewritten now
+    var was = animate && changed && nfLoad && !still ? rollSnap() : null;
+    $$('.sheet.nf-roll').forEach(function (s) { s.classList.remove('nf-roll'); });
+    rolling = !!was;
     $$('[data-bind]').forEach(function (el) { var fn = BIND[el.getAttribute('data-bind')]; if (fn) fn(el, t, animate && changed, key); });
     listeners.forEach(function (fn) { fn(key, t, animate && changed); });
+    rolling = false;
+    if (was) rollFigures(was);
     document.dispatchEvent(new CustomEvent('lumora:trade', { detail: { key: key, trade: t, animate: animate && changed } }));
   }
   L.setTrade = function (k) { setTrade(k, true); };
@@ -1145,7 +1245,9 @@
     // R4: nothing incoming stamped 11 p.m. to 5 a.m.; a text-back is a green SMS bubble (Spanish pages write "11:48 p. m.")
     shown('.lk4-nt, [data-task="calls"], .bub.in').forEach(function (x) { if (/\b(11:\d\d\s?(?:PM\b|p\.\s?m\.)|12:\d\d\s?(?:AM\b|a\.\s?m\.)|[1-4]:\d\d\s?(?:AM\b|a\.\s?m\.))/i.test(x.innerText)) E.push('R4: something incoming between 11 p.m. and 5 a.m.: ' + x.innerText.slice(0, 50)); });
     $$('.thread .sys').forEach(function (s) { var b = s.nextElementSibling; if (/^(Missed call|Llamada perdida)/.test(s.textContent) && b && b.classList.contains('out') && !b.classList.contains('sms')) E.push('R4: a text-back in a blue bubble.'); });
-    // R2: What we automate, second, at least 6 rows. A link to the full list before that page is live is golive.py's push gate
+    // R2: What we automate, second, at least 6 rows; on Home third since the alive build (2026-10-24, Franco's Oct 23 yes to Oct 19
+    // idea 15: the walk comes right under the promise), still before How it works. This code counts rows, not the place; check.py
+    // home_src_problems holds Home's section order. A link to the full list before that page is live is golive.py's push gate
     // (full_list_problems): the browser can't know what is live (moved there when /what-we-automate/ was readied, 2026-10-11)
     var auto = document.getElementById('automate'); if (!auto || shown('[data-task]', auto).length < 6) E.push('R2: What we automate is missing or has under 6 rows.');
     // R5: the night band's headline has no call word, and its lock screen clock never hides
@@ -1241,6 +1343,13 @@
       $$('tr', w).forEach(function (tr) { var td = tr.querySelectorAll('td'); if (td.length < 2 || !/^\d+$/.test(td[0].textContent.trim())) return; var rn = td[0].textContent.trim(), job = +td[1].textContent.trim();
         if (f[rn] && f[rn] !== job) B.push('Sample: ' + tt.textContent + ' row ' + rn + ' is job ' + f[rn] + ' in one picture and ' + job + ' in another.');
         if (job < last) B.push('Sample: ' + tt.textContent + ' job numbers go down at row ' + rn + '.'); f[rn] = job; last = job; }); });
+    // alive build 2026-10-24 (Franco's pick phone-scale, alive round item 12): on a phone the headline is the loudest line. Every
+    // section head is smaller than the h1 and the closing line is never bigger than it (system.css section 3: 28px heads and a 28 to
+    // 32px closing line; at 44 the phone page ended louder than it started)
+    if (innerWidth <= 430) { var h1 = shown('main h1')[0], fsz = function (e) { return parseFloat(getComputedStyle(e).fontSize); };
+      if (h1) { var hf = fsz(h1); shown('main h2, main .t-close').forEach(function (h) { if (h.closest('.pic,.clip,.ph4,.scr-win,.iph')) return;
+        var f = fsz(h), cl = h.matches('.close-h, .t-close');
+        if (cl ? f > hf + 0.05 : f > hf - 0.05) E.push('Type: on a phone the ' + (cl ? 'closing line' : 'section head') + ' "' + h.innerText.trim().slice(0, 30) + '" is ' + f + 'px, the headline ' + hf + 'px (the headline is the loudest line).'); }); } }
     // one type scale outside the pictures, measured on a computer where every clamp sits at its top (review: 16 sizes)
     if (innerWidth >= 1280) {
       var SCALE = [15, 17, 20, 24, 32, 44, 64], odd = {};
@@ -1288,6 +1397,8 @@
       var rings = $$('.pen-ring').filter(vis).length; if (rings > 1) E.push(rings + ' pen rings on the page (one per page).');
       var disp = $$('.t-display').length; if (disp > 1) E.push(disp + ' display money figures (one per page).');
       var nights = $$('main [data-ground=night]').length; if (nights > 1) E.push(nights + ' ink bands (one per page).');
+      // alive build 2026-10-24 (Franco's pick pine-field, alive round item 4): one pine field a page at most, as one ink band
+      var pines = $$('main [data-ground=pine]').length; if (pines > 1) E.push(pines + ' pine fields (one per page at most).');
       var secs = $$('main > section, main > [data-ground]').filter(function (s) { return s.dataset.ground; });
       var KEYS = ['ground', 'density', 'width', 'loud'];
       for (var i = 1; i < secs.length; i++) {
@@ -1328,49 +1439,38 @@
       if (tiny.length) E.push('Text under 12px: ' + tiny.slice(0, 8).join('; '));
       if (small.length) W.push('Text under 15px outside pictures: ' + small.slice(0, 8).join('; '));
     }
+    // alive build 2026-10-24 (Franco's picks pine-field and won-pine): no money and no red on the pine field, and pine as a text
+    // colour means money won back only, a walk figure After (.stop[data-state=after] .find-usd). Red still means money lost only
+    (function () {
+      var rs = getComputedStyle(document.documentElement), tone = function (v) { var i = document.createElement('i'); i.style.color = v; document.body.appendChild(i); var c = getComputedStyle(i).color; i.remove(); return c; };
+      var pv = rs.getPropertyValue('--pine').trim(), pine = pv ? tone(pv) : null, reds = ['--red', '--pen', '--red-night', '--mark'].map(function (k) { return tone(rs.getPropertyValue(k).trim()); });
+      var tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), seen = {};
+      while (tw.nextNode()) {
+        var n = tw.currentNode, el = n.parentElement; if (!n.nodeValue.trim() || !el || el.closest('script,style,noscript,.sr') || !vis(el)) continue;
+        var c = getComputedStyle(el).color, field = el.closest('[data-ground=pine]'), t = n.nodeValue.trim().slice(0, 30);
+        if (field && /\$\s?\d/.test(n.nodeValue) && !seen.usd) { seen.usd = 1; E.push('Money on the pine field: "' + t + '" (no money and no red on it).'); }
+        if (field && reds.indexOf(c) > -1 && !seen.red) { seen.red = 1; E.push('Red text on the pine field: "' + t + '" (no money and no red on it).'); }
+        if (pine && c === pine && !el.closest('.stop[data-state=after] .find-usd') && !seen.pine) { seen.pine = 1; E.push('Pine text outside a figure won back: "' + t + '" (pine means money won back only).'); }
+      }
+    })();
     if (!catalog && document.body.dataset.rules === 'v4') lintV4(E, W, vis, text);
     return { errors: E, warnings: W };
   };
 
   /* ================================================================ the call card (design round item 2, Franco 2026-10-19)
      On a computer a tel: link opens an app picker, FaceTime or nothing, and an sms: link does nothing at all. With a mouse from 900px,
-     Call us, the number beside it and "Or send a text" open a small card under the control instead: whether someone picks up now on
-     Gainesville's clock, a code the phone's camera reads to call or text (QR version 2, level M, written by segno; check.py decodes
+     Call us, the number beside it and "Or send a text" open a small card under the control instead: the shared reply line
+     (since 2026-10-23; it said whether someone picked up now on Gainesville's clock), a code the phone's camera reads to call or text (QR version 2, level M, written by segno; check.py decodes
      it back), the number, "Call from this computer" and the email. Phones keep the dialer exactly as before. Nothing here touches
      the clipboard: the number is plain text. An sms: link whose words the page rewrote since it loaded (the calculator's estimate)
      is left alone, so the visitor's own figure is never dropped on the way to his phone */
   var QR = { tel: 'M0 0.5h7M8 0.5h3M14 0.5h3M18 0.5h7M0 1.5h1M6 1.5h1M8 1.5h1M10 1.5h2M18 1.5h1M24 1.5h1M0 2.5h1M2 2.5h3M6 2.5h1M8 2.5h1M12 2.5h1M15 2.5h2M18 2.5h1M20 2.5h3M24 2.5h1M0 3.5h1M2 3.5h3M6 3.5h1M11 3.5h1M16 3.5h1M18 3.5h1M20 3.5h3M24 3.5h1M0 4.5h1M2 4.5h3M6 4.5h1M8 4.5h4M14 4.5h2M18 4.5h1M20 4.5h3M24 4.5h1M0 5.5h1M6 5.5h1M10 5.5h1M18 5.5h1M24 5.5h1M0 6.5h7M8 6.5h1M10 6.5h1M12 6.5h1M14 6.5h1M16 6.5h1M18 6.5h7M10 7.5h1M13 7.5h1M0 8.5h1M3 8.5h7M12 8.5h2M15 8.5h1M17 8.5h1M20 8.5h1M22 8.5h3M0 9.5h2M3 9.5h1M8 9.5h2M11 9.5h1M13 9.5h1M15 9.5h3M20 9.5h2M0 10.5h1M2 10.5h1M5 10.5h3M9 10.5h1M13 10.5h1M15 10.5h1M17 10.5h2M21 10.5h1M24 10.5h1M2 11.5h1M8 11.5h2M11 11.5h1M13 11.5h1M16 11.5h2M22 11.5h1M24 11.5h1M0 12.5h2M3 12.5h2M6 12.5h1M9 12.5h2M12 12.5h2M17 12.5h2M24 12.5h1M0 13.5h1M3 13.5h1M7 13.5h1M10 13.5h1M13 13.5h3M17 13.5h1M19 13.5h2M22 13.5h1M0 14.5h4M6 14.5h1M9 14.5h5M15 14.5h2M18 14.5h1M21 14.5h1M23 14.5h2M0 15.5h1M2 15.5h1M4 15.5h1M8 15.5h1M10 15.5h2M15 15.5h1M19 15.5h2M22 15.5h1M24 15.5h1M0 16.5h1M2 16.5h1M4 16.5h4M14 16.5h9M24 16.5h1M8 17.5h2M11 17.5h6M20 17.5h1M0 18.5h7M8 18.5h1M11 18.5h1M16 18.5h1M18 18.5h1M20 18.5h1M24 18.5h1M0 19.5h1M6 19.5h1M8 19.5h1M10 19.5h1M12 19.5h1M14 19.5h1M16 19.5h1M20 19.5h1M24 19.5h1M0 20.5h1M2 20.5h3M6 20.5h1M8 20.5h1M12 20.5h9M24 20.5h1M0 21.5h1M2 21.5h3M6 21.5h1M8 21.5h3M14 21.5h1M16 21.5h1M18 21.5h2M22 21.5h3M0 22.5h1M2 22.5h3M6 22.5h1M9 22.5h2M12 22.5h1M14 22.5h2M20 22.5h1M23 22.5h2M0 23.5h1M6 23.5h1M9 23.5h2M14 23.5h2M18 23.5h3M22 23.5h3M0 24.5h7M8 24.5h1M10 24.5h1M13 24.5h5M19 24.5h2M24 24.5h1', sms: 'M0 0.5h7M8 0.5h1M12 0.5h1M14 0.5h1M18 0.5h7M0 1.5h1M6 1.5h1M10 1.5h2M18 1.5h1M24 1.5h1M0 2.5h1M2 2.5h3M6 2.5h1M12 2.5h2M15 2.5h2M18 2.5h1M20 2.5h3M24 2.5h1M0 3.5h1M2 3.5h3M6 3.5h1M8 3.5h4M14 3.5h3M18 3.5h1M20 3.5h3M24 3.5h1M0 4.5h1M2 4.5h3M6 4.5h1M8 4.5h2M11 4.5h4M18 4.5h1M20 4.5h3M24 4.5h1M0 5.5h1M6 5.5h1M8 5.5h1M10 5.5h1M12 5.5h3M16 5.5h1M18 5.5h1M24 5.5h1M0 6.5h7M8 6.5h1M10 6.5h1M12 6.5h1M14 6.5h1M16 6.5h1M18 6.5h7M8 7.5h2M14 7.5h3M0 8.5h1M4 8.5h1M6 8.5h3M13 8.5h2M16 8.5h6M24 8.5h1M0 9.5h2M3 9.5h3M7 9.5h2M10 9.5h1M15 9.5h1M17 9.5h1M19 9.5h2M23 9.5h1M1 10.5h1M4 10.5h1M6 10.5h1M8 10.5h1M10 10.5h1M13 10.5h5M20 10.5h1M0 11.5h1M3 11.5h2M7 11.5h3M13 11.5h1M15 11.5h4M21 11.5h2M0 12.5h2M6 12.5h1M8 12.5h1M12 12.5h2M15 12.5h2M18 12.5h1M21 12.5h3M0 13.5h1M3 13.5h1M7 13.5h1M9 13.5h2M13 13.5h3M17 13.5h1M19 13.5h2M22 13.5h1M2 14.5h1M6 14.5h1M8 14.5h1M10 14.5h1M15 14.5h3M19 14.5h1M21 14.5h1M2 15.5h1M4 15.5h1M7 15.5h1M10 15.5h1M12 15.5h1M14 15.5h1M17 15.5h3M21 15.5h2M24 15.5h1M0 16.5h2M5 16.5h2M8 16.5h4M13 16.5h2M16 16.5h5M22 16.5h1M24 16.5h1M8 17.5h3M12 17.5h1M15 17.5h2M20 17.5h1M22 17.5h2M0 18.5h7M8 18.5h2M11 18.5h4M16 18.5h1M18 18.5h1M20 18.5h1M0 19.5h1M6 19.5h1M9 19.5h1M11 19.5h1M13 19.5h1M15 19.5h2M20 19.5h4M0 20.5h1M2 20.5h3M6 20.5h1M8 20.5h1M10 20.5h1M12 20.5h2M16 20.5h7M24 20.5h1M0 21.5h1M2 21.5h3M6 21.5h1M9 21.5h2M13 21.5h2M18 21.5h1M23 21.5h2M0 22.5h1M2 22.5h3M6 22.5h1M9 22.5h1M15 22.5h2M18 22.5h1M22 22.5h2M0 23.5h1M6 23.5h1M12 23.5h1M14 23.5h1M19 23.5h5M0 24.5h7M8 24.5h1M10 24.5h2M13 24.5h2M19 24.5h6' };
-  // closed days besides the weekend: the holidays Lumora keeps, on the Friday or Monday when one falls on a weekend, and OUT, the
-  // days Franco is away (YYYY-MM-DD on Gainesville's calendar). On those the card never says "Open now"
-  var OUT = [];
-  var WEEK_EN = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  function gnvNow() {
-    var p = {}; new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', hourCycle: 'h23' })
-      .formatToParts(new Date()).forEach(function (x) { p[x.type] = +x.value; });
-    return { y: p.year, m: p.month, d: p.day, h: p.hour % 24 };
-  }
-  function closedDay(y, m, d) {
-    var t = new Date(Date.UTC(y, m - 1, d)), wd = t.getUTCDay();
-    if (wd === 0 || wd === 6) return true;
-    var iso = t.toISOString().slice(0, 10); if (OUT.indexOf(iso) > -1) return true;
-    var md = function (k) { var u = new Date(t.getTime() + k * 864e5); return (u.getUTCMonth() + 1) * 100 + u.getUTCDate(); };
-    var fixed = [101, 704, 1225], obs = function (v) { return md(0) === v || (wd === 5 && md(1) === v) || (wd === 1 && md(-1) === v); };
-    if (fixed.some(obs)) return true;
-    if (m === 5 && wd === 1 && d + 7 > 31) return true;              // Memorial Day, the last Monday of May
-    if (m === 9 && wd === 1 && d <= 7) return true;                  // Labor Day
-    if (m === 11 && ((wd === 4 && d >= 22 && d <= 28) || (wd === 5 && d >= 23 && d <= 29))) return true;   // Thanksgiving and the day after
-    return false;
-  }
-  function callStatus() {   // the bound reply promise (shared-text.json reply), said for right now
-    var n = gnvNow(), today = !closedDay(n.y, n.m, n.d);
-    if (today && n.h >= 9 && n.h < 17) return tr('<b>Open now, until 5 p.m.</b> We answer or call you back today.',
-      '<b>Abiertos ahora, hasta las 5 p. m.</b> Le contestamos o le devolvemos la llamada hoy mismo.');
-    if (today && n.h < 9) return tr('<b>We open at 9 a.m. today.</b> Leave a message, and we\'ll call you back today.',
-      '<b>Abrimos hoy a las 9 a. m.</b> Déjenos un mensaje y le devolvemos la llamada hoy mismo.');
-    var k = 1, u; for (; k < 15; k++) { u = new Date(Date.UTC(n.y, n.m - 1, n.d + k)); if (!closedDay(u.getUTCFullYear(), u.getUTCMonth() + 1, u.getUTCDate())) break; }
-    var wd = u.getUTCDay();
-    return tr('<b>Closed now.</b> Leave a message or a text, and we\'ll call you back by 10 a.m. ' + (k === 1 ? 'tomorrow' : WEEK_EN[wd]) + '.',
-      '<b>Ahora estamos cerrados.</b> Déjenos un mensaje de voz o de texto y le devolvemos la llamada a más tardar a las 10 a. m. ' + (k === 1 ? 'de mañana' : 'del ' + DIAS[wd]) + '.');
+  // The card's first line is the shared reply, word for word (shared-text.json reply; check.py close_static_problems compares them).
+  // The open-now line, its holiday list and OUT went on 2026-10-23: Franco, "They can just open the Google business" (the Google
+  // profile carries the hours, so the site keeps no second copy that can go stale), and the promise audit (PROPAGATION D38, D46)
+  // moved the 10 a.m. clock to the free call script and the voicemail greeting
+  function callStatus() {
+    return tr('We usually call you back the same business day.', 'Por lo general le devolvemos la llamada el mismo día hábil.');
   }
   L.callStatus = callStatus;   // test hook: check.py reads the line the card would show
   function initCallCard() {
@@ -1461,6 +1561,9 @@
     var el = e.target; if (!el || !el.getBoundingClientRect || el.closest('.hdr, .callbar')) return;
     el = ringBox(el);
     var fix = function () {
+      // checkers' pass (2026-10-24): an element a script has replaced since measures 0 and read as under the header, so a tap on the
+      // walk's line (which rewrote its names) threw the page up 73px twice
+      if (!el.isConnected) return;
       var r = el.getBoundingClientRect(), hdr = $('.hdr'), bar = $('.callbar');
       var top = hdr ? hdr.getBoundingClientRect().bottom : 0, bottom = bar && bar.getClientRects().length ? bar.getBoundingClientRect().top : innerHeight;
       // 2026-10-17 round 3: a walk's sticky tally bar stuck under the header covers focus too (Shift+Tab left Before / After 66% under it)
@@ -1472,12 +1575,47 @@
     requestAnimationFrame(fix); setTimeout(fix, 60);
   });
 
+  /* ================================================================ the footer's folds (alive build 2026-10-24, Franco's pick foot-fold,
+     alive round item 16). Under 700px the How it works and Industries lists fold under their headings, half a screen off the end
+     of every page. Each heading gets a button holding its own words, aria-expanded and aria-controls pointing at its list, which
+     is hidden; Enter, Space or a tap shows it. The heading stays an h2 with the button inside (the WAI disclosure pattern): the
+     round's details and summary made the heading a button and took it out of heading navigation. From 700px the button goes and
+     every list shows, live as the width changes; with JavaScript off every list is open. The contact column and the legal rows
+     never fold, and the footer part (parts/foot.*.html) is unchanged. system.css section 25; check.py FOLD_JS */
+  function initFolds() {
+    // checkers' pass (2026-10-24): only a page that loads system.css has the fold's look (section 25). The old build's pages (the
+    // articles, Privacy, 404, /hi/, /met/) load /v4/system.js for the header but not system.css, and their footers have the same
+    // columns: folded there, each heading became a bare grey browser button 19px tall. Their lists stay open. check.py fold_old_problems
+    if (!$('link[rel="stylesheet"][href*="system.css"]')) return;
+    var mq = matchMedia('(max-width: 699px)');
+    var cols = $$('.foot nav.foot-col').map(function (nav, i) {
+      var h = $('.foot-h', nav), ul = $(':scope > ul', nav); if (!h || !ul) return null;
+      if (!ul.id) ul.id = (h.id || 'foot-col-' + i) + '-list';
+      return { h: h, ul: ul, words: h.textContent };
+    }).filter(Boolean);
+    var set = function () {
+      cols.forEach(function (c) {
+        var b = $('.foot-fold', c.h);
+        if (mq.matches && !b) {
+          b = document.createElement('button'); b.type = 'button'; b.className = 'foot-fold';
+          b.setAttribute('aria-expanded', 'false'); b.setAttribute('aria-controls', c.ul.id);
+          b.textContent = c.words; c.h.textContent = ''; c.h.appendChild(b); c.ul.hidden = true;
+          b.addEventListener('click', function () { var open = b.getAttribute('aria-expanded') !== 'true'; b.setAttribute('aria-expanded', open ? 'true' : 'false'); c.ul.hidden = !open; });
+        } else if (!mq.matches && b) { c.h.textContent = c.words; c.ul.hidden = false; }
+      });
+    };
+    set();
+    if (mq.addEventListener) mq.addEventListener('change', set); else if (mq.addListener) mq.addListener(set);
+  }
+
   /* ================================================================ start */
   // Franco 2026-10-19: each nav link carries its own label, so .nav a::after reserves its semibold width and the row never shifts
   // between pages (with JS off only that reserve goes, never the mark)
   $$('.nav a').forEach(function (a) { a.dataset.label = a.textContent.trim(); });
   initMenu();
+  initFolds();   // alive build 2026-10-24 (foot-fold)
   initPickers();
+  rollWatch();   // alive build 2026-10-24 (digits-roll): NumberFlow loads on the first touch of the picker
   initCallCard();   // design round item 2 (2026-10-19)
   var start = [qs.get('trade'), locked ? null : store.get('lumora.trade'), document.body.dataset.trade, 'plumbing'].filter(function (k) { return k && D[k]; })[0];
   if (locked) start = document.body.dataset.trade;

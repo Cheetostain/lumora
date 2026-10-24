@@ -18,20 +18,25 @@
 @font-face{font-family:"Familjen Grotesk";src:url(assets/fonts/FamiljenGrotesk-Italic.woff2) format("woff2");font-weight:400 600;font-style:italic;font-display:swap}
 
 /* ======================================================================= 1. tokens */
-:root{/* ui-ok: cream the brand's paper since brand v2 (#F6F5F2, a cooler white than the flagged #F4F1EA) */
+:root{/* ui-ok: cream the brand's paper, one step warmer since the alive build (2026-10-24): Franco picked #F5F2EA on Oct 23 over the cooler #F6F5F2 of brand v2. It sits near the flagged #F4F1EA on purpose, beside a near-black ink, one sans family and no terracotta */
   /* grounds */
-  --paper:#F6F5F2; --sheet:#FFFEFB; --bone:#E9E4D8; --bone-2:#DDD5C3;
+  --paper:#F5F2EA; --sheet:#FFFEFB; --bone:#E9E4D8; --bone-2:#DDD5C3;   /* paper: #F6F5F2 until the alive build (2026-10-24, Franco's pick paper-warm, alive round item 5); check.py holds every page's theme-color and the header's fallback to it */
   /* ink and the two writing tools */
   --ink:#111110; --ink-hover:#383734;  /* button hover: the fill lightens one subtle step, white text about 12:1 (claim interaction-a; Franco picked B, 2026-10-08) */
-  --ink-x:#111110;          /* headings and every action. 17.3:1 on paper */
-  --body:#2B2B29;         /* running text. 13.0:1 paper, 11.2:1 bone */
-  --muted:#5F5D56;        /* captions, second tone of headings. 6.0:1 paper, 5.2:1 bone */
-  --pencil:#4F4C45;       /* what we saw: notes, arrows, stop tabs, Sample stamps. 7.9:1 paper, 6.8:1 bone. Never a circle (2026-10-17: one red pen) */
-  --red:#C81E28;          /* money as TEXT. 5.3:1 paper, 5.7:1 sheet; on bone only at 24px+ (4.5:1) */
+  --ink-x:#111110;          /* headings and every action. 16.9:1 on paper */
+  --body:#2B2B29;         /* running text. 12.7:1 paper, 11.2:1 bone */
+  --muted:#5F5D56;        /* captions, second tone of headings. 5.9:1 paper, 5.2:1 bone */
+  --pencil:#4F4C45;       /* what we saw: notes, arrows, stop tabs, Sample stamps. 7.7:1 paper, 6.8:1 bone. Never a circle (2026-10-17: one red pen) */
+  --red:#C81E28;          /* money lost as TEXT. 5.1:1 paper, 5.7:1 sheet; on bone only at 24px+ (4.5:1) */
   --pen:#E3242E;          /* the red pen as STROKES: every circle round a problem (money or evidence), underline, arrow (non-text, 3:1+) */
   --mark:#FF323C;         /* the logo mark only */
   /* the one dark band */
   --night:#141412; --on-night:#E9E4D8; --muted-night:#A7A194; --red-night:#FF5A60; /* 14.5 / 7.2 / 6.1 :1 */
+  /* the pine field (alive build 2026-10-24, Franco's pick pine-field, alive round item 4): one a page at most, Home's Who we work
+     with. Its words are the paper (8.6:1) and muted pine (5.8:1). As text, pine is money won back only (won-pine, item 19: 9.6:1 on
+     a stop's sheet, 7.6:1 on bone). No red and no money sit on the field. Lumora.lint holds all three */
+  --pine:#2F4A3F; --on-pine:var(--paper); --muted-pine:#C2CBBF;   /* on-pine reads the paper, so the next paper can't leave the
+     field's words on the old one (checkers' pass, 2026-10-24; check.py close_static_problems) */
   /* objects from the walk: only on those objects, never on text or buttons */
   /* the hardboard (2026-10-17, Franco's iPhone: Safari showed the board pale, Chrome tan): one colour everywhere, #967E64 to the eye,
      a muted mid-brown, lighter than masonite's deep brown and less orange than the old tan, so it reads as a clipboard and leaves
@@ -71,7 +76,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%;
   scroll-padding-top:calc(var(--hdr-h) + 16px);scroll-padding-bottom:calc(var(--bar-h) + 16px)}
 @media (min-width:900px){html{scroll-padding-bottom:16px}}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-body{/* ui-ok: cream the brand's paper since brand v2 */margin:0;background:var(--paper);color:var(--body);font:400 17px/1.55 var(--font);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;overflow-x:clip}
+body{/* ui-ok: cream the brand's paper, warmer since Franco's pick of 2026-10-23 (see :root) */margin:0;background:var(--paper);color:var(--body);font:400 17px/1.55 var(--font);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;overflow-x:clip}
 img,svg{display:block;max-width:100%}
 [hidden]{display:none!important}
 a{color:inherit}
@@ -96,6 +101,18 @@ p,li,dd{text-wrap:pretty}
 h1,.t-h1{font-size:clamp(38px,5.2vw,var(--fs-64));line-height:1.03;letter-spacing:-.026em}
 h2,.t-h2{font-size:clamp(30px,3.5vw,var(--fs-44))}
 h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing:-.01em}
+/* alive build 2026-10-24 (Franco's pick phone-scale, alive round item 12): on a phone the headline is the loudest line. Under 700px
+   a section head is 28px (the round's "Before it ships": near 28, not 24, so it still outranks a 26px card title such as How it
+   works' "The walk"), and the closing line comes down from 44px (40 in Spanish) to 32, so a phone page no longer ends louder than
+   it starts. From 700px nothing changes. The closing line never outgrows the page's headline: it follows the smallest Spanish
+   trade headline (Plumbing's min(34px, 8.7vw), 31.3px at 360) and, on a phone 700px tall or less, the trade headlines' 30px
+   (trade-page.css), where Home's goes to 32 (home.css). main .close-h outranks the Spanish pages' own .close-h size. Lumora.lint
+   fails a section head as big as the headline, or a closing line bigger than it, at 430px and under */
+@media (max-width:699px){
+  h2,.t-h2{font-size:28px}
+  main .close-h,main .t-close{font-size:clamp(28px,8.7vw,32px)}
+}
+@media (max-width:699px) and (max-height:700px){main .close-h,main .t-close{font-size:clamp(28px,8.7vw,30px)}}
 .t-lede{font-size:clamp(17px,1.6vw,var(--fs-20));line-height:1.5}
 .t-body{font-size:17px}
 .t-small{font-size:15px;line-height:1.45}           /* the floor for key text at 390px */
@@ -161,6 +178,15 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
 }
 [data-ground=night]{background:radial-gradient(rgba(233,228,216,.05) 1px,transparent 1.2px) 0 0/5px 5px,var(--night);color:var(--on-night)}
 [data-ground=night] b{color:#fff}
+/* the pine field (alive build 2026-10-24, Franco's pick pine-field): one deep green band a page at most, Home's Who we work with.
+   Headings and words in the paper, labels in muted pine; a link keeps its underline in muted pine and turns white on hover, as on
+   the ink band; the focus ring is the paper. Nothing on it is red and no money sits on it (Lumora.lint) */
+[data-ground=pine]{background:var(--pine);color:var(--on-pine)}
+[data-ground=pine] :is(h2,h3,b,strong){color:var(--on-pine)}
+[data-ground=pine] :is(.t-label,.kicker,.cap,.muted,.two>span){color:var(--muted-pine)}
+[data-ground=pine] .u{text-decoration-color:var(--muted-pine)}
+@media (hover:hover) and (pointer:fine){[data-ground=pine] .u:hover:not(:focus-visible){color:#fff;text-decoration-color:#fff}}
+[data-ground=pine] :focus-visible{outline-color:var(--on-pine)}
 /* the perforated seam: a row of punched holes where one band tears from the next (2 or 3 per page) */
 .seam{position:relative}
 .seam::before{content:"";position:absolute;left:0;right:0;top:-6px;height:12px;z-index:2;pointer-events:none;
@@ -185,7 +211,7 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
 @media (prefers-reduced-motion:no-preference){.lang{transition:background-color var(--t-press) var(--ease-out)}.lang:hover,.lang:focus-visible{transition-duration:var(--t-hover)}}
 .hdr .lang{margin-left:auto;margin-right:6px}
 .hdr .lang+.menu-b{margin-left:0}
-.hdr{/* ui-ok: glass the sticky header; the page does scroll under it, and the blur keeps its words readable (SYSTEM.md 12, kept in the 2026-10-16 merge; resume pass 2026-10-19, craft judge: headings showed through it behind the logo, so .985 and 12px) */position:sticky;top:0;z-index:40;background:rgba(246,245,242,.985);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.hdr{/* the sticky header is the page's own paper (Franco 2026-10-23, "the header needs to match the tone of the... new beige background"). Until the alive build's checkers' pass (2026-10-24) it mixed 98.5% paper with a 12px blur, glass kept from the 2026-10-16 merge (resume pass 2026-10-19: headings showed through it behind the logo); over the pine field and the night band that read 3 to 4 steps darker than the paper, and the blur showed nothing. Now it is var(--paper), solid, so it is the paper over every band; check.py close_static_problems holds it */position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--rule)}
 .hdr-in{display:flex;align-items:center;gap:12px;min-height:var(--hdr-h)}
 .brand{flex-shrink:0;display:flex;align-items:center;min-height:44px}   /* 2026-10-15: a full header row squeezed the logo first (Spanish, 1280: 28px of its 124); check.py fails a shrunk logo. 2026-10-19: 44px tall, the one small target in the phone header (the 64px row, so nothing moves) */
 .brand img{width:104px;height:auto}
@@ -277,7 +303,8 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 /* a phone turned sideways: the header scrolls away, so a sample screen is not squeezed between three fixed bars (the call bar stays) */
 @media (max-width:899px) and (max-height:500px){.hdr{position:static}}
 /* 2026-10-15: the open phone menu is a full sheet under the header, so the page under it neither shows nor scrolls. No scrim
-   (.hdr's backdrop-filter clips a fixed child to the header) and no outside-tap JS (the only thing outside is the header) */
+   (the sheet covers the page; the header's old backdrop-filter also clipped a fixed child to it) and no outside-tap JS (the only
+   thing outside is the header) */
 @media (max-width:899px){
   .nav.open{height:calc(100vh - var(--hdr-h));height:calc(100dvh - var(--hdr-h));overflow-y:auto;overscroll-behavior:contain;border-bottom:0;padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom))}
   body:has(.nav.open){overflow:hidden}
@@ -308,10 +335,11 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 .btn:is(:focus-visible,:active){background:var(--ink-hover);border-color:var(--ink-hover)}.btn-o:is(:focus-visible,:active){background:rgba(17,17,16,.08);border-color:var(--ink)}   /* 2026-10-19: a press takes the hover's colour, so it still answers with reduced motion (no scale) */
 @media (hover:hover) and (pointer:fine){.btn:hover{background:var(--ink-hover);border-color:var(--ink-hover)}.btn-o:hover{background:rgba(17,17,16,.08);border-color:var(--ink)}}
 /* 2026-10-15: on a ruled or graph ground the outline button is filled with paper, so the lines never run through its label;
-   #E4E3E0 is the 8% ink tint over paper as a solid colour (section 9's hover) */
+   its tint is the 8% ink over paper as a solid colour (section 9's hover), mixed from --paper since the alive build (2026-10-24), so a
+   warmer paper takes its tint along; #E3E0D9 first for a browser without color-mix (it was #E4E3E0 on the old paper) */
 [data-ground=ruled] .btn-o,[data-ground=graph] .btn-o{background:var(--paper)}
-[data-ground=ruled] .btn-o:is(:focus-visible,:active),[data-ground=graph] .btn-o:is(:focus-visible,:active){background:#E4E3E0}
-@media (hover:hover) and (pointer:fine){[data-ground=ruled] .btn-o:hover,[data-ground=graph] .btn-o:hover{background:#E4E3E0}}
+[data-ground=ruled] .btn-o:is(:focus-visible,:active),[data-ground=graph] .btn-o:is(:focus-visible,:active){background:#E3E0D9;background:color-mix(in srgb,var(--paper),var(--ink) 8%)}
+@media (hover:hover) and (pointer:fine){[data-ground=ruled] .btn-o:hover,[data-ground=graph] .btn-o:hover{background:#E3E0D9;background:color-mix(in srgb,var(--paper),var(--ink) 8%)}}
 [data-ground=night] .btn{border-color:var(--on-night);background:var(--on-night);color:var(--night)}
 [data-ground=night] .btn:is(:focus-visible,:active){background:var(--sheet);border-color:var(--sheet)}
 @media (hover:hover) and (pointer:fine){[data-ground=night] .btn:hover{background:var(--sheet);border-color:var(--sheet)}}
@@ -336,7 +364,8 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 .price{font-size:var(--fs-17);max-width:36em}
 .mb{font-size:var(--fs-17);max-width:36em}                       /* the money-back sentence, bound from shared-text.json "moneyback" */
 /* 2026-10-17 round 3 (judges after Franco's iPhone review): "the walk fee back" is money returned, a gain, so it is ink with the pencil
-   underline a figure won back wears (.stop[data-state=after] .find-usd), never red: red only ever means money lost. The stroke is the
+   underline a figure won back wears (.stop[data-state=after] .find-usd; since the alive build of 2026-10-24 that figure is pine and
+   only the underline is shared: the fee returned stays ink, since a green refund line reads like a promotion), never red: red only ever means money lost. The stroke is the
    pen-under path drawn in pencil (#4F4C45, on the ink band #A7A194), one per line where the words wrap. It was red, not bold, since
    2026-10-10. Not bold: the question before it is bold. check.py MONEY_JS fails red inside money back */
 .won{font-weight:inherit;color:inherit;padding-bottom:6px;-webkit-box-decoration-break:clone;box-decoration-break:clone;
@@ -499,26 +528,19 @@ a.strip:focus-visible{outline-offset:3px}
 @media (min-width:900px){.facts ul{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:20px}}
 
 /* ======================================================================= 12b. the v4 facts strip (2026-10-15)
-   Moved here from home.css and trade-page.css (trade-page.css item 40: it moves when Home next changes). A fact that wraps
-   starts its second line under its words, not under the tick; 10px between facts on a phone (4px read as one block).
-   .facts above stays for the retired .src.html drafts. */
+   Moved here from home.css and trade-page.css (trade-page.css item 40: it moves when Home next changes). .facts above stays for the
+   retired .src.html drafts.
+   Since the alive build (2026-10-24, Franco's pick facts-line, alive round item 18) the facts read as one plain line of short
+   sentences with no check marks, which takes one of Home's three check-mark lists away. A period drawn here closes each fact, so the
+   shared four-fact part and its bound money back line keep their markup; periods and not the round's middots, because Lumora.lint
+   R14 fails a "word · word" line outside pictures. Still 15px, 500 and full ink: the judges' fix, so "We don't sell leads" reads
+   as a promise and not a caption. Each fact is an inline block: it stays whole wherever it fits and wraps inside itself only where
+   it is wider than its line (the Spanish money back on a phone). check.py DESK_JS fails a tick coming back */
 .facts4{margin-top:48px;background:var(--paper)}   /* 2026-10-16 (Franco's note 1 on v4, the approved desktop): no full-width rules above and below; space does the job */
-.facts4 ul{display:grid;gap:8px;padding-block:14px;font-size:15px;font-weight:500;color:var(--ink)}
-.facts4 li{position:relative;padding-left:28px}
-/* 2026-10-16: one check mark on the site, the drawn tick of Rules we keep (24 x 20, here 18 x 15), as a mask in ink, level;
-   it replaced a CSS check turned -48deg. The tally (13) and How it works' lists use the same --tick. check.py's DESK_JS fails a
-   turned tick */
-.facts4 li::before{content:"";position:absolute;left:0;top:4px;width:18px;height:15px;background:var(--ink);
-  -webkit-mask:var(--tick) 0 0/100% 100% no-repeat;mask:var(--tick) 0 0/100% 100% no-repeat}
-@media (forced-colors:active){.facts4 li::before{forced-color-adjust:none;background:CanvasText}}
-@media (min-width:900px){.facts4 ul{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:16px}}   /* 2026-10-16 repair: 16px least between facts (space-between gives about 18 at 1280), so the four English facts keep one line with the bigger tick; check.py's DESK_JS holds it */
-@media (max-width:699px){.facts4{margin-top:36px}.facts4 ul{gap:10px}}
-/* agency pass 2026-10-18 (rank 5): the shared four-fact strip (system/parts/facts.*.html) says "Walk fee back up to 7 days after we go
-   over your sheet", 3 characters longer than the old money back fact, so the English four needed 1,206px of a 1,200px row and the
-   first fact wrapped at 1280 and 1440. 12px least between facts gives them about 14px there; Home's own three facts keep 16.
-   Resume pass 2026-10-19: "Walk fee back if you ask within 7 days after your sheet" is one character longer and leaves 7px of the
-   row (build/resume-measure-mb2.log); the editor's "...after we go over your sheet" put all four facts on two lines */
-@media (min-width:900px){.facts4 ul[data-part=facts]{column-gap:12px}}
+.facts4 ul{display:block;padding-block:14px;font-size:15px;font-weight:500;color:var(--ink)}
+.facts4 li{display:inline-block;max-width:100%;vertical-align:top}
+.facts4 li::after{content:"."}
+@media (max-width:699px){.facts4{margin-top:36px}}
 
 /* ======================================================================= 13. the walk: floor plan, stops, tally */
 .plan{position:relative;background:var(--sheet);box-shadow:var(--lift);padding:14px;border-radius:2px;max-width:820px}
@@ -553,9 +575,12 @@ a.strip:focus-visible{outline-offset:3px}
 .find-l .find-k{margin-right:2px}
 .loss{color:var(--red)}
 .find-usd{justify-self:start;font-size:clamp(30px,3.4vw,40px);font-weight:600;color:var(--red);line-height:1.05}
-/* After: a figure won back is ink and its underline pencil, so red only ever means money lost (a red "Won back: $1,900 a
-   month" read as our fee, 2026-10-17). check.py MONEY_JS */
-.stop[data-state=after] .find-usd{color:var(--ink)}
+/* After: a figure won back is pine and its underline pencil, so red only ever means money lost (a red "Won back: $1,900 a
+   month" read as our fee, 2026-10-17). It was ink until the alive build (2026-10-24, Franco's pick won-pine, alive round item 19;
+   the trust judge: money coming back was grey while every loss was red). Pine is Lumora's second colour with the pine field and
+   means money won back only; the walk fee back in money back stays ink (.won). One walk component, so Home and every trade page
+   turn together. check.py MONEY_JS fails a Before figure that is not red and an After figure that is not pine */
+.stop[data-state=after] .find-usd{color:var(--pine)}
 .stop[data-state=after] .find-usd .pen-under{stroke:var(--pencil)}
 .find-f{font-size:15px;color:var(--muted)}
 .fixline{font-size:17px}
@@ -805,7 +830,9 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
   .lk-t{transition:opacity var(--t-enter) var(--ease-out)}
 }
 
-/* ======================================================================= 18. rules we keep: a ruled pad sheet, ink ticks */
+/* ======================================================================= 18. rules we keep: a ruled pad sheet. Its ink ticks went
+   with the alive build's checkers' pass (2026-10-24): Franco's pick facts-line took the tick off every other Rules we keep, and the
+   round's judges called the check marks a template tell. The rules start right of the pad's red margin line, as a pad's words do */
 .pad{max-width:820px;margin-inline:auto;background:var(--sheet);box-shadow:var(--lift);border-radius:3px}
 .pad-bind{height:18px;background:var(--body);border-radius:3px 3px 0 0}
 .pad-perf{height:12px;background:radial-gradient(circle,var(--hole,var(--paper)) 2.7px,transparent 3.3px) 3px 50%/13px 12px repeat-x,var(--sheet)}
@@ -814,9 +841,8 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .pad-b h2{line-height:72px;margin-bottom:26px}
 .pad li{position:relative;font-size:17px;line-height:36px;margin-bottom:36px}
 .pad li:last-child{margin-bottom:0}
-.tick{position:absolute;left:-48px;top:7px;width:24px;height:20px;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
 .honest{margin-top:36px;font-size:19px;line-height:36px;color:var(--ink)}   /* 2026-10-16: upright, as the pencil */
-@media (min-width:700px){.pad-b{/* ui-ok: pattern-bg the ruled pad of Rules we keep, a real pad's lines */padding:18px 48px 36px 96px;background:linear-gradient(90deg,transparent 70px,var(--margin) 70px 71.5px,transparent 71.5px),repeating-linear-gradient(to bottom,transparent 0 35px,var(--ruled) 35px 36px);background-position:0 0,0 35px}.tick{left:-62px;width:26px}}
+@media (min-width:700px){.pad-b{/* ui-ok: pattern-bg the ruled pad of Rules we keep, a real pad's lines */padding:18px 48px 36px 96px;background:linear-gradient(90deg,transparent 70px,var(--margin) 70px 71.5px,transparent 71.5px),repeating-linear-gradient(to bottom,transparent 0 35px,var(--ruled) 35px 36px);background-position:0 0,0 35px}}
 
 /* ======================================================================= 19. step tickets (How it works): index cards torn from the pad */
 .tickets{display:grid;gap:22px}
@@ -962,8 +988,11 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .c4-hours .mb{font-size:17px;color:var(--ink)}
 @media (min-width:700px){.c4-hours div{grid-template-columns:8.5em minmax(0,1fr);align-items:baseline;column-gap:16px}}
 .c4-rules h3{margin-bottom:6px;font-size:24px}
-.c4-rules li{position:relative;padding:9px 0 9px 28px;font-size:17px;font-weight:500;color:var(--ink)}
-.c4-rules .tick{left:0;top:15px;width:18px;height:15px}   /* 2026-10-17 round 3 (judges, S9): the facts' tick, 18 x 15 with the words at 28px, as on every page */
+/* alive build 2026-10-24 (Franco's pick facts-line, alive round item 18): Rules we keep loses its ticks with the facts, and a rule
+   sits between its rows instead. The tick SVGs left the markup of all 24 pages (R9: a repeat is deleted, not hidden); until then
+   each was the facts' tick, 18 x 15 with the words at 28px (round 3, 2026-10-17). check.py DESK_JS fails a tick coming back */
+.c4-rules li{padding:9px 0;border-top:1px solid var(--rule);font-size:17px;font-weight:500;color:var(--ink)}
+.c4-rules li:last-child{border-bottom:1px solid var(--rule)}
 .hm-cc-k{margin-bottom:12px}
 .hm-about{margin-top:16px}
 .cc-slot{width:120px;margin:0 0 14px}
@@ -1089,6 +1118,16 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
    sit in two even rows on the two columns of the link lists above (the same grid and gap), in both languages at every width
    from 320. One row fit only English; Spanish under 360 would have left one word alone again. check.py FOOT_ROWS */
 @media (max-width:699px){.foot-base ul{flex-basis:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--g)}}
+/* alive build 2026-10-24 (Franco's pick foot-fold, alive round item 16): under 700px the How it works and Industries lists fold
+   under their headings (system.js initFolds puts a button holding the heading's words inside each h2.foot-h). The button is the
+   heading's row: the words where they were, a plus on the right that turns to a minus while the list shows, and a 44px tap height
+   from 17.5px over the words down to the heading's rule, with padding that does not move the layout (the heading's line is 16.5px
+   and its rule 10px under it). The ink band's focus ring, no animation, no hover state */
+@media (max-width:699px){
+  .foot-fold{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:-17.5px 0 -10px;padding:17.5px 2px 10px 0;border:0;border-radius:2px;background:none;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .foot-fold::after{content:"+";flex:none;font-size:20px;line-height:16px;font-weight:500;color:var(--on-night)}
+  .foot-fold[aria-expanded=true]::after{content:"\2212"}
+}
 .foot-col.c-contact li:not(:has(a)){color:var(--muted-night)}
 /* 2026-10-16 (Franco's GO, note 3: the number once on the last screen): on a phone, while the call bar shows, the footer's call
    button steps aside (the bar has it). It carries data-extra in the markup (R9), so the rule keys on it; on a phone on its side
@@ -1125,6 +1164,16 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
   .sheet.swap{animation:rise var(--t-small) var(--ease-out)}
   .sheet.swap .pen-ring path{stroke-dasharray:1 1;animation:draw 600ms var(--ease-move) 150ms both}
   .swapping{animation:rise var(--t-small) var(--ease-out)}
+  /* job: cause and effect. On Home a pick rolls each changed figure (system.js rollFigures, digits-roll, alive build 2026-10-24); the
+     pen ring on row 1 waits while its figure rolls and draws again round its new width when the roll ends */
+  .sheet.nf-roll .pen-ring{visibility:hidden}
+  /* checkers' pass (2026-10-24): a rolled pick holds the sheet still, so the digits are the one motion (the rise starts at opacity 0
+     and showed the board through a dark sheet under the roll's first 100ms); system.js takes .nf-still off a pick that doesn't roll.
+     NumberFlow pads its digits 0.25em above and below for its fade mask, so a rolling figure stood 1.5em tall: the sheet's total
+     grew 6px and the walk heading 20px, pushing everything under them down and back. The negative margin keeps the line's height
+     and the mask still shows. check.py roll_problems holds both */
+  .sheet.swap.nf-still{animation:none}
+  number-flow{margin-block:-.25em}
   /* job: one-time focus. Pen underlines, arrows and ticks draw when they come into view (150ms anticipation) */
   html.js [data-draw] path{stroke-dasharray:1 1;stroke-dashoffset:1}
   html.js [data-draw]:not(.drawn) path{visibility:hidden}   /* an undrawn stroke with a round cap still paints a red dot (a waiting walk stop's money line); hide it until it draws (trades-1 fix, 2026-10-07) */
@@ -1134,6 +1183,26 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
   html.js .plan:not(.drawn) .pl-route{opacity:0}
   html.js .plan.drawn .pl-route{animation:fadein 900ms var(--ease-out) both}
 }
+/* job: state change. The page fades to the next one (alive build 2026-10-24, Franco's pick page-fade, alive round item 15; Franco,
+   Oct 23: calm motion, "not over the top"). Every v4 page opts in to cross-document view transitions, so following a link to another
+   page of the site fades the old page out over 200ms (exit, ease in) and only then fades the new one in over 220ms (small, ease out),
+   about 420ms in all. The round's clip ran the two together and both headlines showed at once; the new page's delay is the old
+   page's duration, so they never meet (check.py close_static_problems holds the place and the timing, fade_problems the real
+   navigation). The header and the phone's call bar are their own groups, so the chrome holds still while the page under it changes,
+   and their own words (the menu's current page, the language) swap at once when the old page has gone, as the new one starts.
+   Reduced motion and print get the plain page change; browsers without cross-document view transitions (Firefox today) and the old
+   build's pages (Articles, Privacy, /hi/, /met/, 404, on site.css, which doesn't opt in) load as they did */
+@media screen and (prefers-reduced-motion:no-preference){
+  @view-transition{navigation:auto}
+  ::view-transition-old(root){animation:var(--t-exit) var(--ease-in) both lumora-out}
+  ::view-transition-new(root){animation:var(--t-small) var(--ease-out) var(--t-exit) both lumora-in}
+  ::view-transition-group(hdr),::view-transition-group(callbar){animation-duration:var(--t-small);animation-delay:var(--t-exit);animation-timing-function:var(--ease-out)}   /* their words change with the new page, not over the old one */
+  ::view-transition-old(hdr),::view-transition-new(hdr),::view-transition-old(callbar),::view-transition-new(callbar){animation-duration:0s}   /* a swap at once, when the paper is empty: a crossfade doubled the two menus, their words at other widths */
+  .hdr{view-transition-name:hdr}
+  .callbar{view-transition-name:callbar}
+}
+@keyframes lumora-out{to{opacity:0}}
+@keyframes lumora-in{from{opacity:0}}
 
 /* ======================================================================= 27. v4 additions (Home v4, 2026-10-10)
    Each rule hangs off a class only v4 markup uses, so nothing above changes for the pages built on v3.

@@ -27,7 +27,7 @@ html:not(.js) .wa-filter{display:none}
 .wa-chip input:focus-visible+span{outline:3px solid var(--ink);outline-offset:2px}
 /* Franco 2026-10-19: hover is the 8% ink tint (solid over paper, so no ground line shows through), never the ink border: a picked chip
    is the ink border plus its ring, so a hovered chip read as a second pick. Picking fades the ground, border and ring together */
-@media (hover:hover) and (pointer:fine){.wa-chip:hover input:not(:checked)+span{background-color:#E4E3E0}}
+@media (hover:hover) and (pointer:fine){.wa-chip:hover input:not(:checked)+span{background-color:#E3E0D9;background-color:color-mix(in srgb,var(--paper),var(--ink) 8%)}}   /* mixed from --paper since the alive build (2026-10-24, paper-warm); #E3E0D9 for a browser without color-mix (#E4E3E0 on the old paper) */
 @media (prefers-reduced-motion:no-preference){.wa-chip span{transition:background-color var(--t-hover),border-color var(--t-hover),box-shadow var(--t-hover),transform var(--t-press)}.wa-chip input:active+span{transform:var(--press)}}
 /* Windows high contrast drops the ring (box-shadow) and repaints borders, so the picked chip fills with the system highlight */
 @media (forced-colors:active){.wa-chip input:checked+span{forced-color-adjust:none;background:Highlight;color:HighlightText;border-color:Highlight}}

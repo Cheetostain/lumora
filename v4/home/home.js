@@ -22,21 +22,53 @@
     if (t.href) return { href: t.href, text: ES ? 'La visita completa, en la página de ' + t.name : 'The full walk, on the ' + t.name + ' page' };
     return { href: ES ? '/es/how-it-works/#walk' : '/how-it-works/#walk', text: ES ? 'Cómo es la visita, en la página Cómo funciona' : 'How a walk goes, on the How it works page' };
   }
-  // the hero under the sheet (2026-10-17 polish, both judges): the strip's three pictures are the plumbing sample's own screens, so
-  // with another sample picked its label says where they come from; and one line under the picker opens the picked sample's walk
+  // the hero under the sheet (2026-10-17 polish, both judges): one line under the picker opens the picked sample's walk. The strip's
+  // label, which said whose screens the strip showed once another sample was picked, left with the strip (alive build 2026-10-24,
+  // Franco's pick strip-out)
   function picked(key, t) {
-    var k = document.querySelector('[data-rc-k]'), a = document.querySelector('[data-f="pick-walk"]');
-    if (k) { if (k._base == null) k._base = k.innerHTML;
-      if (key === 'plumbing') k.innerHTML = k._base; else k.textContent = ES ? 'Del negocio de ejemplo de plomería, Dunlin Plumbing' : 'From the plumbing sample, Dunlin Plumbing'; }
+    var a = document.querySelector('[data-f="pick-walk"]');
     if (a && t) { var w = walkLink(t); a.href = w.href; a.textContent = w.text; }
   }
+  // Oct 19 idea 15 (Franco's yes, Oct 23; alive build 2026-10-24): the walk comes right under the promise, and its start names the
+  // other sample businesses, so a restaurant owner or a property manager sees at once that the walk is a sample and can switch it
+  // there. With JS off each name is a link to its page, as the picker's chips are; here each becomes a button that picks that
+  // sample through the picker's own path (Lumora.setTrade), and every pick names the samples not picked, from the picker's first
+  // five in its order, each by its chip's sentence name (data-say: "property managers", "administración de propiedades"; a
+  // chip's label is a label). The pressed button now names the sample the walk left, so focus goes to the walk's heading, which
+  // names the new sample and what it loses. Checkers' pass (2026-10-24): the four buttons stay and only their words and data-t
+  // change; when every pick rebuilt them, the pressed one left the page and system.js's focus guard measured it as hidden under
+  // the header, so a tap threw the page up 146px
+  function walkAlso() {
+    var p = document.querySelector('#walk [data-walk-also]'); if (!p || !window.Lumora) return;
+    var chips = Array.prototype.slice.call(document.querySelectorAll('.hm4-hero .pk .chip[data-t]'), 0, 5);
+    var all = chips.map(function (c) { return c.dataset.t; }), links = Array.prototype.slice.call(p.querySelectorAll('a[data-t]'));
+    if (all.length < 2 || links.length !== all.length - 1) return;   // the links stay as they are
+    var say = function (k) { var c = chips[all.indexOf(k)], b = c && c.querySelector('b'); return c ? c.getAttribute('data-say') || (b || c).textContent : k; };
+    var btns = links.map(function (a) { var b = document.createElement('button'); b.type = 'button'; b.className = 'u'; a.parentNode.replaceChild(b, a); return b; });
+    function render(key) {
+      var ks = all.filter(function (k) { return k !== key; }).slice(0, btns.length);
+      btns.forEach(function (b, i) { b.setAttribute('data-t', ks[i]); b.textContent = say(ks[i]); });
+    }
+    // the pick rewrites the sheet in the hero above, whose height changes with the sample (Property managers' is 77px taller than
+    // Restaurants'); Chrome's scroll anchoring held the hero still instead and WebKit has none, so the line just pressed slid down
+    // under the finger. The walk's heading is held where it was on screen (checkers' pass, 2026-10-24; check.py walk_line_problems)
+    p.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('button[data-t]'); if (!b) return;
+      var h = document.querySelector('#walk .walk-h'), y0 = h && h.getBoundingClientRect().top;
+      Lumora.setTrade(b.getAttribute('data-t'));
+      if (h) { var d = h.getBoundingClientRect().top - y0; if (Math.abs(d) > 0.5) scrollBy({ top: d, behavior: 'instant' }); h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+    });
+    Lumora.on(function (k) { render(k); });
+    render(Lumora.trade);
+  }
   function intro(key, t) {
-    var p = document.querySelector('[data-walk-intro]'); if (!p || !t || !t.rows) return;
-    var pairs = t.rows.some(function (r) { return r.pair; });
     // the link under the walk opens the picked trade's page (a restaurant owner who picks Restaurants gets there in one tap). It
-    // follows the pick whatever the walk shows: the motion restore (2026-10-18) put the walk back to every stop, and the link stayed
-    var walk = p.closest('[data-walk-rows]'), more = document.querySelector('[data-f="walk-more"]');
-    if (more) { var w = walkLink(t); more.href = w.href; more.textContent = w.text; }
+    // follows the pick whatever the walk shows: the motion restore (2026-10-18) put the walk back to every stop, and the link stayed.
+    // 2026-10-23 (a shorter Home, D39): Home's walk has no intro line now, so the link is set before the intro is looked for
+    var more = document.querySelector('[data-f="walk-more"]');
+    if (more && t) { var w = walkLink(t); more.href = w.href; more.textContent = w.text; }
+    var p = document.querySelector('[data-walk-intro]'); if (!p || !t || !t.rows) return;
+    var pairs = t.rows.some(function (r) { return r.pair; }), walk = p.closest('[data-walk-rows]');
     // a walk cut to one stop (data-walk-rows="1", the Home of 2026-10-16 to 18) says so
     if (walk && walk.getAttribute('data-walk-rows') === '1') {
       var same = t.rows[0] && t.rows[0].pair;
@@ -121,17 +153,8 @@
     var shut = function () { if (!desk.matches && isOpen()) open(false, false); };   // a phone shows the row, not the list
     if (desk.addEventListener) desk.addEventListener('change', shut);
   }
-  // Who we work with: under each trade link, that trade's biggest leak (its sample sheet's first row), no dollar figure, so the
-  // index shows what a walk finds in each trade (review 2026-10-10, Franco's note 12 "bland"). Prerendered by prerender.py.
-  function who() {
-    var ul = document.querySelector('[data-trades]'); if (!ul || !window.Lumora) return;
-    var T = Lumora.trades, esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
-    Array.prototype.forEach.call(ul.querySelectorAll('a'), function (a) {
-      var k = Object.keys(T).filter(function (k) { return T[k].href === a.getAttribute('href'); })[0], b0 = a.querySelector('b'), name = b0 ? b0.textContent : a.textContent;   // prerendered or plain
-      // a count keeps its noun, as the sheet's rows do (round 4, 2026-10-18: "48 / horas" split under the Spanish plumbing link at 1180)
-      if (k && T[k].rows && T[k].rows[0]) a.innerHTML = '<b>' + esc(name) + '</b><small>' + esc(T[k].rows[0].b).replace(/(\d\+?) (?=\S)/g, '$1 ') + '</small>';
-    });
-  }
+  // Who we work with's trade index and its leak lines (who(), review 2026-10-10) left Home on 2026-10-23 (a shorter Home, D39;
+  // mixed examples, D40): the leak lines live on Industries, and the plain Industry pages list in Who we work with needs no script
   // the night band (round 2, 2026-10-17, judges: two Sample tags side by side): the phone and the log are one picture with one tag,
   // under the log; home.css hides the phone's. The binder writes the pair again on every pick, so the log's tag is marked again each
   // time as the section's sample lead ([data-sample-lead], Lumora.lint R8): it labels the phone beside it, and the log's head names the shop
@@ -220,58 +243,13 @@
     var nudge = Math.round(best * 10) / 10;
     if (Math.abs(nudge - now) > 0.4) walk.style.setProperty('--qc-nudge', nudge + 'px');
   }
-  // the strip's three screens find their own leaks (Franco 2026-10-19, design round item 8; home.css "the strip's three screens").
-  // A phone plays each screen when 75% of its picture is in view (70% of the phone's band); a computer, where the screens sit side
-  // by side, waits until every one it shows is in view and plays them left to right, 400ms apart, so the eye follows one finding
-  // at a time and the last ring lands by about 2.4s. One play each, then still. ?still and a browser with no IntersectionObserver
-  // get the finished strip (.rc-done), as does a screen hidden at that width; reduced motion never sees a start state (CSS)
-  function stripPlay() {
-    var box = document.querySelector('.hm4-hero .recog'); if (!box) return;
-    var all = Array.prototype.slice.call(box.querySelectorAll('.rc-q, .rc-x, .rc-p')), q = new URLSearchParams(location.search);
-    var shown = function (r) { return r.getClientRects().length > 0; }, done = function (r) { r.classList.add('rc-done'); };
-    if ((window.Lumora && Lumora.still) || q.has('still') || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) { all.forEach(done); return; }
-    var rcs = all.filter(shown); all.filter(function (r) { return !shown(r); }).forEach(done);
-    // the phone's loop draws by its dash; it scales with its own viewBox, so pathLength 1 keeps the dash one stroke
-    Array.prototype.forEach.call(box.querySelectorAll('.rc-p .iph-ring path'), function (p) { p.setAttribute('pathLength', '1'); });
-    var pic = function (r) { return r.querySelector('.rc-pic') || r; };
-    var seen = function (el, frac) { var b = el.getBoundingClientRect(), v = Math.min(b.bottom, innerHeight) - Math.max(b.top, 0); return v >= Math.min(b.height, innerHeight) * frac - 1; };
-    var last = -1e9, play = function (r) {
-      var t = Math.max(0, last + 400 - Date.now()); last = Date.now() + t;
-      setTimeout(function () { if (r.classList.contains('rc-x')) pixels(r); r.classList.add('play'); }, t);
-    };
-    var steps = { threshold: [0, .25, .5, .7, .75, .8, .9, 1] };
-    if (matchMedia('(min-width: 900px)').matches) {
-      var io = new IntersectionObserver(function () {
-        if (!rcs.every(function (r) { return seen(pic(r), .75); })) return;
-        io.disconnect(); rcs.forEach(play);   // document order is left to right
-      }, steps);
-      rcs.forEach(function (r) { io.observe(pic(r)); });
-    } else rcs.forEach(function (r) {
-      var o = new IntersectionObserver(function (es) { if (!es[0].isIntersecting || !seen(pic(r), r.classList.contains('rc-p') ? .7 : .75)) return; o.disconnect(); play(r); }, steps);
-      o.observe(pic(r));
-    });
-  }
-  // the spreadsheet's ring is drawn in a stretched viewBox with a non-scaling stroke, where a dash breaks (SYSTEM.md 6); for its one
-  // draw it is written in the svg's own pixels, then put back as it was, so a window resized later still fits it
-  function pixels(r) {
-    var svg = r.querySelector('.xl-ring'), p = svg && svg.querySelector('path'); if (!p) return;
-    var vb = (svg.getAttribute('viewBox') || '').split(/[\s,]+/).map(Number), b = svg.getBoundingClientRect(), d = p.getAttribute('d') || '';
-    if (vb.length !== 4 || vb[0] || vb[1] || !b.width || !b.height || /[^MCLZ\d\s.,-]/.test(d)) { r.classList.add('rc-drawn'); return; }
-    var old = svg.getAttribute('viewBox'), k = 0, sx = b.width / vb[2], sy = b.height / vb[3];
-    p.setAttribute('d', d.replace(/-?\d*\.?\d+/g, function (n) { return (+n * (k++ % 2 ? sy : sx)).toFixed(2); }));
-    p.style.vectorEffect = 'none'; p.setAttribute('pathLength', '1'); svg.setAttribute('viewBox', '0 0 ' + b.width.toFixed(2) + ' ' + b.height.toFixed(2));
-    svg.addEventListener('animationend', function back(e) {
-      if (e.target !== p) return; svg.removeEventListener('animationend', back);
-      r.classList.add('rc-drawn'); p.setAttribute('d', d); p.removeAttribute('pathLength'); p.style.vectorEffect = ''; svg.setAttribute('viewBox', old);
-    });
-  }
   function start() {
     codeDemo();
     if (!window.Lumora) return;
     Lumora.on(intro); Lumora.on(picked); Lumora.on(slip);   // cue() went with the hero strip (2026-10-16): the sheet itself rises on a pick (system.css .sheet.swap)
     Lumora.on(function () { seat(); nightTag(); });
     if (Lumora.trade) { intro(Lumora.trade, Lumora.trades[Lumora.trade]); picked(Lumora.trade, Lumora.trades[Lumora.trade]); slip(Lumora.trade, Lumora.trades[Lumora.trade]); }
-    who(); variants(); picker(); seat(); nightTag(); slipMotion(); stripPlay();
+    variants(); picker(); seat(); nightTag(); slipMotion(); walkAlso();   // stripPlay() left with the strip (alive build 2026-10-24)
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(seat);
     addEventListener('resize', seat);
   }
