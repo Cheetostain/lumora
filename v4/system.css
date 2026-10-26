@@ -591,6 +591,13 @@ a.strip:focus-visible{outline-offset:3px}
   .stop-body.wide{grid-template-columns:1fr}
   .stop-body.wide .stop-notes{order:0;grid-template-columns:1fr 1fr;column-gap:40px}
 }
+/* the space pass (2026-10-25; Franco: "too much empty space that breaks the design of the website"), moved here from home.css by
+   its fixes the same day so every walk has it, Home's and each trade page's (Plumbing's stops 2 and 3 left 267 and 338px of the
+   white page under their notes at 1440): wherever a stop's notes sit beside its picture, the picture fits one screen, so the notes
+   sit at its middle with even air above and below, not at its top over a blank. Home's stop 1 (.stop-q), whose printed quotes
+   list runs taller than a laptop screen, keeps its notes where they are read first. check.py space_problems measures Home and
+   every trade page's walk */
+@media (min-width:760px){.stop:not(.stop-q) .stop-body:not(.wide)>.stop-notes{align-self:center}}
 /* the tally: a slim sticky line inside the walk only (phone), a rail sheet beside the stops (desktop).
    Worked out from scroll position, so a jump or a fast scroll never shows a wrong "so far". */
 .tally{position:sticky;top:var(--hdr-h);z-index:5;margin:0 calc(var(--g)*-1)}

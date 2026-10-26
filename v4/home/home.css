@@ -1027,20 +1027,23 @@ html:not(.js) .hm4-walk .pic.has-seg>.samp{top:auto;bottom:0}
   .hm4-walk .stops>.stop:not(:first-child):nth-child(even){padding-inline:max(40px,var(--wb)) 40px}
   .hm4-walk .stops>.stop:not(:first-child):nth-child(odd){padding-inline:40px max(40px,var(--wb))}
 }
-/* how-split (alive round item 17): from 1240px How it works keeps its heading and "You can stop after any of them." in their own
-   column, held in view (sticky under the header) while the four steps pass on the right. The step names take less of the narrower
-   column (11em in both languages), so the words wrap less. check.py DESK_JS holds the stop line on the heading's x there */
+/* How it works from 1240px. The alive build put its heading and "You can stop after any of them." in their own column, sticky
+   beside the steps (how-split, alive round item 17: "the heading travels down with the reader"). After the promise audit the steps
+   are short: the whole section fits one laptop screen, so the heading never travelled and stood over 541px of bare paper (567 in
+   Spanish), the hole Franco named on Oct 25 ("too much empty space that breaks the design of the website"). Space pass fixes,
+   2026-10-25: the heading sits over the steps, as under 1240 and on every trade page, and the steps keep the split's 72px on their
+   left, where the spine (how-spine) still runs down them and draws with the scroll, just inside the heading's x. No word
+   changed. check.py HOME_JS holds the heading over the steps and the spine between the heading's x and the steps', DESK_JS the stop
+   line on the rows' words, space_problems the hole. Before: "home ORIGINAL-2026-10-25-space.css" */
 @media (min-width:1240px){
-  .hm4-how>.wrap{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);column-gap:72px;align-items:start}
-  .hm4-how .how-h{display:block;grid-column:1;grid-row:1/span 2;position:sticky;top:calc(var(--hdr-h) + 40px);margin-bottom:0}
-  .hm4-how .how-h .t-lede{margin-top:14px}
-  .hm4-how :is(.tl4,.cta-inline){grid-column:2}
-  .hm4-how,:lang(es) .hm4-how{--tl-head:11em}
+  .hm4-how{--how-in:72px}
+  .hm4-how .how-h{grid-template-columns:minmax(0,calc(var(--how-in) + var(--tl-head,15em))) minmax(0,1fr)}   /* the stop line keeps the rows' words' x */
+  .hm4-how :is(.tl4,.cta-inline){margin-left:var(--how-in)}
 }
 /* how-spine (alive round item 13), its markup: one 1px ink line down the four steps and a square marker on each step's name,
-   pseudo-elements only, in the split's 72px gap (44px left of the steps), so from 1240 only: the judges said the line looks lost
-   without the split (the round started it at 900). The line is drawn and every marker filled here; the motion that draws them as
-   the reader scrolls is the block after this one (motion group) */
+   pseudo-elements only, in the steps' 72px left margin (44px left of the steps, 28px right of the heading's x), from 1240 only: the
+   judges said the line looks lost where the steps run edge to edge (the round started it at 900). The line is drawn and every
+   marker filled here; the motion that draws them as the reader scrolls is the block after this one (motion group) */
 @media (min-width:1240px){
   .hm4-how .tl4{position:relative;--sp-x:-44px}
   .hm4-how .tl4::before{/* ui-ok: stripe the axis of the How it works timeline, one 1px ink line beside four steps, not a card edge */content:"";position:absolute;left:var(--sp-x);top:0;bottom:0;width:1px;background:var(--ink);transform-origin:50% 0;pointer-events:none}
@@ -1067,3 +1070,79 @@ html:not(.js) .hm4-walk .pic.has-seg>.samp{top:auto;bottom:0}
 }
 @keyframes how-grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 @keyframes how-fill{from{transform:scale(0)}to{transform:scale(1)}}
+/* ======================================================= the space pass (2026-10-25). Franco, Oct 25: "why does the home feel a little
+   empty now? I feel like there's a little too much empty space that breaks the design of the website, I guess. I don't know, the flow."
+   Measured on the live build (space-and-tools-2026-10-25/before): the holes were columns of very different heights set side by side
+   and top aligned, not padding. Stop 1's notes ended 798px above its picture's foot, the walk end's call 360px above the total's,
+   Who's heading 300px above its links and the night log 167px above the phone's foot. The audit's shorter copy made two of them
+   bigger; the alive build's layouts plus that copy made Who's. The fix keeps every word and every pick, and follows what the bench
+   found the best sites do (space-and-tools-2026-10-25/bench): beside a tall side that fits one screen the short side is centred
+   (Stripe, Mercury, Apple, Fiken); beside a side taller than the screen the short side moves to where it reads first, never under a
+   hole; on a strong colour the heading leads a full column instead of standing alone over an empty block (Fiken, Basecamp).
+   check.py space_problems holds it: on a computer no column beside a taller one leaves a blank run over a quarter of the screen,
+   unless it is sticky and really rides along (a section taller than the screen; How it works no longer is one, see how-split
+   above). Before: "home ORIGINAL-2026-10-25-space.css" */
+
+/* stop 1's printed quotes list, from 1000px: its picture runs about 1,000px, taller than a laptop screen, so notes beside it ended
+   near its top over a blank strip of the white sheet (Franco's screenshot 12). The notes move up beside the stop's name, where they
+   are read before the picture and change with its Before / After right under them, and the picture takes the sheet's whole width.
+   The design round's two figures on one screen (SYSTEM.md 10: the heading's $2,710 and stop 1's $1,900) stay on one screen.
+   From 1240 the notes start on the line the two-up stops under them use (the checkers' read, 2026-10-25: right-aligned in a 340px
+   column they started at x 980 at 1440, on no other line of the walk, over a 540px gap): the second column, stop 3's, whose words
+   start half the row plus 56px in, so the first column is 50% and the gap 56px; the walk keeps two vertical lines. From 1000 to
+   1239 the stops stack and the notes keep their 340px column (on stop 3's notes line they would be 269px wide at 1024 and wrap
+   the figure) */
+@media (min-width:1000px){
+  .hm4-walk .stop-q{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);column-gap:56px;align-items:start}
+  .hm4-walk .stop-q>.stop-h{grid-area:1/1}
+  .hm4-walk .stop-q>.stop-body{display:contents}
+  .hm4-walk .stop-q .stop-body>.pic{grid-area:2/1/3/3;margin-top:28px}
+  .hm4-walk .stop-q .stop-body>.stop-notes{grid-area:1/2;max-width:560px}
+  .hm4-walk .stop-q .pencil{max-width:none}
+}
+@media (min-width:1240px){.hm4-walk .stop-q{grid-template-columns:50% minmax(0,1fr);column-gap:56px}}
+/* the other stops, wherever the notes sit beside the picture, have their notes at the picture's middle: that rule moved to the
+   shared stop in system.css (space pass fixes, 2026-10-25), so every trade page's walk has it too. From 1000 to 1239 the stops
+   stack and the notes' column grew with the window while the picture beside it stayed put (the 340px phone, a 421px screen), so
+   from 1100 the notes went to two lines and left 204px of the white page over and under them beside the Spanish phone, 26% of an
+   800px screen (the checkers' read). They keep the measure they have at 1024 (269px), so they wrap as they do there */
+@media (min-width:1000px) and (max-width:1239px){.hm4-walk .stop:not(.stop-q) .stop-notes{max-width:270px}}
+/* walk-two-up from 1240: a sample with four stops left its fourth alone in the left column beside an empty right half (AC and heating
+   and Property managers: 800 to 930px of bone). A stop that would sit alone in its row takes the whole row, picture and notes side by
+   side, as a stacked stop does, in equal halves (at 1.5 to .7 a phone sat in an 800px half with 230px of sheet on each side) */
+@media (min-width:1240px){
+  .hm4-walk .stops>.stop:nth-child(even):last-child{grid-column:1/-1;padding-inline:max(40px,var(--wb))}
+  .hm4-walk .stops>.stop:nth-child(even):last-child .stop-body{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .hm4-walk .stops>.stop:nth-child(even):last-child .stop-notes{order:-1;max-width:400px}   /* a stacked stop's measure, so the notes keep their lines and the air over and under them stays under a quarter screen */
+}
+/* the walk end, from 900px: rows above the total stay (design round item 13, both judges), and the time back with Call us sits at the
+   middle of the slip and its total, so the right half no longer ends 360px above the total's foot (Franco's screenshot 13). The
+   adding slip and its answer fit one screen, the case where the bench centres the short side */
+@media (min-width:900px){
+  .walk-end>.walk-act{align-self:center;padding-top:0}
+  /* the time back is the walk's second answer, so on a computer it reads as one: its figure on its own line at the stops' figure size
+     (32px, ink: only money is red or pine), the label above it unchanged. With four stops the slip runs 513px and the right column had
+     216px of bone over and under a 94px line and button at 1280 x 800 */
+  .walk-act .walk-time b{display:inline-block;margin-top:2px;font-size:32px;line-height:1.15;letter-spacing:-.01em;font-weight:600;color:var(--ink)}
+  /* space pass fixes (2026-10-25, the checkers' read): a four-stop sample (AC and heating, Property managers) makes the slip a row
+     taller, and on a 1366 x 768 laptop the time back and Call us then sat over 196px of paper (a quarter of that screen is 192). A
+     four-row slip closes its rows up by 3px each side, so it keeps about the height of three and the walk end keeps its shape */
+  .walk-slip ol:has(>li:nth-child(4))>li{padding-block:7px}
+}
+/* Who we work with on the pine field, from 900px: the heading led an empty block (300px at 1440, 340 at 1024; Franco's screenshot
+   14). The left column now says who, in order (the heading, the one line, the examples), and the right column is where to go (the
+   Industry pages list, the closing line and All industries, one block: .who-go). Equal halves, so the two end within a line or two
+   of each other in both languages. Under 900 the order is unchanged: who, then where to go */
+.who-g{grid-template-areas:"h" "one" "ex" "go" "slot"}
+.who-go{grid-area:go;display:grid;row-gap:inherit;align-content:start;min-width:0}
+.who-go>*{grid-area:auto}   /* the list and the closing line stack in their block; their old areas (pages, all) name nothing here */
+@media (min-width:900px){
+  /* the last row takes any height the right column needs beyond the left, so the left lines never spread apart. The review slot (this
+     computer only, never lumorafl.com) gets a fourth row; on the live site there is none, so no empty row leaves its gap at the foot */
+  .who-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"h go" "one go" "ex go";grid-template-rows:auto auto 1fr;column-gap:clamp(48px,6vw,96px)}
+  html.review .who-g{grid-template-areas:"h go" "one go" "ex go" "slot go";grid-template-rows:auto auto auto 1fr}
+  .who-go{padding-top:10px}   /* the label's cap height on the heading's: "Industry pages" reads level with "Who we work with" */
+}
+/* the night pair, from 900px: the log sits at the phone's middle, so the dark under it is even with the dark over it (it hung 167px
+   short of the phone's foot, holding only its Sample tag: Franco's screenshot 15). The phone fits one screen at every computer size */
+@media (min-width:900px){.n4:not([data-layout]) .n4-figs{align-items:center}}

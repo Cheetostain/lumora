@@ -203,3 +203,33 @@ html:not(.js) .wa-filter{display:none}
   .wa-items li{padding-block:7px;line-height:1.4}   /* a phone line is about 45 characters, so it takes tighter leading than the 85 on a computer; 7px since 2026-10-12 (113 items) keeps the page under R9's 15,000px */
 }
 @media (max-width:359px){.cta-row,.c4-tel{row-gap:18px}}
+
+/* ======================================================= 3b the tools list (2026-10-25; Franco said yes to a plain list of the tools
+   owners already use, no logos). Under the bill, on the papers section's own grid from 900px: each group's name over the copy's
+   column and its tools over the picture's, ruled as the list above. Names run as one line of plain words with commas, so a group
+   of eleven is two lines and never a tall column beside a short one (the space pass of the same day: no short side beside a
+   tall one). A name never breaks inside itself (its spaces are &nbsp; in the page); the line breaks after a comma. Lead words take weight only (SYSTEM 4). */
+.wa-tools{margin-top:28px}
+.wa-tools-top{margin-bottom:14px}
+/* checkers' read, 2026-10-25: under the heading, About's own line ("You never have to switch software."), so an owner who lands on
+   #tools reads that he keeps his tools before he reads their names; from 900 it sits on the names' x, level with the heading, as
+   How it works' stop line does */
+.wa-tools-keep{margin-top:4px;font-size:17px;line-height:1.4;color:var(--muted)}
+.wa-tools-g{border-top:2px solid var(--ink)}
+.wa-tools-g>div{padding:9px 0;border-bottom:1px solid var(--rule-bone)}
+.wa-tools-g dt{font-size:17px;line-height:1.4;font-weight:600;color:var(--ink)}
+.wa-tools-g dd{margin-top:2px;font-size:17px;line-height:1.4;color:var(--ink);text-wrap:balance}   /* no tool left alone on a last line (Xactimate at 1440, Zelle at 393): Chrome 155's pretty left both, balance evens a group's two or three lines */
+.wa-tools-g ul{margin:0;padding:0;list-style:none}
+.wa-tools-g li{display:inline}
+.wa-tools-g li:not(:last-child)::after{content:", "}
+.wa-tools-ask{margin-top:6px;font-size:17px;line-height:1.4;font-weight:600}
+.wa-tools-ask a{display:inline-block;padding-block:11px}   /* the trades' open door, 44px to tap, as Industry pages' "Don't see yours? Call us" */
+@media (max-width:699px){.wa-tools-g>div{padding-block:7px}}   /* the list's own phone rhythm (.wa-items li), so the page grows by the list and no more */
+@media (min-width:900px){
+  .wa-docs-g>.wa-tools{grid-column:1/-1;margin-top:24px}
+  .wa-tools-top{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);column-gap:48px;align-items:baseline}
+  .wa-tools-keep{margin-top:0}
+  .wa-tools-g>div{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);column-gap:48px;padding:12px 0}   /* the section's 4fr / 8fr and 48px, so the names start on the picture's x */
+  .wa-tools-g dd{margin-top:0}
+  .wa-tools-ask{margin-left:calc((100% - 48px) / 3 + 48px)}
+}

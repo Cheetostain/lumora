@@ -613,7 +613,7 @@
       rollTo(f('n'), shown.big, sum, money); shown.big = sum;
       if (f('per')) f('per').textContent = perWord(t);
       if (f('sub')) f('sub').textContent = t.sub.replace(/(\d) /g, '$1\u00a0');   // 2026-10-15: no-break space after a count
-      if (f('time')) { f('time').hidden = !t.time; if (t.time) f('time').innerHTML = tr('Time back for you or your\u00a0office: ', 'Usted o su oficina se ahorran ') + '<b>' + esc(t.time) + '</b>.'; }
+      if (f('time')) { f('time').hidden = !t.time; if (t.time) f('time').innerHTML = tr('Time back for you or your\u00a0office: ', 'Usted o su oficina se ahorran ') + '<b>' + esc(t.time) + '.</b>'; }   // space pass fixes (2026-10-25): the period inside the <b>, so Home's 32px time back on a computer has no small dot hanging at its baseline
       if (f('eq')) f('eq').innerHTML = t.rows.map(function (r, i) { return (i ? '<i>+</i>' : '') + '<span>' + money(r.usd) + ' <small>' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1)) + '</small></span>'; }).join('') +
         '<i>=</i><span class="r">' + money(sum) + ' <small>' + perWord(t) + '</small></span>';
       $$('.pen-ring', el).forEach(function (s) { requestAnimationFrame(function () { ring(s); }); });
