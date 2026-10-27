@@ -141,127 +141,8 @@
 .auto-list li{padding:11px 0;border-bottom:1px solid var(--rule);font-size:17px;line-height:1.4;color:var(--ink)}
 .auto-close{margin-top:18px;font-size:17px;max-width:34em}
 .auto-pic{width:100%}
-/* the picture on the English Home (code demo B, 2026-10-10): one window opens on new_jobs.py, the code we write; it runs once
-   in view (home.js), then the code fades and its run log rises into the owner's own screen. The window is a fixed height,
-   so nothing on the page moves while it runs: phone 388px (the Home budget, 11,000px at 390, has no more room), a column
-   480px+ wide 438px. Code in the OS monospace stack
-   (--printer), comments in the screen's sans so the plain English reads first. Bends SYSTEM.md's no code band, no mono and
-   one abstract format rules, scoped to one light code window inside a picture that rests on the owner's screen: Franco's
-   OK pending (code-demo/COMPARE.html). */
-.bm-win{--bm-h:388px;--lg-h:102px;--lh:18px;--fs:12px;--lg-fs:13px;--lg-lh:18px;--sc-fs:15px;--sc-lh:20px;--det-fs:13px;--hl-fs:18px;--row-p:8px;position:relative;height:var(--bm-h)}
-@container (min-width:480px){.bm-win{--bm-h:438px;--lg-h:116px;--lh:20px;--fs:14px;--lg-fs:14px;--lg-lh:19px;--sc-fs:17px;--sc-lh:23px;--det-fs:15px;--hl-fs:22px;--row-p:9px}}
-.bm-tt{flex:1;min-width:0;display:grid;margin-right:46px;text-align:center;font-size:13px;font-weight:600;color:#3a3a3a}   /* the file name while it is code, the shop's screen after */
-.bm-tt b{grid-area:1/1;font-weight:600;color:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bm-tt b+b,.bm[data-view=screen] .bm-tt b{opacity:0}
-.bm[data-view=screen] .bm-tt b+b{opacity:1}
-.bm-body{position:relative;height:calc(var(--bm-h) - 32px);overflow:hidden}
-pre.bm-code{/* ui-ok: mono the code picture is code (SYSTEM.md 16, the one code picture) */position:absolute;left:0;right:0;top:0;height:calc(var(--bm-h) - 32px - var(--lg-h));overflow:hidden;margin:0;padding:8px 0;background:#fff;font:400 var(--fs)/var(--lh) var(--printer);color:#24292f;counter-reset:ln;tab-size:4}
-.bm-code{-webkit-mask-image:linear-gradient(#000 80%,transparent);mask-image:linear-gradient(#000 80%,transparent)}   /* 2026-10-15: the code fades at its foot instead of stopping on a cut line */
-/* 2026-10-19: keyboard focus on the code showed nothing (the window clips the ring and the fade masks it), so the ring is a 3px ink
-   box drawn over the code area by its parent */
-.bm-code:focus-visible{outline:none}
-.bm-body:has(> .bm-code:focus-visible)::after{content:"";position:absolute;inset:0 0 var(--lg-h);border:3px solid var(--ink);pointer-events:none;z-index:1}
-.bm-code,.bm-code code{white-space:normal}     /* each line is its own block below; the newlines between them must not add rows */
-.bm-code code{display:block;font:inherit}
-/* a line too long for a 320 phone wraps, and the rest of it hangs 4 spaces past its own indent (--ind, set by home.js) */
-.bm-code .l{display:block;min-height:var(--lh);white-space:pre-wrap;overflow-wrap:anywhere;padding:0 10px 0 calc(38px + var(--ind,0ch));text-indent:calc(-38px - var(--ind,0ch));counter-increment:ln}
-.bm-code .l::before{content:counter(ln) / "";display:inline-block;width:38px;padding-right:12px;text-align:right;text-indent:0;color:#8b8b90;font-size:12px}
-.bm-code .l.ran::before{content:"\2713" / "";color:#1f7a3a;font-weight:700}   /* a finished step's call line: a tick in the margin */
-.bm-code .k{/* ui-ok: purple a code editor's keyword colour, inside the code picture */color:#7b3f9e}.bm-code .f{color:#0b57a8}.bm-code .s{color:#16602b}.bm-code .n{color:#8a4b00}   /* keywords, function names, the shop's file and label names, names set once */
-.bm-code .c,.bm-code .d{font-family:var(--sys);color:#3d3b36;font-size:1.06em;line-height:1}   /* line-height 1: the sans would make comment lines taller than code lines; upright since 2026-10-16 (Franco: no italic, pictures too), the sans sets comments apart from the code */
-.bm-code.is-run .l{opacity:.42}
-.bm-code .l.hot{/* ui-ok: stripe the code editor's own current-line marker, inside the code picture */opacity:1;background-color:#fff1b8;box-shadow:inset 3px 0 0 #111110}
-.bm[data-run=done][data-view=code] .bm-code{overflow-y:auto;overscroll-behavior:contain}
-.bm[data-view=screen] .bm-code{opacity:0;transform:translateY(-16px);visibility:hidden}
-/* the run log: its top strip shows under the code, four Waiting rows that tick on; on the owner's screen it fills the window */
-.bm-log{position:absolute;inset:0;padding:8px 14px 0;background:#f5f5f7;border-top:1px solid #dedee3;font-family:var(--sys);color:#1d1d1f;transform:translateY(calc(100% - var(--lg-h)))}
-.bm[data-view=screen] .bm-log{transform:none;background:#fff;border-top-color:#fff;padding:16px 18px 0}
-.bm-lk{position:relative;font-size:12px;line-height:18px;font-weight:600;color:#64646a}   /* 2026-10-16: sentence case, no tracking, as .t-label */
-.bm[data-view=screen] .bm-lk .bm-run{display:none}
-.bm-nx{position:absolute;right:0;top:0;opacity:0;visibility:hidden}   /* when it looks again: the code runs every 10 minutes, its docstring says so */
-.bm[data-view=screen] .bm-nx{opacity:1;visibility:visible}
-.bm-hl{display:grid;grid-template-rows:0fr;opacity:0}
-.bm-hl p{min-height:0;overflow:hidden;font-size:var(--hl-fs);line-height:1.3;font-weight:600;letter-spacing:-.01em;color:#111110}
-.bm[data-view=screen] .bm-hl{grid-template-rows:1fr;opacity:1;margin-top:4px}
-.bm-rows{margin:0;padding:0;list-style:none}
-.bm[data-view=screen] .bm-rows{margin-top:10px;border-top:1px solid #e6e6ea}
-.bm-rows li{display:grid;grid-template-columns:1.15em minmax(0,1fr);column-gap:.55em;font-size:var(--lg-fs);line-height:var(--lg-lh)}
-.bm-rows li>b,.bm-w{grid-area:1/2;font-weight:500;color:inherit;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bm-w{color:#8b8b90}
-.bm-rows li:not(.on)>b,.bm-rows li.on>.bm-w{display:none}
-.bm-rows svg{width:1.15em;height:1.15em;margin-top:calc((var(--lg-lh) - 1.15em)/2)}
-.bm-rows li:not(.on) circle{fill:#fff;stroke:#b4b4ba;stroke-width:1.5px;r:7.2px}
-.bm-rows li:not(.on) path{opacity:0}
-.bm[data-view=screen] .bm-rows li{font-size:var(--sc-fs);line-height:var(--sc-lh);padding:var(--row-p) 0;border-bottom:1px solid #e6e6ea}
-.bm[data-view=screen] .bm-rows li:last-child{border-bottom-color:transparent}   /* the footer's rule closes the list */
-.bm[data-view=screen] .bm-rows li>b{white-space:normal;font-weight:600}
-.bm[data-view=screen] .bm-rows svg{margin-top:calc((var(--sc-lh) - 1.15em)/2)}
-.bm-det{grid-column:2;display:grid;grid-template-rows:0fr;opacity:0}
-.bm-det>span{min-height:0;overflow:hidden;font-size:var(--det-fs);line-height:1.35;color:#5d5d62}
-.bm[data-view=screen] .bm-det{grid-template-rows:1fr;opacity:1;margin-top:2px}
-.bm-okb{display:inline-block;margin:4px 0 1px;padding:4px 12px;border-radius:6px;background:#0a63d1;color:#fff;font-weight:600;line-height:1.35}   /* his one tap, as his own app draws it */
-/* the footer names what made the list and opens the code, so a visitor who arrives after the run still knows a program sits
-   behind it (judges 2026-10-10) */
-.bm-foot{position:absolute;left:18px;right:18px;bottom:0;padding:9px 0 11px;border-top:1px solid #e6e6ea;font-size:13px;line-height:18px;opacity:0;visibility:hidden}
-.bm[data-view=screen] .bm-foot{opacity:1;visibility:visible}
-.bm-src{display:inline;position:relative;padding:0;border:0;background:none;font:inherit;color:#0b57a8;cursor:pointer;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}   /* 2026-10-15: the 44px tap area overlaps, so the footer keeps its 18px line and never covers the last row */
-.bm-ctl{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:20px}   /* round 3 (craft judge): 20px under the window at every width, as on a phone (it sat 8px under it on a computer, in its shadow) */
-.bm-ctl .samp{position:static}
-.bm-cap{margin-top:6px;font-size:15px;line-height:1.45;color:var(--muted);max-width:36em}
-.bm-again{display:inline-block;position:relative;margin-inline-start:2px;padding:0;border:0;background:none;font:inherit;font-weight:600;color:var(--ink);cursor:pointer}   /* its underline and hover are the links' (.u, 2026-10-19) */
-@media (hover:hover) and (pointer:fine){.bm-src:hover{text-decoration-thickness:2px}}
-/* 2026-10-19: both buttons keep their 44px tall tap areas (.bm-src 18 + 26, .bm-again 22 + 24) from a layer, not padding, so the focus
-   ring hugs the words instead of crossing the caption line above and the window's edge */
-.bm-again::before,.bm-src::before{content:"";position:absolute;inset:-12px 0}
-.bm-src::before{inset:-13px 0}
-html:not(.js) .bm-again,html:not(.js) .bm-foot{display:none}   /* both need JS (the footer is one button that opens the code; 2026-10-16 repair: with JS off it showed and did nothing) */
-@media (prefers-reduced-motion:no-preference){
-  /* to the owner's screen: the code fades out first (200ms), then the log rises and the rows grow (650ms); the headline, the
-     detail lines (60ms apart) and the footer fade in only once their rows have full height, so no frame shows clipped or
-     half-faded text (both judges, 2026-10-10) */
-  .bm[data-view=screen] .bm-code{transition:opacity 200ms var(--ease-out),transform 300ms var(--ease-move),visibility 0s linear 200ms}
-  .bm[data-view=screen] .bm-log{transition:transform 650ms var(--ease-move) 200ms,background-color 400ms var(--ease-out) 200ms,padding 650ms var(--ease-move) 200ms,border-color 400ms 200ms}
-  .bm[data-view=screen] .bm-rows{transition:margin 650ms var(--ease-move) 200ms,border-color 400ms 200ms}
-  .bm[data-view=screen] .bm-rows li{transition:font-size 650ms var(--ease-move) 200ms,line-height 650ms var(--ease-move) 200ms,padding 650ms var(--ease-move) 200ms}
-  .bm[data-view=screen] .bm-hl,.bm[data-view=screen] .bm-det{transition:grid-template-rows 650ms var(--ease-move) 200ms,margin 650ms var(--ease-move) 200ms,opacity 300ms var(--ease-out) 850ms}
-  .bm[data-view=screen] li:nth-child(2) .bm-det{transition-delay:200ms,200ms,910ms}
-  .bm[data-view=screen] li:nth-child(3) .bm-det{transition-delay:200ms,200ms,970ms}
-  .bm[data-view=screen] li:nth-child(4) .bm-det{transition-delay:200ms,200ms,1030ms}
-  .bm[data-view=screen] .bm-foot,.bm[data-view=screen] .bm-nx{transition:opacity 300ms var(--ease-out) 1100ms,visibility 0s 1100ms}
-  /* back to the code: the screen's words go first, then the log drops and the code returns */
-  .bm-code{transition:opacity 300ms var(--ease-out) 450ms,transform 400ms var(--ease-move) 350ms,visibility 0s}
-  .bm-log{transition:transform 500ms var(--ease-move) 150ms,background-color 300ms var(--ease-out) 150ms,padding 500ms var(--ease-move) 150ms,border-color 300ms 150ms}
-  .bm-rows{transition:margin 500ms var(--ease-move) 150ms,border-color 300ms 150ms}
-  .bm-rows li{transition:font-size 500ms var(--ease-move) 150ms,line-height 500ms var(--ease-move) 150ms,padding 500ms var(--ease-move) 150ms}
-  .bm-hl,.bm-det{transition:opacity 150ms var(--ease-out),grid-template-rows 500ms var(--ease-move) 150ms,margin 500ms var(--ease-move) 150ms}
-  .bm-foot,.bm-nx{transition:opacity 150ms var(--ease-out),visibility 0s 150ms}
-  .bm-code .l{transition:opacity var(--t-enter) var(--ease-out),background-color var(--t-enter) var(--ease-out)}
-  .bm-tt b{transition:opacity 300ms var(--ease-out)}
-  .bm[data-run=running] .bm-rows li.on>b{animation:bm-in var(--t-enter) var(--ease-out) both}   /* job: cause and effect, the row ticks on as its step ends */
-}
-@keyframes bm-in{from{opacity:0;transform:translateX(-4px)}}
-/* 2026-10-15: under 324px wide the English rows wrap too and the fourth ran under the window's foot (320: "Invoice saved in
-   QuickBooks" cut), so the window steps taller, each step its widest wrap plus 8px, as the Spanish does below; :lang(es) wins there */
-@container (max-width:323px){.bm-win{--bm-h:412px}}
-@container (max-width:319px){.bm-win{--bm-h:452px}}
-@container (max-width:311px){.bm-win{--bm-h:470px}}
-@container (max-width:303px){.bm-win{--bm-h:492px}}
-@container (max-width:299px){.bm-win{--bm-h:512px}}
-@container (max-width:287px){.bm-win{--bm-h:532px}}
-/* the Spanish Home's code picture (2026-10-11; it replaced the work order PDF and spreadsheet pair, whose .ap- rules are in
-   "backup ORIGINAL-2026-10-11/"). Every rule above applies; Spanish's longer lines need two more. The owner's screen puts
-   the date and "Revisa cada 10 min" on one line when they fit (360px and up) and wraps the second under the first when they
-   don't, where English keeps its absolute corner. */
-.bm[data-view=screen] .bm-lk{display:flex;flex-wrap:wrap;justify-content:space-between;column-gap:12px}   /* 2026-10-15: English too; at 320 the date ran into "Next check" with no space */
-.bm[data-view=screen] .bm-nx{position:static}
-/* under 368px wide the Spanish lines wrap more than the 388px window holds (measured 2026-10-11: at 360 the header takes two
-   lines, at 320 every row does and the footer too), so the window is taller there, each step sized to its widest wrap plus
-   8px; from 368px up, and at 390 where R9 measures the page, it stays 388px like the English. */
-@container (max-width:335px){:lang(es) .bm-win{--bm-h:410px}}
-@container (max-width:319px){:lang(es) .bm-win{--bm-h:484px}}
-@container (max-width:299px){:lang(es) .bm-win{--bm-h:546px}}
-:lang(es) .bm .nw{white-space:nowrap}   /* a date ("12 de oct.") and a phone number never split at a wrap */
-:lang(es) .bm-src{text-align:start}     /* the footer link wraps under 340px; a button would centre its second line */
+/* the code picture that stood here (code demo B, 2026-10-10 to 2026-10-27) moved to How it works with its rules (Franco, Oct 27);
+   What we automate's picture is the PDF that files itself, whose rules sit at the end of this file */
 
 /* 2026-10-23 (Franco: Home names mixed examples and a "Don't see yours?" line, D40; a shorter Home, D39): the three lines and the
    trade index left Home (the leak lines live on Industries). The one line shows at every width, the examples under it, then the call
@@ -375,7 +256,7 @@ html:not(.js) .hm4-walk .stop:not(.stop-q) .crop-m{height:calc(var(--crop-h) + v
 @media (max-width:899px){.n4 .crop-m{--crop-air:48px;--crop-air-t:24px;padding:var(--crop-air-t) var(--crop-air) 0;margin:calc(-1*var(--crop-air-t)) calc(-1*var(--crop-air)) 0}
   html:not(.js) .n4 .crop-m{height:calc(var(--crop-h,388px) + var(--crop-air-t))}}
 @media (max-width:699px){.hm4-walk .stop:not(.stop-q) .crop-m,.n4 .crop-m{--crop-air:16px;--crop-air-t:10px}}
-@container (min-width:421px){.hm4-walk .pair .xl td{white-space:nowrap}}
+@container (min-width:421px){.hm4-walk .pair .xl td{white-space:nowrap}.hm4-walk .pair .xl td:last-child:not(.nw){white-space:normal}}   /* reviewers' round: the last column wraps where one line would run past the window (Spanish Water stop 3 ran 63px out at 1440) */
 @container (max-width:300px){:lang(es) .hm4-walk .solo .dt{font-size:13px}:lang(es) .hm4-walk .solo .dt :is(td,th):not(:last-child){padding-right:4px}:lang(es) .hm4-walk .solo .dt .st{padding-inline:6px}}
 @media (min-width:760px){.hm4-walk .stop:not(.stop-q) .stop-body{grid-template-columns:minmax(0,1.5fr) minmax(0,.7fr)}
   .hm4-walk .stop:not(.stop-q):nth-child(even) .stop-body{grid-template-columns:minmax(0,.7fr) minmax(0,1.5fr)}}   /* motion restore, 2026-10-18: stop 2's notes come first (system.css), so the picture keeps the wide column, as on the Oct 16 Home */
@@ -477,6 +358,7 @@ html:not(.js) .hm4-walk .pic.has-seg>.samp{top:auto;bottom:0}
   .stop-q .qa .qt td.qid,.stop-q .qa .qt th.qh,.stop-q .qa .newq{display:none}
   .stop-q .qa .qt td,.stop-q .qa .qt th{padding-inline:4px}   /* 2026-10-17 polish: 4px, so a job keeps one line where it can */
   .stop-q .qa .qt td.stc{padding-right:8px}   /* the pencil ring round "Draft, 3 days" reaches 7px past its pill: 5px of air before the Total */
+  .stop-q .qa .qt td.stc:has(.pc){padding-left:12px}   /* reviewers' round: the ring round "Not sent" reached 6px past its cell's left side */
   .stop-q .qa .qt td:first-child,.stop-q .qa .qt th:first-child{padding-left:12px}
   .stop-q .qa .qt td.num,.stop-q .qa .qt th.num{padding-right:12px}
   .stop-q .qa .qt .cu{width:100%;max-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -713,11 +595,11 @@ html:not(.js) .hm4-walk .pic.has-seg>.samp{top:auto;bottom:0}
   /* 2026-10-17, shadows on a phone (Franco on his iPhone: "overbearing", "over buttons and text"): every picture's shadow fades out
      before the next words or control. On a small screen a lift reads deeper, so Home's phone pictures take the shorter one
      (system.css --lift, 34px of reach, faded by 19px) and keep their air: the clipboard's lift ends above the picker; the code
-     window takes --lift (the strip's Excel window did too, until the strip left Home, 2026-10-24), and the code window's Your screen / The code buttons sit 20px under it; stop 1's
+     window took --lift (the strip's Excel window did too, until the strip left Home, 2026-10-24) until it moved to How it works (2026-10-27),
+     and What we automate's PDF picture takes --lift on every window and notice at every width; stop 1's
      quote card, a window over a window, keeps --lift-hi without its deep layer, with 44px of paper before the margin note.
      shadow_air.py measures every one at 375 and 393 in WebKit and Chromium */
   .hm4-hero .board{box-shadow:inset 0 1px 0 rgba(255,244,222,.28),inset 0 0 0 1px rgba(70,48,20,.22),0 3px 0 var(--board-edge),0 4px 1px rgba(40,28,12,.22),0 16px 24px -10px rgba(58,47,28,.30),0 8px 12px -8px rgba(0,0,0,.26)}
-  .bm-win{box-shadow:var(--lift)}
   .stop-q .qcard{box-shadow:var(--lift-hi)}
   .stop-q .stop-body{gap:44px}
 }
@@ -1146,3 +1028,371 @@ html:not(.js) .hm4-walk .pic.has-seg>.samp{top:auto;bottom:0}
 /* the night pair, from 900px: the log sits at the phone's middle, so the dark under it is even with the dark over it (it hung 167px
    short of the phone's foot, holding only its Sample tag: Franco's screenshot 15). The phone fits one screen at every computer size */
 @media (min-width:900px){.n4:not([data-layout]) .n4-figs{align-items:center}}
+
+/* ================================================================================================================================
+   The last pass (2026-10-26, Franco's picks from last-pass-2026-10-26/PASS.html): items 1 to 20 and 22, with the judges' "before it
+   ships" notes, Offices as the default sample (26), the owner photo in place of item 23, and Plumbing's own quotes list as QuickBooks'
+   estimates (28). Ported from the prototype's last-pass.css with its chg- switches taken off. Type stays on the page's one scale
+   (15, 17, 20, 24, 32, 44, 64; picture text 12px and up), red means money lost only, and pencil is #4F4C45. Before: "home
+   ORIGINAL-2026-10-26-pass.css" beside this file. Out, as Franco said: 21 (the dot grid stays), 23 as proposed, 24, 25
+   ================================================================================================================================ */
+
+/* 1 picker-row (computer): the sample businesses as a row of plain tabs. "Your business:" then four names and More, 44px tall like
+   the closed field it replaces, so nothing below it moves. Not nav links: 15px, no underline on hover, one ink underline under the
+   pick only, sliding with the Before / After marker's 260ms motion. The label stays: a tab the row can't hold steps into More's list
+   first (judges: the row read as a second menu without it), and a pick from that list puts its name where More was */
+.pk-tabs{display:none}
+@media (min-width:900px){
+  html.js .hm4-hero .pk-field{display:none}
+  html.js .hm4-hero .pk-tabs{position:relative;display:flex;align-items:stretch;column-gap:16px;height:45px;border-bottom:1px solid var(--rule);white-space:nowrap}
+  .pk-tabs-k{align-self:center;flex:none;font-size:15px;font-weight:500;color:var(--pencil);margin-right:-6px}
+  :is(.pk-tab,.pk-mo){display:inline-flex;align-items:center;flex:none;height:44px;padding:0;border:0;border-radius:0;background:none;font:500 15px/1.2 var(--font);color:var(--ink);cursor:pointer}
+  :is(.pk-tab[aria-pressed=true],.pk-mo.is-pick){font-weight:600}
+  .pk-tab[hidden]{display:none}
+  .pk-mo{margin-left:auto}
+  .pk-mo::after{content:"";display:inline-block;width:12px;height:8px;margin-left:8px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1.5 1.5L6 6l4.5-4.5' fill='none' stroke='%23111110' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px 8px no-repeat}
+  .pk-mo[aria-expanded=true]::after{transform:scaleY(-1)}
+  .pk-ul{position:absolute;left:0;bottom:-1px;width:1px;height:2px;background:var(--ink);transform-origin:0 50%;transform:scaleX(0);pointer-events:none;opacity:0}
+  .pk-tabs.is-set .pk-ul{opacity:1}
+  :is(.pk-tab,.pk-mo):focus-visible{outline-offset:-3px}
+}
+@media (min-width:900px) and (prefers-reduced-motion:no-preference){html:not(.still) .pk-ul{transition:transform 260ms var(--ease-move)}}
+@media (min-width:900px) and (hover:hover) and (pointer:fine){:is(.pk-tab[aria-pressed=false],.pk-mo:not(.is-pick)):hover{color:var(--pencil)}}
+
+/* 4 hero-groups (computer): nine blocks read as three groups, same words. The vision line its own step (24px, 600, ink), broken as
+   "run the same / whether you're there or not" (judges); the price and the money back one block under a 1px ink rule, both 17px
+   ink; the facts one plain line at 400 under a hairline, so they stop outweighing the price. On a laptop under 861px tall the gaps
+   close, so the money back keeps the first screen at 1280 x 800 and 1366 x 768 */
+@media (min-width:900px){
+  .hm4-hero .hero-g{row-gap:18px}
+  .hm4-hero .hero-vision{margin-top:14px;font-size:24px;font-weight:600;line-height:1.25;letter-spacing:-.012em;color:var(--ink);max-width:24em}
+  .hm4-hero .hero-vision>span{display:block}
+  .hm4-hero .hero-act{margin-top:6px}
+  .hm4-hero .hero-terms{gap:8px;padding-top:16px;margin-top:6px;border-top:1px solid var(--ink)}
+  .hm4-hero .hero-terms :is(.price,.hero-mb){font-size:17px;color:var(--ink)}
+  .hm4-hero .hero-g>.facts4{margin-top:4px}
+  .hm4-hero .facts4 ul{padding-top:12px;border-top:1px solid var(--rule);font-weight:400}
+}
+/* the reviewers' round (craft, nice): the facts at 400 on a phone too (they computed 500 there, so the same lines had two weights),
+   and the vision line breaks after "run the same" on a phone wide enough to hold it on one line, as a computer does */
+.hm4-hero .facts4 ul{font-weight:400}
+@media (min-width:390px) and (max-width:899px){:lang(en) .hm4-hero .hero-vision>span{display:block}}   /* 390 up, English: each half holds one line there (at 375 the first half took two, and the Spanish halves took three lines in all) */
+@media (min-width:900px) and (max-height:860px){
+  .hm4-hero .hero-g{row-gap:14px}
+  .hm4-hero .hero-vision{margin-top:10px}
+  .hm4-hero .hero-act{margin-top:0}
+  .hm4-hero .hero-terms{margin-top:0;padding-top:12px}
+}
+@media (min-width:1180px) and (max-height:920px){:lang(es) .hm4-hero .hero-g{row-gap:14px}:lang(es) .hm4-hero .hero-vision{margin-top:8px}}
+
+/* 10 phone-air (phone): 16px from the headline to the lede (6px before) and the Spanish lede at the English size, paid for in six
+   small steps under it, so row 1 of the sheet and its ring stay where they were over the call bar */
+@media (max-width:899px) and (max-height:700px){
+  .hm4-hero h1{line-height:1.05}
+  :root .hm4-hero .t-lede{margin-top:16px}   /* :root outweighs the short phone's ":lang(en) ... {margin-top:6px}" above, as the prototype's html.chg-phone-air did */
+  .hm4-hero{padding-top:20px}   /* 20, not the prototype's 18: Franco's iPhone round keeps 20px of air under the header (iphone_check item 11); the 2px come off the picker's foot */
+  .hm4-hero .hero-tool{margin-top:6px}
+  :lang(es) .hm4-hero .hero-tool{margin-top:8px}
+  .hm4-hero .pk{margin-bottom:3px}
+  .hm4-hero .clip{padding-top:10px}
+  .hm4-hero .sheet{padding-top:25px}
+  :lang(es) .hm4-hero .sheet{padding-top:29px}
+  .hm4-hero .lh{padding-bottom:5px}
+  .hm4-hero .sh-rows li:first-child{padding-top:8px}
+}
+@media (min-width:390px) and (max-width:899px) and (max-height:700px){:lang(es) .hm4-hero .t-lede{font-size:16px}}
+/* 320 x 568, English: the headline keeps item 10's 16px and the header its 20px (iphone_check item 11), so the letterhead's size line
+   can't end over the call bar; the clipboard starts a step lower instead and the line sits whole under the bar, the title and its
+   Sample stamp clear above it (pass-build-2026-10-26/logs/probe-320.log; before, the hero started at 10px under the header) */
+@media (max-width:899px) and (max-height:600px){:lang(en) .hm4-hero .clip{padding-top:21px}}
+/* Offices, Home's default sample since the last pass (item 26): its rows' names take one line beside their circled numbers, so on a
+   phone each row is a little taller and the call bar lands between two rows at every first-screen size check.py measures
+   (pass-build-2026-10-26/build/probe_first.py printed where each line sat) */
+@media (max-width:899px) and (min-height:701px){.hm4-hero .sh-rows li{padding-block:16px}}
+@media (min-width:420px) and (max-width:899px) and (min-height:900px){:lang(es) .hm4-hero .sh-rows li{padding-block:22px}}
+@media (max-width:899px) and (max-height:700px){.hm4-hero .sh-rows li:not(:first-child){padding-block:22px}.hm4-hero .sh-rows li:first-child{padding-bottom:22px}}
+@media (max-width:899px) and (min-height:701px){.hm4-hero .t-lede{margin-top:16px}.hm4-hero .pk{margin-bottom:4px}}
+/* Franco on his iPhone, 2026-10-27 (393 x 659 in Safari): "Home page is a little too tight on phone... just a tiny bit more". The
+   steps between the lede, Call us, the picker and the clipboard go from 6, 6 and 3px to 12, 12 and 7 (Spanish 10, 8 and 3 to 16, 14
+   and 7), 16px in all; row 1's formula still ends over the call bar (595 of 603 at 393 x 659, Spanish 607 of 611 at 375 x 667).
+   320 x 568 keeps its own steps (its letterhead rule above) */
+@media (max-width:899px) and (min-height:601px) and (max-height:700px){
+  :root:lang(en) .hm4-hero .hero-act{margin-top:12px}
+  :root:lang(es) .hm4-hero .hero-act{margin-top:16px}
+  :root:lang(en) .hm4-hero .hero-tool{margin-top:12px}
+  :root:lang(es) .hm4-hero .hero-tool{margin-top:14px}
+  :root .hm4-hero .pk{margin-bottom:7px}
+}
+
+/* 11 chips-peek (phone): the screen's edge cuts a chip near its middle, never its last letter (home.js sets the side padding, 8 to
+   16px, from the chips' own widths); scroll snap lands a swipe on a chip's edge. "Your business:" may set on two short lines inside
+   the row's 44px where that helps the cut */
+@media (max-width:899px){
+  .hm4-hero .pk .chip{padding-inline:var(--pk-cx,8px)}
+  .hm4-hero .pk.pk-q2 .pk-q{width:min-content;white-space:normal;line-height:1.15}
+}
+
+/* 18 sheet-map: each problem row on the walk sheet links to its stop, with the stop's thin circled number (a counter: no words
+   added). Only the problem name underlines on hover; the figure keeps its red. The whole row is the tap target */
+.hm4-hero .sh-rows{counter-reset:sh-stop}
+.hm4-hero .sh-rows>li{position:relative;counter-increment:sh-stop}
+.sh-go{color:inherit;text-decoration:none}
+.sh-go::before{content:counter(sh-stop);display:inline-grid;place-items:center;width:22px;height:22px;margin:-4px 7px -4px 0;vertical-align:1px;border:1.3px solid var(--pencil);border-radius:52% 48% 50% 46%/48% 52% 46% 54%;font-size:13px;font-weight:600;line-height:1;color:var(--ink)}
+@media (max-width:429px){.sh-go::before{width:19px;height:19px;margin-right:4px;font-size:12px}}
+@media (max-width:374px){:lang(es) .sh-go::before{display:none}}   /* the Spanish row 1 took a third line beside the number under 375 */
+.sh-go::after{content:"";position:absolute;inset:0;border-radius:2px}
+.sh-go:focus-visible{outline:none}
+.sh-go:focus-visible::after{outline:3px solid var(--ink);outline-offset:-2px}
+@media (hover:hover) and (pointer:fine){.sh-go:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}}
+#walk .stops>.stop{scroll-margin-top:calc(var(--hdr-h) + 16px)}   /* a tap lands with the stop's title at the top of the screen */
+
+/* 8 stop-head (computer, 1000px and up): stop 1's Before / After switch moves up under its title, the Sample stamp right after it
+   (home.js moves them, Plumbing's own stop and every sample's generated stop 1 alike; under 1000px they ride with the picture) */
+@media (min-width:1000px){
+  .hm4-walk .stop-q.is-head{grid-template-rows:auto auto auto}
+  .hm4-walk .stop-q.is-head>.stop-ctl{grid-area:2/1;display:flex;align-items:center;gap:20px;margin-top:24px}
+  .hm4-walk .stop-q.is-head .stop-body>.stop-notes{grid-area:1/2/3/3}
+  .hm4-walk .stop-q.is-head .stop-body>.pic{grid-area:3/1/4/3;padding-top:0;margin-top:32px}
+  .hm4-walk .stop.is-head:not(.stop-q)>.stop-ctl{display:flex;align-items:center;gap:20px;margin-top:24px}
+  .hm4-walk .stop.is-head:not(.stop-q) .stop-body>.pic.has-seg{padding-top:28px}
+  .hm4-walk .stop.is-head .stop-ctl>.seg{position:relative;top:auto;left:auto;bottom:auto}
+  .hm4-walk .stop.is-head .stop-ctl>.samp{position:static}
+}
+
+/* 7 data-line: "We never ask for a shared password..." sits under the walk end's call, where an owner decides (moved from How it
+   works' walk step, not added) */
+.walk-dl{max-width:28em;margin-top:8px;font-size:17px;line-height:1.45;color:var(--ink);text-wrap:pretty}
+
+/* 6 night-up: How it works and the close are both paper now, so they meet at the perforated seam, its holes the rule grey */
+.hm4-close.seam{border-top:0}
+
+/* 22 who-index (computer only; a phone keeps today's list) with the owner photo (in place of item 23). Computer: who on the left,
+   the photo on the right, then the nine kinds of business as a large index on thin muted pine rules, the ninth ("Don't see yours?
+   Call us") the same size, so the grid reads open. Phone: the photo under the examples at gutter width, where the review-only
+   planning slot was, then today's list */
+.who-photo{grid-area:photo;margin:0;min-width:0}
+.who-photo img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;object-position:50% 50%;border-radius:2px}
+.who-ix .who-g{grid-template-areas:"h" "one" "ex" "photo" "go"}
+@media (min-width:900px){
+  .who-ix .who-g,html.review .who-ix .who-g{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:". . photo" "h h photo" "one one photo" "ex ex photo" ". . photo" "go go go";grid-template-rows:1fr auto auto auto 1fr auto;column-gap:28px;row-gap:20px;align-items:start}   /* the words at the photo's middle: no blank run beside it */
+  /* the reviewers' round (craft judge: the photo's left edge sat off the index's three columns under it, so it read as dropped
+     in): the band takes the index's own three columns and gap, the words across the first two and the photo in the third as a
+     4:5 portrait, on her (the file is the 3:2 frame a phone shows whole) */
+  .who-ix .who-photo img{aspect-ratio:4/5;object-position:70% 50%}   /* 2026-10-27: the Rawpixel bakery owner stands right of centre; 70% keeps his face and the tablet in the 4:5 crop */
+  .who-ix .who-ex{font-size:20px;line-height:1.35}
+  .who-ix .who-go{padding-top:20px}
+  .who-ix .who-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:28px}
+  .who-ix .who-links li{border-top:1px solid rgba(194,203,191,.5)}
+  .who-ix .who-links a{display:flex;align-items:flex-start;min-height:48px;height:100%;padding:14px 8px 18px 0;font-size:24px;line-height:1.2;font-weight:500;text-decoration:none;text-wrap:balance}
+  .who-ix .who-links a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+  .who-ix .who-pages{gap:10px}
+  .who-ix .who-all{margin-top:6px}
+}
+
+/* 12 two-tone: the claim in ink, its second sentence in the muted second tone, one heading. The walk's "Here's where." (home.js
+   wraps it, since system.js writes the heading on every pick); the close's "Tell us what eats your week." on its own line on a
+   computer (judges); a phone keeps it as the line under the heading, where the one-heading version ran two lines longer */
+.close-h>.close-two{display:block;color:var(--muted)}
+.close-lede>.close-two-l{display:none}
+#walk .walk-h .walk-where{color:var(--muted)}
+@media (max-width:699px){.close-h>.close-two{display:none}.close-lede>.close-two-l{display:block}}
+
+/* 15 close-quiet (computer): the close steps down to 44px, one step under the headline, as the phone already does; the hand-drawn
+   arrow to Call us keeps its place and shape, drawn in pencil (red means money lost only since Oct 17) */
+@media (min-width:700px){.hm4-close .close-h{font-size:var(--fs-44);line-height:1.02;letter-spacing:-.022em}}
+.hm4-close .pen-arrow{stroke:var(--pencil);stroke-width:2.2px}
+
+/* 17 signature: his own signature over the typed name, which stays for reading and screen readers. Off until his real signature
+   exists: signature.py puts the markup in only when system/assets/signature.png is there (never a stand-in) */
+.letter-pen{display:block;width:160px;margin:20px 0 -6px -2px}
+.letter-pen img{display:block;width:160px;height:auto}
+.letter .letter-pen+.letter-sig{margin-top:2px}
+
+/* 19 proof-slot: a designed place for the first client who agrees in writing, between How it works and the close. Review only (R8
+   keeps empty slots off lumorafl.com); it ships once everything in it is real, cutting as many words as it adds */
+.hm4-proof{display:none}
+html.review .hm4-proof{display:block;padding-block:clamp(40px,5vw,72px)}
+.proof-g{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:center}
+html.review .proof-ph{width:100%;aspect-ratio:4/5}
+/* the band is the figure.slot itself (reviewers' round), so it drops the slot's own box and keeps it for the photo place inside */
+html.review .slot.proof-slot{display:block;padding:clamp(40px,5vw,72px) 0;border:0;border-radius:0;background:none;color:inherit;font-size:inherit;line-height:inherit;text-align:left}
+html.review .proof-slot .proof-ph{display:grid;align-content:center;justify-items:center;gap:4px;padding:10px;border:1.5px dashed var(--pencil);border-radius:6px;background:var(--sheet);color:var(--pencil);font-size:13px;line-height:1.3;text-align:center}
+.proof-t{display:grid;gap:8px;max-width:34em}
+.proof-t p{font-size:17px;color:var(--muted)}
+.proof-t .proof-who{font-size:24px;line-height:1.25;color:var(--ink)}
+.proof-t .proof-res{padding:10px 12px;border:1.5px dashed var(--pencil);border-radius:6px}
+@media (max-width:599px){.proof-g{grid-template-columns:minmax(0,120px) minmax(0,1fr)}}
+
+/* 16 tap-44 (phone): the hero's "the tools you have" and the footer's bottom links get a 44px tap area with no change to how they
+   look; the walk intro's links stay as they are (links inside a sentence are exempt, and the spacing made it look double spaced) */
+@media (max-width:899px){.hm4-hero .t-lede a.u{padding-block:13px}}   /* the footer's links already carry 44px tap layers (a::before) */
+
+/* 28 Plumbing's own stop 1 as QuickBooks' estimates list: its two tabs over the table (no sidebar, search or filter row), its
+   typed-capital column names, the status word with its grey second line, Edit and the action on a computer, and its count in the
+   footer; the estimate in front as QuickBooks prints it. The pencil schedule behind stays */
+.stop-q .qa .qb-tabs{margin:0;padding:12px 16px 0;border-bottom:1px solid var(--app-line)}
+.stop-q .qt .qs{white-space:nowrap}
+.stop-q .qt td small .chg.tr{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:0 6px}
+.stop-q .pair[data-state=before] td small .chg.tr>.was{transform:none}
+.stop-q .qt td small .pc{display:inline-block}
+.stop-q .qt .qb-act{color:#0a63d1;font-size:12px}
+.stop-q .qfoot .qb-n{flex:none;white-space:nowrap}
+.stop-q .qc-h{font-size:15px;font-weight:700;color:#111110}
+.stop-q .qcard .who{line-height:1.45}
+.stop-q .qc-cols{display:flex;justify-content:space-between;margin:12px 0 0;font-size:12px;font-weight:600;color:var(--app-mut)}
+.stop-q .qcard .qc-cols+ul{margin-top:6px}
+
+/* ======================================================= What we automate's picture: the PDF that files itself (Franco's pick B,
+   Oct 27: "these animations are beautiful... this looks real. looks trustworthy, its understandable instantly"; "i really like
+   the B animation. one more time."). Ported unchanged from the trial's anim.css (solution-anim-2026-10-26/prototype), B's rules
+   only, and kept last in this file so the cascade is the trial's (system.css, home.css, then these). His two changes: the last
+   line says hours with no number (the markup) and the tooth mark on the letterhead (.pv-mark, the one rule added).
+   Each tool keeps its own look inside its window (SYSTEM.md 17: words, columns, order and formats of Google Sheets and Gmail,
+   never a logo). What these rules draw by default is the FINISHED frame: JS off, reduced motion and ?still show it. The first
+   frame lives only under html.js with motion allowed (the end of this block); home.js orderPic() plays it and adds .done.
+   The generic names (.val, .tint, .sf, .ck, .mn) are the picture's own: nothing else on Home uses them.
+   Height: phone 506px against the code picture's 512, computer 404px against its 540 (the trial's measure, logs/today.json). */
+.sa{container:sa / inline-size;margin:0}
+.sa-stage{position:relative}   /* nothing in the picture changes size while it plays: the stage takes its own height */
+.sa-fx{position:absolute;inset:0;pointer-events:none;z-index:6}
+.sa-ctl{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:10px}
+.sa-ctl .samp{position:static}
+.sa-ctl .pause{color:var(--ink)}
+.sa-ctl .pause.is-paused .pi{width:0;height:0;border:0;border-left:12px solid currentColor;border-top:7px solid transparent;border-bottom:7px solid transparent}
+html.still .sa-pause,.sa.still .sa-pause{display:none}
+html.still .sa-ctl,.sa.still .sa-ctl{justify-content:flex-end}
+@media (prefers-reduced-motion:reduce){.sa-pause{display:none}.sa-ctl{justify-content:flex-end}}
+.sa-cap{margin-top:6px;font-size:15px;line-height:1.45;color:var(--muted);max-width:36em}
+
+/* every window inside the picture: the house's Mac title bar, a little smaller (the windows here are 150 to 360px wide) */
+.sa .scr-win{box-shadow:var(--lift)}
+.sa .win-tb{height:26px;gap:6px;padding:0 10px}
+.sa .win-tb i{width:10px;height:10px}
+.sa .win-tb span{margin-right:0;padding-left:4px;text-align:left;font-size:12px}
+@container sa (min-width:480px){.sa .win-tb{height:28px}.sa .win-tb span{text-align:center;margin-right:44px;padding-left:0}}
+
+/* a value and its box: the box is the value's own border, 1.5px, 6px round, about 4px off the words (SYSTEM.md 6: 3 to 4.5px
+   of air). Transparent until a box is drawn, so nothing moves when it appears. 13px on a phone, 12px under 340px of picture */
+.val{position:relative;display:inline-block;padding:2px 5.5px;border:1.5px solid transparent;border-radius:6px;font-size:13px;line-height:18px;white-space:nowrap}
+@container sa (min-width:480px){.val{font-size:14px;line-height:19px}}
+@container sa (max-width:339px){.val{font-size:12px;line-height:17px;padding-inline:4.5px}}
+.val>svg{position:absolute;left:-1.5px;top:-1.5px;max-width:none;overflow:visible;pointer-events:none}   /* max-width: the site's svg rule squeezed the box 3px */
+.val>svg path{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* the PDF: the viewer and a printed page */
+.pdfv{container:pv / inline-size;display:flex;flex-direction:column;min-width:0;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--lift);font-family:var(--sys)}
+.pv-tb span{margin-right:0!important;text-align:left!important;padding-left:4px!important}
+.pv-pg{flex:none;font-style:normal;font-size:12px;color:#6e6e73;white-space:nowrap}
+@container pv (max-width:229px){.pv-pw{display:none}}   /* a narrow viewer says "1 of 1", so the file's name stays whole */
+@container pv (max-width:259px){:lang(es) .pv-pw{display:none}}
+.pv-g{flex:1 1 auto;min-height:0;overflow:hidden;background:#e4e4e2;padding:6px 8px 0}   /* the viewer's grey ground; the page crops at its foot */
+.pv-p{aspect-ratio:8.5/11;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.16),0 0 0 1px rgba(0,0,0,.04);padding:9px 12px 10px;font-family:Arial,var(--sys);color:#202124}
+.pv-p p{margin:0}
+.pv-hd{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:2px 10px;padding-bottom:6px;border-bottom:1px solid #d6d6d6}
+.pv-biz{display:grid;min-width:0;font-size:12px;line-height:15px;color:#5f6368}
+.pv-biz b{font-size:13px;line-height:16px;color:#111110}
+.pv-biz span{white-space:nowrap}
+/* Franco, Oct 27: "obvs add the lil logo to the invoice... just to make it a bit more yk realistic looking". Main Street Dental's
+   own mark, a tooth in one ink line, on its name's line as a small letterhead sets it. It takes no height (14px in the name's
+   16px line) and 17px of width (a 22px mark beside both lines grew the letterhead and pushed the Spanish "Formulario de pedido"
+   under the business at 360) */
+.pv-biz b{display:flex;align-items:center;gap:4px}
+.pv-mark{flex:none;width:13px;height:14px;fill:none;stroke:#111110;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+/* the street line starts under the name, both lines to the right of the mark, as a letterhead locks them up (reviewers' round,
+   Oct 27: it started under the tooth and read as a bullet). 17px = the mark's 13 and its 4px gap. Measured at 320 to 412 and 1440
+   (tools/mark_indent.py): only the Spanish at 360 changes, its "Formulario de pedido" dropping under the business as at 320 and
+   340, with the Total's box still 21.7px clear of the viewer's foot */
+.pv-biz>span{padding-left:17px}
+.pv-doc{flex:none;font-size:13px;line-height:16px;font-weight:700;color:#111110;white-space:nowrap}
+.pv-f{display:grid;grid-template-columns:minmax(0,1.22fr) minmax(0,1fr);gap:0 10px;margin-top:6px}
+/* one column where two no longer keep 6px between the email and the right column's labels (reviewers' round, Oct 27: 3.2px
+   in English at 360, -1.3px in Spanish at 375; the trial measured 393 and 1440 only). check.py order_fields_problems holds it */
+@container pv (max-width:335px){.pv-f{grid-template-columns:minmax(0,1fr)}}
+@container pv (max-width:349px){:lang(es) .pv-f{grid-template-columns:minmax(0,1fr)}}
+/* on a phone, one column stacks six rows and the viewer crops the page at its foot: the Phone row, never boxed or flown, stays
+   off, so the Total's box sits whole (English 320 and 340 cut it 8.6px). A computer's 244px viewer has room and keeps it */
+@container sa (max-width:335px){.pv-c:first-child>:is(dt,dd):nth-of-type(3){display:none}}
+@container sa (max-width:349px){:lang(es) .pv-c:first-child>:is(dt,dd):nth-of-type(3){display:none}}
+.pv-c{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1px 6px;margin:0;align-items:center}
+.pv-c dt{font-size:12px;line-height:16px;color:#5f6368;white-space:nowrap}
+.pv-c dd{margin:0;min-width:0}
+.pv-c .val{padding-block:1.5px;font-size:12.5px;line-height:16px;color:#202124}
+.pv-c .val[data-from=total]{font-weight:700}
+@container sa (min-width:480px){.pv-p{padding:12px 14px}.pv-c .val{font-size:13px}}
+/* the boxes the page keeps once its values have left: ink, as drawn (a mark on the paper, not an input field) */
+.sa[data-v=b] .val.bx{border-color:var(--ink)}
+
+/* the copy that travels (home.js orderPic flyer()): the same box and words as the value it leaves, in the stage's top layer */
+.sa-fly{display:block;opacity:0;will-change:transform}
+.fly-in{position:relative;display:block;width:100%;height:100%}
+.fly-sh{position:absolute;inset:0;border-radius:6px;box-shadow:var(--lift-hi);opacity:0}
+.fly-bg{position:absolute;inset:0;border-radius:6px;background:#fff;border:1.5px solid var(--ink)}
+.fly-t{position:relative;display:block;padding:2px 5.5px;border:1.5px solid transparent;font-family:Arial,var(--sys);color:#202124;white-space:nowrap}   /* size and padding copied from the value (home.js) */
+.fly-w,.sa .xl .v{display:inline-block;line-height:1}   /* tight word boxes, so Flip.fit scales a copy evenly onto its cell */
+.tint{position:absolute;inset:0;background:#e9f5ec;z-index:0}   /* the new row, lit as the house lights a changed row */
+.sf{position:absolute;inset:-1px -1px 0 -1px;border:2px solid #0a63d1;pointer-events:none;opacity:0;z-index:2}   /* Sheets' selected-cell frame, in the system's blue */
+/* the house's ok green tick, drawn (no icon font): a done line in the notices */
+.ck{display:inline-block;width:9px;height:5px;margin:0 6px 3px 1px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg)}
+
+/* the sheet: system.js pairHTML's Google Sheets window (SYSTEM.md 17, item 28), a size smaller; the grid runs to the window's
+   edges, as the app does; rows 22px */
+.sa .solo{container:win / inline-size;display:flex;flex-direction:column;min-width:0}
+.sa .solo>.scr-win{flex:1 1 auto;display:flex;flex-direction:column;min-width:0}
+.sa .solo>.scr-win>.win-b{flex:1 1 auto;min-width:0}
+.sa .gsw .win-b{padding:0}
+.sa .gsw .xl{display:flex;flex-direction:column;height:100%}
+.sa .gsw .xl table{font-size:12px}
+.sa .gsw .xl td,.sa .gsw .xl th{height:22px;padding:2px 6px;line-height:16px}
+.sa .gsw .xl .cl td{height:18px;padding:0 6px;line-height:16px}
+.sa .gsw .xl td:first-child{width:28px;padding:0}
+.sa .gsw .xl-tabs{margin-top:auto;padding:3px 6px 0}
+.sa .gsw .xl-tabs span{padding:2px 10px 3px}
+.sa .xl tr.hm{display:none}
+@container sa (min-width:480px){.sa .xl tr.hm{display:table-row}}
+@container sa (max-width:299px){.sa .gsw .xl td,.sa .gsw .xl th{padding-inline:5px}}   /* 320: the last column kept inside its window (check.py, Oct 27) */
+.sa .xl tr[data-new] td{position:relative;overflow:visible}
+.sa .xl tr[data-new] .v,.sa .xl tr[data-new] .rn-n{position:relative;z-index:1}
+.sa .xl tr[data-new] .t-rn{background:#dedede}
+.sa .xl tr[data-new] .rn-n{color:#111110;font-weight:700}
+.sa .xl tr[data-new] .sf{inset:-1px}
+.sa .xl tr[data-new] .sf::after{content:"";position:absolute;right:-3px;bottom:-3px;width:5px;height:5px;background:#0a63d1;box-shadow:0 0 0 1px #fff}
+.sa .xl tr[data-new] td:last-child .sf{opacity:1}   /* the cell filled last keeps Sheets' selection, as the app leaves it */
+
+/* the notices: plain white, no glass */
+.mns{position:relative;display:grid;gap:8px;align-content:start}
+.mn{position:relative;display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:10px;align-items:start;background:#fff;border-radius:12px;box-shadow:var(--lift);padding:8px 12px 9px;font:12px/16px var(--sys);color:#1d1d1f}
+.mn p{margin:0;min-width:0}
+.mn-av{grid-row:1/3;display:grid;place-items:center;width:28px;height:28px;margin-top:2px;border-radius:50%;background:#9aa0a6;color:#fff;font-size:13px;font-weight:500}   /* Gmail's grey initial of the sender */
+.mn-ok{grid-row:1/3;display:grid;place-items:center;height:28px;margin-top:2px;color:#1b5e2c}
+.mn-ok .ck{width:12px;height:6px;margin:0 0 4px}
+.mn-t{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.mn-t b{min-width:0;font-size:13px;line-height:17px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mn-t span{flex:none;color:#6e6e73;white-space:nowrap}
+.mn-s{grid-column:2;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin-top:1px!important;font-size:13px;line-height:17px;color:#3a3a3c}
+.mn-att{padding:1px 8px;border:1px solid #dadce0;border-radius:6px;background:#fff;font-size:12px;line-height:16px;color:#3c4043;white-space:nowrap}
+@container sa (min-width:480px){.mn-t{flex-direction:column-reverse;align-items:flex-start;gap:0}.mns{gap:10px}}   /* a narrow column: the app's line over the title, as a computer's notice */
+/* the closing line, in Lumora's own voice and type: the time back, with no number (Franco, Oct 27) */
+.sa-out{margin:4px 0 0!important;font:600 16px/1.35 var(--font);color:var(--ink);letter-spacing:-.005em;text-wrap:balance}
+/* one sentence a line, in both languages and at every width, as the trial's line broke (reviewers' round, Oct 27: balance split
+   the English "Whole / days" at 393 and 1440, and the Spanish sat on one line at 393 and two at 360) */
+.sa-out>span{display:block}
+
+/* the layout. The sheet is the screen; Gmail's notice brings the PDF, which opens over the notices, its values drop into the new
+   row, two more notices say what else got done, and the hours back close it */
+.sa[data-v=b] .sa-stage{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;align-items:start}
+.sa[data-v=b] .sa-over{position:absolute;inset:0;z-index:4;visibility:hidden;box-shadow:var(--lift-hi)}
+@container sa (min-width:480px){
+  .sa[data-v=b] .sa-stage{grid-template-columns:minmax(0,1.32fr) minmax(0,1fr);gap:16px;align-items:stretch}
+}
+
+/* the first frame (only with JS and motion allowed; home.js adds .done when the play ends, and the finished frame above takes
+   over with nothing moving) */
+@media screen and (prefers-reduced-motion:no-preference){
+  html.js:not(.still) .sa:not(.done):not(.still) .val.bx{border-color:transparent}
+  html.js:not(.still) .sa:not(.done):not(.still) .tint,
+  html.js:not(.still) .sa:not(.done):not(.still) .sf,
+  html.js:not(.still) .sa:not(.done):not(.still) .xl tr[data-new] .v,
+  html.js:not(.still) .sa:not(.done):not(.still) .sa-out{opacity:0}
+  html.js:not(.still) .sa:not(.done):not(.still) .xl tr[data-new] .rn-n{color:#5f6368;font-weight:400}
+  html.js:not(.still) .sa:not(.done):not(.still) .mn{opacity:0;transform:translateY(12px)}
+}

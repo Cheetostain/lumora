@@ -445,17 +445,31 @@
   function ph4(inner, clock, dark) {
     return '<div class="ph4"><div class="ph4-scr' + (dark ? ' dark' : '') + '"><div class="ph4-sb" aria-hidden="true"><span>' + esc(clock || '') + '</span>' + SB(dark) + '</div>' + inner + '</div>' + PH_FRAME + '</div>';
   }
+  // last pass item 28 (2026-10-26): pc rings the Before value in the red pen, pcs only its grey second line (QuickBooks' "Not sent");
+  // st draws QuickBooks' status mark before the word (ok its check, od its overdue mark, in the system's ok green and wt amber,
+  // never red), and s, its grey second line, may change with the state too ("Card declined" to "Note drafted")
+  var ringed = function (h, on) { return on ? '<span class="pc">' + h + '</span>' : h; };
   function cell(v) {
     if (v && typeof v === 'object') {
-      if ('was' in v || 'now' in v) return '<span class="chg' + (v.tr ? ' tr' : '') + '"><span class="was">' + cell(v.was) + '</span><span class="now">' + cell(v.now) + '</span></span>';
+      // a ringed chip (Sheets' dropdown, QuickBooks' "Total only") is circled round its words, as a pen would, so the loop is the one
+      // system.js fits 4px off the ink of any words (pencil()), not a box's CSS ring
+      // the reviewers' round (owners judge): the chip's arrow poked out of the ring round its words, so a ringed chip carries its
+      // arrow as a glyph inside the ring (.st-chev, shown only in Google Sheets, which draws one) and the loop is fitted round both
+      var wv = v.pc && v.was && typeof v.was === 'object' && v.was.chip ? '<span class="st st-pc ' + (v.was.chip === 'nt' ? 'gy' : v.was.chip) + '"><span class="pc">' + esc(v.was.t) + '<span class="st-chev" aria-hidden="true">\u25BC</span></span></span>' : ringed(cell(v.was), v.pc);
+      if ('was' in v || 'now' in v) return '<span class="chg' + (v.tr ? ' tr' : '') + '"><span class="was">' + wv + '</span><span class="now">' + cell(v.now) + '</span></span>';
       if (v.chip) return chip(v);
-      return esc(v.t) + (v.s ? '<small>' + esc(v.s) + '</small>' : '');
+      var sm = v.s != null && v.s !== '' ? '<small>' + ringed(cell(v.s), v.pcs) + '</small>' : '';
+      if (v.st) return '<span class="qs qs-' + v.st + '">' + cell(v.t) + '</span>' + sm;
+      return cell(v.t) + sm;
     }
     return esc(v == null ? '' : v);
   }
   // two layers for one spot (the window's status line, the formula bar): the old value, then the new one in its place; with tr
   // (a status line, restaurants 2026-10-12) the old words stay, struck in pencil, as a cell's do: the pair's one pencil trace (R7)
-  var was2 = function (v) { return typeof v === 'object' ? '<span class="chg' + (v.tr ? ' tr' : '') + '"><span class="was">' + whole(esc(v.was)) + '</span><span class="now">' + whole(esc(v.now)) + '</span></span>' : whole(esc(v)); };
+  // last pass item 28 (2026-10-26): pcw names the words inside the old line the red pen circles ("Sent 10/01/2026" in a status line)
+  // (the reviewers' round: a comma or colon right after the ringed words goes inside the ring, so no space opens before it)
+  var was2 = function (v) { if (typeof v !== 'object') return whole(esc(v)); var w = whole(esc(v.was)), k = v.pcw && whole(esc(v.pcw)); if (k && w.indexOf(k) > -1) { var j = w.indexOf(k) + k.length, pu = /^[,:;.]/.test(w.charAt(j)) ? w.charAt(j) : ''; w = w.slice(0, w.indexOf(k)) + '<span class="pc">' + k + pu + '</span>' + w.slice(j + pu.length); }
+    return '<span class="chg' + (v.tr ? ' tr' : '') + '"><span class="was">' + w + '</span><span class="now">' + whole(esc(v.now)) + '</span></span>'; };
   // 2026-10-17 round 3 (judges): a column of money, quantities or short counts is set right (.num, system.css), as .dt sets its
   // amounts, so decimals stack (Water damage stop 1's invoice). An ID (a ticket or job number, four digits or more) stays left. The
   // After values decide, since a Before value may be words ("Not added" in the markup column)
@@ -465,23 +479,70 @@
     return vals.length > 0 && vals.every(function (s) { return NUMV.test(s) && (/[.,%$(\u2212-]/.test(s) || /^\d{1,3}$/.test(s)); }); };
   function pairHTML(P) {
     // P.line: the app's own label over the caller (a business phone line shows calls and texts in one thread)
-    if (P.frame === 'phone') return phoneOf()('<div class="ph-who">' + (P.line ? '<small class="ph-line">' + esc(P.line) + '</small>' : '') + '<i></i>' + esc(P.who) + '</div><div class="thread">' + P.msgs.map(function (m) {
-      var o = m[2] || {}, cls = m[0] === 'sys' ? 'sys' + (o.k ? ' k' : '') : 'bub ' + (m[0] === 'sms' ? 'out sms' : m[0]);
+    // iPhone Messages (item 28): the number under its grey circle with iOS's small chevron (system.css .ph-n), a centred time over
+    // a message (ts, "Today 11:21 AM") and the small grey line under the last one sent (dl, "Sent automatically", where iOS says
+    // Delivered)
+    if (P.frame === 'phone') return phoneOf()('<div class="ph-who">' + (P.line ? '<small class="ph-line">' + esc(P.line) + '</small>' : '') + '<i></i><span class="ph-n">' + esc(P.who) + '</span></div><div class="thread">' + P.msgs.map(function (m) {
+      var o = m[2] || {}, cls = m[0] === 'sys' ? 'sys' + (o.k ? ' k' : '') : m[0] === 'ts' ? 'sys ts' : m[0] === 'dl' ? 'sys dl' : 'bub ' + (m[0] === 'sms' ? 'out sms' : m[0]);
+      if (m[0] === 'ts' || m[0] === 'dl') return '<p class="' + cls + (o.add ? ' add' : '') + '">' + whole(esc(m[1])).replace(/^(Today|Hoy) /, '<b>$1</b> ') + '</p>';
       return '<p class="' + cls + (o.add ? ' add' : '') + (o.pc ? ' pc' : '') + '"' + (m[0] === 'sys' ? '' : ' data-ui-ok="nested-card a text bubble on the phone screen (R6): a message, not a box around content"') + '>' + whole(esc(m[1])) + '</p>'; }).join('') + '</div>', P.clock || '9:41');
+    if (P.frame === 'mail') return mailHTML(P);
     // hm: a column (or, on a row, the row) the picture crops on a narrow container, as the screens kit does; nw: never wraps
     var NUM = P.cols.map(function (c, i) { return numCol(P, i); });
+    var QB = P.view === 'list' || P.view === 'form', GS = P.tool === 'Google Sheets', OL = P.tool === 'Outlook' && P.folders;
     var cl = function (i, th, num) { var c = ((P.hm || []).indexOf(i) > -1 ? 'hm ' : '') + (!th && (P.nw || []).indexOf(i) > -1 ? 'nw ' : '') + (num && NUM[i] ? 'num' : ''); return c.trim() ? ' class="' + c.trim() + '"' : ''; };
+    // QuickBooks' list types its column names in capitals (typed, never text-transform) and ends each row on its Action link, a
+    // computer's column only (hm); Google Sheets marks the selected cell with its frame and the corner dot (P.sel: "D43")
+    var ACT = P.view === 'list' && P.act, colName = function (c) { return P.view === 'list' ? String(c).toUpperCase() : c; };
+    // QuickBooks' form numbers its lines in a first "#" column (a computer's only, hm), as its invoice, estimate and bill do
+    var NO = P.view === 'form';
     var head = (P.xls ? '<tr class="cl"><td></td>' + P.cols.map(function (c, i) { return '<td' + cl(i, 1) + '>' + 'ABCDEFG'.charAt(i) + '</td>'; }).join('') + '</tr>' : '') +
-      '<tr>' + (P.xls ? '<td>1</td>' : '') + P.cols.map(function (c, i) { return '<th' + cl(i, 1, 1) + '>' + esc(c) + '</th>'; }).join('') + '</tr>';
-    var body = P.rows.map(function (r) { var rc = ((r.n ? 'n ' : '') + (r.hm ? 'hm' : '')).trim(); return '<tr' + (rc ? ' class="' + rc + '"' : '') + '>' + (P.xls ? '<td>' + esc(r.r) + '</td>' : '') +
-      r.c.map(function (v, i) { return '<td' + cl(i, 0, 1) + '>' + cell(v) + '</td>'; }).join('') + '</tr>'; }).join('');
+      '<tr>' + (P.xls ? '<td>1</td>' : '') + (NO ? '<th class="hm qb-no num">#</th>' : '') + P.cols.map(function (c, i) { return '<th' + cl(i, 1, 1) + '>' + esc(colName(c)) + '</th>'; }).join('') + (ACT ? '<th class="hm qb-act">' + tr('ACTION', 'ACCIÓN') + '</th>' : '') + '</tr>';
+    var body = P.rows.map(function (r, ri) { var rc = ((r.n ? 'n ' : '') + (r.hm ? 'hm ' : '') + (r.tot ? 'tot' : '')).trim(); return '<tr' + (rc ? ' class="' + rc + '"' : '') + '>' + (P.xls ? '<td>' + esc(r.r) + '</td>' : '') + (NO ? '<td class="hm qb-no num">' + (r.tot ? '' : ri + 1) + '</td>' : '') +
+      r.c.map(function (v, i) { var sel = GS && P.sel === 'ABCDEFG'.charAt(i) + r.r; return '<td' + (sel ? cl(i, 0, 1).replace(/^$/, ' class=""').replace(/class="/, 'class="gs-sel ') : cl(i, 0, 1)) + '>' + cell(v) + '</td>'; }).join('') +
+      (ACT ? '<td class="hm nw qb-act">' + (ACT[ri] ? tr('Edit', 'Editar') + ' <i>|</i> ' + cell(ACT[ri].t != null ? ACT[ri].t : ACT[ri]) : '') + '</td>' : '') + '</tr>'; }).join('');
     var badge = P.badge ? '<p class="pair-badge">' + (P.badge.was ? '<span class="was">' + esc(P.badge.was) + '</span>' : '') + (P.badge.now ? '<span class="now ok">✓ ' + esc(P.badge.now) + '</span>' : '') + '</p>' : '';
     // the software's own furniture, present in both states so the frame never has an empty band (design review 2026-10-10):
     // a spreadsheet's formula bar (the selected cell, then "fx") and its sheet tabs with "Ready"; an app list's status line
     var fx = P.fx ? '<div class="xl-fx"><span class="fx-c">' + esc(P.fx.cell) + '</span><b>fx</b>' + was2({ was: P.fx.was, now: P.fx.now }) + '</div>' : '';
-    var tabs = P.tabs ? '<div class="xl-tabs">' + P.tabs.map(function (t, i) { return '<span' + (i ? '' : ' class="on"') + '>' + esc(t) + '</span>'; }).join('') + '<em>' + tr('Ready', 'Listo') + '</em></div>' : '';
-    var status = P.status ? '<p class="win-st">' + was2(P.status) + '</p>' : '';
-    return '<div class="scr-win"><div class="win-tb"><i></i><i></i><i></i><span>' + esc(P.title) + '</span></div><div class="win-b">' + (P.xls ? '<div class="xl">' + fx + '<table>' + head + body + '</table>' + tabs + '</div>' : '<div class="ptbl"><table>' + head + body + '</table></div>') + status + badge + '</div></div>';
+    // Google Sheets has no "Ready" (noReady) and opens its tab bar on a "+"
+    var tabs = P.tabs ? '<div class="xl-tabs">' + (GS ? '<b class="gs-add" aria-hidden="true">+</b>' : '') + P.tabs.map(function (t, i) { return '<span' + (i ? '' : ' class="on"') + '>' + esc(t) + '</span>'; }).join('') + (P.noReady ? '' : '<em>' + tr('Ready', 'Listo') + '</em>') + '</div>' : '';
+    // QuickBooks' list ends on its count ("1-3 of 3"; "1-3 of 24" when the list runs past the page, P.of: the reviewers' round,
+    // Pest's 3 rows under "24 declined"), with our status line on the left of the same row. Its form ends on its own buttons,
+    // "Save and close" and the filled "Review and send" (an invoice or estimate) or "Save and close" alone (a bill), the filled one
+    // in ink, never QuickBooks' green (owners judge: only the title bar said QuickBooks on the forms; Intuit's trademark page asks
+    // that its logo's colours not be used)
+    var qbBtns = P.view === 'form' ? '<span class="qb-btns" aria-hidden="true">' + (/^(bill|factura de proveedor)$/i.test(P.doc || '') ? '<b>' + tr('Save and close', 'Guardar y cerrar') + '</b>' :
+      '<span>' + tr('Save and close', 'Guardar y cerrar') + '</span><b>' + tr('Review and send', 'Revisar y enviar') + '</b>') + '</span>' : '';
+    var status = P.status ? '<p class="win-st' + (P.view === 'list' || qbBtns ? ' qb-foot' : '') + '">' + (P.view === 'list' ? '<span>' + was2(P.status) + '</span><span class="qb-n">1-' + P.rows.length + ' ' + tr('of', 'de') + ' ' + (P.of || P.rows.length) + '</span>' : qbBtns ? '<span>' + was2(P.status) + '</span>' + qbBtns : was2(P.status)) + '</p>' : '';
+    var grid = P.xls ? '<div class="xl' + (GS ? ' gs' : '') + '">' + fx + '<table>' + head + body + '</table>' + tabs + '</div>' : '<div class="ptbl"><table>' + head + body + '</table></div>';
+    // QuickBooks' list: its two tabs over the table, the page's in ink. Its form: the document's own word ("ESTIMATE", "INVOICE",
+    // "Bill") and the line under it, the table, the Billable line a bill carries, then the status line where its activity shows
+    if (P.view === 'list') grid = '<div class="qb-tabs">' + (P.apptabs || []).map(function (t, i) { return '<span' + (i === (P.on || 0) ? ' class="on"' : '') + '>' + esc(t) + '</span>'; }).join('') + '</div>' + grid;
+    // The reviewers' round (owners judge): its balance due large at the top right, as QuickBooks sets it (the total row's label and
+    // amount, or P.due), on a computer's picture; a phone's keeps the total row alone, so the picture is no taller
+    var totR = P.rows.filter(function (r) { return r.tot; })[0], due = P.due || (totR && totR.c[totR.c.length - 1]),
+      dueL = P.dueLabel || (totR ? cellNow(totR.c[0]) : tr('Balance due', 'Saldo pendiente'));
+    if (P.view === 'form') grid = '<div class="qb-h"><div class="qb-hl"><p class="qb-doc">' + esc(P.doc || '') + '</p>' + (P.meta ? '<p class="qb-meta">' + was2(P.meta) + '</p>' : '') + '</div>' +
+      (due ? '<p class="qb-due"><small>' + esc(dueL) + '</small><b>' + cell(due) + '</b></p>' : '') + '</div>' + grid +
+      (P.billable ? '<p class="qb-bill">' + was2(P.billable) + '</p>' : '');
+    // Outlook: its folder pane beside the list on a computer (system.css shows it in a picture 640px wide and up)
+    if (OL) grid = '<div class="ol"><ul class="ol-f" aria-hidden="true">' + P.folders.map(function (f, i) { return '<li' + (i === (P.on || 0) ? ' class="on"' : '') + '>' + esc(f) + '</li>'; }).join('') + '</ul><div class="ol-m">' + grid + '</div></div>';
+    return '<div class="scr-win' + (QB ? ' qb qb-' + P.view : GS ? ' gsw' : OL ? ' olw' : '') + '"><div class="win-tb"><i></i><i></i><i></i><span>' + esc(P.title) + '</span></div><div class="win-b">' + grid + status + badge + '</div></div>';
+  }
+  // Gmail (item 28): one email, as Gmail opens it: the subject as its heading, the sender's grey initial, their name in bold with
+  // "to me" under it and the date at the right, the message, a table where the email carries one, the attachment, a draft reply as a
+  // plain grey box (never Gmail's red Draft), then Reply and Forward as outline buttons
+  function mailHTML(P) {
+    var who = String(P.from || ''), ini = who.charAt(0).toUpperCase(),
+      body = (P.body || []).map(function (para) { return '<p>' + para.map(function (x) { return typeof x === 'object' ? cell(x) : whole(esc(x)); }).join('') + '</p>'; }).join(''),
+      tbl = P.rows && P.rows.length ? '<div class="ptbl gm-t"><table>' + P.rows.map(function (r) { return '<tr' + (r.n ? ' class="n"' : '') + '>' + r.c.map(function (v, i) { return '<td' + (i === r.c.length - 1 ? ' class="num nw"' : '') + '>' + cell(v) + '</td>'; }).join('') + '</tr>'; }).join('') + '</table></div>' : '',
+      att = P.attach ? '<p class="gm-att">' + esc(P.attach) + '</p>' : '',
+      draft = P.draft ? '<p class="gm-draft add">' + esc(P.draft) + '</p>' : '',
+      btns = '<p class="gm-btns"><span>' + tr('Reply', 'Responder') + '</span>' + (P.noForward ? '' : '<span>' + tr('Forward', 'Reenviar') + '</span>') + '</p>';
+    return '<div class="scr-win gmw"><div class="win-tb"><i></i><i></i><i></i><span>' + esc(P.title) + '</span></div><div class="win-b gm">' +
+      '<p class="gm-subj">' + was2(P.page || '') + '</p><div class="gm-from"><span class="gm-av" aria-hidden="true">' + esc(ini) + '</span><p><b>' + esc(who) + '</b><small>' + esc(P.to || '') + '</small></p><span class="gm-when">' + whole(esc(P.when || '')) + '</span></div>' +
+      '<div class="gm-body">' + body + tbl + '</div>' + att + draft + btns + (P.status ? '<p class="win-st">' + was2(P.status) + '</p>' : '') + '</div></div>';
   }
   L.render = { ghost: ghostSVG, real: realHTML, whiteboard: whiteboardHTML, recents: recentsHTML, pair: pairHTML, phone: ph4 };
   // the measured iPhone 15 (system.css 28) round a lock screen's own words: Home's night band since 2026-10-17 (data-iph on the band),
@@ -769,7 +830,11 @@
     // Checkers' pass (2026-10-24): an own stop marked data-own-trade belongs to that sample alone (Home's printed quotes list is
     // plumbing's). Keyed by row id only, Offices, whose first row is also "quotes", walked Plumbing's quotes list as its second stop,
     // numbered 1 and titled for Dunlin Plumbing, and its stops no longer added up to its total. A trade page's own stop has no mark
-    if (!el._own) { el._own = {}; el._ownT = {}; $$(':scope > li[data-own]', list).forEach(function (li) { var id = li.getAttribute('data-own'); el._own[id] = li.outerHTML; el._ownT[id] = li.getAttribute('data-own-trade'); }); }
+    // last pass item 26 (2026-10-26): an own stop that belongs to a sample other than the page's default sits in <template
+    // data-own-stops> beside the list (Home's Plumbing quotes list, now that Offices is prerendered into the list); read the same way
+    if (!el._own) { el._own = {}; el._ownT = {}; var keep = function (li) { var id = li.getAttribute('data-own'); el._own[id] = li.outerHTML; el._ownT[id] = li.getAttribute('data-own-trade'); };
+      $$(':scope > li[data-own]', list).forEach(keep);
+      $$('template[data-own-stops]', el).forEach(function (tp) { Array.prototype.forEach.call(tp.content.children, function (li) { if (li.matches('li[data-own]')) keep(li); }); }); }
     var ownFor = function (id) { return el._own[id] && (!el._ownT[id] || el._ownT[id] === L.trade) ? el._own[id] : null; },
       ownPlace = function (id) { var m = ownFor(id) && /data-place="([^"]*)"/.exec(ownFor(id)); return m && m[1]; };
     list.innerHTML = rows.map(function (r, i) {
@@ -777,7 +842,8 @@
       var P = r.pair, n = i + 1, task = TASK[r.icon] || r.icon, place = (P && P.place) || r.place;
       var crop = (P ? P.frame : r.after.frame) === 'phone' ? ' crop-m' : '';   // R6 crop option: on a phone only the thread's part of the phone shows
       var inner = P ? pairHTML(P) : realHTML(r.after, true), tag = !led || usd(inner);
-      var pic = P ? '<div class="pair' + crop + '" data-g2r data-pair data-state="after" role="img" aria-label="' + esc(P.alt.after) + '" data-label-before="' + esc(P.alt.before) + '" data-label-after="' + esc(P.alt.after) + '">' + inner + '</div>'
+      // last pass (2026-10-26): Home's walk (data-hold-first) holds its first stop on Before on a computer, as Plumbing's own stop 1 did
+      var pic = P ? '<div class="pair' + crop + '" data-g2r data-pair' + (i === 0 && el.hasAttribute('data-hold-first') ? ' data-g2r-hold' : '') + ' data-state="after" role="img" aria-label="' + esc(P.alt.after) + '" data-label-before="' + esc(P.alt.before) + '" data-label-after="' + esc(P.alt.after) + '">' + inner + '</div>'
         : '<div class="solo' + crop + '" role="img" aria-label="' + esc(altAfter(r.after)) + '">' + inner + '</div>';
       // the stop's head is its pencil-circled number beside the PLACE in the shop ("The shop phone"), with the leak's name on
       // a plain line under it: a walk goes room by room, and a calls row never becomes a heading (R1; review 2026-10-10)
@@ -787,7 +853,9 @@
         '<div class="stop-body"><div class="pic' + (P ? ' has-seg' : '') + '"' + (task === 'calls' ? ' data-pic="calls"' : '') + '>' + pic +
         (P ? '<div class="seg" role="group" aria-label="' + tr('Show stop ', 'Mostrar el paso ') + n + ': ' + esc(place) + '"><button type="button" data-show="before" aria-pressed="false">' + tr('Before', 'Antes') + '</button><button type="button" data-show="after" aria-pressed="true">' + tr('After', 'Después') + '</button></div>' : '') +
         (tag ? '<span class="samp">' + tr('Sample', 'Ejemplo') + '</span>' : '') + '</div>' +
-        '<div class="stop-notes"><p class="pencil">' + esc(r.note) + '</p>' +
+        // last pass item 5 (2026-10-26): a row with noteAfter says it under the After picture and its note under Before, as Home's
+        // stop 1 always did (a phone opens the walk on After, and "Nobody called back" sat under the text-back)
+        '<div class="stop-notes"><p class="pencil">' + (P && r.noteAfter ? '<span class="bo">' + esc(r.note) + '</span><span class="ao">' + esc(r.noteAfter) + '</span>' : esc(r.note)) + '</p>' +
         // 2026-10-17: every stop's figure says what it is in each state, not only a one-stop walk's ("$399 a month" alone read as a price)
         // round 4 (2026-10-18): the label sits on the figure's line, "Won back $1,900 a month", as a loss reads "Losing $1,900 a month";
         // "$1,900 a month" alone in big ink under a small label read as a monthly price. It wraps only where the line can't hold both
@@ -1090,6 +1158,13 @@
     // the lock screen's big clock and date tick with the night (9:40 ... 6:38), ending on 6:41.
     var steps = el.hasAttribute('data-steps'), ITEM = steps ? '[data-n]' : '.nt', first = steps ? 0 : -1, step = first;
     var items = function () { return steps ? $$('[data-n]', el).sort(function (a, b) { return a.dataset.n - b.dataset.n; }) : $$('.nt:not(.cb)', el).reverse(); };
+    // last pass item 9 (2026-10-26, Home's night band, data-loop-open): a play opens with the first notification already on the lock
+    // screen, lands the other two 0.8 and 1.6 s in with the night log in step, then holds. A phone shows the newest two notifications
+    // under the clock (the third is not drawn), so only the ones shown count
+    var NS = steps && el.hasAttribute('data-loop-open'), inCrop = function (n) { var c = n.closest('.crop-m'), b = c && c.getBoundingClientRect(); return !!n.getClientRects().length && (!b || !b.height || n.getBoundingClientRect().bottom <= b.bottom - 12); },
+      NSK = function () { var k = []; items().forEach(function (n, i) { if (n.classList.contains('lk4-nt') && inCrop(n)) k.push(i); }); k.push(items().length - 1); return k; },
+      F = function () { return NS ? NSK()[0] : first; };
+    if (NS) step = F();
     function tick(it) {
       var lk = el.querySelector('.lk4'), clk = lk && lk.querySelector('.lk4-t'), day = lk && lk.querySelector('.lk4-d'); if (!clk) return;
       var cur = el.classList.contains('run') && !still && step < it.length ? it[Math.max(step, 0)] : null, m = cur && /^(\d+:\d\d) ([AP]M)$/.exec(cur.dataset.t || '');
@@ -1115,17 +1190,17 @@
     function next() {                                   // job: cause and effect. The night's work lands line by line, in clock order
       clearTimeout(timer);
       var n = items().length;
-      if (step >= n) { plays++; if (plays >= 3) { el.classList.remove('run'); frame(); label('again'); return; } step = first; } else step++;
+      if (step >= n) { plays++; if (plays >= 3) { el.classList.remove('run'); frame(); label('again'); return; } step = F(); } else if (NS) { var nx = NSK().filter(function (x) { return x > step; })[0]; step = nx == null ? n : nx; } else step++;
       frame();
-      timer = setTimeout(next, step === first ? (steps ? 1100 : 700) : step < n - 1 ? (steps ? 650 : 850) : step === n - 1 ? 1600 : 4400);   // about 10 to 13 s a play; stops on the finished frame after 3
+      timer = setTimeout(next, NS ? (step < n - 1 ? 800 : 4400) : step === first ? (steps ? 1100 : 700) : step < n - 1 ? (steps ? 650 : 850) : step === n - 1 ? 1600 : 4400);   // about 10 to 13 s a play; stops on the finished frame after 3
     }
     function running() { return el.classList.contains('run') && !user && seen && !document.hidden; }
-    function sync() { clearTimeout(timer); if (running()) timer = setTimeout(next, 600); }
-    self.reset = function () { step = first; frame(); sync(); };
+    function sync() { clearTimeout(timer); if (running()) timer = setTimeout(next, NS ? 800 : 600); }
+    self.reset = function () { step = F(); frame(); sync(); };
     if (still) { if (btn) btn.hidden = true; frame(); return; }
     el.classList.add('run'); frame();
     if (btn) btn.addEventListener('click', function () {
-      if (!el.classList.contains('run')) { plays = 0; user = false; el.classList.add('run'); step = first; frame(); label('pause'); sync(); return; }
+      if (!el.classList.contains('run')) { plays = 0; user = false; el.classList.add('run'); step = F(); frame(); label('pause'); sync(); return; }
       user = !user; label(user ? 'play' : 'pause');
       // paused, the night shows finished, every row at full strength, as reduced motion does (phone-access review 2026-10-10: a
       // pause froze 4 of 7 log rows dimmed); Play starts a fresh play from the first row
@@ -1270,7 +1345,9 @@
       if (n > 1) E.push('R8: a picture with ' + n + ' Sample labels (' + (p.className || p.id) + ').');
       else if (!n && /\$\s?\d/.test(p.innerText)) E.push('R8: a picture with dollar figures and no Sample label (' + (p.className || p.id) + ').');
       else if (!n && !lead) E.push('R8: a picture with no Sample label, and no lead in its section that names the sample business ([data-sample-lead]) (' + (p.className || p.id) + ').'); });
-    $$('.slot').forEach(function (s) { if (['16:9', '1:1', '4:5'].indexOf(s.dataset.shape) < 0) E.push('R8: a picture slot that is not 16:9, 1:1 or 4:5.'); });
+    // the reviewers' round (2026-10-26): Home's client proof band is one review-only figure.slot, so golive strips it whole; its
+    // photo place inside (.proof-ph) carries the shape
+    $$('.slot:not(.proof-slot), .proof-slot .proof-ph').forEach(function (s) { if (['16:9', '1:1', '4:5'].indexOf(s.dataset.shape) < 0) E.push('R8: a picture slot that is not 16:9, 1:1 or 4:5.'); });
     // R9: no dollar figure more than twice, 16 or fewer, counted per width; the phone-only top-leak strip is the named exception.
     // The bound price sentence counts its bold price only: the plain words after it are the credit's terms, and their $1,500
     // floor (Franco, 2026-10-13, premortem item 9) is a condition the law needs beside the credit, not a figure on show.
@@ -1386,7 +1463,7 @@
     var E = [], W = [], catalog = document.body.hasAttribute('data-catalog');
     var vis = function (el) { var r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(el).visibility !== 'hidden'; };
     var text = document.body.innerText;
-    if (/[—–]/.test(text)) E.push('Em or en dash in visible text.');
+    if (/[\u2014\u2013]/.test(text)) E.push('Em or en dash in visible text.');
     if (/!/.test(text.replace(/<!--[\s\S]*?-->/g, ''))) E.push('Exclamation mark in visible text.');
     (text.match(/\(352\) \d{3}-\d{4}/g) || []).forEach(function (p) { if (p !== '(352) 226-0681' && !/\(352\) 555-01\d\d/.test(p)) E.push('Phone outside the sample range: ' + p); });
     if (!catalog) {

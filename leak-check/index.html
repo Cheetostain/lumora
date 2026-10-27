@@ -26,11 +26,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=f9478776">
-<link rel="stylesheet" href="/v4/trade-page.css?v=f9478776">
+<link rel="stylesheet" href="/v4/system.css?v=ddf1b306">
+<link rel="stylesheet" href="/v4/trade-page.css?v=ddf1b306">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=f9478776" defer></script>
-<script src="/v4/system.js?v=f9478776" defer></script>
+<script src="/v4/trades.js?v=ddf1b306" defer></script>
+<script src="/v4/system.js?v=ddf1b306" defer></script>
 <style>
 /* ===== Loss calculator, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64) outside the pictures; every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -101,7 +101,7 @@ html:not(.js) .lk-bar{display:none}
 }
 /* 2026-10-17 polish: from 900 to 1199 the form was 410 to 560px wide, so beside the 244px box column the words got 86 to 240px
    (150 at 1024: labels and help three or four words a line, 62px empty beside each one-box line). There the estimate takes the
-   width its total line needs ("About $1,540" on one line at 900, the whole line from 1024) and the form the rest, the padding
+   width its total line needs ("About $2,370" on one line at 900, the whole line from 1024) and the form the rest, the padding
    and gaps step in, and each help line runs under its line across the form. The boxes keep their one column on the right */
 @media (min-width:900px) and (max-width:1199px){
   .lk-g{grid-template-columns:minmax(0,1fr) calc(345px + (100vw - 900px) * .65);gap:32px}
@@ -204,12 +204,12 @@ html:not(.js) .lk-bar{display:none}
     <p class="lk-priv" data-first="the privacy line">It runs on your device and sends us nothing. Close the page and your numbers are gone.</p>
     <div class="lk-g">
       <form class="lk-form" id="lk" novalidate autocomplete="off" aria-label="Loss calculator">
-        <div class="tally lk-bar" aria-hidden="true"><div class="tally-bar"><span data-o="barl">Example</span><b data-o="bar">Losing&nbsp;about $1,540&nbsp;a&nbsp;month</b></div></div>
+        <div class="tally lk-bar" aria-hidden="true"><div class="tally-bar"><span data-o="barl">Example</span><b data-o="bar">Losing&nbsp;about $2,370&nbsp;a&nbsp;month</b></div></div>
         <p class="lk-ex">Change the examples to your numbers. Leave blank what you don't know.</p>
         <fieldset data-task="retyping">
           <legend>Typing the same job twice</legend>
           <div class="lf"><label for="lk-minutes">Minutes a day, everyone added up <span class="ex" data-ex="minutes">Example</span></label>
-            <div class="unit"><input id="lk-minutes" name="minutes" inputmode="decimal" value="30" aria-describedby="h-minutes" data-first="the first box"></div>
+            <div class="unit"><input id="lk-minutes" name="minutes" inputmode="decimal" value="120" aria-describedby="h-minutes" data-first="the first box"></div>
             <p class="lf-h" id="h-minutes">Paper ticket, calendar, invoice: add up every place.</p></div>
           <div class="lf"><label for="lk-days">Workdays a month <span class="ex" data-ex="days">Example</span></label>
             <div class="unit"><input id="lk-days" name="days" inputmode="decimal" value="22"></div></div>
@@ -256,9 +256,9 @@ html:not(.js) .lk-bar{display:none}
         <div class="lk-sheet">
           <div class="lk-sh-h"><h2>Your estimate</h2><span class="stamp" data-o="stamp">Sample</span></div>
           <div data-o="result">
-            <p class="lk-total"><span class="lk-about">Losing about</span><span class="lk-fig"><span class="lk-usd" data-o="total">$1,540<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="lk-per">a month</span></span></p>
+            <p class="lk-total"><span class="lk-about">Losing about</span><span class="lk-fig"><span class="lk-usd" data-o="total">$2,370<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="lk-per">a month</span></span></p>
             <ol class="lk-lines">
-              <li data-o="l-retype" data-name="Typing the same job twice" data-task="retyping"><span><b>Typing the same job twice</b>30&nbsp;minutes a day ×&nbsp;22&nbsp;days ÷&nbsp;60 = 11.0 hours ×&nbsp;$25 an hour = $275 a month.</span><span class="v">$275</span></li>
+              <li data-o="l-retype" data-name="Typing the same job twice" data-task="retyping"><span><b>Typing the same job twice</b>120&nbsp;minutes a day ×&nbsp;22&nbsp;days ÷&nbsp;60 = 44.0 hours ×&nbsp;$25 an hour = $1,100 a month.</span><span class="v">$1,100</span></li>
               <li data-o="l-unbilled" data-name="Jobs never billed" data-task="invoices"><span class="off"><b>Jobs never billed</b>Left blank.</span></li>
               <li data-o="l-quotes" data-name="Quotes that went cold" data-task="quotes"><span><b>Quotes that went cold</b>2&nbsp;a month ×&nbsp;$400 profit each = $800 a month.</span><span class="v">$800</span></li>
               <li data-o="l-calls" data-name="Calls nobody called back" data-task="calls"><span><b>Calls nobody called back</b>6&nbsp;rang out − 3&nbsp;called back = 3&nbsp;a week ×&nbsp;52&nbsp;÷&nbsp;12 = 13.0 a month ×&nbsp;24% booked = 3.12 jobs ×&nbsp;$150 profit each = $468 a month.</span><span class="v">$468</span></li>
@@ -332,7 +332,7 @@ html:not(.js) .lk-bar{display:none}
         <p class="auto-close">A walk looks at all of it. <a class="u" href="/what-we-automate/">See the full list</a></p>
     </div>
     <div class="why">
-            <div class="src"><h3>Where the example numbers come from</h3><ul><li>24%: what trade shops with fewer than 5&nbsp;technicians booked in a study of more than 3,000 trade businesses in the US and Canada; all of them booked 42% (ServiceTitan blog, 2022, vendor data).</li><li>$150 profit on a job: $341, HomeAdvisor's national average plumber visit (2026), ×&nbsp;44.3%, Level's median job gross margin (vendor data), rounded.</li><li>The other examples are round numbers, not data.</li></ul></div>
+            <div class="src"><h3>Where the example numbers come from</h3><ul><li>24%: what trade shops with fewer than 5&nbsp;technicians booked in a study of more than 3,000 trade businesses in the US and Canada; all of them booked 42% (ServiceTitan blog, 2022, vendor data).</li><li>$150 profit on a job: $341, HomeAdvisor's national average plumber visit (2026), ×&nbsp;44.3%, Level's median job gross margin (vendor data), rounded.</li><li>2&nbsp;hours a day: 500&nbsp;US professionals averaged more than 9&nbsp;hours a week moving data by hand (Parseur survey, July 2025, vendor data).</li><li>The other examples are round numbers, not data.</li></ul></div>
     </div>
   </div>
 </section>

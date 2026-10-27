@@ -26,11 +26,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=f9478776">
-<link rel="stylesheet" href="/v4/trade-page.css?v=f9478776">
+<link rel="stylesheet" href="/v4/system.css?v=ddf1b306">
+<link rel="stylesheet" href="/v4/trade-page.css?v=ddf1b306">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=f9478776" defer></script>
-<script src="/v4/system.js?v=f9478776" defer></script>
+<script src="/v4/trades.js?v=ddf1b306" defer></script>
+<script src="/v4/system.js?v=ddf1b306" defer></script>
 <style>
 /* ===== Loss calculator, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64) outside the pictures; every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -101,7 +101,7 @@ html:not(.js) .lk-bar{display:none}
 }
 /* 2026-10-17 polish: from 900 to 1199 the form was 410 to 560px wide, so beside the 244px box column the words got 86 to 240px
    (150 at 1024: labels and help three or four words a line, 62px empty beside each one-box line). There the estimate takes the
-   width its total line needs ("About $1,540" on one line at 900, the whole line from 1024) and the form the rest, the padding
+   width its total line needs ("About $2,370" on one line at 900, the whole line from 1024) and the form the rest, the padding
    and gaps step in, and each help line runs under its line across the form. The boxes keep their one column on the right */
 @media (min-width:900px) and (max-width:1199px){
   .lk-g{grid-template-columns:minmax(0,1fr) calc(345px + (100vw - 900px) * .65);gap:32px}
@@ -204,12 +204,12 @@ html:not(.js) .lk-bar{display:none}
     <p class="lk-priv" data-first="the privacy line">Funciona en su teléfono o computadora y no nos manda nada. Cuando cierra la página, sus números se borran.</p>
     <div class="lk-g">
       <form class="lk-form" id="lk" novalidate autocomplete="off" aria-label="Calculadora de pérdidas">
-        <div class="tally lk-bar" aria-hidden="true"><div class="tally-bar"><span data-o="barl">Ejemplo</span><b data-o="bar">Pierde&nbsp;unos $1,540&nbsp;al&nbsp;mes</b></div></div>
+        <div class="tally lk-bar" aria-hidden="true"><div class="tally-bar"><span data-o="barl">Ejemplo</span><b data-o="bar">Pierde&nbsp;unos $2,370&nbsp;al&nbsp;mes</b></div></div>
         <p class="lk-ex">Cambie los ejemplos por sus números. Lo que no sepa, déjelo en blanco.</p>
         <fieldset data-task="retyping">
           <legend>Anotar el mismo trabajo dos&nbsp;veces</legend>
           <div class="lf"><label for="lk-minutes">Minutos al día, entre todos <span class="ex" data-ex="minutes">Ejemplo</span></label>
-            <div class="unit"><input id="lk-minutes" name="minutes" inputmode="decimal" value="30" aria-describedby="h-minutes" data-first="the first box"></div>
+            <div class="unit"><input id="lk-minutes" name="minutes" inputmode="decimal" value="120" aria-describedby="h-minutes" data-first="the first box"></div>
             <p class="lf-h" id="h-minutes">La orden en papel, el calendario, la factura: sume todos los lugares donde lo anotan.</p></div>
           <div class="lf"><label for="lk-days">Días hábiles al mes <span class="ex" data-ex="days">Ejemplo</span></label>
             <div class="unit"><input id="lk-days" name="days" inputmode="decimal" value="22"></div></div>
@@ -256,9 +256,9 @@ html:not(.js) .lk-bar{display:none}
         <div class="lk-sheet">
           <div class="lk-sh-h"><h2>Su&nbsp;cálculo</h2><span class="stamp" data-o="stamp">Ejemplo</span></div>
           <div data-o="result">
-            <p class="lk-total"><span class="lk-about">Pierde unos</span><span class="lk-fig"><span class="lk-usd" data-o="total">$1,540<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="lk-per">al mes</span></span></p>
+            <p class="lk-total"><span class="lk-about">Pierde unos</span><span class="lk-fig"><span class="lk-usd" data-o="total">$2,370<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="lk-per">al mes</span></span></p>
             <ol class="lk-lines">
-              <li data-o="l-retype" data-name="Anotar el mismo trabajo dos&nbsp;veces" data-task="retyping"><span><b>Anotar el mismo trabajo dos&nbsp;veces</b>30&nbsp;minutos al día ×&nbsp;22&nbsp;días ÷&nbsp;60 = 11.0 horas ×&nbsp;$25 la hora =&nbsp;$275&nbsp;al&nbsp;mes.</span><span class="v">$275</span></li>
+              <li data-o="l-retype" data-name="Anotar el mismo trabajo dos&nbsp;veces" data-task="retyping"><span><b>Anotar el mismo trabajo dos&nbsp;veces</b>120&nbsp;minutos al día ×&nbsp;22&nbsp;días ÷&nbsp;60 = 44.0 horas ×&nbsp;$25 la hora =&nbsp;$1,100&nbsp;al&nbsp;mes.</span><span class="v">$1,100</span></li>
               <li data-o="l-unbilled" data-name="Trabajos sin facturar" data-task="invoices"><span class="off"><b>Trabajos sin facturar</b>Lo dejó en blanco.</span></li>
               <li data-o="l-quotes" data-name="Cotizaciones que se enfriaron" data-task="quotes"><span><b>Cotizaciones que se enfriaron</b>2&nbsp;al mes ×&nbsp;$400 de ganancia por trabajo =&nbsp;$800&nbsp;al&nbsp;mes.</span><span class="v">$800</span></li>
               <li data-o="l-calls" data-name="Llamadas que nadie devolvió" data-task="calls"><span><b>Llamadas que nadie devolvió</b>6&nbsp;sin contestar − 3&nbsp;devueltas = 3&nbsp;por semana ×&nbsp;52&nbsp;÷&nbsp;12 = 13.0 al mes ×&nbsp;24% convertidas en trabajo = 3.12 trabajos ×&nbsp;$150 de ganancia por trabajo =&nbsp;$468&nbsp;al&nbsp;mes.</span><span class="v">$468</span></li>
@@ -332,7 +332,7 @@ html:not(.js) .lk-bar{display:none}
         <p class="auto-close">En la visita revisamos todo eso. <a class="u" href="/es/what-we-automate/">Vea la lista completa</a></p>
     </div>
     <div class="why">
-            <div class="src"><h3>De&nbsp;dónde salen los&nbsp;números de&nbsp;ejemplo</h3><ul><li>El 24% es lo que convirtieron en trabajo los negocios con menos de 5&nbsp;técnicos, en un estudio de más de 3,000 empresas contratistas de EE.&nbsp;UU. y Canadá. El promedio de todas fue el 42% (blog de ServiceTitan, 2022, datos de proveedor).</li><li>Los $150 de ganancia por trabajo: $341, la visita promedio de un plomero en el país según HomeAdvisor (2026), ×&nbsp;44.3%, el margen bruto mediano por trabajo según Level (datos de proveedor), redondeado.</li><li>Los demás ejemplos son números redondos, no datos.</li></ul></div>
+            <div class="src"><h3>De&nbsp;dónde salen los&nbsp;números de&nbsp;ejemplo</h3><ul><li>El 24% es lo que convirtieron en trabajo los negocios con menos de 5&nbsp;técnicos, en un estudio de más de 3,000 empresas contratistas de EE.&nbsp;UU. y Canadá. El promedio de todas fue el 42% (blog de ServiceTitan, 2022, datos de proveedor).</li><li>Los $150 de ganancia por trabajo: $341, la visita promedio de un plomero en el país según HomeAdvisor (2026), ×&nbsp;44.3%, el margen bruto mediano por trabajo según Level (datos de proveedor), redondeado.</li><li>2&nbsp;horas al día: en promedio, 500&nbsp;profesionales de EE.&nbsp;UU. pasan datos a mano más de 9&nbsp;horas a la semana (encuesta de Parseur, julio de 2025, datos de proveedor).</li><li>Los demás ejemplos son números redondos, no datos.</li></ul></div>
     </div>
   </div>
 </section>
@@ -400,7 +400,7 @@ html:not(.js) .lk-bar{display:none}
 <script>
 /* The loss calculator, Spanish page. The script is the English page's (leak-check.html) line for line: the same fields, checks
    and math, so check.py's calc_problems and delivery/walk-kit/_build/leak_math.py read both pages the same way. Only the words
-   it writes are Spanish (every quoted sentence below); numbers stay en-US ($1,540, 11.0, 3.12). All the math runs here, in the
+   it writes are Spanish (every quoted sentence below); numbers stay en-US ($2,370, 44.0, 3.12). All the math runs here, in the
    visitor's browser: no fetch, no storage, no form action, and Enter never submits. */
 (function () {
   'use strict';

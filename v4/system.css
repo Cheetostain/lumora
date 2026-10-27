@@ -1290,6 +1290,28 @@ html.fit-pairs .pair.measuring,html.fit-pairs .pair.measuring *{transition:none!
 .pair-badge{display:grid;margin:8px 0 0}
 .pair-badge>*{grid-area:1/1;justify-self:start;margin-top:0}
 .pair .xl td,.pair .xl th,.solo .xl td,.solo .xl th{white-space:normal;text-overflow:clip;max-width:none}   /* the changed cell is the point: show it whole */
+/* the reviewers' round (2026-10-26, owners judge): a ringed cell shows its whole ring. The cell lets the ring out (Excel clips its
+   cells) and keeps 13px each side, so the loop clears the grid lines and the next column's words (the Offices "No", Restaurants'
+   "4", Property managers' "24", the QuickBooks "1,284.00" beside "GL-900518" at 320); check.py ring_cell_problems holds it */
+.pair .xl td:has(.pc),.solo .xl td:has(.pc){overflow:visible;padding-left:13px;padding-right:13px}
+/* an app list has no lines between its columns, so its ring only needs 3px from the next column's words: 6px here and the column
+   before's own 8px on the left, 14px on the right (the next column starts at its words), and the window's own 12px after the last */
+.pair .ptbl td:has(.pc),.solo .ptbl td:has(.pc){padding-left:6px;padding-right:14px}
+.pair .ptbl td:last-child:has(.pc),.solo .ptbl td:last-child:has(.pc){padding-right:0}
+@container (max-width:340px){.pair .xl td:has(.pc),.solo .xl td:has(.pc){padding-left:11px;padding-right:11px}
+}   /* 320: the loop still clears its cell (it reaches about 10px past the words); an app list's last column rings into the window's own 12px, as before */
+/* a struck status line wraps (the Spanish AC's "Pendiente · Enviada 10/01/2026, 9 días después de la visita" ran 27px out of its
+   window at 393): one bar can't strike two lines, so a status line is struck with the text's own line in pencil */
+.win-st .chg.tr>.was{white-space:normal}
+.win-st .chg.tr>.was::after{display:none}
+.pair[data-state=after] .win-st .chg.tr>.was{text-decoration:line-through 2px var(--pencil)}
+.pair .xl.gs td.num .st::after,.solo .xl.gs td.num .st::after{display:none}   /* a flagged figure is a filled cell, not a dropdown (Restaurants' 47%) */
+.st-chev{display:none}
+.pair .xl.gs .st.st-pc::after,.solo .xl.gs .st.st-pc::after{display:none}   /* a ringed chip's arrow is the glyph inside its ring */
+.pair .xl.gs .st-pc .st-chev,.solo .xl.gs .st-pc .st-chev{display:inline-block;margin-left:5px;font-size:7px;line-height:1;vertical-align:2px;color:#3a3a3a}
+@container (max-width:340px){.pair .xl.gs .st-pc .st-chev,.solo .xl.gs .st-pc .st-chev{display:none}}   /* 320 drops the chips' arrows, this one too */
+.pair .xl td:has(.st-pc),.solo .xl td:has(.st-pc){padding-left:5px;padding-right:5px}   /* a ringed chip's own padding holds most of its loop, which reaches 1 to 4px past the pill */
+.olw .ptbl .st{white-space:nowrap}   /* Outlook's follow-up chips stay on one line; Subject wraps instead (the Offices default, 320 to 393) */
 /* a plain app list inside a window (the quotes list): the software's own look, system font */
 .ptbl table{width:100%;border-collapse:collapse;font-size:max(12px,min(3.3cqi,14px));font-variant-numeric:tabular-nums}
 .ptbl th{font-size:12px;font-weight:600;color:#6e6e73;text-align:left;padding:0 8px 7px 0;border-bottom:1px solid #e5e5ea}
@@ -1528,3 +1550,113 @@ html.review .slot{/* ui-ok: pattern-bg a review-only picture slot, never on the 
 /* the walk opens on its number (Franco 2026-10-19, design round item 3; Home's rule until the picks follow-up carried the heading to
    the trade pages): the figure is money lost, so it is red, with its loss word beside it; heading size on bone, over the 24px floor */
 .walk-h-usd{color:var(--red)}
+
+/* last pass item 28 (2026-10-26). Franco: "Does it look exactly like QuickBooks? Because that's what makes people ... have trust and
+   familiarity", and "we have to do what them people use most in general". The walk's sample screens are the everyday tools most
+   businesses use, the same set on every sample: QuickBooks Online for estimates, invoices, bills and payments, a Google or Excel
+   sheet, a Gmail or Outlook inbox, the phone's texts and calls. Each is drawn closely enough that its user knows it at a glance
+   (layout, column names, status words, number and date formats), inside Lumora's frame, with its name in the title bar and never
+   its logo, icons or brand colours: tabs underline in ink, a link is the system's blue (#0a63d1, the phone's sent bubble), a check
+   is the ok green and an overdue mark the wt amber, never red. The red pen still marks the one problem in Before */
+.qb .win-b,.gsw .win-b,.olw .win-b{padding:12px 14px}
+.qb-tabs{display:flex;gap:22px;margin:0 0 10px;border-bottom:1px solid #e3e5e8;font-size:13px;color:#55555a}
+.qb-tabs span{padding:2px 0 8px}
+.qb-tabs span.on{color:#111110;font-weight:600;box-shadow:inset 0 -2px 0 #111110}
+.qb .ptbl th{font-size:12px;font-weight:600;color:#55555a}   /* QuickBooks types its column names in capitals: typed, no letter-spacing */
+.qb .ptbl td small{color:#6e6e73}
+.qs{display:inline-flex;align-items:center;gap:5px}
+.qs::before{content:"";flex:none;width:14px;height:14px;border-radius:50%;background:center/14px 14px no-repeat}
+.qs-ok::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Ccircle cx='7' cy='7' r='7' fill='%23e3f1e6'/%3E%3Cpath d='M4 7.3l2 2 4-4.3' fill='none' stroke='%231b5e2c' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.qs-od::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Ccircle cx='7' cy='7' r='7' fill='%23fbefd2'/%3E%3Cpath d='M7 3.6v4.2' stroke='%236b4800' stroke-width='1.7' stroke-linecap='round'/%3E%3Ccircle cx='7' cy='10.2' r='1' fill='%236b4800'/%3E%3C/svg%3E")}
+.qb-act{color:#0a63d1}
+.qb-act i{font-style:normal;color:#b9bcc2;padding:0 2px}
+.qb-foot{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.qb-n{flex:none;color:#6e6e73;white-space:nowrap}
+.qb-h{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin:0 0 10px}
+.qb-hl{display:grid;gap:2px;min-width:0}
+/* the reviewers' round (2026-10-26, owners judge: the forms only said QuickBooks in the title bar): the form's balance due large at
+   the top right, its lines numbered in a "#" column and its own buttons in the footer, the filled one in ink (never QuickBooks'
+   green), all on a computer's picture; a phone's keeps the total row and the one filled button */
+.qb-due{display:grid;justify-items:end;gap:1px;margin:0;text-align:right;white-space:nowrap}
+.qb-due small{font-size:12px;color:#55555a}
+.qb-due b{font-size:22px;line-height:1.15;font-weight:700;color:#111110;font-variant-numeric:tabular-nums}
+.ptbl :is(th,td).qb-no{width:1.6em;color:#6e6e73;font-weight:400;padding-right:10px}
+.qb-btns{display:flex;flex:none;gap:8px;align-items:center}
+.qb-btns span,.qb-btns b{padding:5px 12px;border-radius:4px;font-size:12px;line-height:1.2;font-weight:600;white-space:nowrap}
+.qb-btns span{box-shadow:inset 0 0 0 1px #8d9096;color:#393a3d}
+.qb-btns b{background:#1d1d1f;color:#fff}   /* ink, not green: Intuit's trademark page asks that its logo's colours not be used (checked 2026-10-26) */
+.qb-form .qb-foot{align-items:center;flex-wrap:wrap}
+.qb-form .qb-foot>span:first-child{flex:1 1 14em;min-width:0}
+@container (max-width:420px){.qb-due,.qb-btns span{display:none}}
+.qb-doc{margin:0;font-size:15px;line-height:1.2;font-weight:700;color:#111110}   /* the document's own word, as QuickBooks prints it ("ESTIMATE", "INVOICE"), in ink, not its blue */
+.qb-meta{margin:0;font-size:12px;line-height:1.35;color:#55555a}
+.qb-form .ptbl tr.tot td{font-weight:700;border-top:2px solid #d0d3d8;padding-top:8px}
+.qb-bill{margin:8px 0 0;font-size:12px;color:#3a3a3a}
+/* Google Sheets: Arial, the letters on its grey band, the selected cell's frame with its corner dot, a dropdown as a rounded chip
+   with its small arrow (in that one column), the tab bar opening on "+", and no "Ready" */
+.xl.gs{font-family:Arial,var(--sys);color:#202124}
+.xl.gs .cl td,.xl.gs td:first-child{background:#f8f9fa;color:#5f6368}
+.xl.gs th{background:#fff}
+.xl td small{display:block;font-size:12px;color:#5f6368}   /* a cell's grey second line (the payer under "Bill to"), as an app list sets it */
+.pair .xl.gs td .st:not(.was *),.solo .xl.gs td .st:not(.was *){white-space:normal}   /* a narrow picture wraps a chip's words rather than run past the window (320) */
+.xl.gs td.gs-sel{position:relative;outline:2px solid #0a63d1;outline-offset:-2px}
+.xl.gs td.gs-sel::after{content:"";position:absolute;right:0;bottom:0;width:6px;height:6px;background:#0a63d1;box-shadow:0 0 0 1px #fff}
+.pair .xl.gs .st,.solo .xl.gs .st{/* ui-ok: pill Google Sheets' own dropdown chip, only in its status column inside the picture */display:inline-flex;align-items:center;gap:4px;padding:1px 7px 1px 9px;border-radius:999px;background:#ececec;color:#3a3a3a;font-size:12px;font-weight:500;white-space:nowrap}
+.pair .xl.gs .st::after,.solo .xl.gs .st::after{content:"";width:8px;height:5px;flex:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M.8.8L4 4 7.2.8' fill='none' stroke='%233a3a3a' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/8px 5px no-repeat}
+.pair .xl.gs .st.ok,.solo .xl.gs .st.ok{background:#e3f1e6;color:#1b5e2c}
+.pair .xl.gs .st.wt,.solo .xl.gs .st.wt{background:#fbefd2;color:#6b4800}
+.pair[data-state=after] .xl.gs .chg.tr>.was .st{background:none;color:var(--pencil);box-shadow:inset 0 0 0 1px rgba(79,76,69,.4)}
+.xl.gs .xl-tabs{background:#f8f9fa;border-top-color:#dadce0;color:#3c4043}
+.xl.gs .xl-tabs span.on{background:#fff;color:#111110;font-weight:600;box-shadow:inset 0 -2px 0 #111110}
+.gs-add{padding:0 8px 2px 4px;font-size:16px;font-weight:400;line-height:1;color:#5f6368}
+@container (max-width:340px){.xl td,.xl th{padding:5px 4px}.xl td:first-child{width:24px}.pair .xl.gs .st,.solo .xl.gs .st{padding:1px 6px}.pair .xl.gs .st::after,.solo .xl.gs .st::after{display:none}}   /* 320: a spreadsheet's cells close up (Excel's and Google Sheets') so four columns fit a phone's picture (last pass: Excel's own short dates, 10/14/2026) */
+/* Gmail: one opened email */
+.gmw .win-b{padding:14px 16px}
+.gm-subj{margin:0 0 12px;font-size:17px;line-height:1.25;font-weight:400;color:#1f1f1f}
+.gm-from{display:grid;grid-template-columns:32px minmax(0,1fr) auto;column-gap:10px;align-items:start;margin:0 0 10px}
+.gm-av{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#9aa0a6;color:#fff;font-size:15px;font-weight:500}
+.gm-from p{display:grid;margin:0;font-size:13px;line-height:1.3;color:#1f1f1f}
+.gm-from b{font-weight:600}
+.gm-from small{font-size:12px;color:#5f6368}
+.gm-when{font-size:12px;line-height:1.3;color:#5f6368;white-space:nowrap}
+.gm-body{font-size:14px;line-height:1.45;color:#1f1f1f}
+.gm-body p{margin:0}
+.gm-body .gm-t{margin-top:8px}
+.gm-t td{border-bottom:0;padding:5px 8px 5px 0}   /* an email's table has no rules between its lines */
+.pair[data-state=before] .gm-body .chg.tr>.now{display:none}
+.gm-body .was .pc{display:inline-block;margin:4px 10px}
+:is(.win-st,.qb-meta) .was .pc{display:inline-block;margin:4px 14px}   /* the red pen's loop round words in a sentence (an email, a status line) keeps its air from the words beside it */   /* a word in a sentence: in Before the hidden new word leaves no gap */
+.gm-from small::after{content:"";display:inline-block;width:8px;height:5px;margin-left:4px;vertical-align:2px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M.8.8L4 4 7.2.8' fill='none' stroke='%235f6368' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/8px 5px no-repeat}
+.gm-att{display:inline-block;margin:12px 0 0;padding:7px 12px;border:1px solid #dadce0;border-radius:8px;font-size:13px;color:#3c4043}
+.gm-draft{margin:12px 0 0;padding:9px 12px;border-radius:8px;background:#f1f3f4;font-size:13px;line-height:1.35;color:#3c4043}
+.gm-btns{display:flex;gap:8px;margin:12px 0 0}
+.gm-btns span{/* ui-ok: pill Gmail's own Reply and Forward buttons, outlined, inside the picture */padding:5px 16px;border:1px solid #747775;border-radius:18px;font-size:13px;font-weight:500;color:#3c4043}
+/* Outlook: its folder pane beside the list, in a picture 640px wide and up */
+.ol-f{display:none}
+.ol-m{min-width:0}
+@container (min-width:640px){
+  .ol{display:grid;grid-template-columns:122px minmax(0,1fr);column-gap:14px}
+  .ol-f{display:block;margin:0;padding:0 12px 0 0;list-style:none;border-right:1px solid #e5e5ea;font-size:13px;color:#3a3a3a}
+  .ol-f li{padding:6px 8px;border-radius:4px}
+  .ol-f li.on{background:#e8ebf0;font-weight:600;color:#111110}
+}
+/* iPhone Messages: the number under its grey circle with the small chevron; the centred time over a message; the small grey line
+   under the last one sent */
+.ph-n{display:inline-flex;align-items:center;gap:3px}
+.ph-n::after{content:"";width:6px;height:10px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 10'%3E%3Cpath d='M1 1l4 4-4 4' fill='none' stroke='%238e8e93' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/6px 10px no-repeat}
+.sys.ts{margin-bottom:-4px;color:#8e8e93}
+.thread>.sys.pc+.sys.ts{margin-top:4px}   /* the ring round a missed call clears iOS's time line under it */   /* iOS sets its time close over the message it dates, and Delivered close under the last sent one */
+.sys.ts b{font-weight:600}
+.sys.dl{align-self:flex-end;margin-top:-5px;color:#8e8e93}
+.iph-msg .thread{gap:5px}   /* iOS's own spacing between a thread's messages, a step under the drawn phone's 6px (last pass: its time lines added two) */
+@container (max-width:300px){.iph-msg .thread{gap:4px}.iph-msg .sys.dl{margin-top:-2px}}   /* a 320px phone: the thread a step closer, so its last line stays on the screen with iOS's time lines (last pass item 28) */
+/* the red pen marks the problem in Before; in After the old value stays as the pencil's struck trace, without the ring */
+.pair[data-state=after] .was .pc::after,.pair[data-state=after] .was .pc>.pc-loop{visibility:hidden}
+/* item 5's captions (noteAfter): both sentences hold one place, so the stop's notes keep the taller one's height in either state; a turn
+   of the switch never moves the figure under them, and the notes stay at the picture's middle (the space pass's rule) */
+.stop-notes .pencil:has(>.ao){display:grid}
+.stop-notes .pencil>:is(.bo,.ao){grid-area:1/1}
+.stop[data-state=after] .stop-notes .pencil>.bo,.stop[data-state=before] .stop-notes .pencil>.ao{display:block;visibility:hidden}
+/* a red ring round a cell's grey second line ("Not sent", "Card declined") keeps its air from the word over it */
+:is(.ptbl,.qt) td small:has(.pc){margin-top:7px}
+
