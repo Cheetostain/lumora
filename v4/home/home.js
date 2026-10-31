@@ -1,171 +1,28 @@
-/* Home v4 only (2026-10-10). The walk's intro names the sample shop the owner picked, and says honestly whether its stops
-   show the same screen before and after (plumbing, the pilot) or only the fixed screen (trades still waiting on their
-   own Before / After pictures, the plan's R7 fallback). v3's Home script is kept in "backup ORIGINAL-2026-10-10/". */
+/* Home (2026-10-10; the generalist Home since 2026-10-30, plan P10). Franco, Oct 27: "clean up the home... just keeping it
+   generalist, so the offices." Home shows the Offices sample only (body data-sample-lock, system.js), so nothing here rewrites the page
+   after a pick: the picker, the walk's stops and the night's lock screen left, with their scripts (size, walkLink, picked, walkAlso,
+   intro, slip, picker, nightTag, variants, seat, pickerRow, toolsFollow, stopHead, chipsPeek; "home ORIGINAL-2026-10-30-generalist.js"
+   beside this file has them). What runs: What we automate's PDF picture (orderPic, as built), the walk film and the night film
+   (films), the sheet's rows that jump to the film (sheetMap) and the walk heading's second tone (twoTone). */
 (function () {
-  function size(t) {                       // "Plumbing, 2 trucks" -> "2-truck shop"; "Property manager, 212 doors" -> "212-door property manager"
-    var m = /, (\d+) (\w+?)s?$/.exec(t.short) || [], kind = t.per === 'yr' ? 'property manager' : /^Restaurant/.test(t.short) ? 'restaurant and bar' :
-      /agency|office/i.test(t.short) ? t.short.split(',')[0].toLowerCase() : /^(?:Roofing|Pest control|Restoration),/.test(t.short) ? 'company' : 'shop';   // "Insurance agency, 10 people" -> "10-person insurance agency" (offices, 2026-10-18)
-    return m[1] ? m[1] + '-' + (m[2] === 'people' ? 'person' : m[2]) + ' ' + kind : kind;
-  }
-  // the tally no longer counts dollars (R9) and is not shown on phones, so the intro promises the end total, not a running sum
-  // The Spanish Home (index.es.html, 2026-10-10) says it in Spanish, from the trade's Spanish short line ("Plomería, 2 camionetas")
   var ES = /^es\b/i.test(document.documentElement.getAttribute('lang') || '');
-  function sizeEs(t) {                     // "un negocio de ejemplo con 2 camionetas"; "una administradora de propiedades de ejemplo con 212 unidades"
-    var m = /, (\d+ .+)$/.exec(t.short) || [], kind = t.per === 'yr' ? 'una administradora de propiedades' : /^Restaurante/.test(t.short) ? 'un restaurante y bar' :
-      /^Agencia/.test(t.short) ? 'una ' + t.short.split(',')[0].toLowerCase() : /^Control de plagas,/.test(t.short) ? 'una compañía'
-      : /^Daños/.test(t.short) ? 'una empresa' : 'un negocio';   // "una agencia de seguros de ejemplo con 4 personas"; pest control and restoration as the heading says them (system.js walkHead, picks follow-up 2026-10-19)
-    return kind + ' de ejemplo' + (m[1] ? ' con ' + m[1].replace(' ', ' ') : '');   // "2 camionetas" never splits over two lines
-  }
-  // where the picked sample's whole walk is: its trade page, or How it works for a sample with no page yet (offices and clinics,
-  // 2026-10-17 polish). The line under the picker and the line under the walk's stop say it the same way
-  function walkLink(t) {
-    if (t.href) return { href: t.href, text: ES ? 'La visita completa, en la página de ' + t.name : 'The full walk, on the ' + t.name + ' page' };
-    return { href: ES ? '/es/how-it-works/#walk' : '/how-it-works/#walk', text: ES ? 'Cómo es la visita, en la página Cómo funciona' : 'How a walk goes, on the How it works page' };
-  }
-  // the hero under the sheet (2026-10-17 polish, both judges): one line under the picker opens the picked sample's walk. The strip's
-  // label, which said whose screens the strip showed once another sample was picked, left with the strip (alive build 2026-10-24,
-  // Franco's pick strip-out)
-  function picked(key, t) {
-    var a = document.querySelector('[data-f="pick-walk"]');
-    if (a && t) { var w = walkLink(t); a.href = w.href; a.textContent = w.text; }
-  }
-  // Oct 19 idea 15 (Franco's yes, Oct 23; alive build 2026-10-24): the walk comes right under the promise, and its start names the
-  // other sample businesses, so a restaurant owner or a property manager sees at once that the walk is a sample and can switch it
-  // there. With JS off each name is a link to its page, as the picker's chips are; here each becomes a button that picks that
-  // sample through the picker's own path (Lumora.setTrade), and every pick names the samples not picked, from the picker's first
-  // five in its order, each by its chip's sentence name (data-say: "property managers", "administración de propiedades"; a
-  // chip's label is a label). The pressed button now names the sample the walk left, so focus goes to the walk's heading, which
-  // names the new sample and what it loses. Checkers' pass (2026-10-24): the four buttons stay and only their words and data-t
-  // change; when every pick rebuilt them, the pressed one left the page and system.js's focus guard measured it as hidden under
-  // the header, so a tap threw the page up 146px
-  function walkAlso() {
-    var p = document.querySelector('#walk [data-walk-also]'); if (!p || !window.Lumora) return;
-    var chips = Array.prototype.slice.call(document.querySelectorAll('.hm4-hero .pk .chip[data-t]'), 0, 5);
-    var all = chips.map(function (c) { return c.dataset.t; }), links = Array.prototype.slice.call(p.querySelectorAll('a[data-t]'));
-    if (all.length < 2 || links.length !== all.length - 1) return;   // the links stay as they are
-    var say = function (k) { var c = chips[all.indexOf(k)], b = c && c.querySelector('b'); return c ? c.getAttribute('data-say') || (b || c).textContent : k; };
-    var btns = links.map(function (a) { var b = document.createElement('button'); b.type = 'button'; b.className = 'u'; a.parentNode.replaceChild(b, a); return b; });
-    function render(key) {
-      var ks = all.filter(function (k) { return k !== key; }).slice(0, btns.length);
-      btns.forEach(function (b, i) { b.setAttribute('data-t', ks[i]); b.textContent = say(ks[i]); });
-    }
-    // the pick rewrites the sheet in the hero above, whose height changes with the sample (Property managers' is 77px taller than
-    // Restaurants'); Chrome's scroll anchoring held the hero still instead and WebKit has none, so the line just pressed slid down
-    // under the finger. The walk's heading is held where it was on screen (checkers' pass, 2026-10-24; check.py walk_line_problems)
-    p.addEventListener('click', function (e) {
-      var b = e.target.closest && e.target.closest('button[data-t]'); if (!b) return;
-      var h = document.querySelector('#walk .walk-h'), y0 = h && h.getBoundingClientRect().top;
-      Lumora.setTrade(b.getAttribute('data-t'));
-      if (h) { var d = h.getBoundingClientRect().top - y0; if (Math.abs(d) > 0.5) scrollBy({ top: d, behavior: 'instant' }); h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+  // GSAP 3.15.0 with Flip and CustomEase, vendored beside system.js (system/assets/vendor, gsap.LICENSE.md): one load for the page,
+  // asked for by whichever picture comes near the screen first (the walk film, the night film or What we automate's PDF picture)
+  var gsapP = null;
+  function loadGsap() {
+    if (gsapP) return gsapP;
+    gsapP = new Promise(function (res, rej) {
+      if (window.gsap && window.Flip && window.CustomEase) return res();
+      var base = null; try { base = new URL('assets/vendor/', document.querySelector('script[src*="system.js"]').src).href; } catch (e) { return rej(); }
+      var files = ['gsap.min.js', 'Flip.min.js', 'CustomEase.min.js'], left = files.length, failed = false;
+      files.forEach(function (f) {
+        var s = document.createElement('script'); s.src = base + f; s.async = false;
+        s.onload = function () { if (!--left && !failed) res(); };
+        s.onerror = function () { failed = true; rej(); };
+        document.head.appendChild(s);
+      });
     });
-    Lumora.on(function (k) { render(k); });
-    render(Lumora.trade);
-  }
-  function intro(key, t) {
-    // the link under the walk opens the picked trade's page (a restaurant owner who picks Restaurants gets there in one tap). It
-    // follows the pick whatever the walk shows: the motion restore (2026-10-18) put the walk back to every stop, and the link stayed.
-    // 2026-10-23 (a shorter Home, D39): Home's walk has no intro line now, so the link is set before the intro is looked for
-    var more = document.querySelector('[data-f="walk-more"]');
-    if (more && t) { var w = walkLink(t); more.href = w.href; more.textContent = w.text; }
-    var p = document.querySelector('[data-walk-intro]'); if (!p || !t || !t.rows) return;
-    var pairs = t.rows.some(function (r) { return r.pair; }), walk = p.closest('[data-walk-rows]');
-    // a walk cut to one stop (data-walk-rows="1", the Home of 2026-10-16 to 18) says so
-    if (walk && walk.getAttribute('data-walk-rows') === '1') {
-      var same = t.rows[0] && t.rows[0].pair;
-      p.textContent = ES ? t.shop + ' es ' + sizeEs(t) + '. Este es un paso de su visita: ' + (same ? 'la misma pantalla, antes y después del arreglo.' : 'el arreglo en la pantalla del propio negocio.')
-        : t.shop + ' is a sample ' + size(t) + '. Here is the first stop from its walk: ' + (same ? 'the same screen before and after the fix.' : 'the fix on the shop\'s own screen.');
-      return;
-    }
-    // the heading names the sample business, so the intro opens on its size alone: "A 2-truck shop." ("Un negocio con 2 camionetas.")
-    var cap = function (s) { return s.charAt(0).toUpperCase() + s.slice(1); }, lead = ES ? cap(sizeEs(t).replace(' de ejemplo', '')) : 'A ' + size(t);
-    if (ES) { p.textContent = lead + '. ' + (pairs ? 'En cada paso se ve la misma pantalla antes y después del arreglo, y la visita termina con el total de la hoja.'
-      : 'En cada paso se ve el arreglo en la pantalla del propio negocio, y la visita termina con el total de la hoja.'); return; }   // "paso", never "parada" (a bus stop; native read 2026-10-10)
-    p.textContent = lead + '. ' + (pairs ? 'Each stop shows the same screen before and after the fix, and the walk ends on the sheet\'s total.'
-      : 'Each stop shows the fix on the shop\'s own screen, and the walk ends on the sheet\'s total.');
-  }
-  // the walk's heading opens on its number (Franco 2026-10-19, design round item 3): system.js walkHead() writes it for every pick,
-  // the one writer Home and the eight trade pages share since the picks follow-up, so it reads the sheet's own total
-  // the walk adds up its stops on a computer (Franco 2026-10-19, design round item 13; UI's slip with Motion's timing, both judges'
-  // fixes): each stop's circled number, its place and what it loses, in the order walked, then the walk sheet's double rule, and the
-  // total under it (the bigfig binder) is the answer, shown once. Written from the stops themselves, so a pick rewrites it. The rows
-  // write in 420ms apart when the walk end comes into view, the rule draws, then the total lands (home.css; reduced motion, ?still
-  // and a phone show the finished slip, and a phone hides it: data-extra)
-  function slip(key, t) {
-    var ol = document.querySelector('[data-f="slip"]'), per = document.querySelector('[data-f="slip-per"]'); if (!ol || !window.Lumora) return;
-    var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
-    ol.innerHTML = Array.prototype.map.call(document.querySelectorAll('#walk .stops > .stop'), function (s, i) {
-      var h3 = s.querySelector('.stop-t h3'), c = h3 && h3.cloneNode(true); if (c) Array.prototype.forEach.call(c.querySelectorAll('.sr'), function (x) { x.remove(); });
-      return '<li style="--i:' + i + '"><span class="tab-n">' + (i + 1) + '</span><span class="ws-p">' + esc(c ? c.textContent.trim() : s.dataset.place) + '</span><b>' + Lumora.money(+s.dataset.usd) + '</b></li>';
-    }).join('');
-    var end = ol.closest('.walk-end'); if (end) end.style.setProperty('--n', ol.children.length);   // the rule and the total wait for the last row
-    if (per && t) per.textContent = t.per === 'yr' ? (ES ? 'Pérdida al año' : 'Lost a year') : (ES ? 'Pérdida al mes' : 'Lost a month');
-  }
-  function slipMotion() {
-    var end = document.querySelector('#walk .walk-end'), q = new URLSearchParams(location.search);
-    if (!end || !end.querySelector('.walk-slip') || !('IntersectionObserver' in window)) return;
-    if ((window.Lumora && Lumora.still) || q.has('still') || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (end.getBoundingClientRect().top < innerHeight) return;   // already on screen (a jump to #walk): the finished slip, nothing replays
-    end.classList.add('ws-wait');
-    var io = new IntersectionObserver(function (es) {
-      var r = es[0].boundingClientRect; if (!es[0].isIntersecting || (es[0].intersectionRatio < 0.5 && r.top > innerHeight * 0.6)) return;
-      io.disconnect(); end.classList.remove('ws-wait'); end.classList.add('ws-run');
-    }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
-    io.observe(end);
-  }
-  // the business picker over the sheet (Franco 2026-10-19, design round item 12). The chips are system.js's radiogroup; this adds
-  // what a chip can't say by itself. Each business's size, from its sample's own short line: "Restaurant and bar, 110 seats" gives
-  // "110 seats", and "Restoration, 2 crews" keeps its kind, since "Water and mold" doesn't say it. A computer opens the list from its
-  // field ("Sample business  Plumbing, 2 trucks  Change"); a pick closes it and focus goes back to the field, so the sheet rewrites
-  // in view with nothing over it, and Esc, a click outside or Tab out of it close it too. The field names the business; its size is
-  // on the sheet's letterhead under it. A phone keeps the picked chip in its row's view, scrolling the row no further than it must
-  // (the row scrolls inside itself; the page never moves)
-  function picker() {
-    var box = document.querySelector('.hm4-hero .pk'); if (!box || !window.Lumora) return;
-    var field = box.querySelector('.pk-field'), now = box.querySelector('[data-pk-now]'), row = box.querySelector('.chips'),
-        chips = Array.prototype.slice.call(box.querySelectorAll('.chip[data-t]')), desk = matchMedia('(min-width: 900px)');
-    function sizeOf(k) {
-      var t = Lumora.trades[k], s = (t && t.short) || '', i = s.indexOf(', '); if (i < 0) return '';
-      return (s.slice(0, 6).toLowerCase() === t.name.slice(0, 6).toLowerCase() ? s.slice(i + 2) : s).replace(/(\d) /g, '$1 ');
-    }
-    chips.forEach(function (c) { var sm = c.querySelector('small'); if (sm) sm.textContent = sizeOf(c.dataset.t); });
-    function mark(key) {
-      var c = box.querySelector('.chip[data-t="' + key + '"]'); if (!c) return;
-      if (now) now.textContent = (c.querySelector('b') || c).textContent;
-      if (desk.matches || !row || row.scrollWidth <= row.clientWidth) return;
-      var l = c.offsetLeft - row.offsetLeft, r = l + c.offsetWidth, x = row.scrollLeft, w = row.clientWidth;   // both from .pk: l is the chip's place in the row
-      var to = l < x + 6 ? l - 6 : r > x + w - 16 ? r - w + 16 : x;   // 6px of room for the focus ring at the left, the gutter at the right
-      if (to !== x) row.scrollTo({ left: Math.max(0, to), behavior: Lumora.still || matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-    }
-    Lumora.on(mark); mark(Lumora.trade);
-    if (!field) return;
-    function open(on, back) {
-      if (on) box.setAttribute('data-open', ''); else box.removeAttribute('data-open');
-      field.setAttribute('aria-expanded', on ? 'true' : 'false');
-      if (on) (box.querySelector('.chip[aria-checked="true"]') || chips[0]).focus();
-      else if (back) field.focus();
-    }
-    var isOpen = function () { return box.hasAttribute('data-open'); };
-    field.addEventListener('click', function () { open(!isOpen(), false); });
-    box.addEventListener('click', function (e) { if (isOpen() && e.target.closest('.chip')) open(false, true); });   // after system.js chose it
-    box.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen()) { e.preventDefault(); open(false, true); } });
-    box.addEventListener('focusout', function (e) { if (isOpen() && (!e.relatedTarget || !box.contains(e.relatedTarget))) open(false, false); });
-    document.addEventListener('pointerdown', function (e) { if (isOpen() && !box.contains(e.target)) open(false, false); });
-    var shut = function () { if (!desk.matches && isOpen()) open(false, false); };   // a phone shows the row, not the list
-    if (desk.addEventListener) desk.addEventListener('change', shut);
-  }
-  // Who we work with's trade index and its leak lines (who(), review 2026-10-10) left Home on 2026-10-23 (a shorter Home, D39;
-  // mixed examples, D40): the leak lines live on Industries, and the plain Industry pages list in Who we work with needs no script
-  // the night band (round 2, 2026-10-17, judges: two Sample tags side by side): the phone and the log are one picture with one tag,
-  // under the log; home.css hides the phone's. The binder writes the pair again on every pick, so the log's tag is marked again each
-  // time as the section's sample lead ([data-sample-lead], Lumora.lint R8): it labels the phone beside it, and the log's head names the shop
-  function nightTag() {
-    var t = document.querySelector('[data-bind=night4] .n4-paper > .samp'); if (t) t.setAttribute('data-sample-lead', '');
-  }
-  // review only: the night band's other two layouts and its other headline, for Franco's pick on the section card (outline 6)
-  function variants() {
-    var q = new URLSearchParams(location.search), n4 = document.querySelector('.n4');
-    if (n4 && /^[bc]$/.test(q.get('n4') || '')) n4.setAttribute('data-layout', q.get('n4'));
-    var h = n4 && n4.querySelector('h2'); if (h && q.get('n4h') === '2') h.textContent = ES ? 'El trabajo de oficina, hecho antes de que usted se levante.' : 'Office work done before you wake up.';
+    return gsapP;
   }
   // What we automate, the PDF that files itself (Franco's pick B, Oct 27: "i really like the B animation. one more time."). The
   // trial's anim.js (solution-anim-2026-10-26/prototype), B's beats only, on the same clock and curves: the owner's sheet, Gmail's
@@ -334,7 +191,7 @@
       ready = true;
       window.SA = { variant: 'b', play: play, done: done, get mode() { return mode; }, get tl() { return tl; } };
       // armed after the fonts: the PDF grows out of the chip in Gmail's notice, set in Familjen Grotesk, and measured before
-      // the font swaps in it would fold a few px off the chip (reviewers' round, Oct 27), as seat() and lastPass() wait too
+      // the font swaps in it would fold a few px off the chip (reviewers' round, Oct 27), as the walk and night films wait too
       (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function () {
         if (!tl && mode !== 'play') arm();
         watch();
@@ -364,114 +221,500 @@
       }, { threshold: [0, .3, .6, .95, 1], rootMargin: '-' + top + 'px 0px -' + bot + 'px 0px' });
       io.observe(stage);
     }
-    // GSAP comes in only when the band is near: three files in order (the plugins need gsap first), none from a CDN
+    // GSAP comes in only when the band is near (loadGsap: three files in order, the plugins after gsap, none from a CDN)
     var near = new IntersectionObserver(function (es) {
       if (!es.some(function (e) { return e.isIntersecting; })) return;
       near.disconnect();
-      var files = ['gsap.min.js', 'Flip.min.js', 'CustomEase.min.js'], left = files.length, failed = false;
-      files.forEach(function (f) {
-        var s = document.createElement('script'); s.src = base + f; s.async = false;
-        s.onload = function () { if (!--left && !failed) start(); };
-        s.onerror = function () { failed = true; fig.classList.add('still'); };   // the finished frame, never a half-drawn one
-        document.head.appendChild(s);
-      });
+      // the walk film above may have loaded it already (2026-10-30): one load for the page
+      loadGsap().then(start, function () { fig.classList.add('still'); });   // the finished frame, never a half-drawn one
     }, { rootMargin: '600px 0px' });
     near.observe(fig);
   }
-  // stop 1 on a computer: the quote card hangs over the list's last rows; its top edge lands on a row line, never through a row's
-  // words (2026-10-17 polish, owner judge: at 1440 the Spanish card cut "Aceptada $4,105.60" in half). The card hangs from the
-  // stage's foot, so the stage's bottom padding moves it to the nearest line (--qc-nudge, set on the section, outside the
-  // prerendered stop). Measured again when the window or the card changes size (Before and After, a trade, the fonts)
-  var seatObs = 'ResizeObserver' in window ? new ResizeObserver(function () { seat(); }) : null;
-  function seat() {
-    var walk = document.getElementById('walk'), st = walk && walk.querySelector('.stop-q .stage'), qc = st && st.querySelector('.qcard'), qa = st && st.querySelector('.qa');
-    if (!qc || !qa) return;
-    if (seatObs && !qc._seat) { qc._seat = 1; seatObs.observe(qc); seatObs.observe(qa); }
-    if (getComputedStyle(qc).position !== 'absolute') { walk.style.removeProperty('--qc-nudge'); return; }
-    var now = parseFloat(walk.style.getPropertyValue('--qc-nudge')) || 0, top = qc.getBoundingClientRect().top - now, best = null;
-    Array.prototype.forEach.call(qa.querySelectorAll('.qt tbody tr'), function (tr) {
-      if (!tr.getClientRects().length) return; var d = tr.getBoundingClientRect().bottom - top; if (d >= -48 && (best === null || Math.abs(d) < Math.abs(best))) best = d; });   // the card keeps 24px or more below the window
-    if (best === null) return;
-    var nudge = Math.round(best * 10) / 10;
-    if (Math.abs(nudge - now) > 0.4) walk.style.setProperty('--qc-nudge', nudge + 'px');
-  }
   /* ================================================================================================================================
-     The last pass (2026-10-26, Franco's picks; ported from the prototype's last-pass.js with its chg- switches taken off). Each part
-     listens to Lumora.on(), so a pick redraws it. Motion follows the house rules: ?still and reduced motion get the finished frame */
-  var LP_STILL = /[?&]still\b/.test(location.search) || matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var lpLater = [], lpResize = [], lpT = 0;
-  addEventListener('resize', function () { clearTimeout(lpT); lpT = setTimeout(function () { lpResize.forEach(function (f) { f(); }); }, 120); });
+     The walk film and the night film (the generalist Home, 2026-10-30; the walk-motion trial's direction B, all five judges' pick,
+     walk-motion-2026-10-27/prototype/proto.js with its other two directions, its ?v switch and its review parts off). Franco, Oct 27:
+     "I should be able to see the emails get dragged into the folders... the machine running and scrolling and it detects two
+     unfinished invoices... then straight to your phone." Each film is one GSAP timeline on B's clock and curves (orderPic above),
+     built ahead and held on its first frame, played once when the whole picture is in view between the sticky header and the
+     phone's call bar, one film at a time, with Pause and Play again (WCAG 2.2.2). Reduced motion, ?still, no IntersectionObserver or
+     a file that fails to load: the finished frame, which is the page itself (home.css). Only transform, opacity and
+     stroke-dashoffset move (SYSTEM.md 9), plus words a tool itself would change (a clock, a count, a status line), set at their
+     moment. Two polish items the trial left for this build: the play waits for the Pause under the picture to clear the call bar
+     too, where the screen holds both, and the night's check boxes the quote's $920.00 before the red pen rings the bill's $1,180.00,
+     so the two figures are read together (Plover IT's bill was $1,240.00 over $980.00 until the reviewers' round, 2026-10-30: What
+     we automate's order is $1,240.00 too, and one business showing the same figure twice read as copied numbers). window.WM is
+     what the clip and check tools read */
+  var FLAT = { flat: true };
+  function films() {
+    var Q = new URLSearchParams(location.search), $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+    var STILL = Q.has('still') || matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window);
+    var WM = window.WM = window.WM || {}; WM.films = {};
+    if (!$('figure.wm[data-film]')) return;
+    var G, MOVE, OUT, IN;
+    function easings() {
+      if (G) return; G = window.gsap; G.registerPlugin(window.Flip, window.CustomEase);
+      MOVE = CustomEase.create('wmMove', '.2,0,0,1'); OUT = CustomEase.create('wmOut', '.33,1,.68,1'); IN = CustomEase.create('wmIn', '.3,0,1,1');
+    }
+    /* one film at a time on the page */
+    var busy = null, queue = [];
+    function next() { busy = null; while (queue.length) { var f = queue.shift(); if (f.mode === 'queued') { f.play(); return; } } }
+    var LAB = ES ? { pause: 'Pausar', play: 'Reproducir', again: 'Ver otra vez' } : { pause: 'Pause', play: 'Play', again: 'Play again' };
+    var LAL = ES ? { pause: 'Pausar la animación', play: 'Reproducir la animación', again: 'Ver otra vez' } : { pause: 'Pause animation', play: 'Play animation', again: 'Play again' };
+    var CLEAR = 'transform,translate,rotate,scale,opacity,visibility,color,boxShadow,strokeDasharray,strokeDashoffset,zIndex,backgroundColor';
+    var money = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
 
-  /* 1 picker-row (computer): "Your business:" then four sample businesses as plain tabs and More, which opens the list picker()
-     already opens from its field (More presses that field). An ink underline slides to the pick (260ms; a jump under reduced
-     motion). A pick from the list puts its name where More was. The row holds what fits: a tab steps into More's list first (it is
-     there already), from the end and never the picked one, and the label steps aside only after every tab but the first */
-  function pickerRow() {
-    var box = document.querySelector('.hm4-hero .pk'), row = box && box.querySelector('.pk-tabs'); if (!row) return;
-    var field = box.querySelector('.pk-field'), more = row.querySelector('.pk-mo'), ul = row.querySelector('.pk-ul'), lab = row.querySelector('.pk-tabs-k'),
-      tabs = Array.prototype.slice.call(row.querySelectorAll('.pk-tab')), desk = matchMedia('(min-width: 900px)');
-    tabs.forEach(function (t) { t.addEventListener('click', function () { if (box.hasAttribute('data-open')) field.click(); Lumora.setTrade(t.dataset.t); }); });
-    more.addEventListener('click', function () { field.click(); });
-    new MutationObserver(function () { more.setAttribute('aria-expanded', box.hasAttribute('data-open') ? 'true' : 'false'); }).observe(box, { attributes: true, attributeFilter: ['data-open'] });
-    // picker() gives focus back to its field after a pick from the list; the field is hidden here, so focus comes back to More
-    box.addEventListener('click', function (e) { if (e.target.closest('.pk-list .chip')) setTimeout(function () { more.focus({ preventScroll: true }); }, 0); });
-    box.addEventListener('keydown', function (e) { if (e.key === 'Escape') setTimeout(function () { if (document.activeElement === document.body || !box.contains(document.activeElement)) more.focus({ preventScroll: true }); }, 0); });
-    function mark(key, move) {
-      var chip = box.querySelector('.chip[data-t="' + key + '"] b');
-      tabs.forEach(function (t) { t.hidden = false; }); if (lab) lab.hidden = false;
-      var own = tabs.filter(function (x) { return x.dataset.t === key; })[0];
-      more.textContent = own || !chip ? more.getAttribute('data-more') : chip.textContent;
-      more.classList.toggle('is-pick', !own);
-      if (desk.matches) {
-        var over = function () { return row.scrollWidth > row.clientWidth + 1; };
-        for (var i = tabs.length - 1; i > 0 && over(); i--) if (tabs[i] !== own) tabs[i].hidden = true;
-        if (lab && over()) lab.hidden = true;
+    function Film(fig, build, hooks) {
+      var F = { name: fig.getAttribute('data-film'), fig: fig, mode: 'wait', tl: null, played: false, armed: false };
+      var stage = $('.wm-stage', fig), fx = $('.wm-fx', fig), btn = $('.wm-pause', fig), lab = btn && $('.pt', btn), made = [], temp = [], lit = [], texts = [];
+      hooks = hooks || {};
+      WM.films[F.name] = F;
+      function label(m) { if (!btn) return; btn.setAttribute('aria-label', LAL[m]); btn.classList.toggle('is-paused', m !== 'pause'); if (lab) lab.textContent = LAB[m]; }
+      function pairs(state) { $$('.wm-pair', fig).forEach(function (p) { p.setAttribute('data-state', state); }); }
+      /* the kit: geometry relative to the stage, and the beats every film is made of */
+      function rect(el) {
+        var r;
+        // a cell's or a line's words; a SMALL too (the reviewers' round, 2026-10-30: the bill's quote is a block-level small, and its
+        // box drew round 190px of empty cell on a computer, the words at its right end)
+        if (el.tagName === 'TD' || el.tagName === 'P' || el.tagName === 'SMALL') { var rg = document.createRange(); rg.selectNodeContents(el); r = rg.getBoundingClientRect(); }
+        else r = el.getBoundingClientRect();
+        var s = stage.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height };
       }
-      var t = own && !own.hidden ? own : null;
-      if (own && own.hidden) { more.textContent = chip ? chip.textContent : more.textContent; more.classList.add('is-pick'); }
-      tabs.forEach(function (x) { x.setAttribute('aria-pressed', x === t ? 'true' : 'false'); });
-      if (!desk.matches) return;
-      var el = t || more, rr = row.getBoundingClientRect(), er = el.getBoundingClientRect(), cs = getComputedStyle(el),
-        w = er.width - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0) - (el === more ? 20 : 0);   // More's arrow is not its name
-      ul.style.transition = move && !LP_STILL ? '' : 'none';
-      ul.style.transform = 'translateX(' + (er.left - rr.left + (parseFloat(cs.paddingLeft) || 0)).toFixed(1) + 'px) scaleX(' + Math.max(1, w).toFixed(1) + ')';
-      row.classList.add('is-set');
+      function track(els) { [].concat(els).forEach(function (e) { if (e && made.indexOf(e) < 0) made.push(e); }); return els; }
+      function f1(n) { return Math.round(n * 10) / 10; }
+      function roundBox(w, h) {           // B's box: starts just past the top-left corner and runs clockwise, as a pen would
+        var o = .75, x0 = o, y0 = o, x1 = w - o, y1 = h - o, r = Math.min(6, (x1 - x0) / 2, (y1 - y0) / 2);
+        return 'M' + f1(x0 + r) + ' ' + y0 + 'H' + f1(x1 - r) + 'A' + r + ' ' + r + ' 0 0 1 ' + f1(x1) + ' ' + f1(y0 + r) + 'V' + f1(y1 - r) +
+          'A' + r + ' ' + r + ' 0 0 1 ' + f1(x1 - r) + ' ' + f1(y1) + 'H' + f1(x0 + r) + 'A' + r + ' ' + r + ' 0 0 1 ' + x0 + ' ' + f1(y1 - r) +
+          'V' + f1(y0 + r) + 'A' + r + ' ' + r + ' 0 0 1 ' + f1(x0 + r) + ' ' + y0;
+      }
+      var K = {
+        stage: stage, rect: rect, track: track,
+        // job: show our work. An ink box draws round a value, the way a pen would (B's drawBox), 4px off its words. o.pad and o.dy
+        // fit a line set right under another (the bill's quote under its $1,180.00: 3px off and 2px lower, so the box's top edge
+        // clears the amount's line and the bill never reads as underlined; reviewers' round, 2026-10-30)
+        box: function (tl, t, el, dur, keep, o) {
+          o = o || {};
+          var b = rect(el), pad = o.pad || 4, W = b.w + pad * 2, Hh = b.h + pad * 2 - 2, NS = 'http://www.w3.org/2000/svg';
+          var svg = document.createElementNS(NS, 'svg'), p = document.createElementNS(NS, 'path');
+          svg.setAttribute('class', 'wm-box'); svg.setAttribute('width', W); svg.setAttribute('height', Hh); svg.setAttribute('viewBox', '0 0 ' + W + ' ' + Hh);
+          svg.style.left = (b.x - pad) + 'px'; svg.style.top = (b.y - pad + 1 + (o.dy || 0)) + 'px';
+          p.setAttribute('d', roundBox(W, Hh)); p.setAttribute('pathLength', '1'); p.style.strokeDasharray = '1 2'; p.style.strokeDashoffset = '1.01';
+          svg.appendChild(p); fx.appendChild(svg);
+          tl.to(p, { strokeDashoffset: 0, duration: dur || .42, ease: OUT }, t);
+          if (keep !== true) tl.to(svg, { opacity: 0, duration: .25, ease: OUT }, typeof keep === 'number' ? keep : t + (dur || .42) + .9);
+          return svg;
+        },
+        // job: cause and effect. A copy of a value (or the words given) lifts off its place and travels to where it lands; what it
+        // fills comes in under it as it arrives (B's fly, the copy's centre landing on the target's)
+        fly: function (tl, t, from, to, opts) {
+          opts = opts || {};
+          var a = rect(from), b = rect(to), el = document.createElement('span'), fs = opts.size || parseFloat(getComputedStyle(from).fontSize) || 13;
+          el.className = 'wm-fly';
+          el.innerHTML = '<span class="fly-in"><span class="fly-sh"></span><span class="fly-bg"></span><span class="fly-t"><span class="fly-w"></span></span></span>';
+          el.querySelector('.fly-w').textContent = opts.text || from.textContent.trim();
+          el.querySelector('.fly-t').style.fontSize = fs + 'px';
+          fx.appendChild(el);
+          var w = el.offsetWidth, h = el.offsetHeight;
+          var x0 = a.x + a.w / 2 - w / 2, y0 = a.y + a.h / 2 - h / 2, x1 = b.x + b.w / 2 - w / 2, y1 = b.y + b.h / 2 - h / 2;
+          var sw = stage.offsetWidth, cl = function (x) { return Math.max(2, Math.min(sw - w - 2, x)); }; x0 = cl(x0); x1 = cl(x1);   // a copy wider than its cell stays inside the picture
+          el.style.left = x0 + 'px'; el.style.top = y0 + 'px';
+          var inn = el.firstChild, sh = inn.firstChild, d = opts.dur || .7, lift = opts.lift == null ? 4 : opts.lift;
+          tl.set(el, { opacity: 1 }, t)
+            .fromTo(inn, { scale: .96 }, { scale: 1.06, y: -lift, duration: .18, ease: OUT }, t)
+            .to(sh, { opacity: 1, duration: .18, ease: OUT }, t)
+            .to(el, { x: x1 - x0, y: y1 - y0, duration: d, ease: MOVE }, t + .18);
+          // opts.arc: the copy rises over its own row and comes down on the cell's edge, so the row it fixes stays readable (judges, Oct 27)
+          if (opts.arc) tl.to(inn, { scale: 1, duration: d, ease: MOVE }, t + .18).to(inn, { y: -lift - opts.arc, duration: d * .45, ease: OUT }, t + .18)
+            .to(inn, { y: 0, duration: d * .55, ease: IN }, t + .18 + d * .45);
+          else tl.to(inn, { scale: 1, y: 0, duration: d, ease: MOVE }, t + .18);
+          tl.to(sh, { opacity: 0, duration: .3, ease: OUT }, t + .18 + d * .55)
+            .to(el, { opacity: 0, duration: .14, ease: OUT }, t + .18 + d + .02);
+          if (opts.land) K.show(tl, t + .18 + d - .04, opts.land, .16, 0);
+          return t + .18 + d;
+        },
+        // job: cause and effect. An element itself travels (a file chip into its row)
+        carry: function (tl, t, el, to, opts) {
+          opts = opts || {};
+          var a = rect(el), b = rect(to), d = opts.dur || .7;
+          var dx = (opts.toLeft ? b.x : b.x + b.w / 2 - a.w / 2) - a.x, dy = b.y + b.h / 2 - (a.y + a.h / 2);
+          track(el);
+          tl.to(el, { scale: 1.06, y: -4, boxShadow: '0 12px 24px rgba(58,47,28,.22)', duration: .16, ease: OUT }, t)
+            .to(el, { x: dx, y: dy, scale: opts.scale || .92, duration: d, ease: MOVE }, t + .16)
+            .to(el, { opacity: 0, duration: .14, ease: OUT }, t + .16 + d - .06);
+          return t + .16 + d;
+        },
+        // job: state change. Something comes in where it belongs (rise and fade)
+        show: function (tl, t, els, dur, dy) {
+          els = [].concat(els).filter(Boolean);
+          if (!els.length) return;
+          tl.fromTo(track(els), { autoAlpha: 0, y: dy == null ? 4 : dy }, { autoAlpha: 1, y: 0, duration: dur || .32, ease: OUT }, t);
+        },
+        hide: function (tl, t, els, dur) { els = [].concat(els).filter(Boolean); if (els.length) tl.to(track(els), { autoAlpha: 0, duration: dur || .2, ease: OUT }, t); },
+        // job: state change. One changed cell (pairHTML's .chg): the old value is struck in pencil (a struck one stays, as the house's
+        // after frame keeps it) or fades out, and the new one comes in over or under it
+        swap: function (tl, t, chg, opts) {
+          if (!chg) return t;
+          opts = opts || {};
+          var was = $(':scope > .was', chg), now = $(':scope > .now', chg), tr = chg.classList.contains('tr');
+          // R7 (check.py film_problems; the reviewers' round, 2026-10-30): old words never fade out under new ones fading in. That
+          // left both under 90% opacity for 150 to 200 ms in four status lines ("Typed again" to "From policy", "3 bills since
+          // Friday" to "3 bills read"...). Unstruck words change at once, as the tool changes them; a dropped value keeps its fall,
+          // at full opacity from its first frame. A struck value stays, so its new one may still fade in beside it
+          var said = !tr && was && was.textContent.trim();
+          if (said && !opts.drop) opts = FLAT;
+          if (tr) {
+            var s = $('.wm-strike', was);
+            if (s) tl.fromTo(track(s), { scaleX: 0 }, { scaleX: 1, duration: .42, ease: MOVE }, t);
+            tl.set(track(was), { color: 'var(--pencil)' }, t + .1);
+            var loop = $('.pc-loop', was); if (loop) tl.to(track(loop), { opacity: 0, duration: .2, ease: OUT }, t + .3);
+          }
+          // opts.flat: a row the machine runs past changes at once, as a machine ticks, written straight to the style, so no tween
+          // reads the page back mid-film (a fade on each kept a slow phone repainting every frame)
+          if (opts.flat) {
+            if (was) track(was); if (now) track(now);
+            tl.call(function () { if (was) { was.style.visibility = 'hidden'; was.style.opacity = '0'; } if (now) { now.style.visibility = 'inherit'; now.style.opacity = '1'; } }, null, t);
+            return t;
+          }
+          if (said) {   // a drop over old words: the old leave and the new land in the same frame, the new at full opacity
+            tl.set(track(was), { autoAlpha: 0 }, t + .06);
+            if (now) tl.set(track(now), { autoAlpha: 1, scale: 1.12, y: -6 }, t + .06).to(now, { scale: 1, y: 0, duration: .3, ease: OUT }, t + .06);
+            return t + .5;
+          }
+          if (now) tl.fromTo(track(now), { autoAlpha: 0, scale: opts.drop ? 1.12 : 1, y: opts.drop ? -6 : 3 },
+            { autoAlpha: 1, scale: 1, y: 0, duration: opts.drop ? .3 : .22, ease: OUT }, t + (tr ? .28 : .06));
+          return t + .5;
+        },
+        // job: state change. The changed row lit, as the house lights it in the finished frame
+        tint: function (tl, t, row, color) {
+          $$('td', row).forEach(function (td, i) {
+            var x = document.createElement('i'); x.className = 'wm-tint'; x.style.background = (i === 0 && row.closest('.xl')) ? '#dedede' : (color || (row.closest('.xl') ? '#e9f5ec' : '#eef7f0'));
+            td.insertBefore(x, td.firstChild); temp.push(x); td.classList.add('wm-lit'); lit.push(td);
+            tl.fromTo(x, { opacity: 0 }, { opacity: 1, duration: .4, ease: OUT }, t);
+          });
+        },
+        // job: show our work. The red pen draws round a problem (system.js pencil() fitted the loop to the words)
+        ring: function (tl, t, pc, dur) {
+          var p = pc && $('.pc-loop path', pc);
+          // a ring in a row the film brings in has no loop yet (the reviewers' round, 2026-10-30: K.show hides the row's cells while
+          // the film is built, pencil() skips hidden words, and the bill's red pen never drew): fit it now, the words shown for the
+          // measure only
+          if (!p && pc && window.Lumora && Lumora.pencil) { var v = pc.style.visibility; pc.style.visibility = 'visible'; Lumora.pencil(pc.parentNode); pc.style.visibility = v; p = $('.pc-loop path', pc); }
+          if (!p) { if (pc) K.show(tl, t, pc, .2, 0); return; }
+          var loop = p.ownerSVGElement; p.setAttribute('pathLength', '1');
+          tl.set(track(loop), { opacity: 1, visibility: 'visible' }, t)
+            .fromTo(track(p), { strokeDasharray: '1 2', strokeDashoffset: 1.01 }, { strokeDashoffset: 0, duration: dur || .6, ease: MOVE }, t);
+        },
+        // a figure that counts keeps the width of its last value, so the words after it never move (no layout shift)
+        hold: function (el) { if (el && !el.style.minWidth) el.style.minWidth = Math.ceil(el.getBoundingClientRect().width) + 'px'; },
+        // words a tool itself would change (a clock, a count, a status line), set at their moment; each comes back at the hand-back
+        text: function (tl, t, el, s) {
+          if (!el) return;
+          if (!texts.some(function (x) { return x[0] === el; })) texts.push([el, el.textContent]);
+          // the words keep their own text node and take the new words (a new node each time sent the page's :has() rules on body
+          // through a style recalc of the whole page on every tick of a running list: frames of 26 to 33 ms on a phone slowed 4x,
+          // 2026-10-30). Words of a new length (the money passing $1,000, set from the right) and the phone's clock and date (centred,
+          // changed five times a night) get a new node: the same node starting further left or right counts as a layout shift
+          var own = !el.closest('.iph');
+          tl.call(function () { var n = el.firstChild; if (own && n && n.nodeType === 3 && !n.nextSibling && n.nodeValue.length === s.length) n.nodeValue = s; else el.textContent = s; }, null, t);
+        },
+        // job: state change. One cell lit, as the house lights a done cell in the finished frame (Excel's green Called)
+        tintCell: function (tl, t, td, color) {
+          if (td) { track(td); tl.call(function () { td.style.backgroundColor = color || '#e2f1e5'; }, null, t); }
+        },
+        // job: show our work. A list runs under its header: B's ink box goes down the rows in view, then holds on the last while the
+        // rest come up under it at the machine's pace, each row changing as the box reaches it (onRow); hold(k) adds a stop after
+        // row k (the night's two never paid). Only transforms move; the rows are one height (home.css .wk-vp)
+        stream: function (tl, t, vp, from, step, onRow, hold) {
+          var roll = $('.wk-roll', vp), rows = $$('tr:not([data-h])', roll); if (rows.length < 2) return t;
+          var hh = rows[0].offsetTop, rh = rows[1].offsetTop - rows[0].offsetTop, V = Math.max(1, Math.round((vp.clientHeight - hh) / rh));
+          var scan = document.createElement('i'); scan.className = 'wk-scan'; scan.style.top = hh + 'px'; scan.style.height = rh + 'px';
+          vp.appendChild(scan); temp.push(scan); track(roll);
+          G.set(scan, { opacity: 0, y: Math.min(from, V - 1) * rh }); G.getProperty(roll, 'y');   // their transforms read now, while the film is built, never mid-play
+          tl.fromTo(scan, { opacity: 0, y: Math.min(from, V - 1) * rh }, { opacity: 1, duration: .14, ease: OUT, immediateRender: false }, t - .14);
+          var at = t;
+          for (var k = from; k < rows.length; k++) {
+            if (k > from) {
+              if (k < V) tl.to(scan, { y: k * rh, duration: step * .9, ease: MOVE }, at - step * .9);
+              else tl.to(roll, { y: -(k - V + 1) * rh, duration: step, ease: 'none' }, at - step);
+            }
+            onRow(rows[k], k, at);
+            at += step + (hold ? hold(k) || 0 : 0);
+          }
+          tl.to(scan, { opacity: 0, duration: .2, ease: OUT }, at - step + .1);
+          return at - step;
+        },
+        under: function (tl, t, root) { var p = $('.pen-under path', root); if (p) tl.fromTo(track(p), { strokeDasharray: '1 1', strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: .7, ease: MOVE }, t); }
+      };
+      F.kit = K;
+      function first() { fig.classList.remove('done'); pairs('before'); if (hooks.first) hooks.first(); }
+      function clean() {
+        if (F.tl) { F.tl.kill(); F.tl = null; }
+        fx.innerHTML = '';
+        // only what the film set: system.js gives some of these their own inline styles (a red pen loop's size and place)
+        if (made.length) G.set(made, { clearProps: CLEAR }); made = [];
+        temp.forEach(function (x) { x.remove(); }); temp = [];
+        texts.forEach(function (x) { x[0].textContent = x[1]; }); texts = [];
+        lit.forEach(function (x) { x.classList.remove('wm-lit'); }); lit = [];
+      }
+      function done() {                   // hand the frame back to home.css and the house's after state, with no inline styles left
+        clean();
+        pairs('after');
+        if (hooks.done) hooks.done();
+        fig.classList.add('done');
+        F.mode = 'done'; label('again'); F.armed = false;
+        if (busy === F) next();
+      }
+      function arm() {
+        clean(); first();
+        F.tl = G.timeline({ paused: true, onComplete: done });
+        F.tl.set({}, {}, build(F.tl, K));   // the last beat holds until the end time
+        F.armed = true;
+      }
+      F.play = function () {
+        if (busy && busy !== F) { F.mode = 'queued'; if (queue.indexOf(F) < 0) queue.push(F); return; }
+        if (!F.armed) arm();
+        F.armed = false; F.mode = 'start'; F.played = true; busy = F; label('pause');
+        // two frames after the trigger: the frame that paints what a scroll just brought in is never the play's first
+        requestAnimationFrame(function () { requestAnimationFrame(function () { if (F.mode === 'start' && F.tl) { F.mode = 'play'; F.tl.play(0); fig.setAttribute('data-t0', String(performance.now())); } }); });
+      };
+      F.done = done; F.arm = arm;
+      if (btn) btn.addEventListener('click', function () {
+        if (F.mode === 'play' || F.mode === 'start') { if (F.mode === 'play') F.tl.pause(); F.mode = 'paused'; label('play'); }
+        else if (F.mode === 'paused') { if (F.tl.time() === 0 && !F.tl.isActive()) F.tl.play(0); else F.tl.play(); F.mode = 'play'; label('pause'); }
+        else if (F.mode === 'wait' || F.mode === 'queued') { F.mode = 'held'; label('play'); var i = queue.indexOf(F); if (i > -1) queue.splice(i, 1); }
+        else if (G) F.play();
+      });
+      // job: one-time focus. Plays once, when the whole picture is in view between the sticky header and the phone's call bar (B's
+      // rule), with its Pause in view too, or within 24px of it (the trial's note: on a phone the Pause sat under the call bar while
+      // the walk played). A reader who stops with the whole picture in view and the Pause still lower gets the play 350 ms later, so
+      // a film never waits on a scroll position a few px wide. A screen shorter than the stage plays once most of it is in view
+      var io = null, idle = 0, TH = []; for (var th = 0; th <= 1.0001; th += .02) TH.push(+th.toFixed(2));
+      F.watch = function () {
+        if (io) io.disconnect(); clearTimeout(idle);
+        var hdr = $('.hdr'), bar = $('.callbar'), top = hdr ? hdr.offsetHeight : 0, bot = bar && bar.getClientRects().length ? bar.offsetHeight : 0;
+        // a stage within 40px of the room between the header and the call bar counts as tall too, and plays once 95% of it is in
+        // view: whole, it would fit only within a scroll window a few px wide, which a reader's scroll steps over (the reviewers'
+        // round, 2026-10-30: the night film at 393 x 659 is 526px in 538, and verify.py's scroll passed it by)
+        var tall = innerHeight - top - bot < stage.offsetHeight + 40;
+        var ok = function () {             // 2: play now; 1: play if the reader stays; 0: not yet
+          var y0 = top, y1 = innerHeight - bot, s = stage.getBoundingClientRect(), f = fig.getBoundingClientRect();
+          if (tall) return Math.min(s.bottom, y1) - Math.max(s.top, y0) >= Math.min(.95, Math.max(.3, Math.floor((y1 - y0) / s.height * 20) / 20 - .05)) * s.height ? 2 : 0;
+          return s.top >= y0 - 1 && s.bottom <= y1 + 1 ? (f.bottom <= y1 + 24 ? 2 : 1) : 0;
+        };
+        var go = function () { if (F.played || F.mode !== 'wait') return; io.disconnect(); clearTimeout(idle); F.play(); };
+        io = new IntersectionObserver(function () {
+          if (F.played || F.mode !== 'wait') return;
+          clearTimeout(idle);
+          var k = ok();
+          if (k === 2) go(); else if (k === 1) idle = setTimeout(function () { if (ok()) go(); }, 350);
+        }, { threshold: TH, rootMargin: '-' + top + 'px 0px -' + bot + 'px 0px' });
+        io.observe(stage); io.observe(fig);
+      };
+      F.still = function () { fig.classList.add('still'); pairs('after'); if (hooks.done) hooks.done(); };
+      return F;
     }
-    mark(Lumora.trade, false);
-    Lumora.on(function (k) { mark(k, true); });
-    lpResize.push(function () { mark(Lumora.trade, false); }); lpLater.push(function () { mark(Lumora.trade, false); });
-  }
 
-  /* 2 tools-follow (computer; a phone hides the names): the lede's tool names follow the pick, the everyday tools most businesses
-     use first and the sample's own industry tool after (Franco, Oct 26: "we are like a general purpose automation business"). Four
-     names, or three where four would take the lede past the lines the default sample's take, so Call us and the price never move.
-     Every name is on What we automate's tools list */
-  // The reviewers' round (craft judge, a must): every Spanish list kept four names, so the Spanish lede ran to three lines at 1280 to
-  // 1440 ("o Gmail." alone on the third) and pushed the price block past a 768px screen, and the English Water and Roofing picks
-  // moved Call us 30px. So the lede keeps the lines the page's own default takes, two at most: the names drop from four to two
-  // until it fits, Water and Roofing name Excel (their screens use it too), and the Spanish default ships three names.
-  // check.py tools_line_problems holds it at 1280, 1366 and 1440 for every pick, both languages
-  var TOOLS = {
-    offices: ES ? ['QuickBooks', 'Outlook', 'Excel', 'Gmail'] : ['QuickBooks', 'Excel', 'Outlook', 'Gmail'], plumbing: ['QuickBooks', 'Excel', 'Housecall Pro', 'Jobber'], ac: ['QuickBooks', 'Excel', 'ServiceTitan', 'Housecall Pro'],
-    electrical: ['QuickBooks', 'Excel', 'Jobber', 'Housecall Pro'], water: ['QuickBooks', 'Excel', 'Xactimate', 'DASH'], pest: ['QuickBooks', 'Google Sheets', 'Gmail', 'PestPac'],
-    roofing: ['QuickBooks', 'Excel', 'JobNimbus', 'AccuLynx'], food: ['QuickBooks', 'Google Sheets', 'Toast', 'Square'], rentals: ['QuickBooks', 'Excel', 'AppFolio', 'Buildium']
-  };
-  function toolsFollow() {
-    var sp = document.querySelector('.hm4-hero .t-tools'), lede = sp && sp.closest('.t-lede'); if (!sp) return;
-    var say = function (n) { return (ES ? ', como ' : ', like ') + n.slice(0, -1).join(', ') + (ES ? ' o ' : ' or ') + n[n.length - 1]; };
-    var BASE = sp.textContent;   // the default as the page ships it (what a reader with JS off sees)
-    function set(k) {
-      var n = TOOLS[k]; if (!n) return;
-      if (getComputedStyle(sp).display === 'none') { sp.textContent = say(n); return; }
-      var cs = getComputedStyle(lede), lh = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.4;
-      sp.textContent = BASE; var cap = Math.min(lede.getBoundingClientRect().height, lh * 2.5);
-      for (var c = n.length; c >= 2; c--) { sp.textContent = say(n.slice(0, c)); if (lede.getBoundingClientRect().height <= cap + 1) break; }
+    var lastChg = function (tr) { var c = $$('td', tr).pop(); return c && $('.chg', c); };
+    var stChg = function (root) { return $('.win-st .chg', root); };
+    // job: state change. One job's window leaves the desk and the next comes in, over it. The scenes waiting their turn are drawn at
+    // 1% from the first frame, under the one on the desk (home.css), so their first frame on screen costs nothing new and nothing
+    // shows through (judges, Oct 27)
+    function scene(tl, t, out, inn, z, K) {
+      tl.set(inn, { zIndex: z }, t)
+        .to(out, { opacity: 0, duration: .2, ease: OUT }, t).set(out, { visibility: 'hidden' }, t + .2)
+        .fromTo(inn, { opacity: .01, y: 8 }, { opacity: 1, y: 0, duration: .3, ease: OUT, immediateRender: false }, t + .12);
+      K.track([out, inn]);
     }
-    Lumora.on(set); set(Lumora.trade);
-    lpResize.push(function () { set(Lumora.trade); }); lpLater.push(function () { set(Lumora.trade); });
-  }
+    // the night: three beats on the desk, each landing as a line of the morning list on the sleeping phone, whose clock runs the
+    // night; at 6:30 the phone wakes with the list (judges, Oct 27: a lit 6:30 AM notice at 11:40 PM came from the future)
+    function night(tl, K) {
+      var S = K.stage, sc = function (k) { return $('.nb-sc[data-sc=' + k + ']', S); };
+      var clock = $('.iph-clock', S), date = $('.iph-date', S), nt = $('.nb-nt', S), li = $$('.nb-list li', S), dim = $('.nb-dim', S), stamp = $('.nb-at', S);
+      var day = date.getAttribute('data-day') || date.textContent;
+      K.track([dim, stamp]);
+      /* 1. the bills: each file goes into its row of QuickBooks' bills; the quote each is checked against is boxed where it is over,
+         and the bill over it gets the red pen */
+      var b = sc('bills'), files = $$('.nb-file', b), rows = $$('tr[data-new]', b), lands = [];
+      K.text(tl, .3, clock, '11:40');
+      rows.forEach(function (r, i) {
+        var s = i ? .82 + (i - 1) * .16 : .3, d = i ? .34 : .5;
+        var l = K.carry(tl, s, files[i], $$('td', r)[0], { dur: d, toLeft: true });
+        K.show(tl, l - .06, $$('td', r), .18, 0); lands.push(l);
+      });
+      var tc = lands[lands.length - 1] + .06, over = $('tr.n', b), quote = over && $('td small', over);
+      if (quote) K.box(tl, tc, quote, .3, tc + 1.2, { pad: 3, dy: 2 });   // the trial's note: the quote's $920.00 read beside the bill's $1,180.00
+      rows.forEach(function (r, i) { K.swap(tl, tc + i * .08 + (r === over ? .22 : 0), lastChg(r)); });
+      K.ring(tl, tc + .3, $('tr.n .pc', b), .45);
+      K.swap(tl, tc + .45, stChg(b));
+      tl.set(K.track(nt), { autoAlpha: 1 }, tc + .5).fromTo(nt, { y: -10, scale: .97 }, { y: 0, scale: 1, duration: .3, ease: OUT }, tc + .5);
+      var l1 = K.fly(tl, tc + .48, $$('td', over)[0], li[0], { text: li[0].textContent, dur: .45, size: 12 });
+      K.show(tl, l1 - .05, li[0], .2, 0);
+      /* 2. the mail: each email's attachment is dragged onto its client's folder, one or two in the air at a time; the inbox counts
+         down, the folders count up, each folder lit as its email lands */
+      var m = sc('mail'), t2 = l1 + .05;
+      scene(tl, t2, b, m, 5, K);
+      K.text(tl, t2 + .12, clock, '12:05'); K.text(tl, t2 + .12, date, day);
+      var atts = $$('.ib .att', m), irows = $$('.ib-m tr', m), fl = $$('.ib-f li[data-f]', m), inboxC = $('.ib-f li.on .ib-c', m), cnt = [0, 0, 0, 0], ta = t2 + .25, la = ta;
+      atts.forEach(function (a, i) {
+        var f = +a.getAttribute('data-to'), s = i ? ta + .62 + (i - 1) * .13 : ta, d = i ? .32 : .45;
+        la = K.fly(tl, s, a, $('span', fl[f]), { dur: d, size: 11 });
+        K.hide(tl, s + .05, irows[i], .2);
+        cnt[f]++; K.text(tl, la - .02, $('.ib-c', fl[f]), String(cnt[f])); K.text(tl, la - .02, inboxC, 5 - i ? String(5 - i) : '');
+        var lt = $('.nb-lit', fl[f]); if (!lt) { lt = document.createElement('i'); lt.className = 'nb-lit'; fl[f].appendChild(lt); } K.track(lt);
+        tl.fromTo(lt, { opacity: 0 }, { opacity: 1, duration: .1, ease: OUT, immediateRender: false }, la - .04).to(lt, { opacity: 0, duration: .35, ease: OUT }, la + .12);
+      });
+      var tf = la + .08;
+      K.swap(tl, tf, stChg($('.ib', m)));
+      var l2 = K.fly(tl, tf + .05, $('.ib .win-st', m), li[1], { text: li[1].textContent, dur: .4, size: 12 });
+      K.show(tl, l2 - .05, li[1], .2, 0);
+      /* 3. the check: September's sheet runs under its header, each commission against the carrier's statement; it stops on the two
+         never paid and the red pen rings them */
+      var c = sc('check'), t3 = l2 + .05;
+      scene(tl, t3, m, c, 6, K);
+      K.text(tl, t3 + .12, clock, '5:40');
+      var vp = $('.wk-vp', c), miss = function (r) { return !!$('.now .pc', r); };
+      var end = K.stream(tl, t3 + .35, vp, 0, .033, function (r, k, at) {
+        var ch = lastChg(r); K.swap(tl, at, ch, FLAT);
+        if (miss(r)) K.ring(tl, at + .06, $('.now .pc', ch), .35); else K.tintCell(tl, at, $$('td', r).pop());
+      }, function (k) { var r = $$('.wk-roll tr:not([data-h])', vp)[k]; return r && miss(r) ? .22 : 0; });
+      K.swap(tl, end + .12, stChg(c));
+      var l3 = K.fly(tl, end + .18, $('.win-st', c), li[2], { text: li[2].textContent, dur: .4, size: 12 });
+      K.show(tl, l3 - .05, li[2], .2, 0);
+      /* 6:30: the phone wakes with the morning list */
+      var tw = l3 + .1;
+      K.text(tl, tw, clock, '6:30');
+      tl.to(dim, { opacity: 0, duration: .45, ease: OUT }, tw).fromTo(stamp, { opacity: 0 }, { opacity: 1, duration: .3, ease: OUT, immediateRender: false }, tw + .2)
+        .fromTo(nt, { scale: .98 }, { scale: 1, duration: .3, ease: OUT, immediateRender: false }, tw + .05);
+      return tw + .7;
+    }
+    function nightFirst(S) {
+      var clock = $('.iph-clock', S), date = $('.iph-date', S);
+      if (!date.getAttribute('data-day')) date.setAttribute('data-day', date.textContent);
+      clock.textContent = '11:00'; date.textContent = date.getAttribute('data-eve');
+      $$('.ib tr', S).forEach(function (r) { r.classList.add('unread'); });
+      var c = $('.ib-f li.on .ib-c', S); if (c) c.textContent = c.getAttribute('data-n');
+      $$('.ib-f li[data-f] .ib-c', S).forEach(function (x) { x.textContent = ''; });
+    }
+    function nightDone(S) {
+      var clock = $('.iph-clock', S), date = $('.iph-date', S);
+      clock.textContent = '6:30'; if (date.getAttribute('data-day')) date.textContent = date.getAttribute('data-day');
+      $$('.ib tr', S).forEach(function (r) { r.classList.remove('unread'); });
+      var c = $('.ib-f li.on .ib-c', S); if (c) c.textContent = '';
+      var n = [0, 0, 0, 0]; $$('.ib .att', S).forEach(function (a) { n[+a.getAttribute('data-to')]++; });
+      $$('.ib-f li[data-f] .ib-c', S).forEach(function (x, i) { x.textContent = n[i] ? String(n[i]) : ''; });
+      fitRolls(S);
+    }
+    // each list's finished frame: run to its last rows (the CSS reads --end; a phone and a computer show a different number of rows)
+    function fitRolls(root) {
+      $$('.wk-vp', root || document).forEach(function (vp) {
+        var roll = $('.wk-roll', vp), t = roll && $('table', roll); if (!t || !vp.clientHeight) return;
+        roll.style.setProperty('--end', -Math.max(0, t.offsetHeight - vp.clientHeight) + 'px');
+      });
+    }
 
-  /* 18 sheet-map: each problem row on the walk sheet links to its stop, with the stop's own thin circled number (a CSS counter: no
+    // the walk: the week of 9/28 at reading speed, then the rest of October in fast-forward; the date drives every change, and the
+    // money moves with it: the loss struck when the first fix lands, then won back, step by step (judges, Oct 27). Each tool is a list:
+    // the walk's own row first, then in the fast-forward the month's rows run past the ink box, one tool at a time
+    var WON = { quotes: [0, 4, 6, 10, 12, 14], renewals: [0, 3, 5, 8, 10] };   // the trial's spec.py B_QUOTES_WON, B_RENEWALS_WON
+    function week(tl, K) {
+      var S = K.stage, d = $('.wk-d', S), days = $$('.wk-days li', S), cur = $('.wk-cur', S), W = {};
+      $$('.wk-w', S).forEach(function (w) { W[w.getAttribute('data-k')] = w; });
+      var labels = days.slice(0, 8).map(function (li) { return li.getAttribute('data-d'); });
+      var c0 = K.rect(cur), mid = function (el) { var r = K.rect(el); return r.x + r.w / 2 - (c0.x + c0.w / 2); };
+      var go = function (t, i) { tl.to(cur, { x: mid(days[i]), duration: .26, ease: MOVE }, t); K.text(tl, t + .1, d, labels[i]); };
+      K.track(cur); tl.set(cur, { x: 0 }, 0);
+      var rowsIn = function (w) { return $$('.wk-roll tr:not([data-h])', w); }, Qr = rowsIn(W.quotes), R = rowsIn(W.renewals), I = rowsIn(W.invoices);
+      var shown = function (el) { return el && el.getClientRects().length; }, re = ES ? 'RE: ' : 'Re: ';
+      // the money: the hero's loss first, then what comes back
+      var lost = $('.wk-lost', S), won = $('.wk-won', S), num = $('.wm-n', won), sum = 0, phone = S.clientWidth < 1000;
+      K.hold(num); K.track(lost);
+      var add = function (t, usd) { sum += usd; K.text(tl, t, num, money(sum)); };
+      // Wed 9/30: Karen Davis's follow-up, two days after her quote, goes out by itself
+      go(.35, 1); go(.7, 2);
+      var karen = Qr[0], tds = $$('td', karen), subj = shown(tds[1]) ? tds[1] : tds[0], rh = karen.getBoundingClientRect().height;
+      K.box(tl, .9, subj, .36);
+      var l = K.fly(tl, 1, subj, $('.now', lastChg(karen)), { text: re + tds[1].textContent.trim(), dur: .55, arc: rh * .8 });
+      K.swap(tl, l - .06, lastChg(karen), { drop: true }); K.tint(tl, l, karen);
+      tl.fromTo(K.track($('.wm-strike', lost)), { scaleX: 0 }, { scaleX: 1, duration: .42, ease: MOVE }, l + .05).set(lost, { color: 'var(--pencil)' }, l + .15);
+      if (phone) tl.to(lost, { autoAlpha: 0, duration: .22, ease: OUT }, l + .55);
+      var tw = phone ? l + .7 : l + .35;
+      K.show(tl, tw, won, .3, 4); add(tw, 260);
+      // Fri 10/2: invoice 1047's amount, typed wrong, fills in from its policy
+      go(l + .25, 3); go(l + .55, 4);
+      var inv = I[0], cell = $('.chg.tr', inv), src = $('.wm-src', W.invoices), t2 = l + .7;
+      K.box(tl, t2, src, .3);
+      var l2 = K.fly(tl, t2 + .2, src, $('.now', cell), { dur: .45 });
+      K.swap(tl, l2 - .06, cell); K.swap(tl, l2 + .08, lastChg(inv), { drop: true }); K.tint(tl, l2, inv); add(l2 + .08, 36);
+      // Sat 10/3, Sun 10/4, Mon 10/5: Maria Garcia called, four weeks before her renewal goes up 18%
+      go(l2 + .2, 5); go(l2 + .35, 6); go(l2 + .5, 7);
+      var maria = R[0], t3 = l2 + .75;
+      K.box(tl, t3, $('td.num', maria) || $$('td', maria)[4], .3, t3 + 1);
+      K.swap(tl, t3 + .32, lastChg(maria), { drop: true }); K.tint(tl, t3 + .45, maria); add(t3 + .45, 240);
+      // the rest of October: the date runs to 10/31 along the dashed line while each list runs by, one tool at a time
+      var t4 = t3 + .8, FF = 2.8, o = { v: 5 }, end = d.getAttribute('data-end');
+      var WD = ES ? ['lun.', 'mar.', 'mié.', 'jue.', 'vie.', 'sáb.', 'dom.'] : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+      var restB = $('.wk-rest b', S), rb = K.rect(restB);
+      tl.to(cur, { x: rb.x - c0.x, duration: FF, ease: 'none' }, t4);
+      // the date moves with the rows' ticks, so a frame that changes words changes them all at once (a slow phone keeps up)
+      var dateAt = function (at) { var n = Math.min(30, Math.max(6, 5 + Math.round(26 * (at - t4) / FF))); if (n !== o.n) { o.n = n; K.text(tl, at, d, WD[(2 + n) % 7] + ' 10/' + n); } };
+      K.text(tl, t4 + FF + .01, d, end);
+      var run = function (w, t, last) {   // a list's status line counts as its rows run: the count moves with each row's tick
+        var st = $('.win-st', w), ch = $('.chg', st), now = $('.now', ch), tpl = st.getAttribute('data-run'), N = +st.getAttribute('data-n'), n0 = +st.getAttribute('data-n0') || 0, fin = now.textContent;
+        K.text(tl, t, now, tpl.replace('{n}', n0)); K.swap(tl, t, ch, FLAT);   // the line turns into a count at once, as the rows start
+        return function (at, k) { K.text(tl, at, now, k >= last ? fin : tpl.replace('{n}', Math.round(n0 + (N - n0) * k / last))); };
+      };
+      var seg = FF / 3, sQ = (seg - .1) / (Qr.length - 1), sR = (seg - .1) / (R.length - 1), sI = (seg - .1) / (I.length - 1);
+      var cQ = run(W.quotes, t4, Qr.length - 1);
+      K.stream(tl, t4 + sQ, $('.wk-vp', W.quotes), 1, sQ, function (r, k, at) { K.swap(tl, at, lastChg(r), FLAT); cQ(at, k); dateAt(at); if (WON.quotes.indexOf(k) > 0) add(at, 260); });
+      var cR = run(W.renewals, t4 + seg, R.length - 1);
+      K.stream(tl, t4 + seg + sR, $('.wk-vp', W.renewals), 1, sR, function (r, k, at) {
+        var ch = lastChg(r); K.swap(tl, at, ch, FLAT); cR(at, k); dateAt(at); if ($('.now .st.ok', ch)) K.tintCell(tl, at, $$('td', r).pop());
+        if (WON.renewals.indexOf(k) > 0) add(at, 240);
+      });
+      // the invoices count the month's working days: 21 more at $36 a day, as the rows run
+      var cI = run(W.invoices, t4 + 2 * seg, I.length - 1), base = 260 * WON.quotes.length + 36 + 240 * WON.renewals.length;
+      K.stream(tl, t4 + 2 * seg + sI, $('.wk-vp', W.invoices), 1, sI, function (r, k, at) {
+        K.swap(tl, at, lastChg(r), FLAT); cI(at, k); dateAt(at); K.text(tl, at, num, money(base + Math.round(21 * k / (I.length - 1)) * 36));
+      });
+      K.under(tl, t4 + FF + .05, won);
+      return t4 + FF + .7;
+    }
+    function weekFirst(S) { var d = $('.wk-d', S); d.textContent = $$('.wk-days li', S)[0].getAttribute('data-d'); }
+    function weekDone(S) { var d = $('.wk-d', S); d.textContent = d.getAttribute('data-end'); fitRolls(S); }
+
+    /* wiring */
+    // the policy's own figure in the invoice's status line, as its own span, so the box can draw round it and it can fly
+    $$('.wm .qb .win-st .was').forEach(function (w) { if (!$('.wm-src', w)) w.innerHTML = w.innerHTML.replace(/1,248\.00/, '<span class="wm-src">1,248.00</span>'); });
+    var list = [], bf = $('[data-film=b]'), nf = $('[data-film=night]');
+    if (bf) list.push(Film(bf, week, { first: function () { weekFirst($('.wm-stage', bf)); }, done: function () { weekDone($('.wm-stage', bf)); } }));
+    if (nf) list.push(Film(nf, night, { first: function () { nightFirst($('.wm-stage', nf)); }, done: function () { nightDone($('.wm-stage', nf)); } }));
+    fitRolls();
+    if (STILL) { list.forEach(function (f) { f.still(); }); WM.ready = true; WM.still = true; return; }
+    function startAll() {
+      easings();
+      var auto = !Q.has('noauto');   // the clip and frame tools step each timeline themselves
+      list.forEach(function (f) { f.arm(); if (auto) f.watch(); });
+      WM.ready = true;
+    }
+    // GSAP comes in when the first film is near (600px), as What we automate's does, from the same one load; the fonts first, so
+    // every flight is measured on the words as they will be drawn
+    var near = new IntersectionObserver(function (es) {
+      if (!es.some(function (e) { return e.isIntersecting; })) return;
+      near.disconnect();
+      loadGsap().then(function () { return document.fonts && document.fonts.ready; }).then(startAll, function () { list.forEach(function (f) { f.still(); }); WM.ready = true; });
+    }, { rootMargin: '600px 0px' });
+    list.forEach(function (f) { near.observe(f.fig); });
+    // a width change re-arms a film that has not played and ends one that is playing on its finished frame
+    var lastW = innerWidth;
+    addEventListener('resize', function () {
+      if (innerWidth === lastW || !G) return; lastW = innerWidth;
+      list.forEach(function (f) { if (f.mode === 'wait' || f.mode === 'held' || f.mode === 'queued') { f.arm(); if (!f.played) f.watch(); } else if (f.mode === 'play' || f.mode === 'paused' || f.mode === 'start') f.done(); });
+      fitRolls();
+    });
+  }
+  var LP_STILL = /[?&]still\b/.test(location.search) || matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 18 sheet-map: each problem row on the walk sheet links to its stop (the film's window since 2026-10-30), with the stop's own thin circled number (a CSS counter: no
      words added). A tap lands with the stop's title at the top of the screen (scroll-margin), and the title takes focus once the
      scroll has ended, so the page's focus guard never cancels the smooth scroll halfway (judges' note) */
   function sheetMap() {
@@ -487,37 +730,17 @@
       var a = e.target.closest && e.target.closest('a.sh-go'); if (!a) return;
       var s = document.getElementById(a.getAttribute('href').slice(1)); if (!s) return;
       e.preventDefault();
-      var h = s.querySelector('.stop-t h3'), done = false, focus = function () { if (done || !h) return; done = true; h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); };
-      if (LP_STILL) { s.scrollIntoView({ block: 'start' }); focus(); return; }
+      // since the generalist Home (2026-10-30) each row's stop is that problem's window in the walk film: the scroll brings the whole
+      // film into view, so it can play, and focus goes to the walk's heading. The window's caption sits inside the film's role="img"
+      // stage, where a screen reader finds no name to read (the reviewers' round, 2026-10-30); the heading names the loss, and the
+      // film's own description comes right after it
+      var film = s.closest('.wm-week'), h = film ? document.querySelector('#walk .walk-h') : s.querySelector('.stop-t h3'), to = film || s, done = false, focus = function () { if (done || !h) return; done = true; h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); };
+      if (LP_STILL) { to.scrollIntoView({ block: 'start' }); focus(); return; }
       if ('onscrollend' in window) addEventListener('scrollend', focus, { once: true });
       setTimeout(focus, 900);
-      s.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      to.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
-    Lumora.on(wire); wire();
-  }
-
-  /* 8 stop-head (computer, 1000px and up): each stop's Before / After switch moves up under its title, the Sample stamp right after
-     it; the notes stay beside the picture. Plumbing's own stop 1 and every sample's stops alike (judges: AC's stamp floated mid-page;
-     and with the switch out of the picture's top, a stop's notes sit at its picture's own middle, so AC's fourth stop, alone beside
-     its phone, left no blank run). Moved back under 1000px, where the switch rides with the picture */
-  function stopHead() {
-    var mq = matchMedia('(min-width: 1000px)');
-    function apply() { Array.prototype.forEach.call(document.querySelectorAll('#walk .stops > .stop'), one); }
-    function one(st) {
-      var pic = st.querySelector('.stop-body > .pic'), seg = st.querySelector('.pic > .seg, .stop-ctl > .seg'), samp = st.querySelector('.pic > .samp, .stop-ctl > .samp'), box = st.querySelector(':scope > .stop-ctl');
-      if (mq.matches && seg && pic) {
-        if (!box) { box = document.createElement('div'); box.className = 'stop-ctl'; st.insertBefore(box, st.querySelector('.stop-body')); }
-        if (seg.parentNode !== box) box.appendChild(seg);
-        if (samp && samp.parentNode !== box) box.appendChild(samp);
-        st.classList.add('is-head');
-      } else if (box) {
-        if (seg) pic.appendChild(seg);
-        if (samp) pic.appendChild(samp);
-        box.remove(); st.classList.remove('is-head');
-      }
-    }
-    Lumora.on(apply); apply();
-    if (mq.addEventListener) mq.addEventListener('change', apply);
+    wire();
   }
 
   /* 12 two-tone (the walk's heading): the claim in ink, "Here's where." in the muted second tone; system.js writes the heading again
@@ -531,48 +754,12 @@
     Lumora.on(apply); apply();
   }
 
-  /* 11 chips-peek (phone): the chips' side padding is set so the screen's edge cuts a chip near its middle, never its last letter or
-     two, with scroll snap. Every label setting ("Your business:" on one line or two) and padding from 8 to 16px is tried: the cut
-     nearest a third of a chip wins, never under a fifth or past two thirds; from 390px wide the first three chips stay whole */
-  function chipsPeek() {
-    var row = document.querySelector('.hm4-hero .pk .chips'), box = document.querySelector('.hm4-hero .pk'), mq = matchMedia('(max-width: 899px)'); if (!row || !box) return;
-    function cutAt(two, p) {
-      box.classList.toggle('pk-q2', two); row.style.setProperty('--pk-cx', p + 'px');
-      var chips = Array.prototype.filter.call(row.querySelectorAll('.chip'), function (c) { return c.getClientRects().length; }), rr = row.getBoundingClientRect(),
-        edge = Math.min(innerWidth, rr.left + row.clientWidth);
-      for (var i = 0; i < chips.length; i++) { var c = chips[i].getBoundingClientRect(); if (c.left < edge && c.right > edge) return { i: i, f: (edge - c.left) / c.width }; }
-      return { i: -1, f: 0 };
-    }
-    function fit() {
-      if (!mq.matches) { box.classList.remove('pk-q2'); row.style.removeProperty('--pk-cx'); return; }
-      var best = null;
-      [true, false].forEach(function (two) {
-        for (var p = 16; p >= 8; p -= 0.5) {
-          var r = cutAt(two, p); if (r.i < 0) continue;
-          var score = Math.abs(r.f - 0.35) + (r.f < 0.2 || r.f > 0.66 ? 1 : 0) + (r.i < 3 && innerWidth >= 390 ? 0.5 : 0) + Math.abs(p - 11) * 0.004 + (two ? 0.01 : 0);
-          if (!best || score < best.s) best = { s: score, p: p, two: two };
-        }
-      });
-      cutAt(best ? best.two : true, best ? best.p : 8);
-    }
-    fit(); lpResize.push(fit); lpLater.push(fit);
-  }
-
-  function lastPass() {
-    pickerRow(); toolsFollow(); sheetMap(); stopHead(); twoTone(); chipsPeek();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { lpLater.forEach(function (f) { f(); }); });
-  }
 
   function start() {
     orderPic();   // What we automate's picture (the code picture it replaced moved to How it works, Oct 27)
+    films();      // the walk film and the night film (2026-10-30)
     if (!window.Lumora) return;
-    Lumora.on(intro); Lumora.on(picked); Lumora.on(slip);   // cue() went with the hero strip (2026-10-16): the sheet itself rises on a pick (system.css .sheet.swap)
-    Lumora.on(function () { seat(); nightTag(); });
-    if (Lumora.trade) { intro(Lumora.trade, Lumora.trades[Lumora.trade]); picked(Lumora.trade, Lumora.trades[Lumora.trade]); slip(Lumora.trade, Lumora.trades[Lumora.trade]); }
-    variants(); picker(); seat(); nightTag(); slipMotion(); walkAlso();   // stripPlay() left with the strip (alive build 2026-10-24)
-    lastPass();   // the last pass's parts (2026-10-26), after picker() has wired the list they open
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(seat);
-    addEventListener('resize', seat);
+    sheetMap(); twoTone();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();

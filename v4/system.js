@@ -674,7 +674,10 @@
       rollTo(f('n'), shown.big, sum, money); shown.big = sum;
       if (f('per')) f('per').textContent = perWord(t);
       if (f('sub')) f('sub').textContent = t.sub.replace(/(\d) /g, '$1\u00a0');   // 2026-10-15: no-break space after a count
-      if (f('time')) { f('time').hidden = !t.time; if (t.time) f('time').innerHTML = tr('Time back for you or your\u00a0office: ', 'Usted o su oficina se ahorran ') + '<b>' + esc(t.time) + '.</b>'; }   // space pass fixes (2026-10-25): the period inside the <b>, so Home's 32px time back on a computer has no small dot hanging at its baseline
+      // a page may give the line its own lead (data-lead; the generalist Home's reviewers' round, 2026-10-30): Home's walk end says
+      // "Time back for Sanderling's office:" in place of a second Sample stamp, the film's own just above it
+      var lead = f('time') && f('time').getAttribute('data-lead');
+      if (f('time')) { f('time').hidden = !t.time; if (t.time) f('time').innerHTML = (lead ? esc(lead) : tr('Time back for you or your\u00a0office: ', 'Usted o su oficina se ahorran ')) + '<b>' + esc(t.time) + '.</b>'; }   // space pass fixes (2026-10-25): the period inside the <b>, so Home's 32px time back on a computer has no small dot hanging at its baseline
       if (f('eq')) f('eq').innerHTML = t.rows.map(function (r, i) { return (i ? '<i>+</i>' : '') + '<span>' + money(r.usd) + ' <small>' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1)) + '</small></span>'; }).join('') +
         '<i>=</i><span class="r">' + money(sum) + ' <small>' + perWord(t) + '</small></span>';
       $$('.pen-ring', el).forEach(function (s) { requestAnimationFrame(function () { ring(s); }); });
@@ -1527,7 +1530,8 @@
         var c = getComputedStyle(el).color, field = el.closest('[data-ground=pine]'), t = n.nodeValue.trim().slice(0, 30);
         if (field && /\$\s?\d/.test(n.nodeValue) && !seen.usd) { seen.usd = 1; E.push('Money on the pine field: "' + t + '" (no money and no red on it).'); }
         if (field && reds.indexOf(c) > -1 && !seen.red) { seen.red = 1; E.push('Red text on the pine field: "' + t + '" (no money and no red on it).'); }
-        if (pine && c === pine && !el.closest('.stop[data-state=after] .find-usd') && !seen.pine) { seen.pine = 1; E.push('Pine text outside a figure won back: "' + t + '" (pine means money won back only).'); }
+        // the generalist Home (2026-10-30): the walk film's money line, "Won back $3,552 a month", is a figure won back too
+        if (pine && c === pine && !el.closest('.stop[data-state=after] .find-usd, .wm .wk-won .find-usd') && !seen.pine) { seen.pine = 1; E.push('Pine text outside a figure won back: "' + t + '" (pine means money won back only).'); }
       }
     })();
     if (!catalog && document.body.dataset.rules === 'v4') lintV4(E, W, vis, text);
@@ -1696,8 +1700,13 @@
   initCallCard();   // design round item 2 (2026-10-19)
   var start = [qs.get('trade'), locked ? null : store.get('lumora.trade'), document.body.dataset.trade, 'plumbing'].filter(function (k) { return k && D[k]; })[0];
   if (locked) start = document.body.dataset.trade;
+  // the generalist Home (2026-10-30; Franco, Oct 27: "just keeping it generalist, so the offices"): body data-sample-lock shows the
+  // page's own sample whatever a ?trade= link or a stored pick says, and never stores it, so the industry pages keep remembering the
+  // visitor's own trade. Unlike data-trade-lock it makes the page no trade page (no fit-pairs, no trade page's checks)
+  var fixed = document.body.hasAttribute('data-sample-lock') && D[document.body.dataset.trade];
+  if (fixed) start = document.body.dataset.trade;
   // a choice already made: this trade's own page, ?trade= or a pick stored on an earlier page (trades-1 fix, 2026-10-07)
-  L.picked = locked || !!(qs.get('trade') && D[qs.get('trade')]) || !!(store.get('lumora.trade') && D[store.get('lumora.trade')]);
+  L.picked = locked || (!fixed && (!!(qs.get('trade') && D[qs.get('trade')]) || !!(store.get('lumora.trade') && D[store.get('lumora.trade')])));
   $$('[data-loop]').forEach(function (el) { loops.push(new Loop(el)); });
   if (start) setTrade(start, false);
   initG2R(document, false);
