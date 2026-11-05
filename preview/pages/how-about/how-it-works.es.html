@@ -1,0 +1,1015 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">   <!-- iPhone Safari: the sample 555 numbers inside the pictures stay plain text; the real number is always an explicit tel: link -->
+<title>Cómo funciona nuestra automatización, Gainesville | Lumora</title>
+<meta name="description" content="Recorremos su negocio y sus registros, ponemos una cifra en dólares a cada problema y arreglamos uno, empezando por lo que ya usa. La primera llamada no tiene costo.">
+<meta name="theme-color" content="#F5F2EA">
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="../../system/assets/mark.svg">
+<link rel="preload" href="../../system/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../system/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../system/system.css">
+<link rel="stylesheet" href="../../system/trade-page.css">
+<!-- The Spanish How it works v4 (Friday run, 2026-10-16), built from how-it-works.html section for section: the same eight
+     sections, ids, pictures and styles, written in Spanish from the idea (branding/guidelines-v2/ES-VOICE.md), usted throughout,
+     with the header, menu, close and dark footer of pages/trades-1/plumbing.es.html. Every price, timeline, hours, reply and
+     money-back line is bound from system/shared-text.json. The full sample sheet is typed: its priced rows' names and long
+     formulas are trades.js plumbing's es rows word for word (check.py compares them). Papers that come from outside the shop
+     keep their English (the supply house's item lines on bill 30172, lang="en"); the shop's own screens and the monthly check
+     are Spanish. Money back is "lo que pagó por la visita" everywhere, also in the full terms. The page's own styles are the
+     English page's, rule for rule, plus the Spanish close heading's size (as on plumbing.es.html). -->
+<!-- js: the hidden start states apply only with JS. review: picture slots show on this computer, the local check server or
+     ?review, never on lumorafl.com (R8: on the live site an empty slot shows nothing). -->
+<script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
+<script src="../../system/trades.js" defer></script>
+<script src="../../system/system.js" defer></script>
+<style>
+/* ===== How it works, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
+   32, 44, 64), and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
+.step-h{display:flex;align-items:center;gap:14px}
+.step-h .tab-n{width:44px;height:44px;font-size:20px}
+.step-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:12px;font-size:17px;color:var(--body)}
+[data-ground=night] .step-meta{color:var(--on-night)}
+[data-ground=night] .tl-tag{border-color:var(--on-night);color:var(--on-night)}
+
+/* 1 hero: words and the call block, then the 4-row timeline (R12); split on a computer, the timeline on the right */
+.hiw-hero{padding-bottom:48px}
+.hiw-g{display:grid;gap:28px}
+.hiw-copy h1{max-width:11em}
+.hiw-copy .cta{margin-top:24px}
+.hiw-tl .tl-stop{font-size:17px;color:var(--muted);padding-bottom:12px}
+.hiw-tl .tl4>li{grid-template-columns:none}
+.hiw-tl .tl-head{flex-direction:row;align-items:baseline}
+/* 2026-10-16: the walk row's card bleeds out by its padding (system.css), so its words keep the other rows' x */
+.hiw-tl .tl4 .price,.hiw-tl .tl4 .mb{font-size:17px}
+.tl-go{justify-self:start;font-size:15px;padding-block:12px;margin-block:-10px -12px}   /* each row jumps to its step (H1); a 44px tall tap area without moving the layout */
+@media (min-width:900px){
+  .hiw-g{grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:56px;align-items:start}
+  .hiw-copy{position:sticky;top:112px}
+  .hiw-tl .tl4>li.tl-big{padding-block:26px 24px}
+}
+
+/* 2 the free call: the page's type-only rest (one big sentence, three short lines) */
+.fc .fc-big{margin-top:20px;font-size:clamp(20px,2.5vw,32px);font-weight:500;line-height:1.3;letter-spacing:-.01em;color:var(--ink);max-width:22em}
+.fc p:not(.fc-big):not(.step-meta){margin-top:14px;font-size:17px;max-width:34em}
+
+/* 3 the walk: price beside the heading, the walk page of four stops beside records and sheet, the two lists, full terms */
+.wk-top{display:grid;gap:22px}
+.wk-top .t-lede{margin-top:14px;max-width:30em}
+.wk-price{display:grid;gap:10px;align-self:end;padding-top:14px;border-top:2px solid var(--ink)}
+.wk-parts{display:grid;gap:30px;margin-top:34px}
+.wk-page .wk-ph{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.wk-page h3{margin-bottom:4px}
+.wk-page .wk-sub{font-size:17px;color:var(--body);max-width:30em}
+.wstops{margin-top:14px;border-top:1px solid var(--rule)}
+.wstops li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:2px 12px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.wstops .tab-n{grid-row:1/3}
+.wstops b{font-size:20px;line-height:1.25;color:var(--ink)}
+.wstops b small{font-size:15px;font-weight:500;color:var(--muted)}
+.wstops .pencil{font-size:17px}
+.wk-follow{margin-top:14px;font-size:17px}
+.wk-text{display:grid;gap:22px;align-content:start}
+.wk-text h3{margin-bottom:6px}
+.wk-text p{font-size:17px;max-width:34em}
+.wk-keep{font-size:20px!important;font-weight:600;color:var(--ink);line-height:1.35}
+.wk-lists{display:grid;gap:28px;margin-top:40px}
+.wk-lists h3{margin-bottom:6px}
+.checks li,.nevers li{position:relative;padding:9px 0 9px 28px;border-top:1px solid var(--rule-bone);font-size:17px}
+.checks li:first-child,.nevers li:first-child{border-top:0}
+.checks li::before{content:"";position:absolute;left:0;top:15px;width:18px;height:15px;background:var(--ink);-webkit-mask:var(--tick) 0 0/100% 100% no-repeat;mask:var(--tick) 0 0/100% 100% no-repeat}   /* 2026-10-16 repair: the site's one drawn tick (system.css --tick), level; it was a CSS check turned -48deg */
+.nevers li::before,.nevers li::after{content:"";position:absolute;left:1.5px;top:21px;width:15px;height:2.4px;background:var(--ink);transform:rotate(45deg)}
+.nevers li::after{transform:rotate(-45deg)}
+.wk-lists .note-r{margin-top:8px;font-size:15px;color:var(--muted);max-width:34em}
+.wk-lists .note-r a{display:inline-block;padding-block:12px;margin-block:-12px}   /* a 44px tall tap area without moving the layout */
+@media (min-width:900px){
+  /* 2026-10-17 polish: the price, Your records and What the walk never does start on one x. The three rows had three right
+     columns (26em, .92fr and 1fr), so their left edges sat up to 130px apart at 1440; one column pair now sets all three */
+  .wk{--wk-cols:minmax(0,1.08fr) minmax(0,.92fr)}
+  .wk-top,.wk-parts,.wk-lists{grid-template-columns:var(--wk-cols);gap:56px}
+  .wk-parts{align-items:start}
+}
+
+/* a native disclosure (Full terms, the sources, the cover lists): the facts stay one tap away without a wall of text */
+details:not([open])>:not(summary){display:none}   /* a closed answer takes no room and no count: Chrome lays out closed details content (content-visibility), so Lumora.lint() counted its figures and check.py its words */
+.more{margin-top:28px;border-top:1px solid var(--rule-bone);border-bottom:1px solid var(--rule-bone)}
+.more summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;cursor:pointer;font-weight:600;font-size:17px;color:var(--ink);list-style:none}
+.more summary::-webkit-details-marker{display:none}
+.more summary::after{content:"";width:12px;height:12px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg) translate(-3px,-3px);flex:none}
+.more[open] summary::after{transform:rotate(-135deg) translate(-3px,-3px)}
+.more>div{display:grid;gap:10px;padding:0 0 18px;font-size:17px;max-width:46em}
+
+/* 4 your sheet: the full sample on the clipboard; four columns on a computer, folded rows on a phone */
+.fs-board{margin-top:28px}
+.fs .sheet{padding-inline:16px;padding-bottom:18px}   /* the top is system.css's, under the clip (2026-10-17 round 2) */
+@media (min-width:700px){.fs .sheet{padding-inline:32px;padding-bottom:24px}}
+.fs-src{font-size:15px;color:var(--muted);padding:10px 0 2px}
+.fs-cols{display:flex;justify-content:space-between;gap:12px;font-size:15px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--rule)}
+.fs-cols span:nth-child(3){text-align:right}   /* 2026-10-17 round 2: the money head sits over its figures, 12px from the first head (in Spanish at 320 the two touched) */
+.fs-cols span:nth-child(2),.fs-cols span:nth-child(4){display:none}   /* a phone folds effort and "how you will see it move" into each row, so only two heads apply */
+.fs-rows>li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.fs-leak b{display:block;font-size:17px;line-height:1.3;color:var(--ink)}
+.fs-leak p{font-size:15px;margin-top:4px;color:var(--body)}
+.fs-leak small{display:block;font-size:15px;color:var(--muted);margin-top:4px}
+.fs-usd{grid-column:2;grid-row:1;position:relative;align-self:start;justify-self:end;font-weight:600;font-size:19px;color:var(--red);white-space:nowrap;text-align:right}
+.fs-usd.unp{color:var(--muted);font-weight:500;font-size:15px}
+.fs-usd .pen-ring{left:-14px;top:-12px;width:calc(100% + 26px);height:calc(100% + 24px)}
+.fs-eff,.fs-move{grid-column:1/-1;font-size:15px;color:var(--body)}
+.fs-eff i,.fs-move i{font-style:normal;font-weight:600;color:var(--muted)}
+.fs-first{display:block;margin-top:4px;font-size:17px}   /* the pencil's note on the suggested first fix */
+.sh-total{margin-top:0}
+.fs-more{margin-top:14px;border-top:1px solid var(--rule);border-bottom:0}
+.fs-more summary{font-size:15px;min-height:48px}
+.fs-more .fs-rows>li:last-child{border-bottom:0}
+@media (min-width:980px){
+  .fs-cols{display:grid;grid-template-columns:minmax(0,2.3fr) 90px 150px minmax(0,1.3fr);gap:20px;padding:10px 0}
+  .fs-cols span:nth-child(2),.fs-cols span:nth-child(4){display:block}
+  .fs-cols span:nth-child(3){text-align:right}
+  .fs-rows>li{grid-template-columns:minmax(0,2.3fr) 90px 150px minmax(0,1.3fr);gap:20px;align-items:start}
+  .fs-usd{grid-column:3;grid-row:1}
+  .fs-eff{grid-column:2;grid-row:1}
+  .fs-move{grid-column:4;grid-row:1}
+  .fs-eff i,.fs-move i{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+}
+.fs-after{display:grid;gap:12px;margin-top:26px;max-width:46em}
+.fs-after p{font-size:17px}
+.fs-after .lead{font-size:20px;line-height:1.4;color:var(--ink)}
+.src-d{margin-top:4px}
+.src-d summary{font-size:15px;min-height:48px}
+.src-d .note-r{font-size:15px;color:var(--muted)}
+
+/* 5 one fix: its words on the left, the same fix three ways on the right (a computer); the six kinds of fix moved to 5b, beside
+   the code picture (2026-10-27) */
+.fx-g{display:grid;gap:34px}
+.fx-copy>p{margin-top:14px;font-size:17px;max-width:34em}
+.fx-copy>p.t-lede{font-size:clamp(17px,1.6vw,20px);color:var(--ink)}
+.fx-ai{color:var(--muted)}
+/* 5b what a fix can look like, and the code (2026-10-27): Home's What we automate band as it stood until Oct 27, the code picture
+   on the left on a computer and the six rows beside it, centred on each other (home.css .auto-g) */
+.cd-band .auto-g{display:grid;gap:32px}
+@media (min-width:900px){.cd-band .auto-g{grid-template-columns:minmax(0,1.04fr) minmax(0,1fr);gap:56px;align-items:center}.cd-band .auto-pic{order:-1}}
+.cd-band .auto-pic{width:100%}
+#automate .auto-list{margin-top:20px}
+#automate .auto-close{margin-top:18px;font-size:17px}
+#automate .auto-close a{display:inline-block;padding-block:12px;margin-block:-12px}
+/* the code picture, on Home from 2026-10-10 to 2026-10-27 (code demo B): one window opens on new_customers.py (new_jobs.py until the reviewers' round), the code we write; it runs once
+   in view (the script at the page's end), then the code fades and its run log rises into the owner's own screen. The window is a fixed height,
+   so nothing on the page moves while it runs: phone 388px (the Home budget, 11,000px at 390, has no more room), a column
+   480px+ wide 438px. Code in the OS monospace stack
+   (--printer), comments in the screen's sans so the plain English reads first. Bends SYSTEM.md's no code band, no mono and
+   one abstract format rules, scoped to one light code window inside a picture that rests on the owner's screen: Franco's
+   OK pending (code-demo/COMPARE.html). */
+.bm-win{--bm-h:388px;--lg-h:102px;--lh:18px;--fs:12px;--lg-fs:13px;--lg-lh:18px;--sc-fs:15px;--sc-lh:20px;--det-fs:13px;--hl-fs:18px;--row-p:8px;position:relative;height:var(--bm-h)}
+@container (min-width:480px){.bm-win{--bm-h:438px;--lg-h:116px;--lh:20px;--fs:14px;--lg-fs:14px;--lg-lh:19px;--sc-fs:17px;--sc-lh:23px;--det-fs:15px;--hl-fs:22px;--row-p:9px}}
+.bm-tt{flex:1;min-width:0;display:grid;margin-right:46px;text-align:center;font-size:13px;font-weight:600;color:#3a3a3a}   /* the file name while it is code, the shop's screen after */
+.bm-tt b{grid-area:1/1;font-weight:600;color:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bm-tt b+b,.bm[data-view=screen] .bm-tt b{opacity:0}
+.bm[data-view=screen] .bm-tt b+b{opacity:1}
+.bm-body{position:relative;height:calc(var(--bm-h) - 32px);overflow:hidden}
+pre.bm-code{/* ui-ok: mono the code picture is code (SYSTEM.md 16, the one code picture) */position:absolute;left:0;right:0;top:0;height:calc(var(--bm-h) - 32px - var(--lg-h));overflow:hidden;margin:0;padding:8px 0;background:#fff;font:400 var(--fs)/var(--lh) var(--printer);color:#24292f;counter-reset:ln;tab-size:4}
+.bm-code{-webkit-mask-image:linear-gradient(#000 80%,transparent);mask-image:linear-gradient(#000 80%,transparent)}   /* 2026-10-15: the code fades at its foot instead of stopping on a cut line */
+/* 2026-10-19: keyboard focus on the code showed nothing (the window clips the ring and the fade masks it), so the ring is a 3px ink
+   box drawn over the code area by its parent */
+.bm-code:focus-visible{outline:none}
+.bm-body:has(> .bm-code:focus-visible)::after{content:"";position:absolute;inset:0 0 var(--lg-h);border:3px solid var(--ink);pointer-events:none;z-index:1}
+.bm-code,.bm-code code{white-space:normal}     /* each line is its own block below; the newlines between them must not add rows */
+.bm-code code{display:block;font:inherit}
+/* a line too long for a 320 phone wraps, and the rest of it hangs 4 spaces past its own indent (--ind, set by the page's script) */
+.bm-code .l{display:block;min-height:var(--lh);white-space:pre-wrap;overflow-wrap:anywhere;padding:0 10px 0 calc(38px + var(--ind,0ch));text-indent:calc(-38px - var(--ind,0ch));counter-increment:ln}
+.bm-code .l::before{content:counter(ln) / "";display:inline-block;width:38px;padding-right:12px;text-align:right;text-indent:0;color:#8b8b90;font-size:12px}
+.bm-code .l.ran::before{content:"\2713" / "";color:#1f7a3a;font-weight:700}   /* a finished step's call line: a tick in the margin */
+.bm-code .k{/* ui-ok: purple a code editor's keyword colour, inside the code picture */color:#7b3f9e}.bm-code .f{color:#0b57a8}.bm-code .s{color:#16602b}.bm-code .n{color:#8a4b00}   /* keywords, function names, the shop's file and label names, names set once */
+.bm-code .c,.bm-code .d{font-family:var(--sys);color:#3d3b36;font-size:1.06em;line-height:1}   /* line-height 1: the sans would make comment lines taller than code lines; upright since 2026-10-16 (Franco: no italic, pictures too), the sans sets comments apart from the code */
+.bm-code.is-run .l{opacity:.42}
+.bm-code .l.hot{/* ui-ok: stripe the code editor's own current-line marker, inside the code picture */opacity:1;background-color:#fff1b8;box-shadow:inset 3px 0 0 #111110}
+.bm[data-run=done][data-view=code] .bm-code{overflow-y:auto;overscroll-behavior:contain}
+.bm[data-view=screen] .bm-code{opacity:0;transform:translateY(-16px);visibility:hidden}
+/* the run log: its top strip shows under the code, four Waiting rows that tick on; on the owner's screen it fills the window */
+.bm-log{position:absolute;inset:0;padding:8px 14px 0;background:#f5f5f7;border-top:1px solid #dedee3;font-family:var(--sys);color:#1d1d1f;transform:translateY(calc(100% - var(--lg-h)))}
+.bm[data-view=screen] .bm-log{transform:none;background:#fff;border-top-color:#fff;padding:16px 18px 0}
+.bm-lk{position:relative;font-size:12px;line-height:18px;font-weight:600;color:#64646a}   /* 2026-10-16: sentence case, no tracking, as .t-label */
+.bm[data-view=screen] .bm-lk .bm-run{display:none}
+.bm-nx{position:absolute;right:0;top:0;opacity:0;visibility:hidden}   /* when it looks again: the code runs every 10 minutes, its docstring says so */
+.bm[data-view=screen] .bm-nx{opacity:1;visibility:visible}
+.bm-hl{display:grid;grid-template-rows:0fr;opacity:0}
+.bm-hl p{min-height:0;overflow:hidden;font-size:var(--hl-fs);line-height:1.3;font-weight:600;letter-spacing:-.01em;color:#111110}
+.bm[data-view=screen] .bm-hl{grid-template-rows:1fr;opacity:1;margin-top:4px}
+.bm-rows{margin:0;padding:0;list-style:none}
+.bm[data-view=screen] .bm-rows{margin-top:10px;border-top:1px solid #e6e6ea}
+.bm-rows li{display:grid;grid-template-columns:1.15em minmax(0,1fr);column-gap:.55em;font-size:var(--lg-fs);line-height:var(--lg-lh)}
+.bm-rows li>b,.bm-w{grid-area:1/2;font-weight:500;color:inherit;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bm-w{color:#8b8b90}
+.bm-rows li:not(.on)>b,.bm-rows li.on>.bm-w{display:none}
+.bm-rows svg{width:1.15em;height:1.15em;margin-top:calc((var(--lg-lh) - 1.15em)/2)}
+.bm-rows li:not(.on) circle{fill:#fff;stroke:#b4b4ba;stroke-width:1.5px;r:7.2px}
+.bm-rows li:not(.on) path{opacity:0}
+.bm[data-view=screen] .bm-rows li{font-size:var(--sc-fs);line-height:var(--sc-lh);padding:var(--row-p) 0;border-bottom:1px solid #e6e6ea}
+.bm[data-view=screen] .bm-rows li:last-child{border-bottom-color:transparent}   /* the footer's rule closes the list */
+.bm[data-view=screen] .bm-rows li>b{white-space:normal;font-weight:600}
+.bm[data-view=screen] .bm-rows svg{margin-top:calc((var(--sc-lh) - 1.15em)/2)}
+.bm-det{grid-column:2;display:grid;grid-template-rows:0fr;opacity:0}
+.bm-det>span{min-height:0;overflow:hidden;font-size:var(--det-fs);line-height:1.35;color:#5d5d62}
+.bm[data-view=screen] .bm-det{grid-template-rows:1fr;opacity:1;margin-top:2px}
+.bm-okb{display:inline-block;margin:4px 0 1px;padding:4px 12px;border-radius:6px;background:#0a63d1;color:#fff;font-weight:600;line-height:1.35}   /* his one tap, as his own app draws it */
+/* the footer names what made the list and opens the code, so a visitor who arrives after the run still knows a program sits
+   behind it (judges 2026-10-10) */
+.bm-foot{position:absolute;left:18px;right:18px;bottom:0;padding:9px 0 11px;border-top:1px solid #e6e6ea;font-size:13px;line-height:18px;opacity:0;visibility:hidden}
+.bm[data-view=screen] .bm-foot{opacity:1;visibility:visible}
+.bm-src{display:inline;position:relative;padding:0;border:0;background:none;font:inherit;color:#0b57a8;cursor:pointer;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}   /* 2026-10-15: the 44px tap area overlaps, so the footer keeps its 18px line and never covers the last row */
+.bm-ctl{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:20px}   /* round 3 (craft judge): 20px under the window at every width, as on a phone (it sat 8px under it on a computer, in its shadow) */
+.bm-ctl .samp{position:static}
+.bm-cap{margin-top:6px;font-size:15px;line-height:1.45;color:var(--muted);max-width:36em}
+.bm-again{display:inline-block;position:relative;margin-inline-start:2px;padding:0;border:0;background:none;font:inherit;font-weight:600;color:var(--ink);cursor:pointer}   /* its underline and hover are the links' (.u, 2026-10-19) */
+@media (hover:hover) and (pointer:fine){.bm-src:hover{text-decoration-thickness:2px}}
+/* 2026-10-19: both buttons keep their 44px tall tap areas (.bm-src 18 + 26, .bm-again 22 + 24) from a layer, not padding, so the focus
+   ring hugs the words instead of crossing the caption line above and the window's edge */
+.bm-again::before,.bm-src::before{content:"";position:absolute;inset:-12px 0}
+.bm-src::before{inset:-13px 0}
+html:not(.js) .bm-again,html:not(.js) .bm-foot{display:none}   /* both need JS (the footer is one button that opens the code; 2026-10-16 repair: with JS off it showed and did nothing) */
+@media (prefers-reduced-motion:no-preference){
+  /* to the owner's screen: the code fades out first (200ms), then the log rises and the rows grow (650ms); the headline, the
+     detail lines (60ms apart) and the footer fade in only once their rows have full height, so no frame shows clipped or
+     half-faded text (both judges, 2026-10-10) */
+  .bm[data-view=screen] .bm-code{transition:opacity 200ms var(--ease-out),transform 300ms var(--ease-move),visibility 0s linear 200ms}
+  .bm[data-view=screen] .bm-log{transition:transform 650ms var(--ease-move) 200ms,background-color 400ms var(--ease-out) 200ms,padding 650ms var(--ease-move) 200ms,border-color 400ms 200ms}
+  .bm[data-view=screen] .bm-rows{transition:margin 650ms var(--ease-move) 200ms,border-color 400ms 200ms}
+  .bm[data-view=screen] .bm-rows li{transition:font-size 650ms var(--ease-move) 200ms,line-height 650ms var(--ease-move) 200ms,padding 650ms var(--ease-move) 200ms}
+  .bm[data-view=screen] .bm-hl,.bm[data-view=screen] .bm-det{transition:grid-template-rows 650ms var(--ease-move) 200ms,margin 650ms var(--ease-move) 200ms,opacity 300ms var(--ease-out) 850ms}
+  .bm[data-view=screen] li:nth-child(2) .bm-det{transition-delay:200ms,200ms,910ms}
+  .bm[data-view=screen] li:nth-child(3) .bm-det{transition-delay:200ms,200ms,970ms}
+  .bm[data-view=screen] li:nth-child(4) .bm-det{transition-delay:200ms,200ms,1030ms}
+  .bm[data-view=screen] .bm-foot,.bm[data-view=screen] .bm-nx{transition:opacity 300ms var(--ease-out) 1100ms,visibility 0s 1100ms}
+  /* back to the code: the screen's words go first, then the log drops and the code returns */
+  .bm-code{transition:opacity 300ms var(--ease-out) 450ms,transform 400ms var(--ease-move) 350ms,visibility 0s}
+  .bm-log{transition:transform 500ms var(--ease-move) 150ms,background-color 300ms var(--ease-out) 150ms,padding 500ms var(--ease-move) 150ms,border-color 300ms 150ms}
+  .bm-rows{transition:margin 500ms var(--ease-move) 150ms,border-color 300ms 150ms}
+  .bm-rows li{transition:font-size 500ms var(--ease-move) 150ms,line-height 500ms var(--ease-move) 150ms,padding 500ms var(--ease-move) 150ms}
+  .bm-hl,.bm-det{transition:opacity 150ms var(--ease-out),grid-template-rows 500ms var(--ease-move) 150ms,margin 500ms var(--ease-move) 150ms}
+  .bm-foot,.bm-nx{transition:opacity 150ms var(--ease-out),visibility 0s 150ms}
+  .bm-code .l{transition:opacity var(--t-enter) var(--ease-out),background-color var(--t-enter) var(--ease-out)}
+  .bm-tt b{transition:opacity 300ms var(--ease-out)}
+  .bm[data-run=running] .bm-rows li.on>b{animation:bm-in var(--t-enter) var(--ease-out) both}   /* job: cause and effect, the row ticks on as its step ends */
+}
+@keyframes bm-in{from{opacity:0;transform:translateX(-4px)}}
+/* 2026-10-15: under 324px wide the English rows wrap too and the fourth ran under the window's foot (320: "Invoice saved in
+   QuickBooks" cut), so the window steps taller, each step its widest wrap plus 8px, as the Spanish does below; :lang(es) wins there */
+@container (max-width:323px){.bm-win{--bm-h:412px}}
+@container (max-width:319px){.bm-win{--bm-h:452px}}
+@container (max-width:311px){.bm-win{--bm-h:470px}}
+@container (max-width:303px){.bm-win{--bm-h:492px}}
+@container (max-width:299px){.bm-win{--bm-h:512px}}
+@container (max-width:287px){.bm-win{--bm-h:532px}}
+/* the Spanish Home's code picture (2026-10-11; it replaced the work order PDF and spreadsheet pair, whose .ap- rules are in
+   "backup ORIGINAL-2026-10-11/"). Every rule above applies; Spanish's longer lines need two more. The owner's screen puts
+   the date and "Revisa cada 10 min" on one line when they fit (360px and up) and wraps the second under the first when they
+   don't, where English keeps its absolute corner. */
+.bm[data-view=screen] .bm-lk{display:flex;flex-wrap:wrap;justify-content:space-between;column-gap:12px}   /* 2026-10-15: English too; at 320 the date ran into "Next check" with no space */
+.bm[data-view=screen] .bm-nx{position:static}
+/* under 368px wide the Spanish lines wrap more than the 388px window holds (measured 2026-10-11: at 360 the header takes two
+   lines, at 320 every row does and the footer too), so the window is taller there, each step sized to its widest wrap plus
+   8px; from 368px up, and at 390 where R9 measures the page, it stays 388px like the English. */
+@container (max-width:335px){:lang(es) .bm-win{--bm-h:410px}}
+@container (max-width:319px){:lang(es) .bm-win{--bm-h:484px}}
+@container (max-width:299px){:lang(es) .bm-win{--bm-h:546px}}
+:lang(es) .bm .nw{white-space:nowrap}   /* a date ("12 de oct.") and a phone number never split at a wrap */
+:lang(es) .bm-src{text-align:start}     /* the footer link wraps under 340px; a button would centre its second line */
+
+.fx-tools h3{margin-bottom:8px}
+.fx-tools>p{font-size:17px;max-width:34em}
+.fx-tools .auto-tools{margin-top:10px}
+.fx-tools .tabs{margin-top:18px}
+.jobscr .win-b{padding:14px}
+.js-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.js-h b{font-size:16px;color:#111}.js-h span{font-size:12px;color:#55555a}
+.js-l{font-size:12px;font-weight:600;color:#55555a;margin:10px 0 4px}
+.js-act{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.js-act span{display:inline-grid;place-items:center;min-height:32px;padding:0 12px;border-radius:7px;font-size:13px;font-weight:600;border:1px solid #b9b9bf;color:#1d1d1f;background:#fff}
+.js-act span.pri{background:#0a57b8;border-color:#0a57b8;color:#fff}
+.js-ok{display:block;margin-top:10px;font-size:13px;color:#1f6b36}
+.fx-tools .doc{padding:16px}
+.fx-tools .xl td,.fx-tools .xl th{max-width:none;white-space:normal}   /* four short columns: each sizes to its words, so "3/4\" T&P relief valve" shows whole at 320 instead of ending in dots */
+.fx-tools .xl tr>:first-child{width:1%;white-space:nowrap}
+@media (min-width:900px){.fx-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}}
+
+/* 6 the monthly check, the page's one ink band: the words beside one printed page, straight (papers never tilt on v4) */
+.mcheck{display:grid;gap:36px}
+.mcheck .prose>p{margin-top:14px;font-size:17px;max-width:34em;color:var(--on-night)}
+@media (min-width:1000px){.mcheck{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}}
+.report{background:var(--sheet);color:var(--body);box-shadow:0 30px 60px rgba(0,0,0,.45);padding:22px 18px 18px;font-family:var(--sys);max-width:520px;margin-inline:auto}
+@media (min-width:600px){.report{padding:28px 28px 22px}}
+@media (max-width:699px){.report{box-shadow:0 2px 4px rgba(0,0,0,.35),0 8px 14px -4px rgba(0,0,0,.4)}}   /* 2026-10-17 (Franco's iPhone): a phone-size shadow; the 60px one darkened the summary under the report (check.py SHADOWS) */
+.rp-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding-bottom:10px;border-bottom:2px solid #111}
+.rp-h b{display:block;font-family:var(--font);font-size:22px;color:#111;font-weight:600}
+.rp-h small{display:block;font-size:13px;color:#55555a}
+[data-ground=night] .report .stamp{border-color:var(--pencil);color:var(--pencil)}
+.rp-sec{padding:12px 0;border-bottom:1px solid #e2e0da}
+.rp-k{font-size:12px;font-weight:700;color:#55555a}   /* 2026-10-16: sentence case, no tracking, as About's .fd-k */
+.rp-big{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin-top:4px}
+.rp-big .money{font-family:var(--font);font-size:34px;font-weight:600;color:var(--red);line-height:1.05}
+.rp-big span{font-size:14px;color:#3a3a3f}
+.rp-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rp-two p{font-size:14px;color:#3a3a3f}
+.rp-two b{display:block;font-family:var(--font);font-size:24px;color:#111;font-weight:600}
+.rp-two b i{font-style:normal;color:#77757a;font-weight:500}
+.bars{display:grid;grid-template-columns:repeat(8,1fr);align-items:end;gap:6px;height:84px;margin-top:10px;border-bottom:1.5px solid #111}
+.bars span{display:block;background:#8d8a82;height:var(--h)}
+.bars span.f{background:#111}
+.bars-x{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;font-size:12px;color:#55555a;text-align:center;margin-top:4px}
+.bars-key{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:#3a3a3f;margin-top:6px}
+.bars-key i{display:inline-block;width:10px;height:10px;margin-right:5px;vertical-align:-1px;background:#8d8a82}
+.bars-key i.f{background:#111}
+.rp-next{font-size:14px;color:#3a3a3f}
+.rp-next b{font-weight:700;color:#111;white-space:nowrap}   /* ink, not red: $501.00 leads alone (one red per screen) */
+.rp-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 10px;font-size:12px;color:#55555a;padding-top:10px}
+.cover-d{margin-top:36px;border-color:rgba(233,228,216,.22)}
+.cover-d summary{color:#fff}
+.cover-d summary::after{border-color:var(--on-night)}
+.cover{display:grid;gap:18px;margin-top:6px}
+@media (min-width:900px){.cover{grid-template-columns:1fr 1fr;gap:40px}}
+.cover h3{color:#fff;font-size:20px;margin-bottom:6px}
+.cover li{position:relative;padding:8px 0 8px 28px;border-top:1px solid rgba(233,228,216,.16);font-size:17px;color:var(--on-night)}
+.cover .yes li::before{content:"";position:absolute;left:0;top:14px;width:18px;height:15px;background:var(--on-night);-webkit-mask:var(--tick) 0 0/100% 100% no-repeat;mask:var(--tick) 0 0/100% 100% no-repeat}   /* 2026-10-16 repair: the same drawn tick, on the dark band */
+@media (forced-colors:active){.checks li::before,.cover .yes li::before{forced-color-adjust:none;background:CanvasText}}
+.cover .no li::before{content:"";position:absolute;left:3px;top:20px;width:12px;height:2px;background:var(--muted-night)}
+
+/* 7 questions owners ask: native disclosures, so twelve answers fit a phone without a wall */
+.faq{margin-top:24px;border-top:2px solid var(--ink)}
+.faq details{border-bottom:1px solid var(--rule)}
+.faq summary{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:52px;padding:14px 16px;margin-inline:-16px;cursor:pointer;list-style:none;font-weight:600;font-size:20px;color:var(--ink);line-height:1.3}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:focus-visible{outline-offset:-9px}   /* states sweep CTRL-9 (Franco 2026-10-19): the ring 2px out met the rule above and
+   below (on question 1 it merged with the 2px ink rule into one bar). The row reaches 16px past the words on each side and has
+   14px over and under them, so the ring sits inside it, 6px clear of the rules and 7px clear of the words and the plus (at 4px
+   the rule and the ring still read as two lines), as the index rows do (system.css) */
+.faq summary::after{content:"+";flex:none;width:36px;height:36px;display:grid;place-items:center;border:1.5px solid var(--ink);border-radius:50%;font-weight:500;font-size:20px;line-height:1}
+.faq details[open] summary::after{content:"\2212"}
+.faq .ans{padding:0 0 20px;display:grid;gap:12px;max-width:40em}
+.faq .ans p{font-size:17px}
+.faq-more{margin-top:22px;font-size:17px}
+.faq-more a{display:inline-block;padding-block:12px;margin-block:-12px}
+@media (hover:hover) and (pointer:fine){.faq summary:hover::after{background:var(--ink);color:#fff}}
+.faq summary:active::after{background:var(--ink);color:#fff}
+
+/* motion: an opened answer settles in; nothing else on this page moves but the pen ring, which draws once in view */
+@media screen and (prefers-reduced-motion:no-preference){
+  .faq details[open] .ans,.more[open]>div{animation:rise var(--t-small) var(--ease-out)}
+  .more summary::after{transition:transform var(--t-small) var(--ease-out)}
+  .faq summary::after{transition:background-color var(--t-hover),color var(--t-hover)}
+}
+
+/* phone length (budget 13,000px at 390) */
+@media (max-width:699px){
+  .hiw-hero{padding-bottom:36px}
+  .hiw-g{gap:24px}
+  .hiw-tl .tl4>li{padding-block:16px}
+  .hiw-tl .tl4>li.tl-big{padding-block:20px}
+  .step-h .tab-n{width:40px;height:40px}
+  .fs-leak{display:contents}
+  .fs-leak b{grid-column:1;grid-row:1}
+  .fs-leak p,.fs-leak small{grid-column:1/-1;margin-top:0}   /* what we saw runs the full width under the name and the figure */
+  .fs-rows>li{gap:4px 12px;padding:14px 0}
+  .checks li,.nevers li{padding:7px 0 7px 28px}   /* 2026-10-17 round 3 (judges): every checklist takes the facts' tick, 18 x 15 with its words at 28px */
+  .checks li::before{top:13px}.nevers li::before,.nevers li::after{top:19px}
+  .wk-lists{margin-top:30px}
+  .wk-parts{margin-top:28px}
+  .wstops li{padding:12px 0}
+  .page.wk-page{padding:30px 16px 18px}
+  .cd-band{padding-block:36px}   /* Home's What we automate on a phone, as the band stood there */
+  .bm-win{box-shadow:var(--lift)}   /* 2026-10-17 (Franco's iPhone, shadows): a phone takes the shorter lift; shadow_air.py measures it */
+}
+@media (min-width:900px){.hiw-tl{background:var(--paper);box-shadow:0 0 0 40px var(--paper)}}   /* 2026-10-15: the ruled ground's lines no longer run through the timeline rows; 2026-10-16: 40px, the walk card's 28px bleed plus the 12px of paper it had */
+/* Spanish additions (2026-10-16) */
+.close-h{margin:0 0 24px;font-size:clamp(40px,4.4vw,44px)}   /* Spanish Home's size (home.css), as on plumbing.es.html */
+@media (max-width:359px){.cta-row,.c4-tel{row-gap:18px}}   /* the number and the text link keep their tap areas apart, as on plumbing.es.html */
+</style>
+</head>
+<body data-trade="plumbing" data-rules="v4">
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<div class="util">
+  <div class="wrap util-in">
+    <span>Desde Gainesville atendemos el condado de Alachua.</span>
+    <span class="util-r"><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span><a href="/preview/pages/how-about/how-it-works.html" lang="en" hreflang="en" class="lang">English</a></span>
+  </div>
+</div>
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="/preview/pages/home/index.es.html" aria-label="Lumora, página de inicio"><img src="../../system/assets/logo.svg" alt="" width="124" height="30"></a>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <ul>
+        <li><a class="u" href="/preview/pages/home/index.es.html">Inicio</a></li>
+        <li><a class="u" href="/preview/pages/how-about/how-it-works.es.html" aria-current="page">Cómo funciona</a></li>
+        <li><a class="u" href="/es/industries/">A quién atendemos</a></li>
+        <li><a class="u" href="/es/leak-check/">Calculadora de pérdidas</a></li>
+        <li><a class="u" href="/es/about/">Quiénes somos</a></li>
+        <li><a class="u" href="/es/articles/">Artículos</a></li>
+        <li><a class="u" href="/es/contact/">Contacto</a></li>
+      </ul>
+    </nav>
+    <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
+    <a class="btn btn-sm" href="tel:+13522260681">Llámenos</a>
+    <a href="/preview/pages/how-about/how-it-works.html" lang="en" hreflang="en" class="lang">English</a>
+    <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menú</button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============================================================ 1 HERO: the words and the call block, then the R12 timeline, every
+     line bound; each row jumps to its own step below -->
+<section class="hero hiw-hero" id="top" data-bar-seat data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="timeline">
+  <div class="wrap hiw-g">
+    <div class="hiw-copy">
+      <h1>Qué pasa después de&nbsp;su&nbsp;llamada</h1>
+      <p class="t-lede">En la llamada sin costo vemos si a su negocio le vale la pena una visita. La visita es el primer paso que se paga, y termina en una hoja que le pone una cifra en dólares a cada problema.</p>
+      <div class="cta">
+        <div class="cta-row">
+          <a class="btn btn-lg" href="tel:+13522260681" data-first="the call button">Llámenos</a>
+          <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
+          <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a>
+        </div>
+        <p class="reply">Solemos responder el mismo día hábil.</p>
+      </div>
+    </div>
+    <div class="hiw-tl">
+      <h2 class="sr">Los&nbsp;pasos</h2>
+      <p class="tl-stop"><span data-shared="steps.stop">Puede parar en cualquier paso.</span></p>
+      <ol class="tl4">
+        <li>
+          <div class="tl-head"><h3 data-first="the first step"><span data-shared="step1.when">Hoy</span></h3><span class="tl-tag free"><span data-shared="step1.cost">Sin costo</span></span></div>
+          <div class="tl-body">
+            <p class="t-body"><span data-shared="step1.what">Una llamada sin costo, por teléfono.</span> Usted nos cuenta qué le quita más tiempo, y le decimos claro si la visita se pagaría sola.</p>
+            <a class="u tl-go" href="#conversation">Cómo es la llamada sin costo</a>
+          </div>
+        </li>
+        <li class="tl-big">
+          <div class="tl-head"><h3><span data-shared="step2.when">La visita</span></h3><span class="tl-tag"><span data-shared="step2.cost">Se paga</span></span></div>
+          <div class="tl-body">
+            <p class="t-body"><span data-shared="step2.what">Recorremos su negocio y miramos sus registros.</span></p>
+            <p class="price"><span data-shared="price"><b>La visita cuesta a partir de $500.</b> Si su negocio es más grande, le damos el precio en la llamada sin costo. Se descuenta de un arreglo de $1,500 o más que empiece dentro de los 30&nbsp;días siguientes.</span></p>
+            <a class="u tl-go" href="#walk">Qué incluye la visita</a>
+          </div>
+        </li>
+        <li>
+          <div class="tl-head"><h3><span data-shared="step3.when">Su hoja</span></h3></div>
+          <div class="tl-body">
+            <p class="t-body"><span data-shared="step3.what">Cada problema con su cifra en dólares. Por lo general la tiene a la semana de que nos lleguen sus registros.</span> <span data-shared="step3.get">Es suya, decida lo que decida.</span></p>
+            <a class="u tl-go" href="#sample">Vea una hoja de ejemplo completa</a>
+          </div>
+        </li>
+        <li>
+          <div class="tl-head"><h3><span data-shared="step4.when">Después, solo si usted quiere</span></h3><span class="tl-tag">Se paga</span></div>
+          <div class="tl-body">
+            <p class="t-body"><span data-shared="step4.what">Un arreglo, cotizado antes de empezar, y una revisión mensual que puede cancelar cualquier mes.</span></p>
+            <a class="u tl-go" href="#fix">Qué incluyen el arreglo y la revisión mensual</a>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 2 STEP 1, THE FREE CALL: the type-only rest. Since 2026-10-23 (D38) the
+     Google lookup and the one number we bring are the free call script's, as in the English -->
+<section class="band fc-band" id="conversation" data-ground="paper" data-density="low" data-width="narrow" data-loud="sentence" data-medium="say">
+  <div class="wrap-read fc">
+    <h2 class="step-h"><span class="tab-n" aria-hidden="true">1</span><span><span class="sr">Paso 1: </span>La&nbsp;llamada sin costo</span></h2>
+    <p class="step-meta"><span class="tl-tag free">Sin costo</span> Por teléfono, en español o en inglés.</p>
+    <p class="fc-big">Usted nos cuenta en qué se le va la semana, y nosotros le decimos claro si la visita se pagaría sola.</p>
+    <p>Si otra persona le lleva las cuentas, invítela a la llamada. Si nos dice que no a la visita, no volvemos a llamarle ni a escribirle, a menos que usted nos lo pida.</p>
+  </div>
+</section>
+
+<!-- ============================================================ 3 STEP 2, THE WALK: the paid step and the page's heaviest. The price
+     sentence's second use, with money back (#money-back) and the full terms (#terms), which since 2026-10-23 (D38) keep every condition of the
+     guarantee and leave the refund's days, the date hold and the method to the walk agreement, as in the English -->
+<section class="band seam wk" id="walk" style="--hole:var(--paper)" data-ground="bone" data-density="high" data-width="wide" data-loud="walk page" data-medium="stops">
+  <div class="wrap">
+    <div class="wk-top">
+      <div>
+        <h2 class="step-h"><span class="tab-n" aria-hidden="true">2</span><span><span class="sr">Paso 2: </span>La&nbsp;visita</span></h2>
+        <p class="step-meta"><span class="tl-tag">Se paga</span> Por adelantado, al agendarla.</p>
+        <p class="t-lede">Tiene tres partes: el recorrido, sus registros y la hoja.</p>
+      </div>
+      <div class="wk-price">
+        <p class="price"><span data-shared="price"><b>La visita cuesta a partir de $500.</b> Si su negocio es más grande, le damos el precio en la llamada sin costo. Se descuenta de un arreglo de $1,500 o más que empiece dentro de los 30&nbsp;días siguientes.</span></p>
+        <p class="mb" id="money-back"><span data-shared="moneyback"><b>¿No le valió la pena?</b> Mándenos un mensaje de texto o un correo dentro de los 7&nbsp;días siguientes a la llamada en que repasamos su hoja con usted, y le devolvemos <b class="won">lo que pagó por la visita</b>.</span></p>
+      </div>
+    </div>
+
+    <div class="wk-parts">
+      <div class="page wk-page" style="--hole:var(--bone)">
+        <div class="wk-ph"><h3>El&nbsp;recorrido</h3><span class="stamp">Ejemplo</span></div>
+        <p class="wk-sub">La fecha de la visita la fijamos con usted al agendar. En un negocio de plomería de ejemplo, con 2&nbsp;camionetas, el recorrido pasa por aquí:</p>
+        <ol class="wstops">
+          <li data-task="quotes"><span class="tab-n">1</span><b>La pizarra <small>en la oficina</small></b><p class="pencil">Visita al cliente el martes, cotización el viernes.</p></li>
+          <li data-task="bills"><span class="tab-n">2</span><b>Las camionetas <small>en el estacionamiento</small></b><p class="pencil">Recibo del proveedor en la puerta de la camioneta. Sin número de trabajo.</p></li>
+          <li data-task="retyping"><span class="tab-n">3</span><b>La pila de facturas <small>en el escritorio</small></b><p class="pencil">Orden en papel, calendario, QuickBooks. El mismo trabajo, tres veces.</p></li>
+          <li data-task="calls"><span class="tab-n">4</span><b>El teléfono <small>en el mostrador</small></b><p class="pencil">A las 11:20&nbsp;a.&nbsp;m., los dos técnicos en la calle. Nadie devolvió la llamada.</p></li>
+        </ol>
+      </div>
+      <div class="wk-text">
+        <div>
+          <h3>Sus&nbsp;registros</h3>
+          <p>Facturas, calendario, lista de trabajos e historial de llamadas. Usted mismo descarga los archivos o nos da un usuario a nuestro nombre, nunca una contraseña compartida. El historial muestra cuándo entraron las llamadas y si alguien contestó, no lo que se dijo.</p>
+        </div>
+        <div>
+          <h3>La&nbsp;hoja</h3>
+          <p>La repasamos con usted en una llamada: cada problema con su cifra en dólares y lo que lleva arreglarlo. Si un ajuste en algo que ya paga resuelve alguno, se lo decimos.</p>
+        </div>
+        <p class="wk-keep">La hoja es suya, nos contrate o no para un arreglo.</p>
+      </div>
+    </div>
+
+    <div class="wk-lists">
+      <div>
+        <h3>Lo&nbsp;que&nbsp;la&nbsp;visita nunca hace</h3>
+        <ul class="nevers">
+          <li>Renovarse ni sumar otro cargo. Es un solo cobro.</li>
+          <li>Pedirle una contraseña.</li>
+          <li>Cambiar nada en su teléfono, sus programas o sus cuentas.</li>
+          <li>Escribirles a sus clientes.</li>
+          <li>Pasar sus archivos por una herramienta de inteligencia artificial sin su permiso. Se borran en cuanto le entreguemos la hoja.</li>
+        </ul>
+        <p class="note-r">Cómo manejamos sus registros está en la <a class="u" href="/es/privacy/">página de privacidad</a>.</p>
+      </div>
+    </div>
+    <details class="more" id="terms">
+      <summary>Condiciones completas</summary>
+      <div><p>Se paga al agendarla, con tarjeta, débito bancario o cheque. Si nosotros no podemos hacer el recorrido o no podemos entregarle la hoja, le devolvemos todo lo que pagó por la visita. Si cancela antes de que empiece el recorrido y antes de que nos comparta sus registros, le devolvemos todo lo que pagó por la visita. ¿No le valió la pena? Avísenos dentro de los 7&nbsp;días siguientes a repasar su hoja y le devolvemos lo que pagó por la visita; la hoja sigue siendo suya. Si empieza un arreglo de $1,500 o más dentro de los 30&nbsp;días siguientes a la entrega de la hoja, el precio de la visita se descuenta de ese arreglo. Si le devolvimos lo que pagó por la visita, ya no se descuenta de ningún arreglo. Las condiciones completas están en el acuerdo de la visita.</p></div>
+    </details>
+  </div>
+</section>
+
+<!-- ============================================================ 4 STEP 3, YOUR SHEET: the full sample on the clipboard, the page's one
+     pen ring (on $1,900). The priced rows' names and long formulas are trades.js plumbing's es rows word for word (check.py);
+     the other columns are this page's own Spanish -->
+<section class="band fs-band" id="sample" data-ground="paper" data-density="high" data-width="wide" data-loud="sheet" data-medium="sheet">
+  <div class="wrap">
+    <h2 class="step-h"><span class="tab-n" aria-hidden="true">3</span><span><span class="sr">Paso 3: </span>Su&nbsp;hoja</span></h2>
+    <p class="step-meta">Un ejemplo completo para un negocio de plomería con 2&nbsp;camionetas, con la fórmula de cada fila que lleva cifra.</p>
+    <figure class="clip fs fs-board" aria-label="Hoja de visita de ejemplo, completa">
+      <div class="board">
+        <span class="clamp" aria-hidden="true"><i></i></span>
+        <div class="sheet" data-full-sheet="plumbing" data-ui-ok="nested-card the sheet on its clipboard is the brand object (SYSTEM.md 6), as on Home and every trade page">
+          <header class="sh-head">
+            <div><b class="sh-title">Hoja de visita</b><span class="sh-sub">Dunlin Plumbing, 2&nbsp;camionetas, condado de Alachua</span></div>
+            <span class="stamp">Ejemplo</span>
+          </header>
+          <p class="fs-src">Hecha con el calendario, un archivo de cotizaciones y facturas exportado de QuickBooks, 30&nbsp;días del historial de llamadas de la compañía telefónica y el recorrido.</p>
+          <div class="fs-cols" aria-hidden="true" data-extra="computer: the column heads for effort and for how you will see it move; on a phone each row says both in its own words"><span>Problema y lo que vimos</span><span>Esfuerzo</span><span>Ganancia perdida al&nbsp;mes</span><span>Cómo verá el cambio</span></div>
+          <ol class="fs-rows">
+            <li data-row="quotes" data-task="quotes"><div class="fs-leak"><b>Cotizaciones que tardan más de 48&nbsp;horas en salir</b><p>De 22&nbsp;cotizaciones, 9&nbsp;salieron 2&nbsp;días o más después de la visita. De esos clientes, 5&nbsp;contrataron a otro.</p><small>5&nbsp;trabajos ×&nbsp;$380 de ganancia por trabajo</small></div>
+              <span class="fs-eff"><i>Esfuerzo: </i>Medio</span><span class="fs-usd">$1,900<svg class="pen-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" data-draw><path pathLength="1" d="M14 22C30 4 70 2 90 25S98 80 70 90 10 92 5 60 20 10 34 5"/></svg></span><span class="fs-move"><i>Cómo verá el cambio: </i>Días entre la visita y la cotización, en su archivo de cotizaciones.</span></li>
+            <li data-row="retyping" data-task="retyping"><div class="fs-leak"><b>El mismo trabajo anotado en tres lugares</b><p>Orden en papel, calendario, QuickBooks.</p><small>40&nbsp;min al día ×&nbsp;22&nbsp;días ×&nbsp;$28 la hora</small></div>
+              <span class="fs-eff"><i>Esfuerzo: </i>Medio</span><span class="fs-usd">$411</span><span class="fs-move"><i>Cómo verá el cambio: </i>Minutos al día, medidos en el negocio antes y después.</span></li>
+            <li data-row="calls" data-task="calls"><div class="fs-leak"><b>Llamadas que nadie devolvió</b><p>Cada mes llaman 14&nbsp;números que todavía no son clientes. A 3&nbsp;se les devolvió la llamada y a 11&nbsp;no.</p><small>11&nbsp;llamadas ×&nbsp;24% que se convertirían en trabajo (una tasa de ejemplo) ×&nbsp;$151 de ganancia por trabajo ($341 de visita promedio ×&nbsp;44.3% que queda)</small></div>
+              <span class="fs-eff"><i>Esfuerzo: </i>Bajo</span><span class="fs-usd">$399</span><span class="fs-move"><i>Cómo verá el cambio: </i>Llamadas sin devolver, en su historial de llamadas, mes a mes.</span></li>
+            <li class="is-first" data-task="bills"><div class="fs-leak"><b>Recibos del proveedor sin número de trabajo</b><p>El mes pasado, 14&nbsp;recibos de mostrador no llevaban número de trabajo: $612 en piezas, según su estado de cuenta del proveedor.</p><small>Mientras cada recibo no se cruce con un trabajo, nadie sabe qué piezas se cobraron. <span class="pencil fs-first">Primer arreglo sugerido</span></small></div>
+              <span class="fs-eff"><i>Esfuerzo: </i>Bajo</span><span class="fs-usd unp">sin cifra</span><span class="fs-move"><i>Cómo verá el cambio: </i>Recibos con número de trabajo, en su estado de cuenta mensual del proveedor.</span></li>
+          </ol>
+          <div class="sh-total"><span>Lo que pierde hoy</span><b>$2,710 al mes</b></div>
+          <p class="sh-time">Usted o su oficina se ahorran <b>unas 15&nbsp;horas al mes</b></p>
+          <p class="sh-note">La hoja de su negocio sale de sus registros.</p>
+          <details class="more fs-more">
+            <summary>Otras 3&nbsp;cosas que encontró la visita, sin cifra en dólares</summary>
+            <div>
+              <ol class="fs-rows">
+                <li data-task="reminders"><div class="fs-leak"><b>Reseñas que nunca se piden</b><p>Este mes se terminaron 61&nbsp;trabajos y se enviaron 0&nbsp;solicitudes de reseña. Su perfil de Google sigue mostrando 12&nbsp;reseñas.</p></div>
+                  <span class="fs-eff"><i>Esfuerzo: </i>Bajo</span><span class="fs-usd unp">sin cifra</span><span class="fs-move"><i>Cómo verá el cambio: </i>Su número de reseñas en Google.</span></li>
+                <li data-task="reminders"><div class="fs-leak"><b>Clientes anteriores que no han vuelto</b><p>Hay 38&nbsp;clientes con un trabajo de hace 13&nbsp;a 36&nbsp;meses y ninguno desde entonces. Sale de sus facturas.</p></div>
+                  <span class="fs-eff"><i>Esfuerzo: </i>Medio</span><span class="fs-usd unp">sin cifra</span><span class="fs-move"><i>Cómo verá el cambio: </i>Clientes anteriores que vuelven a agendar, en sus facturas.</span></li>
+                <li data-task="reminders"><div class="fs-leak"><b>Mensajes en un solo idioma</b><p>Los mensajes de citas salen solo en inglés. El mes pasado, la oficina anotó a 9&nbsp;personas que pidieron que las atendieran en español.</p></div>
+                  <span class="fs-eff"><i>Esfuerzo: </i>Medio</span><span class="fs-usd unp">sin cifra</span><span class="fs-move"><i>Cómo verá el cambio: </i>Mensajes enviados en español, en su sistema de citas.</span></li>
+              </ol>
+            </div>
+          </details>
+        </div>
+      </div>
+    </figure>
+    <div class="fs-after">
+      <p class="lead"><b>Primer arreglo sugerido: la fila 4, los recibos del proveedor.</b> La fila 1&nbsp;es más grande, pero esta lleva poco esfuerzo, y cada pieza que encuentra es dinero que usted ya gastó.</p>
+      <p>El cambio lo va a ver en su estado de cuenta del proveedor: cada recibo con su número de trabajo, y cada semana una lista de las piezas que se compraron para un trabajo y nunca llegaron a su factura. Después siguen la fila 1&nbsp;y la fila 2.</p>
+      <details class="more src-d"><summary>De dónde salen las cifras del ejemplo</summary><div><p class="note-r">El promedio nacional de una visita de plomero es $341, según HomeAdvisor (2026, guía nacional de costos), y el margen bruto mediano por trabajo es 44.3%, según Level (datos de proveedor). Los negocios con menos de 5&nbsp;técnicos convirtieron en trabajo el 24% de sus llamadas, a cualquier hora (blog de ServiceTitan, 2022, datos de proveedor).</p><p class="note-r">En la hoja de aire acondicionado y calefacción, el 1&nbsp;de cada 4&nbsp;sale de los datos de ServiceTitan de enero de 2026&nbsp;sobre contratos de servicio comerciales: se renovó el 29.8% cuando la renovación era manual y el 49.1% con renovación automática y recordatorios por correo, así que se conservó más o menos 1&nbsp;de cada 4&nbsp;de los planes que se habrían vencido (datos de proveedor). La cuota anual de $189 es de ejemplo, para un plan con dos mantenimientos, y está dentro de los precios publicados de planes en Florida.</p>
+<p class="note-r">En la hoja de administradores de propiedades, el 10% es un recargo de mantenimiento común en los contratos de administración (foro de BiggerPockets, con lo que cuentan dueños y administradores; se ve de 0&nbsp;a 20%, o una tarifa fija en su lugar). Las 70&nbsp;facturas son de ejemplo: cerca del 5% de las 1,400 facturas de proveedores, más o menos, que paga al año una oficina con 212&nbsp;unidades (unas 600&nbsp;en la semana de cambio de inquilinos, más 3&nbsp;a 5&nbsp;órdenes de trabajo por unidad), a $180 por factura de ejemplo.</p>
+<p class="note-r">En la hoja de control de plagas, el 1&nbsp;de cada 2&nbsp;y el 20% son tasas de ejemplo nuestras, y su visita pone en su lugar los números de su negocio: 1&nbsp;de cada 2&nbsp;renovaciones de termitas vencidas que se recuperan con una llamada, y un 20% más de cobros automáticos rechazados que se recuperan cuando los reintentos se programan. Como referencia, el estudio de Recurly de 2018&nbsp;con más de 1,300 negocios de suscripción encontró que se recuperó más del 45% de los cobros rechazados por las tres razones más comunes (datos de proveedor). Los $225 salen de la cuota promedio de una renovación, $271, entre contratos de cebo de $325 y de líquido de $195, menos una inspección anual de $46. En la página de control de plagas, los $7.50 por pie del tratamiento de termitas con zanja y varilla están dentro de dos guías nacionales de costos: Fixr, de $4 a $14.50, y Polyguard, de $3 a $15.</p></div></details>
+    </div>
+    <div class="cta-inline">
+      <a class="btn" href="tel:+13522260681">Llámenos</a>
+      <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 5 STEP 4, ONE FIX: the terms in plain words, Home's AI line, then the
+     same fix three ways. "Así puede ser un arreglo" (the six rows) moved to band 5b (#code) beside the code picture on Oct 27.
+     The bill's item lines come from the supply house and stay in its
+     English (lang="en"); the shop's own screens are Spanish -->
+<section class="band fx" id="fix" data-ground="sheet" data-density="mid" data-width="split" data-loud="screen" data-medium="tabs">
+  <div class="wrap fx-g">
+    <div class="fx-copy">
+      <h2 class="step-h"><span class="tab-n" aria-hidden="true">4</span><span><span class="sr">Paso 4: </span>Un&nbsp;arreglo</span></h2>
+      <p class="step-meta"><span class="tl-tag">Se paga</span> Solo si usted lo quiere.</p>
+      <p class="t-lede">Le sugerimos empezar con un solo arreglo, uno cuyo resultado pueda ver en sus registros.</p>
+      <p>Cada arreglo tiene su propio precio fijo, nunca por hora, y usted lo conoce con la hoja en la mano, antes de que empiece cualquier trabajo. Si el arreglo necesita algún programa, la cuenta se abre a su nombre y se paga al costo, sin recargo.</p>
+      <p>¿Prefiere arreglarlo todo de una vez? También lo cotizamos a partir de la hoja, y los precios se suman.</p>
+      <p class="fx-ai">Nada le llega a sus clientes, ni entra en una herramienta de inteligencia artificial, sin su visto bueno.</p>
+      <p>Todo funciona en cuentas que son suyas, y cada arreglo está hecho para que, si falla, su negocio siga trabajando como antes.</p>
+    </div>
+    <div class="fx-tools">
+      <h3>El&nbsp;mismo arreglo, de&nbsp;tres maneras</h3>
+      <p>El arreglo de la fila 4, con datos de ejemplo: cada recibo del proveedor lleva el número de trabajo como orden de compra, y una herramienta compara cada factura del proveedor que llega por correo con la factura de ese trabajo. Aquí marca una válvula de alivio de $41.20 en el trabajo 4471. Usted decide si la agrega a la factura o no la cobra.</p>
+      <p class="auto-tools"><span data-shared="tools">Casi todo queda en lo que ya usa: Excel, QuickBooks, la aplicación donde lleva su agenda o una herramienta que le armamos.</span></p>
+      <div data-tabs class="tabs-wrap">
+        <div class="tabs" role="tablist" aria-label="Elija su herramienta">
+          <button role="tab" id="tb1" aria-controls="tp1" aria-selected="true" type="button">En su Excel</button>
+          <button role="tab" id="tb2" aria-controls="tp2" aria-selected="false" type="button">En su programa de trabajos</button>
+          <button role="tab" id="tb3" aria-controls="tp3" aria-selected="false" type="button">Una herramienta que le armamos</button>
+        </div>
+        <div class="pic" role="tabpanel" id="tp1" aria-labelledby="tb1">
+          <div class="scr-win" role="img" aria-label="Ejemplo: una hoja de cálculo llamada Cruce de facturas.xlsx con las cinco líneas de la factura 30172 de Oak Street Supply, cada una con su número de trabajo. Cuatro dicen sí, ya están en la factura de su trabajo. La fila 4, la válvula de alivio del trabajo 4471, está resaltada y dice no. La barra de fórmulas muestra la revisión con CONTAR.SI.CONJUNTO contra la hoja de facturas.">
+            <div class="win-tb" data-ui-ok="fake-chrome R6: the one window frame for computer tasks; Franco kept the Mac buttons (Oct 6)"><i></i><i></i><i></i><span>Cruce de facturas.xlsx</span></div>
+            <div class="xl"><p class="xl-fx"><b>fx</b><span>=SI(CONTAR.SI.CONJUNTO(Facturas[Trabajo],A4,Facturas[Pieza],B4),"sí","no")</span></p>
+              <table><tr class="cl"><td></td><td>A</td><td>B</td><td>C</td></tr>
+                <tr><td>1</td><th>Trabajo</th><th>Pieza, factura 30172</th><th>¿Facturada?</th></tr>
+                <tr><td>2</td><td>4466</td><td lang="en">1/2" PEX-A 100&nbsp;ft</td><td>sí</td></tr>
+                <tr><td>3</td><td>4468</td><td lang="en">Wax ring w/flange, 2</td><td>sí</td></tr>
+                <tr class="on"><td>4</td><td>4471</td><td lang="en">3/4" T&amp;P relief valve</td><td>no</td></tr>
+                <tr><td>5</td><td>4471</td><td lang="en">Element 4500W</td><td>sí</td></tr>
+                <tr><td>6</td><td>4473</td><td lang="en">P-trap 1-1/2" PVC</td><td>sí</td></tr>
+              </table>
+            </div>
+          </div>
+          <span class="samp">Ejemplo</span>
+        </div>
+        <div class="pic" role="tabpanel" id="tp2" aria-labelledby="tb2" hidden>
+          <div class="scr-win jobscr" role="img" aria-label="Ejemplo: el trabajo 4471 de Ann Miller en una aplicación de trabajos. Piezas de las facturas del proveedor: la resistencia, 27 dólares con 85, ya facturada; la válvula de alivio, 41 dólares con 20, sin facturar, con dos botones, Agregar a la factura y No cobrar.">
+            <div class="win-tb" data-ui-ok="fake-chrome R6: the one window frame for computer tasks; Franco kept the Mac buttons (Oct 6)"><i></i><i></i><i></i><span>Trabajo 4471</span></div>
+            <div class="win-b">
+              <div class="js-h"><b>Ann Miller, reparación de calentador</b><span>Terminado mié. 23&nbsp;de sept., factura 4471</span></div>
+              <p class="js-l">Piezas de las facturas del proveedor</p>
+              <table class="dt"><tr><th>Pieza</th><th>Factura</th><th>Estado</th></tr>
+                <tr><td><span lang="en">Element 4500W</span>, $27.85</td><td>30172</td><td><span class="st ok">Facturada</span></td></tr>
+                <tr class="n"><td><span lang="en">3/4" T&amp;P relief valve</span>, $41.20</td><td>30172</td><td><span class="st wt">Sin facturar</span></td></tr>
+              </table>
+              <div class="js-act"><span class="pri">Agregar a la factura</span><span>No cobrar</span></div>
+              <span class="js-ok">Espera su visto bueno. Nada se cobra solo.</span>
+            </div>
+          </div>
+          <span class="samp">Ejemplo</span>
+        </div>
+        <div class="pic" role="tabpanel" id="tp3" aria-labelledby="tb3" hidden>
+          <div class="doc" role="img" aria-label="Ejemplo: el correo de la mañana de una herramienta pequeña. Facturas del proveedor revisadas: la factura 30172 de Oak Street Supply, 5 líneas leídas, 4 ya facturadas en su trabajo y 1 por decidir: la válvula de alivio del trabajo 4471, 41 dólares con 20.">
+            <div class="doc-h"><b>Facturas del proveedor, revisadas</b><span>jue. 6:30&nbsp;a.&nbsp;m.</span></div>
+            <ul class="doc-li">
+              <li><span>Oak Street Supply, factura 30172</span><span>5&nbsp;líneas leídas</span></li>
+              <li><span>Ya facturadas en su trabajo</span><span>4&nbsp;de 5</span></li>
+              <li class="new"><span>Por decidir: <span lang="en">3/4" T&amp;P relief valve</span>, trabajo 4471</span><span>$41.20</span></li>
+            </ul>
+            <div class="js-act"><span class="pri">Agregar a la factura</span><span>No cobrar</span></div>
+            <span class="js-ok">Corre cada noche, en una cuenta que es suya</span>
+          </div>
+          <span class="samp">Ejemplo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 5b PASO 4, ASÍ PUEDE SER UN ARREGLO, Y EL CÓDIGO (2026-10-27): la imagen
+     del código salió de Lo que automatizamos en Inicio (Franco eligió la imagen del PDF, la B) y vive aquí; ver la nota en inglés -->
+<section class="band cd-band" id="code" data-ground="paper" data-density="mid" data-width="split" data-loud="list" data-medium="list">
+  <div class="wrap auto-g">
+    <div class="auto-copy" id="automate">
+      <h2>Así puede ser un&nbsp;arreglo</h2>
+      <ul class="auto-list">
+        <li data-task="bills">Cada factura del proveedor, revisada contra el trabajo para el que se compró el material.</li>
+        <li data-task="invoices">Trabajos terminados que salen en la lista cada mañana hasta que se facturan.</li>
+        <li data-task="quotes">La cotización enviada el mismo día de la visita al cliente, con un recordatorio para usted si nadie contesta.</li>
+        <li data-task="retyping">Un trabajo que se anota una sola vez y pasa solo a todo lo demás.</li>
+        <li data-task="email">Correos y archivos adjuntos leídos y guardados en la carpeta del trabajo que corresponde.</li>
+        <li data-task="reminders">Recordatorios a su personal y a sus clientes, todo el año.</li>
+      </ul>
+      <p class="auto-close"><a class="u" href="/preview/pages/list/what-we-automate.es.html">Vea la lista completa</a></p>
+    </div>
+    <figure class="pic auto-pic bm" data-bm data-medium="code" data-view="screen" data-run="done">
+      <div class="scr-win bm-win">
+        <div class="win-tb"><i></i><i></i><i></i><span class="bm-tt"><b>new_customers.py</b><b aria-hidden="true">Negocio de ejemplo, hoy</b></span></div>
+        <div class="bm-body">
+          <pre class="bm-code" tabindex="0" aria-label="Ejemplo: el código que escribimos, new_customers.py"><code><span class="l"><span class="d">"""Anota cada formulario de cliente nuevo una sola vez.</span></span>
+<span class="l"></span>
+<span class="l"><span class="d">Se ejecuta automáticamente cada 10&nbsp;minutos.</span></span>
+<span class="l"><span class="d">"""</span></span>
+<span class="l"><span class="k">import</span> openpyxl</span>
+<span class="l"><span class="k">import</span> pdfplumber</span>
+<span class="l"></span>
+<span class="l"><span class="k">from</span> office <span class="k">import</span> Customer, calendar, gmail, qbo</span>
+<span class="l"></span>
+<span class="l"><span class="n">CUSTOMERS</span> = <span class="s">"Clientes 2026.xlsx"</span></span>
+<span class="l"><span class="n">LABEL</span> = <span class="s">"Clientes nuevos"</span>  <span class="c"># en Gmail</span></span>
+<span class="l"></span>
+<span class="l"></span>
+<span class="l"><span class="k">def</span> <span class="f">read_customer_form</span>(pdf):</span>
+<span class="l">    <span class="c"># La página 1&nbsp;trae todos los datos</span></span>
+<span class="l">    <span class="k">with</span> pdfplumber.open(pdf) <span class="k">as</span> doc:</span>
+<span class="l">        text = doc.pages[<span class="n">0</span>].extract_text()</span>
+<span class="l">    <span class="k">return</span> Customer.from_form(text)</span>
+<span class="l"></span>
+<span class="l"></span>
+<span class="l"><span class="k">def</span> <span class="f">add_customer_row</span>(customer):</span>
+<span class="l">    <span class="c"># Una fila nueva, bajo el último cliente</span></span>
+<span class="l">    book = openpyxl.load_workbook(<span class="n">CUSTOMERS</span>)</span>
+<span class="l">    book[<span class="s">"Clientes"</span>].append(customer.as_row())</span>
+<span class="l">    book.save(<span class="n">CUSTOMERS</span>)</span>
+<span class="l"></span>
+<span class="l"></span>
+<span class="l"><span class="k">def</span> <span class="f">main</span>():</span>
+<span class="l">    <span class="k">for</span> pdf <span class="k">in</span> gmail.new_pdfs(<span class="n">LABEL</span>):</span>
+<span class="l">        <span class="c"># Lo que antes se pasaba a mano</span></span>
+<span class="l">        customer = read_customer_form(pdf)</span>
+<span class="l">        <span class="c"># Directo a la lista de clientes</span></span>
+<span class="l">        add_customer_row(customer)</span>
+<span class="l">        <span class="c"># La primera cita, en el calendario</span></span>
+<span class="l">        calendar.add_appointment(customer)</span>
+<span class="l">        <span class="c"># Factura en QuickBooks, sin enviar</span></span>
+<span class="l">        qbo.save_invoice(customer, send=<span class="k">False</span>)</span>
+<span class="l">        <span class="c"># Así nunca se anota dos veces</span></span>
+<span class="l">        gmail.mark_done(pdf)</span>
+<span class="l"></span>
+<span class="l"></span>
+<span class="l"><span class="k">if</span> __name__ == <span class="s">"__main__"</span>:</span>
+<span class="l">    main()</span></code></pre>
+          <div class="bm-log" role="group" aria-label="Ejemplo: lo que hizo">
+            <p class="bm-lk"><span class="bm-run">Registro · </span>vie. 9 de oct., 2:15&nbsp;p.&nbsp;m.<span class="bm-nx">Revisa cada 10&nbsp;min</span></p>
+            <div class="bm-hl"><p>Cliente nuevo. Nadie lo escribió.</p></div>
+            <ol class="bm-rows">
+              <li class="on"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#1f7a3a"/><path d="M4.6 8.3l2.2 2.2 4.7-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Se leyó el formulario cliente-nuevo-118.pdf</b><span class="bm-w">Pendiente</span><span class="bm-det"><span>Nancy Hill, desde la página web</span></span></li>
+              <li class="on"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#1f7a3a"/><path d="M4.6 8.3l2.2 2.2 4.7-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Se anotó en Clientes&nbsp;2026, fila&nbsp;977</b><span class="bm-w">Pendiente</span><span class="bm-det"><span>210&nbsp;Main&nbsp;St, Unit&nbsp;B</span></span></li>
+              <li class="on"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#1f7a3a"/><path d="M4.6 8.3l2.2 2.2 4.7-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Calendario: <span class="nw">lun. 12 de oct.</span></b><span class="bm-w">Pendiente</span><span class="bm-det"><span>Primera cita 10:00&nbsp;a.&nbsp;m., <span class="nw">(352) 555-0136</span></span></span></li>
+              <li class="on"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#1f7a3a"/><path d="M4.6 8.3l2.2 2.2 4.7-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Factura en QuickBooks, sin enviar</b><span class="bm-w">Pendiente</span><span class="bm-det"><span><span class="bm-okb">Aprobar y enviar</span></span></span></li>
+            </ol>
+            <p class="bm-foot"><button class="bm-src" type="button">Hecho con new_customers.py, un programa que escribimos para este negocio</button></p>
+          </div>
+        </div>
+      </div>
+      <div class="bm-ctl">
+        <div class="seg" role="group" aria-label="Mostrar">
+          <button type="button" data-view="screen" aria-pressed="true">Su pantalla</button>
+          <button type="button" data-view="code" aria-pressed="false">El código</button>
+        </div>
+        <span class="samp">Ejemplo</span>
+      </div>
+      <figcaption class="bm-cap">Escribimos el código para que nadie anote un nombre dos veces. Usted solo da el visto&nbsp;bueno. <button class="bm-again u" type="button">Verlo otra vez</button></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================================================ 6 STEP 4, THE MONTHLY CHECK: the page's one ink band; the report shows
+     what the supply bill matcher did (14 tickets a month with no job number fall to 2), the next problem is the sheet's row 1 -->
+<section class="band mc" id="check" data-ground="night" data-density="mid" data-width="split" data-loud="report" data-medium="report">
+  <div class="wrap">
+    <div class="mcheck">
+      <div class="prose">
+        <h2>La&nbsp;revisión mensual</h2>
+        <p class="step-meta"><span class="tl-tag">Se paga</span> Mes a mes, cuando ya hay un arreglo funcionando.</p>
+        <p>Una página al mes: lo que hizo el arreglo en sus números y el siguiente problema con su cifra en dólares. Es mes a mes, y puede cancelar cualquier mes por correo. Su propuesta dice qué cubre y cómo se fija el precio.</p>
+      </div>
+      <figure class="mc-pic">
+        <div class="pic">
+          <div class="report" role="img" aria-label="Ejemplo: una página de la revisión mensual de Dunlin Plumbing, septiembre. Lo que hizo el arreglo: 501 dólares encontrados en el mes, en piezas compradas para un trabajo que nunca llegaron a su factura. Los recibos sin número de trabajo bajaron de 14 al mes a 2, en barras por semana, las últimas cuatro después del arreglo, y aparecieron 11 piezas que faltaban en una factura. Qué falló: una factura del proveedor llegó con un formato nuevo; el revisor se detuvo, nos avisó y quedó resuelto. Siguiente problema: cotizaciones que tardan más de 48 horas en salir, 1,900 dólares al mes.">
+            <div class="rp-h" aria-hidden="true"><div><b>Revisión mensual</b><small>Dunlin Plumbing, septiembre</small></div><span class="stamp">Ejemplo</span></div>
+            <div aria-hidden="true">
+              <div class="rp-sec"><p class="rp-k">Lo que hizo el arreglo</p><p class="rp-big"><span class="money">$501.00</span><span>encontrados este mes: piezas compradas para un trabajo que nunca llegaron a su factura</span></p></div>
+              <div class="rp-sec">
+                <div class="rp-two"><p>Recibos sin número de trabajo<b>14 <i>a</i> 2</b></p><p>Piezas que faltaban en una factura<b>11</b></p></div>
+                <div class="bars"><span style="--h:100%"></span><span style="--h:75%"></span><span style="--h:100%"></span><span style="--h:75%"></span><span class="f" style="--h:25%"></span><span class="f" style="--h:3%"></span><span class="f" style="--h:25%"></span><span class="f" style="--h:3%"></span></div>
+                <div class="bars-x"><span>S1</span><span>S2</span><span>S3</span><span>S4</span><span>S5</span><span>S6</span><span>S7</span><span>S8</span></div>
+                <p class="bars-key"><span><i></i>Recibos sin número de trabajo, antes del arreglo</span><span><i class="f"></i>Después</span></p>
+              </div>
+              <div class="rp-sec"><p class="rp-k">Qué falló</p><p class="rp-next">Una factura del proveedor llegó con un formato nuevo. El revisor se detuvo y nos avisó. Ya quedó resuelto.</p></div>
+              <div class="rp-sec"><p class="rp-k">Siguiente problema</p><p class="rp-next">Cotizaciones que tardan más de 48&nbsp;horas en salir: <b>$1,900 al mes</b></p></div>
+              <p class="rp-foot"><span>Cancele cualquier mes, por correo</span></p>
+            </div>
+          </div>
+        </div>
+      </figure>
+    </div>
+    <div class="cta-inline" data-extra="computer: the call bar is on screen the whole time on a phone">
+      <a class="btn" href="tel:+13522260681">Llámenos</a>
+      <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 7 QUESTIONS OWNERS ASK: the cost answer carries #price and points at
+     step 2; the recording answer opens on ES-VOICE's fixed lines. Since 2026-10-23 (D38) the 10-day breach promise is the
+     privacy page's, and each answer is its fear answer, as in the English -->
+<section class="band faq-band" id="faq" data-ground="sheet" data-density="mid" data-width="narrow" data-loud="questions" data-medium="faq">
+  <div class="wrap-read">
+    <h2>Preguntas de&nbsp;los&nbsp;dueños</h2>
+    <div class="faq">
+      <details id="price"><summary>¿Cuánto cuesta?</summary><div class="ans">
+        <p>Publicamos un solo precio, el de la visita, en el <a class="u" href="#walk">paso 2</a>, más arriba, con sus condiciones. Se paga al agendarla, y la hoja es suya de todos modos, aunque nunca nos contrate para un arreglo.</p>
+        <p>Todo lo que viene después de la visita se cotiza a partir de su hoja, así que esa cifra llega después de la visita, no antes. Cada arreglo tiene su propio precio fijo, nunca por hora, y lo que cobre el software va en una línea aparte, al costo. Usted conoce cada precio antes de que empiece cualquier trabajo. La primera llamada no tiene costo.</p></div></details>
+      <details><summary>¿Trabajan fuera de Gainesville?</summary><div class="ans">
+        <p>Estamos en Gainesville y visitamos negocios en el condado de Alachua. ¿Está en otra parte de Florida? Pregúntenos. Toda visita incluye un recorrido en persona, así que llámenos y le decimos si podemos llegar hasta allá.</p></div></details>
+      <details><summary>¿Qué datos necesitan y qué hacen con ellos?</summary><div class="ans">
+        <p>Sus registros: facturas, cotizaciones, su calendario y su lista de trabajos, y el historial de llamadas con su autorización por escrito. Usted mismo descarga los archivos o nos da un usuario a nuestro nombre, nunca una contraseña compartida. Guardamos los archivos cifrados y los borramos en cuanto le entregamos la hoja. Lo demás está en la <a class="u" href="/es/privacy/">página de privacidad</a>.</p></div></details>
+      <details><summary>¿Tengo que dejar de trabajar para la visita?</summary><div class="ans">
+        <p>No. Fijamos el día y la hora con usted al agendarla, fuera de sus horas de más movimiento.</p></div></details>
+      <details><summary>¿Graban llamadas o filman algo?</summary><div class="ans">
+        <p>No filmamos ni grabamos nada sin su permiso, y para grabar una llamada la ley de Florida exige que todos los que participan estén de acuerdo antes. El historial que usamos muestra cuándo entraron las llamadas y si alguien contestó, no lo que se dijo.</p></div></details>
+      <details><summary>¿Esto va a reemplazar a mi personal de oficina?</summary><div class="ans">
+        <p>Reemplaza lo que se vuelve a escribir y lo que hay que andar persiguiendo, como el trabajo anotado en tres lugares o la cotización que espera hasta el viernes. Lo que haga con el tiempo que se libera lo decide usted.</p></div></details>
+      <details><summary>¿Tengo que cambiar de software?</summary><div class="ans">
+        <p>No, a menos que usted quiera. Empezamos con lo que ya paga. Si vemos que un programa nuevo se paga solo, le decimos cuánto cuesta y cuánto le debería dejar, y usted decide.</p></div></details>
+      <details><summary>¿Qué pasa si mi negocio crece o cambio de software?</summary><div class="ans">
+        <p>Avísenos primero, y le decimos por escrito a qué afecta y cuánto costaría. Si tiene más trabajos, camionetas o empleados con los arreglos que ya tiene, no le cobramos nada extra.</p></div></details>
+      <details><summary>¿Venden software?</summary><div class="ans">
+        <p>Únicamente cuando se paga solo y usted lo quiere. Empezamos por las herramientas que ya tiene: las configuramos y las conectamos. Cuando nada en el mercado se ajusta a su manera de trabajar, le hacemos una herramienta a la medida, muchas veces en Python, que funciona en cuentas suyas. Si creemos que un software nuevo le serviría más, le decimos cuánto cuesta, cuánto le debería dejar y por qué, y usted decide. Y si prefiere reemplazar sus herramientas, también lo hacemos y le conseguimos el software nuevo, que se cobra al costo en una línea aparte.</p>
+        <p>La mayoría de los arreglos son un ajuste, una hoja de cálculo o una herramienta pequeña dentro de lo que ya usa. No cobramos comisiones por las herramientas que sugerimos.</p></div></details>
+      <!-- Nov 5: the English page's answer, written from its idea (ES-VOICE section 1); check.py mistakes_problems -->
+      <details id="ai"><summary>¿Esto es inteligencia artificial?</summary><div class="ans">
+        <p>Casi todo es código común y corriente, y es a propósito. Un programa que copia un número lo hace siempre de la misma manera. No se equivoca de dígito, no se salta un paso y no se le olvida nada en una tarde de mucho trabajo, así que el número de póliza de la factura es el mismo de la póliza.</p>
+        <p>Eso pesa más que el tiempo de teclear. Un dígito equivocado en un número de reclamo, un nombre mal escrito o la aseguradora equivocada hace que le devuelvan un reclamo o una factura, y cada ida y vuelta con el ajustador le cuesta de cinco a catorce días antes de cobrar. Un dígito equivocado en el teléfono de su perfil de Google manda sus llamadas a un desconocido.</p>
+        <p>Cuando hay que leer algo, como una factura escaneada o un correo enredado, usamos IA, y el código revisa lo que leyó contra sus propios registros (el nombre, el número de póliza o de reclamo, el monto) antes de que salga nada. Esa IA funciona en una cuenta suya y solo con lo que usted aprueba.</p></div></details>
+      <details><summary>¿Pueden mandarles mensajes de texto a mis clientes por mí?</summary><div class="ans">
+        <p>Los mensajes los manda su negocio, desde su número, y usted aprueba cada palabra. Los configuramos para que cumplan las reglas de Florida sobre mensajes de texto, y un solo STOP detiene todos los mensajes. <a class="u" href="/es/articles/texting-customers-in-florida/">Nuestro artículo</a> explica las reglas en palabras sencillas.</p></div></details>
+      <details><summary>¿Y si el arreglo no funciona?</summary><div class="ans">
+        <p>Cada arreglo está hecho para que, si falla, su negocio vuelva a trabajar como antes, y para avisarnos cuando eso pase. Mientras tenga la revisión mensual, arreglar lo que hicimos va incluido.</p>
+        <p>La revisión mensual muestra lo que hizo el arreglo en sus números. Si no los cambió, lo verá ahí, y puede cancelar cualquier mes.</p></div></details>
+      <details><summary>¿Puedo cancelar?</summary><div class="ans">
+        <p>Sí. Si cancela antes de que empiece el recorrido y antes de que nos comparta sus registros, le devolvemos lo que pagó por la visita. Después, si la hoja no le valió la pena, mándenos un mensaje de texto o un correo dentro de los 7&nbsp;días siguientes a la llamada en que la repasamos con usted, y también le devolvemos lo que pagó por la visita.</p>
+        <p>La hoja es suya de todos modos. La revisión mensual es mes a mes: cancele por correo antes de la siguiente fecha de cobro. Si detiene un arreglo o un proyecto a medio camino, el acuerdo dice qué se debe por el trabajo hecho.</p></div></details>
+      <details><summary>¿Trabajan en español?</summary><div class="ans">
+        <p>Sí. La llamada sin costo, la visita, su hoja, la revisión mensual y la guía de una página que le dejamos con cada arreglo pueden ser en español. Si su sistema de citas les escribe a los clientes solo en inglés, ese puede ser uno de los problemas que arreglamos.</p></div></details>
+    </div>
+    <p class="faq-more">¿Tiene otra pregunta? Llame o escriba al <a class="u" href="tel:+13522260681">(352) 226-0681</a>.</p>
+  </div>
+</section>
+
+<!-- ============================================================ 8 RULES AND CONTACT: plumbing.es.html's close with this page's line
+     ("Empiece con una llamada sin costo."), then every trade's page in one wrapped line. Money back, hours and reply time are bound -->
+<section class="band hm4-close" id="contact" data-ground="paper" data-density="mid" data-width="split" data-loud="close" data-medium="close">
+  <div class="wrap close-g">
+    <div class="c4-main">
+      <h2 class="t-close close-h">Empiece con&nbsp;una&nbsp;llamada sin costo.</h2>
+      <div class="close-act">
+        <div class="arrow-to">
+          <a class="btn btn-lg" href="tel:+13522260681">Llámenos</a>
+          <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
+        </div>
+        <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a></p>
+      </div>
+      <dl class="c4-hours" data-part="close-rows">
+        <div><dt>Devolución del dinero</dt><dd><p class="mb"><span data-shared="moneyback"><b>¿No le valió la pena?</b> Mándenos un mensaje de texto o un correo dentro de los 7&nbsp;días siguientes a la llamada en que repasamos su hoja con usted, y le devolvemos <b class="won">lo que pagó por la visita</b>.</span> <a class="u" href="/es/how-it-works/#terms">Condiciones completas</a></p></dd></div>
+        <div><dt>Horario</dt><dd><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></dd></div>
+        <div><dt>Respuesta</dt><dd><span data-shared="reply">Por lo general le devolvemos la llamada el mismo día hábil.</span></dd></div>
+        <div><dt>Idioma</dt><dd>Español o inglés</dd></div>
+        <div class="c4-where"><dt>Dónde</dt><dd>Gainesville y el condado de Alachua. ¿Está en otra parte de Florida? Pregúntenos.</dd></div>
+        <div class="c4-calc"><dt>¿Todavía no quiere llamar?</dt><dd>Pruebe antes la <a class="u" href="/es/leak-check/">calculadora de pérdidas</a> con sus números. Funciona en su teléfono o computadora y no nos manda nada.</dd></div>
+      </dl>
+    </div>
+    <div class="c4-card">
+      <figure class="contact-card">
+        <img class="cardino" src="../../system/assets/bird-cardino-perch.svg" alt="" width="74" height="60" loading="lazy">
+        <!-- design round item 9 (Franco 2026-10-19): with no reviews yet, the card is a short letter from the owner. The walking stays
+             "we". No photo on this card: Franco's photo goes on About only (Franco, 2026-10-23, D44). Once Lumora has a client, client
+             photos go on Home -->
+        <article class="letter" aria-labelledby="letter-h">
+          <h3 class="letter-h" id="letter-h">Quién recorre su&nbsp;negocio</h3>
+          <p>Casi todos los dueños con los que hablo pierden sus noches en las mismas tareas: la cotización que escriben después de cenar, la factura que nunca salió, la llamada que nadie devolvió.</p>
+          <p>Antes de Lumora me tocaba pasar a la computadora todo el papeleo de una empresa de daños por agua, y terminé automatizando casi todo. Ahora Lumora recorre negocios en Gainesville y sus alrededores, y hace lo mismo.</p>
+          <p>Hablo español e inglés, así que todo puede ser en español.</p>
+          <p class="letter-sig">Franco A. Soto<span>Dueño</span></p>
+        </article>
+        <p class="t-small hm-about"><a class="u" href="/es/about/">Quiénes somos</a></p>
+      </figure>
+      <div class="c4-rules">
+        <h3>Reglas que&nbsp;respetamos</h3>
+        <ul>
+          <li>Empezamos con las herramientas que ya paga.</li>
+          <li>No filmamos ni grabamos nada sin su permiso.</li>
+          <li>Con un solo “no”, ahí queda.</li>
+        </ul>
+      </div>
+    </div>
+    <nav class="pl-more" aria-labelledby="pl-more-k">
+      <p class="t-label" id="pl-more-k">Páginas por tipo de negocio</p>
+      <ul class="pl-trades" data-trades>
+        <li><a href="/es/industries/plumbing/">Plomería</a></li>
+        <li><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li>
+        <li><a href="/es/industries/electrical/">Electricidad</a></li>
+        <li><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></li>
+        <li><a href="/es/industries/pest-control/">Control de plagas</a></li>
+        <li><a href="/es/industries/roofing/">Techos</a></li>
+        <li><a href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a></li>
+        <li><a href="/es/industries/property-managers/">Administradores de propiedades</a></li>
+        <li><a href="tel:+13522260681">¿No ve el suyo? Llámenos</a></li>
+      </ul>
+    </nav>
+  </div>
+</section>
+</main>
+
+<footer class="foot" data-part="foot" data-ground="night">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-lead">
+        <a class="foot-brand" href="/preview/pages/home/index.es.html" aria-label="Lumora, página de inicio"><img src="../../system/assets/logo-white.svg" alt="" width="148" height="36"></a>
+        <p class="foot-line">Su negocio debería funcionar igual, esté usted o no.</p>
+        <a class="btn" href="tel:+13522260681" data-extra="computer: the call bar carries the number on a phone">Llámenos</a>
+      </div>
+      <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="/es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="/es/how-it-works/#walk">La visita</a></li><li><a href="/es/how-it-works/#fix">Un arreglo</a></li><li><a href="/es/how-it-works/#check">La revisión mensual</a></li><li><a href="/es/how-it-works/#faq">Preguntas de los dueños</a></li><li><a href="/preview/pages/list/what-we-automate.es.html">Lo que automatizamos</a></li><li><a href="/es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
+      <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">A quién atendemos</h2><ul><li><a href="/es/industries/plumbing/">Plomería</a></li><li><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li><li><a href="/es/industries/electrical/">Electricidad</a></li><li><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></li><li><a href="/es/industries/pest-control/">Control de plagas</a></li><li><a href="/es/industries/roofing/">Techos</a></li><li><a href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a></li><li><a href="/es/industries/property-managers/">Administradores de propiedades</a></li><li><a href="/es/industries/">Todos los tipos de negocio</a></li></ul></nav>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li>Llame o escriba al <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></li><li>Desde Gainesville atendemos el condado de Alachua</li><li>En español o en inglés</li></ul></div>
+    </div>
+    <div class="foot-base">
+      <p class="legal">&copy; 2026 Lumora Group LLC, empresa de Florida. Los negocios, nombres y números marcados como Ejemplo son ficticios.</p>
+      <ul><li><a href="/es/about/">Quiénes somos</a></li><li><a href="/es/articles/">Artículos</a></li><li><a href="/es/contact/">Contacto</a></li><li><a href="/es/privacy/">Privacidad</a></li></ul>
+    </div>
+  </div>
+</footer>
+
+<nav class="callbar" aria-label="Llámenos o escríbanos"><a href="tel:+13522260681">Llamar <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">Escribir</a></nav>
+<!-- a link to a closed disclosure (#terms from every page's "Condiciones completas", #price) opens it, so the jump lands on the
+     words, not on a shut summary -->
+<script>
+(function () {
+  function open(id) { var t = id && document.getElementById(id), d = t && t.closest('details'); if (d) d.open = true; }
+  open(decodeURIComponent(location.hash.slice(1)));
+  document.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('a[href^="#"]'); if (a) open(a.getAttribute('href').slice(1)); });
+  addEventListener('hashchange', function () { open(decodeURIComponent(location.hash.slice(1))); });
+})();
+</script>
+<!-- the code picture (5b): Home's codeDemo(), moved with it on 2026-10-27 -->
+<script>
+(function () {
+  var ES = true;
+  // The code picture (Home's What we automate from 2026-10-10, code demo B, here since 2026-10-27; on the Spanish Home too since 2026-10-11, the same 43 lines
+  // with Spanish comments, so STEPS and MAIN hold for both; ES picks the button words). It runs
+  // once when 60% of it is in view, about 10 seconds. Each step lights its two lines in main(), the plain comment and the call,
+  // in the order the code really runs; then the call line gets a tick and its run log row goes from Waiting to done. After the
+  // fourth, the code fades and the log rises into the owner's screen (the <style> above times the fold). The text button skips to the
+  // end while it runs (WCAG 2.2.2) and runs it again after. Reduced motion or ?still: no run, the finished screen.
+  // ?view=code opens on the code, for review shots.
+  function codeDemo() {
+    var fig = document.querySelector('[data-bm]'); if (!fig) return;
+    var code = fig.querySelector('.bm-code'), lines = code.querySelectorAll('.l'), rows = fig.querySelectorAll('.bm-rows li'),
+        segs = fig.querySelectorAll('.seg button'), again = fig.querySelector('.bm-again'), src = fig.querySelector('.bm-src'), timers = [];
+    var q = new URLSearchParams(location.search),
+        still = (window.Lumora && Lumora.still) || q.has('still') || matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var STEPS = [[30, 31], [32, 33], [34, 35], [36, 37]], MAIN = 28;   // new_customers.py line numbers (new_jobs.py until the reviewers' round): comment and call; def main() is line 28
+    var FIRST = 800, GAP = 2000, LOG = 800, FOLD = 1400;                // ms; FOLD covers the longest fold transition in the <style> above
+    var AGAIN = ES ? 'Verlo otra vez' : 'Run it again', SKIP = ES ? 'Saltar a la lista' : 'Skip to the list';   // "Saltar", as the page's skip link
+    for (var j = 0; j < lines.length; j++) lines[j].style.setProperty('--ind', (/^ */.exec(lines[j].textContent)[0].length + 4) + 'ch');
+    function scrollTo(n, smooth) {         // line n at the top, under the code's 8px padding (a wrapped line on a 320 phone is taller, so measure)
+      code.scrollTo({ top: n > 1 ? lines[n - 1].offsetTop - 8 : 0, behavior: smooth && !still ? 'smooth' : 'auto' });
+    }
+    function light(s) {
+      for (var i = 0; i < lines.length; i++) lines[i].classList.toggle('hot', !!s && i + 1 >= s[0] && i + 1 <= s[1]);
+      code.classList.toggle('is-run', !!s);
+    }
+    function done(n) {                     // the first n steps finished: their call lines ticked (.ran, since system.css styles .ok as a green chip), their run log rows checked
+      STEPS.forEach(function (s, i) { lines[s[1] - 1].classList.toggle('ran', i < n); });
+      for (var i = 0; i < rows.length; i++) rows[i].classList.toggle('on', i < n);
+    }
+    function show(view) {
+      fig.setAttribute('data-view', view);
+      for (var i = 0; i < segs.length; i++) segs[i].setAttribute('aria-pressed', String(segs[i].getAttribute('data-view') === view));
+      code.inert = view !== 'code';
+    }
+    function stop() { while (timers.length) clearTimeout(timers.pop()); }
+    function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+    function finish(view) {
+      stop(); light(null); done(STEPS.length); show(view);
+      fig.setAttribute('data-run', 'done'); again.textContent = AGAIN;
+      if (view === 'code') scrollTo(1, false);
+    }
+    function run() {
+      stop(); light(null); done(0); show('code'); scrollTo(1, false);
+      fig.setAttribute('data-run', 'running'); again.textContent = SKIP;
+      STEPS.forEach(function (s, i) {
+        at(FIRST + i * GAP, function () { light(s); if (!i) scrollTo(MAIN, true); });
+        at(FIRST + i * GAP + LOG, function () { done(i + 1); });
+      });
+      at(FIRST + STEPS.length * GAP, function () { light(null); show('screen'); });
+      at(FIRST + STEPS.length * GAP + FOLD, function () { finish('screen'); });
+    }
+    for (var i = 0; i < segs.length; i++) segs[i].addEventListener('click', function () { finish(this.getAttribute('data-view')); });
+    src.addEventListener('click', function () { finish('code'); code.focus({ preventScroll: true }); });   // its button hides with the screen; focus goes to the code
+    again.addEventListener('click', function () { if (fig.getAttribute('data-run') === 'running') finish('screen'); else run(); });
+    if (q.get('view') === 'code') { finish('code'); return; }
+    if (still || !('IntersectionObserver' in window)) { finish('screen'); return; }
+    light(null); done(0); show('code'); fig.setAttribute('data-run', 'idle'); again.textContent = SKIP;   // the start state: the code, nothing run yet
+    var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); run(); } }, { threshold: 0.6 });
+    io.observe(fig);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', codeDemo); else codeDemo();
+})();
+</script>
+</body>
+</html>

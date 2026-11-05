@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 214 66" width="214" height="66">
+<!-- The clipboard clip, Home's lever clip as an image so every board draws the same one (2026-10-17 round 2): a flat lever, the rolled pivot, a flat brushed jaw with a curled lip, two plain rivets. The page adds the one soft shadow. -->
+<defs>
+<linearGradient id="roll" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8E9399"/><stop offset=".55" stop-color="#83888E"/><stop offset="1" stop-color="#6F747A"/></linearGradient>
+<clipPath id="jaw"><path d="M11 24h192a5 5 0 0 1 5 5v27a6 6 0 0 1-6 6H12a6 6 0 0 1-6-6V29a5 5 0 0 1 5-5z"/></clipPath>
+<filter id="brush" x="0" y="0" width="1" height="1"><feTurbulence type="fractalNoise" baseFrequency=".006 .85" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  .16 0 0 0 -.08"/></filter>
+</defs>
+<path d="M58 21L60 7C60 4.5 62 3 64.5 2.8 79 1.8 93 1.4 107 1.4s28 .4 42.5 1.4C152 3 154 4.5 154 7l2 14z" fill="#80858B" stroke="rgba(30,30,34,.42)"/>
+<path d="M63 5.6C78 4.6 92 4.2 107 4.2s29 .4 44 1.4" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1" stroke-linecap="round"/>
+<rect x="40" y="16" width="134" height="12" rx="6" fill="url(#roll)" stroke="rgba(40,40,44,.34)"/>
+<path d="M11 24h192a5 5 0 0 1 5 5v27a6 6 0 0 1-6 6H12a6 6 0 0 1-6-6V29a5 5 0 0 1 5-5z" fill="#878C92" stroke="rgba(30,30,34,.40)"/>
+<g clip-path="url(#jaw)"><rect x="6" y="24" width="202" height="38" filter="url(#brush)"/><rect x="6" y="57" width="202" height="5" fill="#72777D"/></g>
+<circle cx="22" cy="41" r="4" fill="#797E84" stroke="rgba(30,30,34,.40)" stroke-width=".8"/>
+<circle cx="192" cy="41" r="4" fill="#797E84" stroke="rgba(30,30,34,.40)" stroke-width=".8"/>
+</svg>
