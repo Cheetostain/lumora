@@ -233,3 +233,41 @@ html:not(.js) .wa-filter{display:none}
   .wa-tools-g dd{margin-top:0}
   .wa-tools-ask{margin-left:calc((100% - 48px) / 3 + 48px)}
 }
+
+/* 3b what a wrong detail costs (Nov 5): how the work stays right under the heading, four plain ruled rows as the list's own, then
+   the sources in the muted tone */
+.wa-cost-rows{margin:20px 0 0;padding:0;list-style:none;border-top:2px solid var(--ink);max-width:42em}
+.wa-cost-rows li{padding:12px 0;border-bottom:1px solid var(--rule);font-size:17px;line-height:1.45;color:var(--ink)}
+.wa-cost-rows b{font-weight:600}
+.wa-cost-how{margin-top:12px;font-size:17px;line-height:1.45;max-width:42em}
+.wa-src{margin-top:12px;font-size:15px;line-height:1.4;color:var(--muted);max-width:42em}
+@media (max-width:699px){.wa-cost-rows li{padding-block:9px;line-height:1.4}}
+/* the held invoice (the review round, Nov 5: "show the check rather than promise it"): Home's sample policy on paper, and its
+   QuickBooks invoice in B's window, the policy number one digit off, the red pen round it, held, not sent. A phone sees it between
+   the line under the heading and the rows; a computer beside the rows, in the band's right column. Still, no motion */
+.wa-cost .wrap{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"h" "how" "pic" "rows" "src"}
+.wa-cost h2{grid-area:h}
+.wa-cost-how{grid-area:how}
+.wa-cost-pic{grid-area:pic;align-self:start;margin:20px 0 0;padding-bottom:34px;max-width:420px}
+.wa-cost-rows{grid-area:rows}
+.wa-src{grid-area:src}
+@media (min-width:900px){
+  .wa-cost .wrap{grid-template-columns:minmax(0,42em) minmax(320px,400px);column-gap:clamp(40px,5vw,80px);justify-content:space-between;
+    grid-template-areas:"h pic" "how pic" "rows pic" "src pic";grid-template-rows:auto auto auto 1fr}
+  .wa-cost-pic{margin-top:8px}
+}
+.wcp-g{display:grid;gap:12px}
+.wcp-pol{background:#fff;box-shadow:var(--lift);padding:14px 18px 12px;width:82%;font:400 14px/1.35 var(--sys);color:#1d1d1f}
+.wcp-h{display:block;font:700 15px var(--sys);margin-bottom:4px}
+.wcp-kv{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:6px 0;border-bottom:1px solid #ececec;font:400 14px/1.35 var(--sys)}
+.wcp-kv:last-child{border-bottom:0}
+.wcp-kv>span{color:#666}
+.wcp-kv b{font-weight:600;white-space:nowrap}
+.wcp-inv{margin-left:10%}
+.wcp-pg{padding:10px 18px 14px}
+.wcp-bad b{padding-right:8px}   /* room for the pen's ring past the number's last digit */
+.wcp-held{margin:12px 0 0;font:400 14px/1.4 var(--sys);color:#1d1d1f}
+.wcp-held b{font-weight:600}
+/* a phone keeps the invoice alone: its line "The policy says GL-900518." names the other half of the check (the band measured
+   1,225px at 390 with both, the page 347px over its R9 limit) */
+@media (max-width:699px){.wcp-pol{display:none}.wcp-inv{margin-left:0}.wa-cost-pic{margin-top:16px}}

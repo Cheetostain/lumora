@@ -90,6 +90,12 @@
   // ring is level): the hand-drawn point list, which leaned, became p1-final's level ellipse, built the way build.py ring()
   // builds it: the long axis level, a 2.2% pressure wobble, 1.08 turns so the end passes just inside the start, a 4.5% drift
   // in as the pen closes. In the .sh-usd box (system.css section 11) it keeps about 3.7px off the figure (pencil_air.py).
+  // Nov 6 (Franco: the ring round the first "Lost a month" figure was too tall, nearly on the rule above on a computer and on the
+  // sheet's edge on a phone): the same level ellipse, lower. Its box (.sh-usd .pen-ring, system.css section 11) is less tall and a
+  // little wider, so the oval stays the live one, only flatter. A superellipse (exponent 2.8) was tried the same day and dropped:
+  // its flat top and straight sides read as a pill, close to the Sample stamp's outline (reviewers, Nov 6). check.py PEN_EDGE
+  // holds the edge; pencil_air.py the air. Nov 7 (reviewers): flatter means wider, so on a phone the ringed sheet's right margin is
+  // 20px (system.css, under .sh-usd .pen-ring) and the ring clears the sheet's edge by 10.9px or more, where live's was 6.9 to 7.9.
   function ring(svg) {
     if (!svg) return;
     var w = svg.clientWidth || svg.getBoundingClientRect().width, h = svg.clientHeight || svg.getBoundingClientRect().height;
@@ -405,13 +411,13 @@
   // sentences joined with ". ", never ".." after a part that already ends in a period (Spanish "p. m.", "oct."; review 2026-10-10)
   var sent = function (parts) { return parts.filter(function (s) { return s; }).map(function (s) { s = String(s).trim(); return /[.?]$/.test(s) ? s : s + '.'; }).join(' '); };
   function altAfter(R) {
-    return R.frame === 'phone' ? sent([tr('Sample, fixed: a text thread on the shop phone with ', 'Ejemplo, con el arreglo: la conversación en el teléfono del negocio con el ') + R.who].concat(R.msgs.map(function (m) { return m[1]; })))
-      : sent([tr('Sample, fixed: ', 'Ejemplo, con el arreglo: ') + R.title + (R.meta ? ', ' + R.meta : ''), R.badge && R.badge[1], R.total && R.total[0] + ' ' + R.total[1]]);
+    return R.frame === 'phone' ? sent([tr('Example, fixed: a text thread on the shop phone with ', 'Ejemplo, con el arreglo: la conversación en el teléfono del negocio con el ') + R.who].concat(R.msgs.map(function (m) { return m[1]; })))
+      : sent([tr('Example, fixed: ', 'Ejemplo, con el arreglo: ') + R.title + (R.meta ? ', ' + R.meta : ''), R.badge && R.badge[1], R.total && R.total[0] + ' ' + R.total[1]]);
   }
   function altBefore(row) {
-    if (row.before.kind === 'whiteboard') return 'Sample, as we find it: the office whiteboard. Garcia\'s water heater visit is under Tuesday; "Quote Garcia" is under Friday, with an arrow back to Tuesday.';
-    if (row.before.kind === 'recents') return 'Sample, as we find it: the shop phone\'s Recents. Two missed calls from (352) 555-0131 at 6:12 PM, circled, and no call back.';
-    return 'Sample, as we find it: drawing of ' + row.place.toLowerCase() + ': ' + row.before.g.map(function (v) { return v.replace('|', ' '); }).join(', ') + '.';
+    if (row.before.kind === 'whiteboard') return 'Example, as we find it: the office whiteboard. Garcia\'s water heater visit is under Tuesday; "Quote Garcia" is under Friday, with an arrow back to Tuesday.';
+    if (row.before.kind === 'recents') return 'Example, as we find it: the shop phone\'s Recents. Two missed calls from (352) 555-0131 at 6:12 PM, circled, and no call back.';
+    return 'Example, as we find it: drawing of ' + row.place.toLowerCase() + ': ' + row.before.g.map(function (v) { return v.replace('|', ' '); }).join(', ') + '.';
   }
   function beforeHTML(row) { return row.before.kind === 'whiteboard' ? whiteboardHTML() : row.before.kind === 'recents' ? recentsHTML() : ghostSVG(row.before.ghost, row.before.g); }
 
@@ -562,21 +568,39 @@
   var phoneOf = function () { return document.querySelector('[data-iph]') ? iphMsg : ph4; };
 
   /* ================================================================ binders: everything the trade choice rewrites */
+  // Nov 6 (Franco: "we shouldn't have every business name and number marked. Sample is made up at the bottom footer unless it is
+  // required by law"): the Sample / Ejemplo stamps left every picture, and one footer line says the examples are made up. The law's
+  // one exception stays: a result someone got (time back, money won back) says "example" in its own words beside the figure (FTC
+  // 16 CFR 255.2(c) and the .com disclosures guide: a footer can't qualify a claim). So a time back names "the example shop" in its
+  // own line, on the sheet and at the walk's end (exampleTime). Lint R8 holds it.
+  // exampleOf(t): [EN noun, ES noun, ES feminine], the nouns walkHead() uses, a property manager named as one
+  function exampleOf(t) {
+    var s = (t.short || '').split(',')[0];
+    var en = t.per === 'yr' ? 'property manager' : /^Restaurant/.test(s) ? 'restaurant' : / agency$/i.test(s) ? 'agency' : /^(?:Roofing|Pest control|Restoration)$/.test(s) ? 'company' : 'shop';
+    var es = (t.es && t.es.short || s).split(',')[0];
+    var x = /^Agencia/.test(es) ? ['agencia', 1] : /^Restaurante/.test(es) ? ['restaurante', 0] : /^Control de plagas/.test(es) ? ['compañía', 1] : /^Daños/.test(es) ? ['empresa', 1] : /^Administradora/.test(es) || t.per === 'yr' ? ['administradora', 1] : ['negocio', 0];
+    return [en, x[0], x[1]];
+  }
+  // the time back's lead, "Time back for the example shop: " / "El negocio de ejemplo se ahorra ", one writer for the sheet and the
+  // walk end. Nov 7 (reviewers: the sheet said "Time back for you or your office:" while its "An example agency" sat on the business
+  // line at the top, 672 to 856px above the figure on a 320 or 375 phone, off its screen, so R8 failed it): the word moved onto the
+  // result's own line and the business line is the live one again ("Insurance agency, 10 people"), once a picture
+  function exampleTime(t) {
+    var x = exampleOf(t);
+    return tr('Time back for the example\u00a0' + x[0].replace(/ /g, '\u00a0') + ': ', (x[2] ? 'La ' : 'El ') + x[1] + ' de\u00a0ejemplo se\u00a0ahorra ');   // 'se ahorra' kept together: at 320 the Spanish property manager's sheet left 'ahorra' alone on its next line (check.py's time-back label rule, Nov 7)
+  }
+  L.exampleTime = exampleTime;
   // the walk opens on its number (Franco 2026-10-19, design round item 3; carried from Home to the eight trade pages by the picks
-  // follow-up the same day): "Our sample shop, Dunlin Plumbing, loses $2,710 a month. Here's where." One writer for Home's picker
-  // and every trade page, reading the sheet's own total, so the heading can't drift from the sheet under it. The word sample sits
-  // in the heading (it is the section's sample lead, Lumora.lint R8; owner judge: a skim of the headings never reached the intro),
-  // the figure is red with its loss word beside it (check.py MONEY_JS), and each business is called what its page calls it
-  // (lane 3b, 2026-10-18: roofers, pest control and restoration owners say company). The Spanish is written in Spanish, usted, its
-  // short words bound (item 6). check.py: Home's item 3 checks and walk_head_problems on the trade pages
+  // follow-up the same day): "Dunlin Plumbing loses $2,710 a month. Here's where." One writer for Home and every trade page,
+  // reading the sheet's own total, so the heading can't drift from the sheet under it; the figure is red with its loss word beside
+  // it (check.py MONEY_JS). The Spanish is written in Spanish, usted, its short words bound (item 6). Nov 7 (Franco, note 1: no
+  // Sample on every business name; decision D): the heading names the business alone. From 2026-10-19 it opened "Our sample shop,"
+  // ("Nuestro negocio de ejemplo,"), the section's sample lead; a loss needs nothing but the footer line, and the result under it
+  // (the walk end's time back) says example itself. check.py: Home's item 3 checks and walk_head_problems on the trade pages
   function walkHead(el, t) {
     var h = el.querySelector('[data-walk-head]'); if (!h || !t || !t.rows) return;
-    var s = (t.short || '').split(',')[0], hx = function (x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
-    var who = ES ? (/^Restaurante/.test(s) ? 'Nuestro restaurante' : /^Agencia/.test(s) ? 'Nuestra agencia' : /^Control de plagas/.test(s) ? 'Nuestra compañía'
-      : /^Daños/.test(s) ? 'Nuestra empresa' : 'Nuestro negocio') + ' de\u00a0ejemplo'
-      : 'Our sample ' + (t.per === 'yr' ? 'business' : /^Restaurant/.test(s) ? 'restaurant' : / agency$/i.test(s) ? 'agency'
-      : /^(?:Roofing|Pest control|Restoration)$/.test(s) ? 'company' : 'shop');
-    h.innerHTML = who + ', ' + hx(t.shop) + (ES ? ', pierde ' : ', loses ') + '<span class="walk-h-usd">' + money(total(t)) + '\u00a0' + perWord(t).replace(/ /g, '\u00a0') + '</span>' +
+    var hx = function (x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+    h.innerHTML = hx(t.shop) + (ES ? ' pierde ' : ' loses ') + '<span class="walk-h-usd">' + money(total(t)) + '\u00a0' + perWord(t).replace(/ /g, '\u00a0') + '</span>' +
       (ES ? '. Le\u00a0mostramos dónde.' : '. Here\'s where.');
   }
   var shown = {};
@@ -585,6 +609,7 @@
       var f = function (k) { return el.querySelector('[data-f="' + k + '"]'); };
       // 2026-10-15: "2 / trucks" never splits (no-break space). Design round picks, 2026-10-19 (item 1): the place after the short
       // business line sits in span.sh-at, so a trade page's phone reads "Plumbing, 2 trucks" and the Spanish line keeps one line
+      // the business line as live (Nov 6 to 7 it said "An example agency" here; the time line below says it now, beside its figure)
       if (f('sub')) { var sb = t.sub.replace(/(\d) /g, '$1\u00a0'), so = (t.short || '').replace(/(\d) /g, '$1\u00a0'), hx = function (s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
         if (so && sb.length > so.length && sb.indexOf(so) === 0) f('sub').innerHTML = hx(so) + '<span class="sh-at">' + hx(sb.slice(so.length)) + '</span>'; else f('sub').textContent = sb; }
       // 2026-10-17: the money column says what its figures are, a loss ("A month" read as a price list)
@@ -596,9 +621,9 @@
       if (f('total')) f('total').textContent = money(total(t)) + perShort(t);
       // one short line for screen readers when the owner picks another trade (the sheet itself is not a live region: a pick
       // used to read out about 50 changed words). Empty on load, so nothing is announced before he chooses.
-      if (f('live') && animate) f('live').textContent = tr('Sample business: ', 'Negocio de ejemplo: ') + t.name + ', ' + money(total(t)) + ' ' + perWord(t) + tr(' lost before any fix.', ' que pierde hoy, antes de arreglar nada.');
+      if (f('live') && animate) f('live').textContent = tr('Example business: ', 'Negocio de ejemplo: ') + t.name + ', ' + money(total(t)) + ' ' + perWord(t) + tr(' lost before any fix.', ' que pierde hoy, antes de arreglar nada.');
       // 2026-10-17 round 2 (Franco's iPhone): "your office:" keeps together (WebKit broke it "your / office:"); system.css keeps the figure whole
-      var tm = f('time'); if (tm) { tm.hidden = !t.time; if (t.time) tm.innerHTML = tr('Time back for you or your\u00a0office: ', 'Usted o su oficina se ahorran ') + '<b>' + esc(t.time) + '</b>'; }
+      var tm = f('time'); if (tm) { tm.hidden = !t.time; if (t.time) tm.innerHTML = exampleTime(t) + '<b>' + esc(t.time) + '</b>'; }   // Nov 7: the example named on the result's own line, never "you or your office"
       // the line about where the numbers come from. 2026-10-16 (p1-final round 2) it named each trade's own records from its
       // morning list's foot; since the promise audit (2026-10-23, D38) it says "your own records" for every pick, because a list of
       // record types read as a method he is bound to. Each trade's records stay in its night log's foot, a sample picture
@@ -645,9 +670,10 @@
     // h1 on that trade's own page; check.py fails the two if they drift) and the top line of its sample sheet with the dollars, as
     // Home's Who we work with reads it, so nothing on the index is typed. The row takes that sheet row's task tag (R1). The shop
     // size is home.js size()'s. A Spanish page keeps its prerendered words until trades-src-es.json carries a Spanish line.
-    // The sample line opens "From the sample sheet for a 2-crew shop:" so it reads as its own item, never as the price of the
+    // The sample line opens "From the sheet for a 2-crew shop:" so it reads as its own item, never as the price of the
     // one-problem line above it (Industries review, 2026-10-12: roofing's $771 depreciation row sat under the decking line, and
-    // decking is its own $689 row). A trailing number keeps its word ("day 30").
+    // decking is its own $689 row). A trailing number keeps its word ("day 30"). Nov 7 (Franco, note 1): "From the sample sheet" and
+    // "De la hoja de ejemplo" lost the word; the footer says the examples are made up.
     index: function (el) {
       $$('[data-t]', el).forEach(function (li) {
         var t = D[li.getAttribute('data-t')], r = t && t.rows[0]; if (!r) return;
@@ -661,12 +687,12 @@
         if (ES) {
           var me = /, (\d+) (.+)$/.exec(t.short) || [], qui = t.per === 'yr' ? 'una administradora de propiedades con ' :
             /^Restaurante/.test(t.short) ? 'un restaurante y bar con capacidad para ' : 'un negocio con ';
-          if (leak) leak.innerHTML = 'De la hoja de ejemplo de ' + qui + (me[1] ? me[1] + ' ' + (/^Restaurante/.test(t.short) ? 'personas' : me[2]) : '') + ': ' +
+          if (leak) leak.innerHTML = 'De la hoja de ' + qui + (me[1] ? me[1] + ' ' + (/^Restaurante/.test(t.short) ? 'personas' : me[2]) : '') + ': ' +
             esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', una pérdida de <b class="loss">' + money(r.usd) + perShort(t) + '</b>.';
           return;
         }
         // 2026-10-17: the figure is red and says it is a loss ("losing"), so it never reads as the price of the line above
-        if (leak) leak.innerHTML = 'From the sample sheet for a ' + who + ': ' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', losing <b class="loss">' + money(r.usd) + perShort(t) + '</b>.';
+        if (leak) leak.innerHTML = 'From the sheet for a ' + who + ': ' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', losing <b class="loss">' + money(r.usd) + perShort(t) + '</b>.';
       });
     },
     bigfig: function (el, t) {
@@ -674,10 +700,11 @@
       rollTo(f('n'), shown.big, sum, money); shown.big = sum;
       if (f('per')) f('per').textContent = perWord(t);
       if (f('sub')) f('sub').textContent = t.sub.replace(/(\d) /g, '$1\u00a0');   // 2026-10-15: no-break space after a count
-      // a page may give the line its own lead (data-lead; the generalist Home's reviewers' round, 2026-10-30): Home's walk end says
-      // "Time back for Sanderling's office:" in place of a second Sample stamp, the film's own just above it
+      // a page may give the line its own lead (data-lead; the generalist Home's reviewers' round, 2026-10-30; no page does since Nov 7,
+      // when Home's "Time back for the example office:" sat under its sheet's "example agency" line). Nov 6: the walk end's time back is a result on a line of its own, so with no lead it
+      // names the example business too ("Time back for the example shop:", "El negocio de ejemplo se ahorra"), never "you or your office"
       var lead = f('time') && f('time').getAttribute('data-lead');
-      if (f('time')) { f('time').hidden = !t.time; if (t.time) f('time').innerHTML = (lead ? esc(lead) : tr('Time back for you or your\u00a0office: ', 'Usted o su oficina se ahorran ')) + '<b>' + esc(t.time) + '.</b>'; }   // space pass fixes (2026-10-25): the period inside the <b>, so Home's 32px time back on a computer has no small dot hanging at its baseline
+      if (f('time')) { f('time').hidden = !t.time; if (t.time) f('time').innerHTML = (lead ? esc(lead) : exampleTime(t)) + '<b>' + esc(t.time) + '.</b>'; }   // space pass fixes (2026-10-25): the period inside the <b>, so Home's 32px time back on a computer has no small dot hanging at its baseline
       if (f('eq')) f('eq').innerHTML = t.rows.map(function (r, i) { return (i ? '<i>+</i>' : '') + '<span>' + money(r.usd) + ' <small>' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1)) + '</small></span>'; }).join('') +
         '<i>=</i><span class="r">' + money(sum) + ' <small>' + perWord(t) + '</small></span>';
       $$('.pen-ring', el).forEach(function (s) { requestAnimationFrame(function () { ring(s); }); });
@@ -693,7 +720,7 @@
         return '<li class="stop page" id="' + id + '" data-usd="' + r.usd + '" data-place="' + esc(r.place) + '">' +
           '<p class="tab"><span class="tab-n">' + (i + 1) + '</span>Stop ' + (i + 1) + ' · ' + esc(r.place) + '</p><h3>' + esc(r.b) + '</h3>' +
           '<div class="stop-body"><div class="pic"><div class="g2r" data-g2r data-state="after" role="img" aria-label="' + esc(altAfter(r.after)) + '" data-label-before="' + esc(altBefore(r)) + '" data-label-after="' + esc(altAfter(r.after)) + '">' +
-          '<div class="before">' + beforeHTML(r) + '</div><div class="after">' + realHTML(r.after) + '</div></div><span class="samp">Sample</span></div>' +
+          '<div class="before">' + beforeHTML(r) + '</div><div class="after">' + realHTML(r.after) + '</div></div></div>' +   // Nov 6: no Sample stamp
           '<div class="stop-notes"><p class="pencil">' + esc(r.note) + '</p>' +
           '<p class="find"><span class="find-usd money">' + money(r.usd) + ' ' + perWord(t) + UNDER_SVG + '</span><span class="find-f">' + esc(r.f) + '</span></p>' +
           '<p class="fixline"><b>Fix:</b> ' + esc(r.fix) + '</p>' +
@@ -721,7 +748,7 @@
         ['', PH, 'Missed Call', '11:48 PM', '(352) 555-0119', 'Texted back · 11:49 PM']];
       nts.innerHTML = N.map(function (n) { return '<div class="nt ' + n[0] + '"><span class="ap" aria-hidden="true">' + n[1] + '</span><div><p class="nr"><b>' + esc(n[2]) + '</b>' + (n[3] ? '<span>' + n[3] + '</span>' : '') + '</p><p>' + esc(n[4]) + '</p>' + (n[5] ? '<span class="fx">↩ ' + esc(n[5]) + '</span>' : '') + '</div></div>'; }).join('');
       var lock = el.querySelector('.scr-lock');
-      if (lock) lock.setAttribute('aria-label', 'Sample: a shop phone\'s lock screen at 6:41 a.m. Missed calls at 11:48 p.m., 3:02 a.m. and 6:38 a.m., a voicemail at 3:04 a.m. and a text at 3:06 a.m. that says "' + t.night + '" With the fix, each caller got a text back within a minute, and a 7:30 a.m. callback list sits on top.');
+      if (lock) lock.setAttribute('aria-label', 'Example: a shop phone\'s lock screen at 6:41 a.m. Missed calls at 11:48 p.m., 3:02 a.m. and 6:38 a.m., a voicemail at 3:04 a.m. and a text at 3:06 a.m. that says "' + t.night + '" With the fix, each caller got a text back within a minute, and a 7:30 a.m. callback list sits on top.');
       loops.forEach(function (lp) { if (lp.el === el || el.contains(lp.el) || lp.el.contains(el)) lp.reset(); });
     },
     morning: function (el, t) {
@@ -730,9 +757,9 @@
       if (list) {
         list.innerHTML = '<div class="mo-h"><b>Morning list · ' + esc(t.shop) + '</b><span>' + esc(m.at) + '</span></div>' +
           m.lines.map(function (l, i) { return '<div class="mo-row' + (l[3] ? ' flag' : '') + '" style="--i:' + Math.min(i, 5) + '"><span class="l">' + esc(l[0]) + '</span><span class="v">' + esc(l[1]) + '</span>' + (l[2] ? '<span class="d">' + esc(l[2]) + '</span>' : '') + '</div>'; }).join('') +
-          '<div class="mo-foot"><span>' + esc(m.src || 'From your own job list, invoices and call log') + '</span><span>Sample</span></div>';   // m.src: each trade names its own records
+          '<div class="mo-foot"><span>' + esc(m.src || 'From your own job list, invoices and call log') + '</span></div>';   // m.src: each trade names its own records; Nov 6: no Sample word
         list.setAttribute('role', 'img');
-        list.setAttribute('aria-label', 'Sample morning list for ' + t.shop + ': ' + m.lines.map(function (l) { return l[0] + ', ' + l[1]; }).join('; ') + '.');
+        list.setAttribute('aria-label', 'Example morning list for ' + t.shop + ': ' + m.lines.map(function (l) { return l[0] + ', ' + l[1]; }).join('; ') + '.');
       }
       // a lock screen that opts in (data-f="date") shows the morning list's own day, so the two never disagree
       var day = el.querySelector('.lk-d[data-f="date"]'), md = /(\w{3}), (\w{3}) (\d+)/.exec(m.at), W = { Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday' },
@@ -769,19 +796,19 @@
           d5 = ab(d0) + ' ' + d0.getDate() + ' de ' + ['ene.', 'feb.', 'mar.', 'abr.', 'may.', 'jun.', 'jul.', 'ago.', 'sept.', 'oct.', 'nov.', 'dic.'][d0.getMonth()];
         day = dl(d0); eve = dl(d1); logDate = pm ? ab(d1) + ' a ' + d5 : d5; logDate = logDate.charAt(0).toUpperCase() + logDate.slice(1);
       }
-      var lock = '', SAMP = '<span class="samp">' + tr('Sample', 'Ejemplo') + '</span>';
+      var lock = '';   // Nov 6: the pair carries no Sample stamp (the footer says the examples are made up)
       if (N.lock) {
         var nts = N.nts.map(function (x, i) { return { x: x, i: i }; }).sort(function (a, b) { return key(b.x.at) - key(a.x.at); });   // newest on top, as a phone shows them
         // data-day / data-eve: the loop ticks the big clock through the night (9:40 ... 6:41) and the date line with it
-        lock = '<div class="pic n4-phone"><div class="lk4 crop-m" data-day="' + esc(day) + '" data-eve="' + esc(eve) + '" role="img" aria-label="' + esc(tr('Sample: the shop phone\'s lock screen at 6:41 a.m., ', 'Ejemplo: la pantalla de bloqueo del teléfono del negocio a las 6:41 a. m., ') + day + '. ' +
+        lock = '<div class="pic n4-phone"><div class="lk4 crop-m" data-day="' + esc(day) + '" data-eve="' + esc(eve) + '" role="img" aria-label="' + esc(tr('Example: the shop phone\'s lock screen at 6:41 a.m., ', 'Ejemplo: la pantalla de bloqueo del teléfono del negocio a las 6:41 a. m., ') + day + '. ' +
           nts.map(function (o) { return o.x.t + ', ' + hora(o.x.at) + ': ' + o.x.p + (o.x.fx ? '. ' + o.x.fx : ''); }).join('. ') + '.') + '">' +
           (el.hasAttribute('data-iph') ? iph : function (s) { return ph4(s, '', true); })('<p class="lk4-d' + (el.hasAttribute('data-iph') ? ' iph-date' : '') + '" aria-hidden="true">' + esc(day) + '</p><p class="lk4-t' + (el.hasAttribute('data-iph') ? ' iph-clock' : '') + '" aria-hidden="true">6:41</p><div class="lk4-nts" aria-hidden="true">' + nts.map(function (o) {
             var x = o.x; return '<div class="lk4-nt" data-n="' + nNt[o.i] + '" data-t="' + esc(x.at) + '" data-task="' + x.task + '"><span class="ap ap-' + x.app.toLowerCase() + '">' + (APPS[x.app] || APPS.List) + '</span><div><p class="nr"><b>' + esc(x.t) + '</b><span>' + whole(esc(hora(x.at))) + '</span></p><p>' + esc(x.p) + '</p>' +
-              (x.fx ? '<span class="fx">↩ ' + esc(x.fx) + '</span>' : '') + '</div></div>'; }).join('') + '</div>') + '</div>' + SAMP + '</div>';
+              (x.fx ? '<span class="fx">↩ ' + esc(x.fx) + '</span>' : '') + '</div></div>'; }).join('') + '</div>') + '</div></div>';
       }
       figs.innerHTML = lock + '<div class="pic n4-paper"><div class="np"><div class="np-h"><b>' + esc(N.paper + ', ' + t.shop) + '</b><span>' + esc(logDate) + '</span></div><ol class="np-rows">' +
         N.rows.map(function (r, i) { return '<li data-n="' + nRow[i] + '" data-t="' + esc(r[0]) + '" data-task="' + r[2] + '"><time>' + whole(esc(hora(r[0]))) + '</time><span>' + whole(esc(r[1])) + '</span></li>'; }).join('') +
-        '</ol><p class="np-foot">' + esc((t.morning && t.morning.src) || tr('From your own job list, invoices, bills and email', 'De su lista de trabajos, sus facturas, las facturas de proveedores y su correo')) + '</p></div>' + SAMP + '</div>';
+        '</ol><p class="np-foot">' + esc((t.morning && t.morning.src) || tr('From your own job list, invoices, bills and email', 'De su lista de trabajos, sus facturas, las facturas de proveedores y su correo')) + '</p></div></div>';
       figs.classList.toggle('nolock', !N.lock);
       loops.forEach(function (lp) { if (lp.el === el || el.contains(lp.el) || lp.el.contains(el)) lp.reset(); });
       fitCrops();
@@ -822,11 +849,10 @@
     // "Stop 1:" (a lone "1" read as a step of one), and its find line says what the figure is in each state: Lost / Won back
     var most = +el.getAttribute('data-walk-rows') || 0; if (most) rows = rows.slice(0, most);
     var one = rows.length === 1;
-    // 2026-10-17 (Franco: "do we have to include them?"): a Sample tag sits by anything that looks like a real business's dollar
-    // results. A stop picture with no dollar figure leaves its tag off where the walk's own lead names the sample business
-    // ([data-sample-lead], "Dunlin Plumbing is a sample 2-truck shop."); its alt text still opens "Sample". Lint R8 holds it
-    var sec = el.closest('section') || el, led = !!sec.querySelector('[data-sample-lead]'),
-      usd = function (h) { return /\$\s?\d/.test(h.replace(/<[^>]*>/g, ' ')); };
+    // Nov 6 (Franco: no Sample on every business name and number): a stop carries no Sample tag. Its After figure, "Won back", is a
+    // result, so its counting line says example in its own words ("Counted in the example shop's quote export"; "sample" until
+    // Nov 7); lint R8 holds it.
+    // Its alt text opens "Example" (Spanish "Ejemplo"; "Sample" until Nov 7). From 2026-10-17 to Nov 6 a stop with a dollar figure carried a tag
     // a page's own stop (li.stop[data-own="ROW ID"], written in the page) stands where that row's stop would be: the row stays on
     // the sheet and its picture leaves the walk (PLUMBING-INTEGRATE item 37, C9; the AC page walks its change-out quote in place of
     // the phone, 2026-10-12). Read once from the page's own markup, so a re-render and the prerender keep it as written.
@@ -844,18 +870,18 @@
       if (ownFor(r.id)) return ownFor(r.id);
       var P = r.pair, n = i + 1, task = TASK[r.icon] || r.icon, place = (P && P.place) || r.place;
       var crop = (P ? P.frame : r.after.frame) === 'phone' ? ' crop-m' : '';   // R6 crop option: on a phone only the thread's part of the phone shows
-      var inner = P ? pairHTML(P) : realHTML(r.after, true), tag = !led || usd(inner);
+      var inner = P ? pairHTML(P) : realHTML(r.after, true);
       // last pass (2026-10-26): Home's walk (data-hold-first) holds its first stop on Before on a computer, as Plumbing's own stop 1 did
       var pic = P ? '<div class="pair' + crop + '" data-g2r data-pair' + (i === 0 && el.hasAttribute('data-hold-first') ? ' data-g2r-hold' : '') + ' data-state="after" role="img" aria-label="' + esc(P.alt.after) + '" data-label-before="' + esc(P.alt.before) + '" data-label-after="' + esc(P.alt.after) + '">' + inner + '</div>'
         : '<div class="solo' + crop + '" role="img" aria-label="' + esc(altAfter(r.after)) + '">' + inner + '</div>';
       // the stop's head is its pencil-circled number beside the PLACE in the shop ("The shop phone"), with the leak's name on
       // a plain line under it: a walk goes room by room, and a calls row never becomes a heading (R1; review 2026-10-10)
-      // the Before / After buttons sit under the picture they switch, beside its Sample label
+      // the Before / After buttons sit under the picture they switch
       return '<li class="stop page" id="stop-' + n + '" data-usd="' + r.usd + '" data-place="' + esc(place) + '" data-task="' + task + '"' + (P ? ' data-state="after"' : '') + '>' +
         '<div class="stop-h">' + (one ? '' : '<span class="tab-n">' + n + '</span>') + '<div class="stop-t"><h3>' + (one ? '' : '<span class="sr">' + tr('Stop ', 'Paso ') + n + ': </span>') + esc(headEs(place)) + '</h3><p class="stop-leak">' + esc(r.b) + '</p></div></div>' +
         '<div class="stop-body"><div class="pic' + (P ? ' has-seg' : '') + '"' + (task === 'calls' ? ' data-pic="calls"' : '') + '>' + pic +
         (P ? '<div class="seg" role="group" aria-label="' + tr('Show stop ', 'Mostrar el paso ') + n + ': ' + esc(place) + '"><button type="button" data-show="before" aria-pressed="false">' + tr('Before', 'Antes') + '</button><button type="button" data-show="after" aria-pressed="true">' + tr('After', 'Después') + '</button></div>' : '') +
-        (tag ? '<span class="samp">' + tr('Sample', 'Ejemplo') + '</span>' : '') + '</div>' +
+        '</div>' +
         // last pass item 5 (2026-10-26): a row with noteAfter says it under the After picture and its note under Before, as Home's
         // stop 1 always did (a phone opens the walk on After, and "Nobody called back" sat under the text-back)
         '<div class="stop-notes"><p class="pencil">' + (P && r.noteAfter ? '<span class="bo">' + esc(r.note) + '</span><span class="ao">' + esc(r.noteAfter) + '</span>' : esc(r.note)) + '</p>' +
@@ -1051,7 +1077,7 @@
           // round 4: the counts keep their words here too ("3 of 3 stops"), as keepCounts() writes them everywhere else
           if (pg) pg.textContent = keepCounts(all ? tr('Walk done, ', 'Visita terminada, ') + n + of + n + st : n ? n + of + stops.length + st : stops.length + tr(' stops on this walk', ' pasos en esta visita'));
           if (b1) b1.textContent = keepCounts(all ? tr('Walk done', 'Visita terminada') : n ? tr('Next: ', 'Sigue: ') + lc(nx ? nx.dataset.place : '') : tr('The walk, ', 'La visita, ') + stops.length + st);
-          if (b2) b2.textContent = keepCounts(n ? n + of + stops.length : tr('Sample business', 'Negocio de ejemplo'));
+          if (b2) b2.textContent = n ? keepCounts(n + of + stops.length) : '';   // Nov 6: empty before the first stop (it said Sample business until then)
           return;
         }
         var tot = walk.querySelector('[data-tally] [data-f="tot"]'), tper = walk.querySelector('[data-tally] [data-f="tper"]');
@@ -1061,7 +1087,7 @@
         var next = stops[Math.min(n, stops.length - 1)];
         // one line on a phone at the start, and it names the NEXT stop (the counted one can still be on screen)
         if (bs) bs.textContent = keepCounts(all ? 'Walk done, ' + n + ' of ' + n + ' stops' : n ? 'Next: ' + (next ? next.dataset.place : '') : 'The walk, ' + stops.length + ' stops');
-        if (bu) bu.textContent = n ? money(sum) + ' ' + perWord(t) + (all ? '' : ' so far') : 'Sample business';  // never "$0 so far"
+        if (bu) bu.textContent = n ? money(sum) + ' ' + perWord(t) + (all ? '' : ' so far') : '';  // never "$0 so far"; Nov 6: empty (it said Sample business)
       });
     }
   };
@@ -1153,7 +1179,7 @@
   /* ================================================================ loops: the night band (pause control, off-screen pause) */
   var loops = [];
   function Loop(el) {
-    var self = this, btn = el.querySelector('.pause'), timer = 0, user = false, seen = false, plays = 0;
+    var self = this, btn = el.querySelector('.pause'), timer = 0, user = false, seen = false;
     self.el = el;
     // v4 [data-steps]: every [data-n] item (log rows and notifications) lands in its own clock order; else the v3 calls, oldest first.
     // v4 never opens on an empty frame (review 2026-10-10: a blank paper and a bare lock screen read as unfinished): each
@@ -1182,20 +1208,21 @@
       el.classList.toggle('fixed', step >= it.length);
       if (steps) tick(it);
     }
-    // the control: one pattern, the label swaps (no aria-pressed beside a swapping label); when the 3 plays end it stays,
-    // as "Play again", so keyboard focus never drops to the page (phone-access review 2026-10-10)
+    // the control: one pattern, the label swaps (no aria-pressed beside a swapping label). Nov 6 (Franco, on Home's films: the
+    // 1 2 3 and Play again "feel like a video"): it loops while it is on screen, with no 3-play stop and no Play again, so the
+    // control is the round Pause icon alone (system.css .pause), and keyboard focus stays on it
     function label(mode) {
       if (!btn) return;
-      var vis = (ES ? { pause: 'Pausar', play: 'Reproducir', again: 'Ver otra vez' } : { pause: 'Pause', play: 'Play', again: 'Play again' })[mode], lab = btn.querySelector('.pt');
-      btn.setAttribute('aria-label', (ES ? { pause: 'Pausar la animación', play: 'Reproducir la animación', again: 'Ver otra vez' } : { pause: 'Pause animation', play: 'Play animation', again: 'Play again' })[mode]);
+      var vis = (ES ? { pause: 'Pausar', play: 'Reproducir' } : { pause: 'Pause', play: 'Play' })[mode], lab = btn.querySelector('.pt');
+      btn.setAttribute('aria-label', (ES ? { pause: 'Pausar la animación', play: 'Reproducir la animación' } : { pause: 'Pause animation', play: 'Play animation' })[mode]);
       btn.classList.toggle('is-paused', mode !== 'pause'); if (lab) lab.textContent = vis;
     }
     function next() {                                   // job: cause and effect. The night's work lands line by line, in clock order
       clearTimeout(timer);
       var n = items().length;
-      if (step >= n) { plays++; if (plays >= 3) { el.classList.remove('run'); frame(); label('again'); return; } step = F(); } else if (NS) { var nx = NSK().filter(function (x) { return x > step; })[0]; step = nx == null ? n : nx; } else step++;
+      if (step >= n) step = F(); else if (NS) { var nx = NSK().filter(function (x) { return x > step; })[0]; step = nx == null ? n : nx; } else step++;
       frame();
-      timer = setTimeout(next, NS ? (step < n - 1 ? 800 : 4400) : step === first ? (steps ? 1100 : 700) : step < n - 1 ? (steps ? 650 : 850) : step === n - 1 ? 1600 : 4400);   // about 10 to 13 s a play; stops on the finished frame after 3
+      timer = setTimeout(next, NS ? (step < n - 1 ? 800 : 4400) : step === first ? (steps ? 1100 : 700) : step < n - 1 ? (steps ? 650 : 850) : step === n - 1 ? 1600 : 4400);   // about 10 to 13 s a play, the finished frame held 4.4 s; loops while on screen (Nov 6)
     }
     function running() { return el.classList.contains('run') && !user && seen && !document.hidden; }
     function sync() { clearTimeout(timer); if (running()) timer = setTimeout(next, NS ? 800 : 600); }
@@ -1203,7 +1230,6 @@
     if (still) { if (btn) btn.hidden = true; frame(); return; }
     el.classList.add('run'); frame();
     if (btn) btn.addEventListener('click', function () {
-      if (!el.classList.contains('run')) { plays = 0; user = false; el.classList.add('run'); step = F(); frame(); label('pause'); sync(); return; }
       user = !user; label(user ? 'play' : 'pause');
       // paused, the night shows finished, every row at full strength, as reduced motion does (phone-access review 2026-10-10: a
       // pause froze 4 of 7 log rows dimmed); Play starts a fresh play from the first row
@@ -1309,6 +1335,7 @@
      the other trades they warn, since those trades' pictures wait on their own owner read (Home 1.5). */
   function lintV4(E, W, vis, text) {
     var shown = function (s, r) { return $$(s, r).filter(vis); }, def = L.trade === (document.body.dataset.trade || 'plumbing'), B = def ? E : W;
+    var STAMP_WORDS = /^\s*(?:(?:an?\s+)?(?:sample|example)(?:\s+(?:data|business|only|figures?|numbers?|page|shop))?|(?:datos|negocio|cifras|caso)\s+de\s+ejemplo|(?:un\s+)?ejemplo|muestra)\s*[:.]?\s*$/i;   // R8's stamp in words (Nov 7)
     var texts = function (fn) { var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); while (w.nextNode()) { var nd = w.currentNode, pe = nd.parentElement;
       if (pe && nd.nodeValue.trim() && !pe.closest('.sr,script,style') && vis(pe)) fn(nd.nodeValue, pe); } };
     // R1: back office leads; calls are one row per list, one call per stack, one calls picture per page, never a heading
@@ -1335,19 +1362,54 @@
     if (/as we find it|with the fix/i.test(text)) E.push('R7: an old Before / After label ("As we find it" or "With the fix").');
     shown('button').forEach(function (b) { if (/^\s*(fixed|arreglado)\s*$/i.test(b.innerText)) E.push('R7: a "Fixed" switch.'); });
     $$('[data-pair]').forEach(function (p) { if (!p.querySelector('.chg.tr, .pc')) E.push('R7: a Before / After picture with no pencil trace.'); });
-    // R8: no drawings, straight stamps, exactly one Sample label per picture, slots in one of the 3 shapes
+    // R8: no drawings, straight papers, no Sample stamp, a result says example in its own words, slots in one of the 3 shapes
     if (shown('.ghost').length) E.push('R8: an ink ghost drawing.');
     if ($$('img').some(function (i) { return /\/figs\//.test(i.getAttribute('src') || ''); })) E.push('R8: a trade drawing.');
-    shown('.stamp,.samp').forEach(function (s) { var tf = getComputedStyle(s).transform; if (tf && tf !== 'none' && tf !== 'matrix(1, 0, 0, 1, 0, 0)') E.push('R8: a tilted Sample stamp.'); });
     // papers sit straight too (PLUMBING-INTEGRATE item 42; system.css straightens .ticket and .doc.tilt-* on v4 pages): a move is fine, a turn is not
     shown('.ticket,.doc').forEach(function (d) { var tf = getComputedStyle(d).transform; if (tf && tf !== 'none' && !/^matrix\(1, 0, 0, 1,/.test(tf)) E.push('R8: a tilted paper (' + d.className + ').'); });
-    // 2026-10-17: one Sample label at most; none only on a picture with no dollar figure whose section's lead names the sample
-    // business ([data-sample-lead] saying sample / ejemplo). A picture with dollar figures or results always keeps its label
-    shown('.pic').forEach(function (p) { var n = $$('.samp,.stamp', p).filter(function (s) { return vis(s) && /^(sample|ejemplo)$/i.test(s.textContent.trim()); }).length;
-      var sec = p.closest('section') || document.body, lead = shown('[data-sample-lead]', sec).some(function (l) { return /sample|ejemplo/i.test(l.innerText); });
-      if (n > 1) E.push('R8: a picture with ' + n + ' Sample labels (' + (p.className || p.id) + ').');
-      else if (!n && /\$\s?\d/.test(p.innerText)) E.push('R8: a picture with dollar figures and no Sample label (' + (p.className || p.id) + ').');
-      else if (!n && !lead) E.push('R8: a picture with no Sample label, and no lead in its section that names the sample business ([data-sample-lead]) (' + (p.className || p.id) + ').'); });
+    // Nov 6 (Franco: "we shouldn't have every business name and number marked"; lead decision D): no Sample / Ejemplo stamp on any
+    // picture. One footer line says the examples are made up (check.py example_note_problems holds it on every page). From
+    // 2026-10-17 to Nov 6 this rule asked for exactly one Sample label a picture. A stamp is a .stamp or .samp, or any shown element
+    // whose whole text is the word; the Loss calculator's own tags (data-ex, its bar's data-o="barl") mark the example numbers in
+    // the boxes he is meant to overwrite, a state of the form, so they stay
+    $$('.stamp,.samp').filter(vis).forEach(function (s) { E.push('R8: a Sample stamp is back (' + s.className + ': "' + s.textContent.trim() + '").'); });
+    // Nov 7 (Franco, note 1, on the words left after the stamps): no "Our sample shop," on a heading, no "a sample job" on a finding,
+    // no "From the sample sheet for" on a list. Alt text (not shown) may still say it; a result's own note says example. Nov 7,
+    // reviewers: the rule let through most of the wordings this pass took out ("At a sample 2-truck plumbing shop", "A sample
+    // supplier bill", "Our sample property manager", "En un contrato de estudiante de ejemplo", "Una factura de proveedor de
+    // ejemplo"), so "a / the / our sample" before any word fails now, but for the sample sheet, its numbers and a rate, fee or
+    // figure, and in Spanish "un / una X de Y de ejemplo" fails as "Nuestro X de ejemplo" did
+    // Nov 7, second review: the copy says example now, so the mark's likeliest way back is in that word, which passed: "Our example
+    // shop, Dunlin Plumbing, loses", "Example shop: Dunlin Plumbing", "Sample: Dunlin Plumbing", "Dunlin Plumbing (sample)", "(ejemplo)"
+    // and "The businesses and numbers here are samples." fail now; "the example shop" in a result's own line stays (its FTC note)
+    texts(function (v, pe) { var m = /\bour\s+example\b|^\s*(?:an?\s+)?(?:samples?|examples?|ejemplos?|muestras?)(?:\s+[^\s:]+)?\s*:|\((?:samples?|examples?|ejemplos?|muestras?)\)|\b(?:are|is)\s+(?:all\s+)?(?:samples|examples)\b|\bson\s+(?:todos\s+)?(?:muestras|ejemplos)\b|\b(?:our|the|a|an)\s+sample\s+(?!sheets?\b|numbers?\b|(?:win\s+)?rates?\b|(?:yearly\s+)?fee\b|figures?\b|data\b|\$)\S+|\b(?:our|the|a|an)\s+sample\s*$|, a sample[.,]|\bsample sheet for\b|\bsample business\b|\bNuestr[oa]s?\s+\S+\s+de\s+ejemplo\b|\bUn ejemplo(?::|\s+con\b)|\bhoja de ejemplo de\b|\b(?:un|una)\s+\S+\s+de\s+\S+(?:\s+\S+)?\s+de\s+ejemplo\b|\bnegocio de ejemplo, hoy\b/i.exec(v);
+      if (m) E.push('R8: "' + m[0].trim() + '" marks a business or a job as a sample in shown words (' + (pe.className || pe.tagName.toLowerCase()) + '); the footer says the examples are made up.'); });
+    // a stamp in words: any shown element whose whole text is the word, in either language and with or without a second word or a
+    // colon ("Sample", "Example", "EXAMPLE", "Sample data", "Ejemplo:", "Datos de ejemplo"; Nov 7, reviewers: an "Example" badge was the
+    // likeliest way one comes back, and only the bare Sample / Ejemplo failed), the calculator's own tags aside
+    texts(function (v, pe) { if (STAMP_WORDS.test(v) && !pe.closest('[data-ex], [data-o="barl"], .stamp, .samp')) E.push('R8: a visible "' + v.trim() + '" label (' + (pe.className || pe.tagName.toLowerCase()) + ').'); });
+    // the law's one exception (FTC 16 CFR 255.2(c), the .com disclosures guide: the note sits with the claim, a footer can't qualify
+    // it): a result someone got from the work (Won back, Time back, Recupera, se ahorra) says example (ejemplo) in the words of its
+    // own picture, stop or walk end, shown with it
+    var RES = /\b(?:Won back|Time back)\b|\bRecupera\b|\bLo que recupera\b|\bse ahorran?\b|\bWhat the fix did\b|\bLo que logró el arreglo\b/;
+    // Nov 6, benchmark pass: the word is body size (12px or more) and shares one screen with the figure (How it works' full sheet
+    // had "example" on its business line 1,264px above its time back at 393 wide, so its time line says it now). The word is
+    // example, for the shop or for a rate ("1 in 2 is an example rate", "una tasa de ejemplo"); until Nov 7 "sample" counted too,
+    // and the pages mixed both (reviewers, Nov 7)
+    var EXW = /\bexample\b|\bejemplo\b/i;
+    texts(function (v, pe) { if (!RES.test(v)) return; var c = pe.closest('.pic, .stop, .walk-end, .sheet, figure, .report') || pe, near = null, far = null;
+      var w = document.createTreeWalker(c, NodeFilter.SHOW_TEXT), r = pe.getBoundingClientRect();
+      while (w.nextNode()) { var xe = w.currentNode.parentElement; if (!xe || !EXW.test(w.currentNode.nodeValue) || xe.closest('.sr') || !vis(xe)) continue;
+        var xr = xe.getBoundingClientRect(), span = Math.max(r.bottom, xr.bottom) - Math.min(r.top, xr.top);
+        if (parseFloat(getComputedStyle(xe).fontSize) >= 12 && span <= innerHeight) { near = xe; break; } far = far || xe; }
+      if (!near) E.push('R8: a result with no example word beside it' + (far ? ' (the word is under 12px or off the screen the figure is on)' : '') + ': "' + v.trim().slice(0, 60) + '" (' + (c.className || c.tagName.toLowerCase()) + ').'); });
+    // Nov 7, reviewers: every stop's counting line names the example business. The rows that already had "an example rate" kept
+    // "From your job files" when the rest became "From the example company's job files", so the same records were the visitor's in one
+    // stop and the example's in the next, and "your" under "Won back $700 a month" made the result read as his own (FTC 255.2(c)).
+    // A line fails on "your", or in Spanish on "su" or "sus" before the word ejemplo ("De sus expedientes"; "del restaurante de
+    // ejemplo ... contra su meta" passes)
+    $$('.stop .find-f').filter(vis).forEach(function (s) { var v = s.textContent;
+      if (/\byour\b/i.test(v) || /^(?:(?!ejemplo)[\s\S])*\bsus?\b/i.test(v)) E.push('R8: a counting line speaks to the visitor ("' + v.trim().slice(0, 60) + '"); every stop names the example business.'); });
     // the reviewers' round (2026-10-26): Home's client proof band is one review-only figure.slot, so golive strips it whole; its
     // photo place inside (.proof-ph) carries the shape
     $$('.slot:not(.proof-slot), .proof-slot .proof-ph').forEach(function (s) { if (['16:9', '1:1', '4:5'].indexOf(s.dataset.shape) < 0) E.push('R8: a picture slot that is not 16:9, 1:1 or 4:5.'); });
@@ -1494,10 +1556,11 @@
     // WCAG 2.5.3: a pause button's accessible name starts with the words it shows ("Pausa" vs "Pausar la animación" missed it, 2026-10-10)
     $$('.pause').forEach(function (b) { var v = ((b.querySelector('.pt') || {}).textContent || '').trim(), a = (b.getAttribute('aria-label') || '').trim();
       if (v && a && a.toLowerCase().indexOf(v.toLowerCase()) !== 0) E.push('A pause button shows "' + v + '" but is named "' + a + '" (the name must start with the visible words).'); });
-    // 2026-10-17 iPhone round: a picture that drops its tag (R8, its section's lead names the sample) still says so in its alt
-    // text, which sits on the screen inside it ("Sample, after: ..."), so the alt text of what it holds counts too
-    $$('.pic, .sheet, .morning').forEach(function (p) { var alt = $$('[aria-label]', p).map(function (a) { return a.getAttribute('aria-label'); }).join(' ');
-      if (!/sample|ejemplo/i.test(p.innerText + (p.getAttribute('aria-label') || '') + ' ' + alt)) W.push('Picture without a visible "Sample" label: ' + (p.id || p.className)); });
+    // 2026-10-17 iPhone round: a picture's alt text says it is a sample ("Sample, after: ..."), so a screen reader hears what the
+    // footer line says. Nov 6: the stamps left the pictures (R8), so the alt text, or the picture's own words, carries it alone; a
+    // picture read word for word (no role="img" in it, the night log's paper) is the footer's alone, as the page's own text is
+    $$('.pic, .sheet, .morning').filter(function (p) { return p.matches('[role=img]') || p.querySelector('[role=img]'); }).forEach(function (p) { var alt = $$('[aria-label]', p).map(function (a) { return a.getAttribute('aria-label'); }).join(' ');
+      if (!/sample|ejemplo|example/i.test(p.innerText + (p.getAttribute('aria-label') || '') + ' ' + alt)) W.push('Picture whose alt text never says it is a sample: ' + (p.id || p.className)); });
     $$('a[href^="sms:"]').forEach(function (a) { if (!/body=/.test(a.getAttribute('href'))) W.push('sms: link without a prefilled body.'); });
     // agency pass 2026-10-18 (rank 22): a trade page's texts say which page they came from ("Hi, I saw your plumbing page."), so the
     // generic website body on a page locked to one trade is a slip
@@ -1530,8 +1593,9 @@
         var c = getComputedStyle(el).color, field = el.closest('[data-ground=pine]'), t = n.nodeValue.trim().slice(0, 30);
         if (field && /\$\s?\d/.test(n.nodeValue) && !seen.usd) { seen.usd = 1; E.push('Money on the pine field: "' + t + '" (no money and no red on it).'); }
         if (field && reds.indexOf(c) > -1 && !seen.red) { seen.red = 1; E.push('Red text on the pine field: "' + t + '" (no money and no red on it).'); }
-        // the generalist Home (2026-10-30): the walk film's money line, "Won back $3,552 a month", is a figure won back too
-        if (pine && c === pine && !el.closest('.stop[data-state=after] .find-usd, .wm .wk-won .find-usd') && !seen.pine) { seen.pine = 1; E.push('Pine text outside a figure won back: "' + t + '" (pine means money won back only).'); }
+        // the walk film's sheet ends on "Won back $3,552 a month", a figure won back too (direction C since Nov 5, .cf-won; the
+        // generalist Home's film of 2026-10-30 had it as .wk-won)
+        if (pine && c === pine && !el.closest('.stop[data-state=after] .find-usd, .cf .cf-won b') && !seen.pine) { seen.pine = 1; E.push('Pine text outside a figure won back: "' + t + '" (pine means money won back only).'); }
       }
     })();
     if (!catalog && document.body.dataset.rules === 'v4') lintV4(E, W, vis, text);

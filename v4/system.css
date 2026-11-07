@@ -200,7 +200,12 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
    "Español" on an English page and "English" on a Spanish one, with lang and hreflang set. It sits in the util bar on a
    computer and beside Menu in the phone header. In its markup href comes first, then lang, so golive.py's Spanish-link rewrite
    finds it. The pill's one-link hiding rule (A11) went with it; check.py fails a pill coming back */
-.lang{display:inline-flex;align-items:center;min-height:44px;padding-inline:4px;font-size:15px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;border-radius:999px}
+.lang{display:inline-flex;align-items:center;gap:5px;min-height:44px;padding-inline:4px;font-size:15px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;border-radius:999px}
+/* Nov 6 (Franco's note 2, "a flag next to the Spanish / English switch", decision E): a globe, not a flag. A flag stands for a country,
+   and Gainesville's Spanish speakers come from many (Cuba, Puerto Rico, Mexico, Colombia, Venezuela, Peru), so any one flag leaves
+   most of them out. The globe is drawn inline in the site's line (1.5 stroke, round caps, currentColor), 18px, hidden from screen
+   readers, so the link's name stays the word in its own language. check.py LANG_JS and source_problems fail a switch without it */
+.lang .globe{flex:none;width:18px;height:18px}
 /* Franco 2026-10-19 (the header review): the language word and the header number answer like the Menu button, an 8% ink tint with
    no line, beside a nav that marks its states by ink and weight alone. In the util bar the word gets 7px each side (the margin keeps
    it in place) and its ring is drawn inside its own 44px box: outside it, the page top and the sticky header cut the ring to two side bars */
@@ -216,6 +221,9 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
 .brand{flex-shrink:0;display:flex;align-items:center;min-height:44px}   /* 2026-10-15: a full header row squeezed the logo first (Spanish, 1280: 28px of its 124); check.py fails a shrunk logo. 2026-10-19: 44px tall, the one small target in the phone header (the 64px row, so nothing moves) */
 .brand img{width:104px;height:auto}
 @media (min-width:360px){.brand img{width:124px}}   /* 2026-10-16 (p1-final): the phone header carries the logo, the language word and Menu, so the logo keeps its full 124px from 360; under 360 it stays 104 */
+/* Nov 6: the globe adds 23px, so under 360 (logo 104, the word, Menu at 5.75em for "Cerrar") the row ran 16px into the 16px gutter
+   and Menu touched the screen's edge at 320. Under 360 the row's gaps are 8px, the word sits 2px from Menu and its tint 2px past it */
+@media (max-width:359px){.hdr-in{gap:8px}.hdr .lang{margin-right:2px;padding-inline:2px;gap:4px}}
 .nav{position:absolute;top:100%;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--rule);display:none}
 .nav.open{display:block}
 .nav ul{display:grid;padding:8px var(--g) 18px}
@@ -380,10 +388,10 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 .cta-inline .mb{flex-basis:100%;font-size:15px}
 
 /* ======================================================================= 7. labels and stamps */
-.stamp{display:inline-block;border:1.6px solid var(--pencil);color:var(--pencil);font-weight:600;font-size:15px;line-height:1.3;padding:1px 9px;border-radius:3px;letter-spacing:.04em;white-space:nowrap}
-.pic:has(>.samp){padding-bottom:28px}
-.samp{position:absolute;right:10px;bottom:0;z-index:3;font:600 15px/1.3 var(--font);letter-spacing:.04em;color:var(--pencil);background:rgba(255,254,251,.92);padding:1px 9px;border:1.6px solid var(--pencil);border-radius:3px}   /* 2026-10-15: the stamp's look (was 12px tracked capitals, a second Sample style); about 25px tall, inside the 28px band */
-[data-ground=night] .stamp{border-color:var(--on-night);color:var(--on-night)}
+/* Nov 6 (Franco: "we shouldn't have every business name and number marked. Sample is made up at the bottom footer unless it is
+   required by law"): the Sample / Ejemplo stamps (.stamp, .samp) left every page, and with them their rules and the 28px each
+   stamped picture kept under it. The footer's line says the examples are made up; a picture with a result says "example" in its own
+   words (system.js exampleShort, lint R8). The rules as they were: "system ORIGINAL-2026-11-06-notes.css" */
 .kicker{font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--pencil);margin-bottom:12px}   /* 2026-10-16: sentence case, as .t-label */
 [data-ground=night] .kicker{color:var(--muted-night)}
 .cap{font-size:15px;color:var(--muted);margin-top:14px}
@@ -435,7 +443,6 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 /* recognition strip: the trade, the top leak, its figure and its math, above the phone fold (R1) */
 .strip{position:relative;display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:14px 16px;background:var(--sheet);box-shadow:var(--lift);text-decoration:none;color:inherit}   /* 2026-10-15: the pencil stripe down its left edge is gone (a UI humanizer tell); check.py fails it coming back */
 .strip-k{font-size:15px;font-weight:600;color:var(--muted);line-height:1.3;text-wrap:balance}
-.strip .stamp{grid-column:2;grid-row:1;justify-self:end;align-self:start}
 .strip-b{grid-column:1/-1;font-weight:600;color:var(--ink);font-size:17px;line-height:1.3;text-wrap:balance}
 .strip-usd{grid-column:1/-1;font-size:30px;font-weight:600;color:var(--red);line-height:1.1}
 .strip-usd .su{position:relative;display:inline-block}   /* resume pass 2026-10-19: the figure stays whole and carries its pen underline (system.js strip) */
@@ -444,12 +451,10 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 @media (hover:hover) and (pointer:fine){a.strip:hover{box-shadow:var(--lift-hi)}}   /* 2026-10-19: a mouse under 900px gets a cue too; the higher lift, nothing moves */
 a.strip:focus-visible{outline-offset:3px}
 @media (prefers-reduced-motion:no-preference){a.strip{transition:transform var(--t-press)}}
-/* 2026-10-15: from 360 to 899 the Sample stamp moves onto the dollar row, so the label gets the full width and one line (the
-   strip is 22 to 24px shorter). Under 360 it stays: at 320 the dollar figure wrapped when it shared the row */
+/* 2026-10-15: from 360 to 899 the label gets the full width and one line (the Sample stamp sat on the dollar row until Nov 6) */
 @media (min-width:360px) and (max-width:899px){
   .strip-k{grid-column:1/-1;grid-row:1}
   .strip-b{grid-row:2}
-  .strip .stamp{grid-row:3;align-self:center}
   .strip-usd{grid-column:1;grid-row:3}
 }
 
@@ -496,13 +501,13 @@ a.strip:focus-visible{outline-offset:3px}
 /* agency pass 2026-10-18 (rank 28, UI designer, lane 3b): one board looks like one board (SYSTEM 3, Oct 17), so every walk sheet
    carries Home's letterhead (header.lh: the mark, Walk sheet, the stamp, the business line) and its page foot (p.sh-foot). Home's
    rules from home.css, no new values; home.css keeps its own copy under .hm4-hero until lane 2 drops it */
-.sheet .lh{display:grid;grid-template-columns:auto minmax(0,1fr) auto;column-gap:14px;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.sheet .lh{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--rule)}
 .sheet .lh img{width:34px;height:auto}
-.sheet .lh .sh-sub{grid-column:2/-1;margin-top:2px}
+.sheet .lh .sh-sub{grid-column:2;margin-top:2px}   /* Nov 6: two columns, the mark and the words (the third held the Sample stamp) */
 .sheet .sh-foot{display:flex;justify-content:space-between;gap:12px;margin-top:14px;padding-top:8px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted)}
 .sheet .sh-foot>span:first-child{display:flex;gap:14px;flex-wrap:wrap}
 @media (max-width:899px){.sheet .lh{padding-bottom:10px}}
-@media (max-width:359px){.sheet .lh{column-gap:8px}.sheet .lh .stamp{font-size:13px;padding:1px 6px}}
+@media (max-width:359px){.sheet .lh{column-gap:8px}}
 .sh-title{display:block;font-size:21px;font-weight:600;color:var(--ink)}
 .sh-sub{display:block;font-size:15px;color:var(--muted)}
 .sh-cols{display:flex;justify-content:space-between;font-size:15px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--rule)}
@@ -510,7 +515,8 @@ a.strip:focus-visible{outline-offset:3px}
 .sh-l b{display:block;font-size:17px;line-height:1.3}
 .sh-l small{display:block;font-size:15px;color:var(--muted);margin-top:4px;line-height:1.4}
 .sh-usd{position:relative;align-self:start;font-weight:600;font-size:19px;color:var(--red);white-space:nowrap}
-.sh-usd .pen-ring{left:-11px;top:-12px;width:calc(100% + 22px);height:calc(100% + 24px);stroke-width:2.3px}   /* 2026-10-16 (p1-final): with ring()'s level ellipse it keeps about 3.7px off the figure at every width (pencil_air.py); still inside the sheet at 390 */
+.sh-usd .pen-ring{left:-19px;top:-7px;width:calc(100% + 30px);height:calc(100% + 14px);stroke-width:2.3px}   /* Nov 6 (Franco: too tall, on the sheet's edge on a phone): ring()'s level ellipse in a box 14px taller than the figure (was 24) and 30px wider (was 22), 4px left of centre because the pen's closing stroke drifts in on the left. A flatter oval, about 40px tall round Home's figure (was 50), 3.5px off it and 11px under the rule above (check.py PEN_EDGE). Before: 2026-10-16 p1-final, left -11px, top -12px, +22px, +24px */
+@media (max-width:599px){.sheet[data-ring]{padding-right:20px}.board:has(.sheet[data-ring]){padding-inline:10px}}   /* Nov 7 (reviewers, the other half of Franco's Nov 6 note): a flatter level oval has to be wider to keep its 3.5px of air, so the box above left the ring's right side where it was, its ink 6.9 to 7.9px from a phone sheet's edge, as live. On a phone a ringed sheet's right margin is 20px (16 on the left) and the clipboard's brown edge gives the 4px, 12px a side to 10, so the paper is 4px wider, its text box keeps its width to the pixel and nothing rewraps, and the ring's ink is 10.9px or more inside the paper (PEN_EDGE: 10 or more at the sides). Taking the 4px from the words instead sent Electrical's Spanish row 1 to four lines at 375 and the call bar found no seat (check.py BAR_JS, WebKit 375 x 667). Home's sheet and board have their own sizes (home.css) */
 .sh-total{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;align-items:baseline;padding-top:12px;margin-top:-1px;border-top:2px solid var(--ink);font-weight:600;color:var(--ink)}
 .sh-total b{font-size:24px;color:var(--red)}   /* 2026-10-17: the total is a loss too, red like its rows */
 .sh-time{font-size:15px;margin-top:8px}
@@ -800,10 +806,14 @@ html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs
 .phase{display:inline-flex;border:1px solid #3a3833;border-radius:999px;padding:3px;font-size:15px;font-weight:600}
 .phase span{padding:6px 14px;border-radius:999px;color:var(--muted-night)}
 [data-loop]:not(.fixed) .ph-a,[data-loop].fixed .ph-b{background:var(--on-night);color:var(--night)}
-/* the pause control: visible, labelled, 44px, aria-pressed. Required on any loop over 5 s (WCAG 2.2.2) */
-.pause{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 18px 0 14px;border:1.5px solid currentColor;border-radius:999px;background:none;font-weight:600;font-size:15px;cursor:pointer}
+/* the pause control: visible, labelled, 44px. Required on any loop over 5 s (WCAG 2.2.2). Nov 6 (Franco: the films' "1, 2, 3 and the
+   play again... feels like a video"): one small quiet round icon, 44 x 44, its word kept for screen readers (.pt) beside the
+   aria-label that swaps, "Pause animation" / "Play animation"; the ring is the icon's colour at 45% so the icon carries it */
+.pause{position:relative;display:inline-grid;place-items:center;flex:none;width:44px;height:44px;min-height:44px;padding:0;border:1.5px solid currentColor;border-color:color-mix(in srgb,currentColor 45%,transparent);border-radius:50%;background:none;cursor:pointer}
+.pause .pt{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .pause .pi{width:12px;height:14px;border-left:4px solid currentColor;border-right:4px solid currentColor}
-.pause[aria-pressed=true] .pi{width:0;height:0;border:0;border-left:12px solid currentColor;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.pause:is([aria-pressed=true],.is-paused) .pi{width:0;height:0;margin-left:3px;border:0;border-left:12px solid currentColor;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.pause:focus-visible{border-radius:50%}   /* the house ring (:focus-visible) keeps the button round; its 2px radius would square it */
 /* Franco 2026-10-19: hover, focus and a press take one light step, the ink band's version of an outline button's 8% tint; the full
    bone fill read as Pause switched on (a filled pill means picked on this site), and focus had no step at all */
 [data-ground=night] .pause:is(:focus-visible,:active){background:rgba(233,228,216,.12);color:var(--on-night);border-color:var(--on-night)}
@@ -1238,10 +1248,9 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .stop-h h3{margin:4px 0 0}
 .pic.has-seg{padding-bottom:73px}   /* 2026-10-17 round 3 (judges): 18px between the picture and Before / After (the 55px switch); 64 left 9px on a computer against 17 on a phone */
 @media (max-width:699px){.pic.has-seg{padding-bottom:72px}}   /* 2026-10-17: 17px of air between the picture and Before / After, past its shadow (9px sat in it) */
-html:not(.js) .pic.has-seg{padding-bottom:28px}            /* no JS: no buttons, so no empty slot under the picture */
+html:not(.js) .pic.has-seg{padding-bottom:0}             /* no JS: no buttons, so no empty slot under the picture (28px held the Sample stamp until Nov 6) */
 .pic.has-seg>.seg{position:absolute;left:0;bottom:0}
-.pic.has-seg>.samp{bottom:13px}
-@media (max-width:359px){.seg button{padding:0 8px}.pic.has-seg>.samp{right:0}}   /* 2026-10-15: at 320 the bigger Sample label ("Ejemplo") ran 11px into Antes / Después; now 15px clear (English 37px). Picks gate 2026-10-19 (Franco 2026-10-19, design round item 5): equal halves for the marker made the Spanish switch two "Después" wide, and the label sat on it again (AC stop 1, -4px in Chrome, -6px in WebKit), so 8px a side here, not 12: 12px clear in Chrome, 10 in WebKit, buttons 72 x 44 */
+@media (max-width:359px){.seg button{padding:0 8px}}   /* picks gate 2026-10-19 (design round item 5): 8px a side, not 12, so the Spanish switch (two "Después" wide) kept clear of the Sample label beside it, buttons 72 x 44; the label left on Nov 6 */
 .pair .st,.solo .st{white-space:normal}   /* a status that is the fix wraps rather than being cut (Water stop 2 at 320 to 360) */
 .chg.tr>.was .st{white-space:nowrap}   /* 2026-10-15: a struck old pill on one line ("Draft, 3 / days" put the strike between its lines) */
 @container (max-width:300px){.ptbl td:last-child{padding-right:0}.ptbl .chg.tr>.was .st{padding-inline:5px}}   /* 2026-10-15: so "Borrador, 3 días" fits unwrapped at 320 (it ran 7px past the window) */

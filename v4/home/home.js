@@ -3,7 +3,9 @@
    after a pick: the picker, the walk's stops and the night's lock screen left, with their scripts (size, walkLink, picked, walkAlso,
    intro, slip, picker, nightTag, variants, seat, pickerRow, toolsFollow, stopHead, chipsPeek; "home ORIGINAL-2026-10-30-generalist.js"
    beside this file has them). What runs: What we automate's PDF picture (orderPic, as built), the walk film and the night film
-   (films), the sheet's rows that jump to the film (sheetMap) and the walk heading's second tone (twoTone). */
+   (films; direction C of the Nov 4 review since Nov 5, "home ORIGINAL-2026-11-05-films-c.js" has the Oct 30 films), the hero
+   sheet's late rows on a phone (heroFill), the sheet's rows that jump to the film (sheetMap) and the walk heading's second tone
+   (twoTone). */
 (function () {
   var ES = /^es\b/i.test(document.documentElement.getAttribute('lang') || '');
   // GSAP 3.15.0 with Flip and CustomEase, vendored beside system.js (system/assets/vendor, gsap.LICENSE.md): one load for the page,
@@ -27,9 +29,10 @@
   // What we automate, the PDF that files itself (Franco's pick B, Oct 27: "i really like the B animation. one more time."). The
   // trial's anim.js (solution-anim-2026-10-26/prototype), B's beats only, on the same clock and curves: the owner's sheet, Gmail's
   // notice brings the order PDF, which opens; four details are boxed and fly up into a new row; the PDF folds back into its
-  // notice; QuickBooks and Gmail say what else got done; the hours back close it. 5.7 s, once, when all of it is in view (a screen
-  // shorter than the picture starts it at 60%), then .done hands the frame back to home.css, so nothing jumps. Pause, Play and
-  // Play again (WCAG 2.2.2: it moves for more than 5 s beside the list). GSAP 3.15.0 with Flip and CustomEase, vendored beside
+  // notice; QuickBooks and Gmail say what else got done; the hours back close it. 5.7 s, when all of it is in view (a screen
+  // shorter than the picture starts it at 60%), then .done hands the frame back to home.css, so nothing jumps; the end holds 3 s
+  // and it plays again while it is in view (Nov 6, with the films: Franco found Play again "feels like a video"). It pauses off the
+  // screen and goes on when back. One round Pause icon, Pause and Play (WCAG 2.2.2: it moves for more than 5 s beside the list). GSAP 3.15.0 with Flip and CustomEase, vendored beside
   // system.js (assets/vendor, gsap.LICENSE.md), loads only when the band comes within 600px of the screen; reduced motion, ?still,
   // no IntersectionObserver or a file that fails to load: the finished frame and no control. Every motion names its job
   // (SYSTEM.md 9): only transform, opacity and stroke-dashoffset move, on the house curves, with no bounce and no overshoot. One
@@ -42,7 +45,7 @@
     if (still || !base || !('IntersectionObserver' in window)) { fig.classList.add('still'); return; }
     var $ = function (s) { return fig.querySelector(s); }, $$ = function (s) { return [].slice.call(fig.querySelectorAll(s)); };
     var stage = $('.sa-stage'), fx = $('.sa-fx'), btn = $('.sa-pause'), lab = btn && btn.querySelector('.pt');
-    var G, F, CE, MOVE, OUT, IN, tl = null, mode = 'wait', played = false, made = [], ready = false, armed = false;
+    var G, F, CE, MOVE, OUT, IN, tl = null, mode = 'wait', played = false, made = [], ready = false, armed = false, loopT = 0, seen = false;
 
     /* the box: an ink rounded box, drawn with stroke-dashoffset */
     var f1 = function (n) { return Math.round(n * 10) / 10; };
@@ -91,7 +94,12 @@
       if (made.length) G.set(made, { clearProps: 'all' }); made = [];   // an empty list made GSAP warn "target not found"
       $$('.sa-pdf .val svg').forEach(function (s) { s.remove(); });
       fig.classList.add('done');
-      mode = 'done'; label('again'); armed = false;   // Play again builds it anew (arming here would bring the first frame back)
+      armed = false;   // the next play builds it anew (arming here would bring the first frame back)
+      // Nov 6: the end holds 3 s, then it plays again from the start when the reader can see it (a reader who paused keeps it paused)
+      clearTimeout(loopT);
+      if (mode === 'paused') { mode = 'stopped'; label('play'); return; }
+      mode = 'done'; label('pause');
+      loopT = setTimeout(function () { if (mode !== 'done') return; mode = 'wait'; played = false; arm(); watch(); }, 3000);
     }
     function track(els) { [].concat(els).forEach(function (e) { if (e && made.indexOf(e) < 0) made.push(e); }); return els; }
     /* the beats */
@@ -153,11 +161,11 @@
       fadeIn(4.85, $('.sa-out'), 6, .4);       // job: state change. The hours back, last
       return 5.7;
     }
-    /* play, pause, play again */
+    /* pause and play (the round icon; its word for screen readers) */
     function label(m) {
       if (!btn) return;
-      var vis = (ES ? { pause: 'Pausar', play: 'Reproducir', again: 'Ver otra vez' } : { pause: 'Pause', play: 'Play', again: 'Play again' })[m];
-      btn.setAttribute('aria-label', (ES ? { pause: 'Pausar la animación', play: 'Reproducir la animación', again: 'Ver otra vez' } : { pause: 'Pause animation', play: 'Play animation', again: 'Play again' })[m]);
+      var vis = (ES ? { pause: 'Pausar', play: 'Reproducir' } : { pause: 'Pause', play: 'Play' })[m];
+      btn.setAttribute('aria-label', (ES ? { pause: 'Pausar la animación', play: 'Reproducir la animación' } : { pause: 'Pause animation', play: 'Play animation' })[m]);
       btn.classList.toggle('is-paused', m !== 'pause'); if (lab) lab.textContent = vis;
     }
     // the timeline, built ahead and held paused on its first frame, so a play starts with no setup in its first frame (measured
@@ -179,10 +187,18 @@
     if (btn) btn.addEventListener('click', function () {
       if (mode === 'play') { tl.pause(); mode = 'paused'; label('play'); }
       else if (mode === 'paused') { tl.play(); mode = 'play'; label('pause'); }
+      else if (mode === 'away') { mode = 'paused'; label('play'); }   // stopped off the screen: it stays stopped
+      else if (mode === 'done') { clearTimeout(loopT); mode = 'stopped'; label('play'); }   // holding its end: no next play
       else if (mode === 'wait') { mode = 'held'; label('play'); }     // pressed before it began: it never starts by itself
-      else if (ready) play();                                          // held or done: play (again) from the start
+      else if (ready) play();                                          // held or stopped: play from the start
       else { mode = 'wait'; label('pause'); }                         // held while GSAP is still on its way: it plays when in view
     });
+    // job: one-time focus, kept on a loop. Off the screen it pauses where it is and goes on when back (Nov 6)
+    new IntersectionObserver(function (es) {
+      seen = es[0].isIntersecting;
+      if (!seen && mode === 'play') { tl.pause(); mode = 'away'; }
+      else if (seen && mode === 'away') { tl.play(); mode = 'play'; }
+    }).observe(stage);
     function start() {                  // GSAP is in: the first frame, then the play once the whole picture is in view
       G = window.gsap; F = window.Flip; CE = window.CustomEase;
       if (!G || !F || !CE) { fig.classList.add('still'); return; }
@@ -200,27 +216,42 @@
       var lastW = innerWidth;
       addEventListener('resize', function () {
         if (innerWidth === lastW) return; lastW = innerWidth;
-        if (mode === 'wait' || mode === 'held') { arm(); if (!played) watch(); } else if (mode === 'play' || mode === 'paused') done();
+        if (mode === 'wait' || mode === 'held') { arm(); if (!played) watch(); } else if (mode === 'play' || mode === 'paused' || mode === 'away') done();
       });
     }
-    // job: one-time focus. Plays once, when the whole picture is in view of the reader (SYSTEM.md 9: a one-time sequence ends on
-    // screen). The sticky header and the phone's call bar cover the screen's top and foot, so they come off the view (reviewers'
+    // job: one-time focus. Plays when the whole picture is in view of the reader (SYSTEM.md 9: a sequence ends on screen), each
+    // time round. The sticky header and the phone's call bar cover the screen's top and foot, so they come off the view (reviewers'
     // round, Oct 27: at 393 the play began with the stage's last 75px, where the reply notice and the hours line land, under the bar)
-    var io = null;
+    // Nov 5 (the Nov 4 review): its Pause under the picture clears the call bar too, where the screen holds the picture and the
+    // Pause together, and it waits while the night film above still plays where the reader can see it (window.CF, films below:
+    // at 1440 the play began with the night film's last 114px still moving on screen)
+    var io = null, ctl = fig.querySelector('.sa-ctl');
+    function inView() {
+      var hdr = document.querySelector('.hdr'), bar = document.querySelector('.callbar');
+      var top = hdr ? hdr.offsetHeight : 0, barH = bar && bar.getClientRects().length && getComputedStyle(bar).display !== 'none' ? bar.offsetHeight : 0, bot = innerHeight - barH;
+      // the whole stage where the screen holds it (at .95 its last 20px, the hours line's, could still sit under the bar);
+      // a screen shorter than the stage plays once most of it is in view
+      var r = stage.getBoundingClientRect(), seen = Math.max(0, Math.min(r.bottom, bot) - Math.max(r.top, top)) / r.height;
+      var room = (bot - top) / r.height, need = room >= 1 ? 1 : room >= .95 ? .95 : room >= .6 ? .6 : .3;
+      if (seen < need - .001) return false;
+      if (ctl) { var c = ctl.getBoundingClientRect(); if (c.bottom - r.top <= bot - top && c.bottom > bot + .5) return false; }
+      return true;
+    }
+    // the review round (Nov 5): with B in view and a film still playing above it, mostly off the screen, that film is asked to stop at
+    // its next stop (CF.yieldTo), at most 6 s on, and its cf:idle starts B; at 1440 B had sat on its first frame for up to 20 s
+    function tryPlay() {
+      if (played || mode !== 'wait' || !inView()) return;
+      if (window.CF && CF.busy()) { if (CF.yieldTo) CF.yieldTo(); return; }
+      io.disconnect(); play();
+    }
     function watch() {
       if (io) io.disconnect();
       var hdr = document.querySelector('.hdr'), bar = document.querySelector('.callbar');
       var top = hdr ? hdr.offsetHeight : 0, bot = bar && bar.getClientRects().length ? bar.offsetHeight : 0;
-      io = new IntersectionObserver(function (es) {
-        es.forEach(function (en) {
-          // the whole stage where the screen holds it (at .95 its last 20px, the hours line's, could still sit under the bar);
-          // a screen shorter than the stage plays once most of it is in view
-          var room = (innerHeight - top - bot) / stage.offsetHeight, need = room >= 1 ? 1 : room >= .95 ? .95 : room >= .6 ? .6 : .3;
-          if (!played && mode === 'wait' && en.intersectionRatio >= need) { io.disconnect(); play(); }
-        });
-      }, { threshold: [0, .3, .6, .95, 1], rootMargin: '-' + top + 'px 0px -' + bot + 'px 0px' });
-      io.observe(stage);
+      io = new IntersectionObserver(tryPlay, { threshold: [0, .3, .6, .95, 1], rootMargin: '-' + top + 'px 0px -' + bot + 'px 0px' });
+      io.observe(stage); if (ctl) io.observe(ctl);
     }
+    document.addEventListener('cf:idle', function () { if (io) tryPlay(); });
     // GSAP comes in only when the band is near (loadGsap: three files in order, the plugins after gsap, none from a CDN)
     var near = new IntersectionObserver(function (es) {
       if (!es.some(function (e) { return e.isIntersecting; })) return;
@@ -231,486 +262,384 @@
     near.observe(fig);
   }
   /* ================================================================================================================================
-     The walk film and the night film (the generalist Home, 2026-10-30; the walk-motion trial's direction B, all five judges' pick,
-     walk-motion-2026-10-27/prototype/proto.js with its other two directions, its ?v switch and its review parts off). Franco, Oct 27:
-     "I should be able to see the emails get dragged into the folders... the machine running and scrolling and it detects two
-     unfinished invoices... then straight to your phone." Each film is one GSAP timeline on B's clock and curves (orderPic above),
-     built ahead and held on its first frame, played once when the whole picture is in view between the sticky header and the
-     phone's call bar, one film at a time, with Pause and Play again (WCAG 2.2.2). Reduced motion, ?still, no IntersectionObserver or
-     a file that fails to load: the finished frame, which is the page itself (home.css). Only transform, opacity and
-     stroke-dashoffset move (SYSTEM.md 9), plus words a tool itself would change (a clock, a count, a status line), set at their
-     moment. Two polish items the trial left for this build: the play waits for the Pause under the picture to clear the call bar
-     too, where the screen holds both, and the night's check boxes the quote's $920.00 before the red pen rings the bill's $1,180.00,
-     so the two figures are read together (Plover IT's bill was $1,240.00 over $980.00 until the reviewers' round, 2026-10-30: What
-     we automate's order is $1,240.00 too, and one business showing the same figure twice read as copied numbers). window.WM is
-     what the clip and check tools read */
-  var FLAT = { flat: true };
+     The walk film and the night film: direction C of the Nov 4 animation review (anim-review-2026-11-04, REPORT.html and
+     science/RULES.md; Franco, Nov 5: "I like this... This is perfect."), moved here from the prototype's films-c.js on Nov 5.
+     Rules from the review: one region changes at a time, at least 0.5 s between changes; every caption is held long enough to
+     read (1 s plus 0.33 s a word, in its own language); money moves only on the walk sheet, after the work is shown; the end frame
+     tells the story alone. home.css draws each film's END frame, so reduced motion, ?still or a failed load show the finished
+     picture with no control. Here GSAP 3.15 (the vendored copy beside system.js, loaded once for the page by loadGsap) sets the
+     first frame and plays one timeline per film. A film starts once half of it is on screen, between the sticky header and the
+     phone's call bar, and runs on its own. A film that leaves the screen pauses at its next stop and goes on when it is back. At
+     its end it holds 3 s, then plays again from the start while half of it is on screen (one that is away waits for the reader).
+     Nov 6 (Franco: "the 1, 2, 3 and the play again... just feels like a video almost and doesn't feel like part of the website"):
+     the 1 2 3 marks and Play again are gone; one round Pause icon sits inside the film, at its top (WCAG 2.2.2), and the walk
+     sheet's lit line says which step is on. The hero sheet's rows still jump to their step (#stop-1 to 3). Step 3 shows the copy
+     and the check (Franco, Nov 5: "it should be clear that there are no mistakes being made"): the premium lands in the invoice,
+     then the name, the policy number and the amount get their ticks on the invoice, and the policy's name and number get theirs,
+     each group in one place. While a film plays on screen, What we automate's picture waits (CF.busy, and a cf:idle event when it
+     stops; CF.yieldTo asks a film mostly off the screen to stop at its next stop). window.CF is what the clip and check tools
+     read: each film's beats ({t, d, region, what, with}) and end. Only transform, opacity and stroke-dashoffset move. */
   function films() {
-    var Q = new URLSearchParams(location.search), $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+    var figs = [].slice.call(document.querySelectorAll('figure.cf[data-cfilm]'));
+    var CF = window.CF = { films: {}, ready: false, busy: function () { return false; } };
+    if (!figs.length) { CF.ready = true; return; }
+    var Q = new URLSearchParams(location.search);
     var STILL = Q.has('still') || matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window);
-    var WM = window.WM = window.WM || {}; WM.films = {};
-    if (!$('figure.wm[data-film]')) return;
-    var G, MOVE, OUT, IN;
-    function easings() {
-      if (G) return; G = window.gsap; G.registerPlugin(window.Flip, window.CustomEase);
-      MOVE = CustomEase.create('wmMove', '.2,0,0,1'); OUT = CustomEase.create('wmOut', '.33,1,.68,1'); IN = CustomEase.create('wmIn', '.3,0,1,1');
+    var $ = function (s, r) { return (r || document).querySelector(s); };
+    var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+    // the night's policy sheet: the rows' real pitch (a row is its height plus a 1px border), so the roll and the cursor never drift,
+    // and the cursor on column C; the still frame needs it too
+    function polFit(fig) {
+      var vp = $('.pol-vp', fig), roll = vp && $('.pol-roll', vp); if (!roll) return 0;
+      var rws = $$('tr', roll), cur = $('.pol-cur', vp), cc = $('td.pol-c', roll), rh = rws[1].offsetTop - rws[0].offsetTop;
+      vp.style.setProperty('--rp', rh + 'px'); cur.style.left = cc.offsetLeft + 'px'; cur.style.width = cc.offsetWidth + 'px';
+      return rh;
     }
-    /* one film at a time on the page */
-    var busy = null, queue = [];
-    function next() { busy = null; while (queue.length) { var f = queue.shift(); if (f.mode === 'queued') { f.play(); return; } } }
-    var LAB = ES ? { pause: 'Pausar', play: 'Reproducir', again: 'Ver otra vez' } : { pause: 'Pause', play: 'Play', again: 'Play again' };
-    var LAL = ES ? { pause: 'Pausar la animación', play: 'Reproducir la animación', again: 'Ver otra vez' } : { pause: 'Pause animation', play: 'Play animation', again: 'Play again' };
-    var CLEAR = 'transform,translate,rotate,scale,opacity,visibility,color,boxShadow,strokeDasharray,strokeDashoffset,zIndex,backgroundColor';
-    var money = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+    if (STILL) {
+      figs.forEach(function (f) { f.classList.add('still'); polFit(f); });
+      addEventListener('resize', function () { figs.forEach(polFit); });
+      CF.ready = true; CF.still = true; return;
+    }
 
-    function Film(fig, build, hooks) {
-      var F = { name: fig.getAttribute('data-film'), fig: fig, mode: 'wait', tl: null, played: false, armed: false };
-      var stage = $('.wm-stage', fig), fx = $('.wm-fx', fig), btn = $('.wm-pause', fig), lab = btn && $('.pt', btn), made = [], temp = [], lit = [], texts = [];
-      hooks = hooks || {};
-      WM.films[F.name] = F;
-      function label(m) { if (!btn) return; btn.setAttribute('aria-label', LAL[m]); btn.classList.toggle('is-paused', m !== 'pause'); if (lab) lab.textContent = LAB[m]; }
-      function pairs(state) { $$('.wm-pair', fig).forEach(function (p) { p.setAttribute('data-state', state); }); }
-      /* the kit: geometry relative to the stage, and the beats every film is made of */
-      function rect(el) {
-        var r;
-        // a cell's or a line's words; a SMALL too (the reviewers' round, 2026-10-30: the bill's quote is a block-level small, and its
-        // box drew round 190px of empty cell on a computer, the words at its right end)
-        if (el.tagName === 'TD' || el.tagName === 'P' || el.tagName === 'SMALL') { var rg = document.createRange(); rg.selectNodeContents(el); r = rg.getBoundingClientRect(); }
-        else r = el.getBoundingClientRect();
-        var s = stage.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height };
-      }
-      function track(els) { [].concat(els).forEach(function (e) { if (e && made.indexOf(e) < 0) made.push(e); }); return els; }
+    var G, MOVE, OUT;
+    var LAB = ES ? { pause: 'Pausar', play: 'Reproducir' } : { pause: 'Pause', play: 'Play' };
+    var LAL = ES ? { pause: 'Pausar la animación', play: 'Reproducir la animación' } : { pause: 'Pause animation', play: 'Play animation' };
+    var HOLD = 3000;   // Nov 6: the end frame holds 3 s before the next play
+    // a film that stops moving (paused, done, or off the screen) tells What we automate's picture, which waits while one plays on screen
+    function idle() { document.dispatchEvent(new Event('cf:idle')); }
+
+    function Film(fig, build, stops, steps) {
+      var F = { name: fig.getAttribute('data-cfilm'), fig: fig, mode: 'wait', tl: null, played: false, away: false, beats: [], end: 0, ratio: 0, pending: null, due: false, loopT: 0 };
+      var btn = $('.cf-pause', fig), lab = btn && $('.pt', btn), fx = $('.cf-fx', fig), made = [], temp = [];
+      CF.films[F.name] = F;
+      function label(m) { if (!btn) return; btn.setAttribute('aria-label', LAL[m]); btn.classList.toggle('is-paused', m !== 'pause'); lab.textContent = LAB[m]; }
+      function arr(x) { return [].concat(x).filter(Boolean); }
+      function rect(el) { var r = el.getBoundingClientRect(), s = fx.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; }
       function f1(n) { return Math.round(n * 10) / 10; }
-      function roundBox(w, h) {           // B's box: starts just past the top-left corner and runs clockwise, as a pen would
+      function roundBox(w, h) {           // B's ink box: starts just past the top-left corner and runs clockwise, as a pen would
         var o = .75, x0 = o, y0 = o, x1 = w - o, y1 = h - o, r = Math.min(6, (x1 - x0) / 2, (y1 - y0) / 2);
         return 'M' + f1(x0 + r) + ' ' + y0 + 'H' + f1(x1 - r) + 'A' + r + ' ' + r + ' 0 0 1 ' + f1(x1) + ' ' + f1(y0 + r) + 'V' + f1(y1 - r) +
           'A' + r + ' ' + r + ' 0 0 1 ' + f1(x1 - r) + ' ' + f1(y1) + 'H' + f1(x0 + r) + 'A' + r + ' ' + r + ' 0 0 1 ' + x0 + ' ' + f1(y1 - r) +
           'V' + f1(y0 + r) + 'A' + r + ' ' + r + ' 0 0 1 ' + f1(x0 + r) + ' ' + y0;
       }
+      var tl;
       var K = {
-        stage: stage, rect: rect, track: track,
-        // job: show our work. An ink box draws round a value, the way a pen would (B's drawBox), 4px off its words. o.pad and o.dy
-        // fit a line set right under another (the bill's quote under its $1,180.00: 3px off and 2px lower, so the box's top edge
-        // clears the amount's line and the bill never reads as underlined; reviewers' round, 2026-10-30)
-        box: function (tl, t, el, dur, keep, o) {
-          o = o || {};
-          var b = rect(el), pad = o.pad || 4, W = b.w + pad * 2, Hh = b.h + pad * 2 - 2, NS = 'http://www.w3.org/2000/svg';
+        fig: fig, phone: false,
+        track: function (els) { arr(els).forEach(function (e) { if (made.indexOf(e) < 0) made.push(e); }); return els; },
+        // the first frame: written now, read back by every tween as its start
+        start: function (els, vars) { els = arr(els); if (els.length) { K.track(els); G.set(els, vars); } },
+        beat: function (t, d, region, what, withPrev) { if (region) F.beats.push({ t: +t.toFixed(3), d: d, region: region, what: String(what).replace(/\s+/g, ' ').trim(), with: !!withPrev }); },
+        to: function (t, els, vars, region, what, withPrev) {
+          els = arr(els); if (!els.length) return t;
+          var v = Object.assign({ duration: .25, ease: OUT }, vars);
+          tl.to(K.track(els), v, t); K.beat(t, v.duration, region, what, withPrev);
+          return t + v.duration;
+        },
+        // job: state change. Words or a mark in one place become others: the old out in .15 s, the new in .25 s
+        swap: function (t, out, inn, region, what) {
+          tl.to(K.track(arr(out)), { autoAlpha: 0, duration: .15, ease: OUT }, t);
+          tl.to(K.track(arr(inn)), { autoAlpha: 1, y: 0, duration: .25, ease: OUT }, t + .08);
+          K.beat(t, .33, region, what);
+        },
+        cap: function (t, out, inn) { K.swap(t, out, inn, 'caption', inn.textContent); },
+        // job: show our work. B's ink box round a value, drawn by the pen
+        box: function (el) {
+          var b = rect(el), pad = 4, W = b.w + pad * 2, H = b.h + pad * 2 - 2, NS = 'http://www.w3.org/2000/svg';
           var svg = document.createElementNS(NS, 'svg'), p = document.createElementNS(NS, 'path');
-          svg.setAttribute('class', 'wm-box'); svg.setAttribute('width', W); svg.setAttribute('height', Hh); svg.setAttribute('viewBox', '0 0 ' + W + ' ' + Hh);
-          svg.style.left = (b.x - pad) + 'px'; svg.style.top = (b.y - pad + 1 + (o.dy || 0)) + 'px';
-          p.setAttribute('d', roundBox(W, Hh)); p.setAttribute('pathLength', '1'); p.style.strokeDasharray = '1 2'; p.style.strokeDashoffset = '1.01';
-          svg.appendChild(p); fx.appendChild(svg);
-          tl.to(p, { strokeDashoffset: 0, duration: dur || .42, ease: OUT }, t);
-          if (keep !== true) tl.to(svg, { opacity: 0, duration: .25, ease: OUT }, typeof keep === 'number' ? keep : t + (dur || .42) + .9);
-          return svg;
+          svg.setAttribute('class', 'cf-box'); svg.setAttribute('width', W); svg.setAttribute('height', H); svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+          svg.style.left = (b.x - pad) + 'px'; svg.style.top = (b.y - pad + 1) + 'px';
+          p.setAttribute('d', roundBox(W, H)); p.setAttribute('pathLength', '1');
+          svg.appendChild(p); fx.appendChild(svg); temp.push(svg);
+          G.set(p, { strokeDasharray: '1 2', strokeDashoffset: 1.01 });
+          return p;
         },
-        // job: cause and effect. A copy of a value (or the words given) lifts off its place and travels to where it lands; what it
-        // fills comes in under it as it arrives (B's fly, the copy's centre landing on the target's)
-        fly: function (tl, t, from, to, opts) {
-          opts = opts || {};
-          var a = rect(from), b = rect(to), el = document.createElement('span'), fs = opts.size || parseFloat(getComputedStyle(from).fontSize) || 13;
-          el.className = 'wm-fly';
-          el.innerHTML = '<span class="fly-in"><span class="fly-sh"></span><span class="fly-bg"></span><span class="fly-t"><span class="fly-w"></span></span></span>';
-          el.querySelector('.fly-w').textContent = opts.text || from.textContent.trim();
-          el.querySelector('.fly-t').style.fontSize = fs + 'px';
-          fx.appendChild(el);
-          var w = el.offsetWidth, h = el.offsetHeight;
-          var x0 = a.x + a.w / 2 - w / 2, y0 = a.y + a.h / 2 - h / 2, x1 = b.x + b.w / 2 - w / 2, y1 = b.y + b.h / 2 - h / 2;
-          var sw = stage.offsetWidth, cl = function (x) { return Math.max(2, Math.min(sw - w - 2, x)); }; x0 = cl(x0); x1 = cl(x1);   // a copy wider than its cell stays inside the picture
-          el.style.left = x0 + 'px'; el.style.top = y0 + 'px';
-          var inn = el.firstChild, sh = inn.firstChild, d = opts.dur || .7, lift = opts.lift == null ? 4 : opts.lift;
-          tl.set(el, { opacity: 1 }, t)
-            .fromTo(inn, { scale: .96 }, { scale: 1.06, y: -lift, duration: .18, ease: OUT }, t)
-            .to(sh, { opacity: 1, duration: .18, ease: OUT }, t)
-            .to(el, { x: x1 - x0, y: y1 - y0, duration: d, ease: MOVE }, t + .18);
-          // opts.arc: the copy rises over its own row and comes down on the cell's edge, so the row it fixes stays readable (judges, Oct 27)
-          if (opts.arc) tl.to(inn, { scale: 1, duration: d, ease: MOVE }, t + .18).to(inn, { y: -lift - opts.arc, duration: d * .45, ease: OUT }, t + .18)
-            .to(inn, { y: 0, duration: d * .55, ease: IN }, t + .18 + d * .45);
-          else tl.to(inn, { scale: 1, y: 0, duration: d, ease: MOVE }, t + .18);
-          tl.to(sh, { opacity: 0, duration: .3, ease: OUT }, t + .18 + d * .55)
-            .to(el, { opacity: 0, duration: .14, ease: OUT }, t + .18 + d + .02);
-          if (opts.land) K.show(tl, t + .18 + d - .04, opts.land, .16, 0);
-          return t + .18 + d;
-        },
-        // job: cause and effect. An element itself travels (a file chip into its row)
-        carry: function (tl, t, el, to, opts) {
-          opts = opts || {};
-          var a = rect(el), b = rect(to), d = opts.dur || .7;
-          var dx = (opts.toLeft ? b.x : b.x + b.w / 2 - a.w / 2) - a.x, dy = b.y + b.h / 2 - (a.y + a.h / 2);
-          track(el);
-          tl.to(el, { scale: 1.06, y: -4, boxShadow: '0 12px 24px rgba(58,47,28,.22)', duration: .16, ease: OUT }, t)
-            .to(el, { x: dx, y: dy, scale: opts.scale || .92, duration: d, ease: MOVE }, t + .16)
-            .to(el, { opacity: 0, duration: .14, ease: OUT }, t + .16 + d - .06);
-          return t + .16 + d;
-        },
-        // job: state change. Something comes in where it belongs (rise and fade)
-        show: function (tl, t, els, dur, dy) {
-          els = [].concat(els).filter(Boolean);
-          if (!els.length) return;
-          tl.fromTo(track(els), { autoAlpha: 0, y: dy == null ? 4 : dy }, { autoAlpha: 1, y: 0, duration: dur || .32, ease: OUT }, t);
-        },
-        hide: function (tl, t, els, dur) { els = [].concat(els).filter(Boolean); if (els.length) tl.to(track(els), { autoAlpha: 0, duration: dur || .2, ease: OUT }, t); },
-        // job: state change. One changed cell (pairHTML's .chg): the old value is struck in pencil (a struck one stays, as the house's
-        // after frame keeps it) or fades out, and the new one comes in over or under it
-        swap: function (tl, t, chg, opts) {
-          if (!chg) return t;
-          opts = opts || {};
-          var was = $(':scope > .was', chg), now = $(':scope > .now', chg), tr = chg.classList.contains('tr');
-          // R7 (check.py film_problems; the reviewers' round, 2026-10-30): old words never fade out under new ones fading in. That
-          // left both under 90% opacity for 150 to 200 ms in four status lines ("Typed again" to "From policy", "3 bills since
-          // Friday" to "3 bills read"...). Unstruck words change at once, as the tool changes them; a dropped value keeps its fall,
-          // at full opacity from its first frame. A struck value stays, so its new one may still fade in beside it
-          var said = !tr && was && was.textContent.trim();
-          if (said && !opts.drop) opts = FLAT;
-          if (tr) {
-            var s = $('.wm-strike', was);
-            if (s) tl.fromTo(track(s), { scaleX: 0 }, { scaleX: 1, duration: .42, ease: MOVE }, t);
-            tl.set(track(was), { color: 'var(--pencil)' }, t + .1);
-            var loop = $('.pc-loop', was); if (loop) tl.to(track(loop), { opacity: 0, duration: .2, ease: OUT }, t + .3);
-          }
-          // opts.flat: a row the machine runs past changes at once, as a machine ticks, written straight to the style, so no tween
-          // reads the page back mid-film (a fade on each kept a slow phone repainting every frame)
-          if (opts.flat) {
-            if (was) track(was); if (now) track(now);
-            tl.call(function () { if (was) { was.style.visibility = 'hidden'; was.style.opacity = '0'; } if (now) { now.style.visibility = 'inherit'; now.style.opacity = '1'; } }, null, t);
-            return t;
-          }
-          if (said) {   // a drop over old words: the old leave and the new land in the same frame, the new at full opacity
-            tl.set(track(was), { autoAlpha: 0 }, t + .06);
-            if (now) tl.set(track(now), { autoAlpha: 1, scale: 1.12, y: -6 }, t + .06).to(now, { scale: 1, y: 0, duration: .3, ease: OUT }, t + .06);
-            return t + .5;
-          }
-          if (now) tl.fromTo(track(now), { autoAlpha: 0, scale: opts.drop ? 1.12 : 1, y: opts.drop ? -6 : 3 },
-            { autoAlpha: 1, scale: 1, y: 0, duration: opts.drop ? .3 : .22, ease: OUT }, t + (tr ? .28 : .06));
-          return t + .5;
-        },
-        // job: state change. The changed row lit, as the house lights it in the finished frame
-        tint: function (tl, t, row, color) {
-          $$('td', row).forEach(function (td, i) {
-            var x = document.createElement('i'); x.className = 'wm-tint'; x.style.background = (i === 0 && row.closest('.xl')) ? '#dedede' : (color || (row.closest('.xl') ? '#e9f5ec' : '#eef7f0'));
-            td.insertBefore(x, td.firstChild); temp.push(x); td.classList.add('wm-lit'); lit.push(td);
-            tl.fromTo(x, { opacity: 0 }, { opacity: 1, duration: .4, ease: OUT }, t);
-          });
-        },
-        // job: show our work. The red pen draws round a problem (system.js pencil() fitted the loop to the words)
-        ring: function (tl, t, pc, dur) {
-          var p = pc && $('.pc-loop path', pc);
-          // a ring in a row the film brings in has no loop yet (the reviewers' round, 2026-10-30: K.show hides the row's cells while
-          // the film is built, pencil() skips hidden words, and the bill's red pen never drew): fit it now, the words shown for the
-          // measure only
-          if (!p && pc && window.Lumora && Lumora.pencil) { var v = pc.style.visibility; pc.style.visibility = 'visible'; Lumora.pencil(pc.parentNode); pc.style.visibility = v; p = $('.pc-loop path', pc); }
-          if (!p) { if (pc) K.show(tl, t, pc, .2, 0); return; }
-          var loop = p.ownerSVGElement; p.setAttribute('pathLength', '1');
-          tl.set(track(loop), { opacity: 1, visibility: 'visible' }, t)
-            .fromTo(track(p), { strokeDasharray: '1 2', strokeDashoffset: 1.01 }, { strokeDashoffset: 0, duration: dur || .6, ease: MOVE }, t);
-        },
-        // a figure that counts keeps the width of its last value, so the words after it never move (no layout shift)
-        hold: function (el) { if (el && !el.style.minWidth) el.style.minWidth = Math.ceil(el.getBoundingClientRect().width) + 'px'; },
-        // words a tool itself would change (a clock, a count, a status line), set at their moment; each comes back at the hand-back
-        text: function (tl, t, el, s) {
-          if (!el) return;
-          if (!texts.some(function (x) { return x[0] === el; })) texts.push([el, el.textContent]);
-          // the words keep their own text node and take the new words (a new node each time sent the page's :has() rules on body
-          // through a style recalc of the whole page on every tick of a running list: frames of 26 to 33 ms on a phone slowed 4x,
-          // 2026-10-30). Words of a new length (the money passing $1,000, set from the right) and the phone's clock and date (centred,
-          // changed five times a night) get a new node: the same node starting further left or right counts as a layout shift
-          var own = !el.closest('.iph');
-          tl.call(function () { var n = el.firstChild; if (own && n && n.nodeType === 3 && !n.nextSibling && n.nodeValue.length === s.length) n.nodeValue = s; else el.textContent = s; }, null, t);
-        },
-        // job: state change. One cell lit, as the house lights a done cell in the finished frame (Excel's green Called)
-        tintCell: function (tl, t, td, color) {
-          if (td) { track(td); tl.call(function () { td.style.backgroundColor = color || '#e2f1e5'; }, null, t); }
-        },
-        // job: show our work. A list runs under its header: B's ink box goes down the rows in view, then holds on the last while the
-        // rest come up under it at the machine's pace, each row changing as the box reaches it (onRow); hold(k) adds a stop after
-        // row k (the night's two never paid). Only transforms move; the rows are one height (home.css .wk-vp)
-        stream: function (tl, t, vp, from, step, onRow, hold) {
-          var roll = $('.wk-roll', vp), rows = $$('tr:not([data-h])', roll); if (rows.length < 2) return t;
-          var hh = rows[0].offsetTop, rh = rows[1].offsetTop - rows[0].offsetTop, V = Math.max(1, Math.round((vp.clientHeight - hh) / rh));
-          var scan = document.createElement('i'); scan.className = 'wk-scan'; scan.style.top = hh + 'px'; scan.style.height = rh + 'px';
-          vp.appendChild(scan); temp.push(scan); track(roll);
-          G.set(scan, { opacity: 0, y: Math.min(from, V - 1) * rh }); G.getProperty(roll, 'y');   // their transforms read now, while the film is built, never mid-play
-          tl.fromTo(scan, { opacity: 0, y: Math.min(from, V - 1) * rh }, { opacity: 1, duration: .14, ease: OUT, immediateRender: false }, t - .14);
-          var at = t;
-          for (var k = from; k < rows.length; k++) {
-            if (k > from) {
-              if (k < V) tl.to(scan, { y: k * rh, duration: step * .9, ease: MOVE }, at - step * .9);
-              else tl.to(roll, { y: -(k - V + 1) * rh, duration: step, ease: 'none' }, at - step);
-            }
-            onRow(rows[k], k, at);
-            at += step + (hold ? hold(k) || 0 : 0);
-          }
-          tl.to(scan, { opacity: 0, duration: .2, ease: OUT }, at - step + .1);
-          return at - step;
-        },
-        under: function (tl, t, root) { var p = $('.pen-under path', root); if (p) tl.fromTo(track(p), { strokeDasharray: '1 1', strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: .7, ease: MOVE }, t); }
+        // job: cause and effect. A copy of a value lifts off its place and lands where it fills (B's fly). Both places are measured
+        // on the timeline itself, at the moment the copy leaves and lands
+        fly: function (t, from, to, text, d, region, what) {
+          tl.seek(t, true); var a = rect(from);
+          tl.seek(t + d + .2, true); var b = rect(to);
+          var el = document.createElement('span'); el.className = 'cf-fly'; el.textContent = text;
+          if (from.closest('.cf-night')) el.style.fontSize = '13px';
+          fx.appendChild(el); temp.push(el);
+          var w = el.offsetWidth, h = el.offsetHeight, fw = fx.clientWidth, cl = function (x) { return Math.max(2, Math.min(fw - w - 2, x)); };
+          var x0 = cl(a.x + a.w / 2 - w / 2), y0 = a.y + a.h / 2 - h / 2, x1 = cl(b.x + b.w / 2 - w / 2), y1 = b.y + b.h / 2 - h / 2;
+          G.set(el, { x: x0, y: y0, autoAlpha: 0 });
+          tl.to(el, { autoAlpha: 1, scale: 1.06, y: y0 - 4, duration: .18, ease: OUT }, t)
+            .to(el, { x: x1, y: y1, scale: 1, duration: d - .18, ease: MOVE }, t + .18)
+            .to(el, { autoAlpha: 0, duration: .14, ease: OUT }, t + d);
+          K.beat(t, d, region, what);
+          return t + d;
+        }
       };
       F.kit = K;
-      function first() { fig.classList.remove('done'); pairs('before'); if (hooks.first) hooks.first(); }
       function clean() {
-        if (F.tl) { F.tl.kill(); F.tl = null; }
-        fx.innerHTML = '';
-        // only what the film set: system.js gives some of these their own inline styles (a red pen loop's size and place)
-        if (made.length) G.set(made, { clearProps: CLEAR }); made = [];
+        if (tl) { tl.kill(); tl = F.tl = null; }
         temp.forEach(function (x) { x.remove(); }); temp = [];
-        texts.forEach(function (x) { x[0].textContent = x[1]; }); texts = [];
-        lit.forEach(function (x) { x.classList.remove('wm-lit'); }); lit = [];
-      }
-      function done() {                   // hand the frame back to home.css and the house's after state, with no inline styles left
-        clean();
-        pairs('after');
-        if (hooks.done) hooks.done();
-        fig.classList.add('done');
-        F.mode = 'done'; label('again'); F.armed = false;
-        if (busy === F) next();
+        if (made.length) G.set(made, { clearProps: 'all' }); made = [];
+        F.beats = [];
       }
       function arm() {
-        clean(); first();
-        F.tl = G.timeline({ paused: true, onComplete: done });
-        F.tl.set({}, {}, build(F.tl, K));   // the last beat holds until the end time
+        clean();
+        K.phone = fig.clientWidth < 760;
+        tl = F.tl = G.timeline({ paused: true, defaults: { lazy: false }, onComplete: done });
+        F.end = build(tl, K);
+        tl.set({}, {}, F.end);
+        // a film that left the screen stops at its next stop, so the visitor comes back to a readable frame
+        stops.forEach(function (s) { tl.call(function () { if (F.away && F.mode === 'play') { tl.pause(); F.mode = 'away'; label('play'); idle(); } }, null, s); });
+        tl.seek(0, true);
         F.armed = true;
       }
-      F.play = function () {
-        if (busy && busy !== F) { F.mode = 'queued'; if (queue.indexOf(F) < 0) queue.push(F); return; }
-        if (!F.armed) arm();
-        F.armed = false; F.mode = 'start'; F.played = true; busy = F; label('pause');
-        // two frames after the trigger: the frame that paints what a scroll just brought in is never the play's first
-        requestAnimationFrame(function () { requestAnimationFrame(function () { if (F.mode === 'start' && F.tl) { F.mode = 'play'; F.tl.play(0); fig.setAttribute('data-t0', String(performance.now())); } }); });
+      // the end: hold 3 s, then play again from the start if half the film is on screen and What we automate's picture isn't playing
+      // there; otherwise the next play is due when the reader is back (F.due, the observer below). Its mode stays 'done' until then
+      function again() {
+        if (F.mode !== 'done') return;
+        var sa = window.SA && SA.mode === 'play';
+        if (F.ratio >= .5 && !sa && !document.hidden) { F.due = false; F.play(0); }
+        else { F.due = true; if (sa) F.loopT = setTimeout(again, 1000); }
+      }
+      function done() { F.mode = 'done'; label('pause'); fig.classList.add('done'); idle(); clearTimeout(F.loopT); F.loopT = setTimeout(again, HOLD); }
+      F.arm = arm;
+      F.play = function (from) {
+        if (!tl) return;
+        clearTimeout(F.loopT); F.due = false;
+        fig.classList.remove('done');
+        F.played = true; F.away = io ? F.ratio < .2 : false; F.mode = 'play'; label('pause');
+        if (from != null) tl.play(from); else tl.play();
+        fig.setAttribute('data-t0', String(performance.now()));
       };
-      F.done = done; F.arm = arm;
+      F.replay = function () { F.play(0); };
+      F.jump = function (i) {
+        if (!tl) { F.pending = i; return; }
+        F.play(steps[i] || 0);
+      };
       if (btn) btn.addEventListener('click', function () {
-        if (F.mode === 'play' || F.mode === 'start') { if (F.mode === 'play') F.tl.pause(); F.mode = 'paused'; label('play'); }
-        else if (F.mode === 'paused') { if (F.tl.time() === 0 && !F.tl.isActive()) F.tl.play(0); else F.tl.play(); F.mode = 'play'; label('pause'); }
-        else if (F.mode === 'wait' || F.mode === 'queued') { F.mode = 'held'; label('play'); var i = queue.indexOf(F); if (i > -1) queue.splice(i, 1); }
-        else if (G) F.play();
+        if (!tl) { F.mode = F.mode === 'held' ? 'wait' : 'held'; label(F.mode === 'held' ? 'play' : 'pause'); return; }
+        if (F.mode === 'play') { tl.pause(); F.mode = 'paused'; label('play'); idle(); }
+        else if (F.mode === 'paused' || F.mode === 'away') F.play();
+        else if (F.mode === 'done') { clearTimeout(F.loopT); F.due = false; F.mode = 'stopped'; label('play'); }   // holding its end: no next play
+        else if (F.mode === 'stopped') F.play(0);
+        else if (F.mode === 'wait') { F.mode = 'held'; label('play'); }
+        else if (F.mode === 'held') F.play(0);
       });
-      // job: one-time focus. Plays once, when the whole picture is in view between the sticky header and the phone's call bar (B's
-      // rule), with its Pause in view too, or within 24px of it (the trial's note: on a phone the Pause sat under the call bar while
-      // the walk played). A reader who stops with the whole picture in view and the Pause still lower gets the play 350 ms later, so
-      // a film never waits on a scroll position a few px wide. A screen shorter than the stage plays once most of it is in view
-      var io = null, idle = 0, TH = []; for (var th = 0; th <= 1.0001; th += .02) TH.push(+th.toFixed(2));
+      // job: one-time focus. Half the film on screen between the header and the call bar starts it; under a fifth, it is away
+      var io = null;
       F.watch = function () {
-        if (io) io.disconnect(); clearTimeout(idle);
-        var hdr = $('.hdr'), bar = $('.callbar'), top = hdr ? hdr.offsetHeight : 0, bot = bar && bar.getClientRects().length ? bar.offsetHeight : 0;
-        // a stage within 40px of the room between the header and the call bar counts as tall too, and plays once 95% of it is in
-        // view: whole, it would fit only within a scroll window a few px wide, which a reader's scroll steps over (the reviewers'
-        // round, 2026-10-30: the night film at 393 x 659 is 526px in 538, and verify.py's scroll passed it by)
-        var tall = innerHeight - top - bot < stage.offsetHeight + 40;
-        var ok = function () {             // 2: play now; 1: play if the reader stays; 0: not yet
-          var y0 = top, y1 = innerHeight - bot, s = stage.getBoundingClientRect(), f = fig.getBoundingClientRect();
-          if (tall) return Math.min(s.bottom, y1) - Math.max(s.top, y0) >= Math.min(.95, Math.max(.3, Math.floor((y1 - y0) / s.height * 20) / 20 - .05)) * s.height ? 2 : 0;
-          return s.top >= y0 - 1 && s.bottom <= y1 + 1 ? (f.bottom <= y1 + 24 ? 2 : 1) : 0;
-        };
-        var go = function () { if (F.played || F.mode !== 'wait') return; io.disconnect(); clearTimeout(idle); F.play(); };
-        io = new IntersectionObserver(function () {
-          if (F.played || F.mode !== 'wait') return;
-          clearTimeout(idle);
-          var k = ok();
-          if (k === 2) go(); else if (k === 1) idle = setTimeout(function () { if (ok()) go(); }, 350);
-        }, { threshold: TH, rootMargin: '-' + top + 'px 0px -' + bot + 'px 0px' });
-        io.observe(stage); io.observe(fig);
+        if (io) io.disconnect();
+        var hdr = $('.hdr'), bar = $('.callbar'), top = hdr ? hdr.offsetHeight : 0, bot = bar && bar.getClientRects().length && getComputedStyle(bar).display !== 'none' ? bar.offsetHeight : 0;
+        io = new IntersectionObserver(function (es) {
+          es.forEach(function (e) {
+            F.ratio = e.intersectionRatio;
+            if (F.ratio >= .5) {
+              F.away = false;
+              if (F.mode === 'wait' && !F.played) { if (F.pending != null) { F.jump(F.pending); F.pending = null; } else F.play(0); }
+              else if (F.mode === 'away') F.play();
+              else if (F.mode === 'done' && F.due) again();   // the next play waited for the reader
+            } else if (F.ratio < .2 && F.mode === 'play') F.away = true;
+            if (!e.isIntersecting) idle();
+          });
+        }, { threshold: [0, .2, .5, .8, 1], rootMargin: '-' + top + 'px 0px -' + bot + 'px 0px' });
+        io.observe(fig);
       };
-      F.still = function () { fig.classList.add('still'); pairs('after'); if (hooks.done) hooks.done(); };
       return F;
     }
 
-    var lastChg = function (tr) { var c = $$('td', tr).pop(); return c && $('.chg', c); };
-    var stChg = function (root) { return $('.win-st .chg', root); };
-    // job: state change. One job's window leaves the desk and the next comes in, over it. The scenes waiting their turn are drawn at
-    // 1% from the first frame, under the one on the desk (home.css), so their first frame on screen costs nothing new and nothing
-    // shows through (judges, Oct 27)
-    function scene(tl, t, out, inn, z, K) {
-      tl.set(inn, { zIndex: z }, t)
-        .to(out, { opacity: 0, duration: .2, ease: OUT }, t).set(out, { visibility: 'hidden' }, t + .2)
-        .fromTo(inn, { opacity: .01, y: 8 }, { opacity: 1, y: 0, duration: .3, ease: OUT, immediateRender: false }, t + .12);
-      K.track([out, inn]);
+    /* ---------- the walk: the walk sheet is the step list ---------- */
+    function walk(tl, K) {
+      var f = K.fig, ph = K.phone, dim = ph ? 0 : .38;
+      var sheet = $('.cf-main-sheet', f), over = $('.cf-over', f), L = $$('.cf-ln', sheet);
+      var strike = function (i) { return $('.cf-strike', L[i]); }, res = function (i) { return $('.cf-res', L[i]); };
+      var caps = $$('.cf-cap', f), b = caps.map(function (c) { return $('.cf-b', c); }), c2 = $('.cf-c', caps[2]), main = $('.cf-main', f);
+      var ol = $('.cf-ol', f), xl = $('.cf-xl', f), inv = $('.cf-inv', f), end = ph ? over : sheet;
+      var selbg = $('.ol-selbg', ol), empty = $('.ol-empty', ol), read = $('.ol-read', ol), mail = $('.ol-mail', ol), flag = $('.ol-flag', ol), sent = $('.ol-sent', ol);
+      var cur = $('.cx-cur', xl), okf = $('.cx-okf', xl), e0 = [$('.cx-e12 .v0', xl), $('.cx-fv .v0', xl)], e1 = [$('.cx-e12 .v1', xl), $('.cx-fv .v1', xl)];
+      var prem = $('.prem', inv), fld = $('.cq-fld', inv), qv = $('.cq-v', inv), rs = $('.cq-rs', inv), saved = $('.cq-saved', inv);
+      var ok = $$('.cf-brw .cq-ok path', inv), okp = $$('.cf-doc .cq-ok path', inv);   // the invoice's ticks, then the policy's
+      /* the first frame: line 1 lit, Outlook's Sent Items, Karen's flagged quote */
+      K.start(L, { autoAlpha: dim }); K.start(L[0], { autoAlpha: 1 });
+      K.start($$('.cf-strike', sheet), { scaleX: 0 }); K.start($$('.cf-res', sheet), { autoAlpha: 0, y: 4 });
+      K.start($('.cf-won', sheet), { autoAlpha: 0, y: 4 }); K.start($('.cf-under path', sheet), { strokeDasharray: '1 1', strokeDashoffset: 1 });
+      if (ph) { K.start(over, { autoAlpha: 0, y: 8 }); K.start($('.cf-tot .cf-strike', over), { scaleX: 0 }); K.start($('.cf-won', over), { autoAlpha: 0, y: 4 }); K.start($('.cf-under path', over), { strokeDasharray: '1 1', strokeDashoffset: 1 }); }
+      K.start(main, { opacity: 1 });
+      K.start(caps[0], { autoAlpha: 1, y: 0 }); K.start([caps[1], caps[2]], { autoAlpha: 0, y: 4 }); K.start(b.concat(c2), { autoAlpha: 0, y: 4 });
+      K.beat(0, 0, 'caption', $('.cf-a', caps[0]).textContent, true);   // on screen from the first frame (the caption rule reads it)
+      K.start(ol, { autoAlpha: 1, y: 0 }); K.start([xl, inv], { autoAlpha: 0, y: 8 });
+      K.start(selbg, { autoAlpha: 0 }); K.start([flag], { autoAlpha: 1 }); K.start(sent, { autoAlpha: 0 });
+      if (ph) K.start(read, { yPercent: 104 }); else { K.start(empty, { autoAlpha: 1 }); K.start(mail, { autoAlpha: 0, x: 40 }); }
+      K.start([cur, okf].concat(e1), { autoAlpha: 0 }); K.start(e0, { autoAlpha: 1 });
+      K.start([qv, saved], { autoAlpha: 0 }); K.start(rs, { autoAlpha: 1 }); K.start(ok.concat(okp), { strokeDasharray: '1 1', strokeDashoffset: 1 });
+      /* 1. Karen Davis: the follow-up sends itself */
+      K.to(2.4, selbg, { autoAlpha: 1 }, 'stage', "Karen's row fills light blue");
+      if (ph) K.to(2.9, read, { yPercent: 0, duration: .8, ease: MOVE }, 'stage', 'the reply slides up under her row');
+      else { tl.to(K.track(empty), { autoAlpha: 0, duration: .2, ease: OUT }, 2.9); K.to(2.9, mail, { autoAlpha: 1, x: 0, duration: .8, ease: MOVE }, 'stage', 'the reading pane slides in'); }
+      // 4.0 s: the Spanish first line, "Karen Davis recibió su cotización el lunes. No contestó.", is nine words (3.97 s)
+      K.to(4.0, b[0], { autoAlpha: 1, y: 0 }, 'caption', b[0].textContent);
+      K.swap(4.5, flag, sent, 'stage', 'the flag becomes Sent');
+      K.to(6.4, strike(0), { scaleX: 1, duration: .5, ease: MOVE }, 'sheet', 'the pen strikes $1,560');
+      K.to(6.9, res(0), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '36 of 48 followed up');
+      /* 2. Maria Garcia: on today's call list */
+      K.to(8.6, L[0], { autoAlpha: dim }, 'sheet', 'line 2 lights'); tl.to(K.track(L[1]), { autoAlpha: 1, duration: .25, ease: OUT }, 8.6);
+      K.to(9.1, ol, { autoAlpha: 0, duration: .3 }, 'stage', 'crossfade to Excel'); tl.to(K.track(xl), { autoAlpha: 1, y: 0, duration: .3, ease: OUT }, 9.1);
+      tl.to(caps[0], { autoAlpha: 0, duration: .25, ease: OUT }, 9.1);
+      // 9.6 to 14.0 s: the Spanish line, "La renovación de Maria sube 18%. Nadie la ha llamado.", is ten words (4.30 s)
+      K.to(9.6, caps[1], { autoAlpha: 1, y: 0 }, 'caption', $('.cf-a', caps[1]).textContent);
+      K.to(13.0, cur, { autoAlpha: 1 }, 'stage', 'E12 selected');
+      K.to(14.0, b[1], { autoAlpha: 1, y: 0 }, 'caption', b[1].textContent);
+      K.swap(14.5, e0, e1, 'stage', 'E12 becomes Yes and the call date'); tl.to(K.track(okf), { autoAlpha: 1, duration: .3, ease: OUT }, 14.5);
+      K.to(17.3, strike(1), { scaleX: 1, duration: .5, ease: MOVE }, 'sheet', 'the pen strikes $1,200');
+      K.to(17.8, res(1), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '24 of 30 called in time');
+      /* 3. Lisa Anderson: the invoice fills in from her policy, then its details are checked against it */
+      K.to(19.4, L[1], { autoAlpha: dim }, 'sheet', 'line 3 lights'); tl.to(K.track(L[2]), { autoAlpha: 1, duration: .25, ease: OUT }, 19.4);
+      K.to(19.9, xl, { autoAlpha: 0, duration: .3 }, 'stage', 'crossfade to the policy and the invoice'); tl.to(K.track(inv), { autoAlpha: 1, y: 0, duration: .3, ease: OUT }, 19.9);
+      tl.to(caps[1], { autoAlpha: 0, duration: .25, ease: OUT }, 19.9);
+      K.to(20.7, caps[2], { autoAlpha: 1, y: 0 }, 'caption', $('.cf-a', caps[2]).textContent);
+      tl.seek(22.4, true); var box = K.box(prem);
+      K.to(22.5, box, { strokeDashoffset: 0, duration: .3 }, 'stage', 'the premium is boxed');
+      tl.to(K.track(qv), { autoAlpha: 1, duration: .16, ease: OUT }, 24.0);
+      K.fly(23.3, prem, fld, prem.textContent.trim(), .8, 'stage', '$1,248.00 lands in Amount');
+      K.to(24.1, b[2], { autoAlpha: 1, y: 0 }, 'caption', b[2].textContent);
+      // the check (Nov 5): the name, the policy number and the amount each get a tick on the invoice, then the policy's own name and
+      // number get theirs, 0.5 s on, so the eye sees what each was checked against (the review round: the invoice's ticks alone
+      // showed a tick but not its other half). Each group is like items in one place, 0.16 s apart (RULES.md 2: up to four like
+      // items moving the same way in one region read as one change). The caption says it once both are drawn
+      K.to(27.25, ok, { strokeDashoffset: 0, duration: .3, stagger: .16, ease: MOVE }, 'stage', 'check: name, policy number and amount ticked on the invoice');
+      K.to(27.75, okp, { strokeDashoffset: 0, duration: .3, stagger: .16, ease: MOVE }, 'stage', "check: the policy's name and number ticked");
+      K.to(28.25, c2, { autoAlpha: 1, y: 0 }, 'caption', c2.textContent);
+      K.swap(28.75, rs, saved, 'stage', 'Review and send becomes Saved');
+      // on a phone the full sheet comes over the stage and covers the check's caption, so the phone's end starts 0.95 s later
+      // (the review round: at 32.0 s the line had 2.6 s of quiet reading; the Spanish one needs 4.96 s)
+      var e = ph ? 32.1 : 31.15;
+      K.to(e, strike(2), { scaleX: 1, duration: .5, ease: MOVE }, 'sheet', 'the pen strikes $792');
+      K.to(e + .5, res(2), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '33 hours of typing back');
+      /* the end: the whole sheet, the loss struck, the month won back */
+      e += ph ? 1.5 : 1.1;
+      if (ph) K.to(e, over, { autoAlpha: 1, y: 0 }, 'sheet', 'the full sheet comes over the stage');
+      else K.to(e, [L[0], L[1]], { autoAlpha: 1 }, 'sheet', 'the whole sheet lights');
+      K.to(e + .5, $('.cf-tot .cf-strike', end), { scaleX: 1, duration: .5, ease: MOVE }, 'sheet', 'the pen strikes Lost before any fix');
+      K.to(e + 1.1, $('.cf-won', end), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', 'Won back $3,552 a month');
+      tl.to(K.track($('.cf-under path', end)), { strokeDashoffset: 0, duration: .7, ease: MOVE }, e + 1.3);
+      K.to(e + 2.0, main, { opacity: .45, duration: .3 }, 'stage', 'the stage steps back');
+      return e + 2.3;
     }
-    // the night: three beats on the desk, each landing as a line of the morning list on the sleeping phone, whose clock runs the
-    // night; at 6:30 the phone wakes with the list (judges, Oct 27: a lit 6:30 AM notice at 11:40 PM came from the future)
+
+    /* ---------- the night: the phone leads, two desk scenes, the morning list ---------- */
     function night(tl, K) {
-      var S = K.stage, sc = function (k) { return $('.nb-sc[data-sc=' + k + ']', S); };
-      var clock = $('.iph-clock', S), date = $('.iph-date', S), nt = $('.nb-nt', S), li = $$('.nb-list li', S), dim = $('.nb-dim', S), stamp = $('.nb-at', S);
-      var day = date.getAttribute('data-day') || date.textContent;
-      K.track([dim, stamp]);
-      /* 1. the bills: each file goes into its row of QuickBooks' bills; the quote each is checked against is boxed where it is over,
-         and the bill over it gets the red pen */
-      var b = sc('bills'), files = $$('.nb-file', b), rows = $$('tr[data-new]', b), lands = [];
-      K.text(tl, .3, clock, '11:40');
-      rows.forEach(function (r, i) {
-        var s = i ? .82 + (i - 1) * .16 : .3, d = i ? .34 : .5;
-        var l = K.carry(tl, s, files[i], $$('td', r)[0], { dur: d, toLeft: true });
-        K.show(tl, l - .06, $$('td', r), .18, 0); lands.push(l);
-      });
-      var tc = lands[lands.length - 1] + .06, over = $('tr.n', b), quote = over && $('td small', over);
-      if (quote) K.box(tl, tc, quote, .3, tc + 1.2, { pad: 3, dy: 2 });   // the trial's note: the quote's $920.00 read beside the bill's $1,180.00
-      rows.forEach(function (r, i) { K.swap(tl, tc + i * .08 + (r === over ? .22 : 0), lastChg(r)); });
-      K.ring(tl, tc + .3, $('tr.n .pc', b), .45);
-      K.swap(tl, tc + .45, stChg(b));
-      tl.set(K.track(nt), { autoAlpha: 1 }, tc + .5).fromTo(nt, { y: -10, scale: .97 }, { y: 0, scale: 1, duration: .3, ease: OUT }, tc + .5);
-      var l1 = K.fly(tl, tc + .48, $$('td', over)[0], li[0], { text: li[0].textContent, dur: .45, size: 12 });
-      K.show(tl, l1 - .05, li[0], .2, 0);
-      /* 2. the mail: each email's attachment is dragged onto its client's folder, one or two in the air at a time; the inbox counts
-         down, the folders count up, each folder lit as its email lands */
-      var m = sc('mail'), t2 = l1 + .05;
-      scene(tl, t2, b, m, 5, K);
-      K.text(tl, t2 + .12, clock, '12:05'); K.text(tl, t2 + .12, date, day);
-      var atts = $$('.ib .att', m), irows = $$('.ib-m tr', m), fl = $$('.ib-f li[data-f]', m), inboxC = $('.ib-f li.on .ib-c', m), cnt = [0, 0, 0, 0], ta = t2 + .25, la = ta;
-      atts.forEach(function (a, i) {
-        var f = +a.getAttribute('data-to'), s = i ? ta + .62 + (i - 1) * .13 : ta, d = i ? .32 : .45;
-        la = K.fly(tl, s, a, $('span', fl[f]), { dur: d, size: 11 });
-        K.hide(tl, s + .05, irows[i], .2);
-        cnt[f]++; K.text(tl, la - .02, $('.ib-c', fl[f]), String(cnt[f])); K.text(tl, la - .02, inboxC, 5 - i ? String(5 - i) : '');
-        var lt = $('.nb-lit', fl[f]); if (!lt) { lt = document.createElement('i'); lt.className = 'nb-lit'; fl[f].appendChild(lt); } K.track(lt);
-        tl.fromTo(lt, { opacity: 0 }, { opacity: 1, duration: .1, ease: OUT, immediateRender: false }, la - .04).to(lt, { opacity: 0, duration: .35, ease: OUT }, la + .12);
-      });
-      var tf = la + .08;
-      K.swap(tl, tf, stChg($('.ib', m)));
-      var l2 = K.fly(tl, tf + .05, $('.ib .win-st', m), li[1], { text: li[1].textContent, dur: .4, size: 12 });
-      K.show(tl, l2 - .05, li[1], .2, 0);
-      /* 3. the check: September's sheet runs under its header, each commission against the carrier's statement; it stops on the two
-         never paid and the red pen rings them */
-      var c = sc('check'), t3 = l2 + .05;
-      scene(tl, t3, m, c, 6, K);
-      K.text(tl, t3 + .12, clock, '5:40');
-      var vp = $('.wk-vp', c), miss = function (r) { return !!$('.now .pc', r); };
-      var end = K.stream(tl, t3 + .35, vp, 0, .033, function (r, k, at) {
-        var ch = lastChg(r); K.swap(tl, at, ch, FLAT);
-        if (miss(r)) K.ring(tl, at + .06, $('.now .pc', ch), .35); else K.tintCell(tl, at, $$('td', r).pop());
-      }, function (k) { var r = $$('.wk-roll tr:not([data-h])', vp)[k]; return r && miss(r) ? .22 : 0; });
-      K.swap(tl, end + .12, stChg(c));
-      var l3 = K.fly(tl, end + .18, $('.win-st', c), li[2], { text: li[2].textContent, dur: .4, size: 12 });
-      K.show(tl, l3 - .05, li[2], .2, 0);
-      /* 6:30: the phone wakes with the morning list */
-      var tw = l3 + .1;
-      K.text(tl, tw, clock, '6:30');
-      tl.to(dim, { opacity: 0, duration: .45, ease: OUT }, tw).fromTo(stamp, { opacity: 0 }, { opacity: 1, duration: .3, ease: OUT, immediateRender: false }, tw + .2)
-        .fromTo(nt, { scale: .98 }, { scale: 1, duration: .3, ease: OUT, immediateRender: false }, tw + .05);
-      return tw + .7;
-    }
-    function nightFirst(S) {
-      var clock = $('.iph-clock', S), date = $('.iph-date', S);
-      if (!date.getAttribute('data-day')) date.setAttribute('data-day', date.textContent);
-      clock.textContent = '11:00'; date.textContent = date.getAttribute('data-eve');
-      $$('.ib tr', S).forEach(function (r) { r.classList.add('unread'); });
-      var c = $('.ib-f li.on .ib-c', S); if (c) c.textContent = c.getAttribute('data-n');
-      $$('.ib-f li[data-f] .ib-c', S).forEach(function (x) { x.textContent = ''; });
-    }
-    function nightDone(S) {
-      var clock = $('.iph-clock', S), date = $('.iph-date', S);
-      clock.textContent = '6:30'; if (date.getAttribute('data-day')) date.textContent = date.getAttribute('data-day');
-      $$('.ib tr', S).forEach(function (r) { r.classList.remove('unread'); });
-      var c = $('.ib-f li.on .ib-c', S); if (c) c.textContent = '';
-      var n = [0, 0, 0, 0]; $$('.ib .att', S).forEach(function (a) { n[+a.getAttribute('data-to')]++; });
-      $$('.ib-f li[data-f] .ib-c', S).forEach(function (x, i) { x.textContent = n[i] ? String(n[i]) : ''; });
-      fitRolls(S);
-    }
-    // each list's finished frame: run to its last rows (the CSS reads --end; a phone and a computer show a different number of rows)
-    function fitRolls(root) {
-      $$('.wk-vp', root || document).forEach(function (vp) {
-        var roll = $('.wk-roll', vp), t = roll && $('table', roll); if (!t || !vp.clientHeight) return;
-        roll.style.setProperty('--end', -Math.max(0, t.offsetHeight - vp.clientHeight) + 'px');
-      });
+      var f = K.fig, caps = $$('.cf-cap', f), desk = $('.cf-desk', f), bills = $('.cf-bills', f), pol = $('.cf-pol', f);
+      var okRows = $$('.b-ok', bills), okSt = $$('.b-ok .b-st', bills), red = $('.b-red', bills);
+      var dd = $$('.ph-date span', f), kk = $$('.ph-clk span', f), nt = $('.ph-nt', f), tm = $$('.nt-tm span', f), ntH = $('.nt-h', f), li = $$('.nt-l li', f);
+      var vp = $('.pol-vp', pol), roll = $('.pol-roll', pol), cur = $('.pol-cur', pol), np = $$('.pol-np', pol), rings = $$('.pol-ring path', pol);
+      var rh = polFit(f), c = parseFloat(getComputedStyle(vp).getPropertyValue('--c')) || 2;
+      var at = function (row) { return -(row - 2 - c) * rh; };   // the roll's y that puts a sheet row under the cursor
+      /* the first frame: 11:40 PM, QuickBooks' bills, the phone asleep with nothing on it */
+      K.start(caps, { autoAlpha: 0, y: 4 }); K.start(caps[0], { autoAlpha: 1, y: 0 });
+      K.beat(0, 0, 'caption', caps[0].textContent, true);   // on screen from the first frame (the caption rule reads it)
+      K.start(desk, { opacity: 1 }); K.start(bills, { autoAlpha: 1, y: 0 }); K.start(pol, { autoAlpha: 0, y: 8 });
+      K.start(okRows, { opacity: 1 }); K.start([red].concat(okSt), { autoAlpha: 0 });
+      K.start(dd, { autoAlpha: 0 }); K.start(dd[0], { autoAlpha: 1 }); K.start(kk, { autoAlpha: 0 }); K.start(kk[0], { autoAlpha: 1 });
+      K.start(nt, { autoAlpha: 0, y: -10 }); K.start(tm[1], { autoAlpha: 0 }); K.start(tm[0], { autoAlpha: 1 });
+      K.start([ntH, li[1], li[2]], { autoAlpha: 0, display: 'none' });
+      K.start(roll, { y: 0 }); K.start(cur, { autoAlpha: 0 }); K.start(np, { autoAlpha: 0 }); K.start(rings, { strokeDasharray: '1 2', strokeDashoffset: 1.01 });
+      /* 11:40 PM: three bills against their quotes, one over */
+      K.to(1.0, okSt, { autoAlpha: 1, duration: .75 }, 'desk', 'two Matches quote ticks');
+      K.to(2.4, okRows, { opacity: .4 }, 'desk', 'the other rows dim, Plover IT turns red'); tl.to(K.track(red), { autoAlpha: 1, duration: .25, ease: OUT }, 2.4);
+      K.cap(5.0, caps[0], caps[1]);
+      tl.to(nt, { autoAlpha: 1, y: 0, duration: .25, ease: OUT }, 6.5);
+      K.fly(5.75, red, li[0], li[0].textContent, .9, 'phone', 'the red line lands on the morning list');
+      /* 12:05 AM: the filing, as one line on the phone */
+      K.cap(9.3, caps[1], caps[2]);
+      K.swap(9.8, [kk[0], dd[0]], [kk[1], dd[1]], 'phone', 'clock 12:05 AM, Monday');
+      tl.set(li[1], { display: 'list-item' }, 10.4); K.to(10.4, li[1], { autoAlpha: 1 }, 'phone', '6 attachments filed joins the note');
+      /* 5:40 AM: September's policies against the carrier's statement */
+      K.to(13.0, bills, { autoAlpha: 0, duration: .3 }, 'desk', 'crossfade to Policies 2026.xlsx'); tl.to(K.track(pol), { autoAlpha: 1, y: 0, duration: .3, ease: OUT }, 13.0);
+      K.cap(13.8, caps[2], caps[3]);
+      K.swap(14.3, kk[1], kk[2], 'phone', 'clock 5:40');
+      tl.to(cur, { autoAlpha: 1, duration: .12, ease: OUT }, 14.8);
+      K.to(14.8, roll, { y: at(29), duration: 1.2, ease: 'power2.inOut' }, 'desk', 'the rows run and stop on row 29');
+      K.to(16.0, np[0], { autoAlpha: 1 }, 'desk', 'Not paid, circled, beside $0.00'); tl.to(rings[0], { strokeDashoffset: 0, duration: .5, ease: MOVE }, 16.0);
+      K.to(18.0, roll, { y: at(31), duration: .3, ease: MOVE }, 'desk', 'one step to row 31');
+      K.to(18.5, np[1], { autoAlpha: 1 }, 'desk', 'Not paid, circled'); tl.to(rings[1], { strokeDashoffset: 0, duration: .5, ease: MOVE }, 18.5);
+      /* 6:30 AM: the desk steps back, the phone carries the list */
+      K.cap(20.5, caps[3], caps[4]);
+      K.to(21.0, desk, { opacity: .35, duration: .5 }, 'desk', 'the desk dims');
+      K.swap(21.5, kk[2], kk[3], 'phone', 'clock 6:30');
+      tl.set(ntH, { display: 'block' }, 22.0); tl.set(li[2], { display: 'list-item' }, 22.0);
+      K.to(22.0, [ntH, li[2]], { autoAlpha: 1, duration: .4 }, 'phone', 'the note grows: 3 things need you');
+      tl.to(K.track(tm[0]), { autoAlpha: 0, duration: .15 }, 22.0); tl.to(K.track(tm[1]), { autoAlpha: 1, duration: .25 }, 22.08);
+      return 26.5;
     }
 
-    // the walk: the week of 9/28 at reading speed, then the rest of October in fast-forward; the date drives every change, and the
-    // money moves with it: the loss struck when the first fix lands, then won back, step by step (judges, Oct 27). Each tool is a list:
-    // the walk's own row first, then in the fast-forward the month's rows run past the ink box, one tool at a time
-    var WON = { quotes: [0, 4, 6, 10, 12, 14], renewals: [0, 3, 5, 8, 10] };   // the trial's spec.py B_QUOTES_WON, B_RENEWALS_WON
-    function week(tl, K) {
-      var S = K.stage, d = $('.wk-d', S), days = $$('.wk-days li', S), cur = $('.wk-cur', S), W = {};
-      $$('.wk-w', S).forEach(function (w) { W[w.getAttribute('data-k')] = w; });
-      var labels = days.slice(0, 8).map(function (li) { return li.getAttribute('data-d'); });
-      var c0 = K.rect(cur), mid = function (el) { var r = K.rect(el); return r.x + r.w / 2 - (c0.x + c0.w / 2); };
-      var go = function (t, i) { tl.to(cur, { x: mid(days[i]), duration: .26, ease: MOVE }, t); K.text(tl, t + .1, d, labels[i]); };
-      K.track(cur); tl.set(cur, { x: 0 }, 0);
-      var rowsIn = function (w) { return $$('.wk-roll tr:not([data-h])', w); }, Qr = rowsIn(W.quotes), R = rowsIn(W.renewals), I = rowsIn(W.invoices);
-      var shown = function (el) { return el && el.getClientRects().length; }, re = ES ? 'RE: ' : 'Re: ';
-      // the money: the hero's loss first, then what comes back
-      var lost = $('.wk-lost', S), won = $('.wk-won', S), num = $('.wm-n', won), sum = 0, phone = S.clientWidth < 1000;
-      K.hold(num); K.track(lost);
-      var add = function (t, usd) { sum += usd; K.text(tl, t, num, money(sum)); };
-      // Wed 9/30: Karen Davis's follow-up, two days after her quote, goes out by itself
-      go(.35, 1); go(.7, 2);
-      var karen = Qr[0], tds = $$('td', karen), subj = shown(tds[1]) ? tds[1] : tds[0], rh = karen.getBoundingClientRect().height;
-      K.box(tl, .9, subj, .36);
-      var l = K.fly(tl, 1, subj, $('.now', lastChg(karen)), { text: re + tds[1].textContent.trim(), dur: .55, arc: rh * .8 });
-      K.swap(tl, l - .06, lastChg(karen), { drop: true }); K.tint(tl, l, karen);
-      tl.fromTo(K.track($('.wm-strike', lost)), { scaleX: 0 }, { scaleX: 1, duration: .42, ease: MOVE }, l + .05).set(lost, { color: 'var(--pencil)' }, l + .15);
-      if (phone) tl.to(lost, { autoAlpha: 0, duration: .22, ease: OUT }, l + .55);
-      var tw = phone ? l + .7 : l + .35;
-      K.show(tl, tw, won, .3, 4); add(tw, 260);
-      // Fri 10/2: invoice 1047's amount, typed wrong, fills in from its policy
-      go(l + .25, 3); go(l + .55, 4);
-      var inv = I[0], cell = $('.chg.tr', inv), src = $('.wm-src', W.invoices), t2 = l + .7;
-      K.box(tl, t2, src, .3);
-      var l2 = K.fly(tl, t2 + .2, src, $('.now', cell), { dur: .45 });
-      K.swap(tl, l2 - .06, cell); K.swap(tl, l2 + .08, lastChg(inv), { drop: true }); K.tint(tl, l2, inv); add(l2 + .08, 36);
-      // Sat 10/3, Sun 10/4, Mon 10/5: Maria Garcia called, four weeks before her renewal goes up 18%
-      go(l2 + .2, 5); go(l2 + .35, 6); go(l2 + .5, 7);
-      var maria = R[0], t3 = l2 + .75;
-      K.box(tl, t3, $('td.num', maria) || $$('td', maria)[4], .3, t3 + 1);
-      K.swap(tl, t3 + .32, lastChg(maria), { drop: true }); K.tint(tl, t3 + .45, maria); add(t3 + .45, 240);
-      // the rest of October: the date runs to 10/31 along the dashed line while each list runs by, one tool at a time
-      var t4 = t3 + .8, FF = 2.8, o = { v: 5 }, end = d.getAttribute('data-end');
-      var WD = ES ? ['lun.', 'mar.', 'mié.', 'jue.', 'vie.', 'sáb.', 'dom.'] : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-      var restB = $('.wk-rest b', S), rb = K.rect(restB);
-      tl.to(cur, { x: rb.x - c0.x, duration: FF, ease: 'none' }, t4);
-      // the date moves with the rows' ticks, so a frame that changes words changes them all at once (a slow phone keeps up)
-      var dateAt = function (at) { var n = Math.min(30, Math.max(6, 5 + Math.round(26 * (at - t4) / FF))); if (n !== o.n) { o.n = n; K.text(tl, at, d, WD[(2 + n) % 7] + ' 10/' + n); } };
-      K.text(tl, t4 + FF + .01, d, end);
-      var run = function (w, t, last) {   // a list's status line counts as its rows run: the count moves with each row's tick
-        var st = $('.win-st', w), ch = $('.chg', st), now = $('.now', ch), tpl = st.getAttribute('data-run'), N = +st.getAttribute('data-n'), n0 = +st.getAttribute('data-n0') || 0, fin = now.textContent;
-        K.text(tl, t, now, tpl.replace('{n}', n0)); K.swap(tl, t, ch, FLAT);   // the line turns into a count at once, as the rows start
-        return function (at, k) { K.text(tl, at, now, k >= last ? fin : tpl.replace('{n}', Math.round(n0 + (N - n0) * k / last))); };
-      };
-      var seg = FF / 3, sQ = (seg - .1) / (Qr.length - 1), sR = (seg - .1) / (R.length - 1), sI = (seg - .1) / (I.length - 1);
-      var cQ = run(W.quotes, t4, Qr.length - 1);
-      K.stream(tl, t4 + sQ, $('.wk-vp', W.quotes), 1, sQ, function (r, k, at) { K.swap(tl, at, lastChg(r), FLAT); cQ(at, k); dateAt(at); if (WON.quotes.indexOf(k) > 0) add(at, 260); });
-      var cR = run(W.renewals, t4 + seg, R.length - 1);
-      K.stream(tl, t4 + seg + sR, $('.wk-vp', W.renewals), 1, sR, function (r, k, at) {
-        var ch = lastChg(r); K.swap(tl, at, ch, FLAT); cR(at, k); dateAt(at); if ($('.now .st.ok', ch)) K.tintCell(tl, at, $$('td', r).pop());
-        if (WON.renewals.indexOf(k) > 0) add(at, 240);
-      });
-      // the invoices count the month's working days: 21 more at $36 a day, as the rows run
-      var cI = run(W.invoices, t4 + 2 * seg, I.length - 1), base = 260 * WON.quotes.length + 36 + 240 * WON.renewals.length;
-      K.stream(tl, t4 + 2 * seg + sI, $('.wk-vp', W.invoices), 1, sI, function (r, k, at) {
-        K.swap(tl, at, lastChg(r), FLAT); cI(at, k); dateAt(at); K.text(tl, at, num, money(base + Math.round(21 * k / (I.length - 1)) * 36));
-      });
-      K.under(tl, t4 + FF + .05, won);
-      return t4 + FF + .7;
-    }
-    function weekFirst(S) { var d = $('.wk-d', S); d.textContent = $$('.wk-days li', S)[0].getAttribute('data-d'); }
-    function weekDone(S) { var d = $('.wk-d', S); d.textContent = d.getAttribute('data-end'); fitRolls(S); }
-
-    /* wiring */
-    // the policy's own figure in the invoice's status line, as its own span, so the box can draw round it and it can fly
-    $$('.wm .qb .win-st .was').forEach(function (w) { if (!$('.wm-src', w)) w.innerHTML = w.innerHTML.replace(/1,248\.00/, '<span class="wm-src">1,248.00</span>'); });
-    var list = [], bf = $('[data-film=b]'), nf = $('[data-film=night]');
-    if (bf) list.push(Film(bf, week, { first: function () { weekFirst($('.wm-stage', bf)); }, done: function () { weekDone($('.wm-stage', bf)); } }));
-    if (nf) list.push(Film(nf, night, { first: function () { nightFirst($('.wm-stage', nf)); }, done: function () { nightDone($('.wm-stage', nf)); } }));
-    fitRolls();
-    if (STILL) { list.forEach(function (f) { f.still(); }); WM.ready = true; WM.still = true; return; }
+    /* ---------- wiring ---------- */
+    var list = [];
+    figs.forEach(function (fig) {
+      var n = fig.getAttribute('data-cfilm');
+      // the walk's stops: each step's start, and 27.0 s, just before the check, so a reader who scrolled away in step 3 comes back
+      // to the ticks being drawn, not to a finished film (the review round, Nov 5)
+      if (n === 'walk') list.push(Film(fig, walk, [8.6, 19.4, 27.0], [0, 8.6, 19.4]));
+      if (n === 'night') list.push(Film(fig, night, [5.0, 9.3, 13.0, 20.5], [0]));
+    });
+    // a film that plays where the reader can see any of it; What we automate's picture waits for it (orderPic)
+    CF.busy = function () {
+      return list.some(function (f) { if (f.mode !== 'play') return false; var r = f.fig.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; });
+    };
+    // B is in view and waits: a film playing with under half of it on screen stops at its next stop, and its cf:idle starts B
+    CF.yieldTo = function () { list.forEach(function (f) { if (f.mode === 'play' && f.ratio < .5) f.away = true; }); };
+    // the hero sheet's rows link to the walk's marks (#stop-1 to 3): the page scrolls there (sheetMap), and the film plays that step
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#stop-"]'); if (!a || !CF.films.walk) return;
+      var i = +a.getAttribute('href').slice(6) - 1; if (i >= 0 && i < 3) CF.films.walk.jump(i);
+    });
     function startAll() {
-      easings();
-      var auto = !Q.has('noauto');   // the clip and frame tools step each timeline themselves
-      list.forEach(function (f) { f.arm(); if (auto) f.watch(); });
-      WM.ready = true;
+      G = window.gsap; G.registerPlugin(window.CustomEase);
+      MOVE = CustomEase.create('cfMove', '.2,0,0,1'); OUT = CustomEase.create('cfOut', '.33,1,.68,1');
+      var auto = !Q.has('noauto');   // the clip tools step the timelines themselves
+      // each film is built in a task of its own (the review round, Nov 5: both in one task made a 170 to 211 ms frame at 393 on a
+      // slow phone, about 90 ms the walk's and 70 to 100 ms the night's)
+      each(function (f) { f.arm(); if (auto) f.watch(); }, function () { CF.ready = true; });
     }
-    // GSAP comes in when the first film is near (600px), as What we automate's does, from the same one load; the fonts first, so
-    // every flight is measured on the words as they will be drawn
+    function each(fn, then) {
+      var i = 0;
+      (function next() { if (i >= list.length) { if (then) then(); return; } fn(list[i++]); setTimeout(next, 0); })();
+    }
     var near = new IntersectionObserver(function (es) {
       if (!es.some(function (e) { return e.isIntersecting; })) return;
       near.disconnect();
-      loadGsap().then(function () { return document.fonts && document.fonts.ready; }).then(startAll, function () { list.forEach(function (f) { f.still(); }); WM.ready = true; });
+      loadGsap().then(function () { return document.fonts && document.fonts.ready; }).then(startAll, function () { figs.forEach(function (f) { f.classList.add('still'); polFit(f); }); CF.ready = true; });
     }, { rootMargin: '600px 0px' });
-    list.forEach(function (f) { near.observe(f.fig); });
-    // a width change re-arms a film that has not played and ends one that is playing on its finished frame
+    figs.forEach(function (f) { near.observe(f); });
+    // a width change rebuilds each film for the new layout and puts it back where it was
     var lastW = innerWidth;
     addEventListener('resize', function () {
       if (innerWidth === lastW || !G) return; lastW = innerWidth;
-      list.forEach(function (f) { if (f.mode === 'wait' || f.mode === 'held' || f.mode === 'queued') { f.arm(); if (!f.played) f.watch(); } else if (f.mode === 'play' || f.mode === 'paused' || f.mode === 'start') f.done(); });
-      fitRolls();
+      each(function (f) {
+        if (!f.tl) return;
+        var t = f.tl.time(), going = f.mode === 'play';
+        f.arm(); f.tl.seek(t, true); if (going) f.tl.play();
+      });
     });
+  }
+
+  /* the hero sheet on a phone (Nov 5; the Nov 4 review: "the hero writes itself below the fold on phones"). system.js writes the
+     sheet in on load when its top is on the first screen, which on Home's phone layout leaves rows 2 and 3 and the total writing
+     under the call bar, unseen. Here every part of the sheet that starts below the call bar waits, empty, and writes in when it
+     scrolls into view, one row after another as the sheet does. A computer, reduced motion and ?still are left as they are */
+  function heroFill() {
+    var s = document.querySelector('.hm4-hero .sheet[data-fill]');
+    if (!s || !s.classList.contains('writing') || s.classList.contains('wait') || !('IntersectionObserver' in window)) return;
+    var bar = document.querySelector('.callbar'), barH = bar && bar.getClientRects().length && getComputedStyle(bar).display !== 'none' ? bar.offsetHeight : 0;
+    if (!barH) return;
+    var low = innerHeight - barH;
+    var parts = [].slice.call(s.querySelectorAll('.sh-rows > li, .sh-total, .sh-time')).filter(function (e) { return e.getBoundingClientRect().top > low - 8; });
+    if (!parts.length) return;
+    parts.forEach(function (e) { e.classList.add('fill-wait'); });
+    var io = new IntersectionObserver(function (es) {
+      var k = 0;   // the parts that come into view together write in one after another, from their own start
+      es.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var e = en.target; io.unobserve(e);
+        if (e.tagName === 'LI') e.style.setProperty('--i', String(k)); else e.style.animationDelay = (k * 420 + 200) + 'ms';
+        k++; e.classList.remove('fill-wait');
+      });
+    }, { rootMargin: '0px 0px -' + (barH + 8) + 'px 0px' });
+    parts.forEach(function (e) { io.observe(e); });
   }
   var LP_STILL = /[?&]still\b/.test(location.search) || matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -734,7 +663,7 @@
       // film into view, so it can play, and focus goes to the walk's heading. The window's caption sits inside the film's role="img"
       // stage, where a screen reader finds no name to read (the reviewers' round, 2026-10-30); the heading names the loss, and the
       // film's own description comes right after it
-      var film = s.closest('.wm-week'), h = film ? document.querySelector('#walk .walk-h') : s.querySelector('.stop-t h3'), to = film || s, done = false, focus = function () { if (done || !h) return; done = true; h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); };
+      var film = s.closest('.cf-walk'), h = film ? document.querySelector('#walk .walk-h') : s.querySelector('.stop-t h3'), to = film || s, done = false, focus = function () { if (done || !h) return; done = true; h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); };
       if (LP_STILL) { to.scrollIntoView({ block: 'start' }); focus(); return; }
       if ('onscrollend' in window) addEventListener('scrollend', focus, { once: true });
       setTimeout(focus, 900);
@@ -757,7 +686,8 @@
 
   function start() {
     orderPic();   // What we automate's picture (the code picture it replaced moved to How it works, Oct 27)
-    films();      // the walk film and the night film (2026-10-30)
+    films();      // the walk film and the night film (direction C, Nov 5)
+    heroFill();   // the hero sheet on a phone: what starts under the call bar writes in when it comes into view (Nov 5)
     if (!window.Lumora) return;
     sheetMap(); twoTone();
   }

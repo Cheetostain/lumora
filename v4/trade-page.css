@@ -236,10 +236,10 @@ html:not(.js) .stop .crop-m{height:calc(var(--crop-h) + var(--crop-air-t))}
 .n4-figs{display:grid;gap:20px;justify-items:center;margin-top:18px}
 .n4-figs>.pic{width:min(var(--ph-w),100%)}
 .n4-figs>.n4-paper{width:min(440px,100%)}
-.n4 .loop-ctl{position:relative;z-index:4;margin-top:-12px;justify-content:flex-start}   /* 2026-10-15: -12px, not -28px: a 16px gap, so Pause no longer sits glued to the log */
-.n4 .pause{min-height:44px;padding:0 14px 0 12px;gap:8px;border-color:rgba(233,228,216,.45);font-size:15px;color:var(--muted-night)}
+.n4 .loop-ctl{position:relative;z-index:4;margin-top:16px;justify-content:flex-start}   /* 2026-10-15: a 16px gap, so Pause no longer sits glued to the log (-12px under the Sample stamp's 28px until Nov 6) */
+.n4 .pause{border-color:rgba(233,228,216,.45);color:var(--muted-night)}   /* Nov 6: the round icon (system.css .pause); its pill padding left */
 .n4 .pause .pi{width:10px;height:12px;border-left-width:3px;border-right-width:3px}
-.n4 .pause.is-paused .pi{width:0;height:0;border:0;border-left:10px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent}
+.n4 .pause.is-paused .pi{width:0;height:0;margin-left:2px;border:0;border-left:10px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent}
 .n4 .cta-inline{margin-top:4px}
 .n4 .cta-inline .mb-s{color:var(--on-night)}
 @media (min-width:900px){
