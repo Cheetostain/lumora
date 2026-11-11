@@ -643,18 +643,19 @@
           var e = /^(.*), (\d+) (.+)$/.exec(t.short); if (!e) return t.short;
           if (t.per === 'yr') return 'Una administradora de propiedades con ' + e[2] + ' unidades';
           if (/^Restaurante/.test(e[1])) return 'Un restaurante y bar con capacidad para ' + e[2] + ' personas';
-          if (/^Daños/.test(e[1])) return 'Una pequeña empresa de daños por agua con ' + e[2] + ' ' + e[3];
-          if (/^Control de plagas$/.test(e[1])) return 'Una pequeña compañía de ' + e[1].toLowerCase() + ' con ' + e[2] + ' ' + e[3];   // lane 3b, 2026-10-18
-          return 'Un pequeño negocio de ' + e[1].charAt(0).toLowerCase() + e[1].slice(1) + ' con ' + e[2] + ' ' + e[3];
+          if (/^Daños/.test(e[1])) return 'Una empresa de daños por agua con ' + e[2] + ' ' + e[3];
+          if (/^Control de plagas$/.test(e[1])) return 'Una compañía de ' + e[1].toLowerCase() + ' con ' + e[2] + ' ' + e[3];   // lane 3b, 2026-10-18
+          return 'Un negocio de ' + e[1].charAt(0).toLowerCase() + e[1].slice(1) + ' con ' + e[2] + ' ' + e[3];
         }
         var m = /^(.*), (\d+) (\w+?)s?$/.exec(t.short); if (!m) return t.short;
-        // Franco asked again what "2 trucks" meant, so the size says "small" outright and keeps the owner's own word:
-        // "A small plumbing shop with 2 trucks"; "A property manager with 212 rentals" (doors is jargon too)
+        // Franco asked again what "2 trucks" meant, so the size keeps the owner's own word: "A plumbing shop with 2 trucks"; "A
+        // property manager with 212 rentals" (doors is jargon too). "Small" left on Nov 10 (sweep card HQ D56): it told a bigger
+        // owner the page wasn't for him, and the count already says the size
         var trade = /^[A-Z]{2}/.test(m[1]) ? m[1] : m[1].charAt(0).toLowerCase() + m[1].slice(1);
         if (t.per === 'yr') return 'A property manager with ' + m[2] + '\u00a0rentals';   // 2026-10-15: no-break space, the count stays with its noun
         if (/^Restaurant/.test(m[1])) return (/^(8\d*|11|18)$/.test(m[2]) ? 'An ' : 'A ') + m[2] + '-' + m[3] + ' restaurant and bar';
         // agency pass 2026-10-18 (lane 3b): roofers, pest control operators and restoration owners call their business a company
-        return 'A small ' + trade + (/^(Roofing|Pest control|Restoration)$/.test(m[1]) ? ' company' : ' shop') + ' with ' + m[2] + '\u00a0' + m[3] + (m[2] === '1' ? '' : 's');
+        return (/^[aeiou]/i.test(trade) ? 'An ' : 'A ') + trade + (/^(Roofing|Pest control|Restoration)$/.test(m[1]) ? ' company' : ' shop') + ' with ' + m[2] + '\u00a0' + m[3] + (m[2] === '1' ? '' : 's');
       }
       var s = function (k) { return el.querySelector('[data-s="' + k + '"]'); }, r = t.rows[0];
       if (s('sub')) s('sub').textContent = stripSize(t); if (s('leak')) s('leak').textContent = keepCounts(r.b);
@@ -1539,8 +1540,21 @@
       var rings = $$('.pen-ring').filter(vis).length; if (rings > 1) E.push(rings + ' pen rings on the page (one per page).');
       var disp = $$('.t-display').length; if (disp > 1) E.push(disp + ' display money figures (one per page).');
       var nights = $$('main [data-ground=night]').length; if (nights > 1) E.push(nights + ' ink bands (one per page).');
-      // alive build 2026-10-24 (Franco's pick pine-field, alive round item 4): one pine field a page at most, as one ink band
-      var pines = $$('main [data-ground=pine]').length; if (pines > 1) E.push(pines + ' pine fields (one per page at most).');
+      // alive build 2026-10-24 (Franco's pick pine-field, alive round item 4): one pine band a page at most, as one ink band. Nov 9
+      // (Franco's pick blotter): Home alone adds the pine pad under the hero clipboard (.clip[data-pine=pad]), with no words on it,
+      // and two pine surfaces are never on one screen (a screen's height or more apart)
+      var pineEls = $$('main [data-ground=pine]'), pines = pineEls.length; if (pines > 1) E.push(pines + ' pine bands (one per page at most).');
+      var pads = $$('main [data-pine=pad]');
+      if (pads.length > 1) E.push(pads.length + " pine pads (one, under Home's hero clipboard).");
+      pads.forEach(function (pd) {
+        if (!pd.closest('.hm4-hero')) E.push("A pine pad outside Home's hero (" + (pd.className || pd.tagName) + ').');
+        var bd = pd.querySelector('.board'); if (!bd) return;
+        var cs = getComputedStyle(bd, '::before'), r = bd.getBoundingClientRect(), top = r.top + scrollY + (parseFloat(cs.top) || 0), bot = r.bottom + scrollY - (parseFloat(cs.bottom) || 0);
+        pineEls.filter(vis).forEach(function (band) {
+          var q = band.getBoundingClientRect(), bt = q.top + scrollY, bb = q.bottom + scrollY, gap = bt > bot ? bt - bot : top - bb;
+          if (gap < innerHeight) E.push('The pine pad and the pine band are ' + Math.round(gap) + 'px apart, on one screen (a screen or more apart).');
+        });
+      });
       var secs = $$('main > section, main > [data-ground]').filter(function (s) { return s.dataset.ground; });
       var KEYS = ['ground', 'density', 'width', 'loud'];
       for (var i = 1; i < secs.length; i++) {
@@ -1593,9 +1607,9 @@
         var c = getComputedStyle(el).color, field = el.closest('[data-ground=pine]'), t = n.nodeValue.trim().slice(0, 30);
         if (field && /\$\s?\d/.test(n.nodeValue) && !seen.usd) { seen.usd = 1; E.push('Money on the pine field: "' + t + '" (no money and no red on it).'); }
         if (field && reds.indexOf(c) > -1 && !seen.red) { seen.red = 1; E.push('Red text on the pine field: "' + t + '" (no money and no red on it).'); }
-        // the walk film's sheet ends on "Won back $3,552 a month", a figure won back too (direction C since Nov 5, .cf-won; the
-        // generalist Home's film of 2026-10-30 had it as .wk-won)
-        if (pine && c === pine && !el.closest('.stop[data-state=after] .find-usd, .cf .cf-won b') && !seen.pine) { seen.pine = 1; E.push('Pine text outside a figure won back: "' + t + '" (pine means money won back only).'); }
+        // the walk film's sheet ends on "Won back $2,922 a month" (the rows it wins back, Nov 10), a figure won back too (direction C since Nov 5, .cf-won; the
+        // generalist Home's film of 2026-10-30 had it as .wk-won); since the review fixes of Nov 10 a line won back in part says its dollars back (.cf-bk)
+        if (pine && c === pine && !el.closest('.stop[data-state=after] .find-usd, .cf .cf-won b, .cf .cf-res .cf-bk') && !seen.pine) { seen.pine = 1; E.push('Pine text outside a figure won back: "' + t + '" (pine means money won back only).'); }
       }
     })();
     if (!catalog && document.body.dataset.rules === 'v4') lintV4(E, W, vis, text);

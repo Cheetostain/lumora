@@ -455,3 +455,9 @@ html:not(.js) .stop .crop-m{height:calc(var(--crop-h) + var(--crop-air-t))}
 .sheet .sh-unp{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;padding:14px 0;border-bottom:1px solid var(--rule)}
 .sheet .sh-usd.unp{color:var(--muted);font-weight:500;font-size:15px;padding-top:2px}
 @media screen and (prefers-reduced-motion:no-preference){html.js .sheet[data-fill]:not(.swap):not(.still) .sh-unp{animation:write 380ms var(--ease-out) both;animation-delay:1500ms}}
+
+/* Nov 10, the handset in Call us (Franco, Nov 9: "just your average like telephone icon to the left of Call us inside the button"):
+   on a Spanish phone the hero's Llámenos is 28px wider with the icon, and the line beside it took one more line, so at 393 x 659
+   the ringed row went under the call bar (pest control, measured with answers-build-2026-11-10/tools/probe_first.py). The button keeps
+   its height and the icon its 1em; its sides go to 12px, so the line keeps its lines. The English pages keep theirs (it fits) */
+@media (max-width:899px){:lang(es) .hm4-hero .hero-act .btn:has(.ico-call){padding:0 12px}}

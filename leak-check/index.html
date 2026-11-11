@@ -26,11 +26,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=b101fba6">
-<link rel="stylesheet" href="/v4/trade-page.css?v=b101fba6">
+<link rel="stylesheet" href="/v4/system.css?v=a9e66da2">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a9e66da2">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=b101fba6" defer></script>
-<script src="/v4/system.js?v=b101fba6" defer></script>
+<script src="/v4/trades.js?v=a9e66da2" defer></script>
+<script src="/v4/system.js?v=a9e66da2" defer></script>
 <style>
 /* ===== Loss calculator, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64) outside the pictures; every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -189,7 +189,7 @@ html:not(.js) .lk-bar{display:none}
       </ul>
     </nav>
     <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
-    <a class="btn btn-sm" href="tel:+13522260681">Call us</a>
+    <a class="btn btn-sm" href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call us</a>
     <a href="/es/leak-check/" lang="es" hreflang="es" class="lang"><svg class="globe" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8"/><ellipse cx="10" cy="10" rx="3.4" ry="8"/><path d="M2.8 6.5h14.4M2.8 13.5h14.4"/></svg>Español</a>
     <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   </div>
@@ -200,7 +200,7 @@ html:not(.js) .lk-bar{display:none}
 <section class="hero lk" id="top" data-bar-seat data-ground="graph" data-density="high" data-width="split" data-loud="estimate" data-medium="calc">
   <div class="wrap">
     <h1>What does the busywork cost you?</h1>
-    <p class="t-lede">Put in your own numbers and see roughly what four kinds of office work cost you a month. It takes about a minute.</p>
+    <p class="t-lede">Put in your own numbers and see what four kinds of office work cost you a month. It takes a minute.</p>
     <p class="lk-priv" data-first="the privacy line">It runs on your device and sends us nothing. Close the page and your numbers are gone.</p>
     <div class="lk-g">
       <form class="lk-form" id="lk" novalidate autocomplete="off" aria-label="Loss calculator">
@@ -215,7 +215,7 @@ html:not(.js) .lk-bar{display:none}
             <div class="unit"><input id="lk-days" name="days" inputmode="decimal" value="22"></div></div>
           <div class="lf"><label for="lk-rate">Hourly cost of whoever types it <span class="ex" data-ex="rate">Example</span></label>
             <div class="unit"><input id="lk-rate" name="rate" inputmode="decimal" value="$25" aria-describedby="h-rate"></div>
-            <p class="lf-h" id="h-rate">Pay plus taxes. If it's you at night, skip it: those are hours, not dollars.</p></div>
+            <p class="lf-h" id="h-rate">Pay plus taxes and benefits. If it's you, put what an hour of your time is worth. The Gainesville median for a general manager is $45 an hour.</p></div>
         </fieldset>
         <fieldset data-task="invoices">
           <legend>Jobs finished but never billed</legend>
@@ -239,12 +239,12 @@ html:not(.js) .lk-bar{display:none}
           <legend>Calls nobody called back</legend>
           <div class="lf"><label for="lk-rang">Calls a week from new numbers that rang out or went to voicemail <span class="ex" data-ex="rang">Example</span></label>
             <div class="step"><button type="button" class="stepb" data-step="-1" data-for="rang" aria-label="One fewer call">−</button><input id="lk-rang" name="rang" inputmode="decimal" value="6" aria-describedby="h-rang"><button type="button" class="stepb" data-step="1" data-for="rang" aria-label="One more call">+</button></div>
-            <p class="lf-h" id="h-rang">Leave out spam and numbers already in your contacts or customer list. If you guess, guess low.</p></div>
+            <p class="lf-h" id="h-rang">Leave out spam and numbers already in your contacts or customer list. If you're estimating, use a normal week.</p></div>
           <div class="lf"><label for="lk-back">Of those, how many you called back <span class="ex" data-ex="back">Example</span></label>
             <div class="step"><button type="button" class="stepb" data-step="-1" data-for="back" aria-label="One fewer call returned">−</button><input id="lk-back" name="back" inputmode="decimal" value="3"><button type="button" class="stepb" data-step="1" data-for="back" aria-label="One more call returned">+</button></div></div>
           <div class="lf"><label for="lk-book">Share that would have booked a job (%) <span class="ex" data-ex="book">Example</span></label>
             <div class="unit"><input id="lk-book" name="book" inputmode="decimal" value="24%" aria-describedby="h-book"></div>
-            <p class="lf-h" id="h-book">3&nbsp;in 10&nbsp;is 30%. Not sure? Small trade shops booked 24% of calls (ServiceTitan, 2022, vendor data). For any other business, use your own guess, and guess low.</p></div>
+            <p class="lf-h" id="h-book">3&nbsp;in 10&nbsp;is 30%. Not sure? In ServiceTitan's 2022&nbsp;data on more&nbsp;than 3,000&nbsp;trade businesses, they booked 42% of calls on average: 24% with fewer than 5&nbsp;technicians, 59% with 25&nbsp;or&nbsp;more (vendor data). Use the figure nearest your size. For any other business, use your best guess.</p></div>
           <div class="lf"><label for="lk-profit">Profit on a typical job <span class="ex" data-ex="profit">Example</span></label>
             <div class="unit"><input id="lk-profit" name="profit" inputmode="decimal" value="$150" aria-describedby="h-profit"></div>
             <p class="lf-h" id="h-profit">After parts and labor, not the ticket price.</p></div>
@@ -269,7 +269,7 @@ html:not(.js) .lk-bar{display:none}
           <noscript><p class="lk-note">With JavaScript off the boxes can't add up your own numbers, so this is the example. Every step is under How we count.</p></noscript>
         </div>
         <div class="cta lk-cta">
-          <div class="cta-row"><a class="btn" href="tel:+13522260681">Call us</a><a class="u lk-sms" data-o="sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send us a text</a></div>
+          <div class="cta-row"><a class="btn" href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call us</a><a class="u lk-sms" data-o="sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send us a text</a></div>
           <p class="mb"><span data-shared="moneyback.short">Walk fee back if you ask within 7&nbsp;days</span>. <a class="u" href="/how-it-works/#terms">Full terms</a></p>
         </div>
         <p class="lk-route">Restaurants and property managers lose money in other places. See their example sheets: <a class="u" href="/industries/restaurants-and-bars/">Restaurants and bars</a> or <a class="u" href="/industries/property-managers/">Property managers</a>.</p>
@@ -319,7 +319,7 @@ html:not(.js) .lk-bar{display:none}
       <p class="how-sum">The total adds the lines you filled in, rounded to the nearest ten dollars.</p>
     </div>
     <div class="how-auto" id="automate">
-        <h3>What this leaves out</h3>
+        <h3>What a walk adds</h3>
         <ul class="auto-list">
           <li data-task="bills">Supplier bills that don't match what you ordered.</li>
           <li data-task="bills">Supply-house tickets with no job number.</li>
@@ -342,7 +342,7 @@ html:not(.js) .lk-bar{display:none}
       <h2 class="t-close close-h">Want the real numbers?</h2>
       <div class="close-act">
         <div class="arrow-to">
-          <a class="btn btn-lg" href="tel:+13522260681">Call us</a>
+          <a class="btn btn-lg" href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call us</a>
           <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
         </div>
         <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
@@ -381,7 +381,7 @@ html:not(.js) .lk-bar{display:none}
       <div class="foot-lead">
         <a class="foot-brand" href="/" aria-label="Lumora, home page"><img src="/v4/assets/logo-white.svg" alt="" width="148" height="36"></a>
         <p class="foot-line">Your business should run the same whether you're there or not.</p>
-        <a class="btn" href="tel:+13522260681" data-extra="computer: the call bar carries the number on a phone">Call us</a>
+        <a class="btn" href="tel:+13522260681" data-extra="computer: the call bar carries the number on a phone"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call us</a>
       </div>
       <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">How it works</h2><ul><li><a href="/how-it-works/#conversation">The free call</a></li><li><a href="/how-it-works/#walk">The walk</a></li><li><a href="/how-it-works/#fix">One fix</a></li><li><a href="/how-it-works/#check">The monthly check</a></li><li><a href="/how-it-works/#faq">Questions owners ask</a></li><li><a href="/what-we-automate/">What we automate</a></li><li><a href="/leak-check/">Loss calculator</a></li></ul></nav>
       <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">Industries</h2><ul><li><a href="/industries/plumbing/">Plumbing</a></li><li><a href="/industries/ac-and-heating/">AC and heating</a></li><li><a href="/industries/electrical/">Electrical</a></li><li><a href="/industries/water-damage-and-mold/">Water damage and mold</a></li><li><a href="/industries/pest-control/">Pest control</a></li><li><a href="/industries/roofing/">Roofing</a></li><li><a href="/industries/restaurants-and-bars/">Restaurants and bars</a></li><li><a href="/industries/property-managers/">Property managers</a></li><li><a href="/industries/">All industries</a></li></ul></nav>
@@ -394,7 +394,7 @@ html:not(.js) .lk-bar{display:none}
   </div>
 </footer>
 
-<nav class="callbar" aria-label="Call or text us"><a href="tel:+13522260681">Call <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text</a></nav>
+<nav class="callbar" aria-label="Call or text us"><a href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text</a></nav>
 
 <script>
 /* The loss calculator. All the math runs here, in the visitor's browser: no fetch, no storage, no form action, and Enter never

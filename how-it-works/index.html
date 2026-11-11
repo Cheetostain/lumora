@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=b101fba6">
-<link rel="stylesheet" href="/v4/trade-page.css?v=b101fba6">
+<link rel="stylesheet" href="/v4/system.css?v=a9e66da2">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a9e66da2">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=b101fba6" defer></script>
-<script src="/v4/system.js?v=b101fba6" defer></script>
+<script src="/v4/trades.js?v=a9e66da2" defer></script>
+<script src="/v4/system.js?v=a9e66da2" defer></script>
 <style>
 /* ===== How it works, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64), and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -98,6 +98,16 @@
   .wk-top,.wk-parts,.wk-lists{grid-template-columns:var(--wk-cols);gap:56px}
   .wk-parts{align-items:start}
 }
+/* the receipt shoebox (picks build, Nov 9; Franco, on Home's walk band: "I don't like that one there because it's right next to the
+   light lamp thing. Maybe we could put that one in an 'About' or 'How it Works' section... just to keep the art style consistent").
+   Pine ink on the page's own paper, hatching only, drawn by picks-build-2026-11-09/tools/make_plates.py with Home's lamp and desk
+   phone. It fills the open half of the walk band's lower row, under Your records, beside What the walk never does: the records the
+   walk reads, as most owners keep them. Art, never UI: no words on it, nothing moves */
+.ink{display:block;max-width:100%;height:auto;pointer-events:none;user-select:none}
+.ink-box{width:128px;margin:-86px 0 0 auto}   /* a phone (Nov 9, third pass): alone under the list it left half its row empty and added 151px; now it stands at the right of the privacy line, which wraps beside it, and the band grows about 80px */
+@media (max-width:899px){.wk-lists .note-r{max-width:calc(100% - 140px);min-height:76px}}
+@media (max-width:359px){.ink-box{width:120px;margin-top:-84px}.wk-lists .note-r{max-width:calc(100% - 130px);min-height:76px}}
+@media (min-width:900px){.ink-box{width:340px;align-self:end;justify-self:start;margin:0 0 4px}}
 
 /* a native disclosure (Full terms, the sources, the cover lists): the facts stay one tap away without a wall of text */
 details:not([open])>:not(summary){display:none}   /* a closed answer takes no room and no count: Chrome lays out closed details content (content-visibility), so Lumora.lint() counted its figures and check.py its words */
@@ -415,7 +425,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       </ul>
     </nav>
     <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
-    <a class="btn btn-sm" href="tel:+13522260681">Call us</a>
+    <a class="btn btn-sm" href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call us</a>
     <a href="/es/how-it-works/" lang="es" hreflang="es" class="lang"><svg class="globe" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8"/><ellipse cx="10" cy="10" rx="3.4" ry="8"/><path d="M2.8 6.5h14.4M2.8 13.5h14.4"/></svg>Español</a>
     <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   </div>
@@ -427,10 +437,10 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
   <div class="wrap hiw-g">
     <div class="hiw-copy">
       <h1>What happens after you call us</h1>
-      <p class="t-lede">The free call tells us whether a walk is worth it for your business. The walk is the first paid step, and it ends in a sheet with a dollar figure on every problem.</p>
+      <p class="t-lede">The free call shows where your week goes. The walk is the first paid step, and it ends in a sheet with a dollar figure on every problem.</p>
       <div class="cta">
         <div class="cta-row">
-          <a class="btn btn-lg" href="tel:+13522260681" data-first="the call button">Call us</a>
+          <a class="btn btn-lg" href="tel:+13522260681" data-first="the call button"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call us</a>
           <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
           <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a>
         </div>
@@ -459,7 +469,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
         <li>
           <div class="tl-head"><h3><span data-shared="step3.when">Your sheet</span></h3></div>
           <div class="tl-body">
-            <p class="t-body"><span data-shared="step3.what">Every problem in dollars, usually within a week of getting your records.</span> <span data-shared="step3.get">You keep it either way.</span></p>
+            <p class="t-body"><span data-shared="step3.what">Every problem in dollars, on the schedule we set with you on the free call.</span> <span data-shared="step3.get">You keep it either way.</span></p>
             <a class="u tl-go" href="#sample">See a full example sheet</a>
           </div>
         </li>
@@ -534,6 +544,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
         </ul>
         <p class="note-r">How we handle your records is on the <a class="u" href="/privacy/">privacy page</a>.</p>
       </div>
+      <img class="ink ink-box" src="/v4/how-about/assets/plates/shoebox.svg" width="340" height="250" alt="" aria-hidden="true" decoding="async" loading="lazy">
     </div>
     <details class="more" id="terms">
       <summary>Full terms</summary>
@@ -588,11 +599,11 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       <p class="lead"><b>Suggested first fix: row 4, the supply-house tickets.</b> Row 1&nbsp;is bigger, but this one is low effort, and every part it finds is money you already spent.</p>
       <p>You will see it move on your own supplier statement: every ticket with a job number, and a weekly list of parts bought for a job that never reached its invoice. Next on the list: row 1, then row 2.</p>
       <details class="more src-d"><summary>Where the example numbers come from</summary><div><p class="note-r">$341 is HomeAdvisor's national average plumber visit (2026, cost guide); 44.3% is Level's median job gross margin (vendor data). 24% is the share of calls that trade shops with fewer than 5&nbsp;technicians booked at all hours (ServiceTitan blog, 2022, vendor data).</p><p class="note-r">On the AC and heating sheet, 1&nbsp;in 4&nbsp;comes from ServiceTitan's January 2026&nbsp;data on commercial service agreements: 29.8% renewed when renewal was manual and 49.1% with auto-renew and email reminders, so about 1&nbsp;in 4&nbsp;of the plans that would have lapsed were kept (vendor data). $189 is an example yearly fee for a plan with two tune-ups, within published Florida plan prices.</p>
-<p class="note-r">On the property manager sheet, 10% is a common maintenance markup in management agreements (BiggerPockets forum, owners and managers reporting; 0&nbsp;to 20% seen, or a flat fee instead). 70&nbsp;bills is an example: about 5% of the 1,400 or so vendor bills an office with 212&nbsp;rentals pays in a year (about 600&nbsp;in turn week, plus 3&nbsp;to 5&nbsp;work orders a rental), at an example $180 a bill.</p>
+<p class="note-r">On the property manager sheet, 10% is a common maintenance markup in management agreements (BiggerPockets forum, owners and managers reporting; 0&nbsp;to 20% seen, or a flat fee instead). 70&nbsp;bills is an example: 5% of the 1,400 or so vendor bills an office with 212&nbsp;rentals pays in a year (600&nbsp;in turn week, plus 3&nbsp;to 5&nbsp;work orders a rental), at an example $180 a bill.</p>
 <p class="note-r">On the pest control sheet, 1&nbsp;in 2&nbsp;and 20% are our own example rates, and your walk puts your own numbers in their place: 1&nbsp;in 2&nbsp;lapsed termite renewals won back by a follow-up call, and 20% more declined autopay charges recovered once retries run on a schedule. For scale, Recurly's 2018&nbsp;study of more than 1,300 subscription businesses found that over 45% of the charges declined for the three most common reasons were recovered (vendor data). $225 is a renewal's $271 average fee across $325 bait and $195 liquid agreements, less a $46 yearly inspection. On the pest control page, $7.50 a foot for trench-and-rod termite treatment sits inside two national cost guides, Fixr's $4 to $14.50 and Polyguard's $3 to $15.</p></div></details>
     </div>
     <div class="cta-inline">
-      <a class="btn" href="tel:+13522260681">Call us</a>
+      <a class="btn" href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call us</a>
       <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
     </div>
   </div>
@@ -606,8 +617,8 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       <p class="t-lede">We suggest starting with one fix you can watch move in your own records.</p>
       <p>Each fix has its own fixed price, never by the hour, and you hear it with the sheet in hand, before any work starts. Any software it needs is opened in your name, at cost, never marked up.</p>
       <p>Want everything fixed at once? We quote that from the sheet too, and the prices add up.</p>
-      <p class="fx-ai">Nothing goes to your customers, or into an AI tool, without your OK.</p>
-      <p>Everything runs in accounts you own, and every fix is built to fall back to how your business worked before.</p>
+      <p class="fx-ai">Nothing goes to your customers without your OK.</p>
+      <p>You own your accounts, your data and what we build, in writing once it's paid. If we part, you keep all of it, with a one-page sheet in English or Spanish on running it. Every fix is built to fall back to how your business worked before.</p>
     </div>
     <div class="fx-tools">
       <h3>The same fix, three ways</h3>
@@ -762,18 +773,18 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       </div>
       <figure class="mc-pic">
         <div class="pic">
-          <div class="report" role="img" aria-label="One monthly check page for the example shop, September. What the fix did: 501 dollars found in the month, in parts bought for a job that never reached its invoice. Supply tickets with no job number fell from 14 a month to 2, shown as weekly bars, the last four after the fix, and 11 parts were found missing from an invoice. What broke: one supplier bill came in a new layout; the matcher stopped and told us, and it was fixed. Next problem: quotes sent 48 or more hours after the visit, 1,900 dollars a month.">
-            <div class="rp-h" aria-hidden="true"><div><b>Monthly check</b><small>The example shop, September</small></div></div>
+          <div class="report" role="img" aria-label="One monthly check page for the example shop, December, with two fixes running. What the fixes did: 2,021 dollars this month, 501 dollars in parts that never reached an invoice and 4 jobs kept, 1,520 dollars, from quotes that now go out the same day. Supply tickets with no job number fell from 14 a month to 2, shown as weekly bars, the last four after the fix, and quotes sent 48 or more hours late fell from 9 to 1. What broke: one supplier bill came in a new layout; the matcher stopped and told us, and it was fixed. Next problem: the same job typed in three places, 411 dollars a month.">
+            <div class="rp-h" aria-hidden="true"><div><b>Monthly check</b><small>The example shop, December</small></div></div>
             <div aria-hidden="true">
-              <div class="rp-sec"><p class="rp-k">What the fix did</p><p class="rp-big"><span class="money">$501.00</span><span>found this month: parts bought for a job that never reached its invoice</span></p></div>
+              <div class="rp-sec"><p class="rp-k">What the fixes did</p><p class="rp-big"><span class="money">$2,021</span><span>this month: $501 in parts that never reached an invoice, and 4&nbsp;jobs kept ($1,520) from quotes that now go out the same day</span></p></div>
               <div class="rp-sec">
-                <div class="rp-two"><p>Supply tickets with no job number<b>14 <i>to</i> 2</b></p><p>Parts found missing from an invoice<b>11</b></p></div>
+                <div class="rp-two"><p>Supply tickets with no job number<b>14 <i>to</i> 2</b></p><p>Quotes sent 48+ hours late<b>9 <i>to</i> 1</b></p></div>
                 <div class="bars"><span style="--h:100%"></span><span style="--h:75%"></span><span style="--h:100%"></span><span style="--h:75%"></span><span class="f" style="--h:25%"></span><span class="f" style="--h:3%"></span><span class="f" style="--h:25%"></span><span class="f" style="--h:3%"></span></div>
                 <div class="bars-x"><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span><span>W8</span></div>
                 <p class="bars-key"><span><i></i>Tickets with no job number, before the fix</span><span><i class="f"></i>After</span></p>
               </div>
               <div class="rp-sec"><p class="rp-k">What broke</p><p class="rp-next">One supplier bill came in a new layout. The matcher stopped and told us. Fixed.</p></div>
-              <div class="rp-sec"><p class="rp-k">Next problem</p><p class="rp-next">Quotes sent 48+ hours after the visit: <b>$1,900 a month</b></p></div>
+              <div class="rp-sec"><p class="rp-k">Next problem</p><p class="rp-next">The same job typed in three places: <b>$411 a month</b></p></div>
               <p class="rp-foot"><span>Cancel any month, by email</span></p>
             </div>
           </div>
@@ -781,7 +792,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       </figure>
     </div>
     <div class="cta-inline" data-extra="computer: the call bar is on screen the whole time on a phone">
-      <a class="btn" href="tel:+13522260681">Call us</a>
+      <a class="btn" href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call us</a>
       <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
     </div>
   </div>
@@ -795,7 +806,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
         <p>We publish one price, the walk's, in <a class="u" href="#walk">step 2</a> above, with its terms. It is paid when booked, and you keep the sheet either way, even if you never hire us for a fix.</p>
         <p>Everything after the walk is quoted from your sheet, so that number comes after the walk, not before. Each fix has its own fixed price, never by the hour, and any software fees show on their own line, at cost. You hear each price before any work starts. The first conversation is free.</p></div></details>
       <details><summary>Do you work outside Gainesville?</summary><div class="ans">
-        <p>We are based in Gainesville and walk businesses across Alachua County. Farther in Florida by arrangement. Every walk includes a visit, so call and we will tell you if the drive works.</p></div></details>
+        <p>We are based in Gainesville and walk businesses across Alachua County, and farther in Florida by arrangement.</p></div></details>
       <details><summary>What data do you need, and what do you do with it?</summary><div class="ans">
         <p>Your own records: invoices, quotes, your calendar and job list, and your call history with your written OK. You run the exports or give us a user seat of our own, never a shared password. We keep the files encrypted and delete them once your sheet is delivered. The <a class="u" href="/privacy/">privacy page</a> has the rest.</p></div></details>
       <details><summary>Do I have to stop work for the visit?</summary><div class="ans">
@@ -824,7 +835,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
         <p>Yes. Cancel before the visit starts and before any of your records are shared, and you get the walk fee back. After that, if the sheet wasn't worth it to you, text or email us within 7&nbsp;days of the call where you go over it, and you get the walk fee back.</p>
         <p>You keep the sheet either way. The monthly check runs month to month: cancel by email before the next billing date. If you stop a fix or a build partway, the agreement says what is owed for the work done.</p></div></details>
       <details><summary>Do you work in Spanish?</summary><div class="ans">
-        <p>Yes. The free call, the walk, your sheet, the monthly check and the one-page handover sheet can all be in Spanish. If your booking tool texts customers only in English, that can be one of the problems we fix.</p></div></details>
+        <p>Yes. The free call, the walk, your sheet, the monthly check and the one-page handover sheet can all be in Spanish. If your booking tool texts customers only in English, we fix that too.</p></div></details>
     </div>
     <p class="faq-more">Another question? Call or text <a class="u" href="tel:+13522260681">(352) 226-0681</a>.</p>
   </div>
@@ -836,7 +847,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       <h2 class="t-close close-h">Start with a free call.</h2>
       <div class="close-act">
         <div class="arrow-to">
-          <a class="btn btn-lg" href="tel:+13522260681">Call us</a>
+          <a class="btn btn-lg" href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call us</a>
           <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
         </div>
         <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Or send a text</a></p>
@@ -856,8 +867,8 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
         <article class="letter" aria-labelledby="letter-h">
           <h3 class="letter-h" id="letter-h">Who walks your business</h3>
           <p>Most owners I meet lose their evenings to the same few jobs: the quote typed up at night, the invoice that never went out, the call nobody got back to.</p>
-          <p>Before Lumora I did the paperwork at a water damage company, and I automated most of it. Now Lumora walks businesses around Gainesville and does the same.</p>
-          <p>I speak English and Spanish, so your office can work in either.</p>
+          <p>I've built automations since 2022. At a water damage company I did the claims paperwork, then automated it and trained the staff to run it. Now Lumora does the same for businesses around Gainesville.</p>
+          <p>I'm bilingual, so your office can work in English or Spanish.</p>
           <p class="letter-sig">Franco A. Soto<span>Owner</span></p>
         </article>
         <p class="t-small hm-about"><a class="u" href="/about/">About Lumora</a></p>
@@ -895,7 +906,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       <div class="foot-lead">
         <a class="foot-brand" href="/" aria-label="Lumora, home page"><img src="/v4/assets/logo-white.svg" alt="" width="148" height="36"></a>
         <p class="foot-line">Your business should run the same whether you're there or not.</p>
-        <a class="btn" href="tel:+13522260681" data-extra="computer: the call bar carries the number on a phone">Call us</a>
+        <a class="btn" href="tel:+13522260681" data-extra="computer: the call bar carries the number on a phone"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call us</a>
       </div>
       <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">How it works</h2><ul><li><a href="/how-it-works/#conversation">The free call</a></li><li><a href="/how-it-works/#walk">The walk</a></li><li><a href="/how-it-works/#fix">One fix</a></li><li><a href="/how-it-works/#check">The monthly check</a></li><li><a href="/how-it-works/#faq">Questions owners ask</a></li><li><a href="/what-we-automate/">What we automate</a></li><li><a href="/leak-check/">Loss calculator</a></li></ul></nav>
       <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">Industries</h2><ul><li><a href="/industries/plumbing/">Plumbing</a></li><li><a href="/industries/ac-and-heating/">AC and heating</a></li><li><a href="/industries/electrical/">Electrical</a></li><li><a href="/industries/water-damage-and-mold/">Water damage and mold</a></li><li><a href="/industries/pest-control/">Pest control</a></li><li><a href="/industries/roofing/">Roofing</a></li><li><a href="/industries/restaurants-and-bars/">Restaurants and bars</a></li><li><a href="/industries/property-managers/">Property managers</a></li><li><a href="/industries/">All industries</a></li></ul></nav>
@@ -908,7 +919,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
   </div>
 </footer>
 
-<nav class="callbar" aria-label="Call or text us"><a href="tel:+13522260681">Call <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text</a></nav>
+<nav class="callbar" aria-label="Call or text us"><a href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text</a></nav>
 <script>
 (function () {
   function open(id) { var t = id && document.getElementById(id), d = t && t.closest('details'); if (d) d.open = true; }

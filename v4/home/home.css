@@ -212,6 +212,11 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
   .hm4-close .c4-rules ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:40px}
   .hm4-close .c4-rules li{border-bottom:1px solid var(--rule)}
   .c4-rules li{text-wrap:balance}   /* a Spanish rule takes two even lines, never "ya paga." alone */
+  /* review fixes, Nov 10: the signature (Nov 9) and the letter's longer story (sweep card HQ D46) made the card end 99 to 151px under
+     the ask from 1180 to 1440 (iphone_check item 22, 72 at most). The ask's lines are short, so the two columns share the width
+     evenly and the letter takes fewer lines */
+  .hm4-close .close-g{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)}
+  .hm4-close .letter-pen{margin-top:14px}   /* and the signature sits 6px closer to the letter, so the English card ends within 72px at 1280 to 1440 with the heading still two lines */
 }
 
 /* ======================================================= band padding by role (computer, then phone). Quick sections get less air,
@@ -423,6 +428,21 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
 /* under 360px the three short sentences take five lines beside "Llámenos" (each is wider than the 143px beside it at 320), so the
    smallest phones keep the two-sentence line, four lines, as before round 3 */
 @media (max-width:359px) and (max-height:700px){:lang(es) .rs-g{display:none}:lang(es) .rs-l{display:inline}}
+/* Nov 10, the handset in Call us (Franco, Nov 9: "just your average like telephone icon to the left of Call us inside the button"):
+   the button is 28px wider (the icon and its 0.4em), so beside it the reply line took one more line and the ringed row went under
+   the call bar on short phones (measured: 20px at 320 x 568 and 393 x 659, and 21px in Spanish at 360 x 780 and 393 x 852). The
+   button keeps its 58px height and the icon its 1em; its sides go to 16px on a short phone (12px in Spanish, where Llámenos is
+   wider, with 10px to the line), so the line beside it keeps its lines. At 390 and wider on a short phone the English line drops
+   ", in English or Spanish" and the facts under the price say the language instead (said once). Review fixes, Nov 10: the build
+   dropped "A Gainesville company." there, and iphone_check item 17 holds the town, the free call and the same-day reply in that
+   line (round 3: the reader learns we are local on the first screen); the language clause is the same length. The Spanish keeps
+   its three short sentences. probe: answers-build-2026-11-10/tools/probe_first.py */
+@media (max-width:899px){:lang(es) .hm4-hero .hero-act .btn:has(.ico-call){padding:0 12px}:lang(es) .hm4-hero .cta-row{gap:10px}}
+@media (max-width:899px) and (max-height:700px){:lang(en) .hm4-hero .hero-act .btn:has(.ico-call){padding:0 16px}}
+@media (min-width:390px) and (max-width:899px) and (max-height:700px){
+  :lang(en) .hm4-hero .rs-lang{display:none}
+  :lang(en) .hm4-hero .facts4 li:nth-child(2){display:inline-block}
+}
 /* round 3 (2026-10-17, craft judge): under 390px wide on a 701 to 899px tall phone (375 x 812: iPhone X, XS, 11 Pro, 12 mini, 13 mini)
    the English headline took four lines and the lede four, so the ringed row ended under the call bar (845px in English, 820 in
    Spanish; the bar starts at 756). The headline steps to 35px (three lines from 360), the lede to 16px (three lines), and the clipboard
@@ -1047,6 +1067,9 @@ html.still .sa-ctl,.sa.still .sa-ctl{display:none}   /* Nov 6: the row held the 
 .cf-tot .cf-strike{transform:rotate(-1.5deg)}
 .cf-won{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:10px}
 .cf-won b{position:relative;font:600 25px/1.2 var(--font);color:var(--pine);white-space:nowrap}
+/* review fixes, Nov 10: a line won back in part (36 of 48, 24 of 30) keeps its amount unstruck and says the dollars it wins back,
+   pine like every figure won back (won-pine); only a line won back whole is struck. The three add up to the Won back figure */
+.cf-res .cf-bk{font-weight:inherit;color:var(--pine)}
 .cf-under{position:absolute;left:0;right:0;bottom:-7px;width:100%;max-width:none;height:9px;overflow:visible}
 .cf-under path{fill:none;stroke:var(--pine);stroke-width:2.7;stroke-linecap:round}   /* no non-scaling-stroke: with it the drawn line stopped short of the figure (review round, Nov 5) */
 .cf-over{display:none}
@@ -1392,3 +1415,529 @@ html.js .hm4-hero .sheet[data-fill] .fill-wait,html.js .hm4-hero .sheet[data-fil
    to one mid-play or when a shadow next to them changes; the words in them keep one rendering (check.py shadow_air read their
    glyphs changing by up to 91 when the shadows around them were taken away) */
 .cf-main,.cf-desk,.cf-over{will-change:opacity,transform}
+
+/* ======================================================= a-desk (walk-takes-2026-11-06/a-desk/pages/home/desk.css), the computer layout
+   Franco kept on Nov 7 ("on the computer it stays how I liked it"); moved here unchanged on Nov 9, before the picks block */
+/* a-desk take (2026-11-06, Franco: the films "look pasted in"). Both films play on one desk that continues the hero's physical world:
+   a pine desk mat (the green of Who we work with, as a ground, never as text), the hero's clipboard at film size on its left and a
+   laptop on its right whose screen plays the apps. Everything stands on one line at the mat's foot, the mat has one fixed height, so
+   the film has a frame and no dead paper under it. At night the clipboard has gone home and the phone lies in its place, on the same
+   line. The caption is page text under the mat, with the round Pause at its end; the walk's close sits on the mat's two columns.
+   Loaded after home.css, so these rules win on the same selectors. Nothing here moves: home.js films() is unchanged */
+
+.hm4-walk,.hm4-night{--colw:372px;--gap:40px;--pad:36px}
+.dk{margin-top:36px}
+
+/* ---------- the desk mat ---------- */
+.dk-mat{/* ui-ok: nested-card the desk mat the objects lie on, a physical surface like the hero's clipboard */
+  position:relative;border-radius:22px;padding:44px var(--pad) var(--pad);
+  background:url(/v4/assets/grain-board.webp) 0 0/150px 150px,#2F4A3F;
+  box-shadow:inset 0 0 0 1px rgba(233,228,216,.07),inset 0 1px 0 rgba(233,228,216,.10),0 2px 0 #213730,0 3px 1px rgba(40,34,24,.20),0 26px 40px -24px rgba(40,34,24,.42)}
+.cf-night .dk-mat{background:url(/v4/assets/grain-board.webp) 0 0/150px 150px,#1F302A;
+  box-shadow:inset 0 0 0 1px rgba(233,228,216,.06),inset 0 1px 0 rgba(233,228,216,.08),0 2px 0 #0f1714,0 26px 40px -24px rgba(0,0,0,.6)}
+
+/* one grid for both films: the paper object's column, then the laptop; both stand on the mat's foot */
+.dk .cf-grid,.dk .cf-ngrid{display:grid;grid-template-columns:var(--colw) minmax(0,1fr);gap:var(--gap);align-items:end}
+
+/* ---------- the clipboard: the hero's board, clip and sheet, smaller ---------- */
+.dk-clip{position:relative;padding-top:14px}
+.dk-board{border-radius:12px;padding:34px 14px 16px;
+  box-shadow:inset 0 1px 0 rgba(255,244,222,.28),inset 0 0 0 1px rgba(70,48,20,.22),0 3px 0 var(--board-edge),0 4px 1px rgba(20,14,6,.30),0 22px 30px -16px rgba(0,0,0,.45)}
+.dk-board .clamp{top:-14px;width:190px;height:59px}
+.dk .cf-main-sheet{position:relative;padding:30px 18px 18px;border-radius:1px;box-shadow:0 1px 1px rgba(58,47,28,.18),0 3px 8px -3px rgba(58,47,28,.20)}
+.dk .cf-sh-h b{font-size:20px}
+.dk .cf-ln{padding:11px 0 10px}
+
+/* ---------- the laptop: a lid with a thin black bezel, an aluminium base with its thumb notch ---------- */
+.dk-lap{position:relative;min-width:0}
+.dk-lid{position:relative;padding:14px 14px 16px;border-radius:16px 16px 4px 4px;background:#1a1a1c;
+  box-shadow:inset 0 0 0 1px #3b3b3f,0 0 0 1px #0c0c0d}
+.dk-cam{position:absolute;left:50%;top:5px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#2e3033}
+.dk-scr{/* ui-ok: nested-card the laptop screen inside its bezel, a drawn device like the measured iPhone */position:relative;height:450px;padding:14px;border-radius:3px;overflow:hidden;background:#56707A}
+.cf-night .dk-scr{background:#2E3B44}
+.dk-base{position:relative;height:15px;margin:0 -3%;border-radius:2px 2px 14px 14px;background:#C8CACE;
+  box-shadow:inset 0 1px 0 #E4E5E8,inset 0 -2px 0 #A9ABB0,0 2px 1px rgba(0,0,0,.30),0 16px 20px -12px rgba(0,0,0,.55)}
+.dk-base i{position:absolute;left:50%;top:0;width:15%;height:5px;margin-left:-7.5%;border-radius:0 0 7px 7px;background:#AEB0B5}
+.cf-night .dk-base{background:#9A9CA1;box-shadow:inset 0 1px 0 #B7B9BD,inset 0 -2px 0 #7E8085,0 2px 1px rgba(0,0,0,.4),0 16px 20px -12px rgba(0,0,0,.7)}
+
+/* the apps fill the screen as windows do on a laptop; their shadow is the screen's, small */
+.dk .cf-main,.dk .cf-stage,.dk .cf-desk{height:100%}
+.dk .cf-win{box-shadow:0 1px 2px rgba(0,0,0,.28),0 8px 18px rgba(0,0,0,.22)}
+.dk .cf-inv{gap:14px}
+.dk .cf-doc{width:248px;box-shadow:0 1px 2px rgba(0,0,0,.25),0 6px 14px rgba(0,0,0,.18)}
+.dk .cf-inv .cf-win{height:100%}
+.dk .cq-band{gap:24px}
+
+/* the night's two windows fill the same screen: QuickBooks' page runs to the window's foot, the policy sheet shows more rows */
+.dk .cf-desk .cf-win{height:100%}
+.dk .cf-bills .cf-qbw{height:calc(100% - 77px)}
+.dk .pol-vp{--v:7}
+
+/* ---------- the night: the phone lies where the clipboard was, on the same line ---------- */
+.dk .cf-ph{justify-self:center;align-self:end}
+.dk .cf-ph .iph{width:256px}
+.dk .cf-ph .iph-dev{box-shadow:none}   /* Nov 9: plain black, as live Home's (the take drew bezel rings and a lift) */
+.dk .ph-nt{font-size:12.5px;padding-inline:10px}
+.dk .nt-top{font-size:12px}
+.dk .nt-l{padding-left:14px}
+
+/* ---------- the caption: page text under the mat, the Pause at its end ---------- */
+.dk-foot{display:grid;grid-template-columns:var(--colw) minmax(0,1fr);gap:var(--gap);padding:20px var(--pad) 0;align-items:start}
+.dk-capline{grid-column:2;display:flex;align-items:flex-start;gap:20px}
+.dk .cf-caps{flex:1;min-width:0;margin:0}
+.dk .cf-cap{font:500 20px/1.4 var(--font);letter-spacing:0;max-width:40em}
+.dk .cf-cap .cf-a,.dk .cf-cap .cf-b,.dk .cf-cap .cf-c{display:inline}
+.dk .cf-cap .cf-b,.dk .cf-cap .cf-c{font-weight:600}
+.dk .cf-pause{margin-top:-6px}
+.dk-more{grid-column:1;grid-row:1;margin:0;font-size:17px;font-weight:600;line-height:1.4}
+.cf-night .dk-foot{color:var(--on-night)}
+.cf-night.dk .cf-cap{color:var(--on-night)}
+
+/* ---------- the walk's close, on the same two columns ---------- */
+.dk-end{display:grid;grid-template-columns:var(--colw) minmax(0,1fr);gap:var(--gap);align-items:end;margin-top:48px;padding:28px var(--pad) 0;border-top:0;position:relative}
+.dk-end::before{content:"";position:absolute;left:var(--pad);right:var(--pad);top:0;border-top:1px solid var(--rule-bone)}
+.dk-end .walk-time{margin:0;font-size:17px;line-height:1.3;font-weight:600}
+.dk-end .walk-time b{display:block;margin-top:4px;font-size:44px;line-height:1.05;letter-spacing:-.015em;font-weight:600;color:var(--ink)}
+.dk-act{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 40px}
+.dk-act .cta-row{margin:0}
+.dk-act .walk-dl{margin:0;max-width:24em;font-size:15px;color:var(--muted)}
+
+/* the night band: its heading sits close over the desk */
+.wm-night.hm4-night .nb{gap:0}
+.wm-night .n4-copy{margin-bottom:0}
+
+/* ---------- between a phone and a computer (film 760 to 1099px): the same desk, a narrower clipboard ---------- */
+@container cf (min-width:760px) and (max-width:1099px){
+  .dk{--colw:268px;--gap:24px;--pad:22px}
+  .dk .cf-main-sheet{padding:28px 14px 14px}
+  .dk .cf-l{font-size:15px}
+  .dk-scr{height:470px}   /* the policy sits over the invoice here (home.css), so the screen stands taller */
+  .dk .cf-inv .cf-win{flex:1 1 auto;height:auto;min-height:0}
+  .dk .cf-ph .iph{width:256px}
+  .dk-end .walk-time b{font-size:32px}
+}
+
+/* ---------- a phone: the mat keeps its frame; the clipboard strip, then the laptop's screen cut off by the mat's edge ---------- */
+@container cf (max-width:759px){
+  .dk{margin-top:24px}
+  .dk-mat{padding:16px 12px 0;border-radius:16px;overflow:hidden}
+  .dk .cf-grid,.dk .cf-ngrid{display:flex;flex-direction:column;gap:18px;align-items:stretch}
+  .dk-clip{padding-top:8px}
+  .dk-board{padding:22px 8px 8px;border-radius:10px;box-shadow:inset 0 0 0 1px rgba(70,48,20,.22),0 2px 0 var(--board-edge),0 8px 12px -6px rgba(0,0,0,.4)}
+  .dk-board .clamp{top:-11px;width:150px;height:46px}
+  .dk .cf-main-sheet{padding:20px 12px 6px;margin:0}
+  .dk .cf-doc{padding:10px 12px}
+  /* the invoice's Saved sits beside its title here, so the mat's edge never cuts it off */
+  .dk .cf-inv .cq-pg{position:relative}
+  .dk .cf-inv .cq-foot{position:absolute;right:14px;top:10px;margin:0}
+  .dk .cf-inv .cq-saved{padding-top:2px}
+  /* the laptop seen close: its lid's top and left bezel, the screen running under the mat's right and bottom edges */
+  .dk-lap{margin-right:-12px}
+  .dk-lid{padding:12px 0 0 12px;border-radius:14px 0 0 0;box-shadow:inset 1px 1px 0 #3b3b3f}
+  .dk-cam{top:4px}
+  .dk-scr{height:392px;padding:10px 0 0 10px;border-radius:3px 0 0 0}
+  .cf-night .dk-scr{height:340px}
+  .dk .cf-inv .cf-win{flex:1 1 auto;height:auto;min-height:0}
+  .dk-base{display:none}
+  .dk .cf-win{border-radius:8px 0 0 0}
+  .dk .cf-over{top:30px;left:12px;right:12px;z-index:7}
+  /* the night: the phone stands behind the laptop, its clock and the morning list over the lid */
+  .dk .cf-ph{order:-1;align-self:center;height:256px;overflow:hidden;-webkit-mask-image:none;mask-image:none}
+  .dk .cf-ph .iph{width:270px}
+  .cf-night .dk-lap{position:relative;z-index:2;margin-top:-36px}
+  .dk .cf-desk{height:100%}
+  .dk .pol-vp{--v:6}
+  /* the caption and the close: one column */
+  .dk-foot{display:flex;flex-direction:column;padding:16px 0 0}
+  .dk-more{order:2}
+  .dk-capline{gap:14px}
+  .dk .cf-cap{font-size:18px}
+  .dk .cf-pause{margin-top:-4px}
+  .dk-more{margin-top:12px}
+}
+@media (max-width:1199px){.hm4-walk,.hm4-night{--colw:268px;--gap:24px;--pad:22px}}   /* Nov 9: the night too, and from 760px of film (the figure is its own container, so the container query's .dk{--colw} never reached it); a phone's layout ignores it */
+@media (max-width:899px){
+  .dk-end{display:block;margin-top:36px;padding:24px 0 0}
+  .dk-end::before{left:0;right:0}
+  .dk-end .walk-time b{font-size:32px}
+  .dk-act{display:grid;justify-content:start;gap:14px;margin-top:18px}
+}
+
+/* ======================================================= p4-pullout (walk-takes-2026-11-07/p4-pullout/pages/home/pullout.css), the phone
+   layout Franco picked on Nov 9 ("we will do P4 pullout"); moved here on Nov 9, before the picks block */
+/* p4 pull-out take (2026-11-07). Franco liked a-desk on a computer and rejected it on a phone ("everything small and stacked").
+   A phone now copies four patterns from the best product pages:
+   - Teenage Engineering's OP-1 field: the portrait object fills the phone's width with nothing beside it. Here the hero's clipboard,
+     at real size, lies on the paper ground, no mat, no laptop.
+   - Jitter: one component blown up instead of the whole app. Only the part of the app that moves comes out.
+   - Tabela's phone tile: one panel hangs over the object's edge at readable size. Each app part is a small Mac window over the
+     board's lower right, 12px under the lit line, so the line being read is never covered.
+   - Readwise's Daily Review: the laptop goes, the iPhone stays alone and large. Moto: small panels come in one at a time over a
+     portrait scene, the night's windows over the phone's lower half.
+   The computer layout is a-desk's, unchanged: every rule here sits in the phone's container query, and .po is hidden above it.
+   Timing lives in home.js (walkPhone, nightPhone), the same beats as the computer's film. */
+
+.po{display:none}
+
+@container cf (max-width:759px){
+  /* ---------- no mat on a phone ---------- */
+  .dk-mat,.cf-night .dk-mat{padding:0;border-radius:0;background:none;box-shadow:none;overflow:visible}
+  .dk .dk-lap,.dk .cf-over{display:none}
+
+  /* ---------- the walk: the hero's clipboard at real size, the film block fixed at board + 120px ---------- */
+  .cf-walk .cf-grid{display:block;position:relative;max-width:460px;margin-inline:auto;padding-bottom:120px}   /* home.js sets the exact overhang */
+  .cf-walk.still .cf-grid{padding-bottom:0}
+  .cf-walk .dk-clip{padding-top:14px}
+  .cf-walk .dk-board{padding:34px 14px 16px;border-radius:12px;
+    box-shadow:inset 0 1px 0 rgba(255,244,222,.28),inset 0 0 0 1px rgba(70,48,20,.22),0 3px 0 var(--board-edge),0 4px 1px rgba(20,14,6,.30),0 10px 12px -8px rgba(0,0,0,.30)}   /* Nov 9: the lift ends 14px under the board, off the caption (shadow_air) */
+  .cf-walk .dk-board .clamp{top:-14px;width:190px;height:59px}
+  .cf-walk .cf-main-sheet{margin:0;padding:30px 18px 18px;border-radius:1px;box-shadow:0 1px 1px rgba(58,47,28,.18),0 3px 8px -3px rgba(58,47,28,.20)}
+  .cf-walk .cf-main-sheet .cf-sh-h{margin-bottom:12px}
+  .cf-walk .cf-main-sheet .cf-sh-h img{width:30px}
+  .cf-walk .cf-main-sheet .cf-sh-h b{font-size:20px}
+  .cf-walk .cf-main-sheet .cf-sh-sub{font-size:15px}
+  .cf-walk .cf-main-sheet .cf-lines{display:block}
+  .cf-walk .cf-main-sheet .cf-ln{grid-area:auto;padding:11px 0 10px;visibility:visible;opacity:1}
+  .cf-walk .cf-main-sheet .cf-l{font-size:17px}
+  .cf-walk .cf-main-sheet .cf-usd{font-size:17px}
+  .cf-walk .cf-main-sheet .cf-tot,.cf-walk .cf-main-sheet .cf-won{display:flex}
+  .cf-walk .cf-main-sheet .cf-tot .cf-usd{font-size:19px}
+  .cf-walk .cf-main-sheet .cf-won b{font-size:22px}
+
+  /* ---------- the pulled-out windows: one at a time, over the board's lower right ---------- */
+  /* the layer is the board's box; anything past the board's left edge is cut there, the right overhang shows */
+  .po{display:block;position:absolute;inset:0 0 0 0;z-index:5;pointer-events:none;clip-path:inset(-80px -60px -60px 0)}
+  .po-fx{position:absolute;inset:0;pointer-events:none;z-index:6}
+  .po-w{position:absolute;right:-8px;top:0;width:min(300px,calc(100% - 4px));border-radius:10px;overflow:hidden;background:#fff;
+    box-shadow:0 0 0 1px rgba(0,0,0,.07),0 1px 1px rgba(0,0,0,.14),0 6px 14px rgba(40,34,24,.20);
+    font:400 15px/1.35 var(--sys);color:#1d1d1f;visibility:hidden;opacity:0}
+  /* the Mac title bar and its buttons at the computer's size */
+  .po .cf-bar{height:40px;padding:0 14px;font:600 14px var(--sys)}
+  .po .cf-dots{gap:7px}
+  .po .cf-dots i{width:12px;height:12px}
+  .po .cf-ttl{margin-right:60px;padding-left:10px}
+
+  /* step 1: Outlook's reading pane */
+  .po-ol .cf-bar{background:#0F6CBD;color:#fff}
+  .po-mail{padding:14px 18px 16px}
+  .po-mail .ol-sb{font-size:19px;margin-bottom:8px}
+  .po-mail .ol-to{font-size:14px}
+  .po-dt{margin-top:5px;font-size:13px;color:#605e5c}
+  .po-mail p{margin:10px 0 12px;font-size:15px;line-height:1.5;color:#242424}
+
+  /* step 2: Renewals 2026.xlsx, the formula bar and rows 11 to 13, columns A, D and E */
+  .po-xl{font-family:var(--xls)}
+  .po-xl .cf-bar{background:#107C41;color:#fff}
+  .po-xl .cx-fx{font-size:14px}
+  .cf-walk .po-grid td,.cf-walk .po-grid th{height:34px;padding:4px 8px;font-size:15px}
+  .cf-walk .po-grid th{height:24px;font-size:13px;padding:3px}
+  .cf-walk .po-grid td.rn,.cf-walk .po-grid th:first-child{width:34px;font-size:13px;padding:3px}
+  .cf-walk .po-grid th:nth-child(3){width:58px}
+  .cf-walk .po-grid th:nth-child(4){width:100px}
+  .cf-walk .po-grid tr:last-child td{border-bottom:0}
+  .po-grid .cx-e12 .v0,.po-grid .cx-e12 .v1{left:8px}
+
+  /* step 3: the policy behind, cut by the board's left edge; the invoice in front, whole, a step lower. Both stack their details
+     label over value, so the invoice's left edge never covers a value on the policy */
+  .po-inv{left:-12px;right:-8px;width:auto;overflow:visible;background:none;box-shadow:none;border-radius:0}
+  .po-doc{position:absolute;left:0;top:0;width:200px;padding:14px 14px 12px 22px;background:#fff;
+    box-shadow:0 0 0 1px rgba(0,0,0,.05),0 1px 1px rgba(58,47,28,.16),0 10px 24px rgba(40,34,24,.20);font:400 14px/1.3 var(--sys);color:#1d1d1f}
+  .po-doc .cd-h{font-size:15px;margin-bottom:4px}
+  .po-doc .cd-kv{display:grid;justify-content:start;gap:1px;padding:6px 0 7px}
+  .po-doc .cd-kv>span:first-child{font-size:12px;color:#666}
+  .po-doc .cd-prem{border:0;padding-bottom:2px}
+  .po-doc .prem{justify-self:start}
+  .po-qb{position:absolute;right:0;top:0;width:240px;border-radius:10px;overflow:hidden;background:#fff;
+    box-shadow:0 0 0 1px rgba(0,0,0,.07),0 1px 1px rgba(0,0,0,.14),0 14px 30px rgba(40,34,24,.26)}
+  .po-qb .cb-strip{height:40px;padding:0 12px}
+  .po-qb .cb-tab{margin-left:6px;padding:9px 12px;font-size:13px}
+  .po-qpg{padding:10px 12px 12px;font-size:14px}
+  .po-qpg .cq-band{display:grid;gap:4px;margin:0 0 8px;padding:7px 10px}
+  .po-qpg .cq-band>div,.po-amt{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .po-qpg .cq-band small,.po-amt small{display:inline;font-size:12px;color:#666}
+  .po-amt{padding:0 2px 0 10px}
+  .po-amt .cq-fld{min-width:92px;font-size:14px}
+  .po-qpg .cq-foot{margin-top:8px}
+  .po-qpg .cq-rs{padding:6px 14px;font-size:13px}
+  .po-qpg .cq-saved{padding-top:5px}
+
+  /* ---------- the night: the phone alone and large, the windows over its lower half ---------- */
+  .cf-night .cf-ngrid{display:block}
+  .cf-night .cf-ph{width:300px;max-width:100%;height:auto;margin:0 auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
+  .cf-night .cf-ph .iph{width:100%}
+  .cf-night .cf-ph .iph-dev{box-shadow:none}   /* Nov 9: plain black, as live Home's; its lift fell on the caption under it (shadow_air) */
+  .po-n{--pw:min(330px,100cqw);inset:auto;left:calc(50% - var(--pw) / 2);top:55%;width:var(--pw);clip-path:none}
+  .po-n .po-w{left:0;right:auto;width:100%}
+  .po-bills .cf-bar{background:#f3f3f3;color:#1d1d1f;border-bottom:1px solid #e3e3e3}
+  .po-bl{margin:0;padding:2px 0 4px;list-style:none}
+  .po-bl li{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:10px;row-gap:2px;padding:9px 14px;border-bottom:1px solid #f0f0f0}
+  .po-bl li:last-child{border-bottom:0}
+  .po-bl b{font:500 15px/1.3 var(--sys);color:#1d1d1f}
+  .po-bl .po-over b{font-weight:600}
+  .po-am{font-size:15px;text-align:right;white-space:nowrap}
+  .po-st{grid-column:1/3;font-size:14px;line-height:1.3}
+  .po-st .cq-tick{width:16px;height:16px}
+  .po-st .cq-tick::after{left:5px;top:2px}
+  .po-pol{font-family:var(--xls)}
+  .po-pol .cf-bar{background:#107C41;color:#fff}
+  .po-pol .cx-grid td,.po-pol .cx-grid th{font-size:14px;padding-inline:6px}
+  .po-pol .cx-grid td.rn,.po-pol .cx-grid th:first-child{width:30px;font-size:12px;padding:2px}
+  .po-pol .cx-grid td:nth-child(2),.po-pol .cx-grid th:nth-child(2){width:36%}
+  .po-pol .cx-grid td:nth-child(3),.po-pol .cx-grid th:nth-child(3){width:26%}
+  .po-pol tr.chd td{height:auto;padding-block:5px;white-space:normal;line-height:1.15;font-size:13px}
+  .po-pol td.pol-c{padding-left:13px}   /* room for the pen ring round Not paid */
+  .po-vp{--rh:32px;--c:2;position:relative;height:calc(var(--rp,var(--rh)) * 5);overflow:hidden}
+  .po-roll .cx-grid td{height:calc(var(--rh) - 1px);padding-block:0}
+  .po-roll .cx-grid tr:first-child td{border-top:0}
+
+  /* ---------- the caption line: page text under the picture, the round Pause at its right end ---------- */
+  .dk .dk-foot{padding:18px 0 0}
+  .dk .dk-capline{gap:14px;align-items:flex-start}
+  .dk .cf-caps{min-height:calc(3 * 19px * 1.4)}
+  .dk .cf-cap{font:500 19px/1.4 var(--font)}
+  .dk .cf-pause{margin-top:0}
+  .cf-night .dk-foot{padding-top:20px}
+  .cf-night.dk .cf-caps{min-height:calc(2 * 19px * 1.4)}
+}
+@container cf (max-width:359px){.po-vp{--rh:28px}.po-pol tr.chd td{font-size:12px}}
+@container cf (max-width:339px){
+  .cf-night .cf-ph{width:260px}
+  .cf-walk .cf-main-sheet{padding-inline:14px}
+  .po-doc{width:184px}
+  .po-qb{width:200px}
+  .po-qb .cb-strip{padding:0 8px}
+  .po-qb .cb-tab{margin-left:2px;padding:9px 8px;font-size:12px}
+  .po-qpg .cq-band>div{gap:4px}
+  .po-amt .cq-fld{min-width:84px}
+}
+@media (max-width:799px){.hm4-walk,.hm4-night{overflow-x:clip}}
+
+/* ======================================================= Franco's picks, Nov 9 (picks-build-2026-11-09). His words: "we'll do P4
+   pullout. i also like the Blotter... I do like the ink plate... I like the lamp. Now, on the desktop, it should probably be right
+   next to the paragraph where it says, 'paperwork checked while you slept,' not on top of the phone. It should be a line, a centered
+   div with the paragraph and the title. Also, on the phone, the lamp at 393 is not centered... It would look good if it were centered
+   or maybe aligned left." On the desk phone plate: "I like that it's on the 'how it works' section but I don't know if I like it
+   exactly there... the coil of the phone is touching the line". The rules above this block are a-desk's (the computer, Nov 6) and
+   p4-pullout's (the phone, Nov 7), moved here from their takes' desk.css and pullout.css; these rules finish them. */
+
+/* ---------- 1. the films' desk mat is no longer pine. The hero's blotter is pine now, and two pine desks on one screen fought
+   (the walk film starts about one screen under the hero). The walk's mat is a felt one step darker than the bone band it lies on
+   (--bone-2), the night's a charcoal felt one step lighter than the night: a quiet surface that frames the film and leaves pine to
+   the blotter and Who we work with ---------- */
+.dk-mat{background:url(/v4/assets/grain-board.webp) 0 0/150px 150px,var(--bone-2);
+  box-shadow:inset 0 0 0 1px rgba(58,47,28,.10),inset 0 1px 0 rgba(255,250,240,.35),0 2px 0 #CBC2AE,0 3px 1px rgba(40,34,24,.12),0 26px 40px -24px rgba(40,34,24,.30)}
+.cf-night .dk-mat{background:url(/v4/assets/grain-board.webp) 0 0/150px 150px,#22211E;
+  box-shadow:inset 0 0 0 1px rgba(233,228,216,.06),inset 0 1px 0 rgba(233,228,216,.07),0 2px 0 #0c0c0b,0 26px 40px -24px rgba(0,0,0,.6)}
+/* a phone has no mat (p4): the felt above must not come back under 760px of film, or its lift falls on the caption (shadow_air) */
+@container cf (max-width:759px){.dk-mat,.cf-night .dk-mat{background:none;box-shadow:none}}
+
+/* ---------- 2. p4 on the phone, the judges' three grafts ---------- */
+/* (a) the film's height is the board's: home.js walkPhone hangs each window under its line where it fits on the board, and over the
+   lines already done when it doesn't, so no step leaves empty paper under the board (it was about 100px, 200px at 320) */
+/* (b) the Pause's progress ring (d1-mercury's): the button's own border is the track, the ring fills with the step being played */
+.pz-ring{position:absolute;inset:-1.5px;width:44px;height:44px;transform:rotate(-90deg);overflow:visible;pointer-events:none}
+.pz-ring circle{fill:none;stroke-width:2}
+.pz-rt{stroke:none}
+.pz-rp{stroke:currentColor;stroke-dasharray:1 1;stroke-dashoffset:1;stroke-linecap:round}
+.cf.still .pz-ring,.cf.done .pz-rp{display:none}
+/* (c) p1-corner's tappable rows: each line of the film's walk sheet is a button that plays its step. Nothing shows until a hover
+   or a keyboard focus, so the sheet reads as before */
+.cf-ln{position:relative}
+.cf-go{position:absolute;inset:-2px -6px;z-index:1;margin:0;padding:0;border:0;border-radius:4px;background:none;cursor:pointer}
+.cf-go:focus-visible{outline:2px solid var(--ink);outline-offset:0}
+@media (hover:hover) and (pointer:fine){.cf-go:hover{background:rgba(17,17,16,.05)}}
+.cf.still .cf-go,html:not(.js) .cf-go{display:none}
+/* the phone's pulled-out invoice wears the live plain Mac bar, as every film window since Nov 7 (SYSTEM.md 21) */
+@container cf (max-width:759px){
+  /* from 420px of film, 252px wide with the buttons at the phone's 10px: "Invoice - QuickBooks" keeps its whole name, centred (PIC_TEXT_JS, DESK_JS); narrower, see the rules at the end */
+  .po-qb{width:252px}
+  .po-qb .cf-bar{height:40px;padding:0 10px;background:#e9e9e9;border-bottom:1px solid #d0d0d0;color:#3a3a3a;font:500 12.5px var(--sys)}
+  .po-qb .cf-dots{gap:6px}
+  .po-qb .cf-dots i{width:10px;height:10px}
+  .po-qb .cf-ttl{margin-right:50px;padding-left:8px}
+}
+@container cf (max-width:339px){.po-qb{width:212px}.po-qb .cf-bar{padding:0 8px}.po-qb .cf-ttl{font-size:12px;margin-right:0;padding-left:6px}}
+
+/* ---------- 3. the blotter: the hero clipboard on the owner's pine desk pad (green take, Nov 7). REVERSAL of the Oct 24 rule "one
+   pine field a page": Home now has two pine surfaces, the pad and Who we work with, never on one screen and never carrying text
+   (system.css token note, SYSTEM.md 3 and 10, Lumora.lint, check.py PINE). The pad is drawn by the board's ::before (the field) and
+   ::after (the leather corners); .clip[data-pine=pad] marks it for the lint ---------- */
+.hm4-hero{overflow-x:clip}
+.hm4-hero .clip{isolation:isolate}
+.hm4-hero .hero-tool{--blot-out:16px;--blot-top:96px;--blot-foot:24px}
+@media (min-width:1080px){.hm4-hero .hero-tool{--blot-out:24px}}
+@media (min-width:1180px){.hm4-hero .hero-tool{--blot-out:56px}}
+.hm4-hero .board::before,.hm4-hero .board::after{content:"";position:absolute;z-index:-1;pointer-events:none;
+  top:var(--blot-top);bottom:calc(-1 * var(--blot-foot));left:calc(-1 * var(--blot-out));right:calc(50% - 50vw)}
+.hm4-hero .board::before{
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%232F4A3F' fill-opacity='.5'/%3E%3C/svg%3E") 0 0/8px 8px,
+    url(/v4/assets/grain.webp) 0 0/160px 160px,#2F4A3F;
+  background-blend-mode:normal,multiply,normal;
+  outline:1px solid rgba(194,203,191,.4);outline-offset:-13px}
+.hm4-hero .board::after{
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' fill='none'%3E%3Cpath d='M55 0L0 55' stroke='%23C2CBBF' stroke-opacity='.24'/%3E%3Cpath d='M47 0L0 47' stroke='%23C2CBBF' stroke-opacity='.34' stroke-dasharray='3 3'/%3E%3C/svg%3E") 0 0/56px 56px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' fill='none'%3E%3Cpath d='M0 1L55 56' stroke='%23C2CBBF' stroke-opacity='.24'/%3E%3Cpath d='M0 9L47 56' stroke='%23C2CBBF' stroke-opacity='.34' stroke-dasharray='3 3'/%3E%3C/svg%3E") 0 100%/56px 56px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%2324392F' fill-opacity='.5'/%3E%3C/svg%3E") 0 0/8px 8px,
+    url(/v4/assets/grain.webp) 0 0/160px 160px,#24392F;
+  background-blend-mode:normal,normal,normal,multiply,normal;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0H56L0 56Z'/%3E%3C/svg%3E") 0 0/56px 56px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0L56 56H0Z'/%3E%3C/svg%3E") 0 100%/56px 56px no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0H56L0 56Z'/%3E%3C/svg%3E") 0 0/56px 56px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0L56 56H0Z'/%3E%3C/svg%3E") 0 100%/56px 56px no-repeat}
+.hm4-hero .board{box-shadow:inset 0 1px 0 rgba(255,244,222,.28),inset 0 0 0 1px rgba(70,48,20,.22),0 3px 0 var(--board-edge),0 1px 1px rgba(0,0,0,.25),0 14px 28px rgba(10,20,15,.35)}
+.hm4-hero .pk-more{margin-top:calc(var(--blot-foot) + 24px)}
+/* the phone, where the take's pad showed only as 16px strips down each side. The clipboard fills the width there (as p4's walk
+   board does), so the pad is the desk the full-width board lies on: it starts behind the steel clamp, so a pine band runs across
+   the screen at the board's top, and ends 40px under the board; its four leather corners sit at the screen's edges, two up by the
+   clamp and two under the board, and its stitched edge runs 8px in. The board doesn't move, so the first screen is as before */
+@media (max-width:899px){
+  .hm4-hero .hero-tool{--blot-top:-11px;--blot-foot:40px}
+  .hm4-hero .board::before{left:calc(50% - 50vw);outline-offset:-9px}
+  .hm4-hero .board::after{left:calc(50% - 50vw);
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' fill='none'%3E%3Cpath d='M33 0L0 33' stroke='%23C2CBBF' stroke-opacity='.28'/%3E%3Cpath d='M27 0L0 27' stroke='%23C2CBBF' stroke-opacity='.38' stroke-dasharray='3 3'/%3E%3C/svg%3E") 0 0/34px 34px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' fill='none'%3E%3Cpath d='M1 0L34 33' stroke='%23C2CBBF' stroke-opacity='.28'/%3E%3Cpath d='M7 0L34 27' stroke='%23C2CBBF' stroke-opacity='.38' stroke-dasharray='3 3'/%3E%3C/svg%3E") 100% 0/34px 34px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' fill='none'%3E%3Cpath d='M0 1L33 34' stroke='%23C2CBBF' stroke-opacity='.28'/%3E%3Cpath d='M0 7L27 34' stroke='%23C2CBBF' stroke-opacity='.38' stroke-dasharray='3 3'/%3E%3C/svg%3E") 0 100%/34px 34px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' fill='none'%3E%3Cpath d='M34 1L1 34' stroke='%23C2CBBF' stroke-opacity='.28'/%3E%3Cpath d='M34 7L7 34' stroke='%23C2CBBF' stroke-opacity='.38' stroke-dasharray='3 3'/%3E%3C/svg%3E") 100% 100%/34px 34px no-repeat,
+      url(/v4/assets/grain.webp) 0 0/160px 160px,#24392F;
+    background-blend-mode:normal,normal,normal,normal,multiply,normal;
+    -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M0 0H34L0 34Z'/%3E%3C/svg%3E") 0 0/34px 34px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M0 0H34V34Z'/%3E%3C/svg%3E") 100% 0/34px 34px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M0 0L34 34H0Z'/%3E%3C/svg%3E") 0 100%/34px 34px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M34 0V34H0Z'/%3E%3C/svg%3E") 100% 100%/34px 34px no-repeat;
+    mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M0 0H34L0 34Z'/%3E%3C/svg%3E") 0 0/34px 34px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M0 0H34V34Z'/%3E%3C/svg%3E") 100% 0/34px 34px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M0 0L34 34H0Z'/%3E%3C/svg%3E") 0 100%/34px 34px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M34 0V34H0Z'/%3E%3C/svg%3E") 100% 100%/34px 34px no-repeat}
+}
+
+/* ---------- 4. the ink plates: pine ink, hatching only, one drawing style (make_plates.py). Art, never UI: no text on them, no
+   link, nothing moves ---------- */
+.ink{display:block;max-width:100%;height:auto;pointer-events:none;user-select:none}
+
+/* the lamp row (#night). The lamp is a paper print with its plate mark, so its pine ink sits on paper on the night band; a paper
+   object, it takes the house paper lift. On a computer the lamp, the heading and the paragraph are one group, centred on the band,
+   the lamp beside the words (Franco's "a centered div with the paragraph and the title"). On a phone the section's class picks the
+   layout: lamp-center (the default: the print centred over the heading) or lamp-left (the print on the copy's left edge) */
+.ink-lamp{flex:none;background:url(/v4/assets/grain.webp) 0 0/160px 160px,var(--paper);background-blend-mode:multiply;box-shadow:var(--lift)}
+.n4-row{display:flex;flex-direction:column;align-items:center;gap:24px}
+.n4-row .n4-copy{align-self:stretch}
+.lamp-center .ink-lamp{width:min(264px,78%)}
+@media (max-width:699px){.n4-row{max-width:36em}}   /* the row is the copy's width, so a centred lamp is centred over the words */
+.lamp-left .n4-row{align-items:flex-start}
+.lamp-left .ink-lamp{width:min(220px,64%)}
+/* answers build, Nov 10 (Franco, Nov 9: "lamp on the phone goes LEFT"; "I Dont like at all how it looks on that background honestly
+   looks like forced or something. maybe we could keep the lamp white instead of tryna force it green"). lamp-white, the default: the
+   lamp drawn in the band's paper tone straight on the night (lamp-night.svg: the room is the band, the light is what the lines
+   draw), no print, no lift, so it reads as part of the band. lamp-pine brings back the pine print on its paper for comparison.
+   One of the two images shows; a hidden lazy image is never fetched */
+.ink-lamp-p,.lamp-pine .ink-lamp-w{display:none}
+.lamp-pine .ink-lamp-p{display:block}
+.ink-lamp-w{background:none;box-shadow:none}   /* its box is the drawing's own (no paper margin), so lamp-left starts on the heading's edge */
+/* Nov 9, third pass: the row starts at 700 (from 700 to 899 the lamp was centred over a 36em column on the left, so it sat up to
+   111px off the screen's centre, neither of Franco's two phone layouts). The print is smaller (it was 250px tall beside 171px of
+   words, 36px over the film's mat, 12px off the film phone's edge at 1440): now about 200px tall at 1440, its left edge 60px inside
+   the film's, and the row keeps 24px more over the film */
+@media (min-width:700px){
+  .n4-row{flex-direction:row;justify-content:center;gap:clamp(32px,4vw,56px);margin-bottom:24px}
+  .n4-row .n4-copy{align-self:center;flex:0 1 36em}
+  .n4-row .n4-copy h2,.n4-row .n4-copy .t-lede{margin-inline:0;text-align:left}
+  .lamp-center .ink-lamp,.lamp-left .ink-lamp{width:clamp(200px,18vw,260px)}
+}
+
+/* the desk phone (How it works). Default, phone-call: on a computer it stands in the call row after the number, the phone beside
+   "Call us"; on a phone, where the call row is the call bar's, it stands beside the heading (Nov 9, second pass: at the timeline's
+   end it added 150px under the last rule with nothing to sit beside, and beside the heading it lifts the dull first screen of the
+   section at no height). phone-head: at the heading row's right end on a computer, its foot 32px over the timeline's top rule; on a
+   phone it closes the timeline on the rows' left edge. Either way the coil keeps 8px or more of paper from any rule (check.py PICKS_JS) */
+/* Nov 10: the desk phone is off Home (Franco, Nov 9: "leave off now"); the grid only stands while a plate is in the section, so
+   How it works lays out as before the picks build. The rules stay so the plate can come back with its markup */
+.hm4-how:has(.ink-phone) .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center}
+.hm4-how:has(.ink-phone) .wrap>*{grid-column:1/-1}
+.ink-phone{width:150px}
+.phone-head .ink-phone{grid-column:1;justify-self:start;margin-top:28px}
+.phone-call .ink-phone{grid-column:2;grid-row:1;justify-self:end;align-self:end;width:112px;margin:0 0 20px 16px}
+.phone-call .how-h{grid-column:1;grid-row:1}
+@media (min-width:900px){
+  .phone-call .wrap{grid-template-columns:auto minmax(0,1fr)}
+  .phone-call .how-h{grid-column:1/-1;grid-row:auto}
+  .phone-call .cta-inline{grid-column:1}
+  .phone-call .ink-phone{grid-column:2;grid-row:auto;justify-self:start;align-self:end;margin:30px 0 -6px 48px;width:184px}   /* 30px under the last step's rule, as the call row */
+  .phone-head .ink-phone{grid-column:2;grid-row:1;justify-self:end;align-self:end;width:176px;margin:-72px 0 32px 24px}
+  .phone-head .how-h{grid-column:1;grid-row:1}
+}
+@media (min-width:900px) and (max-width:1199px){.phone-head .ink-phone{width:150px}}
+/* the walk film's foot on a phone: 0 until home.js measures what still hangs under the board (p4's 120px start made the film 936px
+   tall at 320, so half of it never fit between the header and the call bar of a 568px phone and it never started) */
+@container cf (max-width:759px){.cf-walk .cf-grid{padding-bottom:0}}
+/* the pulled-out windows on a narrow phone (film under 360px): the buttons at 10px and the title at 12.5px, still centred, so the
+   Spanish "Renovaciones 2026.xlsx" keeps its whole name; only "Facturas de proveedores - QuickBooks" gives up its centring margin, as
+   its laptop window's does under 360px (SYSTEM.md 21) */
+@container cf (max-width:419px){
+  .po .cf-bar{padding:0 10px;font-size:12.5px}
+  .po .cf-dots{gap:6px}
+  .po .cf-dots i{width:10px;height:10px}
+  .po .cf-ttl{margin-right:50px;padding-left:8px}
+  .po-bills .cf-ttl:lang(es){margin-right:0;padding-left:6px;font-size:12px}
+}
+@container cf (max-width:419px){.po-doc{width:176px}.po-qb{width:212px}.po-qb .cf-ttl{margin-right:0;padding-left:6px;font-size:12px}}   /* a narrow phone: the policy and the invoice side by side, no value covered, so the invoice need not step down */
+@container cf (max-width:339px){.po-doc{width:176px}.po-qb{width:200px}.po-qb .cf-ttl{margin-right:0;padding-left:6px;font-size:12px}}   /* 320: the invoice keeps its whole name; under 340px of film it gives up its centring margin */
+/* up to 317px of film (320 to 349 wide), Nov 9, third pass. "Lisa Anderson" and its tick end 119px into the policy, and a 200px invoice
+   starts at 96 there. The second pass moved the policy's words 14px left, which put their first letters under the board's clip
+   ("olicy", "isa Anderson"), and at 320 the invoice still stepped down, so the policy lay over the clamp. Now the invoice is the
+   narrow one: 180px, its customer and policy stacked label over value as the policy's are, 4px nearer the screen's edge. The
+   policy's words start 6px inside the clip at 13px, and the two stay side by side with every tick showing (check.py nov9_problems) */
+@container cf (max-width:317px){
+  .po-inv{right:-12px}
+  .po-doc{padding-left:18px}
+  .po-doc .cd-h{font-size:13px}   /* "DECLARACIONES" ends before the invoice starts */
+  .po-doc .cd-kv>:last-child{font-size:13px}
+  .po-qb{width:180px}
+  .po-qb .cf-bar{padding:0 8px}
+  .po-qb .cf-ttl{margin-right:0;padding-left:6px;font-size:12px}
+  .po-qpg{padding:8px 8px 10px}
+  .po-qpg .cq-band{padding:6px 8px}
+  .po-qpg .cq-band>div{display:grid;justify-content:start;gap:0}
+  .po-amt{padding:0 0 0 8px}
+  .po-amt .cq-fld{min-width:70px}
+}
+/* the policy's "Premium" label keeps 5px over the pen's ring round the amount (the ring's top touched the label's baseline) */
+@container cf (max-width:759px){.po-doc .cd-kv.cd-prem{gap:5px}}
+/* a narrow phone (film under 360px): the Excel rows' columns D and E narrower, so "Garcia, Maria" keeps its whole name in column A */
+@container cf (max-width:359px){.cf-walk .po-grid th:nth-child(3){width:48px}.cf-walk .po-grid th:nth-child(4){width:86px}}
+/* the night's caption row starts 28px under the film on a phone, clear of the windows' shadows */
+@container cf (max-width:759px){.cf-night .dk-foot{padding-top:28px}}
+
+/* ---------- Nov 9, third pass: the blotter between a phone and a wide screen ---------- */
+/* 900 to 1079: the pad shows 16px left of the clipboard, so its 56px leather corners hid behind the board and the stitching ran 3px
+   from the board's edge: a green frame. In that range the pad is a plain pine field, no corners, no stitching */
+@media (min-width:900px) and (max-width:1079px){
+  .hm4-hero .board::before{outline:0}
+  .hm4-hero .board::after{display:none}
+}
+/* 1600 and up: the pad ran to the screen's edge, 360px of bare pine at 1920, a green band. It ends 120px right of the clipboard there
+   (what 1440 shows) and takes its two right-hand leather corners, so it reads as a pad with four corners */
+@media (min-width:1600px){
+  .hm4-hero .board::before,.hm4-hero .board::after{right:-120px}
+  .hm4-hero .board::after{
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' fill='none'%3E%3Cpath d='M55 0L0 55' stroke='%23C2CBBF' stroke-opacity='.24'/%3E%3Cpath d='M47 0L0 47' stroke='%23C2CBBF' stroke-opacity='.34' stroke-dasharray='3 3'/%3E%3C/svg%3E") 0 0/56px 56px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' fill='none'%3E%3Cpath d='M1 0L56 55' stroke='%23C2CBBF' stroke-opacity='.24'/%3E%3Cpath d='M9 0L56 47' stroke='%23C2CBBF' stroke-opacity='.34' stroke-dasharray='3 3'/%3E%3C/svg%3E") 100% 0/56px 56px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' fill='none'%3E%3Cpath d='M0 1L55 56' stroke='%23C2CBBF' stroke-opacity='.24'/%3E%3Cpath d='M0 9L47 56' stroke='%23C2CBBF' stroke-opacity='.34' stroke-dasharray='3 3'/%3E%3C/svg%3E") 0 100%/56px 56px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' fill='none'%3E%3Cpath d='M56 1L1 56' stroke='%23C2CBBF' stroke-opacity='.24'/%3E%3Cpath d='M56 9L9 56' stroke='%23C2CBBF' stroke-opacity='.34' stroke-dasharray='3 3'/%3E%3C/svg%3E") 100% 100%/56px 56px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%2324392F' fill-opacity='.5'/%3E%3C/svg%3E") 0 0/8px 8px,
+      url(/v4/assets/grain.webp) 0 0/160px 160px,#24392F;
+    background-blend-mode:normal,normal,normal,normal,normal,multiply,normal;
+    -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0H56L0 56Z'/%3E%3C/svg%3E") 0 0/56px 56px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0H56V56Z'/%3E%3C/svg%3E") 100% 0/56px 56px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0L56 56H0Z'/%3E%3C/svg%3E") 0 100%/56px 56px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M56 0V56H0Z'/%3E%3C/svg%3E") 100% 100%/56px 56px no-repeat;
+    mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0H56L0 56Z'/%3E%3C/svg%3E") 0 0/56px 56px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0H56V56Z'/%3E%3C/svg%3E") 100% 0/56px 56px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0L56 56H0Z'/%3E%3C/svg%3E") 0 100%/56px 56px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M56 0V56H0Z'/%3E%3C/svg%3E") 100% 100%/56px 56px no-repeat}
+}
+/* the hero sheet's row links on a phone: 44px tall (they were 43 at 320 and 375) */
+@media (max-width:899px){.sh-go::after{top:-.5px;bottom:-.5px}}
+/* review fixes, Nov 10: the walk film's end frame on a narrow phone. "Won back" / "Lo que recupera" stays one line beside its figure
+   (it broke to "Lo que / recupera" at 320); under 340 the figure is 20px with an 8px gap, so the Spanish one stays inside the sheet */
+@media (max-width:359px){.cf-walk .cf-won>span{white-space:nowrap}}
+@media (max-width:339px){.cf-walk .cf-main-sheet .cf-won,.cf-walk .cf-over .cf-won{gap:8px}.cf-walk .cf-main-sheet .cf-won b,.cf-walk .cf-over .cf-won b{font-size:20px}}

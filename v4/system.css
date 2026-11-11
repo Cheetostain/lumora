@@ -32,8 +32,8 @@
   --mark:#FF323C;         /* the logo mark only */
   /* the one dark band */
   --night:#141412; --on-night:#E9E4D8; --muted-night:#A7A194; --red-night:#FF5A60; /* 14.5 / 7.2 / 6.1 :1 */
-  /* the pine field (alive build 2026-10-24, Franco's pick pine-field, alive round item 4): one a page at most, Home's Who we work
-     with. Its words are the paper (8.6:1) and muted pine (5.8:1). As text, pine is money won back only (won-pine, item 19: 9.6:1 on
+  /* the pine field (alive build 2026-10-24, Franco's pick pine-field, alive round item 4). Since Nov 9 (Franco's pick blotter): one pine band a page at most ([data-ground=pine], Home's Who we work with); Home alone adds the pine desk pad under the hero clipboard (.clip[data-pine=pad], Franco's pick blotter, Nov 9), which carries no words. So Home shows two pine surfaces and every other page one at most; two pine surfaces are never on one screen (a screen's height or more apart at 320, 393, 768 and 1440), none carries money or red, and nothing else is pine (the films' desk mats are felt, Nov 9).
+     Its words are the paper (8.6:1) and muted pine (5.8:1). As text, pine is money won back only (won-pine, item 19: 9.6:1 on
      a stop's sheet, 7.6:1 on bone). No red and no money sit on the field. Lumora.lint holds all three */
   --pine:#2F4A3F; --on-pine:var(--paper); --muted-pine:#C2CBBF;   /* on-pine reads the paper, so the next paper can't leave the
      field's words on the old one (checkers' pass, 2026-10-24; check.py close_static_problems) */
@@ -178,7 +178,8 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
 }
 [data-ground=night]{background:radial-gradient(rgba(233,228,216,.05) 1px,transparent 1.2px) 0 0/5px 5px,var(--night);color:var(--on-night)}
 [data-ground=night] b{color:#fff}
-/* the pine field (alive build 2026-10-24, Franco's pick pine-field): one deep green band a page at most, Home's Who we work with.
+/* the pine field (alive build 2026-10-24, Franco's pick pine-field): one deep green band a page at most, Home's Who we work with
+   (since Nov 9 Home also has the hero's pine desk pad, home.css; the rule in full is at --pine above).
    Headings and words in the paper, labels in muted pine; a link keeps its underline in muted pine and turns white on hover, as on
    the ink band; the focus ring is the paper. Nothing on it is red and no money sits on it (Lumora.lint) */
 [data-ground=pine]{background:var(--pine);color:var(--on-pine)}
@@ -337,6 +338,13 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 /* job: feedback. Ink is the colour of every action; hover lightens the fill one step and the label never changes (claim interaction-a, 2026-10-08: the old paper wipe made buttons look disabled). */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:10px 26px;border-radius:999px;border:2px solid var(--ink);
   background:var(--ink);color:#fff;font-weight:600;font-size:17px;line-height:1.2;text-decoration:none;text-align:center;cursor:pointer}
+/* the handset in every call button and the call bar's Call half (answers build, Nov 10; Franco, Nov 9: "just your average like
+   telephone icon to the left of Call us inside the button"). shared_text.py writes it, 1em in the button's own colour, 0.4em before
+   the words; the button keeps its padding and min-height, so the tap size holds and the width never changes after load */
+.ico-call{flex:none;display:block;width:1em;height:1em}
+.btn:has(>.ico-call){gap:.4em}
+.callbar .ico-call{margin-right:.4em}
+.hdr .btn-sm:has(>.ico-call){padding-inline:14px}   /* the header's button gives 8px of its sides back, so the Spanish menu keeps 32px from the logo at 1280 to 1440 (HEADER_JS) */
 .btn-o{background:transparent;color:var(--ink)}
 .btn-sm{min-height:44px;padding:6px 18px;font-size:15px}
 .btn-lg{min-height:58px;padding:12px 32px;font-size:var(--fs-20)}

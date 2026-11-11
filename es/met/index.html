@@ -1,21 +1,67 @@
 <!doctype html>
-<!-- Built by _build/build.py from _build/content. Edit those and rebuild: changes made in this file are overwritten. -->
-<html lang="es" dir="ltr">
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gusto en conocerlo | Lumora</title>
-<meta name="description" content="Mándele un texto a Franco para que su llamada le entre.">
+<meta name="format-detection" content="telephone=no">
+<title>Mucho gusto | Lumora</title>
+<meta name="description" content="Escríbale a Franco para que la llamada de Franco le entre sin problema.">
+<link rel="canonical" href="https://lumorafl.com/es/met/">
+<link rel="alternate" hreflang="en" href="https://lumorafl.com/met/">
+<link rel="alternate" hreflang="es" href="https://lumorafl.com/es/met/">
+<link rel="alternate" hreflang="x-default" href="https://lumorafl.com/met/">
+<meta property="og:title" content="Mucho gusto | Lumora">
+<meta property="og:description" content="Escríbale a Franco para que la llamada de Franco le entre sin problema.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lumorafl.com/es/met/">
+<meta property="og:image" content="https://lumorafl.com/assets/share-card-es.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lumora. Automatizamos el trabajo repetitivo y arreglamos cómo funciona su negocio. Gainesville, FL.">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:site_name" content="Lumora">
+<meta property="og:locale" content="es_US">
+<meta property="og:locale:alternate" content="en_US">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F5F2EA">
-<link rel="icon" href="../../assets/mark.svg" type="image/svg+xml">
-<link rel="preload" href="../../assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../../assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/site.css?v=de4d59d1">
-<link rel="stylesheet" href="../../assets/v4-header.css?v=8db7c21f">
-<script>document.documentElement.classList.add('js')</script>
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="/v4/assets/mark.svg">
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/v4/system.css?v=a9e66da2">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a9e66da2">
+<script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
+<script src="/v4/trades.js?v=a9e66da2" defer></script>
+<script src="/v4/system.js?v=a9e66da2" defer></script>
+<style>
+/* /met/: its own parts, after system.css and trade-page.css (the hero's grid is the trade pages' .hm4-hero) */
+.auto-close a{display:inline-block;padding-block:12px;margin-block:-12px;position:relative;z-index:1}
+.met-hero{padding:56px 0 72px}
+.met-hero h1{max-width:12em}
+.met-hero .t-lede{margin-top:14px;max-width:30em}
+.met-btns{display:grid;gap:12px;margin-top:24px;max-width:420px}
+.met-hero .reply{margin-top:14px}
+.met-more{margin-top:26px;font-size:17px;max-width:30em}
+.met-more a.u{display:inline-block;padding-block:12px;margin-block:-12px}
+@media (min-width:560px){.met-btns{display:flex;flex-wrap:wrap;max-width:none}}
+/* the outlined button carries the number, one text run beside the handset (review fixes, Nov 10: as three flex items the Spanish
+   label stacked word by word at 320). Under 360px its sides narrow, and under 340px its words go to 18px, so "Llame al (352) 226-0681"
+   stays one line at 320 */
+@media (max-width:359px){.met-btns .btn-num{padding-inline:16px}}
+@media (max-width:339px){.met-btns .btn-num{font-size:18px}}
+@media (min-width:900px){.met-hero{padding:96px 0 120px}}
+/* 2 what we take over (#automate): the six kinds of computer work in Home's words, and every trade's page in one line */
+.ct-auto-g{display:grid;gap:16px}
+.ct-auto-t .t-lede{margin-top:10px;max-width:24em}
+.ct-auto-g .pl-more{margin-top:10px}
+@media (min-width:900px){
+  .ct-auto-g{grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-areas:"t list" "t more" "trades trades";column-gap:64px;row-gap:12px;align-items:start}
+  .ct-auto-t{grid-area:t}.ct-auto-g>.auto-list{grid-area:list}.ct-auto-g>.auto-close{grid-area:more}
+  .ct-auto-g>.pl-more{grid-area:trades;margin-top:28px}
+}
+</style>
 </head>
-<body>
+<body data-trade="offices" data-sample-lock data-rules="v4">
 <a class="skip" href="#main">Saltar al contenido</a>
 
 <div class="util">
@@ -39,56 +85,79 @@
       </ul>
     </nav>
     <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
-    <a class="btn btn-sm" href="tel:+13522260681">Llámenos</a>
+    <a class="btn btn-sm" href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Llámenos</a>
     <a href="/met/" lang="en" hreflang="en" class="lang"><svg class="globe" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8"/><ellipse cx="10" cy="10" rx="3.4" ry="8"/><path d="M2.8 6.5h14.4M2.8 13.5h14.4"/></svg>English</a>
     <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menú</button>
   </div>
 </header>
-<svg class="defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><g id="lm-word" fill="currentColor"><path d="M107.001 14.4V57.5246H99V14.4H107.001Z"/><path d="M138.356 54.6307C135.859 57.0516 132.398 58.2622 127.972 58.2622C123.546 58.2622 120.066 57.0516 117.531 54.6307C115.034 52.1717 113.786 48.7862 113.786 44.4737V26.5997H121.787V44.4737C121.787 46.4407 122.335 48.0106 123.432 49.1834C124.529 50.3561 126.042 50.9424 127.972 50.9424C129.901 50.9424 131.414 50.3561 132.511 49.1834C133.608 48.0106 134.157 46.4407 134.157 44.4737V26.5997H142.157V44.4737C142.157 48.8239 140.89 52.2096 138.356 54.6307Z"/><path d="M186.431 25.7486C190.139 25.7486 193.146 26.9023 195.453 29.2099C197.837 31.5175 199.028 34.7328 199.028 38.8562V57.5246H191.028V40.3315C191.028 38.0239 190.46 36.246 189.325 34.9975C188.228 33.7493 186.734 33.125 184.842 33.125C182.8 33.125 181.154 33.8059 179.906 35.1679C178.658 36.4918 178.033 38.2886 178.033 40.5583V57.5246H170.033V40.3882C170.033 38.1185 169.465 36.3406 168.33 35.0544C167.233 33.7682 165.72 33.125 163.791 33.125C161.824 33.125 160.197 33.8059 158.911 35.1679C157.663 36.5297 157.038 38.3455 157.038 40.6152V57.5246H149.038V26.5997H156.868V31.0258C157.738 29.399 159.024 28.1129 160.727 27.167C162.429 26.1835 164.283 25.7107 166.288 25.7486C168.255 25.7486 170.052 26.2214 171.678 27.167C173.343 28.1129 174.572 29.4557 175.367 31.1959C176.501 29.4936 178.052 28.1695 180.019 27.2239C181.986 26.2404 184.124 25.7486 186.431 25.7486Z"/><path d="M204.246 42.0338C204.246 37.4566 205.797 33.6168 208.899 30.515C212.039 27.3374 216.011 25.7486 220.815 25.7486C225.619 25.7486 229.591 27.3374 232.731 30.515C235.833 33.6168 237.384 37.4566 237.384 42.0338C237.384 46.6488 235.833 50.5073 232.731 53.6093C229.591 56.749 225.619 58.319 220.815 58.319C216.011 58.319 212.039 56.749 208.899 53.6093C205.797 50.5073 204.246 46.6488 204.246 42.0338ZM214.686 48.3322C216.313 50.0345 218.356 50.8855 220.815 50.8855C223.198 50.8855 225.222 50.0345 226.886 48.3322C228.551 46.5542 229.383 44.4547 229.383 42.0338C229.383 39.6127 228.551 37.5322 226.886 35.7919C225.222 34.0898 223.198 33.2386 220.815 33.2386C218.356 33.2386 216.313 34.0898 214.686 35.7919C213.06 37.4566 212.247 39.5371 212.247 42.0338C212.247 44.4926 213.06 46.5922 214.686 48.3322Z"/><path d="M251.018 57.5246H243.019V26.5997H250.678V30.7418C252.533 27.413 255.37 25.7486 259.19 25.7486C260.438 25.7486 261.686 25.9754 262.934 26.4295L262.253 34.0898C260.892 33.6737 259.663 33.4656 258.566 33.4656C256.219 33.4656 254.366 34.26 253.006 35.8488C251.681 37.3997 251.018 39.7262 251.018 42.8282V57.5246Z"/><path d="M289.397 30.288V26.5997H297V57.5246H289.397V53.9498C286.75 56.8248 283.457 58.2622 279.523 58.2622C275.059 58.2622 271.39 56.7113 268.514 53.6093C265.639 50.5073 264.202 46.6109 264.202 41.9203C264.202 37.2674 265.658 33.4277 268.572 30.4015C271.486 27.3374 275.136 25.8053 279.523 25.8053C283.382 25.8053 286.673 27.2995 289.397 30.288ZM289.51 42.0338C289.51 39.6127 288.677 37.5132 287.014 35.7353C285.386 33.9953 283.325 33.125 280.829 33.125C278.294 33.125 276.214 33.9953 274.586 35.7353C272.998 37.4755 272.203 39.5748 272.203 42.0338C272.203 44.5303 273.017 46.6488 274.644 48.389C276.269 50.129 278.333 50.999 280.829 50.999C283.325 50.999 285.386 50.129 287.014 48.389C288.677 46.6109 289.51 44.4926 289.51 42.0338Z"/></g><g id="lm-mark"><path fill-rule="evenodd" clip-rule="evenodd" d="M90 8.4409C85.8561 8.5788 81.8053 9.6543 78.5818 11.9296C75.3583 14.2048 72.962 17.6797 72.166 21.5559C71.77 23.4841 71.77 25.5116 71.77 27.525C71.77 33.4927 71.77 39.4603 71.77 45.428C71.77 49.2815 71.77 53.1885 70.2579 56.7901C68.7265 60.4376 65.6443 63.7719 62.1274 66.1376C58.6105 68.5034 54.6589 69.9005 50.7291 70.7849C47.0072 71.6225 43.3048 72.0001 39.5853 72.0001C35.4501 72.0001 31.2938 71.5333 27.1654 70.5199C23.2446 69.5573 19.3491 68.1017 13.4902 65.5518C18.9353 66.2577 23.7401 65.0072 27.3381 63.5431C31.7025 61.7671 35.86 59.0385 39.2758 56.1487C43.3184 52.7287 46.5352 48.903 48.5787 45.5599C49.882 43.4278 50.9656 41.0708 51.8262 38.4557C52.6869 35.8406 53.3246 32.9674 53.9172 30.0677C54.5099 27.1679 55.0576 24.2416 55.7823 21.6864C56.5069 19.1312 57.4085 16.9473 58.8638 15.0547C60.3192 13.1622 62.3283 11.5612 64.8204 10.3245C67.3125 9.0878 70.2876 8.2154 73.2911 7.704C75.5687 7.3162 77.8627 7.1359 80.0564 7.1359C83.6485 7.1359 86.9717 7.6193 90 8.4409Z" fill="#FF323C"/><path fill-rule="evenodd" clip-rule="evenodd" d="M0 47.5235C4.2778 48.0257 8.2391 48.0494 12.3023 47.292C16.3654 46.5346 20.5305 44.9959 23.8039 42.6413C27.0774 40.2867 29.4592 37.116 30.9594 33.3639C32.4596 29.6118 33.0781 25.2782 34.2347 21.2198C35.3913 17.1614 37.0861 13.3783 39.6425 10.2153C42.199 7.0523 45.6171 4.5095 49.3595 2.7949C53.5349 0.8819 58.1139 0 62.753 0C66.4297 0 70.1441 0.554 73.7422 1.2518C77.8111 2.0409 81.7313 3.014 85.1911 4.701C81.4497 4.2352 77.4952 4.2807 73.592 4.8711C69.6889 5.4614 65.837 6.5968 62.6593 8.3485C59.4815 10.1003 56.9779 12.4685 55.2857 15.5037C53.5935 18.5389 52.7127 22.2411 51.8998 26.1803C51.0869 30.1195 50.3418 34.2956 49.0854 37.9777C47.8289 41.6597 46.061 44.8477 43.7883 47.4888C41.5157 50.1299 38.7384 52.2243 35.3579 53.2774C33.352 53.9022 31.1338 54.1605 28.7581 54.1605C27.1302 54.1605 25.4283 54.0392 23.6747 53.834C19.3621 53.3293 14.737 52.3168 10.6412 51.2183C6.5455 50.1199 2.9791 48.9355 0 47.5235Z" fill="#FF323C"/></g></defs></svg>
+
 <main id="main">
-<section class="hi" aria-labelledby="met-h">
+
+<section class="hero met-hero" id="top" data-bar-seat data-ground="sheet" data-density="low" data-width="narrow" data-loud="h1" data-medium="say">
   <div class="wrap">
-    <div class="hero-copy">
-      <h1 id="met-h">Gusto en conocerlo.</h1>
-      <p class="lede">Mándele un texto a Franco ahora, así queda guardado su número y su llamada le entra cuando lo llame.</p>
-      <div class="actions">
-        <a class="btn btn-hero" href="sms:+13522260681?&amp;body=Hola%2C%20Franco.%20Gusto%20en%20conocerlo.%20Le%20escribe%20%5Bnombre%5D%2C%20de%20%5Bnegocio%5D.">Escríbale a Franco</a>
-        <a class="btn btn-line" href="tel:+13522260681">Llame al (352) <span class="nw">226-0681</span></a>
-      </div>
+    <h1>Mucho gusto.</h1>
+    <p class="t-lede">Escríbale a Franco ahora. Así el número de Lumora le queda guardado en su teléfono, y cuando Franco le devuelva la llamada, le entra sin problema.</p>
+    <div class="met-btns">
+      <a class="btn btn-lg" href="sms:+13522260681?&amp;body=Hola%2C%20Franco.%20Mucho%20gusto.%20Le%20escribe%20%5Bnombre%5D%2C%20de%20%5Bnegocio%5D." data-first="the Text button">Escríbale a Franco</a>
+      <a class="btn btn-o btn-lg btn-num" href="tel:+13522260681" data-first="the Call button"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Llame&nbsp;al (352)&nbsp;226-0681</a>
     </div>
+    <p class="reply"><span data-shared="reply">Por lo general le devolvemos la llamada el mismo día hábil.</span></p>
+    <p class="met-more">Lo que hace Lumora: automatizamos el papeleo que le quita el sueño. <a class="u" href="/es/how-it-works/">Cómo funciona</a></p>
   </div>
 </section>
 
+<section class="band ct-auto" id="automate" data-ground="paper" data-density="low" data-width="split" data-loud="list" data-medium="list">
+  <div class="wrap ct-auto-g">
+    <div class="ct-auto-t">
+      <h2>¿No&nbsp;sabe qué decirnos?</h2>
+      <p class="t-lede">Díganos cuál de estos le quita más tiempo en la semana. Con eso basta.</p>
+    </div>
+    <ul class="auto-list">
+      <li data-task="retyping">Escribir dos veces los mismos nombres y números.</li>
+      <li data-task="invoices">Trabajo terminado que nunca se facturó.</li>
+      <li data-task="bills">Facturas de proveedores que no cuadran con lo que pidió.</li>
+      <li data-task="email">Leer los correos y guardar los adjuntos a mano.</li>
+      <li data-task="reminders">Mandarles recordatorios a su equipo y a sus clientes, uno por uno.</li>
+      <li data-task="numbers">Sumar los números de fin de mes.</li>
+    </ul>
+    <p class="auto-close"><a class="u" href="/es/what-we-automate/">Vea la lista completa</a></p>
+    <nav class="pl-more" aria-labelledby="pl-more-k">
+      <p class="t-label" id="pl-more-k">Páginas por tipo de negocio</p>
+      <ul class="pl-trades" data-trades>
+        <li><a href="/es/industries/plumbing/">Plomería</a></li>
+        <li><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li>
+        <li><a href="/es/industries/electrical/">Electricidad</a></li>
+        <li><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></li>
+        <li><a href="/es/industries/pest-control/">Control de plagas</a></li>
+        <li><a href="/es/industries/roofing/">Techos</a></li>
+        <li><a href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a></li>
+        <li><a href="/es/industries/property-managers/">Administradores de propiedades</a></li>
+        <li><a href="tel:+13522260681">¿No ve el suyo? Llámenos</a></li>
+      </ul>
+    </nav>
+  </div>
+</section>
 </main>
-<div class="hem" aria-hidden="true"></div>
-<footer class="foot">
+
+<footer class="foot" data-part="foot" data-ground="night">
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-lead">
-        <a class="foot-brand" href="../../es/" aria-label="Lumora, página de inicio"><svg class="lk-line" viewBox="0 0 297 78.859" width="220" height="58.41" aria-hidden="true" focusable="false"><use href="#lm-word"/><use href="#lm-mark"/><path fill="currentColor" d="M103.543 76.518Q102.021 76.518 101.007 75.895Q99.994 75.272 99.497 74.126Q99 72.981 99 71.433Q99 69.872 99.497 68.733Q99.994 67.594 101.007 66.971Q102.021 66.348 103.543 66.348Q105.092 66.348 106.098 66.971Q107.105 67.594 107.602 68.733Q108.1 69.872 108.1 71.433Q108.1 72.981 107.602 74.126Q107.105 75.272 106.098 75.895Q105.092 76.518 103.543 76.518ZM103.556 75.158Q104.953 75.158 105.62 74.183Q106.287 73.208 106.287 71.433Q106.287 69.646 105.62 68.677Q104.953 67.708 103.556 67.708Q102.146 67.708 101.479 68.677Q100.812 69.646 100.812 71.433Q100.812 73.208 101.479 74.183Q102.146 75.158 103.556 75.158Z M109.559 78.859V68.79H111.108V69.772H111.41Q111.649 69.306 112.158 68.96Q112.668 68.614 113.524 68.614Q114.518 68.614 115.192 69.111Q115.865 69.608 116.211 70.502Q116.557 71.395 116.557 72.566Q116.557 73.749 116.211 74.636Q115.865 75.523 115.192 76.014Q114.518 76.505 113.537 76.505Q112.781 76.505 112.303 76.222Q111.825 75.939 111.561 75.473H111.259V78.859ZM113.109 75.221Q113.914 75.221 114.361 74.542Q114.808 73.862 114.808 72.566Q114.808 71.269 114.361 70.584Q113.914 69.898 113.109 69.898Q112.253 69.898 111.749 70.621Q111.246 71.345 111.246 72.566Q111.246 73.774 111.749 74.498Q112.253 75.221 113.109 75.221Z M121.076 76.53Q119.351 76.53 118.451 75.448Q117.551 74.366 117.551 72.553Q117.551 71.345 117.954 70.464Q118.357 69.583 119.137 69.092Q119.918 68.601 121.05 68.601Q122.674 68.601 123.53 69.614Q124.386 70.628 124.386 72.566V72.981H119.2Q119.263 74.013 119.735 74.642Q120.207 75.272 121.076 75.272Q121.73 75.272 122.133 74.894Q122.535 74.517 122.686 73.925H124.297Q124.159 74.655 123.775 75.24Q123.391 75.826 122.724 76.178Q122.057 76.53 121.076 76.53ZM119.213 71.848H122.724Q122.686 70.867 122.252 70.344Q121.818 69.822 121.038 69.822Q120.245 69.822 119.779 70.338Q119.314 70.854 119.213 71.848Z M125.858 76.342V68.79H127.394V70.124H127.696Q127.771 69.772 127.973 69.451Q128.174 69.13 128.596 68.922Q129.017 68.715 129.747 68.715H130.074V70.275H129.609Q128.514 70.275 128.035 70.835Q127.557 71.395 127.557 72.566V76.342Z M133.762 76.505Q132.743 76.505 132.063 76.008Q131.383 75.511 131.043 74.617Q130.704 73.724 130.704 72.553Q130.704 71.37 131.05 70.483Q131.396 69.596 132.076 69.105Q132.755 68.614 133.762 68.614Q134.593 68.614 135.102 68.947Q135.612 69.281 135.839 69.772H136.141V68.79H137.689V76.342H136.141V75.36H135.839Q135.612 75.826 135.102 76.165Q134.593 76.505 133.762 76.505ZM134.14 75.221Q134.995 75.221 135.505 74.498Q136.015 73.774 136.015 72.566Q136.015 71.345 135.505 70.621Q134.995 69.898 134.14 69.898Q133.334 69.898 132.894 70.584Q132.453 71.269 132.453 72.566Q132.453 73.862 132.894 74.542Q133.334 75.221 134.14 75.221Z M142.635 76.53Q140.936 76.53 140.068 75.448Q139.199 74.366 139.199 72.566Q139.199 70.691 140.105 69.646Q141.011 68.601 142.648 68.601Q144.057 68.601 144.888 69.363Q145.719 70.124 145.895 71.496H144.221Q144.12 70.716 143.724 70.294Q143.327 69.872 142.673 69.872Q141.804 69.872 141.376 70.584Q140.949 71.295 140.949 72.566Q140.949 73.837 141.376 74.548Q141.804 75.259 142.66 75.259Q143.327 75.259 143.724 74.831Q144.12 74.403 144.221 73.636H145.895Q145.706 74.995 144.869 75.763Q144.032 76.53 142.635 76.53Z M147.317 76.342V68.79H149.016V76.342ZM148.173 67.821Q147.707 67.821 147.462 67.569Q147.216 67.318 147.216 66.902Q147.216 66.487 147.462 66.229Q147.707 65.971 148.173 65.971Q148.651 65.971 148.896 66.229Q149.142 66.487 149.142 66.902Q149.142 67.318 148.896 67.569Q148.651 67.821 148.173 67.821Z M154.088 76.53Q152.288 76.53 151.407 75.454Q150.526 74.378 150.526 72.566Q150.526 70.753 151.407 69.677Q152.288 68.601 154.088 68.601Q155.888 68.601 156.769 69.677Q157.65 70.753 157.65 72.566Q157.65 74.378 156.769 75.454Q155.888 76.53 154.088 76.53ZM154.088 75.297Q155.019 75.297 155.46 74.586Q155.9 73.875 155.9 72.566Q155.9 71.244 155.46 70.539Q155.019 69.835 154.088 69.835Q153.144 69.835 152.71 70.539Q152.276 71.244 152.276 72.566Q152.276 73.875 152.71 74.586Q153.144 75.297 154.088 75.297Z M159.148 76.342V68.79H160.696V69.923H160.998Q161.224 69.319 161.721 68.96Q162.219 68.601 163.087 68.601Q164.383 68.601 164.994 69.4Q165.604 70.2 165.604 71.521V76.342H163.905V71.836Q163.905 70.955 163.59 70.483Q163.276 70.011 162.596 70.011Q161.765 70.011 161.306 70.659Q160.847 71.307 160.847 72.264V76.342Z M170.538 76.53Q168.814 76.53 167.914 75.448Q167.014 74.366 167.014 72.553Q167.014 71.345 167.416 70.464Q167.819 69.583 168.6 69.092Q169.38 68.601 170.513 68.601Q172.136 68.601 172.992 69.614Q173.848 70.628 173.848 72.566V72.981H168.662Q168.725 74.013 169.197 74.642Q169.669 75.272 170.538 75.272Q171.192 75.272 171.595 74.894Q171.998 74.517 172.149 73.925H173.76Q173.621 74.655 173.237 75.24Q172.854 75.826 172.186 76.178Q171.519 76.53 170.538 76.53ZM168.675 71.848H172.186Q172.149 70.867 171.715 70.344Q171.28 69.822 170.5 69.822Q169.707 69.822 169.241 70.338Q168.776 70.854 168.675 71.848Z M177.963 76.53Q176.818 76.53 176.101 76.146Q175.383 75.763 175.043 75.158Q174.704 74.554 174.653 73.925H176.289Q176.34 74.277 176.547 74.592Q176.755 74.907 177.12 75.096Q177.485 75.284 178.039 75.284Q178.668 75.284 178.983 75.039Q179.297 74.793 179.297 74.391Q179.297 74.038 179.033 73.793Q178.769 73.547 178.203 73.359L177.296 73.044Q176.667 72.818 176.151 72.547Q175.635 72.276 175.32 71.861Q175.006 71.446 175.006 70.791Q175.006 69.797 175.736 69.199Q176.466 68.601 177.775 68.601Q178.719 68.601 179.329 68.91Q179.939 69.218 180.254 69.74Q180.569 70.263 180.619 70.904H179.046Q178.995 70.439 178.674 70.124Q178.354 69.809 177.712 69.809Q177.17 69.809 176.887 70.03Q176.604 70.25 176.604 70.64Q176.604 71.018 176.887 71.263Q177.17 71.509 177.749 71.71L178.643 71.999Q179.272 72.213 179.788 72.484Q180.304 72.755 180.6 73.176Q180.896 73.598 180.896 74.252Q180.896 75.272 180.147 75.901Q179.398 76.53 177.963 76.53Z M185.741 78.859V78.808Q186.081 78.267 186.465 77.556Q186.849 76.845 187.151 76.14L184.495 68.866V68.79H186.182L187.277 71.811Q187.441 72.239 187.592 72.729Q187.743 73.22 187.906 73.95H188.208Q188.359 73.22 188.517 72.729Q188.674 72.239 188.825 71.811L189.92 68.79H191.506V68.866L189.051 75.486Q188.636 76.618 188.227 77.487Q187.818 78.355 187.516 78.859Z M194.854 76.342V76.266L197.937 66.525H200.719L203.802 76.266V76.342H201.99L199.422 67.884H199.12L196.54 76.342ZM197.119 73.686 197.534 72.301H200.995L201.411 73.686Z M207.263 76.53Q205.979 76.53 205.356 75.725Q204.733 74.919 204.733 73.61V68.79H206.432V73.296Q206.432 74.164 206.747 74.642Q207.062 75.121 207.741 75.121Q208.585 75.121 209.038 74.466Q209.491 73.812 209.491 72.855V68.79H211.19V76.342H209.667V75.209H209.365Q209.176 75.8 208.654 76.165Q208.132 76.53 207.263 76.53Z M214.236 76.342Q213.946 76.002 213.776 75.523Q213.606 75.045 213.606 74.089V70.036H212.574V68.79H213.632V66.902H215.293V68.79H216.539V70.036H215.305V73.875Q215.305 74.882 215.526 75.404Q215.746 75.926 216.061 76.266V76.342Z M220.982 76.53Q219.182 76.53 218.301 75.454Q217.42 74.378 217.42 72.566Q217.42 70.753 218.301 69.677Q219.182 68.601 220.982 68.601Q222.781 68.601 223.662 69.677Q224.543 70.753 224.543 72.566Q224.543 74.378 223.662 75.454Q222.781 76.53 220.982 76.53ZM220.982 75.297Q221.913 75.297 222.354 74.586Q222.794 73.875 222.794 72.566Q222.794 71.244 222.354 70.539Q221.913 69.835 220.982 69.835Q220.038 69.835 219.604 70.539Q219.169 71.244 219.169 72.566Q219.169 73.875 219.604 74.586Q220.038 75.297 220.982 75.297Z M226.041 76.342V68.79H227.589V69.923H227.891Q228.093 69.331 228.571 68.966Q229.049 68.601 229.88 68.601Q230.673 68.601 231.195 68.954Q231.717 69.306 231.969 69.923H232.271Q232.498 69.319 232.995 68.96Q233.492 68.601 234.323 68.601Q235.556 68.601 236.135 69.4Q236.714 70.2 236.714 71.521V76.342H235.015V71.836Q235.015 70.955 234.732 70.483Q234.449 70.011 233.819 70.011Q233.051 70.011 232.642 70.659Q232.233 71.307 232.233 72.264V76.342H230.534V71.836Q230.534 70.955 230.251 70.483Q229.968 70.011 229.339 70.011Q228.571 70.011 228.156 70.659Q227.74 71.307 227.74 72.264V76.342Z M241.182 76.505Q240.162 76.505 239.483 76.008Q238.803 75.511 238.463 74.617Q238.124 73.724 238.124 72.553Q238.124 71.37 238.47 70.483Q238.816 69.596 239.495 69.105Q240.175 68.614 241.182 68.614Q242.013 68.614 242.522 68.947Q243.032 69.281 243.259 69.772H243.561V68.79H245.109V76.342H243.561V75.36H243.259Q243.032 75.826 242.522 76.165Q242.013 76.505 241.182 76.505ZM241.559 75.221Q242.415 75.221 242.925 74.498Q243.435 73.774 243.435 72.566Q243.435 71.345 242.925 70.621Q242.415 69.898 241.559 69.898Q240.754 69.898 240.314 70.584Q239.873 71.269 239.873 72.566Q239.873 73.862 240.314 74.542Q240.754 75.221 241.559 75.221Z M248.154 76.342Q247.865 76.002 247.695 75.523Q247.525 75.045 247.525 74.089V70.036H246.493V68.79H247.55V66.902H249.212V68.79H250.458V70.036H249.224V73.875Q249.224 74.882 249.445 75.404Q249.665 75.926 249.979 76.266V76.342Z M251.842 76.342V68.79H253.541V76.342ZM252.698 67.821Q252.232 67.821 251.987 67.569Q251.741 67.318 251.741 66.902Q251.741 66.487 251.987 66.229Q252.232 65.971 252.698 65.971Q253.176 65.971 253.422 66.229Q253.667 66.487 253.667 66.902Q253.667 67.318 253.422 67.569Q253.176 67.821 252.698 67.821Z M255.077 76.342V74.882L258.047 71.269Q258.261 71.005 258.475 70.76Q258.689 70.514 258.878 70.338V70.036H255.253V68.79H260.904V70.237L257.959 73.862Q257.757 74.114 257.55 74.347Q257.342 74.58 257.116 74.793V75.096H261.068V76.342Z M265.158 76.505Q264.138 76.505 263.459 76.008Q262.779 75.511 262.439 74.617Q262.1 73.724 262.1 72.553Q262.1 71.37 262.446 70.483Q262.792 69.596 263.471 69.105Q264.151 68.614 265.158 68.614Q265.989 68.614 266.498 68.947Q267.008 69.281 267.235 69.772H267.537V68.79H269.085V76.342H267.537V75.36H267.235Q267.008 75.826 266.498 76.165Q265.989 76.505 265.158 76.505ZM265.535 75.221Q266.391 75.221 266.901 74.498Q267.411 73.774 267.411 72.566Q267.411 71.345 266.901 70.621Q266.391 69.898 265.535 69.898Q264.73 69.898 264.289 70.584Q263.849 71.269 263.849 72.566Q263.849 73.862 264.289 74.542Q264.73 75.221 265.535 75.221Z M274.031 76.53Q272.332 76.53 271.463 75.448Q270.595 74.366 270.595 72.566Q270.595 70.691 271.501 69.646Q272.407 68.601 274.043 68.601Q275.453 68.601 276.284 69.363Q277.114 70.124 277.291 71.496H275.617Q275.516 70.716 275.12 70.294Q274.723 69.872 274.069 69.872Q273.2 69.872 272.772 70.584Q272.344 71.295 272.344 72.566Q272.344 73.837 272.772 74.548Q273.2 75.259 274.056 75.259Q274.723 75.259 275.12 74.831Q275.516 74.403 275.617 73.636H277.291Q277.102 74.995 276.265 75.763Q275.428 76.53 274.031 76.53Z M278.713 76.342V68.79H280.412V76.342ZM279.569 67.821Q279.103 67.821 278.858 67.569Q278.612 67.318 278.612 66.902Q278.612 66.487 278.858 66.229Q279.103 65.971 279.569 65.971Q280.047 65.971 280.292 66.229Q280.538 66.487 280.538 66.902Q280.538 67.318 280.292 67.569Q280.047 67.821 279.569 67.821Z M285.484 76.53Q283.684 76.53 282.803 75.454Q281.922 74.378 281.922 72.566Q281.922 70.753 282.803 69.677Q283.684 68.601 285.484 68.601Q287.284 68.601 288.165 69.677Q289.046 70.753 289.046 72.566Q289.046 74.378 288.165 75.454Q287.284 76.53 285.484 76.53ZM285.484 75.297Q286.415 75.297 286.856 74.586Q287.296 73.875 287.296 72.566Q287.296 71.244 286.856 70.539Q286.415 69.835 285.484 69.835Q284.54 69.835 284.106 70.539Q283.672 71.244 283.672 72.566Q283.672 73.875 284.106 74.586Q284.54 75.297 285.484 75.297ZM284.804 68.035V67.959L285.736 65.769H287.322V65.845L286.164 68.035Z M290.543 76.342V68.79H292.092V69.923H292.394Q292.62 69.319 293.117 68.96Q293.614 68.601 294.483 68.601Q295.779 68.601 296.39 69.4Q297 70.2 297 71.521V76.342H295.301V71.836Q295.301 70.955 294.986 70.483Q294.672 70.011 293.992 70.011Q293.161 70.011 292.702 70.659Q292.243 71.307 292.243 72.264V76.342Z"/></svg></a>
-        <p class="foot-line">Lumora se encarga de lo que hoy se vuelve a escribir, se queda esperando o se olvida.</p>
-        <p class="foot-about">Para contratistas, restaurantes y negocios locales de Gainesville.</p>
-        <p class="foot-price"><b>La visita cuesta a partir de $500.</b> Si su negocio es más grande, le damos el precio en la llamada sin costo. Se descuenta de un arreglo de $1,500 o más que empiece dentro de los 30 días siguientes.</p>
-        <a class="btn" href="../../es/contact/">Llámenos o escríbanos</a>
+        <a class="foot-brand" href="/es/" aria-label="Lumora, página de inicio"><img src="/v4/assets/logo-white.svg" alt="" width="148" height="36"></a>
+        <p class="foot-line">Su negocio debería funcionar igual, esté usted o no.</p>
+        <a class="btn" href="tel:+13522260681" data-extra="computer: the call bar carries the number on a phone"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Llámenos</a>
       </div>
-      <nav class="foot-col c-how" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="../../es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="../../es/how-it-works/#walk">La visita</a></li><li><a href="../../es/how-it-works/#fix">Un arreglo</a></li><li><a href="../../es/how-it-works/#check">La revisión mensual</a></li><li><a href="../../es/how-it-works/#price">De qué depende el precio</a></li><li><a href="../../es/how-it-works/#sample">La hoja de ejemplo</a></li><li><a href="../../es/how-it-works/#faq">Preguntas que nos hacen los dueños</a></li><li><a href="../../es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
-      <nav class="foot-col c-ind" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">A quién atendemos</h2><ul><li><a href="../../es/industries/plumbing/">Plomería</a></li><li><a href="../../es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li><li><a href="../../es/industries/electrical/">Electricidad</a></li><li><a href="../../es/industries/water-damage-and-mold/">Daños por agua y moho</a></li><li><a href="../../es/industries/pest-control/">Control de plagas</a></li><li><a href="../../es/industries/roofing/">Techos</a></li><li><a href="../../es/industries/restaurants-and-bars/">Restaurantes y bares</a></li><li><a href="../../es/industries/property-managers/">Administradores de propiedades</a></li><li><a href="../../es/industries/">Todos los tipos de negocio</a></li></ul></nav>
-      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li>Llame o escriba al <a class="tel" href="tel:+13522260681">(352) <span class="nw">226-0681</span></a></li><li>Por lo general le devolvemos la llamada el mismo día hábil.</li><li><a class="mail" href="mailto:franco@lumorafl.com?subject=Solicitud%20de%20visita">franco@lumorafl.com</a></li><li>De lunes a viernes, de 9 a. m. a 5 p. m.</li><li>Gainesville; atendemos el condado de Alachua. Otras zonas de Florida, previo acuerdo.</li><li>Español o inglés</li></ul></div>
+      <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="/es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="/es/how-it-works/#walk">La visita</a></li><li><a href="/es/how-it-works/#fix">Un arreglo</a></li><li><a href="/es/how-it-works/#check">La revisión mensual</a></li><li><a href="/es/how-it-works/#faq">Preguntas de los dueños</a></li><li><a href="/es/what-we-automate/">Lo que automatizamos</a></li><li><a href="/es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
+      <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">A quién atendemos</h2><ul><li><a href="/es/industries/plumbing/">Plomería</a></li><li><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li><li><a href="/es/industries/electrical/">Electricidad</a></li><li><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></li><li><a href="/es/industries/pest-control/">Control de plagas</a></li><li><a href="/es/industries/roofing/">Techos</a></li><li><a href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a></li><li><a href="/es/industries/property-managers/">Administradores de propiedades</a></li><li><a href="/es/industries/">Todos los tipos de negocio</a></li></ul></nav>
+      <div class="foot-col c-contact"><h2 class="foot-h">Contacto</h2><ul><li>Llame o escriba al <a class="tel" href="tel:+13522260681">(352) 226-0681</a></li><li><a href="mailto:franco@lumorafl.com">franco@lumorafl.com</a></li><li><span data-shared="hours">De lunes a viernes, de 9&nbsp;a.&nbsp;m. a 5&nbsp;p.&nbsp;m.</span></li><li>Desde Gainesville atendemos el condado de Alachua</li><li>En español o en inglés</li></ul></div>
     </div>
     <div class="foot-base">
-      <p class="legal">© 2026 Lumora Group LLC, empresa de Florida.</p>
-      <ul>
-        <li><a href="../../es/about/">Quiénes somos</a></li>
-        <li><a href="../../es/articles/">Artículos</a></li>
-        <li><a href="../../es/privacy/">Privacidad</a></li>
-        <li><a href="../../met/" hreflang="en" lang="en" data-lang="en">Also in English</a></li>
-      </ul>
-      <!-- Icons: Material Symbols by Google, Apache License 2.0. License: ../../assets/icons/LICENSE.txt and ../../assets/icons/NOTICE.txt -->
+      <p class="legal">&copy; 2026 Lumora Group LLC, empresa de Florida. Los negocios, las personas y las cifras de nuestros ejemplos son inventados.</p>
+      <ul><li><a href="/es/about/">Quiénes somos</a></li><li><a href="/es/articles/">Artículos</a></li><li><a href="/es/contact/">Contacto</a></li><li><a href="/es/privacy/">Privacidad</a></li></ul>
     </div>
   </div>
 </footer>
 
-<script src="/v4/system.js?v=b101fba6" defer></script>
-<script src="../../assets/site.js?v=ae64391b" defer></script>
+<nav class="callbar" aria-label="Llámenos o escríbanos"><a href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Llamar <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">Escribir</a></nav>
 </body>
 </html>

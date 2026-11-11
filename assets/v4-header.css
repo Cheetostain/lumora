@@ -68,6 +68,7 @@
 @media (hover:hover) and (pointer:fine){:where(.skip,.util,.hdr,.callcard) .u:hover:not(:focus-visible){text-decoration-color:var(--ink);text-decoration-thickness:2px}}
 @media (prefers-reduced-motion:no-preference){:where(.skip,.util,.hdr,.callcard) .u{transition:text-decoration-color var(--t-press) var(--ease-out)}:where(.skip,.util,.hdr,.callcard) .u:hover{transition-duration:var(--t-hover)}}
 :where(.skip,.util,.hdr,.callcard) .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:10px 26px;border-radius:999px;border:2px solid var(--ink); background:var(--ink);color:#fff;font-weight:600;font-size:17px;line-height:1.2;text-decoration:none;text-align:center;cursor:pointer}
+.hdr .btn-sm:has(>.ico-call){padding-inline:14px}
 :where(.skip,.util,.hdr,.callcard) .btn-sm{min-height:44px;padding:6px 18px;font-size:15px}
 :where(.skip,.util,.hdr,.callcard) .btn:is(:focus-visible,:active){background:var(--ink-hover);border-color:var(--ink-hover)}
 @media (hover:hover) and (pointer:fine){:where(.skip,.util,.hdr,.callcard) .btn:hover{background:var(--ink-hover);border-color:var(--ink-hover)}}

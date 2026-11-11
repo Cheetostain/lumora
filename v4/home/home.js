@@ -311,6 +311,17 @@
     function Film(fig, build, stops, steps) {
       var F = { name: fig.getAttribute('data-cfilm'), fig: fig, mode: 'wait', tl: null, played: false, away: false, beats: [], end: 0, ratio: 0, pending: null, due: false, loopT: 0 };
       var btn = $('.cf-pause', fig), lab = btn && $('.pt', btn), fx = $('.cf-fx', fig), made = [], temp = [];
+      // Nov 9 (the judges' graft 2, d1-mercury's ring): the Pause's ring fills with the step being played, so the visitor sees how
+      // long this step runs and that the film moves on by itself. The walk's steps are its three lines; the night's, its four times
+      var ring = $('.pz-rp', fig), segs = (steps.length > 1 ? steps : [0].concat(stops)).slice();
+      function tick() {
+        if (!ring || !tl) return;
+        var t = tl.time(), s = segs.concat(F.end || t + 1), i = 0;
+        while (i < s.length - 2 && t >= s[i + 1]) i++;
+        var p = Math.max(0, Math.min(1, (t - s[i]) / ((s[i + 1] - s[i]) || 1)));
+        ring.style.strokeDashoffset = String(+(1 - p).toFixed(4));
+      }
+      F.tick = tick;
       CF.films[F.name] = F;
       function label(m) { if (!btn) return; btn.setAttribute('aria-label', LAL[m]); btn.classList.toggle('is-paused', m !== 'pause'); lab.textContent = LAB[m]; }
       function arr(x) { return [].concat(x).filter(Boolean); }
@@ -381,7 +392,8 @@
       function arm() {
         clean();
         K.phone = fig.clientWidth < 760;
-        tl = F.tl = G.timeline({ paused: true, defaults: { lazy: false }, onComplete: done });
+        fx = (K.phone && $('.po-fx', fig)) || $('.cf-fx', fig);   // p4: a phone's walk draws its pen box and fly over the pulled-out windows
+        tl = F.tl = G.timeline({ paused: true, defaults: { lazy: false }, onComplete: done, onUpdate: function () { tick(); } });
         F.end = build(tl, K);
         tl.set({}, {}, F.end);
         // a film that left the screen stops at its next stop, so the visitor comes back to a readable frame
@@ -458,7 +470,7 @@
       K.start(L, { autoAlpha: dim }); K.start(L[0], { autoAlpha: 1 });
       K.start($$('.cf-strike', sheet), { scaleX: 0 }); K.start($$('.cf-res', sheet), { autoAlpha: 0, y: 4 });
       K.start($('.cf-won', sheet), { autoAlpha: 0, y: 4 }); K.start($('.cf-under path', sheet), { strokeDasharray: '1 1', strokeDashoffset: 1 });
-      if (ph) { K.start(over, { autoAlpha: 0, y: 8 }); K.start($('.cf-tot .cf-strike', over), { scaleX: 0 }); K.start($('.cf-won', over), { autoAlpha: 0, y: 4 }); K.start($('.cf-under path', over), { strokeDasharray: '1 1', strokeDashoffset: 1 }); }
+      if (ph) { K.start(over, { autoAlpha: 0, y: 8 }); K.start($('.cf-won', over), { autoAlpha: 0, y: 4 }); K.start($('.cf-under path', over), { strokeDasharray: '1 1', strokeDashoffset: 1 }); }
       K.start(main, { opacity: 1 });
       K.start(caps[0], { autoAlpha: 1, y: 0 }); K.start([caps[1], caps[2]], { autoAlpha: 0, y: 4 }); K.start(b.concat(c2), { autoAlpha: 0, y: 4 });
       K.beat(0, 0, 'caption', $('.cf-a', caps[0]).textContent, true);   // on screen from the first frame (the caption rule reads it)
@@ -474,8 +486,8 @@
       // 4.0 s: the Spanish first line, "Karen Davis recibió su cotización el lunes. No contestó.", is nine words (3.97 s)
       K.to(4.0, b[0], { autoAlpha: 1, y: 0 }, 'caption', b[0].textContent);
       K.swap(4.5, flag, sent, 'stage', 'the flag becomes Sent');
-      K.to(6.4, strike(0), { scaleX: 1, duration: .5, ease: MOVE }, 'sheet', 'the pen strikes $1,560');
-      K.to(6.9, res(0), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '36 of 48 followed up');
+      // review fixes, Nov 10: lines 1 and 2 win back part of their dollars, so the pen strikes nothing there; the line says what it wins back
+      K.to(6.9, res(0), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '36 of 48 followed up, $1,170 back');
       /* 2. Maria Garcia: on today's call list */
       K.to(8.6, L[0], { autoAlpha: dim }, 'sheet', 'line 2 lights'); tl.to(K.track(L[1]), { autoAlpha: 1, duration: .25, ease: OUT }, 8.6);
       K.to(9.1, ol, { autoAlpha: 0, duration: .3 }, 'stage', 'crossfade to Excel'); tl.to(K.track(xl), { autoAlpha: 1, y: 0, duration: .3, ease: OUT }, 9.1);
@@ -485,8 +497,7 @@
       K.to(13.0, cur, { autoAlpha: 1 }, 'stage', 'E12 selected');
       K.to(14.0, b[1], { autoAlpha: 1, y: 0 }, 'caption', b[1].textContent);
       K.swap(14.5, e0, e1, 'stage', 'E12 becomes Yes and the call date'); tl.to(K.track(okf), { autoAlpha: 1, duration: .3, ease: OUT }, 14.5);
-      K.to(17.3, strike(1), { scaleX: 1, duration: .5, ease: MOVE }, 'sheet', 'the pen strikes $1,200');
-      K.to(17.8, res(1), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '24 of 30 called in time');
+      K.to(17.8, res(1), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '24 of 30 called in time, $960 back');
       /* 3. Lisa Anderson: the invoice fills in from her policy, then its details are checked against it */
       K.to(19.4, L[1], { autoAlpha: dim }, 'sheet', 'line 3 lights'); tl.to(K.track(L[2]), { autoAlpha: 1, duration: .25, ease: OUT }, 19.4);
       K.to(19.9, xl, { autoAlpha: 0, duration: .3 }, 'stage', 'crossfade to the policy and the invoice'); tl.to(K.track(inv), { autoAlpha: 1, y: 0, duration: .3, ease: OUT }, 19.9);
@@ -510,12 +521,11 @@
       var e = ph ? 32.1 : 31.15;
       K.to(e, strike(2), { scaleX: 1, duration: .5, ease: MOVE }, 'sheet', 'the pen strikes $792');
       K.to(e + .5, res(2), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '33 hours of typing back');
-      /* the end: the whole sheet, the loss struck, the month won back */
+      /* the end: the whole sheet, the loss before any fix and the month won back (the total is no longer struck: $630 of it stays lost) */
       e += ph ? 1.5 : 1.1;
       if (ph) K.to(e, over, { autoAlpha: 1, y: 0 }, 'sheet', 'the full sheet comes over the stage');
       else K.to(e, [L[0], L[1]], { autoAlpha: 1 }, 'sheet', 'the whole sheet lights');
-      K.to(e + .5, $('.cf-tot .cf-strike', end), { scaleX: 1, duration: .5, ease: MOVE }, 'sheet', 'the pen strikes Lost before any fix');
-      K.to(e + 1.1, $('.cf-won', end), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', 'Won back $3,552 a month');
+      K.to(e + 1.1, $('.cf-won', end), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', 'Won back $2,922 a month');
       tl.to(K.track($('.cf-under path', end)), { strokeDashoffset: 0, duration: .7, ease: MOVE }, e + 1.3);
       K.to(e + 2.0, main, { opacity: .45, duration: .3 }, 'stage', 'the stage steps back');
       return e + 2.3;
@@ -567,14 +577,196 @@
       return 26.5;
     }
 
+    /* ---------- p4 pull-out (Nov 7): a phone's walk. The whole sheet at real size, and each app's moving part as one small Mac
+       window 12px under the lit line. A window comes in (0.4 s, rising 16px) after its line lights and leaves before the next line
+       lights, so one thing moves at a time. The beats are the computer's: the window's entry takes the stage's first beat ---------- */
+    function walkPhone(tl, K) {
+      var f = K.fig, dim = .38, po = $('.po', f);
+      var sheet = $('.cf-main-sheet', f), L = $$('.cf-ln', sheet);
+      var strike = function (i) { return $('.cf-strike', L[i]); }, res = function (i) { return $('.cf-res', L[i]); };
+      var caps = $$('.cf-cap', f), b = caps.map(function (c) { return $('.cf-b', c); }), c2 = $('.cf-c', caps[2]);
+      var ol = $('.po-ol', po), xl = $('.po-xl', po), inv = $('.po-inv', po), W = [ol, xl, inv], send = $('.po-send', ol);
+      var cur = $('.cx-cur', xl), okf = $('.cx-okf', xl), e0 = [$('.cx-e12 .v0', xl), $('.cx-fv .v0', xl)], e1 = [$('.cx-e12 .v1', xl), $('.cx-fv .v1', xl)];
+      var prem = $('.prem', inv), fld = $('.cq-fld', inv), qv = $('.cq-v', inv), rs = $('.cq-rs', inv), saved = $('.cq-saved', inv);
+      var ok = $$('.po-qb .cq-ok path', inv), okp = $$('.po-doc .cq-ok path', inv);
+      // a narrow phone (under about 380px) has no room beside the policy: the invoice steps down beside the premium instead of covering a value
+      var doc = $('.po-doc', inv), qb = $('.po-qb', inv); qb.style.top = '';
+      var vr = Math.max.apply(null, $$('.cd-kv > :last-child', doc).map(function (x) { return x.getBoundingClientRect().right; }));
+      if (qb.getBoundingClientRect().left < vr + 6) qb.style.top = ($('.cd-prem', doc).offsetTop - 2) + 'px';   // beside the premium, under the name
+      /* Nov 9, third pass: where the invoice starts right of the policy's edge (400px of film and up), the policy's page runs on under
+         it, so no strip of the sheet's words shows between the two */
+      doc.style.width = ''; doc.style.paddingBottom = '';
+      var qr0 = qb.getBoundingClientRect(), dr0 = doc.getBoundingClientRect();
+      if (!qb.style.top && qr0.left > dr0.right - 7) doc.style.width = Math.round(qr0.left - dr0.left + 7) + 'px';
+      // and where the invoice is the taller of the two (its stacked form, under 318px of film), the policy's page ends 4px over its foot
+      if (!qb.style.top && qr0.bottom - dr0.bottom > 4) doc.style.paddingBottom = Math.round(parseFloat(getComputedStyle(doc).paddingBottom) + qr0.bottom - dr0.bottom - 4) + 'px';
+      /* Nov 9 (the judges' graft 1: "tie the film's height to the board"): until today the film kept the height of its deepest
+         window, so steps 1 and 2 and the end left about 100px of empty paper under the board (200px at 320). Now each window hangs
+         12px under its line when it fits on the board (its foot at most 8px past the board's foot); when it doesn't, it sits over the
+         lines already done, its foot 4px over its own line's rule, so the lit line is never covered. Only a window that fits neither way
+         still hangs under the board, and only that overhang sets the film's foot, fixed for the whole film, so the page never jumps */
+      var g = $('.cf-grid', f), board = $('.dk-board', f);
+      g.style.paddingBottom = '0px';
+      var pt = po.getBoundingClientRect().top, br = board.getBoundingClientRect(), bTop = br.top - pt, bBot = br.bottom - pt;
+      var tall = function (w) { var t = w.getBoundingClientRect().top, h = 0; [w].concat([].slice.call(w.children)).forEach(function (x) { h = Math.max(h, x.getBoundingClientRect().bottom - t); }); return h; };
+      W.forEach(function (w, i) {
+        w.style.top = '0px';
+        var r = L[i].getBoundingClientRect(), h = tall(w), under = r.bottom - pt + 12, over = r.top - pt - 4 - h;   // over: its foot 4px over the lit line's rule, so no part of the line above peeks under it
+        w.style.top = Math.round(under + h <= bBot + 8 ? under : over >= bTop - 24 ? over : under) + 'px';   // over may cover the clamp's foot, never the lit line
+      });
+      /* Nov 9, third pass: a window that sits over the lines already done can land with its top edge through a line of the sheet
+         (the title in Spanish at 393, the sub-line at 375). Whatever that edge cuts (the sheet's header, a finished row) leaves
+         with the window's entry and comes back when it goes, so the window lies on clean paper and no word is sliced */
+      /* Nov 10 (Franco's item 21, "do it"): the same for what lies under a window. Step 1's Outlook window hangs under line 1 and its
+         left edge ran through the total line, so a phone showed "Lost b" beside the window. A line still to come or the total that
+         the window's left edge or its foot slices leaves with the window too, and comes back when it goes (a line it covers whole stays) */
+      var tot = $('.cf-tot', sheet);
+      var slices = function (el, top, bot, left) {
+        var r = el.getBoundingClientRect(), rg = document.createRange(), tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n, cut = false, outL = false, inW = false;
+        if (r.bottom <= top + 1 || r.top >= bot - 1) return false;                       // not under the window
+        if (r.top + 3 < bot && r.bottom - 3 > bot) return true;                          // the window's foot runs through it
+        while (!cut && (n = tw.nextNode())) {
+          if (!n.nodeValue.trim()) continue;
+          rg.selectNodeContents(n);
+          [].forEach.call(rg.getClientRects(), function (q) {
+            if (q.bottom <= top + 1 || q.top >= bot - 1) return;
+            if (q.left < left - 1 && q.right > left + 1) cut = true;
+            else if (q.right <= left + 1) outL = true; else inW = true;
+          });
+        }
+        // review fixes, Nov 10: at 375 and 393 the window covered lines 2 and 3's titles while their circled numbers stayed out to its
+        // left, two stray numbers; a line with words both beside and under the window leaves too
+        return cut || (outL && inW);
+      };
+      var hd = $('.cf-sh-h', sheet), CUT = W.map(function (w, i) {
+        var top = Infinity, bot = -Infinity, left = Infinity; [w].concat([].slice.call(w.children)).forEach(function (x) { var r = x.getBoundingClientRect(); if (r.height) { top = Math.min(top, r.top); bot = Math.max(bot, r.bottom); left = Math.min(left, r.left); } });
+        var above = [hd].concat(L.slice(0, i)).filter(function (el) { var r = el.getBoundingClientRect(), pad = el === hd ? 0 : 8; return r.top + pad < top - 1 && r.bottom - pad > top + 1 && bot > r.bottom; });
+        return above.concat(L.slice(i + 1).concat(tot ? [tot] : []).filter(function (el) { return slices(el, top, bot, left); }));
+      });
+      var cutOut = function (i, t) { if (CUT[i].length) tl.to(K.track(CUT[i]), { autoAlpha: 0, duration: .25, ease: OUT }, t); };
+      var cutIn = function (i, t) { var els = CUT[i].filter(function (el) { return el === hd || el === tot || i < 2; }); if (els.length) tl.to(K.track(els), { autoAlpha: el1(els), duration: .3, ease: OUT }, t); };
+      var el1 = function (els) { return function (j, el) { return el === hd || el === tot ? 1 : dim; }; };
+      var deep = 0;
+      W.forEach(function (w) { [w].concat([].slice.call(w.children)).forEach(function (x) { deep = Math.max(deep, x.getBoundingClientRect().bottom - br.bottom); }); });
+      g.style.paddingBottom = Math.max(0, Math.ceil(deep)) + 'px';
+      f.setAttribute('data-po-deep', String(Math.round(deep)));   // read by the checks: what still hangs under the board
+      /* the first frame: line 1 lit, the other lines dimmed, no window */
+      K.start(L, { autoAlpha: dim }); K.start(L[0], { autoAlpha: 1 });
+      K.start($$('.cf-strike', sheet), { scaleX: 0 }); K.start($$('.cf-res', sheet), { autoAlpha: 0, y: 4 });
+      K.start($('.cf-won', sheet), { autoAlpha: 0, y: 4 }); K.start($('.cf-under path', sheet), { strokeDasharray: '1 1', strokeDashoffset: 1 });
+      K.start(caps[0], { autoAlpha: 1, y: 0 }); K.start([caps[1], caps[2]], { autoAlpha: 0, y: 4 }); K.start(b.concat(c2), { autoAlpha: 0, y: 4 });
+      K.beat(0, 0, 'caption', $('.cf-a', caps[0]).textContent, true);
+      K.start(W, { autoAlpha: 0, y: 16 }); K.start(send, { autoAlpha: 0 });
+      K.start([cur, okf].concat(e1), { autoAlpha: 0 }); K.start(e0, { autoAlpha: 1 });
+      K.start([qv, saved], { autoAlpha: 0 }); K.start(rs, { autoAlpha: 1 }); K.start(ok.concat(okp), { strokeDasharray: '1 1', strokeDashoffset: 1 });
+      var IN = { autoAlpha: 1, y: 0, duration: .4 }, OUTW = { autoAlpha: 0, y: 10, duration: .3 };
+      /* 1. Karen Davis: the follow-up sends itself */
+      K.to(2.9, ol, IN, 'stage', "Outlook's reading pane comes out under line 1"); cutOut(0, 2.9);
+      K.to(4.0, b[0], { autoAlpha: 1, y: 0 }, 'caption', b[0].textContent);
+      K.to(4.5, send, { autoAlpha: 1 }, 'stage', 'Sent by itself');
+      // review fixes, Nov 10: lines 1 and 2 win back part of their dollars, so the pen strikes nothing there; the line says what it wins back
+      K.to(6.9, res(0), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '36 of 48 followed up, $1,170 back');
+      K.to(7.9, ol, OUTW, 'stage', 'the Outlook window leaves'); cutIn(0, 7.9);
+      /* 2. Maria Garcia: on today's call list */
+      K.to(8.6, L[0], { autoAlpha: dim }, 'sheet', 'line 2 lights'); tl.to(K.track(L[1]), { autoAlpha: 1, duration: .25, ease: OUT }, 8.6);
+      K.to(9.1, xl, IN, 'stage', 'the Excel rows come out under line 2'); cutOut(1, 9.1);
+      tl.to(caps[0], { autoAlpha: 0, duration: .25, ease: OUT }, 9.1);
+      K.to(9.6, caps[1], { autoAlpha: 1, y: 0 }, 'caption', $('.cf-a', caps[1]).textContent);
+      K.to(13.0, cur, { autoAlpha: 1 }, 'stage', 'E12 selected');
+      K.to(14.0, b[1], { autoAlpha: 1, y: 0 }, 'caption', b[1].textContent);
+      K.swap(14.5, e0, e1, 'stage', 'E12 becomes Yes and the call date'); tl.to(K.track(okf), { autoAlpha: 1, duration: .3, ease: OUT }, 14.5);
+      K.to(17.8, res(1), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '24 of 30 called in time, $960 back');
+      K.to(18.8, xl, OUTW, 'stage', 'the Excel window leaves'); cutIn(1, 18.8);
+      /* 3. Lisa Anderson: the invoice fills in from her policy, then its details are checked against it */
+      K.to(19.4, L[1], { autoAlpha: dim }, 'sheet', 'line 3 lights'); tl.to(K.track(L[2]), { autoAlpha: 1, duration: .25, ease: OUT }, 19.4);
+      K.to(19.9, inv, IN, 'stage', 'the policy and the invoice come out under line 3'); cutOut(2, 19.9);
+      tl.to(caps[1], { autoAlpha: 0, duration: .25, ease: OUT }, 19.9);
+      K.to(20.7, caps[2], { autoAlpha: 1, y: 0 }, 'caption', $('.cf-a', caps[2]).textContent);
+      tl.seek(22.4, true); var box = K.box(prem);
+      K.to(22.5, box, { strokeDashoffset: 0, duration: .3 }, 'stage', 'the premium is boxed');
+      tl.to(K.track(qv), { autoAlpha: 1, duration: .16, ease: OUT }, 24.0);
+      K.fly(23.3, prem, fld, prem.textContent.trim(), .8, 'stage', '$1,248.00 lands in Amount');
+      K.to(24.1, b[2], { autoAlpha: 1, y: 0 }, 'caption', b[2].textContent);
+      K.to(27.25, ok, { strokeDashoffset: 0, duration: .3, stagger: .16, ease: MOVE }, 'stage', 'check: name, policy number and amount ticked on the invoice');
+      K.to(27.75, okp, { strokeDashoffset: 0, duration: .3, stagger: .16, ease: MOVE }, 'stage', "check: the policy's name and number ticked");
+      K.to(28.25, c2, { autoAlpha: 1, y: 0 }, 'caption', c2.textContent);
+      K.swap(28.75, rs, saved, 'stage', 'Review and send becomes Saved');
+      var e = 32.1;
+      K.to(e, strike(2), { scaleX: 1, duration: .5, ease: MOVE }, 'sheet', 'the pen strikes $792');
+      K.to(e + .5, res(2), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '33 hours of typing back');
+      tl.to(K.track(box.parentNode), { autoAlpha: 0, y: 10, duration: .3, ease: OUT }, e + 1.0);   // the pen box leaves with its window
+      K.to(e + 1.0, inv, OUTW, 'stage', 'the last window leaves');
+      if (CUT[2].indexOf(hd) >= 0) tl.to(K.track(hd), { autoAlpha: 1, duration: .3, ease: OUT }, e + 1.0);   // the rows come back with "the whole sheet lights"
+      if (tot && CUT[2].indexOf(tot) >= 0) tl.to(K.track(tot), { autoAlpha: 1, duration: .3, ease: OUT }, e + 1.0);   // the total, before Won back comes in under it
+      /* the end: the whole sheet stands alone, the loss before any fix and the month won back */
+      e += 1.5;
+      K.to(e, [L[0], L[1]], { autoAlpha: 1 }, 'sheet', 'the whole sheet lights');
+      K.to(e + 1.1, $('.cf-won', sheet), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', 'Won back $2,922 a month');
+      tl.to(K.track($('.cf-under path', sheet)), { strokeDashoffset: 0, duration: .7, ease: MOVE }, e + 1.3);
+      return e + 2.3;
+    }
+
+    /* ---------- p4 pull-out: a phone's night. The measured iPhone alone and large; QuickBooks' bills, then the policy sheet, come in
+       as one small Mac window over the phone's lower half, under the clock and the morning list. Same beats as the computer ---------- */
+    function nightPhone(tl, K) {
+      var f = K.fig, caps = $$('.cf-cap', f), po = $('.po-n', f), bills = $('.po-bills', po), pol = $('.po-pol', po);
+      var okRows = $$('.po-ok', bills), okSt = $$('.po-ok .b-st', bills), red = $('.b-red', bills);
+      var dd = $$('.ph-date span', f), kk = $$('.ph-clk span', f), nt = $('.ph-nt', f), tm = $$('.nt-tm span', f), ntH = $('.nt-h', f), li = $$('.nt-l li', f);
+      var vp = $('.po-vp', pol), roll = $('.po-roll', pol), cur = $('.po-cur', pol);
+      if (!roll.firstElementChild) { var src = $('.cf-pol .pol-roll table', f); if (src) roll.appendChild(src.cloneNode(true)); }
+      var np = $$('.pol-np', roll), rings = $$('.pol-ring path', roll), rws = $$('tr', roll), cc = $('td.pol-c', roll);
+      var rh = rws[1].offsetTop - rws[0].offsetTop, c = 2;
+      vp.style.setProperty('--rp', rh + 'px'); cur.style.left = cc.offsetLeft + 'px'; cur.style.width = cc.offsetWidth + 'px';
+      var at = function (row) { return -(row - 2 - c) * rh; };
+      var IN = { autoAlpha: 1, y: 0, duration: .4 }, OUTW = { autoAlpha: 0, y: 16, duration: .4 };
+      /* the first frame: 11:40 PM, the bills window over the phone, the phone asleep with nothing on it */
+      K.start(caps, { autoAlpha: 0, y: 4 }); K.start(caps[0], { autoAlpha: 1, y: 0 });
+      K.beat(0, 0, 'caption', caps[0].textContent, true);
+      K.start(bills, { autoAlpha: 1, y: 0 }); K.start(pol, { autoAlpha: 0, y: 16 });
+      K.start(okRows, { opacity: 1 }); K.start([red].concat(okSt), { autoAlpha: 0 });
+      K.start(dd, { autoAlpha: 0 }); K.start(dd[0], { autoAlpha: 1 }); K.start(kk, { autoAlpha: 0 }); K.start(kk[0], { autoAlpha: 1 });
+      K.start(nt, { autoAlpha: 0, y: -10 }); K.start(tm[1], { autoAlpha: 0 }); K.start(tm[0], { autoAlpha: 1 });
+      K.start([ntH, li[1], li[2]], { autoAlpha: 0, display: 'none' });
+      K.start(roll, { y: 0 }); K.start(cur, { autoAlpha: 0 }); K.start(np, { autoAlpha: 0 }); K.start(rings, { strokeDasharray: '1 2', strokeDashoffset: 1.01 });
+      /* 11:40 PM: three bills against their quotes, each check in turn, one over */
+      K.to(1.0, okSt, { autoAlpha: 1, duration: .35, stagger: .4 }, 'desk', 'Matches quote ticks, one bill after the other');
+      K.to(2.4, okRows, { opacity: .4 }, 'desk', 'the other rows dim, Plover IT turns red'); tl.to(K.track(red), { autoAlpha: 1, duration: .25, ease: OUT }, 2.4);
+      K.cap(5.0, caps[0], caps[1]);
+      tl.to(nt, { autoAlpha: 1, y: 0, duration: .25, ease: OUT }, 6.5);
+      K.fly(5.75, red, li[0], li[0].textContent, .9, 'phone', 'the red line flies into the morning list');
+      K.to(6.95, bills, OUTW, 'desk', 'the bills window drops away');
+      /* 12:05 AM: the filing, as one line on the phone */
+      K.cap(9.3, caps[1], caps[2]);
+      K.swap(9.8, [kk[0], dd[0]], [kk[1], dd[1]], 'phone', 'clock 12:05 AM, Monday');
+      tl.set(li[1], { display: 'list-item' }, 10.4); K.to(10.4, li[1], { autoAlpha: 1 }, 'phone', '6 attachments filed joins the note');
+      /* 5:40 AM: September's policies against the carrier's statement */
+      K.to(13.0, pol, IN, 'desk', 'Policies 2026.xlsx comes in over the phone');
+      K.cap(13.8, caps[2], caps[3]);
+      K.swap(14.3, kk[1], kk[2], 'phone', 'clock 5:40');
+      tl.to(K.track(cur), { autoAlpha: 1, duration: .12, ease: OUT }, 14.8);
+      K.to(14.8, roll, { y: at(29), duration: 1.2, ease: 'power2.inOut' }, 'desk', 'the rows run and stop on row 29');
+      K.to(16.0, np[0], { autoAlpha: 1 }, 'desk', 'Not paid, circled, beside $0.00'); tl.to(rings[0], { strokeDashoffset: 0, duration: .5, ease: MOVE }, 16.0);
+      K.to(18.0, roll, { y: at(31), duration: .3, ease: MOVE }, 'desk', 'one step to row 31');
+      K.to(18.5, np[1], { autoAlpha: 1 }, 'desk', 'Not paid, circled'); tl.to(rings[1], { strokeDashoffset: 0, duration: .5, ease: MOVE }, 18.5);
+      /* 6:30 AM: the window leaves, the phone carries the list */
+      K.cap(20.5, caps[3], caps[4]);
+      K.to(21.0, pol, OUTW, 'desk', 'the policy sheet leaves');
+      K.swap(21.5, kk[2], kk[3], 'phone', 'clock 6:30');
+      tl.set(ntH, { display: 'block' }, 22.0); tl.set(li[2], { display: 'list-item' }, 22.0);
+      K.to(22.0, [ntH, li[2]], { autoAlpha: 1, duration: .4 }, 'phone', 'the note grows: 3 things need you');
+      tl.to(K.track(tm[0]), { autoAlpha: 0, duration: .15 }, 22.0); tl.to(K.track(tm[1]), { autoAlpha: 1, duration: .25 }, 22.08);
+      return 26.5;
+    }
+
     /* ---------- wiring ---------- */
     var list = [];
     figs.forEach(function (fig) {
       var n = fig.getAttribute('data-cfilm');
       // the walk's stops: each step's start, and 27.0 s, just before the check, so a reader who scrolled away in step 3 comes back
       // to the ticks being drawn, not to a finished film (the review round, Nov 5)
-      if (n === 'walk') list.push(Film(fig, walk, [8.6, 19.4, 27.0], [0, 8.6, 19.4]));
-      if (n === 'night') list.push(Film(fig, night, [5.0, 9.3, 13.0, 20.5], [0]));
+      // p4 pull-out (Nov 7): a phone plays the same beats on its own layout (walkPhone, nightPhone)
+      if (n === 'walk') list.push(Film(fig, function (tl, K) { return K.phone ? walkPhone(tl, K) : walk(tl, K); }, [8.6, 19.4, 27.0], [0, 8.6, 19.4]));
+      if (n === 'night') list.push(Film(fig, function (tl, K) { return K.phone ? nightPhone(tl, K) : night(tl, K); }, [5.0, 9.3, 13.0, 20.5], [0]));
     });
     // a film that plays where the reader can see any of it; What we automate's picture waits for it (orderPic)
     CF.busy = function () {
@@ -584,6 +776,8 @@
     CF.yieldTo = function () { list.forEach(function (f) { if (f.mode === 'play' && f.ratio < .5) f.away = true; }); };
     // the hero sheet's rows link to the walk's marks (#stop-1 to 3): the page scrolls there (sheetMap), and the film plays that step
     document.addEventListener('click', function (e) {
+      // Nov 9 (the judges' graft 3, p1-corner's rows): a line of the film's own walk sheet is a button that plays its step
+      var g = e.target.closest && e.target.closest('.cf-go'); if (g && CF.films.walk) { CF.films.walk.jump(+g.getAttribute('data-go')); return; }
       var a = e.target.closest && e.target.closest('a[href^="#stop-"]'); if (!a || !CF.films.walk) return;
       var i = +a.getAttribute('href').slice(6) - 1; if (i >= 0 && i < 3) CF.films.walk.jump(i);
     });

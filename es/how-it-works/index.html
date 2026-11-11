@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=b101fba6">
-<link rel="stylesheet" href="/v4/trade-page.css?v=b101fba6">
+<link rel="stylesheet" href="/v4/system.css?v=a9e66da2">
+<link rel="stylesheet" href="/v4/trade-page.css?v=a9e66da2">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=b101fba6" defer></script>
-<script src="/v4/system.js?v=b101fba6" defer></script>
+<script src="/v4/trades.js?v=a9e66da2" defer></script>
+<script src="/v4/system.js?v=a9e66da2" defer></script>
 <style>
 /* ===== How it works, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64), and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -97,6 +97,16 @@
   .wk-top,.wk-parts,.wk-lists{grid-template-columns:var(--wk-cols);gap:56px}
   .wk-parts{align-items:start}
 }
+/* the receipt shoebox (picks build, Nov 9; Franco, on Home's walk band: "I don't like that one there because it's right next to the
+   light lamp thing. Maybe we could put that one in an 'About' or 'How it Works' section... just to keep the art style consistent").
+   Pine ink on the page's own paper, hatching only, drawn by picks-build-2026-11-09/tools/make_plates.py with Home's lamp and desk
+   phone. It fills the open half of the walk band's lower row, under Your records, beside What the walk never does: the records the
+   walk reads, as most owners keep them. Art, never UI: no words on it, nothing moves */
+.ink{display:block;max-width:100%;height:auto;pointer-events:none;user-select:none}
+.ink-box{width:128px;margin:-86px 0 0 auto}   /* a phone (Nov 9, third pass): alone under the list it left half its row empty and added 151px; now it stands at the right of the privacy line, which wraps beside it, and the band grows about 80px */
+@media (max-width:899px){.wk-lists .note-r{max-width:calc(100% - 140px);min-height:76px}}
+@media (max-width:359px){.ink-box{width:120px;margin-top:-84px}.wk-lists .note-r{max-width:calc(100% - 130px);min-height:76px}}
+@media (min-width:900px){.ink-box{width:340px;align-self:end;justify-self:start;margin:0 0 4px}}
 
 /* a native disclosure (Full terms, the sources, the cover lists): the facts stay one tap away without a wall of text */
 details:not([open])>:not(summary){display:none}   /* a closed answer takes no room and no count: Chrome lays out closed details content (content-visibility), so Lumora.lint() counted its figures and check.py its words */
@@ -417,7 +427,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       </ul>
     </nav>
     <a class="hdr-tel" href="tel:+13522260681">(352) 226-0681</a>
-    <a class="btn btn-sm" href="tel:+13522260681">Llámenos</a>
+    <a class="btn btn-sm" href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Llámenos</a>
     <a href="/how-it-works/" lang="en" hreflang="en" class="lang"><svg class="globe" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8"/><ellipse cx="10" cy="10" rx="3.4" ry="8"/><path d="M2.8 6.5h14.4M2.8 13.5h14.4"/></svg>English</a>
     <button class="menu-b" type="button" aria-expanded="false" aria-controls="nav">Menú</button>
   </div>
@@ -429,10 +439,10 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
   <div class="wrap hiw-g">
     <div class="hiw-copy">
       <h1>Qué pasa después de&nbsp;su&nbsp;llamada</h1>
-      <p class="t-lede">En la llamada sin costo vemos si a su negocio le vale la pena una visita. La visita es el primer paso que se paga, y termina en una hoja que le pone una cifra en dólares a cada problema.</p>
+      <p class="t-lede">La llamada sin costo le muestra a dónde se le va la semana. La visita es el primer paso pagado, y termina en una hoja con una cifra en dólares para cada problema.</p>
       <div class="cta">
         <div class="cta-row">
-          <a class="btn btn-lg" href="tel:+13522260681" data-first="the call button">Llámenos</a>
+          <a class="btn btn-lg" href="tel:+13522260681" data-first="the call button"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Llámenos</a>
           <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
           <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a>
         </div>
@@ -461,7 +471,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
         <li>
           <div class="tl-head"><h3><span data-shared="step3.when">Su hoja</span></h3></div>
           <div class="tl-body">
-            <p class="t-body"><span data-shared="step3.what">Cada problema con su cifra en dólares. Por lo general la tiene a la semana de que nos lleguen sus registros.</span> <span data-shared="step3.get">Es suya, decida lo que decida.</span></p>
+            <p class="t-body"><span data-shared="step3.what">Cada problema con su cifra en dólares, en el plazo que acordemos con usted en la llamada sin costo.</span> <span data-shared="step3.get">Es suya, decida lo que decida.</span></p>
             <a class="u tl-go" href="#sample">Vea una hoja de ejemplo completa</a>
           </div>
         </li>
@@ -536,6 +546,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
         </ul>
         <p class="note-r">Cómo manejamos sus registros está en la <a class="u" href="/es/privacy/">página de privacidad</a>.</p>
       </div>
+      <img class="ink ink-box" src="/v4/how-about/assets/plates/shoebox.svg" width="340" height="250" alt="" aria-hidden="true" decoding="async" loading="lazy">
     </div>
     <details class="more" id="terms">
       <summary>Condiciones completas</summary>
@@ -590,11 +601,11 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       <p class="lead"><b>Primer arreglo sugerido: la fila 4, los recibos del proveedor.</b> La fila 1&nbsp;es más grande, pero esta lleva poco esfuerzo, y cada pieza que encuentra es dinero que usted ya gastó.</p>
       <p>El cambio lo va a ver en su estado de cuenta del proveedor: cada recibo con su número de trabajo, y cada semana una lista de las piezas que se compraron para un trabajo y nunca llegaron a su factura. Después siguen la fila 1&nbsp;y la fila 2.</p>
       <details class="more src-d"><summary>De dónde salen las cifras del ejemplo</summary><div><p class="note-r">El promedio nacional de una visita de plomero es $341, según HomeAdvisor (2026, guía nacional de costos), y el margen bruto mediano por trabajo es 44.3%, según Level (datos de proveedor). Los negocios con menos de 5&nbsp;técnicos convirtieron en trabajo el 24% de sus llamadas, a cualquier hora (blog de ServiceTitan, 2022, datos de proveedor).</p><p class="note-r">En la hoja de aire acondicionado y calefacción, el 1&nbsp;de cada 4&nbsp;sale de los datos de ServiceTitan de enero de 2026&nbsp;sobre contratos de servicio comerciales: se renovó el 29.8% cuando la renovación era manual y el 49.1% con renovación automática y recordatorios por correo, así que se conservó más o menos 1&nbsp;de cada 4&nbsp;de los planes que se habrían vencido (datos de proveedor). La cuota anual de $189 es de ejemplo, para un plan con dos mantenimientos, y está dentro de los precios publicados de planes en Florida.</p>
-<p class="note-r">En la hoja de administradores de propiedades, el 10% es un recargo de mantenimiento común en los contratos de administración (foro de BiggerPockets, con lo que cuentan dueños y administradores; se ve de 0&nbsp;a 20%, o una tarifa fija en su lugar). Las 70&nbsp;facturas son de ejemplo: cerca del 5% de las 1,400 facturas de proveedores, más o menos, que paga al año una oficina con 212&nbsp;unidades (unas 600&nbsp;en la semana de cambio de inquilinos, más 3&nbsp;a 5&nbsp;órdenes de trabajo por unidad), a $180 por factura de ejemplo.</p>
+<p class="note-r">En la hoja de administradores de propiedades, el 10% es un recargo de mantenimiento común en los contratos de administración (foro de BiggerPockets, con lo que cuentan dueños y administradores; se ve de 0&nbsp;a 20%, o una tarifa fija en su lugar). Las 70&nbsp;facturas son de ejemplo: el 5% de unas 1,400 facturas de proveedores que paga al año una oficina con 212&nbsp;unidades (600&nbsp;en la semana de cambio de inquilinos, más 3&nbsp;a 5&nbsp;órdenes de trabajo por unidad), a $180 por factura de ejemplo.</p>
 <p class="note-r">En la hoja de control de plagas, el 1&nbsp;de cada 2&nbsp;y el 20% son tasas de ejemplo nuestras, y su visita pone en su lugar los números de su negocio: 1&nbsp;de cada 2&nbsp;renovaciones de termitas vencidas que se recuperan con una llamada, y un 20% más de cobros automáticos rechazados que se recuperan cuando los reintentos se programan. Como referencia, el estudio de Recurly de 2018&nbsp;con más de 1,300 negocios de suscripción encontró que se recuperó más del 45% de los cobros rechazados por las tres razones más comunes (datos de proveedor). Los $225 salen de la cuota promedio de una renovación, $271, entre contratos de cebo de $325 y de líquido de $195, menos una inspección anual de $46. En la página de control de plagas, los $7.50 por pie del tratamiento de termitas con zanja y varilla están dentro de dos guías nacionales de costos: Fixr, de $4 a $14.50, y Polyguard, de $3 a $15.</p></div></details>
     </div>
     <div class="cta-inline">
-      <a class="btn" href="tel:+13522260681">Llámenos</a>
+      <a class="btn" href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Llámenos</a>
       <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
     </div>
   </div>
@@ -608,8 +619,8 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       <p class="t-lede">Le sugerimos empezar con un solo arreglo, uno cuyo resultado pueda ver en sus registros.</p>
       <p>Cada arreglo tiene su propio precio fijo, nunca por hora, y usted lo conoce con la hoja en la mano, antes de que empiece cualquier trabajo. Si el arreglo necesita algún programa, la cuenta se abre a su nombre y se paga al costo, sin recargo.</p>
       <p>¿Prefiere arreglarlo todo de una vez? También lo cotizamos a partir de la hoja, y los precios se suman.</p>
-      <p class="fx-ai">Nada le llega a sus clientes, ni entra en una herramienta de inteligencia artificial, sin su visto bueno.</p>
-      <p>Todo funciona en cuentas que son suyas, y cada arreglo está hecho para que, si falla, su negocio siga trabajando como antes.</p>
+      <p class="fx-ai">Nada le llega a sus clientes sin su visto bueno.</p>
+      <p>Sus cuentas, sus datos y lo que construimos son suyos, por escrito, una vez pagado. Si dejamos de trabajar juntos, usted se queda con todo, con una hoja de una página, en español o en inglés, para manejarlo. Cada arreglo está hecho para que, si falla, su negocio siga trabajando como antes.</p>
     </div>
     <div class="fx-tools">
       <h3>El&nbsp;mismo arreglo, de&nbsp;tres maneras</h3>
@@ -764,18 +775,18 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       </div>
       <figure class="mc-pic">
         <div class="pic">
-          <div class="report" role="img" aria-label="Una página de la revisión mensual del negocio de ejemplo, septiembre. Lo que hizo el arreglo: 501 dólares encontrados en el mes, en piezas compradas para un trabajo que nunca llegaron a su factura. Los recibos sin número de trabajo bajaron de 14 al mes a 2, en barras por semana, las últimas cuatro después del arreglo, y aparecieron 11 piezas que faltaban en una factura. Qué falló: una factura del proveedor llegó con un formato nuevo; el revisor se detuvo, nos avisó y quedó resuelto. Siguiente problema: cotizaciones que tardan más de 48 horas en salir, 1,900 dólares al mes.">
-            <div class="rp-h" aria-hidden="true"><div><b>Revisión mensual</b><small>El negocio de&nbsp;ejemplo, septiembre</small></div></div>
+          <div class="report" role="img" aria-label="Una página de la revisión mensual del negocio de ejemplo, diciembre, con dos arreglos funcionando. Lo que hicieron los arreglos: 2,021 dólares este mes, 501 dólares en piezas que nunca llegaron a una factura y 4 trabajos que no se perdieron, 1,520 dólares, porque las cotizaciones ahora salen el mismo día. Los recibos sin número de trabajo bajaron de 14 al mes a 2, en barras por semana, las últimas cuatro después del arreglo, y las cotizaciones con más de 48 horas de atraso bajaron de 9 a 1. Qué falló: una factura del proveedor llegó con un formato nuevo; el revisor se detuvo, nos avisó y quedó resuelto. Siguiente problema: el mismo trabajo anotado en tres lugares, 411 dólares al mes.">
+            <div class="rp-h" aria-hidden="true"><div><b>Revisión mensual</b><small>El negocio de&nbsp;ejemplo, diciembre</small></div></div>
             <div aria-hidden="true">
-              <div class="rp-sec"><p class="rp-k">Lo que hizo el arreglo</p><p class="rp-big"><span class="money">$501.00</span><span>encontrados este mes: piezas compradas para un trabajo que nunca llegaron a su factura</span></p></div>
+              <div class="rp-sec"><p class="rp-k">Lo que hicieron los arreglos</p><p class="rp-big"><span class="money">$2,021</span><span>este mes: $501 en piezas que nunca llegaron a una factura, y 4&nbsp;trabajos que no se perdieron ($1,520) porque las cotizaciones ahora salen el mismo día</span></p></div>
               <div class="rp-sec">
-                <div class="rp-two"><p>Recibos sin número de trabajo<b>14 <i>a</i> 2</b></p><p>Piezas que faltaban en una factura<b>11</b></p></div>
+                <div class="rp-two"><p>Recibos sin número de trabajo<b>14 <i>a</i> 2</b></p><p>Cotizaciones con más de 48&nbsp;h de atraso<b>9 <i>a</i> 1</b></p></div>
                 <div class="bars"><span style="--h:100%"></span><span style="--h:75%"></span><span style="--h:100%"></span><span style="--h:75%"></span><span class="f" style="--h:25%"></span><span class="f" style="--h:3%"></span><span class="f" style="--h:25%"></span><span class="f" style="--h:3%"></span></div>
                 <div class="bars-x"><span>S1</span><span>S2</span><span>S3</span><span>S4</span><span>S5</span><span>S6</span><span>S7</span><span>S8</span></div>
                 <p class="bars-key"><span><i></i>Recibos sin número de trabajo, antes del arreglo</span><span><i class="f"></i>Después</span></p>
               </div>
               <div class="rp-sec"><p class="rp-k">Qué falló</p><p class="rp-next">Una factura del proveedor llegó con un formato nuevo. El revisor se detuvo y nos avisó. Ya quedó resuelto.</p></div>
-              <div class="rp-sec"><p class="rp-k">Siguiente problema</p><p class="rp-next">Cotizaciones que tardan más de 48&nbsp;horas en salir: <b>$1,900 al mes</b></p></div>
+              <div class="rp-sec"><p class="rp-k">Siguiente problema</p><p class="rp-next">El mismo trabajo anotado en tres lugares: <b>$411 al mes</b></p></div>
               <p class="rp-foot"><span>Cancele cualquier mes, por correo</span></p>
             </div>
           </div>
@@ -783,7 +794,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       </figure>
     </div>
     <div class="cta-inline" data-extra="computer: the call bar is on screen the whole time on a phone">
-      <a class="btn" href="tel:+13522260681">Llámenos</a>
+      <a class="btn" href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Llámenos</a>
       <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
     </div>
   </div>
@@ -797,7 +808,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
         <p>Publicamos un solo precio, el de la visita, en el <a class="u" href="#walk">paso 2</a>, más arriba, con sus condiciones. Se paga al agendarla, y la hoja es suya de todos modos, aunque nunca nos contrate para un arreglo.</p>
         <p>Todo lo que viene después de la visita se cotiza a partir de su hoja, así que esa cifra llega después de la visita, no antes. Cada arreglo tiene su propio precio fijo, nunca por hora, y lo que cobre el software va en una línea aparte, al costo. Usted conoce cada precio antes de que empiece cualquier trabajo. La primera llamada no tiene costo.</p></div></details>
       <details><summary>¿Trabajan fuera de Gainesville?</summary><div class="ans">
-        <p>Estamos en Gainesville y visitamos negocios en el condado de Alachua. ¿Está en otra parte de Florida? Pregúntenos. Toda visita incluye un recorrido en persona, así que llámenos y le decimos si podemos llegar hasta allá.</p></div></details>
+        <p>Estamos en Gainesville y visitamos negocios en el condado de Alachua. También vamos a otras partes de Florida, si lo coordinamos con usted. Llámenos.</p></div></details>
       <details><summary>¿Qué datos necesitan y qué hacen con ellos?</summary><div class="ans">
         <p>Sus registros: facturas, cotizaciones, su calendario y su lista de trabajos, y el historial de llamadas con su autorización por escrito. Usted mismo descarga los archivos o nos da un usuario a nuestro nombre, nunca una contraseña compartida. Guardamos los archivos cifrados y los borramos en cuanto le entregamos la hoja. Lo demás está en la <a class="u" href="/es/privacy/">página de privacidad</a>.</p></div></details>
       <details><summary>¿Tengo que dejar de trabajar para la visita?</summary><div class="ans">
@@ -826,7 +837,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
         <p>Sí. Si cancela antes de que empiece el recorrido y antes de que nos comparta sus registros, le devolvemos lo que pagó por la visita. Después, si la hoja no le valió la pena, mándenos un mensaje de texto o un correo dentro de los 7&nbsp;días siguientes a la llamada en que la repasamos con usted, y también le devolvemos lo que pagó por la visita.</p>
         <p>La hoja es suya de todos modos. La revisión mensual es mes a mes: cancele por correo antes de la siguiente fecha de cobro. Si detiene un arreglo o un proyecto a medio camino, el acuerdo dice qué se debe por el trabajo hecho.</p></div></details>
       <details><summary>¿Trabajan en español?</summary><div class="ans">
-        <p>Sí. La llamada sin costo, la visita, su hoja, la revisión mensual y la guía de una página que le dejamos con cada arreglo pueden ser en español. Si su sistema de citas les escribe a los clientes solo en inglés, ese puede ser uno de los problemas que arreglamos.</p></div></details>
+        <p>Sí. La llamada sin costo, la visita, su hoja, la revisión mensual y la guía de una página que le dejamos con cada arreglo pueden ser en español. Si su sistema de citas les escribe a los clientes solo en inglés, eso también lo arreglamos.</p></div></details>
     </div>
     <p class="faq-more">¿Tiene otra pregunta? Llame o escriba al <a class="u" href="tel:+13522260681">(352) 226-0681</a>.</p>
   </div>
@@ -838,7 +849,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       <h2 class="t-close close-h">Empiece con&nbsp;una&nbsp;llamada sin costo.</h2>
       <div class="close-act">
         <div class="arrow-to">
-          <a class="btn btn-lg" href="tel:+13522260681">Llámenos</a>
+          <a class="btn btn-lg" href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Llámenos</a>
           <svg class="pen-arrow" viewBox="0 0 110 84" aria-hidden="true" data-draw><path pathLength="1" d="M98 17C100 42 80 55 16 55"/><path pathLength="1" d="M28 46L15 55 28 64"/></svg>
         </div>
         <p class="c4-tel"><a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a> <a class="u c4-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a></p>
@@ -858,7 +869,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
         <article class="letter" aria-labelledby="letter-h">
           <h3 class="letter-h" id="letter-h">Quién recorre su&nbsp;negocio</h3>
           <p>Casi todos los dueños con los que hablo pierden sus noches en las mismas tareas: la cotización que escriben después de cenar, la factura que nunca salió, la llamada que nadie devolvió.</p>
-          <p>Antes de Lumora me tocaba pasar a la computadora todo el papeleo de una empresa de daños por agua, y terminé automatizando casi todo. Ahora Lumora recorre negocios en Gainesville y sus alrededores, y hace lo mismo.</p>
+          <p>Hago automatizaciones desde 2022. En una empresa de daños por agua me tocaba el papeleo de los reclamos; lo automaticé y le enseñé al personal a manejarlo. Ahora Lumora hace lo mismo en negocios de Gainesville y sus alrededores.</p>
           <p>Hablo español e inglés, así que todo puede ser en español.</p>
           <p class="letter-sig">Franco A. Soto<span>Dueño</span></p>
         </article>
@@ -897,7 +908,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       <div class="foot-lead">
         <a class="foot-brand" href="/es/" aria-label="Lumora, página de inicio"><img src="/v4/assets/logo-white.svg" alt="" width="148" height="36"></a>
         <p class="foot-line">Su negocio debería funcionar igual, esté usted o no.</p>
-        <a class="btn" href="tel:+13522260681" data-extra="computer: the call bar carries the number on a phone">Llámenos</a>
+        <a class="btn" href="tel:+13522260681" data-extra="computer: the call bar carries the number on a phone"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Llámenos</a>
       </div>
       <nav class="foot-col" aria-labelledby="f-how"><h2 class="foot-h" id="f-how">Cómo funciona</h2><ul><li><a href="/es/how-it-works/#conversation">La llamada sin costo</a></li><li><a href="/es/how-it-works/#walk">La visita</a></li><li><a href="/es/how-it-works/#fix">Un arreglo</a></li><li><a href="/es/how-it-works/#check">La revisión mensual</a></li><li><a href="/es/how-it-works/#faq">Preguntas de los dueños</a></li><li><a href="/es/what-we-automate/">Lo que automatizamos</a></li><li><a href="/es/leak-check/">Calculadora de pérdidas</a></li></ul></nav>
       <nav class="foot-col" aria-labelledby="f-ind"><h2 class="foot-h" id="f-ind">A quién atendemos</h2><ul><li><a href="/es/industries/plumbing/">Plomería</a></li><li><a href="/es/industries/ac-and-heating/">Aire acondicionado y calefacción</a></li><li><a href="/es/industries/electrical/">Electricidad</a></li><li><a href="/es/industries/water-damage-and-mold/">Daños por agua y moho</a></li><li><a href="/es/industries/pest-control/">Control de plagas</a></li><li><a href="/es/industries/roofing/">Techos</a></li><li><a href="/es/industries/restaurants-and-bars/">Restaurantes y bares</a></li><li><a href="/es/industries/property-managers/">Administradores de propiedades</a></li><li><a href="/es/industries/">Todos los tipos de negocio</a></li></ul></nav>
@@ -910,7 +921,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
   </div>
 </footer>
 
-<nav class="callbar" aria-label="Llámenos o escríbanos"><a href="tel:+13522260681">Llamar <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">Escribir</a></nav>
+<nav class="callbar" aria-label="Llámenos o escríbanos"><a href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Llamar <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">Escribir</a></nav>
 <script>
 (function () {
   function open(id) { var t = id && document.getElementById(id), d = t && t.closest('details'); if (d) d.open = true; }
