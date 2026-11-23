@@ -1941,3 +1941,13 @@ html.js .hm4-hero .sheet[data-fill] .fill-wait,html.js .hm4-hero .sheet[data-fil
    (it broke to "Lo que / recupera" at 320); under 340 the figure is 20px with an 8px gap, so the Spanish one stays inside the sheet */
 @media (max-width:359px){.cf-walk .cf-won>span{white-space:nowrap}}
 @media (max-width:339px){.cf-walk .cf-main-sheet .cf-won,.cf-walk .cf-over .cf-won{gap:8px}.cf-walk .cf-main-sheet .cf-won b,.cf-walk .cf-over .cf-won b{font-size:20px}}
+
+/* Nov 13 (HQ P27): the lede now names three things we automate. Its new words run one line shorter than the old
+   ones between 376 and 391px wide, which lifted the walk sheet so the call bar cut a row at 390 x 844. Holding the
+   old three-line height there keeps every measured first screen where it was. */
+@media (min-width:376px) and (max-width:391px){.hm4-hero .t-lede{min-height:calc(3lh)}}
+@media (max-width:374px){html[lang="es"] .hm4-hero .t-lede{min-height:calc(3lh)}}   /* the Spanish words run one line shorter below 375px; English matches the old lines there */
+/* Nov 23 (D61): the English headline "We automate your office work so it runs by itself." takes two lines on a short phone where
+   the old one took three, which lifted the sheet so the call bar cut a row at 375 x 667. Holding the old three-line height there
+   keeps every measured first screen where it was, as the Nov 13 lede rule above does; push 2 (the hero layout) replaces both. */
+@media (max-width:899px) and (max-height:700px){html[lang="en"] .hm4-hero h1{min-height:calc(3lh)}}
