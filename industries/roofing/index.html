@@ -28,10 +28,10 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=8bc95b5d">
-<link rel="stylesheet" href="/v4/trade-page.css?v=8bc95b5d">
+<link rel="stylesheet" href="/v4/system.css?v=ff017dc4">
+<link rel="stylesheet" href="/v4/trade-page.css?v=ff017dc4">
 <style>
-/* RF: roofing's own extras, after trade-page.css. Section 4's two papers: the signed contract (paper, straight, R8) and the
+/* RF: roofing's own extras, after trade-page.css. Section 2's two papers: the signed contract (paper, straight, R8) and the
    county permit search in the one window frame (R6), the flag row across its top and one pencil ring on "No applications
    found". They reuse plumbing's paper pair (.pl-docs, .pl-inv, .pl-flag): side by side in a picture 640px and wider, stacked
    under it with the window laid over the contract's empty bottom edge, so no line is hidden. No portal's own look. */
@@ -65,10 +65,30 @@
    the ring clears every letter; the indent gives the ring's left side room (review 2026-10-12) */
 .rf-none{margin-left:18px}
 .rf-none .pc::after{inset:-8px -18px}
+/* Nov 25 2026 (everything run, job B, 6.8): its own arrangement. From a 641px picture the permit search is the big sheet, in front, and the
+   contract is tucked behind it: only the contract's blank left margin lies under the window, every line of it is in view */
+@container (min-width:641px){
+  .pl-docs.rf-docs{grid-template-columns:minmax(0,1fr);gap:0;align-items:start}
+  .rf-docs>*{grid-area:1/1}
+  .rf-docs .rf-ct{width:42%;max-width:none;justify-self:end;padding:20px 18px 24px 46px}
+  .rf-docs .doc-h{display:grid;gap:2px;justify-content:start}
+  .rf-docs .rf-kv div{grid-template-columns:minmax(0,1fr);gap:0;padding:5px 0 6px}
+  .rf-docs .rf-kv dt{font-size:12px}
+  .rf-docs .rf-sig{margin-top:30px}
+  .rf-docs .pl-inv{position:relative;z-index:1;width:calc(58% + 28px);justify-self:start;margin:44px 0 0}
+  .rf-docs .pl-flag{padding:14px 20px;gap:10px;font-size:16px}
+  .rf-docs .rf-ps-b{padding:20px 20px 22px}
+  .rf-docs .rf-q{padding:7px 14px;font-size:16px;line-height:28px}
+  .rf-docs .rf-none{margin:26px 0 28px 22px;font-size:24px;font-family:var(--sys);letter-spacing:-.01em}
+  .rf-docs .rf-days-k{font-size:13px;margin-bottom:8px}
+  .rf-docs .rf-days{gap:6px}
+  .rf-docs .rf-days li{padding:7px 2px;font-size:13px;line-height:1.5}
+  .rf-docs .rf-days b{font-size:20px}
+}
 </style>
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=8bc95b5d" defer></script>
-<script src="/v4/system.js?v=8bc95b5d" defer></script>
+<script src="/v4/trades.js?v=ff017dc4" defer></script>
+<script src="/v4/system.js?v=ff017dc4" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Office automation for roofing companies","serviceType":"Business process automation","provider":{"@type":"ProfessionalService","@id":"https://lumorafl.com/#business","name":"Lumora","url":"https://lumorafl.com/","telephone":"+1-352-226-0681"},"areaServed":[{"@type":"AdministrativeArea","name":"Alachua County, FL"},{"@type":"City","name":"Gainesville, FL"},{"@type":"City","name":"Alachua, FL"},{"@type":"City","name":"Archer, FL"},{"@type":"City","name":"Hawthorne, FL"},{"@type":"City","name":"High Springs, FL"},{"@type":"City","name":"La Crosse, FL"},{"@type":"City","name":"Micanopy, FL"},{"@type":"City","name":"Newberry, FL"},{"@type":"City","name":"Waldo, FL"}],"audience":{"@type":"BusinessAudience","audienceType":"Roofing companies"},"availableLanguage":["en","es"],"url":"https://lumorafl.com/industries/roofing/"}</script>
 </head>
 <body data-trade="roofing" data-trade-lock data-rules="v4">
@@ -156,6 +176,51 @@
       <li data-shared="moneyback.short">Walk fee back if you ask within 7&nbsp;days</li>
       <li>We don't sell leads, and there's no long contract</li>
     </ul>
+  </div>
+</section>
+
+<section class="band pl-papers" id="deposit" data-ground="paper" data-desk="pine" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
+  <div class="wrap pl-pw">
+    <div class="pl-pw-copy">
+      <h2>Day 28&nbsp;of 30, and no permit application on file.</h2>
+      <p class="pl-find">Job TR-26-133, a retail reroof. Nancy Allen paid a 30&nbsp;percent deposit on Wednesday, September 9: $4,563.00 on a $15,210.00 contract. Over 10&nbsp;percent down, the permit application is due within 30&nbsp;days of the payment, unless she agreed in writing to a longer time (F.S. 489.126). On day 28&nbsp;the county portal shows none. The estimator meant to file it between jobs.</p>
+      <p class="pl-fix"><b>The fix:</b> a deposit over 10&nbsp;percent starts a clock on your job list, with a reminder to you on day 20&nbsp;and the permit details ready for your office to file. This is one of the things a walk looks for.</p>
+      <p class="t-small pl-art"><a class="u" href="/articles/florida-job-dates/">Our article</a> lists the dates a Florida job runs on: the deposit, the permit, the notice and the lien.</p>
+    </div>
+    <figure class="pic pl-docs-pic">
+      <div role="img" aria-label="Example: two papers from one retail reroof, job TR-26-133. Turnstone Roofing's signed contract, license CCC0000118: owner Nancy Allen, 137 Oak St, Alachua County, a reroof of 24.5 squares in architectural shingles, contract price 15,210.00, deposit of 4,563.00, 30 percent, received September 9, 2026. Beside it the county's permit search for 137 Oak St: No applications found, circled in red, and a strip of days from day 26, Monday, October 5, to day 30, Friday, October 9, with today, day 28, marked. A flag across the top of the search: the September 9 deposit is over 10 percent, there is no permit application on day 28, apply by Friday, October 9.">
+        <div class="pl-docs rf-docs">
+          <div class="doc rf-ct">
+            <div class="doc-h"><b>TURNSTONE ROOFING</b><span>CONTRACT TR-26-133</span></div>
+            <p class="doc-to">Lic. CCC0000118&nbsp;· (352) 555-0150</p>
+            <dl class="rf-kv">
+              <div><dt>Owner</dt><dd>Allen, Nancy</dd></div>
+              <div><dt>Property</dt><dd>137&nbsp;Oak&nbsp;St, Alachua County</dd></div>
+              <div><dt>Scope</dt><dd>Reroof, 24.5 SQ, architectural</dd></div>
+              <div><dt>Contract price</dt><dd>15,210.00</dd></div>
+              <div><dt>Deposit</dt><dd><b>4,563.00 (30%), 09/09/26</b></dd></div>
+            </dl>
+            <div class="rf-sig"><span>N. Allen, Owner</span><span>M. Hale, for Turnstone Roofing</span></div>
+          </div>
+          <div class="scr-win pl-inv rf-ps">
+            <div class="win-tb"><i></i><i></i><i></i><span>Permit search</span></div>
+            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>The Sep 9&nbsp;deposit is over 10&nbsp;percent. No permit application on day 28. <b>Apply by Fri, Oct 9.</b></span></p>
+            <div class="rf-ps-b">
+              <p class="rf-q"><span>Address</span><span>137&nbsp;Oak&nbsp;St</span></p>
+              <p class="rf-none"><span class="pc" data-draw>No applications found.</span></p>
+              <p class="rf-days-k">Days since the deposit</p>
+              <ol class="rf-days">
+                <li><b>26</b><span>Oct 5</span></li>
+                <li><b>27</b><span>Oct 6</span></li>
+                <li class="on"><b>28</b><span>Today</span></li>
+                <li><b>29</b><span>Oct 8</span></li>
+                <li class="due"><b>30</b><span>Oct 9</span></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
   </div>
 </section>
 
@@ -250,52 +315,7 @@
   </div>
 </section>
 
-<section class="band pl-papers" id="deposit" data-ground="sheet" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
-  <div class="wrap pl-pw">
-    <div class="pl-pw-copy">
-      <h2>Day 28&nbsp;of 30, and no permit application on file.</h2>
-      <p class="pl-find">Job TR-26-133, a retail reroof. Nancy Allen paid a 30&nbsp;percent deposit on Wednesday, September 9: $4,563.00 on a $15,210.00 contract. Over 10&nbsp;percent down, the permit application is due within 30&nbsp;days of the payment, unless she agreed in writing to a longer time (F.S. 489.126). On day 28&nbsp;the county portal shows none. The estimator meant to file it between jobs.</p>
-      <p class="pl-fix"><b>The fix:</b> a deposit over 10&nbsp;percent starts a clock on your job list, with a reminder to you on day 20&nbsp;and the permit details ready for your office to file. This is one of the things a walk looks for.</p>
-      <p class="t-small pl-art"><a class="u" href="/articles/florida-job-dates/">Our article</a> lists the dates a Florida job runs on: the deposit, the permit, the notice and the lien.</p>
-    </div>
-    <figure class="pic pl-docs-pic">
-      <div role="img" aria-label="Example: two papers from one retail reroof, job TR-26-133. Turnstone Roofing's signed contract, license CCC0000118: owner Nancy Allen, 137 Oak St, Alachua County, a reroof of 24.5 squares in architectural shingles, contract price 15,210.00, deposit of 4,563.00, 30 percent, received September 9, 2026. Beside it the county's permit search for 137 Oak St: No applications found, circled in red, and a strip of days from day 26, Monday, October 5, to day 30, Friday, October 9, with today, day 28, marked. A flag across the top of the search: the September 9 deposit is over 10 percent, there is no permit application on day 28, apply by Friday, October 9.">
-        <div class="pl-docs rf-docs">
-          <div class="doc rf-ct">
-            <div class="doc-h"><b>TURNSTONE ROOFING</b><span>CONTRACT TR-26-133</span></div>
-            <p class="doc-to">Lic. CCC0000118&nbsp;· (352) 555-0150</p>
-            <dl class="rf-kv">
-              <div><dt>Owner</dt><dd>Allen, Nancy</dd></div>
-              <div><dt>Property</dt><dd>137&nbsp;Oak&nbsp;St, Alachua County</dd></div>
-              <div><dt>Scope</dt><dd>Reroof, 24.5 SQ, architectural</dd></div>
-              <div><dt>Contract price</dt><dd>15,210.00</dd></div>
-              <div><dt>Deposit</dt><dd><b>4,563.00 (30%), 09/09/26</b></dd></div>
-            </dl>
-            <div class="rf-sig"><span>N. Allen, Owner</span><span>M. Hale, for Turnstone Roofing</span></div>
-          </div>
-          <div class="scr-win pl-inv rf-ps">
-            <div class="win-tb"><i></i><i></i><i></i><span>Permit search</span></div>
-            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>The Sep 9&nbsp;deposit is over 10&nbsp;percent. No permit application on day 28. <b>Apply by Fri, Oct 9.</b></span></p>
-            <div class="rf-ps-b">
-              <p class="rf-q"><span>Address</span><span>137&nbsp;Oak&nbsp;St</span></p>
-              <p class="rf-none"><span class="pc" data-draw>No applications found.</span></p>
-              <p class="rf-days-k">Days since the deposit</p>
-              <ol class="rf-days">
-                <li><b>26</b><span>Oct 5</span></li>
-                <li><b>27</b><span>Oct 6</span></li>
-                <li class="on"><b>28</b><span>Today</span></li>
-                <li><b>29</b><span>Oct 8</span></li>
-                <li class="due"><b>30</b><span>Oct 9</span></li>
-              </ol>
-            </div>
-          </div>
-        </div>
-      </div>
-    </figure>
-  </div>
-</section>
-
-<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" style="--hole:var(--sheet)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
+<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" style="--hole:var(--paper)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
   <div class="wrap">
     <h2 class="walk-h" data-walk-head data-sample-lead>Turnstone Roofing loses <span class="walk-h-usd">$1,684&nbsp;a&nbsp;month</span>. Here's where.</h2>
     <p class="walk-intro">A 2-crew company. Each stop shows the same screen before and after the fix, and the walk ends on the sheet's total.</p>
@@ -387,6 +407,7 @@
           <p>Most owners I meet lose their evenings to the same few jobs: the quote typed up at night, the invoice that never went out, the call nobody got back to.</p>
           <p>I've built automations since 2022. At a water damage company I did the claims paperwork, then automated it and trained the staff to run it. Now Lumora does the same for businesses around Gainesville.</p>
           <p>I'm bilingual, so your office can run in English, Spanish or both.</p>
+          <span class="letter-pen" aria-hidden="true"><img src="/v4/assets/signature.png" loading="lazy" decoding="async" alt="" width="160" height="84"></span>
           <p class="letter-sig">Franco A. Soto<span>Owner</span></p>
         </article>
         <p class="t-small hm-about"><a class="u" href="/about/">About Lumora</a></p>

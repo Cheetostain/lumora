@@ -28,11 +28,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=8bc95b5d">
-<link rel="stylesheet" href="/v4/trade-page.css?v=8bc95b5d">
+<link rel="stylesheet" href="/v4/system.css?v=ff017dc4">
+<link rel="stylesheet" href="/v4/trade-page.css?v=ff017dc4">
 <style>
-/* WT: water's own extras. Section 2's computer-only picture (one search by claim number) and section 4's two screens (the
-   adjuster's email and the claim file it waits on). Section 4 reuses plumbing's paper pair (.pl-docs, .pl-inv, .pl-flag): side
+/* WT: water's own extras. Section 3's computer-only picture (one search by claim number) and section 2's two screens (the
+   adjuster's email and the claim file it waits on). Section 2 reuses plumbing's paper pair (.pl-docs, .pl-inv, .pl-flag): side
    by side in a picture 640px and wider, stacked under it with the claim file laid over the email's empty bottom edge, so no line
    is hidden. One pencil ring, round the two missing rows. */
 .wt-search{width:min(100%,520px)}
@@ -77,8 +77,8 @@
 }
 </style>
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=8bc95b5d" defer></script>
-<script src="/v4/system.js?v=8bc95b5d" defer></script>
+<script src="/v4/trades.js?v=ff017dc4" defer></script>
+<script src="/v4/system.js?v=ff017dc4" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Office automation for restoration companies","serviceType":"Business process automation","provider":{"@type":"ProfessionalService","@id":"https://lumorafl.com/#business","name":"Lumora","url":"https://lumorafl.com/","telephone":"+1-352-226-0681"},"areaServed":[{"@type":"AdministrativeArea","name":"Alachua County, FL"},{"@type":"City","name":"Gainesville, FL"},{"@type":"City","name":"Alachua, FL"},{"@type":"City","name":"Archer, FL"},{"@type":"City","name":"Hawthorne, FL"},{"@type":"City","name":"High Springs, FL"},{"@type":"City","name":"La Crosse, FL"},{"@type":"City","name":"Micanopy, FL"},{"@type":"City","name":"Newberry, FL"},{"@type":"City","name":"Waldo, FL"}],"audience":{"@type":"BusinessAudience","audienceType":"Restoration companies"},"availableLanguage":["en","es"],"url":"https://lumorafl.com/industries/water-damage-and-mold/"}</script>
 </head>
 <body data-trade="water" data-trade-lock data-rules="v4">
@@ -169,6 +169,48 @@
   </div>
 </section>
 
+<section class="band pl-papers" id="claim" data-ground="paper" data-desk="pine" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
+  <div class="wrap pl-pw">
+    <div class="pl-pw-copy">
+      <h2>The check waits on a dry log and a signature.</h2>
+      <p class="pl-find">Claim 0026-1093-3H. Two weeks after the file went out, the adjuster asks for the dry log and the signed certificate of completion. One is on Luis's phone, the other in the truck. The carrier's $1,709.90 waits. Florida gives the insurer 60&nbsp;days from notice to pay or deny (F.S. 627.70131), and this file is already 21&nbsp;days into them.</p>
+      <p class="pl-fix"><b>The fix:</b> each file checked before it goes out against what adjusters ask for, and anything missing sent to you while the tech has it. Your office sends the file. Nothing goes to the insurer from us, and we never talk coverage.</p>
+    </div>
+    <figure class="pic pl-docs-pic">
+      <div role="img" aria-label="Example: two screens from one water job, claim 0026-1093-3H. First, desk adjuster Mary Johnson's email from Sunfront P&amp;C on Monday, October 5, at 9:12 a.m.: documents needed before payment, the daily dry log with moisture readings and the certificate of completion signed by the insured. Then the claim file for job 26-0152-WTR in the shop's own job app, as a checklist. Ready: the work authorization signed September 14, estimate GMW-26-0152 for 2,709.90, 112 photos by room and day, the invoice and W-9, and the 1,000.00 deductible, billed September 21. Missing, circled in red: the dry log for September 14 to 18, still on Luis's phone, and the certificate of completion, still in the truck. A flag across the top of the file: Mary Johnson's email asks for 2 papers this file doesn't have.">
+        <div class="pl-docs wt-docs">
+          <div class="scr-win wt-mail">
+            <div class="win-tb"><i></i><i></i><i></i><span>Inbox</span></div>
+            <div class="wt-mh">
+              <p class="wt-subj">Claim 0026-1093-3H, documents needed before payment</p>
+              <p class="wt-from"><b>Mary Johnson</b>, Sunfront P&amp;C<span>Mon, Oct 5, 9:12&nbsp;AM</span></p>
+            </div>
+            <div class="wt-mb">
+              <p>Before payment, please send:</p>
+              <ol><li>The daily dry log, with moisture readings</li><li>The certificate of completion, signed by the insured</li></ol>
+            </div>
+          </div>
+          <div class="scr-win pl-inv wt-file">
+            <div class="win-tb"><i></i><i></i><i></i><span>Job 26-0152-WTR</span></div>
+            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>Mary Johnson's email asks for 2&nbsp;papers this file doesn't have.</span></p>
+            <div class="wt-ck">
+              <div class="wt-row"><span class="st ok">Ready</span><span>Work authorization, signed 9/14</span><span></span></div>
+              <div class="wt-row"><span class="st ok">Ready</span><span>Estimate <span class="nw">GMW-26-0152</span></span><span class="r">2,709.90</span></div>
+              <div class="wt-row"><span class="st ok">Ready</span><span>Photos by room and day (112)</span><span></span></div>
+              <div class="wt-miss pc" data-draw>
+                <div class="wt-row"><span class="st wt">Missing</span><span>Dry log, 9/14 to 9/18<small>On Luis's phone</small></span><span></span></div>
+                <div class="wt-row"><span class="st wt">Missing</span><span>Certificate of completion, signed<small>In the truck</small></span><span></span></div>
+              </div>
+              <div class="wt-row"><span class="st ok">Ready</span><span>Invoice and W-9</span><span></span></div>
+              <div class="wt-row"><span class="st ok">Ready</span><span>Deductible, billed 9/21</span><span class="r">1,000.00</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
+
 <section class="band hm4-auto pl-auto" id="automate" data-ground="sheet" data-density="mid" data-width="split" data-loud="list" data-medium="list">
   <div class="wrap pl-auto-g">
     <h2>What we automate in a restoration company</h2>
@@ -253,49 +295,7 @@
   </div>
 </section>
 
-<section class="band pl-papers" id="claim" data-ground="sheet" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
-  <div class="wrap pl-pw">
-    <div class="pl-pw-copy">
-      <h2>The check waits on a dry log and a signature.</h2>
-      <p class="pl-find">Claim 0026-1093-3H. Two weeks after the file went out, the adjuster asks for the dry log and the signed certificate of completion. One is on Luis's phone, the other in the truck. The carrier's $1,709.90 waits. Florida gives the insurer 60&nbsp;days from notice to pay or deny (F.S. 627.70131), and this file is already 21&nbsp;days into them.</p>
-      <p class="pl-fix"><b>The fix:</b> each file checked before it goes out against what adjusters ask for, and anything missing sent to you while the tech has it. Your office sends the file. Nothing goes to the insurer from us, and we never talk coverage.</p>
-    </div>
-    <figure class="pic pl-docs-pic">
-      <div role="img" aria-label="Example: two screens from one water job, claim 0026-1093-3H. First, desk adjuster Mary Johnson's email from Sunfront P&amp;C on Monday, October 5, at 9:12 a.m.: documents needed before payment, the daily dry log with moisture readings and the certificate of completion signed by the insured. Then the claim file for job 26-0152-WTR in the shop's own job app, as a checklist. Ready: the work authorization signed September 14, estimate GMW-26-0152 for 2,709.90, 112 photos by room and day, the invoice and W-9, and the 1,000.00 deductible, billed September 21. Missing, circled in red: the dry log for September 14 to 18, still on Luis's phone, and the certificate of completion, still in the truck. A flag across the top of the file: Mary Johnson's email asks for 2 papers this file doesn't have.">
-        <div class="pl-docs wt-docs">
-          <div class="scr-win wt-mail">
-            <div class="win-tb"><i></i><i></i><i></i><span>Inbox</span></div>
-            <div class="wt-mh">
-              <p class="wt-subj">Claim 0026-1093-3H, documents needed before payment</p>
-              <p class="wt-from"><b>Mary Johnson</b>, Sunfront P&amp;C<span>Mon, Oct 5, 9:12&nbsp;AM</span></p>
-            </div>
-            <div class="wt-mb">
-              <p>Before payment, please send:</p>
-              <ol><li>The daily dry log, with moisture readings</li><li>The certificate of completion, signed by the insured</li></ol>
-            </div>
-          </div>
-          <div class="scr-win pl-inv wt-file">
-            <div class="win-tb"><i></i><i></i><i></i><span>Job 26-0152-WTR</span></div>
-            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>Mary Johnson's email asks for 2&nbsp;papers this file doesn't have.</span></p>
-            <div class="wt-ck">
-              <div class="wt-row"><span class="st ok">Ready</span><span>Work authorization, signed 9/14</span><span></span></div>
-              <div class="wt-row"><span class="st ok">Ready</span><span>Estimate <span class="nw">GMW-26-0152</span></span><span class="r">2,709.90</span></div>
-              <div class="wt-row"><span class="st ok">Ready</span><span>Photos by room and day (112)</span><span></span></div>
-              <div class="wt-miss pc" data-draw>
-                <div class="wt-row"><span class="st wt">Missing</span><span>Dry log, 9/14 to 9/18<small>On Luis's phone</small></span><span></span></div>
-                <div class="wt-row"><span class="st wt">Missing</span><span>Certificate of completion, signed<small>In the truck</small></span><span></span></div>
-              </div>
-              <div class="wt-row"><span class="st ok">Ready</span><span>Invoice and W-9</span><span></span></div>
-              <div class="wt-row"><span class="st ok">Ready</span><span>Deductible, billed 9/21</span><span class="r">1,000.00</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </figure>
-  </div>
-</section>
-
-<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" style="--hole:var(--sheet)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
+<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" style="--hole:var(--paper)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
   <div class="wrap">
     <h2 class="walk-h" data-walk-head data-sample-lead>Gadwall Mold &amp; Water loses <span class="walk-h-usd">$1,987&nbsp;a&nbsp;month</span>. Here's where.</h2>
     <p class="walk-intro">A 2-crew company. Each stop shows the same screen before and after the fix, and the walk ends on the sheet's total.</p>
@@ -387,6 +387,7 @@
           <p>Most owners I meet lose their evenings to the same few jobs: the quote typed up at night, the invoice that never went out, the call nobody got back to.</p>
           <p>I've built automations since 2022. At a water damage company I did the claims paperwork, then automated it and trained the staff to run it. Now Lumora does the same for businesses around Gainesville.</p>
           <p>I'm bilingual, so your office can run in English, Spanish or both.</p>
+          <span class="letter-pen" aria-hidden="true"><img src="/v4/assets/signature.png" loading="lazy" decoding="async" alt="" width="160" height="84"></span>
           <p class="letter-sig">Franco A. Soto<span>Owner</span></p>
         </article>
         <p class="t-small hm-about"><a class="u" href="/about/">About Lumora</a></p>

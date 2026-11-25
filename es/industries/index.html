@@ -27,13 +27,129 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=8bc95b5d">
-<link rel="stylesheet" href="/v4/trade-page.css?v=8bc95b5d">
+<link rel="stylesheet" href="/v4/system.css?v=ff017dc4">
+<link rel="stylesheet" href="/v4/trade-page.css?v=ff017dc4">
 <style>
-/* ===== the trade index, as industries.html has it (rule for rule), then the Spanish additions at the end */
-.ix-hero .hero-g{grid-template-areas:"copy" "act" "tool" "terms"}
+/* ===== 1. the pine first band (everything run, job B, Nov 25 2026; DESIGN.md 6.1). system.css gives the call block its look on pine; here
+   the words that have no rule there, the two columns and the papers. The band is flat under the header and torn at its foot (the next
+   band's .seam, Home's punched row). Words column: centred against the papers. Papers column: two piles that end at the foot. */
+.ix-hero{padding-bottom:0;overflow:clip}
+.ix-hero .hero-g{grid-template-areas:"copy" "act" "tool"}
+.ix-hero .t-lede,.ix-hero .mb,.ix-hero .hm-sms{color:var(--on-pine)}
+.ix-hero .ix-mb{margin-top:8px;font-size:15px;color:var(--muted-pine)}
+.ix-hero .ix-mb .u{color:inherit}
 .ix-hero .cta-row{column-gap:16px}
-.ix-h{font-size:24px;line-height:1.2}
+.ix-papers{grid-area:tool}
+.ix-p{position:relative;transform:none;max-width:none}
+.ix-st>.ix-p+.ix-p{margin-top:-26px}   /* the paper in front lies on the blank foot of the one behind, so no word is ever cut */
+.ix-p::after{display:none}
+
+/* the five papers' own rules, copied from their trade pages (pest-control, restaurants-and-bars, property-managers, roofing) */
+.pe-form{background:#fff;box-shadow:var(--lift);padding:12px 14px 10px;font-family:var(--sys);color:#1d1d1f}
+.pe-fh{display:grid;gap:1px;text-align:center;padding-bottom:7px;border-bottom:1.5px solid #1d1d1f}
+.pe-fh span{font-size:12px;line-height:1.3;color:#444}
+.pe-fh b{font-size:13px;line-height:1.25;letter-spacing:.01em;text-wrap:balance}
+.pe-sec{margin:8px 0 0;padding:3px 6px;background:#e9e9e6;font-size:12px;font-weight:700}
+.pe-f{display:grid;grid-template-columns:6.6em minmax(0,1fr);gap:6px;padding:4px 2px;border-bottom:1px solid #dcdcd8;font-size:12px;line-height:1.3}
+.pe-f i{font-style:normal;color:#555}
+.pe-ck{display:grid;grid-template-columns:13px minmax(0,1fr);gap:7px;align-items:start;padding:4px 2px;font-size:12px;line-height:1.35}
+.pe-ck .bx{width:12px;height:12px;margin-top:2px;border:1.2px solid #333;display:grid;place-items:center;font:700 11px/1 var(--sys)}
+.pe-ck .bx.on::before{content:"X"}
+.pe-ck.pc{margin:5px 0 3px}
+.pe-ck.pc::after{inset:1.5px -5px 1.5px -4px;border-radius:10px 13px 11px 14px/12px 10px 13px 11px}
+.rb-inv table{font-size:12px}
+.rb-inv td{white-space:nowrap}
+.rb-inv tr:has(.pc){font-size:13px}
+.rb-inv .pc::after{inset:-8px -11px -7px -11px}
+.rb-inv tr:has(.pc) td{padding-block:6px}
+.rb-inv tr:has(.pc) td:first-child{padding-right:14px}
+.rb-9{display:inline-block;margin-left:7px;font:600 16px/1 var(--font);color:var(--pencil)}
+.ix-tk .pc::after{inset:-5px -16px}
+.rf-ct{padding:14px 16px 18px}
+.rf-kv div{display:grid;grid-template-columns:7.4em minmax(0,1fr);gap:8px;padding:5px 0;border-bottom:1px dotted #d6d6d6;font-size:13px;line-height:1.35;color:#1d1d1f}
+.rf-kv dt{color:#555}
+.pm-insp{background:#fff;box-shadow:var(--lift);padding:14px 16px 18px;font-family:var(--sys);color:#1d1d1f}
+.pm-insp-h{display:grid;gap:2px;padding-bottom:8px;border-bottom:1.5px solid #1d1d1f}
+.pm-insp-h b{font-size:14px;line-height:1.3}
+.pm-insp-h span{font-size:12px;color:#555}
+.pm-insp dl div{display:grid;grid-template-columns:6.6em minmax(0,1fr);gap:8px;padding:4px 0;border-bottom:1px dotted #d6d6d6;font-size:13px;line-height:1.35}
+.pm-insp dt{color:#555}
+
+/* a phone: the tops of the two counter papers, cut by the band's foot. Under 360px there is no room for them (the first trade stays the
+   nearest thing under the band); the ticket's second line waits for 390px */
+@media (max-width:899px){
+  .ix-hero{padding-top:24px}
+  .ix-papers{position:relative;height:84px;margin-top:0}
+  .ix-st>.pe-form,.ix-st-b>:not(.ix-tk){display:none}
+  .ix-st>.ix-p+.ix-p{margin-top:0}
+  .ix-st>.ix-p{position:absolute;width:282px;min-height:160px;padding-top:12px}
+  .ix-st>.rb-inv{left:0;top:0}
+  .ix-st>.ix-tk{left:56px;top:50px}
+}
+@media (max-width:389px){.ix-st>.ix-tk{left:46px;top:40px}.ix-papers small{display:none}:lang(es) .ix-papers{display:none}:lang(es) .ix-hero{padding-bottom:24px}:lang(es) .ix-pick{padding-top:28px}}   /* the Spanish money back takes three lines more */
+@media (max-width:359px){.ix-papers{display:none}.ix-hero{padding-bottom:28px}}
+@media (min-width:390px) and (max-width:899px){.ix-papers{height:106px}:lang(es) .ix-pick{padding-top:28px}}
+@media (max-width:699px){.ix-more{display:none}}
+@media (min-width:700px) and (max-width:899px){.ix-papers{height:112px}.ix-st>.ix-p{width:calc(50% - 12px)}.ix-st>.ix-tk{left:calc(50% + 12px);top:16px}.ix-more>:not(:first-child){display:none}}
+
+/* a computer: the words stand centred in the band; the papers start under its top and run off its foot */
+@media (min-width:900px){
+  .hm4-hero.ix-hero{padding-top:0}
+  .hm4-hero.ix-hero .hero-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:24px;row-gap:0;grid-template-rows:minmax(64px,1fr) auto auto minmax(72px,1fr);grid-template-areas:". tool" "copy tool" "act tool" ". tool"}
+  .ix-hero h1{max-width:6.2em}
+  .ix-hero .hero-copy{max-width:556px}
+  .ix-hero .hero-act{margin-top:28px}
+  .ix-papers{align-self:end;display:flex;align-items:flex-end;padding-top:40px}
+  .ix-st{flex:none;display:flex;flex-direction:column;align-items:flex-start}
+  .ix-st>.ix-p{padding-bottom:44px}
+  .ix-st>.ix-p:last-child{padding-bottom:18px}
+  .ix-st-a{position:relative;z-index:1}
+}
+/* a small laptop: one pile down the right half, four papers (the state form waits for a wider screen) */
+@media (min-width:900px) and (max-width:1199px){
+  .ix-papers{flex-direction:column;align-items:flex-start}
+  .ix-st-a>.pe-form,.ix-lg{display:none}
+  .ix-st-b{order:1}
+  .ix-st-a{order:2;margin:-26px 0 0 clamp(0px,9vw - 80px,24px)}
+  .ix-st-a>.rb-inv{width:304px}
+  .ix-st-b>.pm-insp{width:256px;margin-left:clamp(96px,19vw - 60px,160px)}
+  .ix-st-b>.rf-ct{width:290px;margin-left:clamp(8px,6vw - 40px,32px)}
+  .ix-st-b>.ix-tk.ix-p{width:284px;margin-left:clamp(88px,18vw - 60px,150px);padding-bottom:44px}
+}
+@media (min-width:1200px){
+  .hm4-hero.ix-hero .hero-g{grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr)}
+  .ix-papers{padding-top:96px}
+  :lang(es) .ix-papers{padding-top:108px}
+  .ix-st-a{width:304px}
+  .ix-st-a>.pe-form{width:270px;margin-left:24px}
+  .ix-st-a>.rb-inv{width:304px}
+  .ix-st-b{margin-left:8px}
+  .ix-st-b>.pm-insp{width:250px;margin-left:34px}
+  .ix-st-b>.rf-ct{width:276px}
+  .ix-st-b>.ix-tk{width:278px;margin-left:14px}
+}
+/* a short laptop: the pile gives back two rows, so the index's heading shows under the band */
+@media (min-width:1200px) and (max-height:860px){
+  .hm4-hero.ix-hero .hero-g{grid-template-rows:minmax(44px,1fr) auto auto minmax(52px,1fr)}
+  .ix-papers,:lang(es) .ix-papers{padding-top:36px}
+  .ix-sm{display:none}
+  .ix-pick{padding-top:48px}
+}
+@media (min-width:1360px){
+  .hm4-hero.ix-hero .hero-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .ix-st-a>.pe-form{width:276px;margin-left:34px}
+  .ix-st-b{margin-left:20px}
+  .ix-st-b>.pm-insp{width:264px;margin-left:56px}
+  .ix-st-b>.rf-ct{width:302px}
+  .ix-st-b>.ix-tk{width:288px;margin-left:32px}
+}
+
+/* ===== 2. the trade index: the page's one tool, as it has been since 2026-10-12 (the type, the order, the red figures after their loss
+   word, the dotted leader and the one mark a state; trade-page.css has the states). The whole row is the link, but its name is the trade
+   alone (the stretched ::after), so a screen reader hears "Plumbing", not 30 words. Since Nov 25 it has the page's full width. */
+.ix-pick{padding-block:34px 0}
+main>.ix-pick.band{padding-bottom:0}
+.ix-h{font-size:28px;line-height:1.2}
 .ix-list{margin-top:10px;border-top:2px solid var(--ink);font-size:17px}
 .ix-list li{position:relative;display:grid;gap:4px;padding:13px 0 14px;border-bottom:1px solid var(--rule)}
 .ix-n{font-size:20px;line-height:1.2;letter-spacing:-.01em}
@@ -47,26 +163,41 @@
 .ix-also{margin-top:16px;font-size:17px;max-width:34em}
 .ix-note{margin-top:10px;font-size:15px;color:var(--muted);max-width:40em}
 /* the list's states and the note link's tap area live in trade-page.css (2026-10-19) */
-@media (min-width:900px){
-  .ix-hero .hero-g{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);grid-template-areas:"copy tool" "act tool" "terms tool";grid-template-rows:auto auto 1fr}
-  .ix-h{font-size:24px}
-}
-@media (min-width:1200px){
-  .ix-list{display:grid;grid-template-columns:auto minmax(0,24em);column-gap:12px}
-  .ix-list li{grid-column:1/-1;grid-template-columns:subgrid;align-items:baseline;column-gap:12px}
+@media (min-width:900px) and (max-width:1199px){.ix-list li{grid-template-columns:15em minmax(0,1fr);column-gap:24px;align-items:baseline}}
+@media (min-width:900px){.ix-pick{padding-top:64px}.ix-h{font-size:32px}.ix-also{max-width:none}.ix-note{max-width:46em;text-wrap:balance}}
+@media (min-width:1200px){   /* one set of columns for all eight rows (subgrid), so every line starts at the same x, however long the trade's name;
+                                the dotted leader runs from each name's arrow to that column (the name cell's ::before, placed last) */
+  .ix-list{display:grid;grid-template-columns:auto minmax(0,44em);column-gap:12px}
+  .ix-list li{grid-column:1/-1;grid-template-columns:subgrid;align-items:baseline;column-gap:12px}   /* the li's own gap:4px would set the subgrid's column gap */
   .ix-n{display:flex;align-items:baseline;white-space:nowrap}
   .ix-n::before{content:"";order:2;flex:1 0 24px;margin-left:12px;border-bottom:2px dotted rgba(17,17,16,.35);transform:translateY(-4px)}
 }
-@media (min-width:900px){.ix-hero .hero-tool.ix{background:var(--paper);box-shadow:0 0 0 12px var(--paper)}}
-@media (min-width:900px){.ix-hero .hero-terms{align-self:stretch;position:relative}
-  .ix-hero[data-ground=ruled] .hero-terms::before{content:"";position:absolute;z-index:-1;top:-600px;bottom:-600px;left:-50vw;right:-28px;background:var(--paper);pointer-events:none}}   /* agency pass 2026-10-18 (4b.6): no stray rules under the left column */
+@media (min-width:1200px){:lang(es) .ix-list{grid-template-columns:auto minmax(0,48em)}:lang(es) .ix-leak{max-width:none}}   /* Spanish runs longer: the row with the figure keeps to one line where it can */
+/* price and money back, word for word, under the rows: one hairline over the two */
+.ix-terms{display:grid;gap:14px;margin-top:32px;padding-top:18px;border-top:1px solid var(--rule)}
+.ix-terms :is(.price,.mb){font-size:15px;line-height:1.5}
+.ix-terms .price b{color:var(--ink)}
+@media (min-width:900px){.ix-terms{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:56px;margin-top:32px}}
+.ix-pick .facts4{margin-top:20px;padding-bottom:26px}
+
+/* ===== 3. What we automate in any business: from 900px who it's for and what you keep stand under the heading's two lines, so the left
+   column is as full as the list beside it (it was blank for 430px; the list is 523px, too short for a heading that rides along) */
+@media (min-width:900px){
+  #automate{padding-block:96px}
+  .pl-auto-g{grid-template-areas:"h list" "tools list" "who list" "slot list" ". close";grid-template-rows:auto auto auto 1fr auto}
+  .pl-auto-r{display:contents}
+  #automate h2{max-width:10em}
+  #automate .auto-list{grid-area:list}#automate .auto-close{grid-area:close}
+  #automate .pl-who{grid-area:who;margin-top:40px;max-width:30em}
+}
+@media (min-width:900px) and (max-width:1199px){.pl-auto-g{grid-template-columns:minmax(0,.84fr) minmax(0,1.16fr)}}   /* the list's rows take two lines, not three */
 /* ES. The close heading at the Spanish Home's size (plumbing.es.html): "Hablemos de su negocio." stays on one line from 700 to 1440 */
 .close-h{margin:0 0 24px;font-size:clamp(40px,4.4vw,44px)}
 @media (max-width:359px){.cta-row,.c4-tel{row-gap:18px}}
 </style>
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=8bc95b5d" defer></script>
-<script src="/v4/system.js?v=8bc95b5d" defer></script>
+<script src="/v4/trades.js?v=ff017dc4" defer></script>
+<script src="/v4/system.js?v=ff017dc4" defer></script>
 </head>
 <body data-rules="v4">
 <a class="skip" href="#main">Saltar al contenido</a>
@@ -102,7 +233,7 @@
 
 <main id="main">
 
-<section class="hero hm4-hero ix-hero" id="top" data-bar-seat data-ground="ruled" data-density="mid" data-width="split" data-loud="h1" data-medium="index">
+<section class="hero hm4-hero ix-hero" id="top" data-bar-seat data-ground="pine" data-density="mid" data-width="split" data-loud="h1" data-medium="docs">
   <div class="wrap hero-g">
     <div class="hero-copy">
       <p class="eyebrow">Contratistas, restaurantes y administradores de propiedades de Gainesville y el condado de Alachua.</p>
@@ -116,9 +247,58 @@
           <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
           <a class="u hm-sms" href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">O mándenos un mensaje</a>
         </div>
+        <p class="reply"><span data-shared="reply">Por lo general le devolvemos la llamada el mismo día hábil.</span> En español o en inglés.</p>
+      </div>
+      <p class="mb ix-mb"><span data-shared="moneyback.short">Le devolvemos lo que pagó por la visita si nos avisa dentro de los 7&nbsp;días siguientes a&nbsp;repasar su&nbsp;hoja</span>. <a class="u" href="/es/how-it-works/#terms">Condiciones completas</a></p>
+    </div>
+    <div class="pic ix-papers" aria-hidden="true" data-nosnippet>
+      <div class="ix-st ix-st-a">
+        <div class="pe-form ix-p" lang="en" data-paper>
+          <div class="pe-fh"><span>Florida Department of Agriculture and Consumer Services</span><b>Wood-Destroying Organisms Inspection Report</b><span>Rule 5E-14.142, F.A.C.</span></div>
+          <p class="pe-sec">Section 1. General information</p>
+          <div class="pe-f"><i>Company</i><span>Killdeer Pest Control</span></div>
+          <div class="pe-f"><i>Property</i><span>127&nbsp;Oak&nbsp;St, Gainesville, FL 32601</span></div>
+          <p class="pe-sec">Section 2. Inspection findings</p>
+          <div class="pe-ck pc"><span class="bx on"></span><span><b>B.</b> VISIBLE evidence of WDO(s) was observed as follows:</span></div>
+        </div>
+        <div class="ticket rb-inv ix-p" lang="en" data-paper>
+          <p class="tk-co">COASTWAY BROADLINE FOODS<small>Ocala FL, (352) 555-0181</small></p>
+          <div class="ix-more">
+            <p class="tk-no ix-lg"><span>ACCT 512077</span><span>WHIMBREL KITCHEN &amp; TAP</span></p>
+            <p class="tk-no"><span>INVOICE 7041152203</span><span>MON 10/05/26</span></p>
+            <p class="tk-no ix-lg ix-sm"><span>RTE 214&nbsp;STOP 09</span><span>NET 7</span></p>
+            <table><tr><th>QTY</th><th>DESCRIPTION</th><th class="r">EXT</th></tr><tr><td>318.4 LB</td><td>WING CHKN JMBO</td><td class="r">1,076.19</td></tr><tr><td><span class="pc">10&nbsp;CS<i class="rb-9">9</i></span></td><td>FRY 3/8 SKIN-ON</td><td class="r">387.50</td></tr><tr class="ix-lg ix-sm"><td>6&nbsp;CS</td><td>OIL CANOLA 35LB JUG</td><td class="r">281.10</td></tr></table>
+          </div>
+        </div>
+      </div>
+      <div class="ix-st ix-st-b">
+        <div class="pm-insp ix-p" data-paper>
+          <p class="pm-insp-h"><b>Inspección de salida</b><span>Bramble Court 204, habitación C</span></p>
+          <dl><div><dt>Inquilina</dt><dd>Anderson, Emily</dd></div><div><dt>Salida</dt><dd>vie. 31&nbsp;de jul. de 2026</dd></div></dl>
+        </div>
+        <div class="doc rf-ct ix-p" data-paper>
+          <div class="doc-h"><b>TURNSTONE ROOFING</b><span>CONTRATO TR-26-133</span></div>
+          <p class="doc-to ix-lg">Lic. CCC0000118&nbsp;· (352) 555-0150</p>
+          <dl class="rf-kv"><div><dt>Propietaria</dt><dd>Allen, Nancy</dd></div><div><dt>Propiedad</dt><dd>137&nbsp;Oak&nbsp;St, condado de Alachua</dd></div></dl>
+        </div>
+        <div class="ticket ix-tk ix-p" lang="en" data-paper>
+          <p class="tk-co">OAK STREET SUPPLY CO.<small>500&nbsp;Oak&nbsp;St, Gainesville FL</small></p>
+          <div class="ix-more">
+            <p class="tk-no ix-lg"><span>SOLD TO 20614</span><span>DUNLIN PLUMBING</span></p>
+            <p class="tk-no"><span>TICKET 87106</span><span>09/22/26 7:12&nbsp;AM</span></p>
+            <p class="tk-no ix-lg ix-sm"><span>CUST PO 4470-DB</span><span>WILL CALL: DAVE B.</span></p>
+            <table><tr><th>QTY</th><th>DESCRIPTION</th><th class="r">EXT</th></tr><tr><td>1</td><td>WTR HTR 40G ELEC</td><td class="r">612.00</td></tr><tr><td>1</td><td><span class="pc">EXP TANK 2&nbsp;GAL</span></td><td class="r">38.90</td></tr></table>
+            <p class="tk-sum ix-lg ix-sm"><span>MERCHANDISE</span><span>650.90</span></p>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="hero-tool ix">
+  </div>
+</section>
+
+<section class="band seam ix-pick" id="pick" data-ground="paper" data-density="high" data-width="wide" data-loud="index" data-medium="index">
+  <div class="wrap">
+    <div class="ix">
       <h2 class="ix-h" id="ix-h" data-first="the trade list's heading">Elija su&nbsp;tipo de&nbsp;negocio</h2>
       <nav aria-labelledby="ix-h">
         <ul class="ix-list" data-trades data-bind="index"><li data-t="plumbing" data-task="quotes"><h3 class="ix-n" data-first="the first trade"><a href="/es/industries/plumbing/">Plomería</a></h3><div class="ix-b"><p class="ix-one" data-f="one">La pieza del recibo del proveedor que nunca pasó a la factura.</p><p class="ix-leak" data-f="leak">De la hoja de un negocio con 2&nbsp;camionetas: cotizaciones que tardan más de 48&nbsp;horas en salir, una pérdida de <b class="loss">$1,900 al mes</b>.</p></div></li><li data-t="ac" data-task="quotes"><h3 class="ix-n"><a href="/es/industries/ac-and-heating/">Aire acondicionado y&nbsp;calefacción</a></h3><div class="ix-b"><p class="ix-one" data-f="one">La cotización que salió nueve días tarde.</p><p class="ix-leak" data-f="leak">De la hoja de un negocio con 3&nbsp;camionetas: cambios de equipo cotizados tarde, una pérdida de <b class="loss">$1,100 al mes</b>.</p></div></li><li data-t="electrical" data-task="retyping"><h3 class="ix-n"><a href="/es/industries/electrical/">Electricidad</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Cotizaciones que siguen con el precio del cobre de enero.</p><p class="ix-leak" data-f="leak">De la hoja de un negocio con 3&nbsp;camionetas: material sacado del proveedor sin número de trabajo, que nunca se cobró al cliente, una pérdida de <b class="loss">$574 al mes</b>.</p></div></li><li data-t="water" data-task="invoices"><h3 class="ix-n"><a href="/es/industries/water-damage-and-mold/">Daños por&nbsp;agua y&nbsp;moho</a></h3><div class="ix-b"><p class="ix-one" data-f="one">Seis días de deshumidificador en el registro, cinco en la factura.</p><p class="ix-leak" data-f="leak">De la hoja de un negocio con 2&nbsp;cuadrillas: días de secado sin facturar, una pérdida de <b class="loss">$1,026 al mes</b>.</p></div></li><li data-t="pest" data-task="reminders"><h3 class="ix-n"><a href="/es/industries/pest-control/">Control de&nbsp;plagas</a></h3><div class="ix-b"><p class="ix-one" data-f="one">La renovación contra termitas que venció sin una llamada.</p><p class="ix-leak" data-f="leak">De la hoja de un negocio con 3&nbsp;rutas: renovaciones contra termitas vencidas, todavía sin llamada, una pérdida de <b class="loss">$675 al mes</b>.</p></div></li><li data-t="roofing" data-task="reminders"><h3 class="ix-n"><a href="/es/industries/roofing/">Techos</a></h3><div class="ix-b"><p class="ix-one" data-f="one">La madera podrida que se cambió al quitar el techo viejo y nunca se cobró.</p><p class="ix-leak" data-f="leak">De la hoja de un negocio con 2&nbsp;cuadrillas: depreciación retenida, una pérdida de <b class="loss">$771 al mes</b>.</p></div></li><li data-t="food" data-task="reminders"><h3 class="ix-n"><a href="/es/industries/restaurants-and-bars/">Restaurantes y&nbsp;bares</a></h3><div class="ix-b"><p class="ix-one" data-f="one">La caja que aparece en la factura y nunca bajó del camión.</p><p class="ix-leak" data-f="leak">De la hoja de un restaurante y bar con capacidad para 110&nbsp;personas: un martes flojo con tanto personal como una noche llena, una pérdida de <b class="loss">$1,153 al mes</b>.</p></div></li><li data-t="rentals" data-task="reminders"><h3 class="ix-n"><a href="/es/industries/property-managers/">Administradores de&nbsp;propiedades</a></h3><div class="ix-b"><p class="ix-one" data-f="one">El aviso de reclamo del depósito que salió el día&nbsp;31.</p><p class="ix-leak" data-f="leak">De la hoja de una administradora de propiedades con 212&nbsp;unidades: reclamos de depósito enviados después del día&nbsp;30, una pérdida de <b class="loss">$2,700 al año</b>.</p></div></li></ul>
@@ -126,8 +306,7 @@
       <p class="ix-also">También visitamos oficinas, negocios de limpieza y de mantenimiento de piscinas, y talleres mecánicos. La visita funciona igual.</p>
       <p class="ix-note">En la página de cada tipo de negocio está la hoja de ejemplo completa, con la cuenta de cada línea (<a class="u" href="/es/how-it-works/#sample">de dónde salen las cifras de ejemplo</a>). La hoja de su negocio sale de sus registros, porque el calor, las tormentas y las semanas en que llegan los estudiantes de UF cambian cuánto trabajo entra cada mes.</p>
     </div>
-    <div class="hero-terms">
-      <p class="reply"><span data-shared="reply">Por lo general le devolvemos la llamada el mismo día hábil.</span> En español o en inglés.</p>
+    <div class="ix-terms">
       <p class="price"><span data-shared="price"><b>La visita cuesta a partir de $500.</b> Si su negocio es más grande, le damos el precio en la llamada sin costo. Se descuenta de un arreglo de $1,500 o más que empiece dentro de los 30&nbsp;días siguientes.</span></p>
       <p class="mb"><span data-shared="moneyback"><b>¿No le valió la pena?</b> Mándenos un mensaje de texto o un correo dentro de los 7&nbsp;días siguientes a la llamada en que repasamos su hoja con usted, y le devolvemos <b class="won">lo que pagó por la visita</b>.</span> <a class="u" href="/es/how-it-works/#terms">Condiciones completas</a></p>
     </div>
@@ -193,6 +372,7 @@
           <p>Casi todos los dueños con los que hablo pierden sus noches en las mismas tareas: la cotización que escriben después de cenar, la factura que nunca salió, la llamada que nadie devolvió.</p>
           <p>Hago automatizaciones desde 2022. En una empresa de daños por agua me tocaba el papeleo de los reclamos; lo automaticé y le enseñé al personal a manejarlo. Ahora Lumora hace lo mismo en negocios de Gainesville y sus alrededores.</p>
           <p>Hablo español e inglés, así que todo puede ser en español, en inglés o en los dos.</p>
+          <span class="letter-pen" aria-hidden="true"><img src="/v4/assets/signature.png" loading="lazy" decoding="async" alt="" width="160" height="84"></span>
           <p class="letter-sig">Franco A. Soto<span>Dueño</span></p>
         </article>
         <p class="t-small hm-about"><a class="u" href="/es/about/">Quiénes somos</a></p>
@@ -230,5 +410,21 @@
 </footer>
 
 <nav class="callbar" aria-label="Llámenos o escríbanos"><a href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Llamar <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hola%2C%20vi%20su%20p%C3%A1gina%20web.%20%C2%BFCu%C3%A1ndo%20podemos%20hablar%20por%20tel%C3%A9fono%3F">Mensaje</a></nav>
+<script>
+(function () {
+  var pick = document.getElementById('pick'), bar = document.querySelector('.callbar'), must = pick.querySelector('.ix-n'), w = 0;
+  function seat(force) {
+    if (!force && innerWidth === w) return; w = innerWidth; pick.style.paddingTop = '';
+    if (!bar.getClientRects().length || scrollY > 0) return;
+    var B = bar.getBoundingClientRect().top, base = parseFloat(getComputedStyle(pick).paddingTop), m = must.getBoundingClientRect().bottom, L = [], n, tw = document.createTreeWalker(pick, NodeFilter.SHOW_TEXT);
+    while ((n = tw.nextNode())) { if (!n.nodeValue.trim()) continue; var r = document.createRange(); r.selectNodeContents(n); [].forEach.call(r.getClientRects(), function (q) { if (q.bottom > B - 60 && q.top < B + 60) L.push(q); }); }
+    for (var i = 0; i <= 32; i++) { var s = (i % 2 ? -1 : 1) * Math.ceil(i / 2);
+      if (m <= B && m + s > B) continue;
+      if (!L.some(function (q) { return q.top + s + 3 < B && q.bottom + s > B; })) { if (s) pick.style.paddingTop = base + s + 'px'; return; } }
+  }
+  addEventListener('load', function () { seat(true); if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { setTimeout(function () { seat(true); }, 60); }); });
+  addEventListener('resize', function () { clearTimeout(seat.t); seat.t = setTimeout(seat, 220); });
+})();
+</script>
 </body>
 </html>

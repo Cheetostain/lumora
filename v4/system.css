@@ -183,11 +183,22 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
    Headings and words in the paper, labels in muted pine; a link keeps its underline in muted pine and turns white on hover, as on
    the ink band; the focus ring is the paper. Nothing on it is red and no money sits on it (Lumora.lint) */
 [data-ground=pine]{background:var(--pine);color:var(--on-pine)}
-[data-ground=pine] :is(h2,h3,b,strong){color:var(--on-pine)}
-[data-ground=pine] :is(.t-label,.kicker,.cap,.muted,.two>span){color:var(--muted-pine)}
-[data-ground=pine] .u{text-decoration-color:var(--muted-pine)}
-@media (hover:hover) and (pointer:fine){[data-ground=pine] .u:hover:not(:focus-visible){color:#fff;text-decoration-color:#fff}}
-[data-ground=pine] :focus-visible{outline-color:var(--on-pine)}
+[data-ground=pine] :is(h1,h2,h3,b,strong):not(:where([data-paper],[data-paper] *)){color:var(--on-pine)}
+[data-ground=pine] :is(.t-label,.kicker,.eyebrow,.cap,.muted,.two>span):not(:where([data-paper],[data-paper] *)){color:var(--muted-pine)}
+[data-ground=pine] .u:not(:where([data-paper],[data-paper] *)){text-decoration-color:var(--muted-pine)}
+@media (hover:hover) and (pointer:fine){[data-ground=pine] .u:hover:not(:focus-visible):not(:where([data-paper],[data-paper] *)){color:#fff;text-decoration-color:#fff}}
+[data-ground=pine] :focus-visible:not(:where([data-paper],[data-paper] *)){outline-color:var(--on-pine)}
+/* Nov 25 2026 (everything run, job B): more pages stand on pine now, so the call block has one look on it, as it has one on night: the
+   bone button with an ink label, the number in the paper, the reply line and the pencil underline in muted pine. A sheet, ticket, pad
+   or window lying on the green carries data-paper: it has its own ground, its words start from ink, and no rule above reaches inside it */
+:where([data-ground=pine] [data-paper]){color:var(--ink)}
+[data-ground=pine] .btn:not(:where([data-paper],[data-paper] *)){border-color:var(--on-night);background:var(--on-night);color:var(--ink)}
+[data-ground=pine] .btn:is(:focus-visible,:active):not(:where([data-paper],[data-paper] *)){background:var(--sheet);border-color:var(--sheet)}
+@media (hover:hover) and (pointer:fine){[data-ground=pine] .btn:hover:not(:where([data-paper],[data-paper] *)){background:var(--sheet);border-color:var(--sheet)}[data-ground=pine] .cta-tel:hover:not(:focus-visible):not(:where([data-paper],[data-paper] *)){text-decoration-color:#fff}}
+[data-ground=pine] .cta-tel:not(:where([data-paper],[data-paper] *)){color:var(--on-pine)}
+[data-ground=pine] .reply:not(:where([data-paper],[data-paper] *)){color:var(--muted-pine)}
+[data-ground=pine] .cta-inline:not(:where([data-paper],[data-paper] *)){border-color:rgba(245,242,234,.22)}
+[data-ground=pine] .won:not(:where([data-paper],[data-paper] *)){background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6C28 2 60 9 98 4' fill='none' stroke='%23C2CBBF' stroke-width='2.2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E")}
 /* the perforated seam: a row of punched holes where one band tears from the next (2 or 3 per page) */
 .seam{position:relative}
 .seam::before{content:"";position:absolute;left:0;right:0;top:-6px;height:12px;z-index:2;pointer-events:none;
@@ -1038,7 +1049,11 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
    Hours, Reply time, Language, and the plain calculator link for a reader not ready to call). Page CSS keeps only its own
    spacing: where Rules we keep sits and the band padding */
 .close-g{display:grid;gap:44px}
-@media (min-width:900px){.close-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:start}.c4-card{padding-top:84px;position:sticky;top:96px}}
+@media (min-width:900px){.close-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:start}.c4-card{padding-top:84px}}
+/* Nov 25 2026 (everything run, job B): signed, the letter card is 813 to 1,091px tall, taller than a laptop's screen, and a sticky card taller
+   than the screen keeps its own foot under the screen's edge while the page moves. It scrolls with the ask, level at the top, and rides only on a
+   screen that holds the tallest card whole. check.py letter_card_problems measures it at 1366 x 768 */
+@media (min-width:900px) and (min-height:1200px){.c4-card{position:sticky;top:96px}}
 .close-act{gap:12px}
 .close-act .arrow-to{position:relative;display:inline-flex;width:max-content}
 .close-h{margin:0 0 24px;font-size:clamp(44px,5.4vw,64px)}   /* one step above nothing: the same top step as the H1; the Spanish runs balanced on two lines, "Hablemos de / su negocio." */
@@ -1071,6 +1086,12 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .letter .letter-sig{margin-top:18px;font-size:var(--fs-20);line-height:1.3;color:var(--ink)}
 .letter-sig span{display:block;margin-top:2px;font-size:var(--fs-15);color:var(--muted)}
 .letter+.cblock{margin-top:14px}
+/* Nov 25 2026 (everything run, job B): his signature over the typed name on every page that carries the letter, 160px wide, as both
+   Homes have worn it since Nov 11 (home.css 17 keeps its own copy, the same values). The markup, right before .letter-sig:
+   <span class="letter-pen" aria-hidden="true"><img src="../../system/assets/signature.png" alt="" width="160" height="84"></span> */
+.letter-pen{display:block;width:160px;margin:20px 0 -6px -2px}
+.letter-pen img{display:block;width:160px;height:auto}
+.letter .letter-pen+.letter-sig{margin-top:2px}
 /* design round item 10 (Franco 2026-10-19): what happens on the call, between the close's head and its button, one sentence a line at
    every width (the craft judge: on a phone 'If a walk' hung at the end of line 1). One rhythm: 12px under the head, 24px to the
    button. The pen arrow still comes down from above the button and clears the line by 12px or more (check.py close_runtime) */
@@ -1680,6 +1701,11 @@ html.review .slot{/* ui-ok: pattern-bg a review-only picture slot, never on the 
 .gm-t td{border-bottom:0;padding:5px 8px 5px 0}   /* an email's table has no rules between its lines */
 .pair[data-state=before] .gm-body .chg.tr>.now{display:none}
 .gm-body .was .pc{display:inline-block;margin:4px 10px}
+/* Nov 25 2026: Pest control's stop 3 read "for 129      Oak St" in After: the new number kept the width of the old one and its circle.
+   In After the old number keeps its height and none of its width; the circle's 20px wait at the sentence's end, so it takes as many lines
+   in both states and the frame keeps its size (R7) */
+.pair[data-state=after] .gm-body p .chg:not(.tr)>.was{width:0;white-space:nowrap}
+.pair[data-state=after] .gm-body p:has(>.chg:not(.tr)>.was>.pc)::after{content:"";display:inline-block;width:20px;height:1px}
 :is(.win-st,.qb-meta) .was .pc{display:inline-block;margin:4px 14px}   /* the red pen's loop round words in a sentence (an email, a status line) keeps its air from the words beside it */   /* a word in a sentence: in Before the hidden new word leaves no gap */
 .gm-from small::after{content:"";display:inline-block;width:8px;height:5px;margin-left:4px;vertical-align:2px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M.8.8L4 4 7.2.8' fill='none' stroke='%235f6368' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/8px 5px no-repeat}
 .gm-att{display:inline-block;margin:12px 0 0;padding:7px 12px;border:1px solid #dadce0;border-radius:8px;font-size:13px;color:#3c4043}

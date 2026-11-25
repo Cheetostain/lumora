@@ -28,8 +28,8 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=8bc95b5d">
-<link rel="stylesheet" href="/v4/trade-page.css?v=8bc95b5d">
+<link rel="stylesheet" href="/v4/system.css?v=ff017dc4">
+<link rel="stylesheet" href="/v4/trade-page.css?v=ff017dc4">
 <style>
 /* the page's own extras; the shared trade-page blocks are in trade-page.css */
 /* 4. one student move-out: the inspection paper (a plain printed report, no software maker's look, R6, as AC's load calc) and
@@ -91,10 +91,20 @@
 @media (max-width:699px){
   .pm-mo .mo-row .l,.pm-mo .mo-row .v{font-size:14px}
 }
+/* 2. on the pine desk (Nov 25): side by side, the two papers print a step larger and the window hangs lower, so they fill the panel the words give it */
+@media (min-width:900px){@container (min-width:641px){
+  .pm-papers[data-desk=pine] .pl-docs{gap:20px}
+  .pm-papers[data-desk=pine] .pm-insp{max-width:none;padding:22px 22px 26px}
+  .pm-papers[data-desk=pine] .pm-insp-h b{font-size:16px}.pm-papers[data-desk=pine] .pm-insp-h span{font-size:13px}
+  .pm-papers[data-desk=pine] .pm-insp dl div{grid-template-columns:5.2em minmax(0,1fr);padding:6px 0}
+  .pm-papers[data-desk=pine] .pm-ch{margin-top:16px}.pm-papers[data-desk=pine] .pm-ch li{padding:6px 0}
+  .pm-papers[data-desk=pine] .pl-inv{margin-top:64px}
+  .pm-papers[data-desk=pine] .pm-led{padding:10px 16px 18px}.pm-papers[data-desk=pine] .pm-led li{padding:9px 0}
+}}
 </style>
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=8bc95b5d" defer></script>
-<script src="/v4/system.js?v=8bc95b5d" defer></script>
+<script src="/v4/trades.js?v=ff017dc4" defer></script>
+<script src="/v4/system.js?v=ff017dc4" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Office automation for property managers","serviceType":"Business process automation","provider":{"@type":"ProfessionalService","@id":"https://lumorafl.com/#business","name":"Lumora","url":"https://lumorafl.com/","telephone":"+1-352-226-0681"},"areaServed":[{"@type":"AdministrativeArea","name":"Alachua County, FL"},{"@type":"City","name":"Gainesville, FL"},{"@type":"City","name":"Alachua, FL"},{"@type":"City","name":"Archer, FL"},{"@type":"City","name":"Hawthorne, FL"},{"@type":"City","name":"High Springs, FL"},{"@type":"City","name":"La Crosse, FL"},{"@type":"City","name":"Micanopy, FL"},{"@type":"City","name":"Newberry, FL"},{"@type":"City","name":"Waldo, FL"}],"audience":{"@type":"BusinessAudience","audienceType":"Property managers"},"availableLanguage":["en","es"],"url":"https://lumorafl.com/industries/property-managers/"}</script>
 </head>
 <body data-trade="rentals" data-trade-lock data-rules="v4">
@@ -185,6 +195,51 @@
   </div>
 </section>
 
+<section class="band pl-papers pm-papers" id="guarantor" data-ground="paper" data-desk="pine" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
+  <div class="wrap pl-pw">
+    <div class="pl-pw-copy">
+      <h2>The damage ran past the deposit, and the guarantor never got the bill.</h2>
+      <p class="pl-find">On a student lease, the claim notice went out certified on day 21&nbsp;and the deposit was applied. Within two miles of UF, the average deposit with a guarantor is $52, about 4% of the average without one (UF Off-Campus Life, 2026-27). With a deposit that small, almost any damage runs past it, and the guarantor owes the rest once your office sends the bill.</p>
+      <p class="pl-fix"><b>The fix:</b> every move-out with charges past the deposit goes on one list with its guarantor, and the bill is drafted for your OK. This is one of the things a walk looks for.</p>
+      <p class="t-small pm-rule">Your office writes the claim notice and mails it certified, or emails it only where you and the tenant signed the email addendum (F.S. 83.49 and 83.505).</p>
+    </div>
+    <figure class="pic pl-docs-pic">
+      <div role="img" aria-label="Example: two papers from one student move-out. The move-out inspection for Bramble Court 204, bed C, tenant Emily Anderson, Friday, July 31, 2026, compared with the move-in report of August 15, 2025 and 23 photos: deep clean beyond normal wear 240.00, closet door off its track and rehung 75.00, two broken blinds 70.00, charges 385.00. Beside it the ledger for BRM-204-C as of Monday, September 28: the move-out charges, 385.00, and the claim notice sent by certified mail on August 21, delivered August 24; no objection in 15 days, so the 50.00 deposit was applied on September 8. The balance, 335.00, is circled in red. Guarantor on file: Robert Anderson, guaranty signed April 12, 2025. A flag across the top says the charges are 335.00 over the deposit, the guarantor has had no bill in 20 days, and the bill is drafted for your OK.">
+        <div class="pl-docs">
+          <div class="pm-insp">
+            <p class="pm-insp-h"><b>Move-out inspection</b><span>Bramble Court 204, bed C</span></p>
+            <dl>
+              <div><dt>Tenant</dt><dd>Anderson, Emily</dd></div>
+              <div><dt>Moved out</dt><dd>Fri, Jul 31, 2026</dd></div>
+              <div><dt>Move-in</dt><dd>Report of 8/15/25, 23&nbsp;photos</dd></div>
+            </dl>
+            <ul class="pm-ch">
+              <li><span>Deep clean beyond normal wear</span><span>240.00</span></li>
+              <li><span>Closet door off its track, rehung</span><span>75.00</span></li>
+              <li><span>Blinds, 2&nbsp;broken</span><span>70.00</span></li>
+              <li class="pm-ch-t"><span>Charges</span><span>385.00</span></li>
+            </ul>
+          </div>
+          <div class="scr-win pl-inv">
+            <div class="win-tb"><i></i><i></i><i></i><span>BRM-204-C, Sept 28</span></div>
+            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>Charges 335.00 over the deposit, and no bill to the guarantor in 20&nbsp;days. <b>Bill drafted for your OK.</b></span></p>
+            <div class="pm-led">
+              <ul>
+                <li><span>08/21/26</span><span>Move-out charges</span><span>385.00</span></li>
+                <li><span>08/21/26</span><span>Claim notice, certified mail 9589&nbsp;0710 5270&nbsp;0000 0000&nbsp;01</span><span></span></li>
+                <li><span>08/24/26</span><span>Delivered</span><span></span></li>
+                <li><span>09/08/26</span><span>No objection in 15&nbsp;days, deposit applied</span><span>−50.00</span></li>
+              </ul>
+              <p class="pm-bal"><span>Balance</span><span class="pc" data-draw>335.00</span></p>
+              <p class="pm-gu">Guarantor on file: <b>Anderson, Robert</b>, guaranty signed 4/12/25</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
+
 <section class="band hm4-auto pl-auto" id="automate" data-ground="sheet" data-density="mid" data-width="split" data-loud="list" data-medium="list">
   <div class="wrap pl-auto-g">
     <h2>What we automate in a property management office</h2>
@@ -272,52 +327,7 @@
   </div>
 </section>
 
-<section class="band pl-papers pm-papers" id="guarantor" data-ground="sheet" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
-  <div class="wrap pl-pw">
-    <div class="pl-pw-copy">
-      <h2>The damage ran past the deposit, and the guarantor never got the bill.</h2>
-      <p class="pl-find">On a student lease, the claim notice went out certified on day 21&nbsp;and the deposit was applied. Within two miles of UF, the average deposit with a guarantor is $52, about 4% of the average without one (UF Off-Campus Life, 2026-27). With a deposit that small, almost any damage runs past it, and the guarantor owes the rest once your office sends the bill.</p>
-      <p class="pl-fix"><b>The fix:</b> every move-out with charges past the deposit goes on one list with its guarantor, and the bill is drafted for your OK. This is one of the things a walk looks for.</p>
-      <p class="t-small pm-rule">Your office writes the claim notice and mails it certified, or emails it only where you and the tenant signed the email addendum (F.S. 83.49 and 83.505).</p>
-    </div>
-    <figure class="pic pl-docs-pic">
-      <div role="img" aria-label="Example: two papers from one student move-out. The move-out inspection for Bramble Court 204, bed C, tenant Emily Anderson, Friday, July 31, 2026, compared with the move-in report of August 15, 2025 and 23 photos: deep clean beyond normal wear 240.00, closet door off its track and rehung 75.00, two broken blinds 70.00, charges 385.00. Beside it the ledger for BRM-204-C as of Monday, September 28: the move-out charges, 385.00, and the claim notice sent by certified mail on August 21, delivered August 24; no objection in 15 days, so the 50.00 deposit was applied on September 8. The balance, 335.00, is circled in red. Guarantor on file: Robert Anderson, guaranty signed April 12, 2025. A flag across the top says the charges are 335.00 over the deposit, the guarantor has had no bill in 20 days, and the bill is drafted for your OK.">
-        <div class="pl-docs">
-          <div class="pm-insp">
-            <p class="pm-insp-h"><b>Move-out inspection</b><span>Bramble Court 204, bed C</span></p>
-            <dl>
-              <div><dt>Tenant</dt><dd>Anderson, Emily</dd></div>
-              <div><dt>Moved out</dt><dd>Fri, Jul 31, 2026</dd></div>
-              <div><dt>Move-in</dt><dd>Report of 8/15/25, 23&nbsp;photos</dd></div>
-            </dl>
-            <ul class="pm-ch">
-              <li><span>Deep clean beyond normal wear</span><span>240.00</span></li>
-              <li><span>Closet door off its track, rehung</span><span>75.00</span></li>
-              <li><span>Blinds, 2&nbsp;broken</span><span>70.00</span></li>
-              <li class="pm-ch-t"><span>Charges</span><span>385.00</span></li>
-            </ul>
-          </div>
-          <div class="scr-win pl-inv">
-            <div class="win-tb"><i></i><i></i><i></i><span>BRM-204-C, Sept 28</span></div>
-            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>Charges 335.00 over the deposit, and no bill to the guarantor in 20&nbsp;days. <b>Bill drafted for your OK.</b></span></p>
-            <div class="pm-led">
-              <ul>
-                <li><span>08/21/26</span><span>Move-out charges</span><span>385.00</span></li>
-                <li><span>08/21/26</span><span>Claim notice, certified mail 9589&nbsp;0710 5270&nbsp;0000 0000&nbsp;01</span><span></span></li>
-                <li><span>08/24/26</span><span>Delivered</span><span></span></li>
-                <li><span>09/08/26</span><span>No objection in 15&nbsp;days, deposit applied</span><span>−50.00</span></li>
-              </ul>
-              <p class="pm-bal"><span>Balance</span><span class="pc" data-draw>335.00</span></p>
-              <p class="pm-gu">Guarantor on file: <b>Anderson, Robert</b>, guaranty signed 4/12/25</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </figure>
-  </div>
-</section>
-
-<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" data-walk-skip="bills" style="--hole:var(--sheet)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
+<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" data-walk-skip="bills" style="--hole:var(--paper)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
   <div class="wrap">
     <h2 class="walk-h" data-walk-head data-sample-lead>Moorhen Property Management loses <span class="walk-h-usd">$6,420&nbsp;a&nbsp;year</span>. Here's where.</h2>
     <p class="walk-intro">A 212-rental property manager. Each stop shows the same screen before and after the fix, and the walk ends on the sheet's total.</p>
@@ -411,6 +421,7 @@
           <p>Most owners I meet lose their evenings to the same few jobs: the quote typed up at night, the invoice that never went out, the call nobody got back to.</p>
           <p>I've built automations since 2022. At a water damage company I did the claims paperwork, then automated it and trained the staff to run it. Now Lumora does the same for businesses around Gainesville.</p>
           <p>I'm bilingual, so your office can run in English, Spanish or both.</p>
+          <span class="letter-pen" aria-hidden="true"><img src="/v4/assets/signature.png" loading="lazy" decoding="async" alt="" width="160" height="84"></span>
           <p class="letter-sig">Franco A. Soto<span>Owner</span></p>
         </article>
         <p class="t-small hm-about"><a class="u" href="/about/">About Lumora</a></p>

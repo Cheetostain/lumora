@@ -373,7 +373,7 @@
   .hm4-hero h1{font-size:41px}
   .hm4-hero .t-lede{font-size:18px}
 }
-/* Nov 7: the Spanish headline is set by phrase (no-break spaces in the page), and "su trabajo de oficina" (Nov 25; "para que se haga solo."
+/* Nov 7: the Spanish headline is set by phrase (no-break spaces in the page), and "su trabajo de oficina" (Nov 25; the one-day headline's last line
    on Nov 24), the line that can't break, is 9.3em wide at most: the headline takes the biggest size that line fits in the column, up to the English size. The hero's copy is
    the container, so the measure is the column's own width. check.py holds the headline inside its column at 320, 360 and 393 at 568
    and 900 tall, both languages (hero_fit_problems) */

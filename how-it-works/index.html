@@ -27,19 +27,22 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=8bc95b5d">
-<link rel="stylesheet" href="/v4/trade-page.css?v=8bc95b5d">
+<link rel="stylesheet" href="/v4/system.css?v=ff017dc4">
+<link rel="stylesheet" href="/v4/trade-page.css?v=ff017dc4">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=8bc95b5d" defer></script>
-<script src="/v4/system.js?v=8bc95b5d" defer></script>
+<script src="/v4/trades.js?v=ff017dc4" defer></script>
+<script src="/v4/system.js?v=ff017dc4" defer></script>
 <style>
 /* ===== How it works, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24,
    32, 44, 64), and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
 .step-h{display:flex;align-items:center;gap:14px}
 .step-h .tab-n{width:44px;height:44px;font-size:20px}
 .step-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:12px;font-size:17px;color:var(--body)}
-[data-ground=night] .step-meta{color:var(--on-night)}
-[data-ground=night] .tl-tag{border-color:var(--on-night);color:var(--on-night)}
+/* Nov 25 (everything run, job B): beside a step's heading Free and Paid are bold words in the line, no box; the timeline keeps its chips */
+.step-meta{gap:4px 10px}
+.step-meta .tl-tag{border:0;border-radius:0;padding:0;font-size:inherit;color:var(--ink)}
+[data-ground=pine] .step-meta{color:var(--muted-pine)}
+[data-ground=pine] .step-meta .tl-tag{color:var(--on-pine)}
 
 /* 1 hero: words and the call block, then the 4-row timeline (R12); split on a computer, the timeline on the right */
 .hiw-hero{padding-bottom:48px}
@@ -54,7 +57,7 @@
 .tl-go{justify-self:start;font-size:15px;padding-block:12px;margin-block:-10px -12px}   /* each row jumps to its step (H1); a 44px tall tap area without moving the layout */
 @media (min-width:900px){
   .hiw-g{grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:56px;align-items:start}
-  .hiw-copy{position:sticky;top:112px}
+  .hiw-copy{align-self:center}   /* Nov 25: the words at the list's middle (SYSTEM 13, Oct 25). It was sticky at 112px, but system.css makes it relative on the ruled ground, so the 112px only pushed the column down */
   .hiw-tl .tl4>li.tl-big{padding-block:26px 24px}
 }
 
@@ -97,6 +100,7 @@
   .wk{--wk-cols:minmax(0,1.08fr) minmax(0,.92fr)}
   .wk-top,.wk-parts,.wk-lists{grid-template-columns:var(--wk-cols);gap:56px}
   .wk-parts{align-items:start}
+  .wk-text{align-self:center}   /* Nov 25: at the visit page's middle (check.py SPACE_JS) */
 }
 /* the receipt shoebox (picks build, Nov 9; Franco, on Home's walk band: "I don't like that one there because it's right next to the
    light lamp thing. Maybe we could put that one in an 'About' or 'How it Works' section... just to keep the art style consistent").
@@ -120,6 +124,9 @@ details:not([open])>:not(summary){display:none}   /* a closed answer takes no ro
 
 /* 4 your sheet: the full sample on the clipboard; four columns on a computer, folded rows on a phone */
 .fs-board{margin-top:28px}
+/* Nov 25: 960px at most, so it reads as a clipboard (the clip is 16% of it, 13% at 1200) and not as a table in a brown frame. The
+   words and the call row under it keep the board's own left edge */
+@media (min-width:1080px){.fs-board{max-width:960px;margin-inline:auto}.fs-band .fs-after,.fs-band .cta-inline{max-width:960px;margin-inline:auto}.fs-after>*{max-width:782px}}
 .fs .sheet{padding-inline:16px;padding-bottom:18px}   /* the top is system.css's, under the clip (2026-10-17 round 2) */
 @media (min-width:700px){.fs .sheet{padding-inline:32px;padding-bottom:24px}}
 @media (max-width:699px){.fs .sheet{padding-right:20px}}   /* Nov 7 (reviewers): the ring round the first figure needs room a flatter oval takes in width, so the right margin is 20px under 700px, as on Home and the trade pages (system.css .sh-usd .pen-ring), and the board's brown edge gives the 4px (2px a side), so no line rewraps */
@@ -207,8 +214,11 @@ pre.bm-code{/* ui-ok: mono the code picture is code (SYSTEM.md 16, the one code 
 .bm[data-run=done][data-view=code] .bm-code{overflow-y:auto;overscroll-behavior:contain}
 .bm[data-view=screen] .bm-code{opacity:0;transform:translateY(-16px);visibility:hidden}
 /* the run log: its top strip shows under the code, four Waiting rows that tick on; on the owner's screen it fills the window */
-.bm-log{position:absolute;inset:0;padding:8px 14px 0;background:#f5f5f7;border-top:1px solid #dedee3;font-family:var(--sys);color:#1d1d1f;transform:translateY(calc(100% - var(--lg-h)))}
-.bm[data-view=screen] .bm-log{transform:none;background:#fff;border-top-color:#fff;padding:16px 18px 0}
+.bm-log{position:absolute;inset:0;padding:8px 14px 0;background:#fff;border-top:1px solid #fff;font-family:var(--sys);color:#1d1d1f;transform:translateY(calc(100% - var(--lg-h)))}
+.bm-log::before{content:"";position:absolute;inset:-1px 0 0;z-index:-1;background:#f5f5f7;border-top:1px solid #dedee3}   /* the run log's grey, a layer that fades (Nov 25: the film moves on transform and opacity only) */
+.bm[data-view=screen] .bm-log::before{opacity:0}
+.bm-log{isolation:isolate}
+.bm[data-view=screen] .bm-log{transform:none;padding:16px 18px 0}
 .bm-lk{position:relative;font-size:12px;line-height:18px;font-weight:600;color:#64646a}   /* 2026-10-16: sentence case, no tracking, as .t-label */
 .bm[data-view=screen] .bm-lk .bm-run{display:none}
 .bm-nx{position:absolute;right:0;top:0;opacity:0;visibility:hidden}   /* when it looks again: the code runs every 10 minutes, its docstring says so */
@@ -225,8 +235,8 @@ pre.bm-code{/* ui-ok: mono the code picture is code (SYSTEM.md 16, the one code 
 .bm-rows svg{width:1.15em;height:1.15em;margin-top:calc((var(--lg-lh) - 1.15em)/2)}
 .bm-rows li:not(.on) circle{fill:#fff;stroke:#b4b4ba;stroke-width:1.5px;r:7.2px}
 .bm-rows li:not(.on) path{opacity:0}
-.bm[data-view=screen] .bm-rows li{font-size:var(--sc-fs);line-height:var(--sc-lh);padding:var(--row-p) 0;border-bottom:1px solid #e6e6ea}
-.bm[data-view=screen] .bm-rows li:last-child{border-bottom-color:transparent}   /* the footer's rule closes the list */
+.bm[data-view=screen] .bm-rows li{position:relative;font-size:var(--sc-fs);line-height:var(--sc-lh);padding:var(--row-p) 0;border-bottom:1px solid transparent}
+.bm[data-view=screen] .bm-rows li:not(:last-child)::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:#e6e6ea}   /* the footer's rule closes the list */
 .bm[data-view=screen] .bm-rows li>b{white-space:normal;font-weight:600}
 .bm[data-view=screen] .bm-rows svg{margin-top:calc((var(--sc-lh) - 1.15em)/2)}
 .bm-det{grid-column:2;display:grid;grid-template-rows:0fr;opacity:0}
@@ -252,20 +262,18 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
      detail lines (60ms apart) and the footer fade in only once their rows have full height, so no frame shows clipped or
      half-faded text (both judges, 2026-10-10) */
   .bm[data-view=screen] .bm-code{transition:opacity 200ms var(--ease-out),transform 300ms var(--ease-move),visibility 0s linear 200ms}
-  .bm[data-view=screen] .bm-log{transition:transform 650ms var(--ease-move) 200ms,background-color 400ms var(--ease-out) 200ms,padding 650ms var(--ease-move) 200ms,border-color 400ms 200ms}
-  .bm[data-view=screen] .bm-rows{transition:margin 650ms var(--ease-move) 200ms,border-color 400ms 200ms}
-  .bm[data-view=screen] .bm-rows li{transition:font-size 650ms var(--ease-move) 200ms,line-height 650ms var(--ease-move) 200ms,padding 650ms var(--ease-move) 200ms}
-  .bm[data-view=screen] .bm-hl,.bm[data-view=screen] .bm-det{transition:grid-template-rows 650ms var(--ease-move) 200ms,margin 650ms var(--ease-move) 200ms,opacity 300ms var(--ease-out) 850ms}
-  .bm[data-view=screen] li:nth-child(2) .bm-det{transition-delay:200ms,200ms,910ms}
-  .bm[data-view=screen] li:nth-child(3) .bm-det{transition-delay:200ms,200ms,970ms}
-  .bm[data-view=screen] li:nth-child(4) .bm-det{transition-delay:200ms,200ms,1030ms}
+  .bm[data-view=screen] .bm-log{transition:transform 650ms var(--ease-move) 200ms}
+  .bm[data-view=screen] .bm-log::before{transition:opacity 400ms var(--ease-out) 200ms}
+  .bm[data-view=screen] .bm-hl,.bm[data-view=screen] .bm-det{transition:opacity 300ms var(--ease-out) 850ms}
+  .bm[data-view=screen] li:nth-child(2) .bm-det{transition-delay:910ms}
+  .bm[data-view=screen] li:nth-child(3) .bm-det{transition-delay:970ms}
+  .bm[data-view=screen] li:nth-child(4) .bm-det{transition-delay:1030ms}
   .bm[data-view=screen] .bm-foot,.bm[data-view=screen] .bm-nx{transition:opacity 300ms var(--ease-out) 1100ms,visibility 0s 1100ms}
   /* back to the code: the screen's words go first, then the log drops and the code returns */
   .bm-code{transition:opacity 300ms var(--ease-out) 450ms,transform 400ms var(--ease-move) 350ms,visibility 0s}
-  .bm-log{transition:transform 500ms var(--ease-move) 150ms,background-color 300ms var(--ease-out) 150ms,padding 500ms var(--ease-move) 150ms,border-color 300ms 150ms}
-  .bm-rows{transition:margin 500ms var(--ease-move) 150ms,border-color 300ms 150ms}
-  .bm-rows li{transition:font-size 500ms var(--ease-move) 150ms,line-height 500ms var(--ease-move) 150ms,padding 500ms var(--ease-move) 150ms}
-  .bm-hl,.bm-det{transition:opacity 150ms var(--ease-out),grid-template-rows 500ms var(--ease-move) 150ms,margin 500ms var(--ease-move) 150ms}
+  .bm-log{transition:transform 500ms var(--ease-move) 150ms}
+  .bm-log::before{transition:opacity 300ms var(--ease-out) 150ms}
+  .bm-hl,.bm-det{transition:opacity 150ms var(--ease-out)}
   .bm-foot,.bm-nx{transition:opacity 150ms var(--ease-out),visibility 0s 150ms}
   .bm-code .l{transition:opacity var(--t-enter) var(--ease-out),background-color var(--t-enter) var(--ease-out)}
   .bm-tt b{transition:opacity 300ms var(--ease-out)}
@@ -299,6 +307,14 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
 .fx-tools>p{font-size:17px;max-width:34em}
 .fx-tools .auto-tools{margin-top:10px}
 .fx-tools .tabs{margin-top:18px}
+/* Nov 25: the three panels share one cell, so the band keeps the tallest one's height and nothing under it jumps when a tab is picked;
+   the three windows are one size (a hidden panel is visibility:hidden, so it is out of the tab order and the reading order) */
+.fx-tools .tabs-wrap{display:grid;grid-template-columns:minmax(0,1fr)}
+.fx-tools .tabs-wrap>.pic{grid-area:2/1;min-width:0}
+.fx-tools .tabs-wrap>.pic[hidden]{display:block!important;visibility:hidden}
+.fx-tools .tabs-wrap .scr-win{height:100%}
+.fx-tools .tabs-wrap>.pic[hidden] .scr-win{box-shadow:none}
+.ts-when{margin:0 0 6px;font-size:13px;color:#55555a}
 .jobscr .win-b{padding:14px}
 .js-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .js-h b{font-size:16px;color:#111}.js-h span{font-size:12px;color:#55555a}
@@ -307,38 +323,42 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
 .js-act span{display:inline-grid;place-items:center;min-height:32px;padding:0 12px;border-radius:7px;font-size:13px;font-weight:600;border:1px solid #b9b9bf;color:#1d1d1f;background:#fff}
 .js-act span.pri{background:#0a57b8;border-color:#0a57b8;color:#fff}
 .js-ok{display:block;margin-top:10px;font-size:13px;color:#1f6b36}
-.fx-tools .doc{padding:16px}
 .fx-tools .xl td,.fx-tools .xl th{max-width:none;white-space:normal}   /* four short columns: each sizes to its words, so "3/4\" T&P relief valve" shows whole at 320 instead of ending in dots */
 .fx-tools .xl tr>:first-child{width:1%;white-space:nowrap}
-@media (min-width:900px){.fx-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}}
+@media (min-width:900px){.fx-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}.fx-copy{align-self:center}}   /* Nov 25: the words at the tools' middle (SPACE_JS, Spanish at 1024) */
 
-/* 6 the monthly check, the page's one ink band: the words beside one printed page, straight (papers never tilt on v4) */
+/* 6 the monthly check, the page's one pine band (Nov 25, everything run, job B; night until then): pine is the owner's side and the
+   money that came back, so the page that says what came back lies on it, a white sheet on the green, its figure in pine with the
+   pencil underline every won-back figure wears. The words and the call row stand at the sheet's middle */
 .mcheck{display:grid;gap:36px}
-.mcheck .prose>p{margin-top:14px;font-size:17px;max-width:34em;color:var(--on-night)}
-@media (min-width:1000px){.mcheck{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}}
-.report{background:var(--sheet);color:var(--body);box-shadow:0 30px 60px rgba(0,0,0,.45);padding:22px 18px 18px;font-family:var(--sys);max-width:520px;margin-inline:auto}
+.mcheck .prose>p{margin-top:14px;font-size:17px;max-width:34em;color:var(--on-pine)}
+.mcheck .prose>p.step-meta{margin-top:12px;color:var(--muted-pine)}
+.mcheck .cta-inline{margin-top:30px}
+@media (min-width:1000px){.mcheck{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:center}}
+.report{background:var(--sheet);color:var(--body);box-shadow:0 1px 1px rgba(0,0,0,.25),0 24px 48px rgba(10,20,16,.34);padding:22px 18px 18px;font-family:var(--sys);max-width:568px;margin-inline:auto}
 @media (min-width:600px){.report{padding:28px 28px 22px}}
-@media (max-width:699px){.report{box-shadow:0 2px 4px rgba(0,0,0,.35),0 8px 14px -4px rgba(0,0,0,.4)}}   /* 2026-10-17 (Franco's iPhone): a phone-size shadow; the 60px one darkened the summary under the report (check.py SHADOWS) */
+@media (max-width:699px){.report{box-shadow:0 2px 4px rgba(10,20,16,.3),0 8px 14px -4px rgba(10,20,16,.36)}}   /* 2026-10-17 (Franco's iPhone): a phone-size shadow; the 60px one darkened the summary under the report (check.py SHADOWS) */
 .rp-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding-bottom:10px;border-bottom:2px solid #111}
 .rp-h b{display:block;font-family:var(--font);font-size:22px;color:#111;font-weight:600}
 .rp-h small{display:block;font-size:13px;color:#55555a}
-[data-ground=night] .report .stamp{border-color:var(--pencil);color:var(--pencil)}
 .rp-sec{padding:12px 0;border-bottom:1px solid #e2e0da}
 .rp-k{font-size:12px;font-weight:700;color:#55555a}   /* 2026-10-16: sentence case, no tracking, as About's .fd-k */
 .rp-big{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin-top:4px}
-.rp-big .money{font-family:var(--font);font-size:34px;font-weight:600;color:var(--red);line-height:1.05}
+.rp-big .money{position:relative;font-family:var(--font);font-size:34px;font-weight:600;color:var(--pine);line-height:1.05;margin-bottom:8px}   /* Nov 25: pine, money won back ("a gain in red reads like our fee"); red since the line said "$501 found", until Nov 10 */
+.rp-big .money .pen-under{stroke:var(--pencil)}
 .rp-big span{font-size:14px;color:#3a3a3f}
 .rp-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .rp-two p{font-size:14px;color:#3a3a3f}
 .rp-two b{display:block;font-family:var(--font);font-size:24px;color:#111;font-weight:600}
 .rp-two b i{font-style:normal;color:#77757a;font-weight:500}
-.bars{display:grid;grid-template-columns:repeat(8,1fr);align-items:end;gap:6px;height:84px;margin-top:10px;border-bottom:1.5px solid #111}
+.bars{position:relative;display:grid;grid-template-columns:repeat(8,1fr);align-items:end;gap:6px;height:84px;border-bottom:1.5px solid #111}
 .bars span{display:block;background:#8d8a82;height:var(--h)}
 .bars span.f{background:#111}
+/* Nov 25: the two groups are named on the chart, where the key with its two squares was: the first over its bars, After right over the
+   short ones (25% of 84px) */
+.bars-lab{margin:14px 0 5px;font-size:12px;line-height:1.35;color:#3a3a3f}
+.bars>b{position:absolute;left:calc(50% + 3px);bottom:calc(25% + 5px);font-size:12px;line-height:1.35;font-weight:600;color:#111}
 .bars-x{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;font-size:12px;color:#55555a;text-align:center;margin-top:4px}
-.bars-key{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:#3a3a3f;margin-top:6px}
-.bars-key i{display:inline-block;width:10px;height:10px;margin-right:5px;vertical-align:-1px;background:#8d8a82}
-.bars-key i.f{background:#111}
 .rp-next{font-size:14px;color:#3a3a3f}
 .rp-next b{font-weight:700;color:#111;white-space:nowrap}   /* ink, not red: $501.00 leads alone (one red per screen) */
 .rp-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 10px;font-size:12px;color:#55555a;padding-top:10px}
@@ -354,7 +374,8 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
 .cover .no li::before{content:"";position:absolute;left:3px;top:20px;width:12px;height:2px;background:var(--muted-night)}
 
 /* 7 questions owners ask: native disclosures, so twelve answers fit a phone without a wall */
-.faq{margin-top:24px;border-top:2px solid var(--ink)}
+.faq{margin-top:24px}
+.faq>div:first-child{border-top:2px solid var(--ink)}
 .faq details{border-bottom:1px solid var(--rule)}
 .faq summary{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:52px;padding:14px 16px;margin-inline:-16px;cursor:pointer;list-style:none;font-weight:600;font-size:20px;color:var(--ink);line-height:1.3}
 .faq summary::-webkit-details-marker{display:none}
@@ -362,20 +383,27 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
    below (on question 1 it merged with the 2px ink rule into one bar). The row reaches 16px past the words on each side and has
    14px over and under them, so the ring sits inside it, 6px clear of the rules and 7px clear of the words and the plus (at 4px
    the rule and the ring still read as two lines), as the index rows do (system.css) */
-.faq summary::after{content:"+";flex:none;width:36px;height:36px;display:grid;place-items:center;border:1.5px solid var(--ink);border-radius:50%;font-weight:500;font-size:20px;line-height:1}
+.faq summary::after{content:"+";flex:none;width:16px;text-align:center;font-weight:500;font-size:24px;line-height:1}   /* Nov 25: a plain plus, as the footer's folds have; the ring is the steps' mark (14 of them in a column were the loudest thing in the band) */
 .faq details[open] summary::after{content:"\2212"}
 .faq .ans{padding:0 0 20px;display:grid;gap:12px;max-width:40em}
 .faq .ans p{font-size:17px}
 .faq-more{margin-top:22px;font-size:17px}
 .faq-more a{display:inline-block;padding-block:12px;margin-block:-12px}
-@media (hover:hover) and (pointer:fine){.faq summary:hover::after{background:var(--ink);color:#fff}}
-.faq summary:active::after{background:var(--ink);color:#fff}
+@media (hover:hover) and (pointer:fine){.faq summary:hover{background:rgba(17,17,16,.06)}}
+.faq summary:active{background:rgba(17,17,16,.06)}
+/* Nov 25: two columns from 1000px, reading down, each its own stack, so an answer opened in one never moves the other */
+@media (min-width:1000px){
+  .faq-band .wrap-read{width:min(var(--w),100% - 2*var(--g))}
+  .faq{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:64px;align-items:start}
+  .faq>div{border-top:2px solid var(--ink)}
+}
 
-/* motion: an opened answer settles in; nothing else on this page moves but the pen ring, which draws once in view */
+/* motion: an opened answer settles in; the pen ring draws once in view, and the pencil line under the figure won
+   back once its whole page is in view */
 @media screen and (prefers-reduced-motion:no-preference){
   .faq details[open] .ans,.more[open]>div{animation:rise var(--t-small) var(--ease-out)}
   .more summary::after{transition:transform var(--t-small) var(--ease-out)}
-  .faq summary::after{transition:background-color var(--t-hover),color var(--t-hover)}
+  .faq summary{transition:background-color var(--t-hover)}
 }
 
 /* phone length (budget 13,000px at 390) */
@@ -663,8 +691,10 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
           </div>
         </div>
         <div class="pic" role="tabpanel" id="tp3" aria-labelledby="tb3" hidden>
-          <div class="doc" role="img" aria-label="Example: the morning email from a small tool. Supplier bills checked: Oak Street Supply bill 30172, 5 lines read, 4 on their job's invoice, 1 to decide: the relief valve, 41 dollars 20, job 4471.">
-            <div class="doc-h"><b>Supplier bills, checked</b><span>Thu 6:30&nbsp;AM</span></div>
+          <div class="scr-win jobscr" role="img" aria-label="Example: the morning email from a small tool. Supplier bills checked: Oak Street Supply bill 30172, 5 lines read, 4 on their job's invoice, 1 to decide: the relief valve, 41 dollars 20, job 4471.">
+            <div class="win-tb" data-ui-ok="fake-chrome R6: the one window frame for computer tasks; Franco kept the Mac buttons (Oct 6)"><i></i><i></i><i></i><span>Supplier bills, checked</span></div>
+            <div class="win-b">
+            <p class="ts-when">Thu 6:30&nbsp;AM</p>
             <ul class="doc-li">
               <li><span>Oak Street Supply, bill 30172</span><span>5&nbsp;lines read</span></li>
               <li><span>On their job's invoice</span><span>4&nbsp;of 5</span></li>
@@ -672,6 +702,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
             </ul>
             <div class="js-act"><span class="pri">Add to invoice</span><span>No charge</span></div>
             <span class="js-ok">Runs each night, in an account you own</span>
+            </div>
           </div>
         </div>
       </div>
@@ -765,25 +796,29 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
   </div>
 </section>
 
-<section class="band mc" id="check" data-ground="night" data-density="mid" data-width="split" data-loud="report" data-medium="report">
+<section class="band seam mc" id="check" style="--hole:var(--paper)" data-ground="pine" data-density="mid" data-width="split" data-loud="report" data-medium="report">
   <div class="wrap">
     <div class="mcheck">
       <div class="prose">
         <h2>The monthly check</h2>
         <p class="step-meta"><span class="tl-tag">Paid</span> Month to month, once a fix is working.</p>
         <p>One page a month: what the fix did in your numbers and the next problem with a dollar figure. It runs month to month, and you can cancel any month by email. Your fix proposal lists what it covers and how its price is set.</p>
+        <div class="cta-inline" data-extra="computer: the call bar is on screen the whole time on a phone">
+          <a class="btn" href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call us</a>
+          <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
+        </div>
       </div>
       <figure class="mc-pic">
         <div class="pic">
-          <div class="report" role="img" aria-label="One monthly check page for the example shop, December, with two fixes running. What the fixes did: 2,021 dollars this month, 501 dollars in parts that never reached an invoice and 4 jobs kept, 1,520 dollars, from quotes that now go out the same day. Supply tickets with no job number fell from 14 a month to 2, shown as weekly bars, the last four after the fix, and quotes sent 48 or more hours late fell from 9 to 1. What broke: one supplier bill came in a new layout; the matcher stopped and told us, and it was fixed. Next problem: the same job typed in three places, 411 dollars a month.">
+          <div class="report" data-paper role="img" aria-label="One monthly check page for the example shop, December, with two fixes running. What the fixes did: 2,021 dollars this month, 501 dollars in parts that never reached an invoice and 4 jobs kept, 1,520 dollars, from quotes that now go out the same day. Supply tickets with no job number fell from 14 a month to 2, shown as weekly bars, the last four after the fix, and quotes sent 48 or more hours late fell from 9 to 1. What broke: one supplier bill came in a new layout; the matcher stopped and told us, and it was fixed. Next problem: the same job typed in three places, 411 dollars a month.">
             <div class="rp-h" aria-hidden="true"><div><b>Monthly check</b><small>The example shop, December</small></div></div>
             <div aria-hidden="true">
-              <div class="rp-sec"><p class="rp-k">What the fixes did</p><p class="rp-big"><span class="money">$2,021</span><span>this month: $501 in parts that never reached an invoice, and 4&nbsp;jobs kept ($1,520) from quotes that now go out the same day</span></p></div>
+              <div class="rp-sec"><p class="rp-k">What the fixes did</p><p class="rp-big"><span class="money">$2,021<svg class="pen-under" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" data-draw data-wait><path pathLength="1" d="M2 6C28 2 60 9 98 4"/></svg></span><span>this month: $501 in parts that never reached an invoice, and 4&nbsp;jobs kept ($1,520) from quotes that now go out the same day</span></p></div>
               <div class="rp-sec">
                 <div class="rp-two"><p>Supply tickets with no job number<b>14 <i>to</i> 2</b></p><p>Quotes sent 48+ hours late<b>9 <i>to</i> 1</b></p></div>
-                <div class="bars"><span style="--h:100%"></span><span style="--h:75%"></span><span style="--h:100%"></span><span style="--h:75%"></span><span class="f" style="--h:25%"></span><span class="f" style="--h:3%"></span><span class="f" style="--h:25%"></span><span class="f" style="--h:3%"></span></div>
+                <p class="bars-lab">Tickets with no job number, before the fix</p>
+                <div class="bars"><span style="--h:100%"></span><span style="--h:75%"></span><span style="--h:100%"></span><span style="--h:75%"></span><span class="f" style="--h:25%"></span><span class="f" style="--h:3%"></span><span class="f" style="--h:25%"></span><span class="f" style="--h:3%"></span><b>After</b></div>
                 <div class="bars-x"><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span><span>W8</span></div>
-                <p class="bars-key"><span><i></i>Tickets with no job number, before the fix</span><span><i class="f"></i>After</span></p>
               </div>
               <div class="rp-sec"><p class="rp-k">What broke</p><p class="rp-next">One supplier bill came in a new layout. The matcher stopped and told us. Fixed.</p></div>
               <div class="rp-sec"><p class="rp-k">Next problem</p><p class="rp-next">The same job typed in three places: <b>$411 a month</b></p></div>
@@ -793,17 +828,13 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
         </div>
       </figure>
     </div>
-    <div class="cta-inline" data-extra="computer: the call bar is on screen the whole time on a phone">
-      <a class="btn" href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call us</a>
-      <a class="cta-tel" href="tel:+13522260681">(352) 226-0681</a>
-    </div>
   </div>
 </section>
 
 <section class="band faq-band" id="faq" data-ground="sheet" data-density="mid" data-width="narrow" data-loud="questions" data-medium="faq">
   <div class="wrap-read">
     <h2>Questions owners ask</h2>
-    <div class="faq">
+    <div class="faq"><div>
       <details id="price"><summary>What does it cost?</summary><div class="ans">
         <p>We publish one price, the walk's, in <a class="u" href="#walk">step 2</a> above, with its terms. It is paid when booked, and you keep the sheet either way, even if you never hire us for a fix.</p>
         <p>Everything after the walk is quoted from your sheet, so that number comes after the walk, not before. Each fix has its own fixed price, never by the hour, and any software fees show on their own line, at cost. You hear each price before any work starts. The first conversation is free.</p></div></details>
@@ -819,6 +850,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
         <p>It replaces the retyping and the chasing, like the job typed into three places or the quote that waits until Friday. What you do with the time it frees is up to you.</p></div></details>
       <details><summary>Do I have to switch software?</summary><div class="ans">
         <p>No, not unless you want to. We start with what you already pay for. If new software would pay for itself, you hear what it costs and what it should bring back, and you decide.</p></div></details>
+      </div><div>
       <details><summary>What happens when my business grows or I change software?</summary><div class="ans">
         <p>Tell us first, and we tell you in writing what it touches and what it would cost. More jobs, trucks or staff on the fixes you have cost nothing extra from us.</p></div></details>
       <details><summary>Do you sell software?</summary><div class="ans">
@@ -838,6 +870,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
         <p>You keep the sheet either way. The monthly check runs month to month: cancel by email before the next billing date. If you stop a fix or a build partway, the agreement says what is owed for the work done.</p></div></details>
       <details><summary>Do you work in Spanish?</summary><div class="ans">
         <p>Yes. The free call, the walk, your sheet, the monthly check and the one-page handover sheet can all be in Spanish. If your booking tool texts customers only in English, we fix that too.</p></div></details>
+      </div>
     </div>
     <p class="faq-more">Another question? Call or text <a class="u" href="tel:+13522260681">(352) 226-0681</a>.</p>
   </div>
@@ -871,6 +904,7 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
           <p>Most owners I meet lose their evenings to the same few jobs: the quote typed up at night, the invoice that never went out, the call nobody got back to.</p>
           <p>I've built automations since 2022. At a water damage company I did the claims paperwork, then automated it and trained the staff to run it. Now Lumora does the same for businesses around Gainesville.</p>
           <p>I'm bilingual, so your office can run in English, Spanish or both.</p>
+          <span class="letter-pen" aria-hidden="true"><img src="/v4/assets/signature.png" loading="lazy" decoding="async" alt="" width="160" height="84"></span>
           <p class="letter-sig">Franco A. Soto<span>Owner</span></p>
         </article>
         <p class="t-small hm-about"><a class="u" href="/about/">About Lumora</a></p>
@@ -932,6 +966,24 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
 </script>
 <script>
 (function () {
+  var line = document.querySelector('#check .pen-under'), page = line && line.closest('.report');
+  if (!page) return;
+  var wait;
+  function draw() { line.classList.add('drawn'); removeEventListener('scroll', look); removeEventListener('resize', look); }
+  function look() {
+    clearTimeout(wait);
+    var h = document.querySelector('.hdr'), c = document.querySelector('.callbar'), bar = c && c.getClientRects().length ? c.offsetHeight : 0,
+        top = h ? Math.max(0, h.getBoundingClientRect().bottom) : 0, end = innerHeight - bar, r = page.getBoundingClientRect(), l = line.getBoundingClientRect(),
+        seen = Math.min(r.bottom, end) - Math.max(r.top, top), most = seen >= 0.85 * Math.min(r.height, end - top);
+    if (l.top < top || l.bottom > end || !most) return;
+    if (r.height > end - top || seen >= r.height - 1) draw();
+    else wait = setTimeout(draw, 500);   // a fast scroll can pass the frame where all of it shows: most of it, and the reader stopped
+  }
+  addEventListener('scroll', look, { passive: true }); addEventListener('resize', look); look();
+})();
+</script>
+<script>
+(function () {
   var ES = false;
   // The code picture (Home's What we automate from 2026-10-10, code demo B, here since 2026-10-27; on the Spanish Home too since 2026-10-11, the same 43 lines
   // with Spanish comments, so STEPS and MAIN hold for both; ES picks the button words). It runs when 60% of it is in view, about
@@ -966,7 +1018,33 @@ html:not(.js) .bm-foot{display:none}   /* it needs JS (the footer is one button 
       STEPS.forEach(function (s, i) { lines[s[1] - 1].classList.toggle('ran', i < n); });
       for (var i = 0; i < rows.length; i++) rows[i].classList.toggle('on', i < n);
     }
-    function show(view) {
+    // Nov 25: the log's parts go from their old places and sizes to the new ones on transform alone (the rows' font size, line height,
+    // padding and the two folds moved the layout on every frame until then). Same 650 and 500 ms and curve as the log's own rise
+    var log = fig.querySelector('.bm-log'), list = fig.querySelector('.bm-rows'), lk = fig.querySelector('.bm-lk'), moving = [];
+    function places() {
+      var o = log.getBoundingClientRect(), at = function (e) { var r = e.getBoundingClientRect(); return { x: r.left - o.left, y: r.top - o.top, w: r.width, h: r.height }; };
+      return { lk: at(lk), list: at(list), rows: [].map.call(rows, function (li) { var b = li.querySelector('b'); return { li: at(li), svg: at(li.querySelector('svg')), b: at(b), fs: parseFloat(getComputedStyle(b).fontSize) }; }) };
+    }
+    function move(view, set) {
+      if (still || !log.animate || fig.getAttribute('data-view') === view) return set();
+      var a = places(), opt = { duration: view === 'screen' ? 650 : 500, delay: view === 'screen' ? 200 : 150, easing: getComputedStyle(fig).getPropertyValue('--ease-move').trim(), fill: 'backwards' };
+      while (moving.length) moving.pop().cancel();
+      var sg = view === 'screen' ? 1 : -1; a.rows.forEach(function (p, i) { ['li', 'svg', 'b'].forEach(function (n) { p[n].y += sg * (i + 1); }); });   // the screen's 1px rules come and go at once, one over each row
+      set();
+      var z = places(), px = function (x, y, k) { return 'translate(' + x + 'px,' + y + 'px)' + (k ? ' scale(' + k + ')' : ''); };
+      function go(el, from, pseudo) { var o = {}; for (var i in opt) o[i] = opt[i]; if (pseudo) o.pseudoElement = pseudo; el.style.transformOrigin = '0 0'; moving.push(el.animate([{ transform: from }, { transform: 'none' }], o)); }
+      go(lk, px(a.lk.x - z.lk.x, a.lk.y - z.lk.y));
+      var dl = a.list.y - z.list.y, dx = a.list.x - z.list.x; go(list, px(dx, dl));
+      a.rows.forEach(function (p, i) {
+        var q = z.rows[i], li = rows[i], k = p.fs / q.fs, dy = p.li.y - q.li.y, b = li.querySelector('b'), s = li.querySelector('svg');
+        go(li, px(0, dy - dl));
+        go(s, px(p.svg.x - p.li.x - q.svg.x + q.li.x, p.svg.y - p.li.y - q.svg.y + q.li.y, p.svg.w / q.svg.w));
+        go(b, px(p.b.x - p.li.x - q.b.x + q.li.x, p.b.y - p.li.y + p.b.h / 2 - (q.b.y - q.li.y + q.b.h * k / 2), k));
+        if (view === 'screen') go(li, px(0, p.li.h + 1 - q.li.h), '::after');
+      });
+    }
+    function show(view) { move(view, function () { put(view); }); }
+    function put(view) {
       fig.setAttribute('data-view', view);
       for (var i = 0; i < segs.length; i++) segs[i].setAttribute('aria-pressed', String(segs[i].getAttribute('data-view') === view));
       code.inert = view !== 'code';

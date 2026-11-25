@@ -27,11 +27,11 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=8bc95b5d">
-<link rel="stylesheet" href="/v4/trade-page.css?v=8bc95b5d">
+<link rel="stylesheet" href="/v4/system.css?v=ff017dc4">
+<link rel="stylesheet" href="/v4/trade-page.css?v=ff017dc4">
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=8bc95b5d" defer></script>
-<script src="/v4/system.js?v=8bc95b5d" defer></script>
+<script src="/v4/trades.js?v=ff017dc4" defer></script>
+<script src="/v4/system.js?v=ff017dc4" defer></script>
 <style>
 /* ===== About, its own parts (after system.css and trade-page.css). Type sizes stay on the one scale (15, 17, 20, 24, 32, 44,
    64) outside the pictures, and every clamp reaches its top by 1280px, where Lumora.lint() measures it. */
@@ -44,41 +44,75 @@
 .ab-copy .cta{margin-top:26px}
 .ab-free{font-size:17px;color:var(--ink);max-width:30em;margin-bottom:6px}   /* 2026-10-15: a step of air before the call block */
 .ab-card .signed{font-size:20px;line-height:1.5}
+@media (min-width:900px) and (min-height:860px){.ab-card{margin-top:58px}}   /* Nov 25: Cardino stands 58px over the card; the two together sit at the words' middle (on a shorter screen the card alone does) */
 @media (min-width:900px){
   .ab-hero{padding:56px 0 96px}
   .ab-g{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:72px;align-items:center}
 }
 
-/* 2 one contact: four papers from one job, straight (papers never tilt on v4), two a row on a phone, four on a computer.
-   Inside the picture each paper keeps its own type, 12px floor; the pencil rings the one line every paper ends on. */
+/* 2 one contact: the four papers an owner receives, in that order (Nov 25, everything run, job B; four equal cards with a red ring round
+   each number until then). The walk sheet on its clipboard, then the fix quote, the monthly check and the handover sheet. Each ends
+   on the number in plain bold: red is a loss or the pen on a problem, and a phone number is neither */
 .ab-docs .t-lede{margin-top:14px;max-width:34em}
-.fourdocs{display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr))}
-@media (min-width:1000px){.fourdocs{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}}
-@media (max-width:359px){.fourdocs{grid-template-columns:minmax(0,1fr)}}   /* under 360 two papers a row left 113px for text, one word a line */
 .ab-docs figure{margin-top:28px}
-@media (min-width:1000px){.ab-docs figure{margin-top:40px}}
-.fd{background:#fff;box-shadow:var(--lift);padding:14px 12px 12px;font-family:var(--sys);color:#1d1d1f;display:flex;flex-direction:column}
-@media (min-width:700px){.fd{padding:18px 16px 14px;min-height:250px}}
-.fd-k{font-size:12px;font-weight:600;color:#55555a}
-.fd-t{font:600 max(15px,min(5.4cqi,20px))/1.15 var(--font);color:#111;margin:2px 0 8px;padding-bottom:8px;border-bottom:2px solid #111}
-.fd-l{margin:2px 0 12px}
-.fd-l>p{font-size:12px;font-weight:600;color:#111;line-height:1.35}
+.ab-docs .pic{padding:15px 0 0}   /* the clip's handle stands 15px over the board */
+.fd-desk{display:grid;gap:20px;max-width:560px}
+.fd-two{display:contents}
+.fd-sheet .lh{padding-bottom:12px}
+.fd-sheet .sh-rows li{padding:13px 0;align-items:baseline}
+.fd-sheet .sh-rows li:last-child{border-bottom:0}
+.fd-sheet .sh-l b{font-size:17px;font-weight:500}
+.fd-sheet .sh-usd{align-self:baseline}
+.fd-sheet .fd-foot{padding-top:12px;border-top:2px solid var(--ink);font-size:15px}
+.fd-sheet .fd-tel{font-size:17px}
+.fd{background:#fff;box-shadow:var(--lift-hi);padding:20px;font-family:var(--sys);color:#1d1d1f}
+.fd-k{font-size:13px;font-weight:500;color:#55555a;line-height:1.3}
+.fd-t{font:600 20px/1.15 var(--font);color:#111;margin-top:2px;padding-bottom:9px;border-bottom:2px solid #111}
+.fd-q .lh{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:12px;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.fd-q .lh img{width:30px;height:auto}
+.fd-q .fd-t{padding:0;border:0}
+.fd-l{margin:10px 0 14px}
+.fd-l>p{font-size:13px;font-weight:600;color:#111;line-height:1.35}
 .fd-r{margin-top:4px}
-.fd-r li{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:5px 0;border-bottom:1px solid #ecebe6;font-size:12px;color:#3a3a3f;line-height:1.3}
+.fd-r li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:7px 0;border-bottom:1px solid #ecebe6;font-size:13px;color:#3a3a3f;line-height:1.35}
 .fd-r b{font-weight:600;color:#111;white-space:nowrap}
 .fd-r b.w{white-space:normal;text-align:right}
 .fd-n{counter-reset:fdn}
-.fd-n li{justify-content:flex-start}
+.fd-n li{justify-content:flex-start;gap:6px}
 .fd-n li::before{counter-increment:fdn;content:counter(fdn) ".";font-weight:600;color:#111;flex:none;width:14px}
-.fd-foot{margin-top:auto;padding-top:8px;border-top:1px dashed #b5b3ad;font-size:12px;color:#3a3a3f;line-height:1.35}
-.fd-foot .pc{display:inline-block;padding:1px 4px;margin:10px 0 0 6px;font-weight:700;color:#111;font-size:13px;white-space:nowrap}   /* 2026-10-17 polish: 10px above, so the ring (4px out) keeps 6px of air under "Your contact:"; at 4px it touched the y */
-.fd-foot .pc::after{inset:-4px -8px}   /* the ring clears the first and last digits */
-.fd:nth-child(2) .pc::after{border-radius:52% 48% 54% 46%/44% 56% 44% 56%}   /* four rings by one hand, never four copies: the shape varies, the ring stays level (2026-10-16) */
-.fd:nth-child(3) .pc::after{border-radius:50% 50% 44% 56%/58% 42% 54% 46%}
-.fd:nth-child(4) .pc::after{border-radius:46% 54% 52% 48%/50% 50% 46% 54%}
-@media (min-width:1000px){.fd-r li,.fd-l>p,.fd-foot{font-size:13px}.fd-k{font-size:13px}.fd-foot .pc::after{inset:-4px -10px}}   /* four papers a row on a computer have the room for a step up from the 12px floor */
-.ab-docs .pic{padding:30px 0 0}
-.ab-docs .samp{top:0;bottom:auto;left:0;right:auto}   /* the one Sample label sits over the papers, so it is read before them */
+.fd-foot{padding-top:9px;border-top:1px solid #b5b3ad;font-size:13px;color:#3a3a3f;line-height:1.4}
+.fd-tel{display:inline-block;margin-top:2px;font-weight:700;color:#111;white-space:nowrap}
+@media (max-width:699px){
+  .ab-docs figure{margin-top:18px}
+  .fd-desk{gap:14px}
+  .fd{box-shadow:var(--lift);padding:16px}
+  .fd-desk .fd-l{margin:8px 0 10px}
+  .fd-desk .fd-r li{padding:5px 0}
+  .fd-desk .fd-foot{padding-top:7px}
+  .fd-desk .fd-foot br{display:none}
+  .fd-sheet .sh-rows li{padding:10px 0}
+}
+/* Four pages on one line (Franco, Nov 25: the overlapping papers "almost doesn't feel intentional"; Fable's layout). Every page is as
+   tall as the walk sheet, top to top and foot to foot, so the four phone numbers sit on one line; the sheet alone is on its board,
+   which stands out round it. Even 24px gaps, nothing overlaps */
+.fd,.fd-sheet{display:flex;flex-direction:column}
+.fd .fd-foot,.fd-sheet .fd-foot{margin-top:auto}
+.fd-q .lh{padding-bottom:10px}   /* its rule lands on the line the other two title rules end on */
+@media (max-width:759px){.fd-h{display:none}}   /* the handover page shows again, in both languages, in the pair further down */
+@media (min-width:760px){
+  .fd-desk{max-width:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:stretch}
+  .fd-desk>*,.fd-two>*{min-width:0}
+  .fd-walk,.fd-walk .board{display:flex;flex-direction:column}
+  .fd-walk .board,.fd-walk .sheet{flex:1}
+  .fd-q{margin:34px 0 18px}   /* the board's own padding from 600px (system.css): page edges meet the sheet's, not the board's */
+}
+@media (min-width:1264px){
+  .fd-desk{grid-template-columns:440px repeat(3,minmax(0,1fr))}
+  .fd-c,.fd-h{margin:34px 0 18px}
+  .fd-desk .fd .fd-foot{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;min-height:70px}   /* a one-line question keeps its rule level with the two-line ones */
+}
+
+@media (min-width:900px){.ab-proof .proof-g{align-items:center}}   /* Nov 25: the heading of Check it yourself at its list's middle (SYSTEM 13, Oct 25; 217 to 306px stood blank under it) */
 
 /* 3 the work is operations: on a phone the words, the job's history, then the list; on a computer the history sits right */
 .ops-g{display:grid;gap:18px;grid-template-areas:"h" "say" "pic" "list"}
@@ -114,15 +148,43 @@
 .jh li.lost::before{border-color:#55555a;background:#55555a}   /* the lost step stays ink, so the page's red is the figure under the picture */
 .jh-gap{grid-column:2/4;justify-self:start;margin-top:4px;font:500 15px/1.2 var(--font);color:var(--pencil)}   /* 2026-10-16: upright and level, as the pencil */
 
-/* 4 rules we keep, the page's one ink band: the pad is paper, so its text is paper ink on the dark desk */
+/* 4 rules we keep, the page's one pine band (Nov 25; ink until then): the pad is paper, so its text is paper ink on the owner's green
+   desk. The night rules stay for the switch under the signature's note below */
+[data-ground=pine] .pad{box-shadow:0 1px 1px rgba(0,0,0,.25),0 24px 48px rgba(10,20,16,.34);--hole:var(--pine);color:var(--body)}
 [data-ground=night] .pad{box-shadow:0 30px 60px rgba(0,0,0,.5);--hole:var(--night);color:var(--body)}
-@media (max-width:699px){[data-ground=night] .pad{box-shadow:0 2px 4px rgba(0,0,0,.35),0 8px 14px -4px rgba(0,0,0,.45)}}   /* 2026-10-17 (Franco's iPhone): a phone-size shadow; the 60px one lay over Call us under the pad (check.py SHADOWS) */
+@media (max-width:699px){[data-ground=pine] .pad,[data-ground=night] .pad{box-shadow:0 2px 4px rgba(10,20,16,.3),0 8px 14px -4px rgba(10,20,16,.4)}}   /* 2026-10-17 (Franco's iPhone): a phone-size shadow; the 60px one lay over Call us under the pad (check.py SHADOWS) */
 [data-ground=night] .pad h2,[data-ground=night] .pad b{color:var(--ink)}
+/* the rules are signed and stamped (Nov 25, job B; his call: to take it back, put data-ground="night" on #rules, and the stamp goes with
+   the green). Under the last rule, on the pad's own 36px lines: his signature, written once when it and the pad's foot are whole in
+   view (a box slides in from the left while the picture inside it slides the other way), the typed name, and the company seal
+   as a flat stamp in the logo's red (Franco, Nov 25: "should be red for sure"), which stands still */
+.pad-sign{display:flex;align-items:center;gap:14px 64px;min-height:144px;margin-top:36px}
+.pad .letter-pen{overflow:hidden;height:84px;margin:24px 0 0 -2px}
+.pad-name{font-size:15px;line-height:36px;color:var(--muted)}
+.seal{flex:none;width:132px;height:132px}
+@media (max-width:759px){.seal{width:108px;height:108px}}   /* Franco, Nov 25: "a tiny bit smaller on the phone version" (132 and 116 before) */
+@media (max-width:419px){.pad-sign{gap:0;justify-content:space-between;margin-right:-8px}.seal{width:100px;height:100px}}
+@media (max-width:379px){.pad-sign{display:block;margin-right:0}.seal{margin:14px 0 22px}}
+@media screen and (prefers-reduced-motion:no-preference){
+  html.js:not(.still) .pad-sign .letter-pen,html.js:not(.still) .pad-sign .letter-pen img{transition:transform 700ms var(--ease-move)}
+  html.js:not(.still) .pad-sign:not(.penned) .letter-pen{transform:translateX(-101%)}
+  html.js:not(.still) .pad-sign:not(.penned) .letter-pen img{transform:translateX(101%)}
+}
+
 .ab-rules .cta-inline{max-width:820px;margin-inline:auto}
 
-/* 5 in English or Spanish: the page's type-only rest */
+/* 5 in English or Spanish: the sentence, and the handover sheet in both languages beside it (Nov 25; type only until then) */
+.lang-g{display:grid;gap:30px}
+.fd-langs{display:grid;grid-template-columns:repeat(2,minmax(0,220px));gap:14px;align-items:stretch}
+.fd-langs .fd{padding:14px 14px 12px;box-shadow:var(--lift)}
+.fd-langs .fd-r li{padding:6px 0}
+.fd-langs .fd-foot{margin-top:auto}
+.fd-langs .fd{display:flex;flex-direction:column}
+@media (max-width:359px){.fd-langs{grid-template-columns:minmax(0,1fr)}}
+@media (min-width:700px){.fd-langs{gap:28px}.fd-langs .fd{padding:20px}}
+@media (min-width:900px){.lang-g{grid-template-columns:minmax(0,1fr) auto;gap:64px;align-items:center}.fd-langs{grid-template-columns:220px 220px}}
 .lang-big{margin-top:18px;font-size:clamp(24px,3vw,32px);font-weight:500;line-height:1.3;letter-spacing:-.01em;color:var(--ink);max-width:22em}
-.ab-lang .wrap-read>p:last-child{margin-top:14px;font-size:17px;max-width:34em}
+.ab-lang .lang-big+p{margin-top:14px;font-size:17px;max-width:34em}
 
 @media (min-width:900px){.ab-lang{padding-block:96px 72px}.ab-proof{padding-block:72px 112px}}
 
@@ -237,19 +299,25 @@
     <p class="t-lede">We walk your business, go over your sheet with you, quote the fix and do the monthly check. Every page you get ends with the same phone number.</p>
     <figure>
       <div class="pic">
-        <div class="fourdocs" role="img" aria-label="Example: four pages from one job: the walk sheet, the fix quote, a monthly check and the one-page handover sheet. Each ends with the same line: your contact, (352) 226-0681, circled in red.">
-          <div class="fd" aria-hidden="true"><p class="fd-k">After the walk</p><p class="fd-t">Walk sheet</p>
-            <div class="fd-l"><p>Dunlin Plumbing, 2&nbsp;trucks</p><ul class="fd-r"><li data-task="quotes"><span>Quotes 48+ hours late</span><b>$1,900/mo</b></li><li data-task="retyping"><span>Same job typed 3&nbsp;times</span><b>$411/mo</b></li><li data-task="calls"><span>Calls nobody called back</span><b>$399/mo</b></li></ul></div>
-            <p class="fd-foot">Questions about a row? Your contact:<br><span class="pc">(352) 226-0681</span></p></div>
-          <div class="fd" aria-hidden="true"><p class="fd-k">Before any work</p><p class="fd-t">Fix quote</p>
-            <div class="fd-l"><p>Fix: quotes sent late</p><ul class="fd-r"><li><span>Quote out the same day</span><b>Yes</b></li><li><span>Price</span><b>Fixed</b></li><li><span>Paid</span><b class="w">Set in your proposal</b></li><li><span>Software fee</span><b>At cost</b></li></ul></div>
-            <p class="fd-foot">Questions about the price? Your contact:<br><span class="pc">(352) 226-0681</span></p></div>
-          <div class="fd" aria-hidden="true"><p class="fd-k">Every month</p><p class="fd-t">Monthly check</p>
-            <div class="fd-l"><p>December, two fixes</p><ul class="fd-r"><li><span>Supply tickets with no job number</span><b>14&nbsp;to 2</b></li><li><span>Quotes sent 48+ hours late</span><b>9&nbsp;to 1</b></li><li><span>Next problem</span><b class="w">Retyping, $411/mo</b></li></ul></div>
-            <p class="fd-foot">Something looks off? Your contact:<br><span class="pc">(352) 226-0681</span></p></div>
-          <div class="fd" aria-hidden="true"><p class="fd-k">Yours to keep</p><p class="fd-t">How to run it</p>
-            <div class="fd-l"><p>One page, English or Spanish</p><ol class="fd-r fd-n"><li><span>Read the 6:30&nbsp;a.m. quote list</span></li><li><span>Send the quotes waiting for your OK</span></li><li><span>Stops? Text us</span></li></ol></div>
-            <p class="fd-foot">Stuck on a step? Your contact:<br><span class="pc">(352) 226-0681</span></p></div>
+        <div class="fd-desk" role="img" aria-label="Example: four pages from one job: the walk sheet on its clipboard, the fix quote, a monthly check and the one-page handover sheet. Each ends with the same line: your contact, (352) 226-0681.">
+          <div class="clip fd-walk" aria-hidden="true"><div class="board"><span class="clamp"><i></i></span>
+            <div class="sheet fd-sheet" data-ui-ok="nested-card the sheet on its clipboard is the brand object (SYSTEM.md 6), as on Home and every trade page">
+              <header class="lh"><img src="/v4/assets/mark.svg" alt="" width="34" height="27" loading="lazy"><div><p class="fd-k">After the walk</p><b class="sh-title">Walk sheet</b><span class="sh-sub">Dunlin Plumbing, 2&nbsp;trucks</span></div></header>
+              <ul class="sh-rows"><li data-task="quotes"><div class="sh-l"><b>Quotes 48+ hours late</b></div><span class="sh-usd">$1,900/mo</span></li><li data-task="retyping"><div class="sh-l"><b>Same job typed 3&nbsp;times</b></div><span class="sh-usd">$411/mo</span></li><li data-task="calls"><div class="sh-l"><b>Calls nobody called back</b></div><span class="sh-usd">$399/mo</span></li></ul>
+              <p class="fd-foot">Questions about a row? Your contact: <br><span class="fd-tel">(352) 226-0681</span></p>
+            </div>
+          </div></div>
+          <div class="fd fd-q" aria-hidden="true"><header class="lh"><img src="/v4/assets/mark.svg" alt="" width="30" height="24" loading="lazy"><div><p class="fd-k">Before any work</p><p class="fd-t">Fix quote</p></div></header>
+              <div class="fd-l"><p>Fix: quotes sent late</p><ul class="fd-r"><li><span>Quote out the same day</span><b>Yes</b></li><li><span>Price</span><b>Fixed</b></li><li><span>Paid</span><b class="w">Set in your proposal</b></li><li><span>Software fee</span><b>At cost</b></li></ul></div>
+              <p class="fd-foot">Questions about the price? Your contact: <br><span class="fd-tel">(352) 226-0681</span></p></div>
+          <div class="fd-two" aria-hidden="true">
+            <div class="fd fd-c"><p class="fd-k">Every month</p><p class="fd-t">Monthly check</p>
+              <div class="fd-l"><p>December, two fixes</p><ul class="fd-r"><li><span>Supply tickets with no job number</span><b>14&nbsp;to 2</b></li><li><span>Quotes sent 48+ hours late</span><b>9&nbsp;to 1</b></li><li><span>Next problem</span><b class="w">Retyping, $411/mo</b></li></ul></div>
+              <p class="fd-foot">Something looks off? Your contact: <br><span class="fd-tel">(352) 226-0681</span></p></div>
+            <div class="fd fd-h"><p class="fd-k">Yours to keep</p><p class="fd-t">How to run it</p>
+              <div class="fd-l"><p>One page, English or Spanish</p><ol class="fd-r fd-n"><li><span>Read the 6:30&nbsp;a.m. quote list</span></li><li><span>Send the quotes waiting for your OK</span></li><li><span>Stops? Text us</span></li></ol></div>
+              <p class="fd-foot">Stuck on a step? Your contact: <br><span class="fd-tel">(352) 226-0681</span></p></div>
+          </div>
         </div>
       </div>
     </figure>
@@ -300,9 +368,9 @@
   </div>
 </section>
 
-<section class="band ab-rules" id="rules" data-ground="night" data-density="mid" data-width="narrow" data-loud="pad" data-medium="pad">
+<section class="band seam ab-rules" id="rules" style="--hole:var(--paper)" data-ground="pine" data-density="mid" data-width="narrow" data-loud="pad" data-medium="pad">
   <div class="wrap">
-    <div class="pad">
+    <div class="pad" data-paper>
       <div class="pad-bind" aria-hidden="true"></div><div class="pad-perf" aria-hidden="true"></div>
       <div class="pad-b">
         <h2>Rules we keep</h2>
@@ -314,6 +382,11 @@
           <li><p><b>Say no once, and that's the end of it.</b> After a no, we don't call, text or stop by again unless you ask.</p></li>
           <li><p><b>You own your accounts, your data and what we build,</b> in writing once it's paid. If we part, you keep all of it, with a one-page sheet in English or Spanish on running it.</p></li>
         </ol>
+        <div class="pad-sign">
+          <div><span class="letter-pen" aria-hidden="true"><img src="/v4/assets/signature.png" alt="" width="160" height="84"></span>
+          <p class="pad-name">Franco A. Soto, owner</p></div>
+          <img class="seal" src="/v4/how-about/assets/seal-stamp.svg" alt="Seal of Lumora Group LLC, Gainesville, Florida" width="132" height="132" loading="lazy">
+        </div>
       </div>
     </div>
     <div class="cta-inline">
@@ -324,11 +397,21 @@
   </div>
 </section>
 
-<section class="band ab-lang" id="lang" data-ground="paper" data-density="low" data-width="narrow" data-loud="sentence" data-medium="say">
-  <div class="wrap-read">
-    <h2>In English or Spanish</h2>
-    <p class="lang-big">The free call, the walk, your sheet and the monthly check can all be in Spanish, down to the one-page handover sheet.</p>
-    <p>You choose the language, and we keep to it.</p>
+<section class="band ab-lang" id="lang" data-ground="paper" data-density="low" data-width="split" data-loud="sentence" data-medium="papers">
+  <div class="wrap lang-g">
+    <div>
+      <h2>In English or Spanish</h2>
+      <p class="lang-big">The free call, the walk, your sheet and the monthly check can all be in Spanish, down to the one-page handover sheet.</p>
+      <p>You choose the language, and we keep to it.</p>
+    </div>
+    <figure><div class="pic fd-langs" role="img" aria-label="Example: the one-page handover sheet, in English and in Spanish side by side.">
+      <div class="fd fd-own" aria-hidden="true" lang="en"><p class="fd-k">Yours to keep</p><p class="fd-t">How to run it</p>
+              <div class="fd-l"><p>One page, English or Spanish</p><ol class="fd-r fd-n"><li><span>Read the 6:30&nbsp;a.m. quote list</span></li><li><span>Send the quotes waiting for your OK</span></li><li><span>Stops? Text us</span></li></ol></div>
+              <p class="fd-foot">Stuck on a step? Your contact: <br><span class="fd-tel">(352) 226-0681</span></p></div>
+      <div class="fd fd-own" aria-hidden="true" lang="es"><p class="fd-k">Se queda con usted</p><p class="fd-t">Cómo usarlo</p>
+              <div class="fd-l"><p>Una página, en español o en inglés</p><ol class="fd-r fd-n"><li><span>Lea la lista de cotizaciones de las 6:30&nbsp;a.&nbsp;m.</span></li><li><span>Mande las que esperan su visto bueno</span></li><li><span>¿Se detiene? Escríbanos</span></li></ol></div>
+              <p class="fd-foot">¿Algún paso no le sale? Su contacto: <br><span class="fd-tel">(352) 226-0681</span></p></div>
+    </div></figure>
   </div>
 </section>
 
@@ -418,5 +501,18 @@
 </footer>
 
 <nav class="callbar" aria-label="Call or text us"><a href="tel:+13522260681"><svg class="ico-call" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.4 2.9c-.4-.8-1.3-1.2-2.1-.9L4.2 2.7C3 3.1 2.3 4.3 2.5 5.6c1 7 7.8 14.3 15.1 15.6 1.3.2 2.5-.5 3-1.7l.7-2c.3-.8-.1-1.7-.8-2.1l-2.9-1.6c-.7-.4-1.6-.3-2.1.3l-1.1 1.2c-2.6-1.3-4.6-3.4-5.8-5.9l1.2-1.1c.6-.5.7-1.4.4-2.1z"/></svg>Call <span class="cb-n">(352) 226-0681</span></a><a href="sms:+13522260681?&amp;body=Hi%2C%20I%20saw%20your%20website.%20When%20is%20a%20good%20time%20for%20the%20free%20call%3F">Text</a></nav>
+<script>
+(function () {
+  var line = document.querySelector('.pad-sign'), pad = line && line.closest('.pad');
+  if (!pad) return;
+  function look() {
+    var h = document.querySelector('.hdr'), c = document.querySelector('.callbar'), bar = c && c.getClientRects().length ? c.offsetHeight : 0;
+    if (line.getBoundingClientRect().top < (h ? h.getBoundingClientRect().bottom : 0) || pad.getBoundingClientRect().bottom > innerHeight - bar) return;
+    line.classList.add('penned');
+    removeEventListener('scroll', look); removeEventListener('resize', look);
+  }
+  addEventListener('scroll', look, { passive: true }); addEventListener('resize', look); look();
+})();
+</script>
 </body>
 </html>

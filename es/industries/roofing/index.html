@@ -28,8 +28,8 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=8bc95b5d">
-<link rel="stylesheet" href="/v4/trade-page.css?v=8bc95b5d">
+<link rel="stylesheet" href="/v4/system.css?v=ff017dc4">
+<link rel="stylesheet" href="/v4/trade-page.css?v=ff017dc4">
 <style>
 /* RF: roofing's own extras, after trade-page.css, as on the English page (the signed contract beside the county permit
    search, plumbing's paper pair; one pencil ring on "No applications found"). */
@@ -61,6 +61,26 @@
 }
 .rf-none{margin-left:18px}
 .rf-none .pc::after{inset:-8px -18px}
+/* Nov 25 2026 (everything run, job B, 6.8): its own arrangement. From a 641px picture the permit search is the big sheet, in front, and the
+   contract is tucked behind it: only the contract's blank left margin lies under the window, every line of it is in view */
+@container (min-width:641px){
+  .pl-docs.rf-docs{grid-template-columns:minmax(0,1fr);gap:0;align-items:start}
+  .rf-docs>*{grid-area:1/1}
+  .rf-docs .rf-ct{width:42%;max-width:none;justify-self:end;padding:20px 18px 24px 46px}
+  .rf-docs .doc-h{display:grid;gap:2px;justify-content:start}
+  .rf-docs .rf-kv div{grid-template-columns:minmax(0,1fr);gap:0;padding:5px 0 6px}
+  .rf-docs .rf-kv dt{font-size:12px}
+  .rf-docs .rf-sig{margin-top:30px}
+  .rf-docs .pl-inv{position:relative;z-index:1;width:calc(58% + 28px);justify-self:start;margin:44px 0 0}
+  .rf-docs .pl-flag{padding:14px 20px;gap:10px;font-size:16px}
+  .rf-docs .rf-ps-b{padding:20px 20px 22px}
+  .rf-docs .rf-q{padding:7px 14px;font-size:16px;line-height:28px}
+  .rf-docs .rf-none{margin:26px 0 28px 22px;font-size:24px;font-family:var(--sys);letter-spacing:-.01em}
+  .rf-docs .rf-days-k{font-size:13px;margin-bottom:8px}
+  .rf-docs .rf-days{gap:6px}
+  .rf-docs .rf-days li{padding:7px 2px;font-size:13px;line-height:1.5}
+  .rf-docs .rf-days b{font-size:20px}
+}
 /* ES, as the Spanish plumbing and pest pages: the close heading's Spanish size, the night log's wider time column ("10:40 p. m."
    ran into the gap), and under 360px the call rows keep their tap areas apart */
 .close-h{margin:0 0 24px;font-size:clamp(40px,4.4vw,44px)}
@@ -69,8 +89,8 @@
 @media (max-width:359px){.cta-row,.c4-tel{row-gap:18px}}
 </style>
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=8bc95b5d" defer></script>
-<script src="/v4/system.js?v=8bc95b5d" defer></script>
+<script src="/v4/trades.js?v=ff017dc4" defer></script>
+<script src="/v4/system.js?v=ff017dc4" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Automatización de la oficina para negocios de techos","serviceType":"Automatización de procesos de negocio","provider":{"@type":"ProfessionalService","@id":"https://lumorafl.com/#business","name":"Lumora","url":"https://lumorafl.com/","telephone":"+1-352-226-0681"},"areaServed":[{"@type":"AdministrativeArea","name":"Alachua County, FL"},{"@type":"City","name":"Gainesville, FL"},{"@type":"City","name":"Alachua, FL"},{"@type":"City","name":"Archer, FL"},{"@type":"City","name":"Hawthorne, FL"},{"@type":"City","name":"High Springs, FL"},{"@type":"City","name":"La Crosse, FL"},{"@type":"City","name":"Micanopy, FL"},{"@type":"City","name":"Newberry, FL"},{"@type":"City","name":"Waldo, FL"}],"audience":{"@type":"BusinessAudience","audienceType":"Negocios de techos"},"availableLanguage":["en","es"],"url":"https://lumorafl.com/es/industries/roofing/"}</script>
 </head>
 <body data-trade="roofing" data-trade-lock data-rules="v4">
@@ -159,6 +179,51 @@
       <li data-shared="moneyback.short">Le devolvemos lo que pagó por la visita si nos avisa dentro de los 7&nbsp;días siguientes a&nbsp;repasar su&nbsp;hoja</li>
       <li>No le vendemos clientes ni lo amarramos a un contrato largo</li>
     </ul>
+  </div>
+</section>
+
+<section class="band pl-papers" id="deposit" data-ground="paper" data-desk="pine" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
+  <div class="wrap pl-pw">
+    <div class="pl-pw-copy">
+      <h2>Día 28&nbsp;de&nbsp;30, y&nbsp;no&nbsp;hay solicitud de&nbsp;permiso.</h2>
+      <p class="pl-find">El trabajo TR-26-133, un techo nuevo que paga la dueña, sin seguro. Nancy Allen dejó un depósito del 30&nbsp;por ciento el miércoles 9&nbsp;de septiembre: $4,563.00 de un contrato de $15,210.00. Con más del 10&nbsp;por ciento de depósito, hay que solicitar el permiso dentro de los 30&nbsp;días siguientes al pago, salvo que ella haya aceptado por escrito un plazo más largo (F.S.&nbsp;489.126). En el día 28, el portal del condado no muestra ninguna solicitud. El estimador pensaba hacerla entre un trabajo y otro.</p>
+      <p class="pl-fix"><b>El arreglo:</b> cada depósito de más del 10&nbsp;por ciento pone a correr un plazo en su lista de trabajos, con un aviso para usted el día 20&nbsp;y los datos del permiso listos para que su oficina lo solicite. Es una de las cosas que buscamos en la visita.</p>
+      <p class="t-small pl-art"><a class="u" href="/es/articles/florida-job-dates/">Nuestro artículo</a> reúne las fechas de un trabajo en Florida: el depósito, el permiso, el aviso y el gravamen.</p>
+    </div>
+    <figure class="pic pl-docs-pic">
+      <div role="img" aria-label="Ejemplo: dos papeles del mismo techo nuevo, el trabajo TR-26-133. El contrato firmado de Turnstone Roofing, licencia CCC0000118: propietaria Nancy Allen, 137 Oak St, condado de Alachua, cambio de techo de 24.5 cuadros con tejas arquitectónicas, precio total 15,210.00, depósito de 4,563.00, el 30 por ciento, recibido el 9 de septiembre de 2026. Al lado, la búsqueda de permisos del condado para el 137 Oak St: No applications found, que quiere decir que no hay ninguna solicitud, encerrado en rojo, y una fila de días desde el día 26, lunes 5 de octubre, hasta el día 30, viernes 9 de octubre, con hoy, el día 28, marcado. Un aviso arriba de la búsqueda: el depósito del 9 de septiembre pasa del 10 por ciento, no hay solicitud de permiso en el día 28, y hay que solicitarlo a más tardar el viernes 9 de octubre.">
+        <div class="pl-docs rf-docs">
+          <div class="doc rf-ct">
+            <div class="doc-h"><b>TURNSTONE ROOFING</b><span>CONTRATO TR-26-133</span></div>
+            <p class="doc-to">Lic. CCC0000118&nbsp;· (352) 555-0150</p>
+            <dl class="rf-kv">
+              <div><dt>Propietaria</dt><dd>Allen, Nancy</dd></div>
+              <div><dt>Propiedad</dt><dd>137&nbsp;Oak&nbsp;St, condado de Alachua</dd></div>
+              <div><dt>Trabajo</dt><dd>Techo nuevo, 24.5 cuadros, tejas arquitectónicas</dd></div>
+              <div><dt>Precio total</dt><dd>15,210.00</dd></div>
+              <div><dt>Depósito</dt><dd><b>4,563.00 (30%), 09/09/26</b></dd></div>
+            </dl>
+            <div class="rf-sig"><span>N. Allen, propietaria</span><span>M. Hale, por Turnstone Roofing</span></div>
+          </div>
+          <div class="scr-win pl-inv rf-ps">
+            <div class="win-tb"><i></i><i></i><i></i><span lang="en">Permit search</span></div>
+            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>El depósito del 9&nbsp;de&nbsp;sept. pasa del 10&nbsp;por ciento y en el día 28&nbsp;no hay solicitud. <b>Solicite el permiso a más tardar el vie.&nbsp;9&nbsp;de&nbsp;oct.</b></span></p>
+            <div class="rf-ps-b">
+              <p class="rf-q" lang="en"><span>Address</span><span>137&nbsp;Oak&nbsp;St</span></p>
+              <p class="rf-none" lang="en"><span class="pc" data-draw>No applications found.</span></p>
+              <p class="rf-days-k">Días desde el depósito</p>
+              <ol class="rf-days">
+                <li><b>26</b><span>5&nbsp;oct.</span></li>
+                <li><b>27</b><span>6&nbsp;oct.</span></li>
+                <li class="on"><b>28</b><span>Hoy</span></li>
+                <li><b>29</b><span>8&nbsp;oct.</span></li>
+                <li class="due"><b>30</b><span>9&nbsp;oct.</span></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
   </div>
 </section>
 
@@ -253,52 +318,7 @@
   </div>
 </section>
 
-<section class="band pl-papers" id="deposit" data-ground="sheet" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
-  <div class="wrap pl-pw">
-    <div class="pl-pw-copy">
-      <h2>Día 28&nbsp;de&nbsp;30, y&nbsp;no&nbsp;hay solicitud de&nbsp;permiso.</h2>
-      <p class="pl-find">El trabajo TR-26-133, un techo nuevo que paga la dueña, sin seguro. Nancy Allen dejó un depósito del 30&nbsp;por ciento el miércoles 9&nbsp;de septiembre: $4,563.00 de un contrato de $15,210.00. Con más del 10&nbsp;por ciento de depósito, hay que solicitar el permiso dentro de los 30&nbsp;días siguientes al pago, salvo que ella haya aceptado por escrito un plazo más largo (F.S.&nbsp;489.126). En el día 28, el portal del condado no muestra ninguna solicitud. El estimador pensaba hacerla entre un trabajo y otro.</p>
-      <p class="pl-fix"><b>El arreglo:</b> cada depósito de más del 10&nbsp;por ciento pone a correr un plazo en su lista de trabajos, con un aviso para usted el día 20&nbsp;y los datos del permiso listos para que su oficina lo solicite. Es una de las cosas que buscamos en la visita.</p>
-      <p class="t-small pl-art"><a class="u" href="/es/articles/florida-job-dates/">Nuestro artículo</a> reúne las fechas de un trabajo en Florida: el depósito, el permiso, el aviso y el gravamen.</p>
-    </div>
-    <figure class="pic pl-docs-pic">
-      <div role="img" aria-label="Ejemplo: dos papeles del mismo techo nuevo, el trabajo TR-26-133. El contrato firmado de Turnstone Roofing, licencia CCC0000118: propietaria Nancy Allen, 137 Oak St, condado de Alachua, cambio de techo de 24.5 cuadros con tejas arquitectónicas, precio total 15,210.00, depósito de 4,563.00, el 30 por ciento, recibido el 9 de septiembre de 2026. Al lado, la búsqueda de permisos del condado para el 137 Oak St: No applications found, que quiere decir que no hay ninguna solicitud, encerrado en rojo, y una fila de días desde el día 26, lunes 5 de octubre, hasta el día 30, viernes 9 de octubre, con hoy, el día 28, marcado. Un aviso arriba de la búsqueda: el depósito del 9 de septiembre pasa del 10 por ciento, no hay solicitud de permiso en el día 28, y hay que solicitarlo a más tardar el viernes 9 de octubre.">
-        <div class="pl-docs rf-docs">
-          <div class="doc rf-ct">
-            <div class="doc-h"><b>TURNSTONE ROOFING</b><span>CONTRATO TR-26-133</span></div>
-            <p class="doc-to">Lic. CCC0000118&nbsp;· (352) 555-0150</p>
-            <dl class="rf-kv">
-              <div><dt>Propietaria</dt><dd>Allen, Nancy</dd></div>
-              <div><dt>Propiedad</dt><dd>137&nbsp;Oak&nbsp;St, condado de Alachua</dd></div>
-              <div><dt>Trabajo</dt><dd>Techo nuevo, 24.5 cuadros, tejas arquitectónicas</dd></div>
-              <div><dt>Precio total</dt><dd>15,210.00</dd></div>
-              <div><dt>Depósito</dt><dd><b>4,563.00 (30%), 09/09/26</b></dd></div>
-            </dl>
-            <div class="rf-sig"><span>N. Allen, propietaria</span><span>M. Hale, por Turnstone Roofing</span></div>
-          </div>
-          <div class="scr-win pl-inv rf-ps">
-            <div class="win-tb"><i></i><i></i><i></i><span lang="en">Permit search</span></div>
-            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>El depósito del 9&nbsp;de&nbsp;sept. pasa del 10&nbsp;por ciento y en el día 28&nbsp;no hay solicitud. <b>Solicite el permiso a más tardar el vie.&nbsp;9&nbsp;de&nbsp;oct.</b></span></p>
-            <div class="rf-ps-b">
-              <p class="rf-q" lang="en"><span>Address</span><span>137&nbsp;Oak&nbsp;St</span></p>
-              <p class="rf-none" lang="en"><span class="pc" data-draw>No applications found.</span></p>
-              <p class="rf-days-k">Días desde el depósito</p>
-              <ol class="rf-days">
-                <li><b>26</b><span>5&nbsp;oct.</span></li>
-                <li><b>27</b><span>6&nbsp;oct.</span></li>
-                <li class="on"><b>28</b><span>Hoy</span></li>
-                <li><b>29</b><span>8&nbsp;oct.</span></li>
-                <li class="due"><b>30</b><span>9&nbsp;oct.</span></li>
-              </ol>
-            </div>
-          </div>
-        </div>
-      </div>
-    </figure>
-  </div>
-</section>
-
-<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" style="--hole:var(--sheet)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
+<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" style="--hole:var(--paper)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
   <div class="wrap">
     <h2 class="walk-h" data-walk-head data-sample-lead>Turnstone Roofing pierde <span class="walk-h-usd">$1,684&nbsp;al&nbsp;mes</span>. Le&nbsp;mostramos dónde.</h2>
     <p class="walk-intro">Un negocio con 2&nbsp;cuadrillas. En cada paso se ve la misma pantalla antes y después del arreglo, y la visita termina con el total de la hoja.</p>
@@ -389,6 +409,7 @@
           <p>Casi todos los dueños con los que hablo pierden sus noches en las mismas tareas: la cotización que escriben después de cenar, la factura que nunca salió, la llamada que nadie devolvió.</p>
           <p>Hago automatizaciones desde 2022. En una empresa de daños por agua me tocaba el papeleo de los reclamos; lo automaticé y le enseñé al personal a manejarlo. Ahora Lumora hace lo mismo en negocios de Gainesville y sus alrededores.</p>
           <p>Hablo español e inglés, así que todo puede ser en español, en inglés o en los dos.</p>
+          <span class="letter-pen" aria-hidden="true"><img src="/v4/assets/signature.png" loading="lazy" decoding="async" alt="" width="160" height="84"></span>
           <p class="letter-sig">Franco A. Soto<span>Dueño</span></p>
         </article>
         <p class="t-small hm-about"><a class="u" href="/es/about/">Quiénes somos</a></p>

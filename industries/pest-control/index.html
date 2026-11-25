@@ -28,14 +28,14 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=8bc95b5d">
-<link rel="stylesheet" href="/v4/trade-page.css?v=8bc95b5d">
+<link rel="stylesheet" href="/v4/system.css?v=ff017dc4">
+<link rel="stylesheet" href="/v4/trade-page.css?v=ff017dc4">
 
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=8bc95b5d" defer></script>
-<script src="/v4/system.js?v=8bc95b5d" defer></script>
+<script src="/v4/trades.js?v=ff017dc4" defer></script>
+<script src="/v4/system.js?v=ff017dc4" defer></script>
 <style>
-/* Pest only, after trade-page.css. Section 4: the state's termite report (FDACS-13645, page 1) as plain printed paper beside the
+/* Pest only, after trade-page.css. Section 2: the state's termite report (FDACS-13645, page 1) as plain printed paper beside the
    job record window, in plumbing's paper pair (.pl-docs, .pl-inv, .pl-flag). The form keeps its own section bars, boxed fields
    and check boxes, nothing added (5E-14.142(5)(c)); the one pencil ring goes round box B. */
 .pe-form{background:#fff;box-shadow:var(--lift);padding:12px 14px 10px;font-family:var(--sys);color:#1d1d1f;max-width:330px}
@@ -58,6 +58,26 @@
 .pe-job div{display:grid;grid-template-columns:8.4em minmax(0,1fr);gap:8px;padding:6px 0;border-bottom:1px solid #efeff2;font-size:14px;line-height:1.35}
 .pe-job div:last-child{border-bottom:0}
 .pe-job dt{color:#6e6e73}
+/* Nov 25 2026 (everything run, job B, 6.8): its own arrangement. From a 641px picture the state form is the big sheet, at its full height, and
+   the job's window is small, its foot level with the form's and lying over the form's blank right margin only, so the flag stands beside box B */
+@container (min-width:641px){
+  .pl-docs.pe-docs{grid-template-columns:minmax(0,1fr);gap:0;align-items:end}
+  .pe-docs>*{grid-area:1/1}
+  .pe-docs .pe-form{width:62%;max-width:none;justify-self:start;padding:24px 40px 18px}
+  .pe-docs .pe-fh{padding-bottom:10px}
+  .pe-docs .pe-fh b{font-size:15px;text-wrap:balance}
+  .pe-docs .pe-sec{margin-top:12px;font-size:13px;padding:4px 8px}
+  .pe-docs .pe-f,.pe-docs .pe-ck{font-size:13px;padding-inline:4px}
+  .pe-docs .pe-ck.in{padding-left:24px}
+  .pe-docs .pe-ck.pc>span{text-wrap:balance}
+  #report .pe-docs .pe-ck.pc{padding-inline:4px}   /* box B stands under box A, as on the state's form (the ring's own padding set it in by 16px) */
+  .pe-docs .pl-inv{position:relative;z-index:1;width:calc(38% + 22px);justify-self:end;margin:0 0 28px}
+  .pe-docs .pl-flag{padding:10px 14px}
+  .pe-docs .pe-job{padding:6px 14px 10px}
+  .pe-docs .pe-job div{grid-template-columns:6.9em minmax(0,1fr);font-size:13px}
+}
+/* the form is taller than the words: they stand at its middle, so no 250px of blank paper sits under them (No holes, Oct 25) */
+@media (min-width:1200px){#report .pl-pw{grid-template-areas:". pic" "h pic" "find pic" "fix pic" ". pic";grid-template-rows:1fr auto auto auto 1fr}}
 @container (max-width:640px){
   .pl-docs .pe-form{width:88%;justify-self:start;padding:10px 12px 22px}
   .pe-form .pe-hm,.pe-job .pe-hm{display:none}
@@ -162,6 +182,59 @@
   </div>
 </section>
 
+<section class="band pl-papers" id="report" data-ground="paper" data-desk="pine" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
+  <div class="wrap pl-pw">
+    <div class="pl-pw-copy">
+      <h2>The report found termites. No quote went out.</h2>
+      <p class="pl-find">Job WDO-26-0231, a home-sale inspection. The state form shows mud tubes on the foundation and damage at the garage door. The inspection is paid for, but the termite quote hasn't been started, and the inspection period ends Friday, October 9. At $7.50 a foot for 196&nbsp;feet of trench and rod, that's a $1,470 job, with a renewal every year after it.</p>
+      <p class="pl-fix"><b>The fix:</b> every report that finds evidence or damage starts a quote draft the same day, for your OK, before the inspection period ends. The report stays your inspector's, on the state form with nothing added. This is one of the things a walk looks for.</p>
+    </div>
+    <figure class="pic pl-docs-pic">
+      <div role="img" aria-label="Example: two papers from one home-sale termite inspection, job WDO-26-0231. Page 1 of Florida's Wood-Destroying Organisms Inspection Report, form FDACS-13645, Section 1: Killdeer Pest Control, license JB999142, inspector Robert Hayes, inspected the house and attached garage at 127 Oak St on October 1, 2026, at the request of Mary Collins, buyer's agent. Section 2: box B, visible evidence of wood-destroying organisms, is checked and circled in red; the evidence is subterranean termite mud tubes on the block foundation, northeast corner, and the damage is subterranean termite damage to the wood at the garage door frame. Beside it the job record for WDO-26-0231 in the company's software: report sent Friday, October 2 to the agent, buyer, lender and title company; invoice paid; inspection period ends Friday, October 9; closing Friday, October 30; termite quote not started. A flag across the top of the record: the report found termites and damage, no quote started, a draft is ready for your OK.">
+        <div class="pl-docs pe-docs">
+          <div class="pe-form">
+            <div class="pe-fh">
+              <span class="pe-hm">Florida Department of Agriculture and Consumer Services</span>
+              <b>Wood-Destroying Organisms Inspection Report</b>
+              <span>Rule 5E-14.142, F.A.C.</span>
+            </div>
+            <p class="pe-sec">Section 1. General information</p>
+            <div class="pe-f"><i>Company</i><span>Killdeer Pest Control</span></div>
+            <div class="pe-f pe-hm"><i>License</i><span>JB999142</span></div>
+            <div class="pe-f pe-hm"><i>Address</i><span>500&nbsp;Main&nbsp;St, Gainesville, FL 32601</span></div>
+            <div class="pe-f pe-hm"><i>Phone</i><span>(352) 555-0142</span></div>
+            <div class="pe-f pe-hm"><i>Date</i><span>10/1/2026</span></div>
+            <div class="pe-f pe-hm"><i>Inspector</i><span>Robert Hayes, ID card JE9991502</span></div>
+            <div class="pe-f"><i>Property</i><span>127&nbsp;Oak&nbsp;St, Gainesville, FL 32601</span></div>
+            <div class="pe-f pe-hm"><i>Structures</i><span>House, attached garage</span></div>
+            <div class="pe-f"><i>Requested by</i><span>Mary Collins, buyer's agent</span></div>
+            <div class="pe-f pe-hm"><i>Sent to</i><span>Requestor, buyer, lender, title agent</span></div>
+            <p class="pe-sec">Section 2. Inspection findings</p>
+            <div class="pe-ck pe-hm"><span class="bx"></span><span><b>A.</b> NO visible signs of WDO(s) observed.</span></div>
+            <div class="pe-ck pc" data-draw><span class="bx on"></span><span><b>B.</b> VISIBLE evidence of WDO(s) was observed as follows:</span></div>
+            <div class="pe-ck in pe-hm"><span class="bx"></span><span>1. LIVE WDO(s)</span></div>
+            <div class="pe-ck in"><span class="bx on"></span><span>2. EVIDENCE: <em>subterranean termite mud tubes, block foundation, NE corner</em></span></div>
+            <div class="pe-ck in"><span class="bx on"></span><span>3. DAMAGE: <em>subterranean termites, damaged wood at the garage door frame, east side</em></span></div>
+            <p class="pe-ff"><span>FDACS-13645 Rev. 05/21</span><span>Page 1&nbsp;of 2</span></p>
+          </div>
+          <div class="scr-win pl-inv">
+            <div class="win-tb"><i></i><i></i><i></i><span>Job WDO-26-0231</span></div>
+            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>The report found termites and damage. No quote started. <b>Draft ready for your OK.</b></span></p>
+            <dl class="pe-job">
+              <div class="pe-hm"><dt>Property</dt><dd>127&nbsp;Oak&nbsp;St, VA loan</dd></div>
+              <div><dt>Report</dt><dd>Sent Fri, Oct 2&nbsp;to the agent, buyer, lender and title</dd></div>
+              <div><dt>Invoice</dt><dd><span class="st ok">Paid</span></dd></div>
+              <div><dt>Inspection period</dt><dd>Ends Fri, Oct 9</dd></div>
+              <div class="pe-hm"><dt>Closing</dt><dd>Fri, Oct 30</dd></div>
+              <div><dt>Termite quote</dt><dd><span class="st wt">Not started</span></dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
+
 <section class="band hm4-auto pl-auto" id="automate" data-ground="sheet" data-density="mid" data-width="split" data-loud="list" data-medium="list">
   <div class="wrap pl-auto-g">
     <h2>What we automate in a pest control company</h2>
@@ -251,60 +324,7 @@
   </div>
 </section>
 
-<section class="band pl-papers" id="report" data-ground="sheet" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
-  <div class="wrap pl-pw">
-    <div class="pl-pw-copy">
-      <h2>The report found termites. No quote went out.</h2>
-      <p class="pl-find">Job WDO-26-0231, a home-sale inspection. The state form shows mud tubes on the foundation and damage at the garage door. The inspection is paid for, but the termite quote hasn't been started, and the inspection period ends Friday, October 9. At $7.50 a foot for 196&nbsp;feet of trench and rod, that's a $1,470 job, with a renewal every year after it.</p>
-      <p class="pl-fix"><b>The fix:</b> every report that finds evidence or damage starts a quote draft the same day, for your OK, before the inspection period ends. The report stays your inspector's, on the state form with nothing added. This is one of the things a walk looks for.</p>
-    </div>
-    <figure class="pic pl-docs-pic">
-      <div role="img" aria-label="Example: two papers from one home-sale termite inspection, job WDO-26-0231. Page 1 of Florida's Wood-Destroying Organisms Inspection Report, form FDACS-13645, Section 1: Killdeer Pest Control, license JB999142, inspector Robert Hayes, inspected the house and attached garage at 127 Oak St on October 1, 2026, at the request of Mary Collins, buyer's agent. Section 2: box B, visible evidence of wood-destroying organisms, is checked and circled in red; the evidence is subterranean termite mud tubes on the block foundation, northeast corner, and the damage is subterranean termite damage to the wood at the garage door frame. Beside it the job record for WDO-26-0231 in the company's software: report sent Friday, October 2 to the agent, buyer, lender and title company; invoice paid; inspection period ends Friday, October 9; closing Friday, October 30; termite quote not started. A flag across the top of the record: the report found termites and damage, no quote started, a draft is ready for your OK.">
-        <div class="pl-docs">
-          <div class="pe-form">
-            <div class="pe-fh">
-              <span class="pe-hm">Florida Department of Agriculture and Consumer Services</span>
-              <b>Wood-Destroying Organisms Inspection Report</b>
-              <span>Rule 5E-14.142, F.A.C.</span>
-            </div>
-            <p class="pe-sec">Section 1. General information</p>
-            <div class="pe-f"><i>Company</i><span>Killdeer Pest Control</span></div>
-            <div class="pe-f pe-hm"><i>License</i><span>JB999142</span></div>
-            <div class="pe-f pe-hm"><i>Address</i><span>500&nbsp;Main&nbsp;St, Gainesville, FL 32601</span></div>
-            <div class="pe-f pe-hm"><i>Phone</i><span>(352) 555-0142</span></div>
-            <div class="pe-f pe-hm"><i>Date</i><span>10/1/2026</span></div>
-            <div class="pe-f pe-hm"><i>Inspector</i><span>Robert Hayes, ID card JE9991502</span></div>
-            <div class="pe-f"><i>Property</i><span>127&nbsp;Oak&nbsp;St, Gainesville, FL 32601</span></div>
-            <div class="pe-f pe-hm"><i>Structures</i><span>House, attached garage</span></div>
-            <div class="pe-f"><i>Requested by</i><span>Mary Collins, buyer's agent</span></div>
-            <div class="pe-f pe-hm"><i>Sent to</i><span>Requestor, buyer, lender, title agent</span></div>
-            <p class="pe-sec">Section 2. Inspection findings</p>
-            <div class="pe-ck pe-hm"><span class="bx"></span><span><b>A.</b> NO visible signs of WDO(s) observed.</span></div>
-            <div class="pe-ck pc" data-draw><span class="bx on"></span><span><b>B.</b> VISIBLE evidence of WDO(s) was observed as follows:</span></div>
-            <div class="pe-ck in pe-hm"><span class="bx"></span><span>1. LIVE WDO(s)</span></div>
-            <div class="pe-ck in"><span class="bx on"></span><span>2. EVIDENCE: <em>subterranean termite mud tubes, block foundation, NE corner</em></span></div>
-            <div class="pe-ck in"><span class="bx on"></span><span>3. DAMAGE: <em>subterranean termites, damaged wood at the garage door frame, east side</em></span></div>
-            <p class="pe-ff"><span>FDACS-13645 Rev. 05/21</span><span>Page 1&nbsp;of 2</span></p>
-          </div>
-          <div class="scr-win pl-inv">
-            <div class="win-tb"><i></i><i></i><i></i><span>Job WDO-26-0231</span></div>
-            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>The report found termites and damage. No quote started. <b>Draft ready for your OK.</b></span></p>
-            <dl class="pe-job">
-              <div class="pe-hm"><dt>Property</dt><dd>127&nbsp;Oak&nbsp;St, VA loan</dd></div>
-              <div><dt>Report</dt><dd>Sent Fri, Oct 2&nbsp;to the agent, buyer, lender and title</dd></div>
-              <div><dt>Invoice</dt><dd><span class="st ok">Paid</span></dd></div>
-              <div><dt>Inspection period</dt><dd>Ends Fri, Oct 9</dd></div>
-              <div class="pe-hm"><dt>Closing</dt><dd>Fri, Oct 30</dd></div>
-              <div><dt>Termite quote</dt><dd><span class="st wt">Not started</span></dd></div>
-            </dl>
-          </div>
-        </div>
-      </div>
-    </figure>
-  </div>
-</section>
-
-<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" style="--hole:var(--sheet)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
+<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" style="--hole:var(--paper)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
   <div class="wrap">
     <h2 class="walk-h" data-walk-head data-sample-lead>Killdeer Pest Control loses <span class="walk-h-usd">$1,595&nbsp;a&nbsp;month</span>. Here's where.</h2>
     <p class="walk-intro">A 3-route company. Each stop shows the same screen before and after the fix, and the walk ends on the sheet's total.</p>
@@ -377,6 +397,7 @@
           <p>Most owners I meet lose their evenings to the same few jobs: the quote typed up at night, the invoice that never went out, the call nobody got back to.</p>
           <p>I've built automations since 2022. At a water damage company I did the claims paperwork, then automated it and trained the staff to run it. Now Lumora does the same for businesses around Gainesville.</p>
           <p>I'm bilingual, so your office can run in English, Spanish or both.</p>
+          <span class="letter-pen" aria-hidden="true"><img src="/v4/assets/signature.png" loading="lazy" decoding="async" alt="" width="160" height="84"></span>
           <p class="letter-sig">Franco A. Soto<span>Owner</span></p>
         </article>
         <p class="t-small hm-about"><a class="u" href="/about/">About Lumora</a></p>

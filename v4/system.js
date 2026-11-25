@@ -1615,18 +1615,24 @@
     }
     // alive build 2026-10-24 (Franco's picks pine-field and won-pine): no money and no red on the pine field, and pine as a text
     // colour means money won back only, a walk figure After (.stop[data-state=after] .find-usd). Red still means money lost only
+    // Nov 25 2026 (everything run, job B): "on the pine field" means straight on it, the nearest ancestor with an opaque background is the
+    // pine element itself (or a box inside it painted the same green). What is printed on a sheet, a paper, a ticket or a window that
+    // lies on the field has that paper for its ground, as Home's walk sheet on its pad has. Won figures gain How it works' report, $2,021
     (function () {
-      var rs = getComputedStyle(document.documentElement), tone = function (v) { var i = document.createElement('i'); i.style.color = v; document.body.appendChild(i); var c = getComputedStyle(i).color; i.remove(); return c; };
+      var rs = getComputedStyle(document.documentElement), solid = function (c) { var m = /^rgba?\(([^)]+)\)$/.exec(c); if (!m) return c !== 'transparent'; var q = m[1].split(/[\s,\/]+/).filter(Boolean); return q.length < 4 || parseFloat(q[3]) >= 1; };
+      var fieldOf = function (el) { var f = el.closest('[data-ground=pine]'); if (!f) return null;
+        for (var a = el; a && a !== f; a = a.parentElement) { var b = getComputedStyle(a).backgroundColor; if (solid(b) && b !== pine) return null; } return f; };
+      var tone = function (v) { var i = document.createElement('i'); i.style.color = v; document.body.appendChild(i); var c = getComputedStyle(i).color; i.remove(); return c; };
       var pv = rs.getPropertyValue('--pine').trim(), pine = pv ? tone(pv) : null, reds = ['--red', '--pen', '--red-night', '--mark'].map(function (k) { return tone(rs.getPropertyValue(k).trim()); });
       var tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), seen = {};
       while (tw.nextNode()) {
         var n = tw.currentNode, el = n.parentElement; if (!n.nodeValue.trim() || !el || el.closest('script,style,noscript,.sr') || !vis(el)) continue;
-        var c = getComputedStyle(el).color, field = el.closest('[data-ground=pine]'), t = n.nodeValue.trim().slice(0, 30);
+        var c = getComputedStyle(el).color, field = fieldOf(el), t = n.nodeValue.trim().slice(0, 30);
         if (field && /\$\s?\d/.test(n.nodeValue) && !seen.usd) { seen.usd = 1; E.push('Money on the pine field: "' + t + '" (no money and no red on it).'); }
         if (field && reds.indexOf(c) > -1 && !seen.red) { seen.red = 1; E.push('Red text on the pine field: "' + t + '" (no money and no red on it).'); }
         // the walk film's sheet ends on "Won back $2,922 a month" (the rows it wins back, Nov 10), a figure won back too (direction C since Nov 5, .cf-won; the
         // generalist Home's film of 2026-10-30 had it as .wk-won); since the review fixes of Nov 10 a line won back in part says its dollars back (.cf-bk)
-        if (pine && c === pine && !el.closest('.stop[data-state=after] .find-usd, .cf .cf-won b, .cf .cf-res .cf-bk') && !seen.pine) { seen.pine = 1; E.push('Pine text outside a figure won back: "' + t + '" (pine means money won back only).'); }
+        if (pine && c === pine && !el.closest('.stop[data-state=after] .find-usd, .cf .cf-won b, .cf .cf-res .cf-bk, .rp-big .money') && !seen.pine) { seen.pine = 1; E.push('Pine text outside a figure won back: "' + t + '" (pine means money won back only).'); }
       }
     })();
     if (!catalog && document.body.dataset.rules === 'v4') lintV4(E, W, vis, text);
@@ -1761,7 +1767,7 @@
   function initFolds() {
     // checkers' pass (2026-10-24): only a page that loads system.css has the fold's look (section 25). The old build's pages (the
     // articles, Privacy, 404, /hi/, /met/) load /v4/system.js for the header but not system.css, and their footers have the same
-    // columns: folded there, each heading became a bare grey browser button 19px tall. Their lists stay open. check.py fold_old_problems
+    // columns: folded there, each heading became a bare grey browser button 19px tall. Their lists stay open (fold_old_problems held it until Nov 25, 2026)
     if (!$('link[rel="stylesheet"][href*="system.css"]')) return;
     var mq = matchMedia('(max-width: 699px)');
     var cols = $$('.foot nav.foot-col').map(function (nav, i) {

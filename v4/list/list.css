@@ -48,12 +48,28 @@ html:not(.js) .wa-filter{display:none}
    follow each line; once a trade is picked they go (every line left is for that trade). On a computer the stage name rides
    beside its lines. */
 .wa-reach{margin:0 0 28px;font-size:17px;color:var(--body);max-width:42em}   /* agency pass 2026-10-18 (rank 19, the operations consultant): what we can connect, said once where the list starts */
-@media (min-width:900px){.wa-reach{margin-bottom:48px;margin-left:calc((100% - 48px) / 3 + 48px)}}   /* over the lines' column, beside the stage names */
-.wa-stage+.wa-stage{margin-top:32px}
-.wa-sh{margin-bottom:10px;font-size:24px;line-height:1.2}
-/* 2026-10-15: on phones each stage name stays in view under the header while its lines scroll (a long list lost its place) */
-@media (max-width:899px){.wa-sh{position:sticky;top:var(--hdr-h);z-index:5;margin:0;padding-block:10px;background:var(--sheet)}}
-@media (max-width:899px) and (max-height:500px){.wa-sh{top:0}}
+@media (min-width:900px){.wa-reach{margin-bottom:32px;margin-left:calc((100% - 48px) / 3 + 48px)}}   /* over the lines' column, beside the stage names */
+/* everything run, 2026-11-25 (job B, DESIGN 6.4): the list is four blocks with the page's two pictures between them (list on sheet, the
+   wrong detail on the desk, Getting paid on pine, supplier bills, the one bill on the desk, the rest). One section still, so R2 counts
+   every row in every trade view */
+.wa-blk{position:relative}
+.wa-stage+.wa-stage{margin-top:28px}
+.wa-sh{line-height:1.1}
+/* 2026-10-15: on phones each stage name stays in view under the header while its lines scroll (a long list lost its place). Since
+   2026-11-25 at the scale's section head (28px), with its place in the list at the right ("5 of 10"), on its block's own ground */
+.wa-of{flex:none;font-size:15px;font-weight:500;letter-spacing:0;color:var(--muted);white-space:nowrap}
+@media (max-width:899px){
+  .wa-side{display:contents}
+  .wa-sh{position:sticky;top:var(--hdr-h);z-index:5;margin:0 calc(-1*var(--g));padding:9px var(--g);background:var(--sheet)}   /* the screen's width, so no row shows beside it */
+  .wa-nm::before{content:"";float:right;width:64px;height:31px}         /* the first line leaves the place its room; a second line takes the width */
+  .wa-of{position:absolute;right:var(--g);top:17px;line-height:1.35}
+  .wa-paid .wa-sh{background:var(--pine)}
+  html.wa-one .wa-sh{top:calc(var(--hdr-h) + 46px)}                  /* under the trade line (44px and its rule), which covered it from Oct 15 to Nov 25 */
+  html.wa-one .wa-items>li{scroll-margin-top:50px}                   /* a read-first link lands its row under the stuck name */
+  html.wa-one #supplier-bills .wa-items>li{scroll-margin-top:82px}   /* a name of two lines: Spanish, and English under 375px */
+}
+@media (max-width:392px){:lang(es) #supplier-bills .wa-sh{font-size:24px}}   /* two lines, as at 393 */
+@media (max-width:899px) and (max-height:500px){.wa-sh,html.wa-one .wa-sh{top:0}}
 .wa-items{border-top:2px solid var(--ink)}
 .wa-items li{padding:10px 0;border-bottom:1px solid var(--rule);font-size:17px;line-height:1.45;color:var(--ink)}
 .wa-for{display:inline-block;font-size:15px;line-height:1.35;color:var(--muted)}
@@ -63,10 +79,94 @@ html:not(.js) .wa-filter{display:none}
 @media (min-width:900px){
   .wa-stage{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);column-gap:48px;align-items:start}
   .wa-stage+.wa-stage{margin-top:64px}
-  .wa-sh{position:sticky;top:calc(var(--hdr-h) + 24px);margin:0;padding-top:12px;border-top:2px solid var(--ink);font-size:32px /* ui-ok: stripe the ruled list's heading line, computer only; the phone rule's sheet fill (2026-10-15) never meets it */}
+  .wa-side{position:sticky;top:calc(var(--hdr-h) + 24px)}              /* the name and its picture ride together beside the lines */
+  .wa-sh{margin:0;padding-top:14px;border-top:2px solid var(--ink) /* ui-ok: stripe the ruled list's heading line, computer only; the phone rule's sheet fill (2026-10-15) never meets it */}
+  .wa-of{display:none}
   .wa-items{max-width:42em}                                   /* about 85 characters a line at 17px, not 100 */
   .wa-items li{padding:12px 0}
 }
+/* C, Getting paid: the page's one pine band. Rows in on-pine, trade names in muted pine, rules at 22% paper; a jumped-to row's wash is
+   paper at 12%. Where its picture doesn't fit beside the rows (a trade with few), the name goes over the rows and the rows run the
+   width, so no name stands over an empty green column */
+.wa-paid .wa-items{border-top-color:rgba(245,242,234,.6)}
+.wa-paid .wa-items li{border-bottom-color:rgba(245,242,234,.22);color:var(--on-pine)}
+.wa-paid :is(.wa-for,.wa-of){color:var(--muted-pine)}
+.wa-paid .wa-items li:target{background:rgba(245,242,234,.12)}
+@media (min-width:900px){
+  .wa-paid .wa-sh{border-top-color:rgba(245,242,234,.6)}
+  .wa-paid .wa-bare{grid-template-columns:minmax(0,1fr);row-gap:14px}
+  .wa-paid .wa-bare .wa-side{position:static}
+  .wa-paid .wa-bare .wa-sh{padding-top:0;border-top:0}
+  .wa-paid .wa-bare .wa-items{max-width:none}
+}
+
+/* one job, five pictures (build_list.py pic(), its data beside it): Gmail, QuickBooks, the week sheet on paper, the bank match, the morning list. At most
+   420px tall at 384px wide, from 900px; the first one on a phone too. The one yellow is her order number, as the PO numbers on the bill.
+   The QuickBooks look is Home's film's (home.css cq-*), the mail the house Gmail window (system.css) */
+.wj{display:none;margin:22px 0 0}
+.wj mark{padding:0 3px;background:#fde98a;color:#1d1d1f;white-space:nowrap}
+@media (max-width:899px){.wj-ph{display:block;margin:2px 0 16px}}
+@media (min-width:900px){.wj{display:block;max-width:400px}}
+.wj .gm-subj{margin-bottom:10px}
+.wj .gm-body p{font-size:15px}
+.wj-re{margin-top:14px;padding-top:12px;border-top:1px solid #dadce0;font-size:15px;line-height:1.4;color:#1f1f1f}   /* the reply under the note, on a rule: a box in the window would be a card in a card */
+.wj-re p{margin:0}
+.wj-send{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:10px!important;font-size:13px;color:#5f6368}
+.wj-send span{/* ui-ok: pill Gmail's own Send button */padding:6px 18px;border-radius:18px;background:#0b57d0;color:#fff;font-weight:500}
+.wj-qw{display:flex}
+.wj-rail{flex:none;width:38px;padding-top:14px;border-right:1px solid #e6e6e6}
+.wj-rail i{display:block;width:18px;height:18px;margin:0 auto 12px;border-radius:5px;background:#e9ecef}
+.wj-rail i.on{background:#2CA01C}
+.wj-pg{flex:1;min-width:0;padding:14px 16px 16px;font-size:14px;line-height:1.35;color:#1d1d1f;font-variant-numeric:tabular-nums}
+.wj-pg p{margin:0}
+.wj-doc{font:600 22px/1.2 var(--sys);color:#0077C5}
+.wj-band{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px -16px 6px;padding:9px 16px;background:#EAF4FB}
+.wj-band p{white-space:nowrap}
+.wj-band small{display:block;font-size:12px;color:#5c5d63}
+.wj-t{width:100%;border-collapse:collapse}
+.wj-t th{padding:6px 0;border-bottom:1px solid #e3e3e3;font-size:12px;font-weight:600;color:#6b6c72;text-align:left}
+.wj-t td{padding:9px 0;border-bottom:1px solid #f0f0f0}
+.wj-t td,.wj-t th{white-space:nowrap}
+.wj-t .r{text-align:right}
+.wj-fld{display:inline-block;min-width:96px;padding:4px 8px;border:1.5px solid #8d9096;border-radius:4px;text-align:right}
+.wj-kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #f0f0f0}
+.wj-kv>span:first-child{color:#5c5d63}
+.wj-pg .wj-done{display:flex;align-items:center;justify-content:flex-end;gap:7px;margin-top:14px;font-weight:600;font-size:15px;color:#1d7a12}
+.wj-done i{position:relative;flex:none;width:18px;height:18px;border-radius:50%;background:#2CA01C}
+.wj-done i::after{content:"";position:absolute;left:6px;top:3px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.wj-ok{display:inline-block;width:15px;height:12px;margin-left:6px;vertical-align:-1px;overflow:visible}
+.wj-ok path{fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.wj-pg .wj-m{margin:12px 0 4px;font-size:12px;font-weight:600;color:#6b6c72}
+/* the week on paper: five ruled days, the job on its day, one flagged as the bill's "Not yet" row is */
+.wj-wk{padding:18px 20px 24px}
+.wj-wk .doc-h{margin:0;align-items:baseline}
+.wj-wk .doc-h b{font-size:17px;letter-spacing:0}
+.wj-wk ol{margin:0;padding:0;list-style:none}
+.wj-wk li{display:grid;grid-template-columns:58px minmax(0,1fr);gap:10px;align-items:center;min-height:50px;padding:7px 0;border-bottom:1px solid #dcdcdc}
+.wj-wk li:last-child{border-bottom:0}
+.wj-wk li>i{font-style:normal;font-size:13px;color:#555}
+.wj-wk p{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;margin:0;font-size:15px;line-height:1.35}
+.wj-wk p b{font-weight:600}
+.wj-wk small{grid-column:1/-1;font-size:13px;color:#555}
+.wj-wk .wj-wt{margin-inline:-20px;padding-inline:20px;background:#fdf3dc}
+.wj-wk .wj-wt small{font-weight:600;color:#6b4800}
+
+/* the morning list (fix round 1, Nov 25): the top of the house iPhone (system.css section 28), the notification Home's night phone carries
+   (home.css .ph-nt) a size up, cut by a hairline as met cuts its phone */
+.wj-ml{border-bottom:1px solid var(--rule)}
+.wj-lk{--lift-hi:0 1px 2px rgba(0,0,0,.12),0 6px 12px -2px rgba(58,47,28,.16);width:min(340px,calc(100% - 16px));height:min(400px,118cqw);margin-inline:auto;overflow-y:clip}   /* the house's short shadow (its phone value), so the cut at the hairline has no hard edge beside it */
+.wj-lk .iph{width:100%}
+.wj-nt{/* ui-ok: nested-card the phone's own notification on its lock screen */position:absolute;z-index:3;left:calc(9 * var(--pt));right:calc(9 * var(--pt));top:calc(222 * var(--pt));padding:11px 14px 13px;border-radius:calc(23 * var(--pt));background:rgb(170,175,183);color:#111;font-size:14px;line-height:1.4}
+.wj-nt .nt-top{display:flex;align-items:center;gap:7px;font-size:13px;color:#222}
+.wj-nt .nt-ap{flex:none;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:5px;background:#1f6feb}
+.wj-nt .nt-top b{min-width:0;overflow:hidden;text-overflow:ellipsis;color:#000;white-space:nowrap}   /* gives way before the time */
+.wj-nt .nt-top span:last-child{margin-left:auto;color:#333;white-space:nowrap}
+.wj-nt .nt-h{margin:6px 0 1px;font-weight:600}
+.wj-nt .nt-l{margin:0;padding-left:16px;list-style:disc}
+.wj-nt .nt-l li{margin-top:2px}
+
+@container (max-width:330px){.wj-nt{padding-inline:10px;font-size:13px}.wj-nt .nt-top{font-size:12px;gap:4px}.wj-nt .nt-ap{width:18px;height:18px}.wj-rail{display:none}.wj-wk .doc-h b{font-size:15px}.wj-fld{min-width:84px}}   /* a 900 to 1080px screen: the window gives up QuickBooks' rail before a value breaks */
+
 /* read first (JS only, a trade picked): that trade's 5 strongest rows as jump links, in page order, above the list */
 .wa-top{margin-bottom:36px}
 .wa-top-k{margin-bottom:10px;font-size:20px;font-weight:600;line-height:1.3;color:var(--ink)}
@@ -122,25 +222,40 @@ html:not(.js) .wa-filter{display:none}
 .wa-pic .xl table{table-layout:fixed}                                              /* fixed widths from the letter row; the part name gets the rest */
 .wa-pic .xl tr.cl td{max-width:none}                                               /* system.css's max-width:0 would clamp those widths to nothing */
 .wa-pic .xl tr.cl td:nth-child(1){width:44px}
-.wa-pic .xl tr.cl td:nth-child(2){width:52px}
+.wa-panels .xl{--xl-a:52px}
+:lang(es) .wa-panels .xl{--xl-a:74px}                                             /* "Trabajo" whole: it was cut to "Trab..." (2026-11-25) */
+.wa-pic .xl tr.cl td:nth-child(2){width:var(--xl-a)}
 .wa-pic .xl tr.cl td:nth-child(3){width:auto}                                    /* system.css gives every letter cell 30px */
 .wa-pic .xl tr.cl td:nth-child(4){width:66px}
 .wa-pic .xl tr.cl td:nth-child(5){width:92px}
 /* the Excel panel is shorter than the form it shares a cell with: its spare height reads as more empty rows of the same sheet
    (the row-number column, the column lines, a rule every row), not a blank under row 1206 (review 2026-10-11). Geometry measured
-   from the table: column edges at 44, 96, right minus 92 and right minus 158 (Cost; hidden at 420 and under), rows 31.8px a
+   from the table: column edges at 44, 44 plus the job column, right minus 92 and right minus 158 (Cost; hidden at 420 and under), rows 31.8px a
    phone, 34.7px wider (the table's type is max(12px, 3.4cqi) to 14px). */
 .wa-panels .xl{--xl-row:30.8px}
 @container (min-width:421px){.wa-panels .xl{--xl-row:33.7px}}
 .wa-panels .xl::after{content:"";order:2;flex:1 0 0;
-  background:linear-gradient(#dcdcdc,#dcdcdc) 44px 0/1px 100% no-repeat,linear-gradient(#dcdcdc,#dcdcdc) 96px 0/1px 100% no-repeat,
+  background:linear-gradient(#dcdcdc,#dcdcdc) 44px 0/1px 100% no-repeat,linear-gradient(#dcdcdc,#dcdcdc) calc(44px + var(--xl-a)) 0/1px 100% no-repeat,
     linear-gradient(#dcdcdc,#dcdcdc) calc(100% - 92px) 0/1px 100% no-repeat,linear-gradient(#dcdcdc,#dcdcdc) calc(100% - 158px) 0/1px 100% no-repeat,
     linear-gradient(#f3f3f3,#f3f3f3) 0 0/44px 100% no-repeat,repeating-linear-gradient(transparent 0 var(--xl-row),#dcdcdc 0 calc(var(--xl-row) + 1px))}
 .wa-panels .xl-tabs{order:3}
-@container (max-width:420px){.wa-panels .xl::after{background:linear-gradient(#dcdcdc,#dcdcdc) 44px 0/1px 100% no-repeat,linear-gradient(#dcdcdc,#dcdcdc) 96px 0/1px 100% no-repeat,
+@container (max-width:420px){.wa-panels .xl::after{background:linear-gradient(#dcdcdc,#dcdcdc) 44px 0/1px 100% no-repeat,linear-gradient(#dcdcdc,#dcdcdc) calc(44px + var(--xl-a)) 0/1px 100% no-repeat,
     linear-gradient(#dcdcdc,#dcdcdc) calc(100% - 92px) 0/1px 100% no-repeat,linear-gradient(#f3f3f3,#f3f3f3) 0 0/44px 100% no-repeat,
     repeating-linear-gradient(transparent 0 var(--xl-row),#dcdcdc 0 calc(var(--xl-row) + 1px))}}
-.wa-pic .xl tr.wa-flag td:not(:first-child){background:#fbefd2}
+.wa-pic .xl tr.wa-flag td:not(:first-child){position:relative;isolation:isolate}
+.wa-pic .xl tr.wa-flag td:not(:first-child)::before{content:"";position:absolute;inset:0;z-index:-1;background:#fbefd2}
+/* show our work (list.js): the four lines land in the sheet one after another, then "Not yet" takes its tint. Opacity and an 8px rise */
+.wa-wait .xl tr:nth-child(n+3) td:not(:first-child){opacity:0}
+.wa-wait .xl tr.wa-flag td:not(:first-child)::before{opacity:0}
+@media (prefers-reduced-motion:no-preference){
+  .wa-land .xl tr:nth-child(n+3) td:not(:first-child){animation:waLand var(--t-enter) var(--ease-out) both}
+  .wa-land .xl tr:nth-child(4) td:not(:first-child){animation-delay:200ms}
+  .wa-land .xl tr:nth-child(5) td:not(:first-child){animation-delay:400ms}
+  .wa-land .xl tr:nth-child(6) td:not(:first-child){animation-delay:600ms}
+  .wa-land .xl tr.wa-flag td:not(:first-child)::before{animation:waTint var(--t-enter) var(--ease-out) 1000ms both}
+}
+@keyframes waLand{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes waTint{from{opacity:0}to{opacity:1}}
 .wa-pic .dt tr.wa-flag td{background:#fdf3dc}
 .wa-pic .dt td small{display:block;font-size:12px;color:#6e6e73;margin-top:1px}
 .wa-app-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 10px;padding-bottom:8px;border-bottom:1px solid #e5e5ea;font-size:13px;color:#55555a}
@@ -188,28 +303,36 @@ html:not(.js) .wa-filter{display:none}
 
 /* ======================================================= band padding by role */
 @media (min-width:700px){
-  .wa-list{padding-block:72px 112px}
-  .wa-docs{padding-block:104px}
+  .wa-blk{padding-block:88px 96px}
+  .wa-blk.wa-a{padding-top:56px}
+  .wa-blk.wa-paid{padding-block:48px}                                  /* 96px in all (DESIGN 6.4): the pine block is its rows */
+  .wa-blk.wa-docs,.wa-blk.wa-cost{padding-block:96px}
+  .wa-blk.wa-f{padding-bottom:104px}
+  .wa-tls{padding-block:88px 96px}
   .wa-close{padding-block:112px 80px}
 }
 @media (max-width:699px){
   main>.band{padding-block:40px}
-  main>.wa-list{padding-block:28px 44px}
+  .wa-blk{padding-block:22px 32px}
+  .wa-blk.wa-a{padding-block:24px 32px}
+  .wa-blk.wa-paid{padding-block:24px 28px}
+  .wa-blk.wa-docs,.wa-blk.wa-cost{padding-block:36px}
+  .wa-blk.wa-f{padding-bottom:36px}
   main>.wa-close{padding-block:44px 32px}
   .wa-hero{padding-bottom:28px}
   .close-g{gap:36px}
   .c4-card{margin-top:28px}
   .wa-more{margin-top:-12px;padding-top:14px}
-  .wa-items li{padding-block:7px;line-height:1.4}   /* a phone line is about 45 characters, so it takes tighter leading than the 85 on a computer; 7px since 2026-10-12 (113 items) keeps the page under R9's 15,000px */
+  .wa-items li{padding-block:6px;line-height:1.36}   /* a phone line is about 45 characters, so it takes tighter leading than the 85 on a computer; 7px since 2026-10-12 (113 items) kept the page under R9's 15,000px; 6px and 1.36 since 2026-11-25 make room for the first picture on a phone */
 }
 @media (max-width:359px){.cta-row,.c4-tel{row-gap:18px}}
 
 /* ======================================================= 3b the tools list (2026-10-25; Franco said yes to a plain list of the tools
-   owners already use, no logos). Under the bill, on the papers section's own grid from 900px: each group's name over the copy's
+   owners already use, no logos). Its own band under the list since 2026-11-25 (it stood under the bill), on the list's own grid from 900px: each group's name over the copy's
    column and its tools over the picture's, ruled as the list above. Names run as one line of plain words with commas, so a group
    of eleven is two lines and never a tall column beside a short one (the space pass of the same day: no short side beside a
    tall one). A name never breaks inside itself (its spaces are &nbsp; in the page); the line breaks after a comma. Lead words take weight only (SYSTEM 4). */
-.wa-tools{margin-top:28px}
+.wa-tls .wa-tools{margin:0}
 .wa-tools-top{margin-bottom:14px}
 /* checkers' read, 2026-10-25: under the heading, About's own line ("You never have to switch software."), so an owner who lands on
    #tools reads that he keeps his tools before he reads their names; from 900 it sits on the names' x, level with the heading, as
@@ -226,7 +349,6 @@ html:not(.js) .wa-filter{display:none}
 .wa-tools-ask a{display:inline-block;padding-block:11px}   /* the trades' open door, 44px to tap, as Industry pages' "Don't see yours? Call us" */
 @media (max-width:699px){.wa-tools-g>div{padding-block:7px}}   /* the list's own phone rhythm (.wa-items li), so the page grows by the list and no more */
 @media (min-width:900px){
-  .wa-docs-g>.wa-tools{grid-column:1/-1;margin-top:24px}
   .wa-tools-top{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);column-gap:48px;align-items:baseline}
   .wa-tools-keep{margin-top:0}
   .wa-tools-g>div{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);column-gap:48px;padding:12px 0}   /* the section's 4fr / 8fr and 48px, so the names start on the picture's x */
@@ -268,6 +390,18 @@ html:not(.js) .wa-filter{display:none}
 .wcp-bad b{padding-right:8px}   /* room for the pen's ring past the number's last digit */
 .wcp-held{margin:12px 0 0;font:400 14px/1.4 var(--sys);color:#1d1d1f}
 .wcp-held b{font-weight:600}
-/* a phone keeps the invoice alone: its line "The policy says GL-900518." names the other half of the check (the band measured
-   1,225px at 390 with both, the page 347px over its R9 limit) */
-@media (max-width:699px){.wcp-pol{display:none}.wcp-inv{margin-left:0}.wa-cost-pic{margin-top:16px}}
+/* a phone shows the policy too since 2026-11-25 (DESIGN 6.4): until then the Nov 5 reviewers kept the invoice alone for height, so the
+   ringed number had nothing beside it to differ from. The rows' 1px and the picture's foot pay for it (R9) */
+@media (max-width:699px){.wcp-pol{padding:10px 14px 4px}.wcp-inv{margin-left:6%}.wcp-g{gap:10px}.wa-cost-pic{margin-top:14px;padding-bottom:18px}.wa-cost-rows{margin-top:0}}
+/* the wrong detail is a block of the list since 2026-11-25, on the desk right after The invoice: bone's rule tone, and the picture at the
+   words' middle (about 300px stood empty under it) */
+.wa-cost .wa-cost-rows li{border-bottom-color:var(--rule-bone)}
+@media (min-width:900px){
+  .wa-cost .wrap{grid-template-columns:minmax(0,42em) minmax(320px,440px);grid-template-rows:auto auto auto auto}
+  .wa-cost-pic{align-self:center;margin:0;padding-bottom:0;max-width:none}
+  .wcp-pol,.wcp-kv,.wcp-held{font-size:15px}
+  .wcp-pol{padding:18px 22px 14px}
+  .wcp-pg{padding:12px 22px 18px}
+  .wcp-h{font-size:17px}
+  .wcp-inv{margin-left:8%}
+}

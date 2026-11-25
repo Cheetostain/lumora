@@ -28,15 +28,12 @@
 <link rel="icon" href="/v4/assets/mark.svg">
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/v4/assets/fonts/FamiljenGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/v4/system.css?v=8bc95b5d">
-<link rel="stylesheet" href="/v4/trade-page.css?v=8bc95b5d">
+<link rel="stylesheet" href="/v4/system.css?v=ff017dc4">
+<link rel="stylesheet" href="/v4/trade-page.css?v=ff017dc4">
 <style>
 .close-h{margin:0 0 24px;font-size:clamp(40px,4.4vw,44px)}   /* Spanish Home's size (home.css): keeps "Hablemos de su negocio." on one line from 700 to 1440 so the arrow starts under the words */
 :lang(es) .np-rows li{grid-template-columns:5em minmax(0,1fr)}   /* "10:40 p. m." is 77.5px at 16px; the shared 4.6em column (73.6px) let it run into the gap */
 @media (max-width:699px){:lang(es) .pl-night .np-rows li{grid-template-columns:5.1em minmax(0,1fr)}}   /* 67.9px at 14px, was a 4.7em (65.8px) column */
-/* resume pass 2026-10-19: "a su negocio de plomería" took four lines at 38px and put the call block under the call bar at
-   393 x 659 (FREE_JS) and the top row under it at 390 x 844; one step down keeps three lines from 360 to 430 */
-@media (max-width:439px){.hm4-hero h1{font-size:min(34px,8.7vw)}}
 @media (max-width:359px){
   .stop :is(.ph4,.iph) .ph-who{gap:2px;padding:2px 10px 5px}
   .stop :is(.ph4,.iph) .ph-who i{width:22px;height:22px}
@@ -44,8 +41,8 @@
 }
 </style>
 <script>document.documentElement.classList.add('js');if(/^(127\.0\.0\.1|localhost|)$/.test(location.hostname)||/[?&]review\b/.test(location.search))document.documentElement.classList.add('review')</script>
-<script src="/v4/trades.js?v=8bc95b5d" defer></script>
-<script src="/v4/system.js?v=8bc95b5d" defer></script>
+<script src="/v4/trades.js?v=ff017dc4" defer></script>
+<script src="/v4/system.js?v=ff017dc4" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Automatización de la oficina para negocios de plomería","serviceType":"Automatización de procesos de negocio","provider":{"@type":"ProfessionalService","@id":"https://lumorafl.com/#business","name":"Lumora","url":"https://lumorafl.com/","telephone":"+1-352-226-0681"},"areaServed":[{"@type":"AdministrativeArea","name":"Alachua County, FL"},{"@type":"City","name":"Gainesville, FL"},{"@type":"City","name":"Alachua, FL"},{"@type":"City","name":"Archer, FL"},{"@type":"City","name":"Hawthorne, FL"},{"@type":"City","name":"High Springs, FL"},{"@type":"City","name":"La Crosse, FL"},{"@type":"City","name":"Micanopy, FL"},{"@type":"City","name":"Newberry, FL"},{"@type":"City","name":"Waldo, FL"}],"audience":{"@type":"BusinessAudience","audienceType":"Negocios de plomería"},"availableLanguage":["en","es"],"url":"https://lumorafl.com/es/industries/plumbing/"}</script>
 </head>
 <body data-trade="plumbing" data-trade-lock data-rules="v4">
@@ -138,6 +135,43 @@
   </div>
 </section>
 
+<section class="band pl-papers" id="ticket" data-ground="paper" data-desk="pine" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
+  <div class="wrap pl-pw">
+    <div class="pl-pw-copy">
+      <h2>El&nbsp;tanque que&nbsp;salió en&nbsp;el&nbsp;recibo nunca llegó a&nbsp;la&nbsp;factura.</h2>
+      <p class="pl-find">El trabajo 4470, un cambio de calentador de agua. El recibo del proveedor trae un tanque de expansión de 2&nbsp;galones, que en su lista de precios se cobra a $165.00 instalado. La factura no trae el tanque: o se instaló sin cobrar, o se devolvió al proveedor, o sigue en la camioneta de Dave. Usted nos dice qué pasó antes de que se agregue nada a la factura.</p>
+      <p class="pl-fix"><b>El arreglo:</b> cada factura se compara con los recibos de ese trabajo antes de salir, y lo que falte le llega a usted para que lo apruebe. Es una de las cosas que buscamos en la visita.</p>
+      <p class="t-small pl-art">¿Recibos que nunca llegaron a la factura? <a class="u" href="/es/articles/supply-house-tickets-invoice/">En nuestro artículo le explicamos cómo revisarlos cada semana en Jobber, Housecall Pro o QuickBooks</a>.</p>
+    </div>
+    <figure class="pic pl-docs-pic">
+      <div role="img" aria-label="Ejemplo: dos papeles del mismo cambio de calentador, el trabajo 4470. El recibo de mostrador 87106 de Oak Street Supply Co., vendido a la cuenta 20614 de Dunlin Plumbing el 22 de septiembre a las 7:12 a. m., orden de compra del cliente 4470-DB, lo recoge Dave B.: un calentador eléctrico de 40 galones, 612.00, y un tanque de expansión de 2 galones, 38.90, encerrado en rojo; impuesto de venta del 7.5 por ciento, total 699.72. Al lado, la factura 4470 como borrador en la aplicación de trabajos del negocio, para Carlos Martinez, 127 Main St, permiso BP26-900287: cinco líneas, primero el calentador, sin línea del tanque y sin impuesto de venta, total $1,450.00. Un aviso arriba del borrador: el recibo 87106, que el proveedor mandó por correo, tiene un tanque de expansión que no está en esta factura; pendiente de su visto bueno.">
+        <div class="pl-docs">
+          <div class="ticket" lang="en">
+            <p class="tk-co">OAK STREET SUPPLY CO.<small>500&nbsp;Oak&nbsp;St, Gainesville FL</small></p>
+            <p class="tk-no pl-wide"><span>SOLD TO 20614</span><span>DUNLIN PLUMBING</span></p>
+            <p class="tk-no"><span>TICKET 87106</span><span>09/22/26 7:12&nbsp;AM</span></p>
+            <p class="tk-no"><span>CUST PO 4470-DB</span><span>WILL CALL: DAVE B.</span></p>
+            <table><tr><th>QTY</th><th>DESCRIPTION</th><th class="r">EXT</th></tr><tr><td>1</td><td>WTR HTR 40G ELEC</td><td class="r">612.00</td></tr><tr><td>1</td><td><span class="pc" data-draw>EXP TANK 2&nbsp;GAL</span></td><td class="r">38.90</td></tr></table>
+            <p class="tk-sum"><span>MERCHANDISE</span><span>650.90</span></p><p class="tk-sum"><span>SALES TAX 7.5%</span><span>48.82</span></p><p class="tk-sum tk-tot"><span>TOTAL</span><span>699.72</span></p>
+          </div>
+          <div class="scr-win pl-inv">
+            <div class="win-tb"><i></i><i></i><i></i><span>Factura 4470, borrador</span></div>
+            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>El recibo 87106, que llegó por correo, tiene un tanque de expansión que no está en esta factura. <b>Pendiente de su visto bueno.</b></span></p>
+            <div class="doc">
+              <div class="doc-h"><b>DUNLIN PLUMBING</b><span>FACTURA 4470&nbsp;· 09/22/26</span></div>
+              <p class="doc-to">Lic. CFC0000142&nbsp;· (352) 555-0131</p>
+              <p class="doc-to doc-bill"><span class="pl-k">Facturar a</span><b>Carlos Martinez</b>, 127&nbsp;Main&nbsp;St<br>Cambio de calentador de agua, 40&nbsp;gal&nbsp;· Permiso BP26-900287</p>
+              <ul class="doc-li"><li class="pl-li-h"><span>Descripción</span><span>Monto</span></li><li><span>Instalación de calentador eléctrico de 40&nbsp;gal</span><span>1,110.00</span></li><li><span>Bandeja de drenaje, tubo de 3/4 pulg. al exterior</span><span>85.00</span></li><li><span>Tubo nuevo de descarga de la válvula T&amp;P</span><span>95.00</span></li><li><span>Retiro del calentador viejo</span><span>50.00</span></li><li><span>Permiso e inspección</span><span>110.00</span></li></ul>
+              <p class="doc-tot"><span>Total</span><span>$1,450.00</span></p>
+              <p class="pl-due">Pago al recibir</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
+
 <section class="band hm4-auto pl-auto" id="automate" data-ground="sheet" data-density="mid" data-width="split" data-loud="list" data-medium="list">
   <div class="wrap pl-auto-g">
     <h2>Lo&nbsp;que&nbsp;automatizamos en&nbsp;un&nbsp;negocio de&nbsp;plomería</h2>
@@ -226,44 +260,7 @@
   </div>
 </section>
 
-<section class="band pl-papers" id="ticket" data-ground="sheet" data-density="mid" data-width="split" data-loud="docs" data-medium="docs">
-  <div class="wrap pl-pw">
-    <div class="pl-pw-copy">
-      <h2>El&nbsp;tanque que&nbsp;salió en&nbsp;el&nbsp;recibo nunca llegó a&nbsp;la&nbsp;factura.</h2>
-      <p class="pl-find">El trabajo 4470, un cambio de calentador de agua. El recibo del proveedor trae un tanque de expansión de 2&nbsp;galones, que en su lista de precios se cobra a $165.00 instalado. La factura no trae el tanque: o se instaló sin cobrar, o se devolvió al proveedor, o sigue en la camioneta de Dave. Usted nos dice qué pasó antes de que se agregue nada a la factura.</p>
-      <p class="pl-fix"><b>El arreglo:</b> cada factura se compara con los recibos de ese trabajo antes de salir, y lo que falte le llega a usted para que lo apruebe. Es una de las cosas que buscamos en la visita.</p>
-      <p class="t-small pl-art">¿Recibos que nunca llegaron a la factura? <a class="u" href="/es/articles/supply-house-tickets-invoice/">En nuestro artículo le explicamos cómo revisarlos cada semana en Jobber, Housecall Pro o QuickBooks</a>.</p>
-    </div>
-    <figure class="pic pl-docs-pic">
-      <div role="img" aria-label="Ejemplo: dos papeles del mismo cambio de calentador, el trabajo 4470. El recibo de mostrador 87106 de Oak Street Supply Co., vendido a la cuenta 20614 de Dunlin Plumbing el 22 de septiembre a las 7:12 a. m., orden de compra del cliente 4470-DB, lo recoge Dave B.: un calentador eléctrico de 40 galones, 612.00, y un tanque de expansión de 2 galones, 38.90, encerrado en rojo; impuesto de venta del 7.5 por ciento, total 699.72. Al lado, la factura 4470 como borrador en la aplicación de trabajos del negocio, para Carlos Martinez, 127 Main St, permiso BP26-900287: cinco líneas, primero el calentador, sin línea del tanque y sin impuesto de venta, total $1,450.00. Un aviso arriba del borrador: el recibo 87106, que el proveedor mandó por correo, tiene un tanque de expansión que no está en esta factura; pendiente de su visto bueno.">
-        <div class="pl-docs">
-          <div class="ticket" lang="en">
-            <p class="tk-co">OAK STREET SUPPLY CO.<small>500&nbsp;Oak&nbsp;St, Gainesville FL</small></p>
-            <p class="tk-no pl-wide"><span>SOLD TO 20614</span><span>DUNLIN PLUMBING</span></p>
-            <p class="tk-no"><span>TICKET 87106</span><span>09/22/26 7:12&nbsp;AM</span></p>
-            <p class="tk-no"><span>CUST PO 4470-DB</span><span>WILL CALL: DAVE B.</span></p>
-            <table><tr><th>QTY</th><th>DESCRIPTION</th><th class="r">EXT</th></tr><tr><td>1</td><td>WTR HTR 40G ELEC</td><td class="r">612.00</td></tr><tr><td>1</td><td><span class="pc" data-draw>EXP TANK 2&nbsp;GAL</span></td><td class="r">38.90</td></tr></table>
-            <p class="tk-sum"><span>MERCHANDISE</span><span>650.90</span></p><p class="tk-sum"><span>SALES TAX 7.5%</span><span>48.82</span></p><p class="tk-sum tk-tot"><span>TOTAL</span><span>699.72</span></p>
-          </div>
-          <div class="scr-win pl-inv">
-            <div class="win-tb"><i></i><i></i><i></i><span>Factura 4470, borrador</span></div>
-            <p class="pl-flag"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 1.5v13" stroke="#6b4800" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 2.2h8.6l-2 3.1 2 3.1H3.8z" fill="#c98a00"/></svg><span>El recibo 87106, que llegó por correo, tiene un tanque de expansión que no está en esta factura. <b>Pendiente de su visto bueno.</b></span></p>
-            <div class="doc">
-              <div class="doc-h"><b>DUNLIN PLUMBING</b><span>FACTURA 4470&nbsp;· 09/22/26</span></div>
-              <p class="doc-to">Lic. CFC0000142&nbsp;· (352) 555-0131</p>
-              <p class="doc-to doc-bill"><span class="pl-k">Facturar a</span><b>Carlos Martinez</b>, 127&nbsp;Main&nbsp;St<br>Cambio de calentador de agua, 40&nbsp;gal&nbsp;· Permiso BP26-900287</p>
-              <ul class="doc-li"><li class="pl-li-h"><span>Descripción</span><span>Monto</span></li><li><span>Instalación de calentador eléctrico de 40&nbsp;gal</span><span>1,110.00</span></li><li><span>Bandeja de drenaje, tubo de 3/4 pulg. al exterior</span><span>85.00</span></li><li><span>Tubo nuevo de descarga de la válvula T&amp;P</span><span>95.00</span></li><li><span>Retiro del calentador viejo</span><span>50.00</span></li><li><span>Permiso e inspección</span><span>110.00</span></li></ul>
-              <p class="doc-tot"><span>Total</span><span>$1,450.00</span></p>
-              <p class="pl-due">Pago al recibir</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </figure>
-  </div>
-</section>
-
-<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" style="--hole:var(--sheet)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
+<section class="band seam hm4-walk" id="walk" data-bind="walk" data-walk="pairs" data-walk-formulas="off" style="--hole:var(--paper)" data-ground="bone" data-density="high" data-width="wide" data-loud="pictures" data-medium="stops">
   <div class="wrap">
     <h2 class="walk-h" data-walk-head data-sample-lead>Dunlin Plumbing pierde <span class="walk-h-usd">$2,710&nbsp;al&nbsp;mes</span>. Le&nbsp;mostramos dónde.</h2>
     <p class="walk-intro">Un negocio con 2&nbsp;camionetas. En cada paso se ve la misma pantalla antes y después del arreglo, y la visita termina con el total de la hoja.</p>
@@ -355,6 +352,7 @@
           <p>Casi todos los dueños con los que hablo pierden sus noches en las mismas tareas: la cotización que escriben después de cenar, la factura que nunca salió, la llamada que nadie devolvió.</p>
           <p>Hago automatizaciones desde 2022. En una empresa de daños por agua me tocaba el papeleo de los reclamos; lo automaticé y le enseñé al personal a manejarlo. Ahora Lumora hace lo mismo en negocios de Gainesville y sus alrededores.</p>
           <p>Hablo español e inglés, así que todo puede ser en español, en inglés o en los dos.</p>
+          <span class="letter-pen" aria-hidden="true"><img src="/v4/assets/signature.png" loading="lazy" decoding="async" alt="" width="160" height="84"></span>
           <p class="letter-sig">Franco A. Soto<span>Dueño</span></p>
         </article>
         <p class="t-small hm-about"><a class="u" href="/es/about/">Quiénes somos</a></p>
