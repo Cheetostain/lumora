@@ -600,6 +600,12 @@
   function walkHead(el, t) {
     var h = el.querySelector('[data-walk-head]'); if (!h || !t || !t.rows) return;
     var hx = function (x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+    // Nov 24 (hero-review-2026-11-23, item 12; Franco: "implement Home's first screen"): where the section's own sheet ends on what was
+    // won back (Home's walk film, .cf-won), the heading goes from the loss to the payoff, reading that figure. The loss stays red, the
+    // figure won back stays ink (red means money lost, Oct 17). The trade pages have no such sheet and keep theirs
+    var won = el.querySelector('.cf-won b'), wm = won && /\$[\d,]+/.exec(won.textContent);
+    if (wm) { h.innerHTML = hx(t.shop) + (ES ? ' perdía ' : ' was losing ') + '<span class="walk-h-usd">' + money(total(t)) + '\u00a0' + perWord(t).replace(/ /g, '\u00a0') + '</span>. ' +
+      '<span class="walk-won">' + (ES ? 'Los\u00a0arreglos recuperaron\u00a0' : 'The\u00a0fixes won back\u00a0') + wm[0] + '.</span>'; return; }
     h.innerHTML = hx(t.shop) + (ES ? ' pierde ' : ' loses ') + '<span class="walk-h-usd">' + money(total(t)) + '\u00a0' + perWord(t).replace(/ /g, '\u00a0') + '</span>' +
       (ES ? '. Le\u00a0mostramos dónde.' : '. Here\'s where.');
   }
@@ -1103,8 +1109,8 @@
 
   /* ================================================================ the phone call bar lands between two lines (round 3, 2026-10-17)
      Franco's iPhone review, after Home's p1-final rule: the call bar's top edge lands between two lines of the first screen, never
-     across a line, a figure or a button. A page opts in with data-bar-seat on its first section (every page but Home, whose hero
-     is tuned by hand in home.css). On load, when the fonts settle and when the width changes (never on a height change alone, so
+     across a line, a figure or a button. A page opts in with data-bar-seat on its first section (Home too since Nov 24:
+     its gaps were tuned at nine sizes, and between them the bar cut the caption). On load, when the fonts settle and when the width changes (never on a height change alone, so
      iPhone Safari's toolbar can't make the page jump), the block that holds the cut line moves the least it can: up into the air
      above it (12px at most, keeping 8px of that air) or down until the line clears the bar, and never so far that the page's
      first-screen musts ([data-first], the strip's figure, the headline) leave the screen. check.py BAR_JS measures every page that
@@ -1128,6 +1134,7 @@
       // their top 8px showing), so it keeps a button's 8px
       $$('.btn, .stamp, .samp, .seg, select, input:not([type=radio]):not([type=checkbox]), .wa-chip, .chip', sec).forEach(function (e) { if (!shown(e)) return;
         var q = e.getBoundingClientRect(), p = e.matches('.btn, .seg, select, input, .wa-chip, .chip') ? 6 : 0; if (q.height > 4) out.push({ e: e, t: q.top - p, b: q.bottom + p, y: q.top }); });
+      if ($('.hero-eg', sec)) $$('.pen-ring', sec).forEach(function (e) { if (!shown(e)) return; var q = e.getBoundingClientRect(); out.push({ e: e, t: q.top, b: q.bottom, y: q.top }); });   // Nov 24: on Home the bar clears the ring too (hero-review-2026-11-23, item 1)
       return out; };
     var cut = function (o, s) { return o.t + s < B + TOL && o.b + s > B - TOL; };   // a line within half a pixel of the edge counts as cut
     // design round picks, 2026-10-19 (item 1): a trade page's phone opens on the sheet, so its ringed row 1 is a must too
@@ -1143,7 +1150,7 @@
       // lift is shared by them in proportion to the air over each (each keeps 6px of it, a card with a shadow 16, and gives 16px at most), so no one gap closes
       var units = [unitOf(first.e)], x = units[0];   // a unit with nothing before it in its box takes its box's place: the button row is the first thing in its call block
       while (units.length < 3) { var pv = x.previousElementSibling; while (!pv && x.parentElement && x.parentElement !== sec) { x = x.parentElement; pv = x.previousElementSibling; }
-        if (!pv) break; x = pv; if (shown(pv) && getComputedStyle(pv).position !== 'absolute') units.push(pv); }
+        if (!pv) break; x = pv; if (shown(pv) && getComputedStyle(pv).position !== 'absolute' && pv.getBoundingClientRect().top < units[0].getBoundingClientRect().top) units.push(pv); }   // Nov 24: a block the grid sets under this one (Home's vision line) gives it no air
       var tops = units.map(function (c) { return c.getBoundingClientRect().top; });
       // a card with a shadow above a block counts down to its shadow's reach (12px under its edge), so a lift never sets words in it
       var cards = $$('.strip, .clip, .board, .contact-card, .sheet, .page, .card', sec).filter(function (e) { return shown(e) && getComputedStyle(e).boxShadow !== 'none'; }).map(function (e) { var q = e.getBoundingClientRect(); return { y: q.top, b: q.bottom + 12 }; });
@@ -1310,19 +1317,23 @@
   /* ================================================================ header menu */
   function initMenu() {
     var b = $('.menu-b'), nav = $('#nav'); if (!b || !nav) return;
-    // 2026-10-16 repair: #nav comes before the button in the header, so Tab from Close skipped all seven links and landed on the
+    // 2026-10-16 repair: #nav comes before the button in the header, so Tab from Close skipped every link and landed on the
     // hero's button, hidden behind the open sheet. Now Tab from the button goes to the first link and Shift+Tab from the first link
-    // comes back (the header's language link closes the loop), and the page behind is inert until the menu closes. check.py's
-    // MENU_JS holds it on every page
+    // comes back (the header's language link closes the loop), and the page behind is inert until the menu closes. Nov 24 (reviewers): the
+    // call bar is not part of the page behind. It stays in view under the phone menu, which has no Contact link, and a tap on it fell
+    // through to the nav; it calls now, and Tab goes calculator button, Call, Text, language. check.py's MENU_JS holds it on every page
     var open = function () { return nav.classList.contains('open'); };
-    var set = function (o) { nav.classList.toggle('open', o); b.setAttribute('aria-expanded', o ? 'true' : 'false'); b.textContent = o ? tr('Close', 'Cerrar') : tr('Menu', 'Menú');
-      $$('body > main, body > .foot, body > .callbar').forEach(function (el) { el.inert = o; }); };
+    var set = function (o) { nav.classList.toggle('open', o); b.setAttribute('aria-expanded', o ? 'true' : 'false'); $('.menu-w', b).textContent = o ? tr('Close', 'Cerrar') : tr('Menu', 'Menú');   // Nov 24: the word beside the three lines; only the word changes
+      $$('body > main, body > .foot').forEach(function (el) { el.inert = o; }); };
     b.addEventListener('click', function () { set(!open()); });
     nav.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
     b.addEventListener('keydown', function (e) { var a = $('a', nav); if (e.key === 'Tab' && !e.shiftKey && open() && a) { e.preventDefault(); a.focus(); } });
     nav.addEventListener('keydown', function (e) { if (e.key === 'Tab' && e.shiftKey && open() && e.target === $('a', nav)) { e.preventDefault(); b.focus(); } });
+    var bar = $$('body > .callbar a'), calc = $('.nav-calc', nav), lang = $('.hdr-in > .lang') || b;   // the bar's place in the Tab loop: after the calculator button, before the language
+    if (bar.length && calc) [[calc, bar[0], 0], [bar[0], calc, 1], [bar[bar.length - 1], lang, 0], [lang, bar[bar.length - 1], 1]].forEach(function (m) {
+      m[0].addEventListener('keydown', function (e) { if (e.key === 'Tab' && e.shiftKey === !!m[2] && open() && bar[0].getClientRects().length) { e.preventDefault(); m[1].focus(); } }); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open()) { set(false); b.focus(); } });
-    document.addEventListener('click', function (e) { if (open() && !e.target.closest('.hdr')) set(false); });   // a tap on the page under a dropdown (Spanish, 900 to 1279px) closes it
+    document.addEventListener('click', function (e) { if (open() && !e.target.closest('.hdr')) set(false); });   // a tap on the page under a dropdown (Spanish, 900 to 959px) closes it
     addEventListener('resize', function () { if (open() && !b.getClientRects().length) set(false); });   // the window grew past the Menu button: never leave the page inert
   }
 
@@ -1383,8 +1394,10 @@
     // Nov 7, second review: the copy says example now, so the mark's likeliest way back is in that word, which passed: "Our example
     // shop, Dunlin Plumbing, loses", "Example shop: Dunlin Plumbing", "Sample: Dunlin Plumbing", "Dunlin Plumbing (sample)", "(ejemplo)"
     // and "The businesses and numbers here are samples." fail now; "the example shop" in a result's own line stays (its FTC note)
+    // Nov 24 (hero-review-2026-11-23, item 1; Franco: "implement Home's first screen"): the phone caption over Home's clipboard opens
+    // "Example:", the one line that tells a stranger what the sheet is before he reaches it (.hero-eg); everywhere else the word fails
     texts(function (v, pe) { var m = /\bour\s+example\b|^\s*(?:an?\s+)?(?:samples?|examples?|ejemplos?|muestras?)(?:\s+[^\s:]+)?\s*:|\((?:samples?|examples?|ejemplos?|muestras?)\)|\b(?:are|is)\s+(?:all\s+)?(?:samples|examples)\b|\bson\s+(?:todos\s+)?(?:muestras|ejemplos)\b|\b(?:our|the|a|an)\s+sample\s+(?!sheets?\b|numbers?\b|(?:win\s+)?rates?\b|(?:yearly\s+)?fee\b|figures?\b|data\b|\$)\S+|\b(?:our|the|a|an)\s+sample\s*$|, a sample[.,]|\bsample sheet for\b|\bsample business\b|\bNuestr[oa]s?\s+\S+\s+de\s+ejemplo\b|\bUn ejemplo(?::|\s+con\b)|\bhoja de ejemplo de\b|\b(?:un|una)\s+\S+\s+de\s+\S+(?:\s+\S+)?\s+de\s+ejemplo\b|\bnegocio de ejemplo, hoy\b/i.exec(v);
-      if (m) E.push('R8: "' + m[0].trim() + '" marks a business or a job as a sample in shown words (' + (pe.className || pe.tagName.toLowerCase()) + '); the footer says the examples are made up.'); });
+      if (m && !pe.closest('.hero-eg')) E.push('R8: "' + m[0].trim() + '" marks a business or a job as a sample in shown words (' + (pe.className || pe.tagName.toLowerCase()) + '); the footer says the examples are made up.'); });
     // a stamp in words: any shown element whose whole text is the word, in either language and with or without a second word or a
     // colon ("Sample", "Example", "EXAMPLE", "Sample data", "Ejemplo:", "Datos de ejemplo"; Nov 7, reviewers: an "Example" badge was the
     // likeliest way one comes back, and only the bare Sample / Ejemplo failed), the calculator's own tags aside
@@ -1392,13 +1405,13 @@
     // the law's one exception (FTC 16 CFR 255.2(c), the .com disclosures guide: the note sits with the claim, a footer can't qualify
     // it): a result someone got from the work (Won back, Time back, Recupera, se ahorra) says example (ejemplo) in the words of its
     // own picture, stop or walk end, shown with it
-    var RES = /\b(?:Won back|Time back)\b|\bRecupera\b|\bLo que recupera\b|\bse ahorran?\b|\bWhat the fix did\b|\bLo que logró el arreglo\b/;
+    var RES = /\b(?:Won back|Time back|fixes won back)\b|\bRecupera\b|\barreglos recuperaron\b|\bLo que recupera\b|\bse ahorran?\b|\bWhat the fix did\b|\bLo que logró el arreglo\b/;
     // Nov 6, benchmark pass: the word is body size (12px or more) and shares one screen with the figure (How it works' full sheet
     // had "example" on its business line 1,264px above its time back at 393 wide, so its time line says it now). The word is
     // example, for the shop or for a rate ("1 in 2 is an example rate", "una tasa de ejemplo"); until Nov 7 "sample" counted too,
     // and the pages mixed both (reviewers, Nov 7)
     var EXW = /\bexample\b|\bejemplo\b/i;
-    texts(function (v, pe) { if (!RES.test(v)) return; var c = pe.closest('.pic, .stop, .walk-end, .sheet, figure, .report') || pe, near = null, far = null;
+    texts(function (v, pe) { if (!RES.test(v)) return; var c = pe.closest('.pic, .stop, .walk-end, .sheet, figure, .report') || (pe.closest('.walk-won') && pe.closest('section')) || pe, near = null, far = null;
       var w = document.createTreeWalker(c, NodeFilter.SHOW_TEXT), r = pe.getBoundingClientRect();
       while (w.nextNode()) { var xe = w.currentNode.parentElement; if (!xe || !EXW.test(w.currentNode.nodeValue) || xe.closest('.sr') || !vis(xe)) continue;
         var xr = xe.getBoundingClientRect(), span = Math.max(r.bottom, xr.bottom) - Math.min(r.top, xr.top);
@@ -1411,9 +1424,7 @@
     // ejemplo ... contra su meta" passes)
     $$('.stop .find-f').filter(vis).forEach(function (s) { var v = s.textContent;
       if (/\byour\b/i.test(v) || /^(?:(?!ejemplo)[\s\S])*\bsus?\b/i.test(v)) E.push('R8: a counting line speaks to the visitor ("' + v.trim().slice(0, 60) + '"); every stop names the example business.'); });
-    // the reviewers' round (2026-10-26): Home's client proof band is one review-only figure.slot, so golive strips it whole; its
-    // photo place inside (.proof-ph) carries the shape
-    $$('.slot:not(.proof-slot), .proof-slot .proof-ph').forEach(function (s) { if (['16:9', '1:1', '4:5'].indexOf(s.dataset.shape) < 0) E.push('R8: a picture slot that is not 16:9, 1:1 or 4:5.'); });
+    $$('.slot').forEach(function (s) { if (['16:9', '1:1', '4:5'].indexOf(s.dataset.shape) < 0) E.push('R8: a picture slot that is not 16:9, 1:1 or 4:5.'); });
     // R9: no dollar figure more than twice, 16 or fewer, counted per width; the phone-only top-leak strip is the named exception.
     // The bound price sentence counts its bold price only: the plain words after it are the credit's terms, and their $1,500
     // floor (Franco, 2026-10-13, premortem item 9) is a condition the law needs beside the credit, not a figure on show.
@@ -1426,7 +1437,7 @@
     // Design round picks on Home's walk (Franco 2026-10-19, items 3 and 13): the walk heading opens on the sheet's total, the
     // number its end pays off, and on a computer the adding slip lists the three stops it adds up. Both repeat by design, as the
     // strip does, so neither is counted
-    texts(function (s, pe) { if (pe.closest('.hero-strip, .recog, .walk-h-usd, .walk-slip') || pe.closest('.pic') || pe.matches('[data-shared="price"]')) return; (s.match(/\$\d[\d,]*(?:\.\d+)?/g) || []).forEach(function (m) { var k = m.replace(/\.0+$/, ''); seen[k] = (seen[k] || 0) + 1; total++; }); });
+    texts(function (s, pe) { if (pe.closest('.hero-strip, .recog, .walk-h-usd, .walk-slip') || pe.closest('.pic') || pe.matches('[data-shared^="price"]')) return; (s.match(/\$\d[\d,]*(?:\.\d+)?/g) || []).forEach(function (m) { var k = m.replace(/\.0+$/, ''); seen[k] = (seen[k] || 0) + 1; total++; }); });
     Object.keys(seen).forEach(function (k) { if (seen[k] > 2) B.push('R9: ' + k + ' shows ' + seen[k] + ' times (twice at most).'); });
     if (total > 16) B.push('R9: ' + total + ' dollar figures on the page (16 or fewer).');
     // R11: the picked chip is never filled black on a computer screen
@@ -1499,6 +1510,7 @@
       texts(function (s, pe) { if (pe.closest('.pic,.clip,.np,.ph4,.scr-win,.slot,.samp,.stamp,.tally,svg,.util,.foot,.skip')) return;
         var fs = parseFloat(getComputedStyle(pe).fontSize);
         if (pe.closest('h1 .phr') && Math.abs(fs - 58) < 0.6) return;
+        if (pe.closest('h1') && document.querySelector('#top .hero-eg') && Math.abs(fs - 52) < 0.6) return;   // Nov 24 (hero-build-2026-11-24, decision 1): Home's headline up to 960px tall, two lines in both languages (SYSTEM.md 4)
         if (pe.closest('.walk-sum .walk-total > b') && Math.abs(fs - 120) < 0.6) return;   // design round item 13 (2026-10-19): the walk end's one display figure (SYSTEM.md 4)   // design round picks, 2026-10-19 (item 6): the Spanish trade h1 set by phrase, the 64 role's one step (SYSTEM.md)
         if (!SCALE.some(function (v) { return Math.abs(v - fs) < 0.6; })) odd[Math.round(fs * 10) / 10 + 'px'] = s.trim().slice(0, 24); });
       Object.keys(odd).forEach(function (k) { E.push('Type: ' + k + ' is off the scale (15, 17, 20, 24, 32, 44, 64): "' + odd[k] + '"'); });
@@ -1533,8 +1545,9 @@
     if (/!/.test(text.replace(/<!--[\s\S]*?-->/g, ''))) E.push('Exclamation mark in visible text.');
     (text.match(/\(352\) \d{3}-\d{4}/g) || []).forEach(function (p) { if (p !== '(352) 226-0681' && !/\(352\) 555-01\d\d/.test(p)) E.push('Phone outside the sample range: ' + p); });
     if (!catalog) {
-      // the price sentence (shared-text.json "price", bound with data-shared) may appear twice: the hero and step 2 (Oct 8)
-      var prices = $$('[data-shared="price"]').filter(vis).length, p500 = (text.match(/\$500\b/g) || []).length;
+      // the price sentence (shared-text.json "price", bound with data-shared) may appear twice: the hero and step 2 (Oct 8). Home's hero
+      // binds "price.home" (Nov 24), which says what the walk is first; shared_text.py holds it to Home
+      var prices = $$('[data-shared^="price"]').filter(vis).length, p500 = (text.match(/\$500\b/g) || []).length;
       if (prices > 2) E.push('The price sentence appears ' + prices + ' times (at most twice: the hero and step 2).');
       if (p500 > prices) E.push('"$500" appears ' + (p500 - prices) + ' time(s) outside the bound price sentence.');
       var rings = $$('.pen-ring').filter(vis).length; if (rings > 1) E.push(rings + ' pen rings on the page (one per page).');
@@ -1542,14 +1555,18 @@
       var nights = $$('main [data-ground=night]').length; if (nights > 1) E.push(nights + ' ink bands (one per page).');
       // alive build 2026-10-24 (Franco's pick pine-field, alive round item 4): one pine band a page at most, as one ink band. Nov 9
       // (Franco's pick blotter): Home alone adds the pine pad under the hero clipboard (.clip[data-pine=pad]), with no words on it,
-      // and two pine surfaces are never on one screen (a screen's height or more apart)
+      // and two pine surfaces are never on one screen (a screen's height or more apart). Nov 24 (hero-review-2026-11-23, item 1): the pad
+      // is drawn from 900px only; under it the clipboard lies on the page's paper, so there the pad counts for nothing and may not show
       var pineEls = $$('main [data-ground=pine]'), pines = pineEls.length; if (pines > 1) E.push(pines + ' pine bands (one per page at most).');
       var pads = $$('main [data-pine=pad]');
       if (pads.length > 1) E.push(pads.length + " pine pads (one, under Home's hero clipboard).");
       pads.forEach(function (pd) {
         if (!pd.closest('.hm4-hero')) E.push("A pine pad outside Home's hero (" + (pd.className || pd.tagName) + ').');
         var bd = pd.querySelector('.board'); if (!bd) return;
-        var cs = getComputedStyle(bd, '::before'), r = bd.getBoundingClientRect(), top = r.top + scrollY + (parseFloat(cs.top) || 0), bot = r.bottom + scrollY - (parseFloat(cs.bottom) || 0);
+        var cs = getComputedStyle(bd, '::before');
+        if (cs.content === 'none') return;   // not drawn: a phone
+        if (innerWidth < 900) { E.push('The pine pad shows at ' + innerWidth + "px wide (from 900px only; under it the clipboard lies on the page's paper)."); return; }
+        var r = bd.getBoundingClientRect(), top = r.top + scrollY + (parseFloat(cs.top) || 0), bot = r.bottom + scrollY - (parseFloat(cs.bottom) || 0);
         pineEls.filter(vis).forEach(function (band) {
           var q = band.getBoundingClientRect(), bt = q.top + scrollY, bb = q.bottom + scrollY, gap = bt > bot ? bt - bot : top - bb;
           if (gap < innerHeight) E.push('The pine pad and the pine band are ' + Math.round(gap) + 'px apart, on one screen (a screen or more apart).');
@@ -1768,9 +1785,9 @@
   }
 
   /* ================================================================ start */
-  // Franco 2026-10-19: each nav link carries its own label, so .nav a::after reserves its semibold width and the row never shifts
+  // Franco 2026-10-19: each nav link carries its own label, so .nav ul a::after reserves its semibold width and the row never shifts
   // between pages (with JS off only that reserve goes, never the mark)
-  $$('.nav a').forEach(function (a) { a.dataset.label = a.textContent.trim(); });
+  $$('.nav ul a').forEach(function (a) { a.dataset.label = a.textContent.trim(); });
   initMenu();
   initFolds();   // alive build 2026-10-24 (foot-fold)
   initPickers();

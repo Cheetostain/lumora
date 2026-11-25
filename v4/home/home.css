@@ -19,36 +19,24 @@
 .hm4-hero .eyebrow{max-width:36em;margin-bottom:18px}
 :lang(es) .hm4-hero .eyebrow{text-wrap:balance}   /* "y más." never sits alone (its words also hold with no-break spaces) */
 .hm4-hero h1{font-size:clamp(38px,5.2vw,64px);line-height:1.02;letter-spacing:-.022em;max-width:11.5em}
-/* the Spanish headline (round 2, 2026-10-17, judges: on a computer "y ponemos" sat alone on line three of four). Three lines cannot
-   hold it at 64px: its shortest possible first line, "Automatizamos el trabajo", is 689px and the column is 624 at 1280 and 1440.
-   Making room would take the clipboard under 480px, which puts the sheet's calls formula on two lines, and the type scale has
-   nothing between 44 and 64. So it keeps four lines and an even edge: the no-break space in "su negocio" went (index.es.html), and
-   every width that sets four lines reads "Automatizamos el / trabajo repetitivo / y ponemos su / negocio en orden." (phones 320 to
-   430 too, where the same short line sat); widths that set three are unchanged. iphone_check.py holds the edge */
 .hm4-hero .t-lede{font-size:clamp(18px,1.6vw,20px);line-height:1.5;margin-top:22px;max-width:34em}
 .hm4-hero .hero-vision{grid-area:vision;font-size:20px;font-weight:500;line-height:1.35;color:var(--ink);max-width:22em;text-wrap:balance}
-@media (min-width:1180px){.hm4-hero .hero-vision{max-width:31em}}   /* 2026-10-17 polish: one line where the column has room, so the price keeps the first screen at 1280 x 800 in Spanish too */
 .hm4-hero .hero-act{grid-area:act}
 .hm4-hero .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px}
 .hm-sms{font-size:17px}
 .hm-sms,.c4-sms,.who-all a,.hm-about a,.walk-more a,.walk-leak a,.pk-walk a,.c4-hours .mb a,.hero-mb a{display:inline-block;padding-block:12px;margin-block:-12px}   /* 2026-10-17: Full terms too (owner judge) */   /* a 44px tall tap area without moving the layout (WCAG 2.5.8) */
 .reply-s{font-size:15px;line-height:1.35;color:var(--pencil);text-wrap:balance}   /* one shade darker than muted (7.9:1 on paper). 2026-10-17 polish: the
    hero says the reply this short at every width (the owner judge found the Spanish price under the first screen at 1280 x 800,
-   behind the three-line sentence); the close's Reply time row says it whole, once */
-.rs-g{display:none}
-/* resume pass 2026-10-19 (owner judge: Oct 16 said "English or Spanish" beside the first button, and a Spanish reader could not tell
-   whether the call would be in Spanish): the short line says the language. Under 390px it took a fourth line and the call bar cut
-   row 1 of the sheet (375 x 667, 375 x 812, 360 x 780, 320 x 568), so there it steps aside; the header's language link stays */
-@media (max-width:389px){.rs-lang{display:none}}
-/* round 3: the Spanish Home's line is two spans, the short phone's three short sentences (.rs-g, below) and everyone else's two (.rs-l) */
+   behind the three-line sentence); the close's Reply time row says it whole, once. Nov 24 (hero-review-2026-11-23, item 9): one
+   string per language at every size, the language in it; the town is in the eyebrow on every screen */
 .hm4-hero .hero-terms{grid-area:terms;display:grid;gap:10px;max-width:38em}
 .hm4-hero .hero-terms .price{font-size:17px;max-width:38em}
 .hm4-hero .hero-terms b{color:var(--ink)}
 .hm4-hero .hero-terms .hero-mb{font-size:17px;max-width:38em}   /* agency pass 2026-10-18 (rank 5): the guarantee beside the price it covers */
 .hm4-hero .hero-tool{grid-area:tool;position:relative;min-width:0}
 
-/* the clipboard: hardboard with a 3px edge under it, the steel lever clip drawn in SVG (a flat lever, the rolled pivot, a flat
-   brushed jaw with a curled lip, two plain rivets, one soft shadow; no wire bail, no gloss), two more sheets under the top one,
+/* the clipboard: hardboard with a 3px edge under it, the steel clip drawn in SVG (Nov 24, the cold hero review's item 11: a bell handle,
+   the hinge roll with two dark grips, a flat jaw with a turned lip, one soft shadow; system.css 11), two more sheets under the top one,
    and the printed sheet: the mark beside "Walk sheet" with Sample on that line, the shop under them. It writes itself in on load
    again (data-fill, system.css: the rows land, then the total, then the pen rings the biggest leak; SYSTEM 9 item 2), and a pick
    redraws it (.swap). Motion restore, 2026-10-18 (Franco: "why does the lumora website now look so empty, so dead... where's the
@@ -58,7 +46,7 @@
 .hm4-hero .clip{position:relative;padding-top:24px}
 .hm4-hero .board{position:relative;border-radius:14px;padding:30px 14px 22px;   /* its grained hardboard is system.css's .board[data-grain]; the 3px edge under it is system.css's --board-edge, so it follows the board's colour (2026-10-17: one board colour in every engine) */
   box-shadow:inset 0 1px 0 rgba(255,244,222,.28),inset 0 0 0 1px rgba(70,48,20,.22),0 3px 0 var(--board-edge),0 4px 1px rgba(40,28,12,.22),0 46px 80px -28px rgba(58,47,28,.36),0 26px 40px -26px rgba(0,0,0,.34)}
-.hm4-hero .clamp{position:absolute;left:50%;top:-14px;width:214px;max-width:none;height:66px;margin-left:-107px;transform:none;z-index:3;background:none;border-radius:0;box-shadow:none;filter:drop-shadow(0 2px 2px rgba(40,28,12,.28))}
+.hm4-hero .clamp{top:-15px;width:158px;max-width:none;background:none}   /* the rest is system.css's .clamp; 33% of the 480px computer board */
 .hm4-hero .stack{position:relative;isolation:isolate}
 .hm4-hero .stack::before,.hm4-hero .stack::after{content:"";position:absolute;left:3px;right:2px;bottom:-4px;height:40px;background:#F7F4EC;border-radius:1px;box-shadow:0 1px 1px rgba(58,47,28,.22)}
 .hm4-hero .stack::after{left:6px;right:4px;bottom:-8px;background:#EFEBE1;z-index:-1;box-shadow:0 1px 2px rgba(58,47,28,.26)}
@@ -80,7 +68,7 @@
 .hm4-hero .sh-time,.hm4-hero .sh-note{font-size:15px;margin-top:6px}
 .hm4-hero .sh-time b{color:var(--ink);white-space:nowrap}   /* "about 15 hours a month" stays together */
 .hm4-hero .sh-note{color:var(--muted)}
-@media (max-width:420px){.hm4-hero .sheet{padding:48px 16px 12px}.hm4-hero .board{padding:28px 10px 16px}.hm4-hero .clamp{width:176px;height:54px;top:-11px;margin-left:-88px}}
+@media (max-width:420px){.hm4-hero .sheet{padding:48px 16px 12px}.hm4-hero .board{padding:28px 10px 16px}.hm4-hero .clamp{top:-12px;width:clamp(35%,132px,42%)}}
 @media (max-width:420px){.hm4-hero .sheet[data-ring]{padding-right:20px}.hm4-hero .board:has(.sheet[data-ring]){padding-inline:8px}}   /* Nov 7: the ring's 4px of room on a phone (system.css, under .sh-usd .pen-ring): a 20px right margin, paid for by the board's brown edge, 10px a side to 8, so no line of the sheet rewraps; from 421px the sheet has 24px a side */
 /* under the sheet: the picked sample's whole walk and the loss calculator (agency plan M19, ruling 21), two plain links, each with a
    44px tap area that doesn't move the layout; 24px between them, so the two areas never overlap */
@@ -102,7 +90,7 @@
 
 /* ======================================================= 3 who we work with: its own ground (bone), big short lines, wide trade links,
    each with its trade's biggest leak; what you keep under the heading on a computer */
-.who-g{display:grid;gap:24px;grid-template-areas:"h" "one" "lines" "trades" "all" "not" "slot"}
+.who-g{display:grid;gap:24px;grid-template-areas:"h" "one" "lines" "trades" "all" "not"}
 .who-g>h2{grid-area:h}.who-one{grid-area:one}.who-all{grid-area:all}
 /* 2026-10-17 (Franco on his iPhone: "a lot of words", and How it works follows right after): a phone says who in one line, then the
    trades and the closing line; the three lines and What you keep are the computer's (data-extra) */
@@ -111,7 +99,7 @@
    "donde el papeleo se queda para la noche.", was 3px too long for 343px, so balance split the whole line in three. -.025em, about
    the headlines' own tracking, gives 8px back: two lines from 375, broken at the comma. Balance stays: pretty moved the break off the
    comma at 390 and left "la noche." alone at 360; under 375 three lines are the most the column holds anyway, and balance keeps them even */
-@media (max-width:899px){.who-g{grid-template-areas:"h" "one" "trades" "all" "slot"}}   /* their rows go too, or each left two gaps */
+@media (max-width:899px){.who-g{grid-template-areas:"h" "one" "trades" "all"}}   /* their rows go too, or each left two gaps */
 @media (min-width:900px){.who-one{display:none}}
 
 /* 2026-10-16: the arrow sits on the name's line (row 1, the name's line height), not centred on a cell whose leak line runs one or two lines.
@@ -123,7 +111,7 @@
 
 @media (min-width:900px){
 
-  .who-g{grid-template-columns:minmax(0,4fr) minmax(0,8fr);grid-template-areas:"h lines" "not lines" "slot lines" "trades trades" "all all";grid-template-rows:auto auto 1fr auto auto;column-gap:48px;row-gap:20px;align-items:start}
+  .who-g{grid-template-columns:minmax(0,4fr) minmax(0,8fr);grid-template-areas:"h lines" "not lines" ". lines" "trades trades" "all all";grid-template-rows:auto auto 1fr auto auto;column-gap:48px;row-gap:20px;align-items:start}
 
   /* round 3 (2026-10-17, craft judge: in Spanish at 1440 the pair ran four lines against two): the longer first line gets the wider
      column, so the pair runs three lines against two, balanced */
@@ -141,12 +129,47 @@
 @media (min-width:900px){.hm4-how .tl-head{flex-direction:column;align-items:flex-start;gap:6px}}   /* on a computer the step column is narrow, so every tag gets its own line (one wrapped and three didn't) */
 .tl4 .price,.tl4 .mb{font-size:17px}
 
-.tl4 .slot{width:130px}
-@media (min-width:900px){.tl4 .slot{width:150px}.hm4-how .tl4>li.tl-big{padding-block:32px}}   /* 2026-10-16: the inline bleed comes from system.css */
-/* review only (never on the live site): the picture slot grows to its words, so the Spanish slot text no longer runs over the
-   money-back line and the next slot's border (checkers' pass, 2026-10-24) */
-html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
-@media (min-width:900px){html.review .tl4 .slot{min-height:150px}}
+@media (min-width:900px){.hm4-how .mb .won{white-space:nowrap}}   /* Nov 24: "lo que pagó por la visita" broke over two lines at 1440, its pencil line in two strokes */
+@media (min-width:900px){.hm4-how .tl4>li.tl-big{padding-block:32px}}   /* 2026-10-16: the inline bleed comes from system.css */
+/* Nov 24 (hero-review-2026-11-23, item 4): no picture slot, so a step is its name and its words, with no empty third track (and its
+   28px gap) at the right */
+@media (min-width:900px){.hm4-how .tl4>li{grid-template-columns:minmax(0,var(--tl-head,15em)) minmax(0,1fr)}}
+/* Nov 24 (hero-review-2026-11-23, item 7): the owner's note after the steps. A computer sets it on the steps' own lines: its heading
+   on the names' x, its letter on the words' x, the signature, the name and About at the right, so no half of the row is blank (the
+   mock's 640px card left one). Cardino stands on its top edge, so the steps keep room over him. img.note-photo (96px) shows only when
+   add_photo.py has put the real one in */
+.how-note{margin-top:76px}
+.how-note .letter p.note-p{margin:0;text-wrap:pretty}
+.how-note .letter-pen{margin-top:20px}
+.how-note .letter .letter-pen+.letter-sig{margin-top:10px}   /* his strokes ended 2px over the name */
+.how-note .letter p.hm-about{margin-top:14px;font-size:var(--fs-15)}
+.how-note .letter:has(.note-photo){display:grid;grid-template-columns:96px minmax(0,1fr);column-gap:18px}
+.how-note .letter:has(.note-photo)>*{grid-column:1/-1}
+.how-note .letter>.note-photo{grid-column:1;grid-row:1;display:block;width:96px;height:96px;margin-bottom:16px;object-fit:cover;border-radius:2px}
+.how-note .letter:has(.note-photo)>.letter-h{grid-column:2;grid-row:1;align-self:center;margin:0 0 16px}
+@media (min-width:700px){.how-note{margin-top:88px}}
+@media (min-width:900px){
+  .hm4-how .how-note{--bleed:calc(var(--g) - 16px);margin-inline:calc(-1*var(--bleed));padding-inline:var(--bleed)}   /* the walk row's own bleed (system.css .tl-big), so its words sit on the other rows' x */
+  .how-note .letter,.how-note .letter:has(.note-photo){display:grid;grid-template-columns:minmax(0,1fr) 160px;grid-template-rows:auto 1fr;column-gap:48px}
+  .how-note .letter>.letter-h,.how-note .letter:has(.note-photo)>.letter-h{grid-column:1;grid-row:1;margin:0 0 12px}
+  .how-note .letter>.note-p,.how-note .letter:has(.note-photo)>.note-p{grid-column:1;grid-row:2}
+  .how-note .letter>.note-sig,.how-note .letter:has(.note-photo)>.note-sig{grid-column:2;grid-row:1/-1;align-self:center}
+  .how-note .letter-pen{margin-top:0}
+}
+@media (min-width:900px) and (max-width:1179px){   /* the photo at the left of the heading and the letter */
+  .how-note .letter:has(.note-photo){grid-template-columns:96px minmax(0,1fr) 160px;column-gap:24px}
+  .how-note .letter>.note-photo{grid-row:1/-1;align-self:start;margin:0}
+  .how-note .letter:has(.note-photo)>:is(.letter-h,.note-p){grid-column:2}
+  .how-note .letter:has(.note-photo)>.letter-h{align-self:start}
+  .how-note .letter:has(.note-photo)>.note-sig{grid-column:3}
+}
+@media (min-width:1180px){
+  .how-note .letter,.how-note .letter:has(.note-photo){grid-template-columns:minmax(0,var(--tl-head,15em)) minmax(0,1fr) 160px;column-gap:28px}
+  .how-note .letter>.note-p,.how-note .letter:has(.note-photo)>.note-p{grid-column:2;grid-row:1/-1;padding-right:20px;font-size:var(--fs-20);line-height:1.45}
+  .how-note .letter>.note-sig,.how-note .letter:has(.note-photo)>.note-sig{grid-column:3}
+  .how-note .letter>.note-photo{grid-column:1;grid-row:2;align-self:start;margin:4px 0 0}
+}
+@media (min-width:1300px){.hm4-how .how-note{--bleed:28px}}
 .hm4-how .cta-inline{margin-top:30px;border-top:0;padding-top:0}   /* button and number only: the walk row above already says the money back in full */
 
 /* ======================================================= 5 the walk: one stop, the same screen Before / After (R7). For plumbing it is
@@ -185,38 +208,23 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
   }
 
 /* ======================================================= 7 the close: the ask, the shared rows (Money back, Hours, Reply time, Language,
-   the calculator link), the signed card, the rules. The close's own rules are system.css's (section 23) since the agency pass,
+   the calculator link), the rules. The close's own rules are system.css's (section 23) since the agency pass,
    2026-10-18 (Franco: "why remove some info too?"): Hours and Language came back to Home's close and the number shows on a
    phone, as on every trade page. The LLC line is the footer's alone */
-/* round 3 (2026-10-17, craft judge: at 1440 Rules we keep hung under the card and left about 190px of empty paper under Reply time).
-   The approved desktop balanced the two columns with Hours, Language and the LLC line on the left; note 3 (say each thing once) moved
-   those to the footer, so the left column got shorter. Rules we keep left the card (index.html: its own block after it) and, on a
-   computer, runs under both columns, its three rules in a row: the ask and the card now end 42px apart in English (the card's Where
-   row takes two lines since it names the base again) and 18 in Spanish, at 1280 too, where 214 and 153px of paper sat under Reply
-   time. On a phone it sits 30px under the card, as before */
 .c4-rules{margin-top:-14px}
-/* lane 2, agency pass 2026-10-18 (requests-2 item 1): the shared rows came back (Hours, Language, the calculator link), so the left
-   column is the long one again and the round 3 reason for running the rules under both columns is gone. From 900px Rules we keep
-   sits under the card in the right column, as on Plumbing; the card stops being sticky there, so it never slides over the rules.
-   iphone_check item 22 holds the two columns' ends together */
-/* alive build 2026-10-24 (Franco's pick close-trim, alive round item 10): Home's close keeps three rows (Money back, Hours, Reply
-   time), so the ask is short again. The round put Rules we keep under the ask, beside a card that carried Franco's photo; with the
-   photo on About only (D44) the ask and the card end within 20px of each other, and the rules under the ask left 170 to 230px of
-   empty paper under the card (measured at 1024 to 1440, both languages). So from 900px Rules we keep runs under both columns, its
-   three rules in a row with a rule over and under each, round 3's layout (2026-10-17), which held while the ask was this short.
-   iphone_check item 22 holds the ask and the card ending within 72px and the rules under both */
+.hm4-close .c4-hours{margin-top:-14px}   /* 30px under the number, as it stood inside the ask */
+/* Nov 24 (hero-review-2026-11-23, item 7): the signed card moved into How it works, and Rules we keep takes its column from 900px,
+   beside the heading, the button and the number; the three facts run under both, in a row. The ask and the rules start on one line
+   and end on one (as the mock has it, with the facts under the ask, 231px of paper stood under the rules). Before: the card in this
+   column and the rules across both (2026-10-24, close-trim). iphone_check 22 holds it */
 @media (min-width:900px){
-  .hm4-close .c4-main{grid-column:1;grid-row:1}
-  .hm4-close .c4-card{grid-column:2;grid-row:1;position:relative;top:auto}
-  .hm4-close .c4-rules{grid-column:1/-1;grid-row:2;margin-top:-8px}
-  .hm4-close .c4-rules ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:40px}
-  .hm4-close .c4-rules li{border-bottom:1px solid var(--rule)}
-  .c4-rules li{text-wrap:balance}   /* a Spanish rule takes two even lines, never "ya paga." alone */
-  /* review fixes, Nov 10: the signature (Nov 9) and the letter's longer story (sweep card HQ D46) made the card end 99 to 151px under
-     the ask from 1180 to 1440 (iphone_check item 22, 72 at most). The ask's lines are short, so the two columns share the width
-     evenly and the letter takes fewer lines */
-  .hm4-close .close-g{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)}
-  .hm4-close .letter-pen{margin-top:14px}   /* and the signature sits 6px closer to the letter, so the English card ends within 72px at 1280 to 1440 with the heading still two lines */
+  .hm4-close .close-g{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);row-gap:44px;align-items:stretch}
+  .hm4-close .c4-rules{grid-column:2;grid-row:1;display:flex;flex-direction:column;margin-top:0;padding-top:7px}
+  .hm4-close .c4-rules h3{margin-bottom:14px}
+  .hm4-close .c4-rules ul{flex:1;display:grid;grid-auto-rows:1fr}
+  .hm4-close .c4-rules li{display:flex;align-items:center;padding:12px 0;font-size:var(--fs-20);line-height:1.3;text-wrap:balance}
+  .hm4-close .c4-hours{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1.2fr);column-gap:32px;margin-top:0;border-top:0}
+  .hm4-close .c4-hours div{grid-template-columns:minmax(0,1fr);align-content:start;gap:4px;padding:14px 0 16px;border-top:1px solid var(--rule)}
 }
 
 /* ======================================================= band padding by role (computer, then phone). Quick sections get less air,
@@ -243,8 +251,7 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
   .who-g{gap:20px}
   .tl4>li{padding-block:18px}
 
-  .c4-card{margin-top:28px}
-  .c4-rules{margin-top:-6px}
+  .c4-rules,.hm4-close .c4-hours{margin-top:-6px}
 
         }
 /* the smallest phones, under 360 (phone-access review 2026-10-10, measured at 320 x 568): a picked trade's stop phone gives back
@@ -259,65 +266,66 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
 /* Cardino perches on the contact card (Franco 2026-10-10: he floated above it). The perch drawing is cropped to the bird, so
    bottom:100% puts his feet on the card's top edge at any size; 2px down so he stands on it. Overrides system.css's top offsets. */
 
-/* ======================================================= the hero's two layouts on a computer
-   1080 and up: the approved desktop, words left and the clipboard right (460px, 480 from 1180); the strip of three tools under
-   both (from 1240 since round 3) left with the alive build (2026-10-24, strip-out), and the facts end the words' column. 900 to
-   1079 (new, unjudged): the same two columns with a 380px clipboard. Departure from the merge plan's one column there: at 1024 x 768 one column put only words on the first screen and
-   left the clipboard beside an empty half. On a computer the hero keeps its number, "Or send a text" and the whole reply line,
-   since a computer has no call bar */
-@media (min-width:900px){
-  .hm4-hero .reply-s{flex-basis:100%;margin-top:-2px}   /* its own line under the button, the number and "Or send a text" */
-  .hm4-hero .hero-g{row-gap:24px}
-  .hm4-hero .hero-vision{margin-top:-4px}
-}
+/* ======================================================= the hero on a computer, rebuilt Nov 24 (hero-review-2026-11-23, items 2, 3 and
+   10; hero-build-2026-11-24 step 6). Words left, the clipboard right (380px, 460 from 1080, 480 from 1180). One message on the left:
+   the intro line, the headline, the three results, the tools, the call row with the reply line and the calculator line under it, the
+   price with its money back under a 1px ink rule, and the facts under a hairline. From 1180 wide and up to 960 tall the headline is 52px
+   on two lines, so all of it ends on the first screen at 1440 x 900, 1366 x 768 and 1280 x 800 in both languages, with the same air
+   (check.py HOME_DESK_JS, home_pair_problems); taller screens keep 64px. The vision line is the phone's and the footer's: the headline
+   says it here. Until Nov 24 the Spanish alone was tightened from 1180 wide and up to 920 tall, and the gap between the columns was 96px;
+   the 672px column holds the two-line headline ("home ORIGINAL-2026-11-24-cold.css") */
 @media (min-width:900px){
   .hm4-hero{padding-bottom:72px}
-  .hm4-hero .hero-g{grid-template-columns:minmax(0,1fr) 380px;column-gap:40px;grid-template-areas:"copy tool" "vision tool" "act tool" "terms tool" "facts tool";grid-template-rows:auto auto auto auto 1fr}
+  .hm4-hero .hero-g{row-gap:18px;grid-template-columns:minmax(0,1fr) 380px;column-gap:40px;grid-template-areas:"copy tool" "act tool" "terms tool" "facts tool";grid-template-rows:auto auto auto 1fr}
+  .hm4-hero .hero-vision{display:none}
+  .hm4-hero .hero-act{margin-top:6px}
+  .hm4-hero .reply-s{flex-basis:100%;margin-top:-2px}   /* its own line under the button, the number and the text link */
+  .hm4-hero .hero-terms{gap:8px;padding-top:16px;margin-top:6px;border-top:1px solid var(--ink);max-width:none}
+  .hm4-hero .hero-terms :is(.price,.hero-mb){font-size:15px;line-height:1.45;color:var(--ink);max-width:none;text-wrap:pretty}
+  .hm4-hero .hero-g>.facts4{margin-top:4px;padding-bottom:0}
+  .hm4-hero .facts4 ul{padding-block:12px 0;border-top:1px solid var(--rule)}
 }
+.hm4-hero .facts4 ul{font-weight:400}   /* Oct 27: one weight at every width, so the facts never outweigh the price */
 @media (min-width:1080px){.hm4-hero .hero-g{grid-template-columns:minmax(0,1fr) 460px;column-gap:56px}}
-@media (min-width:900px) and (max-height:860px){.hm4-hero{padding-top:24px}}   /* 2026-10-17 polish: a 1280 x 800 laptop shows the price sentence on its first screen, in Spanish too (owner judge) */
-@media (min-width:1180px){.hm4-hero .hero-g{grid-template-columns:minmax(0,1fr) 480px;column-gap:96px}}
-/* round 3 (2026-10-17, owner judge: the Spanish price ran under the first screen at 1280 x 800 and off it at 1366 x 768). The
-   Spanish headline takes four lines at 64px, one more than the English (no 56px on the type scale, and three lines cannot hold it,
-   above), so on a laptop under 861px tall the Spanish hero gives that line back from its own air, the words unchanged: 12px less
-   over the eyebrow, 6 under it, leading .94 in the headline (its descenders clear the next line's ascenders: none sit over one), 16
-   between the blocks instead of 24, and the lede 6px closer at 1.4. The price ends at 760px, on the first screen at 1366 x 768.
-   iphone_check.py holds both languages at 1280 x 800 and 1366 x 768. Resume pass 2026-10-19 (owner judge): to 920px tall, since at
-   1440 x 900 the money back line under the price ended at 918px, under the first screen */
-@media (min-width:1180px) and (max-height:920px){
-  :lang(es) .hm4-hero{padding-top:12px}
-  :lang(es) .hm4-hero .eyebrow{margin-bottom:12px}
-  :lang(es) .hm4-hero h1{line-height:.94}
-  :lang(es) .hm4-hero .t-lede{margin-top:16px;line-height:1.4}
-  :lang(es) .hm4-hero .hero-g{row-gap:16px}
+@media (min-width:1180px){.hm4-hero .hero-g{grid-template-columns:minmax(0,1fr) 480px;column-gap:48px}.hm4-hero h1{max-width:none}}
+@media (min-width:1180px) and (max-height:960px){
+  .hm4-hero .hero-g{row-gap:16px}
+  .hm4-hero h1{font-size:52px;text-wrap:balance}
 }
-/* the facts close the hero: three on Home (the money back is said once, in the close: Franco's list item 3). Since the alive build
-   (2026-10-24, strip-out) they sit in the hero's own grid, 4px under the terms' row gap, as the round built them */
-@media (min-width:900px){.hm4-hero .hero-g>.facts4{margin-top:4px;padding-bottom:0}.hm4-hero .facts4 ul{padding-block:0}}
-/* round 4 (2026-10-18, craft judge) set the three facts in the strip's own columns from 1240, each under its picture. Since the alive
-   build (2026-10-24, Franco's pick facts-line) the facts are one plain line of sentences (system.css 12b), so the columns went;
-   iphone_check.py item 28 now holds the line */
+@media (min-width:900px) and (max-height:860px){   /* a laptop: the same order with less air, so the facts keep the first screen */
+  .hm4-hero{padding-top:16px}
+  .hm4-hero .eyebrow{margin-bottom:14px}
+  .hm4-hero .t-lede{font-size:17px;line-height:1.45;max-width:none}   /* the tools sentence on one line */
+  #top .ld-how{margin-top:8px}
+  .hm4-hero .hero-g{row-gap:14px}
+  .hm4-hero .hero-act{margin-top:0}
+  .hm4-hero .hero-terms{margin-top:0;padding-top:12px}
+  .hm4-hero .clip{padding-top:16px}   /* the board ends inside 768 (it ended 2px past it) */
+}
 
-/* ======================================================= the phone layout (under 900px), p1-final
-   The first screen reads: headline, one line, the call button with the reply line beside it, then the walk sheet running off the
-   bottom of the screen right under the ringed $1,900. Then the two links under the sheet, the vision line, the price and the
-   facts (the strip between the sheet and the vision line left with the alive build, 2026-10-24). One full-width black slab per screen, and that is the call bar */
+/* ======================================================= the phone layout (under 900px), rebuilt Nov 24 (hero-review-2026-11-23, items 1,
+   5, 9 and 10; hero-build-2026-11-24 step 4). p1-final until then. The first screen reads: who it's for, the headline, three results,
+   the tools, the call button alone on its row, the reply line and the calculator line, then the example's caption and the clipboard
+   on the page's paper. Then the two links under the sheet, the vision line, the price and the facts. One full-width black slab per
+   screen, and that is the call bar. Its top edge lands in a gap at check.py's nine phones (HOME_FIRST): until Nov 24 every height band
+   tuned its gaps so row 1's ring ended over the bar, and those bands left with that rule ("home ORIGINAL-2026-11-24-cold.css") */
 @media (max-width:899px){
-  .hm4-hero{padding-top:26px}
+  .hm4-hero{padding-top:28px}
   .hm4-hero .hero-g{gap:0}
-  .hm4-hero .eyebrow{font-size:15px;line-height:1.45;margin-bottom:18px;max-width:26em}
-  .hm4-hero h1{font-size:38px;line-height:1.04;letter-spacing:-.024em}
-  .hm4-hero .t-lede{font-size:17px;line-height:1.5;margin-top:14px}
-  .hm4-hero .hero-act{margin-top:32px}
+  .hm4-hero .eyebrow{font-size:15px;line-height:1.4;margin-bottom:14px;max-width:25em;text-wrap:balance}
+  .hm4-hero h1{font-size:38px;line-height:1.05;letter-spacing:-.024em}
+  .hm4-hero .t-lede{font-size:17px;line-height:1.5;margin-top:16px}
+  .hm4-hero .hero-act{margin-top:28px}
   .hm4-hero .hero-act .cta-tel{display:none}         /* data-extra: the number and Text live in the bar, on screen the whole time */
-  .hm4-hero .cta-row{flex-wrap:nowrap;gap:16px}
-  .hm4-hero .hero-act .btn{flex:none;padding:0 26px}
-  .hm4-hero .hero-tool{margin-top:38px}
+  .hm4-hero .cta-row{gap:12px 0}
+  .hm4-hero .hero-act .btn{flex:none}
+  .hm4-hero .hero-tool{margin-top:24px}
   .hm4-hero .clip{padding-top:16px}
   .hm4-hero .lh{padding-bottom:10px}
   .hm4-hero .sh-cols{margin-top:10px}
-  .hm4-hero .pk-more{margin-top:26px}
-  .hm4-hero .t-tools{display:none}   /* 2026-10-17 (Franco on his iPhone: the block "cuts off a little rough" and sits off centre): the vision line, the price and the
+  .hm4-hero .sh-rows li{padding-block:16px}
+  .hm4-hero .pk-more{margin-top:28px}
+  /* 2026-10-17 (Franco on his iPhone: the block "cuts off a little rough" and sits off centre): the vision line, the price and the
      facts sit centred in their paper, 48px from the phone band's edge to the line and 48px from the last tick to What we automate
      (it was 64 over and 26 under). Since the alive build (2026-10-24, strip-out) the block sits between the links under the sheet
      and the walk, centred the same way. iphone_check.py holds the two within 2px (item 3) */
@@ -339,6 +347,9 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
    dropped to the mark's left edge): on a short phone too, the room coming from the short phone block below. On a phone its two lines
    sit at 1.3, one block of print under the title (1.55 read as two paragraphs) */
 @media (max-width:899px){:lang(es) .hm4-hero .sh-sub{line-height:1.3}}
+/* Nov 24 (hero-review-2026-11-23, item 10): the Spanish rows' names take the next step down on a phone, so "Cotizaciones sin seguimiento"
+   holds one line beside its ringed amount from 360 (two at 17px); -.015em keeps its last letter clear of the pen ring */
+@media (max-width:899px){:root:lang(es) .hm4-hero .sh-rows .sh-l b{font-size:var(--fs-15);letter-spacing:-.015em}}
 /* picks follow-up (Franco 2026-10-19, design round item 7's Spanish match): a phone's letterhead reads the short business line, as
    the trade pages' has since item 1 (span.sh-at holds the place; the town stays beside Llámenos, "Empresa de Gainesville"). The
    Spanish row 1 now says what was lost and what each was worth, "5 trabajos perdidos × $380 de ganancia por trabajo", two phone lines,
@@ -349,189 +360,55 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
    side (under 501px tall) has no bar, so both come back there */
 @media (max-width:899px) and (min-height:501px){main .cta-inline .cta-tel,main .cta-inline[data-extra]{display:none}}
 
-/* tall phones (Pro Max, Plus): room for a bigger headline, still ending on the ring */
+/* from 830 tall the column gets more air; a Pro Max or Plus also takes a bigger headline. Between the sizes the gaps are drawn for,
+   system.js seatBar sets the bar between two lines (data-bar-seat, Nov 24). At 390 and 393 wide the sheet's own top does it, 60px: without
+   it seatBar opens the air under the caption to 31px there, since the title and the business line stand too close to land between */
+@media (max-width:899px) and (min-height:830px){
+  .hm4-hero{padding-top:36px}
+  .hm4-hero .eyebrow{margin-bottom:16px}
+  .hm4-hero .t-lede{margin-top:20px}
+}
+@media (max-width:420px) and (min-height:830px) and (max-height:899px){.hm4-hero .sheet{padding-top:60px}}
 @media (max-width:899px) and (min-height:900px){
-  .hm4-hero{padding-top:30px}
   .hm4-hero h1{font-size:41px}
-  .hm4-hero .t-lede{font-size:18px;margin-top:16px}
-  .hm4-hero .hero-tool{margin-top:40px}
+  .hm4-hero .t-lede{font-size:18px}
 }
-/* Nov 7: the Spanish headline is set by phrase (items 4 and 6, no-break spaces in the page), so "que le quita el sueño." never
-   breaks, and at 41px it is 354px wide (8.63em). The tall-phone size above was set for 414 to 440px wide phones; a 320 or 360px wide
-   screen 900px or taller got it too, and the phrase ran 66px past a 288px column (the page scrolled 50px sideways, the body's clip
-   hid the rest). Here the headline takes the biggest size its phrase fits in the column, 41px from 390 wide as before, 33px at 320,
-   37.7px at 360. The hero's copy is the container, so the measure is the column's own width. check.py holds the headline inside
-   its column at 320, 360 and 393 at 568 and 900 tall, both languages (hero_fit_problems) */
-@media (max-width:899px){.hm4-hero .hero-copy{container-type:inline-size}}
-@media (max-width:899px) and (min-height:900px){:lang(es) .hm4-hero h1{font-size:min(41px,100cqi / 8.7)}}
-/* the Spanish headline runs four lines at 38px, so the gaps above the sheet tighten; each gap is set so the bar's top edge lands in
-   the white between two lines of the sheet (p1-final, measured at 390 x 844, 375 x 667, 393 x 659 and 430 x 932) */
-@media (max-width:899px) and (min-height:701px) and (max-height:899px){
-  /* round 2 (2026-10-17): the short-phone fix below, applied where it also fits. Here the Spanish eyebrow sat 16px under the header
-     (English 32), on the commonest iPhones (390 x 844, 393 x 852). It gets 28: 12px more on top, taken back from a 36px headline (still
-     four lines) and 2px less under the eyebrow and over the button, so the ringed row ends where it did (755 to 756px at 390 x 844) */
-  :lang(es) .hm4-hero{padding-top:22px}   /* 10 before round 2; 16 and 24 before the shop line went back under the title */
-  :lang(es) .hm4-hero h1{font-size:36px}
-  :lang(es) .hm4-hero .eyebrow{margin-bottom:12px}
-  :lang(es) .hm4-hero .hero-act{margin-top:20px}
-  :lang(es) .hm4-hero .hero-tool{margin-top:18px}
-}
+/* Nov 7: the Spanish headline is set by phrase (no-break spaces in the page), and "para que se haga solo." (Nov 24), the line that can't
+   break, is 9.3em wide: the headline takes the biggest size that line fits in the column, up to the English size. The hero's copy is
+   the container, so the measure is the column's own width. check.py holds the headline inside its column at 320, 360 and 393 at 568
+   and 900 tall, both languages (hero_fit_problems) */
+@media (max-width:1279px){.hm4-hero .hero-copy{container-type:inline-size}}
+@media (max-width:899px){:lang(es) .hm4-hero h1{font-size:min(38px,100cqi / 9.4)}}
+@media (min-width:900px) and (max-width:1179px){:lang(es) .hm4-hero h1{font-size:min(clamp(38px,5.2vw,64px),100cqi / 9.4)}}   /* Nov 24: at 900 the line ran 21px past its column, 2px from the pad */
+@media (min-width:1180px) and (max-width:1279px) and (max-height:960px){:root .hm4-hero h1{font-size:min(52px,100cqi / 12.5)}}   /* Nov 24: the Spanish headline's longer line is 12.4em; under 1237 wide its column is shorter than that at 52px. Both languages, one size */
+@media (max-width:899px) and (min-height:900px){:lang(es) .hm4-hero h1{font-size:min(41px,100cqi / 9.4)}}
 /* checkers' pass (2026-10-24): with the strip gone the facts sit one swipe under the reply line by Call us, so on a phone a fact the
-   line already says steps aside, said once, as the line itself does for the eyebrow: the language where the line says it (390px and
-   wider, .rs-lang), Gainesville where the short phone's line says it (.rs-g; the Spanish one from 360px). The computer keeps all
-   three. check.py HOME_JS holds it */
-@media (min-width:390px) and (max-width:899px){.hm4-hero .facts4 li:nth-child(2){display:none}}
-@media (max-width:899px) and (max-height:700px){.hm4-hero .facts4 li:nth-child(1){display:none}}
-@media (max-width:359px) and (max-height:700px){:lang(es) .hm4-hero .facts4 li:nth-child(1){display:inline-block}}
-@media (max-width:899px) and (min-height:900px){:lang(es) .hm4-hero .hero-act{margin-top:40px}:lang(es) .hm4-hero .hero-tool{margin-top:44px}}   /* 2026-10-17: 56 before the shop line's second line */
-/* short phones (iPhone SE, 667 tall): the eyebrow steps aside so the ring still clears the bar, and the line beside the button
-   says Gainesville instead (said once: where the eyebrow shows, it says Gainesville) */
+   line already says steps aside, said once: since Nov 24 the line says the language on every phone (item 9) and no longer says the
+   town, so the language fact steps aside and the Gainesville fact shows. The computer keeps all three. check.py FACTS_ONCE_JS holds it */
+@media (max-width:899px){.hm4-hero .facts4 li:nth-child(2){display:none}}
+/* short phones (667 tall and under: the iPhone SE, and an iPhone with Safari's bars): the same order one step smaller */
 @media (max-width:899px) and (max-height:700px){
-  .rs-g{display:inline}
-  /* round 2 (2026-10-17, judges, seen in Spanish; the English measured the same): with the eyebrow gone the headline's first line
-     sat 15 to 16px under the header. It gets 28 to 30px, the air a taller phone's first line has under it, and the walk sheet does
-     not move: the 14px come from a 30px headline (still three lines in both languages) and 2px less between the lines and the
-     button, over the clamp and under it. The ringed row ends where it did (576 to 577px), the bar still lands between two lines */
-  .hm4-hero{padding-top:22px}   /* p1-final took 8px from a 56px header on short phones; the site keeps one 64px header */
-  .hm4-hero .eyebrow{display:none}
-  .hm4-hero h1{font-size:30px}
-  .hm4-hero .t-lede{font-size:16px;margin-top:8px}
-  .hm4-hero .hero-act{margin-top:12px}
-  .hm4-hero .cta-row{gap:12px}
-  .hm4-hero .hero-act .btn{padding:0 22px}
-  .hm4-hero .hero-tool{margin-top:10px}
-  .hm4-hero .clip{padding-top:11px}   /* the clamp's lever rises 11px over the board */
-  .hm4-hero .sheet{padding-top:40px}
-  .hm4-hero .board{padding-top:24px}
-  /* note 7: beside "Llámenos" the Spanish line ran four lines and crowded the clip. Since the 2026-10-17 polish (owner judge) it keeps
-     the free call, the reason to call, and drops the city instead (the facts under the price say Gainesville; the English keeps
-     all three in its three lines): three
-     lines, "La primera llamada es sin costo. Le respondemos el mismo día hábil." */
-  /* round 3 (2026-10-17, judges: a Spanish reader learned we are local two screens down): the line says all three in three short
-     sentences, one a line at 375 and 393 as the English: "Empresa de Gainesville. Primera llamada sin costo. Respuesta el mismo día
-     hábil." (ES-NEW-LINES, round 3; the two-sentence line is the other widths') */
-  :lang(es) .rs-l{display:none}
-  /* with three lines beside the button, as in English, the Spanish keeps the English spacing, but the clip starts 16px under the
-     line (it sat 10px under it, with the clamp 5px higher) and the sheet's top margin gives those 6px back, so row 1's formula
-     still ends above the bar at 393 x 659 */
-  :lang(es) .hm4-hero .hero-tool{margin-top:16px}
-  :lang(es) .hm4-hero .sheet{padding-top:34px}   /* 36 before round 2 (see the headline's air above) */
-  /* round 3: the letterhead's second line (16px at 1.3) comes back from the Spanish first screen itself: the lede at 15px (three
-     lines still), 2px less over the button, and the letterhead and the column heads 4 to 2px tighter. Row 1's formula ends at 599px,
-     4px over the bar at 393 x 659 (1px before) */
-  :lang(es) .hm4-hero .t-lede{font-size:15px}
-  :lang(es) .hm4-hero .hero-act{margin-top:10px}
-  :lang(es) .hm4-hero .lh{padding-bottom:6px}
-  :lang(es) .hm4-hero .sh-cols{margin-top:6px;padding-bottom:4px}
-  :lang(es) .hm4-hero .sh-rows li:first-child{padding-top:9px}
+  .hm4-hero{padding-top:20px}
+  .hm4-hero .eyebrow{font-size:14px;margin-bottom:10px}
+  .hm4-hero h1{font-size:32px}
+  :lang(es) .hm4-hero h1{font-size:min(32px,100cqi / 9.4)}
+  .hm4-hero .t-lede{font-size:16px;line-height:1.45;margin-top:12px}
+  .hm4-hero .hero-act{margin-top:18px}
 }
-/* under 360px the three short sentences take five lines beside "Llámenos" (each is wider than the 143px beside it at 320), so the
-   smallest phones keep the two-sentence line, four lines, as before round 3 */
-@media (max-width:359px) and (max-height:700px){:lang(es) .rs-g{display:none}:lang(es) .rs-l{display:inline}}
-/* Nov 10, the handset in Call us (Franco, Nov 9: "just your average like telephone icon to the left of Call us inside the button"):
-   the button is 28px wider (the icon and its 0.4em), so beside it the reply line took one more line and the ringed row went under
-   the call bar on short phones (measured: 20px at 320 x 568 and 393 x 659, and 21px in Spanish at 360 x 780 and 393 x 852). The
-   button keeps its 58px height and the icon its 1em; its sides go to 16px on a short phone (12px in Spanish, where Llámenos is
-   wider, with 10px to the line), so the line beside it keeps its lines. At 390 and wider on a short phone the English line drops
-   ", in English or Spanish" and the facts under the price say the language instead (said once). Review fixes, Nov 10: the build
-   dropped "A Gainesville company." there, and iphone_check item 17 holds the town, the free call and the same-day reply in that
-   line (round 3: the reader learns we are local on the first screen); the language clause is the same length. The Spanish keeps
-   its three short sentences. probe: answers-build-2026-11-10/tools/probe_first.py */
-@media (max-width:899px){:lang(es) .hm4-hero .hero-act .btn:has(.ico-call){padding:0 12px}:lang(es) .hm4-hero .cta-row{gap:10px}}
-@media (max-width:899px) and (max-height:700px){:lang(en) .hm4-hero .hero-act .btn:has(.ico-call){padding:0 16px}}
-@media (min-width:390px) and (max-width:899px) and (max-height:700px){
-  :lang(en) .hm4-hero .rs-lang{display:none}
-  :lang(en) .hm4-hero .facts4 li:nth-child(2){display:inline-block}
+/* 360 x 640: the bar lands between the Spanish caption's two lines, so they stand 6px apart there */
+@media (max-width:374px) and (max-height:700px){#top .hero-tool .hero-eg{line-height:1.625}}
+/* under 601 tall (320 x 568, and an iPhone SE with Safari's bars, 375 x 553): a step smaller again, so the reply line ends over the bar and
+   the bar lands before or after the calculator line */
+@media (max-width:899px) and (max-height:600px){
+  .hm4-hero h1,:lang(es) .hm4-hero h1{font-size:30px;line-height:1.02}
+  .hm4-hero .hero-act{margin-top:16px}
 }
-/* round 3 (2026-10-17, craft judge): under 390px wide on a 701 to 899px tall phone (375 x 812: iPhone X, XS, 11 Pro, 12 mini, 13 mini)
-   the English headline took four lines and the lede four, so the ringed row ended under the call bar (845px in English, 820 in
-   Spanish; the bar starts at 756). The headline steps to 35px (three lines from 360), the lede to 16px (three lines), and the clipboard
-   takes the short phone's clip, board and sheet tops. Row 1 ends 22px over the bar in English and 11 in Spanish, the bar in the white
-   between rows as at the other sizes; 390 and up are unchanged. iphone_check.py and check.py's first screens include 375 x 812 */
-@media (max-width:389px) and (min-height:701px) and (max-height:899px){
-  .hm4-hero h1{font-size:35px}
-  .hm4-hero .t-lede{font-size:16px}
-  .hm4-hero .clip{padding-top:11px}
-  .hm4-hero .board{padding-top:24px}
-  .hm4-hero .sheet{padding-top:40px}
-  :lang(es) .hm4-hero .sheet{padding-top:34px}
-}
-/* round 4 (2026-10-18, judges: a 360 x 780 Android phone, a common size, had the ringed row under the call bar, row 1 ending 34px under
-   it in English and 45 in Spanish). Under 375px wide the lede takes a fourth line, so on a 701 to 899px tall phone that narrow the lede
-   steps to 15px (three lines in both languages) and the gaps over the button and the clipboard close by 8px; the Spanish headline goes
-   to 33px (still four lines) and its two gaps and the sheet's top give 4px each. Row 1 ends 10px over the bar in English and 8 in
-   Spanish, the bar in the white before row 2 as at 375 and 393; 375 x 812 and up are unchanged. iphone_check.py and check.py's first
-   screens include 360 x 780 */
-@media (max-width:374px) and (min-height:701px) and (max-height:899px){
-  .hm4-hero .t-lede{font-size:15px}
-  .hm4-hero .hero-act{margin-top:24px}
-  .hm4-hero .hero-tool{margin-top:30px}
-  :lang(es) .hm4-hero h1{font-size:33px}
-  :lang(es) .hm4-hero .hero-act{margin-top:16px}
-  :lang(es) .hm4-hero .hero-tool{margin-top:14px}
-  :lang(es) .hm4-hero .sheet{padding-top:30px}
-}
-/* round 4 (2026-10-18, judges, 320 x 568; the stamp left on Nov 6): beside the 74px Sample stamp "Walk sheet" had 100px and broke into "Walk / sheet", and the
-   Spanish "Hoja de visita" (130px) could not fit at all; the call bar then cut the title and the stamp. Under 360px wide the stamp is
-   set at 13px with 6px sides (picture text keeps 12px or more), the head's gaps are 8px and the Spanish title is 20px, so each title
-   holds one line beside its stamp (11 and 6px to spare at 320). On a short phone that narrow the bar lands between the title's line
-   and the shop line under it, 4px clear of each: the shop line sits 8px under the title (2 at other widths), the English clipboard
-   starts 18px lower (28px under the line beside the button, which sat 10px over the clamp) and the Spanish sheet's top gives 5px.
-   p1-final's look at 375 and 393 is unchanged; the stamp stays on the title's line. iphone_check.py and check.py include 320 x 568 */
+@media (max-width:359px) and (max-height:600px){.hm4-hero .t-lede{font-size:15px}:lang(es) .hm4-hero .t-lede{line-height:1.5;margin-top:16px}:lang(es) .hm4-hero .hero-act{margin-top:28px}}   /* in Spanish the tools sentence takes two lines at 15px, so the gaps open and the bar still lands between the reply line and the calculator line */
+/* the sheet's letterhead on the narrowest phones: 8px between its parts, and the Spanish title at 20px, so each title keeps one line */
 @media (max-width:359px){
   .hm4-hero .lh{column-gap:8px}
   :lang(es) .hm4-hero .sh-title{font-size:20px}
 }
-@media (max-width:359px) and (max-height:700px){
-  .hm4-hero .lh .sh-sub{margin-top:8px}
-  .hm4-hero .hero-tool{margin-top:28px}
-  :lang(es) .hm4-hero .sheet{padding-top:29px}
-}
-/* item 12, the first phone screen with the picker's row (Franco 2026-10-19, design round item 12). The row takes 44px
-   and 6px under it; the lede's four tool names give back a line where it had three, and on a phone the eyebrow keeps "For local
-   businesses in Gainesville." (its kinds of business, .eb-kinds, step aside: the row right under the call names all nine). The
-   English short phone takes the Spanish short phone's letterhead (6px under the title, the column heads 6px under it, row 1 9px
-   down), the sheet's top 4px closer to the clamp and 4 and 2px less over the call and the lede. The margin over the row is set per height band so the sheet's ringed row 1 lands where it did before the row came, the
-   call bar in the same white (measured at 390 x 844, 375 x 667, 393 x 659, 375 x 812, 430 x 932, 360 x 780 and 320 x 568,
-   picks-build-2026-10-19/work/measure_pick.py; check.py HOME_FIRST and iphone_check.py item 15 hold it) */
-@media (max-width:899px){
-  .hm4-hero .eb-kinds{display:none}
-  .hm4-hero .hero-tool{margin-top:18px}
-  :lang(es) .hm4-hero .hero-tool{margin-top:28px}
-}
-/* a tall Spanish phone: the headline set by phrase took a line off, so the bar would cut row 2's head; the call and the row come up
-   and the bar lands between rows 2 and 3, two rows of the sheet on the first screen */
-@media (max-width:899px) and (min-height:900px){.hm4-hero .hero-tool{margin-top:34px}:lang(es) .hm4-hero .hero-tool{margin-top:17px}:lang(es) .hm4-hero .hero-act{margin-top:22px}}
-@media (max-width:389px) and (min-height:701px) and (max-height:899px){.hm4-hero .hero-tool{margin-top:42px}:lang(es) .hm4-hero .hero-tool{margin-top:25px}}
-@media (max-width:374px) and (min-height:701px) and (max-height:899px){.hm4-hero .hero-tool{margin-top:22px}:lang(es) .hm4-hero .hero-tool{margin-top:15px}}
-@media (max-width:899px) and (max-height:700px){
-  .hm4-hero .sheet{padding-top:30px}   /* English; the Spanish keeps its own 34px (29 under 360px) */
-  :lang(en) .hm4-hero .hero-act{margin-top:8px}
-  :lang(en) .hm4-hero .t-lede{margin-top:6px}
-  .hm4-hero .lh{padding-bottom:6px}
-  .hm4-hero .sh-cols{margin-top:6px;padding-bottom:4px}
-  .hm4-hero .sh-rows li:first-child{padding-top:9px}
-  .hm4-hero .hero-tool{margin-top:8px}
-  :lang(es) .hm4-hero .hero-tool{margin-top:16px}
-}
-@media (max-width:359px) and (max-height:700px){.hm4-hero .hero-tool{margin-top:17px}:lang(es) .hm4-hero .hero-tool{margin-top:20px}}
-/* end of item 12's first phone screen */
-/* alive build 2026-10-24 (Franco's pick phone-scale, alive round item 12): on a short phone the headline goes from 30 to 32px at
-   leading 1 (0.8px more a line), so it stays the loudest line on the page beside a 30px closing line and 28px section heads
-   (system.css section 3). The 2px it takes come back from over the call in English (three lines, 2.4px) and from over the picker's
-   row in Spanish (two lines, 1.6px; three under 360px), so row 1's ring and the call bar's edge stay within half a pixel of where
-   they were (alive-build-2026-10-24/logs/phone-first-before.log and phone-first-after.log). Where 32px would take a line more, the
-   English under 360px (four lines) and the Spanish from 360 to 389px (three: "Automatizamos el papeleo que" fills the 343px column
-   at 31px), the headline keeps 30px and its spacing: the English there stays over a 28px closing line, the Spanish at 375 x 667 is
-   as big as the 30px one, never smaller (alive-build-2026-10-24/logs/phone-probe-h1.log) */
-@media (max-width:899px) and (max-height:700px){
-  .hm4-hero h1{font-size:32px;line-height:1}
-  :lang(en) .hm4-hero .hero-act{margin-top:6px}
-  :lang(es) .hm4-hero .hero-tool{margin-top:14px}
-}
-@media (max-width:359px) and (max-height:700px){:lang(es) .hm4-hero .hero-tool{margin-top:18px}}
-@media (max-width:359px) and (max-height:700px){:lang(en) .hm4-hero h1{font-size:30px;line-height:1.04}:lang(en) .hm4-hero .hero-act{margin-top:8px}}
-@media (min-width:360px) and (max-width:389px) and (max-height:700px){:lang(es) .hm4-hero h1{font-size:30px;line-height:1.04}:lang(es) .hm4-hero .hero-tool{margin-top:16px}}
 
 /* ======================================================= design round picks on Home's walk (Franco 2026-10-19, "do 1 to 13": items 3,
    5 and 13; SYSTEM.md section 13, "Design round picks on Home's walk") */
@@ -560,13 +437,13 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
 @keyframes ws-rule{from{transform:scaleX(0)}}
 /* end of the design round picks on Home's walk */
 /* ======================================================= who we work with, 2026-10-23 (D39, D40): the one line, the examples, the call */
-.who-g{grid-template-areas:"h" "one" "ex" "all" "not" "slot"}
+.who-g{grid-template-areas:"h" "one" "ex" "all" "not"}
 .who-ex{grid-area:ex;font-size:20px;line-height:1.35;color:var(--body);max-width:30em;text-wrap:balance}
-@media (max-width:899px){.who-g{grid-template-areas:"h" "one" "ex" "all" "slot"}}
+@media (max-width:899px){.who-g{grid-template-areas:"h" "one" "ex" "all"}}
 @media (min-width:900px){
   .who-one{display:block;font-size:32px;line-height:1.2;letter-spacing:-.015em;max-width:20em}
   .who-ex{font-size:24px;line-height:1.3}
-  .who-g{grid-template-areas:"h one" "slot ex" "slot all" "slot not";grid-template-rows:auto auto auto 1fr;row-gap:24px}
+  .who-g{grid-template-areas:"h one" ". ex" ". all" ". not";grid-template-rows:auto auto auto 1fr;row-gap:24px}
   .who-all{margin-top:0}
 }
 /* the Industry pages list in Who we work with (2026-10-23): R13 keeps all eight trade links on a phone, as plain links like the other
@@ -578,8 +455,8 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
 /* alive build 2026-10-24 (Franco's picks who-trim and trades-open, alive round items 9 and 8): What you keep left Home (What we
    automate's tools line and Rules we keep say it), so its area went; the Industry pages list ends on the call, the trade pages' and
    Contact's own item, and "Most of the work is the same." with All industries follows on its own lines */
-.who-g{grid-template-areas:"h" "one" "ex" "pages" "all" "slot"}
-@media (min-width:900px){.who-g{grid-template-areas:"h one" "slot ex" "slot pages" "slot all";grid-template-rows:auto auto auto 1fr}}
+.who-g{grid-template-areas:"h" "one" "ex" "pages" "all"}
+@media (min-width:900px){.who-g{grid-template-areas:"h one" ". ex" ". pages" ". all";grid-template-rows:auto auto auto 1fr}}
 /* alive build 2026-10-24 (Franco's pick pine-field, alive round item 4): Who we work with is Home's one pine field (system.css
    [data-ground=pine], the heading, the labels and the focus ring). Its own words take the paper; the Industry pages links keep a
    muted pine underline and turn white on hover, with no fill and no negative margin, so nothing runs past the words (the prototype's
@@ -611,6 +488,7 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
   .hm4-how{--how-in:72px}
   .hm4-how .how-h{grid-template-columns:minmax(0,calc(var(--how-in) + var(--tl-head,15em))) minmax(0,1fr)}   /* the stop line keeps the rows' words' x */
   .hm4-how :is(.tl4,.cta-inline){margin-left:var(--how-in)}
+  .hm4-how .how-note{margin-left:calc(var(--how-in) - var(--bleed))}
 }
 /* how-spine (alive round item 13), its markup: one 1px ink line down the four steps and a square marker on each step's name,
    pseudo-elements only, in the steps' 72px left margin (44px left of the steps, 28px right of the heading's x), from 1240 only: the
@@ -669,14 +547,12 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
    14). The left column now says who, in order (the heading, the one line, the examples), and the right column is where to go (the
    Industry pages list, the closing line and All industries, one block: .who-go). Equal halves, so the two end within a line or two
    of each other in both languages. Under 900 the order is unchanged: who, then where to go */
-.who-g{grid-template-areas:"h" "one" "ex" "go" "slot"}
+.who-g{grid-template-areas:"h" "one" "ex" "go"}
 .who-go{grid-area:go;display:grid;row-gap:inherit;align-content:start;min-width:0}
 .who-go>*{grid-area:auto}   /* the list and the closing line stack in their block; their old areas (pages, all) name nothing here */
 @media (min-width:900px){
-  /* the last row takes any height the right column needs beyond the left, so the left lines never spread apart. The review slot (this
-     computer only, never lumorafl.com) gets a fourth row; on the live site there is none, so no empty row leaves its gap at the foot */
+  /* the last row takes any height the right column needs beyond the left, so the left lines never spread apart. */
   .who-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"h go" "one go" "ex go";grid-template-rows:auto auto 1fr;column-gap:clamp(48px,6vw,96px)}
-  html.review .who-g{grid-template-areas:"h go" "one go" "ex go" "slot go";grid-template-rows:auto auto auto 1fr}
   .who-go{padding-top:10px}   /* the label's cap height on the heading's: "Industry pages" reads level with "Who we work with" */
 }
 /* ================================================================================================================================
@@ -687,70 +563,11 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
    ORIGINAL-2026-10-26-pass.css" beside this file. Out, as Franco said: 21 (the dot grid stays), 23 as proposed, 24, 25
    ================================================================================================================================ */
 
-/* 4 hero-groups (computer): nine blocks read as three groups, same words. The vision line its own step (24px, 600, ink), broken as
-   "run the same / whether you're there or not" (judges); the price and the money back one block under a 1px ink rule, both 17px
-   ink; the facts one plain line at 400 under a hairline, so they stop outweighing the price. On a laptop under 861px tall the gaps
-   close, so the money back keeps the first screen at 1280 x 800 and 1366 x 768 */
-@media (min-width:900px){
-  .hm4-hero .hero-g{row-gap:18px}
-  .hm4-hero .hero-vision{margin-top:14px;font-size:24px;font-weight:600;line-height:1.25;letter-spacing:-.012em;color:var(--ink);max-width:24em}
-  .hm4-hero .hero-vision>span{display:block}
-  .hm4-hero .hero-act{margin-top:6px}
-  .hm4-hero .hero-terms{gap:8px;padding-top:16px;margin-top:6px;border-top:1px solid var(--ink)}
-  .hm4-hero .hero-terms :is(.price,.hero-mb){font-size:17px;color:var(--ink)}
-  .hm4-hero .hero-g>.facts4{margin-top:4px}
-  .hm4-hero .facts4 ul{padding-top:12px;border-top:1px solid var(--rule);font-weight:400}
-}
-/* the reviewers' round (craft, nice): the facts at 400 on a phone too (they computed 500 there, so the same lines had two weights),
-   and the vision line breaks after "run the same" on a phone wide enough to hold it on one line, as a computer does */
-.hm4-hero .facts4 ul{font-weight:400}
+/* 4 hero-groups (computer) is the hero's own computer block above since Nov 24. On a phone the vision line breaks after "run the same"
+   where the column holds it on one line */
 @media (min-width:390px) and (max-width:899px){:lang(en) .hm4-hero .hero-vision>span{display:block}}   /* 390 up, English: each half holds one line there (at 375 the first half took two, and the Spanish halves took three lines in all) */
-@media (min-width:900px) and (max-height:860px){
-  .hm4-hero .hero-g{row-gap:14px}
-  .hm4-hero .hero-vision{margin-top:10px}
-  .hm4-hero .hero-act{margin-top:0}
-  .hm4-hero .hero-terms{margin-top:0;padding-top:12px}
-}
-@media (min-width:1180px) and (max-height:920px){:lang(es) .hm4-hero .hero-g{row-gap:14px}:lang(es) .hm4-hero .hero-vision{margin-top:8px}}
-
-/* 10 phone-air (phone): 16px from the headline to the lede (6px before) and the Spanish lede at the English size, paid for in six
-   small steps under it, so row 1 of the sheet and its ring stay where they were over the call bar */
-@media (max-width:899px) and (max-height:700px){
-  .hm4-hero h1{line-height:1.05}
-  :root .hm4-hero .t-lede{margin-top:16px}   /* :root outweighs the short phone's ":lang(en) ... {margin-top:6px}" above, as the prototype's html.chg-phone-air did */
-  .hm4-hero{padding-top:20px}   /* 20, not the prototype's 18: Franco's iPhone round keeps 20px of air under the header (iphone_check item 11); the 2px come off the picker's foot */
-  .hm4-hero .hero-tool{margin-top:6px}
-  :lang(es) .hm4-hero .hero-tool{margin-top:8px}
-
-  .hm4-hero .clip{padding-top:10px}
-  .hm4-hero .sheet{padding-top:25px}
-  :lang(es) .hm4-hero .sheet{padding-top:29px}
-  .hm4-hero .lh{padding-bottom:5px}
-  .hm4-hero .sh-rows li:first-child{padding-top:8px}
-}
-@media (min-width:390px) and (max-width:899px) and (max-height:700px){:lang(es) .hm4-hero .t-lede{font-size:16px}}
-/* 320 x 568, English: the headline keeps item 10's 16px and the header its 20px (iphone_check item 11), so the letterhead's size line
-   can't end over the call bar; the clipboard starts a step lower instead and the line sits whole under the bar, the title and its
-   Sample stamp clear above it (pass-build-2026-10-26/logs/probe-320.log; before, the hero started at 10px under the header) */
-@media (max-width:899px) and (max-height:600px){:lang(en) .hm4-hero .clip{padding-top:21px}}
-/* Offices, Home's default sample since the last pass (item 26): its rows' names take one line beside their circled numbers, so on a
-   phone each row is a little taller and the call bar lands between two rows at every first-screen size check.py measures
-   (pass-build-2026-10-26/build/probe_first.py printed where each line sat) */
-@media (max-width:899px) and (min-height:701px){.hm4-hero .sh-rows li{padding-block:16px}}
-@media (min-width:420px) and (max-width:899px) and (min-height:900px){:lang(es) .hm4-hero .sh-rows li{padding-block:22px}}
-@media (max-width:899px) and (max-height:700px){.hm4-hero .sh-rows li:not(:first-child){padding-block:22px}.hm4-hero .sh-rows li:first-child{padding-bottom:22px}}
-@media (max-width:899px) and (min-height:701px){.hm4-hero .t-lede{margin-top:16px}}
-/* Franco on his iPhone, 2026-10-27 (393 x 659 in Safari): "Home page is a little too tight on phone... just a tiny bit more". The
-   steps between the lede, Call us, the picker and the clipboard go from 6, 6 and 3px to 12, 12 and 7 (Spanish 10, 8 and 3 to 16, 14
-   and 7), 16px in all; row 1's formula still ends over the call bar (595 of 603 at 393 x 659, Spanish 607 of 611 at 375 x 667).
-   320 x 568 keeps its own steps (its letterhead rule above) */
-@media (max-width:899px) and (min-height:601px) and (max-height:700px){
-  :root:lang(en) .hm4-hero .hero-act{margin-top:12px}
-  :root:lang(es) .hm4-hero .hero-act{margin-top:16px}
-  :root:lang(en) .hm4-hero .hero-tool{margin-top:12px}
-  :root:lang(es) .hm4-hero .hero-tool{margin-top:14px}
-
-}
+/* 10 phone-air, the rows' height bands (item 26) and Oct 27's "just a tiny bit more" room were set by height so row 1's ring ended over the
+   call bar; since Nov 24 the phone layout's own block holds that air, one row padding included */
 
 /* 18 sheet-map: each problem row on the walk sheet links to its stop, with the stop's thin circled number (a counter: no words
    added). Only the problem name underlines on hover; the figure keeps its red. The whole row is the tap target */
@@ -774,13 +591,12 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
 
 /* 22 who-index (computer only; a phone keeps today's list) with the owner photo (in place of item 23). Computer: who on the left,
    the photo on the right, then the nine kinds of business as a large index on thin muted pine rules, the ninth ("Don't see yours?
-   Call us") the same size, so the grid reads open. Phone: the photo under the examples at gutter width, where the review-only
-   planning slot was, then today's list */
+   Call us") the same size, so the grid reads open. Phone: the photo under the examples at gutter width, then today's list */
 .who-photo{grid-area:photo;margin:0;min-width:0}
 .who-photo img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;object-position:50% 50%;border-radius:2px}
 .who-ix .who-g{grid-template-areas:"h" "one" "ex" "photo" "go"}
 @media (min-width:900px){
-  .who-ix .who-g,html.review .who-ix .who-g{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:". . photo" "h h photo" "one one photo" "ex ex photo" ". . photo" "go go go";grid-template-rows:1fr auto auto auto 1fr auto;column-gap:28px;row-gap:20px;align-items:start}   /* the words at the photo's middle: no blank run beside it */
+  .who-ix .who-g{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:". . photo" "h h photo" "one one photo" "ex ex photo" ". . photo" "go go go";grid-template-rows:1fr auto auto auto 1fr auto;column-gap:28px;row-gap:20px;align-items:start}   /* the words at the photo's middle: no blank run beside it */
   /* the reviewers' round (craft judge: the photo's left edge sat off the index's three columns under it, so it read as dropped
      in): the band takes the index's own three columns and gap, the words across the first two and the photo in the third as a
      4:5 portrait, on her (the file is the 3:2 frame a phone shows whole) */
@@ -795,12 +611,10 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
   .who-ix .who-all{margin-top:6px}
 }
 
-/* 12 two-tone: the claim in ink, its second sentence in the muted second tone, one heading. The walk's "Here's where." (home.js
-   wraps it, since system.js writes the heading on every pick); the close's "Tell us what eats your week." on its own line on a
+/* 12 two-tone: the claim in ink, its second sentence in the muted second tone, one heading. The close's "Tell us what eats your week." on its own line on a
    computer (judges); a phone keeps it as the line under the heading, where the one-heading version ran two lines longer */
 .close-h>.close-two{display:block;color:var(--muted)}
 .close-lede>.close-two-l{display:none}
-#walk .walk-h .walk-where{color:var(--muted)}
 @media (max-width:699px){.close-h>.close-two{display:none}.close-lede>.close-two-l{display:block}}
 
 /* 15 close-quiet (computer): the close steps down to 44px, one step under the headline, as the phone already does; the hand-drawn
@@ -813,21 +627,6 @@ html.review .tl4 .slot{aspect-ratio:auto;min-height:130px}
 .letter-pen{display:block;width:160px;margin:20px 0 -6px -2px}
 .letter-pen img{display:block;width:160px;height:auto}
 .letter .letter-pen+.letter-sig{margin-top:2px}
-
-/* 19 proof-slot: a designed place for the first client who agrees in writing, between How it works and the close. Review only (R8
-   keeps empty slots off lumorafl.com); it ships once everything in it is real, cutting as many words as it adds */
-.hm4-proof{display:none}
-html.review .hm4-proof{display:block;padding-block:clamp(40px,5vw,72px)}
-.proof-g{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:center}
-html.review .proof-ph{width:100%;aspect-ratio:4/5}
-/* the band is the figure.slot itself (reviewers' round), so it drops the slot's own box and keeps it for the photo place inside */
-html.review .slot.proof-slot{display:block;padding:clamp(40px,5vw,72px) 0;border:0;border-radius:0;background:none;color:inherit;font-size:inherit;line-height:inherit;text-align:left}
-html.review .proof-slot .proof-ph{display:grid;align-content:center;justify-items:center;gap:4px;padding:10px;border:1.5px dashed var(--pencil);border-radius:6px;background:var(--sheet);color:var(--pencil);font-size:13px;line-height:1.3;text-align:center}
-.proof-t{display:grid;gap:8px;max-width:34em}
-.proof-t p{font-size:17px;color:var(--muted)}
-.proof-t .proof-who{font-size:24px;line-height:1.25;color:var(--ink)}
-.proof-t .proof-res{padding:10px 12px;border:1.5px dashed var(--pencil);border-radius:6px}
-@media (max-width:599px){.proof-g{grid-template-columns:minmax(0,120px) minmax(0,1fr)}}
 
 /* 16 tap-44 (phone): the hero's "the tools you have" and the footer's bottom links get a 44px tap area with no change to how they
    look; the walk intro's links stay as they are (links inside a sentence are exempt, and the spacing made it look double spaced) */
@@ -985,36 +784,6 @@ html.still .sa-ctl,.sa.still .sa-ctl{display:none}   /* Nov 6: the row held the 
   html.js:not(.still) .sa:not(.done):not(.still) .mn{opacity:0;transform:translateY(12px)}
 }
 
-/* the business picker's row over the clipboard left with the picker (2026-10-30). In its room a phone now reads the kinds of business
-   Lumora works with, "For offices, trade shops, restaurants and more." (the reviewers' round, 2026-10-30: kept as air, the room was a
-   64px hole four times the hero's gaps, and on a 393 x 659 iPhone, where the eyebrow steps aside, the first screen named no kind of
-   business but the sample's insurance agency). The line takes the row's own box, 44px with its words in the middle, and the gap
-   under it, so row 1's ring, the line beside Call us and the call bar's edge land where item 12's tuning put them (the phone
-   spacing stays as live; generalist-home-2026-10-30/tools/first_screen.py measures them against the backup page). A phone's
-   eyebrow keeps "For local businesses in Gainesville." (item 12's .eb-kinds rule above), so the kinds are said once. A computer
-   keeps them in its eyebrow and has no line here */
-.hero-kinds{display:none}
-@media (max-width:899px){
-  .hm4-hero .hero-kinds{display:flex;align-items:center;height:44px;margin:0 0 4px;font-size:15px;line-height:1.3;font-weight:600;color:var(--ink);text-wrap:balance}
-}
-@media (max-width:899px) and (max-height:700px){.hm4-hero .hero-kinds{margin-bottom:7px}}
-@media (max-width:359px) and (max-height:700px){.hm4-hero .hero-kinds{margin-bottom:3px}}
-/* its words sit halfway between the line beside Call us and the clipboard's clamp, so neither gap reads as a hole: each height band
-   lifts them by half the difference its own tuning left (probe_hero.py, Chrome, 2026-10-30: at 375 x 812 the English line sat 63px
-   under the call's line and 18px over the clamp). Only the words move (position:relative), never the clipboard, ring or bar. On the
-   smallest phone (320 x 568) the line is 14px, so it keeps one line (at 15px it took two, 6px over the Spanish clamp) */
-@media (max-width:899px){
-  .hm4-hero .hero-kinds{position:relative;top:calc(-1 * var(--kinds-up, 0px));--kinds-up:4px}
-  :lang(es) .hm4-hero .hero-kinds{--kinds-up:9px}
-}
-@media (max-width:389px) and (min-height:701px) and (max-height:899px){.hm4-hero .hero-kinds{--kinds-up:23px}:lang(es) .hm4-hero .hero-kinds{--kinds-up:10px}}
-@media (max-width:374px) and (min-height:701px) and (max-height:899px){.hm4-hero .hero-kinds{--kinds-up:13px}:lang(es) .hm4-hero .hero-kinds{--kinds-up:5px}}
-@media (max-width:899px) and (min-height:900px){.hm4-hero .hero-kinds{--kinds-up:18px}:lang(es) .hm4-hero .hero-kinds{--kinds-up:5px}}
-@media (max-width:899px) and (max-height:700px){.hm4-hero .hero-kinds{--kinds-up:2px}:lang(es) .hm4-hero .hero-kinds{--kinds-up:3px}}
-@media (max-width:359px) and (max-height:700px){
-  .hm4-hero .hero-kinds{--kinds-up:-4px;font-size:14px;line-height:1.25}
-  :lang(es) .hm4-hero .hero-kinds{--kinds-up:3px}
-}
 /* the walk end's time back names its example ("Time back for the example office:", Nov 6; "Time back for Sanderling's office:" with its
    Sample stamp from 2026-10-30): a time back alone above Call us read as what an owner gets (check.py's first read, 2026-10-30) */
 .walk-tl .walk-time{display:inline}
@@ -1443,7 +1212,7 @@ html.js .hm4-hero .sheet[data-fill] .fill-wait,html.js .hm4-hero .sheet[data-fil
 .dk-clip{position:relative;padding-top:14px}
 .dk-board{border-radius:12px;padding:34px 14px 16px;
   box-shadow:inset 0 1px 0 rgba(255,244,222,.28),inset 0 0 0 1px rgba(70,48,20,.22),0 3px 0 var(--board-edge),0 4px 1px rgba(20,14,6,.30),0 22px 30px -16px rgba(0,0,0,.45)}
-.dk-board .clamp{top:-14px;width:190px;height:59px}
+.dk-board .clamp{top:-12px;width:min(132px,42%)}
 .dk .cf-main-sheet{position:relative;padding:30px 18px 18px;border-radius:1px;box-shadow:0 1px 1px rgba(58,47,28,.18),0 3px 8px -3px rgba(58,47,28,.20)}
 .dk .cf-sh-h b{font-size:20px}
 .dk .cf-ln{padding:11px 0 10px}
@@ -1524,7 +1293,7 @@ html.js .hm4-hero .sheet[data-fill] .fill-wait,html.js .hm4-hero .sheet[data-fil
   .dk .cf-grid,.dk .cf-ngrid{display:flex;flex-direction:column;gap:18px;align-items:stretch}
   .dk-clip{padding-top:8px}
   .dk-board{padding:22px 8px 8px;border-radius:10px;box-shadow:inset 0 0 0 1px rgba(70,48,20,.22),0 2px 0 var(--board-edge),0 8px 12px -6px rgba(0,0,0,.4)}
-  .dk-board .clamp{top:-11px;width:150px;height:46px}
+  .dk-board .clamp{top:-10px;width:110px}
   .dk .cf-main-sheet{padding:20px 12px 6px;margin:0}
   .dk .cf-doc{padding:10px 12px}
   /* the invoice's Saved sits beside its title here, so the mat's edge never cuts it off */
@@ -1590,7 +1359,7 @@ html.js .hm4-hero .sheet[data-fill] .fill-wait,html.js .hm4-hero .sheet[data-fil
   .cf-walk .dk-clip{padding-top:14px}
   .cf-walk .dk-board{padding:34px 14px 16px;border-radius:12px;
     box-shadow:inset 0 1px 0 rgba(255,244,222,.28),inset 0 0 0 1px rgba(70,48,20,.22),0 3px 0 var(--board-edge),0 4px 1px rgba(20,14,6,.30),0 10px 12px -8px rgba(0,0,0,.30)}   /* Nov 9: the lift ends 14px under the board, off the caption (shadow_air) */
-  .cf-walk .dk-board .clamp{top:-14px;width:190px;height:59px}
+  .cf-walk .dk-board .clamp{top:-12px;width:min(132px,42%)}
   .cf-walk .cf-main-sheet{margin:0;padding:30px 18px 18px;border-radius:1px;box-shadow:0 1px 1px rgba(58,47,28,.18),0 3px 8px -3px rgba(58,47,28,.20)}
   .cf-walk .cf-main-sheet .cf-sh-h{margin-bottom:12px}
   .cf-walk .cf-main-sheet .cf-sh-h img{width:30px}
@@ -1764,50 +1533,32 @@ html.js .hm4-hero .sheet[data-fill] .fill-wait,html.js .hm4-hero .sheet[data-fil
    ::after (the leather corners); .clip[data-pine=pad] marks it for the lint ---------- */
 .hm4-hero{overflow-x:clip}
 .hm4-hero .clip{isolation:isolate}
+/* from 900px only since Nov 24 (hero-review-2026-11-23, item 1; Franco, Nov 13: on a phone the green "looks out of place", "I don't even
+   know what it is"): under 900px the clipboard lies on the page's paper with the phone's own lift (the phone layout's block), and the
+   phone's pad, corners and stitching left. data-pine=pad stays in the page for the computer. check.py pad_verdict holds both sides */
+/* Nov 24 (hero-build-2026-11-24 step 6, decision 5): the computer's pad is direction B's, the one in the mockups Franco reviewed: dark
+   leather corners with a light edge and a stitched line, a rounded left end, a thickness edge and a soft shadow. From 1180 it shows 24px
+   beside the clipboard (56 until then), since the text column runs to 48px from it; its corners are those 24px, whole (40 until
+   the reviewers' pass the same day: the board cut them to dark slivers) */
+@media (min-width:900px){
 .hm4-hero .hero-tool{--blot-out:16px;--blot-top:96px;--blot-foot:24px}
-@media (min-width:1080px){.hm4-hero .hero-tool{--blot-out:24px}}
-@media (min-width:1180px){.hm4-hero .hero-tool{--blot-out:56px}}
-.hm4-hero .board::before,.hm4-hero .board::after{content:"";position:absolute;z-index:-1;pointer-events:none;
+.hm4-hero .board::before,.hm4-hero .board::after{content:"";position:absolute;z-index:-1;pointer-events:none;border-radius:12px 0 0 12px;
   top:var(--blot-top);bottom:calc(-1 * var(--blot-foot));left:calc(-1 * var(--blot-out));right:calc(50% - 50vw)}
 .hm4-hero .board::before{
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%232F4A3F' fill-opacity='.5'/%3E%3C/svg%3E") 0 0/8px 8px,
     url(/v4/assets/grain.webp) 0 0/160px 160px,#2F4A3F;
   background-blend-mode:normal,multiply,normal;
-  outline:1px solid rgba(194,203,191,.4);outline-offset:-13px}
-.hm4-hero .board::after{
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' fill='none'%3E%3Cpath d='M55 0L0 55' stroke='%23C2CBBF' stroke-opacity='.24'/%3E%3Cpath d='M47 0L0 47' stroke='%23C2CBBF' stroke-opacity='.34' stroke-dasharray='3 3'/%3E%3C/svg%3E") 0 0/56px 56px no-repeat,
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' fill='none'%3E%3Cpath d='M0 1L55 56' stroke='%23C2CBBF' stroke-opacity='.24'/%3E%3Cpath d='M0 9L47 56' stroke='%23C2CBBF' stroke-opacity='.34' stroke-dasharray='3 3'/%3E%3C/svg%3E") 0 100%/56px 56px no-repeat,
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%2324392F' fill-opacity='.5'/%3E%3C/svg%3E") 0 0/8px 8px,
-    url(/v4/assets/grain.webp) 0 0/160px 160px,#24392F;
-  background-blend-mode:normal,normal,normal,multiply,normal;
-  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0H56L0 56Z'/%3E%3C/svg%3E") 0 0/56px 56px no-repeat,
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0L56 56H0Z'/%3E%3C/svg%3E") 0 100%/56px 56px no-repeat;
-  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0H56L0 56Z'/%3E%3C/svg%3E") 0 0/56px 56px no-repeat,
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0L56 56H0Z'/%3E%3C/svg%3E") 0 100%/56px 56px no-repeat}
+  box-shadow:0 2px 0 #1F3129,0 18px 30px -16px rgba(20,32,26,.4)}
 .hm4-hero .board{box-shadow:inset 0 1px 0 rgba(255,244,222,.28),inset 0 0 0 1px rgba(70,48,20,.22),0 3px 0 var(--board-edge),0 1px 1px rgba(0,0,0,.25),0 14px 28px rgba(10,20,15,.35)}
 .hm4-hero .pk-more{margin-top:calc(var(--blot-foot) + 24px)}
-/* the phone, where the take's pad showed only as 16px strips down each side. The clipboard fills the width there (as p4's walk
-   board does), so the pad is the desk the full-width board lies on: it starts behind the steel clamp, so a pine band runs across
-   the screen at the board's top, and ends 40px under the board; its four leather corners sit at the screen's edges, two up by the
-   clamp and two under the board, and its stitched edge runs 8px in. The board doesn't move, so the first screen is as before */
-@media (max-width:899px){
-  .hm4-hero .hero-tool{--blot-top:-11px;--blot-foot:40px}
-  .hm4-hero .board::before{left:calc(50% - 50vw);outline-offset:-9px}
-  .hm4-hero .board::after{left:calc(50% - 50vw);
-    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' fill='none'%3E%3Cpath d='M33 0L0 33' stroke='%23C2CBBF' stroke-opacity='.28'/%3E%3Cpath d='M27 0L0 27' stroke='%23C2CBBF' stroke-opacity='.38' stroke-dasharray='3 3'/%3E%3C/svg%3E") 0 0/34px 34px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' fill='none'%3E%3Cpath d='M1 0L34 33' stroke='%23C2CBBF' stroke-opacity='.28'/%3E%3Cpath d='M7 0L34 27' stroke='%23C2CBBF' stroke-opacity='.38' stroke-dasharray='3 3'/%3E%3C/svg%3E") 100% 0/34px 34px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' fill='none'%3E%3Cpath d='M0 1L33 34' stroke='%23C2CBBF' stroke-opacity='.28'/%3E%3Cpath d='M0 7L27 34' stroke='%23C2CBBF' stroke-opacity='.38' stroke-dasharray='3 3'/%3E%3C/svg%3E") 0 100%/34px 34px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' fill='none'%3E%3Cpath d='M34 1L1 34' stroke='%23C2CBBF' stroke-opacity='.28'/%3E%3Cpath d='M34 7L7 34' stroke='%23C2CBBF' stroke-opacity='.38' stroke-dasharray='3 3'/%3E%3C/svg%3E") 100% 100%/34px 34px no-repeat,
-      url(/v4/assets/grain.webp) 0 0/160px 160px,#24392F;
-    background-blend-mode:normal,normal,normal,normal,multiply,normal;
-    -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M0 0H34L0 34Z'/%3E%3C/svg%3E") 0 0/34px 34px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M0 0H34V34Z'/%3E%3C/svg%3E") 100% 0/34px 34px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M0 0L34 34H0Z'/%3E%3C/svg%3E") 0 100%/34px 34px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M34 0V34H0Z'/%3E%3C/svg%3E") 100% 100%/34px 34px no-repeat;
-    mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M0 0H34L0 34Z'/%3E%3C/svg%3E") 0 0/34px 34px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M0 0H34V34Z'/%3E%3C/svg%3E") 100% 0/34px 34px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M0 0L34 34H0Z'/%3E%3C/svg%3E") 0 100%/34px 34px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M34 0V34H0Z'/%3E%3C/svg%3E") 100% 100%/34px 34px no-repeat}
+}
+/* from 1080 the pad has its corners and its stitching (between 900 and 1079 it shows 16px, and they hid behind the board) */
+@media (min-width:1080px){
+.hm4-hero .hero-tool{--blot-out:24px}
+.hm4-hero .board::before{outline:1px solid rgba(194,203,191,.4);outline-offset:-9px}
+.hm4-hero .board::after{
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M0 0H24L0 24Z' fill='%23332A22'/%3E%3Cpath d='M24 0L0 24' stroke='%23E9E4D8' stroke-opacity='.3' stroke-width='1.5'/%3E%3Cpath d='M19 0L0 19' fill='none' stroke='%23E9E4D8' stroke-opacity='.55' stroke-dasharray='3 2.5'/%3E%3C/svg%3E") 0 0/24px 24px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M0 0L24 24H0Z' fill='%23332A22'/%3E%3Cpath d='M0 0L24 24' stroke='%23E9E4D8' stroke-opacity='.3' stroke-width='1.5'/%3E%3Cpath d='M0 5L19 24' fill='none' stroke='%23E9E4D8' stroke-opacity='.55' stroke-dasharray='3 2.5'/%3E%3C/svg%3E") 0 100%/24px 24px no-repeat}
 }
 
 /* ---------- 4. the ink plates: pine ink, hatching only, one drawing style (make_plates.py). Art, never UI: no text on them, no
@@ -1907,33 +1658,16 @@ html.js .hm4-hero .sheet[data-fill] .fill-wait,html.js .hm4-hero .sheet[data-fil
 /* the night's caption row starts 28px under the film on a phone, clear of the windows' shadows */
 @container cf (max-width:759px){.cf-night .dk-foot{padding-top:28px}}
 
-/* ---------- Nov 9, third pass: the blotter between a phone and a wide screen ---------- */
-/* 900 to 1079: the pad shows 16px left of the clipboard, so its 56px leather corners hid behind the board and the stitching ran 3px
-   from the board's edge: a green frame. In that range the pad is a plain pine field, no corners, no stitching */
-@media (min-width:900px) and (max-width:1079px){
-  .hm4-hero .board::before{outline:0}
-  .hm4-hero .board::after{display:none}
-}
+/* ---------- the pad on a wide screen (Nov 9; its corners are B's since Nov 24) ---------- */
 /* 1600 and up: the pad ran to the screen's edge, 360px of bare pine at 1920, a green band. It ends 120px right of the clipboard there
    (what 1440 shows) and takes its two right-hand leather corners, so it reads as a pad with four corners */
 @media (min-width:1600px){
-  .hm4-hero .board::before,.hm4-hero .board::after{right:-120px}
+  .hm4-hero .board::before,.hm4-hero .board::after{right:-120px;border-radius:12px}
   .hm4-hero .board::after{
-    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' fill='none'%3E%3Cpath d='M55 0L0 55' stroke='%23C2CBBF' stroke-opacity='.24'/%3E%3Cpath d='M47 0L0 47' stroke='%23C2CBBF' stroke-opacity='.34' stroke-dasharray='3 3'/%3E%3C/svg%3E") 0 0/56px 56px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' fill='none'%3E%3Cpath d='M1 0L56 55' stroke='%23C2CBBF' stroke-opacity='.24'/%3E%3Cpath d='M9 0L56 47' stroke='%23C2CBBF' stroke-opacity='.34' stroke-dasharray='3 3'/%3E%3C/svg%3E") 100% 0/56px 56px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' fill='none'%3E%3Cpath d='M0 1L55 56' stroke='%23C2CBBF' stroke-opacity='.24'/%3E%3Cpath d='M0 9L47 56' stroke='%23C2CBBF' stroke-opacity='.34' stroke-dasharray='3 3'/%3E%3C/svg%3E") 0 100%/56px 56px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' fill='none'%3E%3Cpath d='M56 1L1 56' stroke='%23C2CBBF' stroke-opacity='.24'/%3E%3Cpath d='M56 9L9 56' stroke='%23C2CBBF' stroke-opacity='.34' stroke-dasharray='3 3'/%3E%3C/svg%3E") 100% 100%/56px 56px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%2324392F' fill-opacity='.5'/%3E%3C/svg%3E") 0 0/8px 8px,
-      url(/v4/assets/grain.webp) 0 0/160px 160px,#24392F;
-    background-blend-mode:normal,normal,normal,normal,normal,multiply,normal;
-    -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0H56L0 56Z'/%3E%3C/svg%3E") 0 0/56px 56px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0H56V56Z'/%3E%3C/svg%3E") 100% 0/56px 56px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0L56 56H0Z'/%3E%3C/svg%3E") 0 100%/56px 56px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M56 0V56H0Z'/%3E%3C/svg%3E") 100% 100%/56px 56px no-repeat;
-    mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0H56L0 56Z'/%3E%3C/svg%3E") 0 0/56px 56px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0H56V56Z'/%3E%3C/svg%3E") 100% 0/56px 56px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 0L56 56H0Z'/%3E%3C/svg%3E") 0 100%/56px 56px no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M56 0V56H0Z'/%3E%3C/svg%3E") 100% 100%/56px 56px no-repeat}
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M0 0H24L0 24Z' fill='%23332A22'/%3E%3Cpath d='M24 0L0 24' stroke='%23E9E4D8' stroke-opacity='.3' stroke-width='1.5'/%3E%3Cpath d='M19 0L0 19' fill='none' stroke='%23E9E4D8' stroke-opacity='.55' stroke-dasharray='3 2.5'/%3E%3C/svg%3E") 0 0/24px 24px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M0 0H24V24Z' fill='%23332A22'/%3E%3Cpath d='M0 0L24 24' stroke='%23E9E4D8' stroke-opacity='.3' stroke-width='1.5'/%3E%3Cpath d='M5 0L24 19' fill='none' stroke='%23E9E4D8' stroke-opacity='.55' stroke-dasharray='3 2.5'/%3E%3C/svg%3E") 100% 0/24px 24px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M0 0L24 24H0Z' fill='%23332A22'/%3E%3Cpath d='M0 0L24 24' stroke='%23E9E4D8' stroke-opacity='.3' stroke-width='1.5'/%3E%3Cpath d='M0 5L19 24' fill='none' stroke='%23E9E4D8' stroke-opacity='.55' stroke-dasharray='3 2.5'/%3E%3C/svg%3E") 0 100%/24px 24px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M24 0V24H0Z' fill='%23332A22'/%3E%3Cpath d='M24 0L0 24' stroke='%23E9E4D8' stroke-opacity='.3' stroke-width='1.5'/%3E%3Cpath d='M24 5L5 24' fill='none' stroke='%23E9E4D8' stroke-opacity='.55' stroke-dasharray='3 2.5'/%3E%3C/svg%3E") 100% 100%/24px 24px no-repeat}
 }
 /* the hero sheet's row links on a phone: 44px tall (they were 43 at 320 and 375) */
 @media (max-width:899px){.sh-go::after{top:-.5px;bottom:-.5px}}
@@ -1942,12 +1676,22 @@ html.js .hm4-hero .sheet[data-fill] .fill-wait,html.js .hm4-hero .sheet[data-fil
 @media (max-width:359px){.cf-walk .cf-won>span{white-space:nowrap}}
 @media (max-width:339px){.cf-walk .cf-main-sheet .cf-won,.cf-walk .cf-over .cf-won{gap:8px}.cf-walk .cf-main-sheet .cf-won b,.cf-walk .cf-over .cf-won b{font-size:20px}}
 
-/* Nov 13 (HQ P27): the lede now names three things we automate. Its new words run one line shorter than the old
-   ones between 376 and 391px wide, which lifted the walk sheet so the call bar cut a row at 390 x 844. Holding the
-   old three-line height there keeps every measured first screen where it was. */
-@media (min-width:376px) and (max-width:391px){.hm4-hero .t-lede{min-height:calc(3lh)}}
-@media (max-width:374px){html[lang="es"] .hm4-hero .t-lede{min-height:calc(3lh)}}   /* the Spanish words run one line shorter below 375px; English matches the old lines there */
-/* Nov 23 (D61): the English headline "We automate your office work so it runs by itself." takes two lines on a short phone where
-   the old one took three, which lifted the sheet so the call bar cut a row at 375 x 667. Holding the old three-line height there
-   keeps every measured first screen where it was, as the Nov 13 lede rule above does; push 2 (the hero layout) replaces both. */
-@media (max-width:899px) and (max-height:700px){html[lang="en"] .hm4-hero h1{min-height:calc(3lh)}}
+/* ---------- Nov 24 (Franco: "implement Home's first screen, reviewed cold, Nov 23"; hero-review-2026-11-23, items 1, 3, 5 and 9):
+   the words of the first screen. Three results, one a line, then how, with only its link words underlined; the reply line under the
+   button on a phone; the calculator line, the same 15px question and answer as "Your own numbers?" under the sheet; and one line over
+   the clipboard, the example's caption on a phone and the walk's on a computer. The phone's spacing is the phone layout's
+   own block above (step 4); the computer's column is the hero's computer block (step 6) */
+#top .ld-x{display:block}
+#top .ld-how{display:block;margin-top:12px;text-wrap:pretty}
+#top .t-lede{color:var(--ink)}
+#top .hero-calc{margin-top:14px;font-size:15px;line-height:20px;font-weight:600;color:var(--ink)}
+#top .hero-calc a{display:inline-block;padding-block:12px;margin-block:-12px}   /* a 44px tap area with the layout unmoved, as .pk-calc's */
+#top .hero-eg{margin:0 0 20px;font-size:16px;line-height:1.4;font-weight:600;color:var(--ink);text-wrap:balance}
+#top .hero-eg b{font-weight:600;color:var(--red);white-space:nowrap}
+#top .clip-cap{margin:0 0 14px;font-size:15px;line-height:1.55;font-weight:600;color:var(--ink)}
+@media (max-width:899px){
+  #top .clip-cap{display:none}
+  #top .reply-s{flex-basis:100%;margin:0}   /* the button alone on its row, the line under it */
+  #top .hero-calc{margin-top:10px}
+}
+@media (min-width:900px){#top .hero-eg{display:none}}

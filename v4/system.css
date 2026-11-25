@@ -32,7 +32,7 @@
   --mark:#FF323C;         /* the logo mark only */
   /* the one dark band */
   --night:#141412; --on-night:#E9E4D8; --muted-night:#A7A194; --red-night:#FF5A60; /* 14.5 / 7.2 / 6.1 :1 */
-  /* the pine field (alive build 2026-10-24, Franco's pick pine-field, alive round item 4). Since Nov 9 (Franco's pick blotter): one pine band a page at most ([data-ground=pine], Home's Who we work with); Home alone adds the pine desk pad under the hero clipboard (.clip[data-pine=pad], Franco's pick blotter, Nov 9), which carries no words. So Home shows two pine surfaces and every other page one at most; two pine surfaces are never on one screen (a screen's height or more apart at 320, 393, 768 and 1440), none carries money or red, and nothing else is pine (the films' desk mats are felt, Nov 9).
+  /* the pine field (alive build 2026-10-24, Franco's pick pine-field, alive round item 4). Since Nov 9 (Franco's pick blotter): one pine band a page at most ([data-ground=pine], Home's Who we work with); Home alone adds the pine desk pad under the hero clipboard (.clip[data-pine=pad], Franco's pick blotter, Nov 9), which carries no words; since Nov 24 it is drawn from 900px wide only (hero-review-2026-11-23, item 1; on a phone the clipboard lies on the page's paper). So a computer's Home shows two pine surfaces and every other page one at most; two pine surfaces are never on one screen (a screen's height or more apart at 320, 393, 768 and 1440), none carries money or red, and nothing else is pine (the films' desk mats are felt, Nov 9).
      Its words are the paper (8.6:1) and muted pine (5.8:1). As text, pine is money won back only (won-pine, item 19: 9.6:1 on
      a stop's sheet, 7.6:1 on bone). No red and no money sit on the field. Lumora.lint holds all three */
   --pine:#2F4A3F; --on-pine:var(--paper); --muted-pine:#C2CBBF;   /* on-pine reads the paper, so the next paper can't leave the
@@ -228,47 +228,61 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
 .nav{position:absolute;top:100%;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--rule);display:none}
 .nav.open{display:block}
 .nav ul{display:grid;padding:8px var(--g) 18px}
-.nav a{display:block;padding:12px 0;font-size:19px;text-decoration:none}
+.nav ul a{display:block;padding:12px 0;font-size:19px;text-decoration:none}
 /* Franco 2026-10-19 (the header review: "when you underline... and you hover your mouse over it, there's another line under the selected
    underline, which is weird UI... I was thinking maybe like bolding"): the nav marks its states with ink and weight only, one mark per
    state, no line and no red (red is for money lost). Rest: muted. The page you are on: ink and semibold (the weight is the cue that is
    not colour). Hover, focus and press: ink; focus adds the ring. Every label reserves its semibold width under itself (::after, from the
-   data-label system.js copies in), so the right-set row never shifts from page to page, and the same rules serve the computer row,
-   the phone sheet and the Spanish dropdown. This replaces the 2026-10-15 pen underline on the page you are on (with the .u stroke on
+   data-label system.js copies in), so the right-set row never shifts from page to page, and the same rules serve the computer row
+   and the phone sheet (which since Nov 24 sets every link in ink and marks the page you are on with a short underline too, below). This replaces the 2026-10-15 pen underline on the page you are on (with the .u stroke on
    hover it drew two red lines at two depths) and the 2026-10-16 row weight. check.py HEADER_JS and nav_state_problems hold it */
-.nav a{color:var(--muted);background:none}
-.nav a::after{content:attr(data-label);content:attr(data-label) / "";display:block;height:0;overflow:hidden;visibility:hidden;font-weight:600;pointer-events:none;user-select:none}
-.nav a[aria-current]{color:var(--ink);font-weight:600}
-@media (hover:hover) and (pointer:fine){.nav a:hover{color:var(--ink)}}
-.nav a:is(:focus-visible,:active){color:var(--ink)}
-@media (prefers-reduced-motion:no-preference){.nav a{transition:color var(--t-press) var(--ease-out)}.nav a:hover,.nav a:focus-visible{transition-duration:var(--t-hover)}}
-.menu-b{margin-left:auto;min-height:44px;min-width:5.75em;padding:0 16px;border:1.5px solid var(--ink);border-radius:999px;background:none;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer}
-/* 2026-10-19: wide enough for "Cerrar", so the label swap never moves the language word; hover and open take the outline button's
-   8% tint (row 12), and a press its scale */
-@media (hover:hover) and (pointer:fine){.menu-b:hover{background:rgba(17,17,16,.08)}}
-.menu-b[aria-expanded=true],.menu-b:active{background:rgba(17,17,16,.08)}
-@media (prefers-reduced-motion:no-preference){.menu-b{transition:background-color var(--t-press) var(--ease-out)}.menu-b:hover{transition-duration:var(--t-hover)}.menu-b:active{transform:var(--press)}}
-.hdr-tel,.hdr .btn{display:none}
+.nav ul a{color:var(--muted);background:none}
+.nav ul a::after{content:attr(data-label);content:attr(data-label) / "";display:block;height:0;overflow:hidden;visibility:hidden;font-weight:600;pointer-events:none;user-select:none}
+.nav ul a[aria-current]{color:var(--ink);font-weight:600}
+@media (hover:hover) and (pointer:fine){.nav ul a:hover{color:var(--ink)}}
+.nav ul a:is(:focus-visible,:active){color:var(--ink)}
+@media (prefers-reduced-motion:no-preference){.nav ul a{transition:color var(--t-press) var(--ease-out)}.nav ul a:hover,.nav ul a:focus-visible{transition-duration:var(--t-hover)}}
+/* The phone menu's button, Nov 24 (hero plan Nov 13, B's drawing; Franco, Nov 13: "Why is the menu not three lines like a hamburger
+   menu like every other menu ever?"): three lines and the word. 36 of 39 benchmarked phone headers draw the lines, and NN/g (June
+   2025) says "Label the icon Menu" and "Avoid extra styling or borders", so the outlined pill, its 5.75em and its grey fill are gone.
+   44px tall; the 10px of padding each side is tap room and hangs past the gutter on the right, so the word itself ends on the 16px
+   gutter, open and closed. Its name is its word (Menu, Close / Menú, Cerrar; system.js changes only .menu-w); the lines are hidden
+   from screen readers and cross into an X. The button is as wide as its longer word needs, so the language link never moves. A mouse
+   sees the lines thicken, a press scales; no state fills it. check.py HEADER_JS, MENU_JS */
+.menu-b{display:inline-flex;align-items:center;justify-content:flex-end;gap:8px;margin-left:auto;margin-right:-10px;min-height:44px;min-width:calc(52px + 2.6em);padding:0 10px;border:0;border-radius:10px;background:none;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer}
+:lang(es) .menu-b{min-width:calc(52px + 2.9em)}
+.menu-ico{flex:none;display:block;width:24px;height:24px}
+.menu-ico path{transform-box:view-box;transform-origin:12px 12px}
+.menu-b[aria-expanded=true] .mi-1{transform:rotate(45deg) translateY(5.5px)}
+.menu-b[aria-expanded=true] .mi-2{opacity:0}
+.menu-b[aria-expanded=true] .mi-3{transform:rotate(-45deg) translateY(-5.5px)}
+@media (hover:hover) and (pointer:fine){.menu-b:hover .menu-ico{stroke-width:2.6}}
+@media (prefers-reduced-motion:no-preference){.menu-ico path{transition:transform var(--t-press) var(--ease-out),opacity var(--t-press) var(--ease-out)}.menu-b:active{transform:var(--press)}}
+@media (max-width:359px){.menu-b{gap:6px;padding-inline:8px;margin-right:-8px;min-width:calc(46px + 2.6em)}:lang(es) .menu-b{min-width:calc(46px + 2.9em)}}
+/* under the links of the open phone menu (item 8): the hours, the place, the free call and an outlined button to the calculator; a
+   computer's row has the number and Call us beside it instead */
+.nav-more{display:none}
+.hdr-tel,.hdr-in>.btn{display:none}
 @media (min-width:900px){
   .util{display:block}
   .brand img{width:124px}
   .menu-b,.hdr .lang{display:none}
   .nav{position:static;display:block;margin-left:auto;background:none;border:0}
   .nav ul{display:flex;gap:24px;padding:0}
-  .nav a{font-size:var(--fs-17);padding:6px 0}
+  .nav ul a{font-size:var(--fs-17);padding:6px 0}
   /* the number stays readable in the sticky header on desktop (conversion graft from C) */
   .hdr-tel{display:inline-block;font-weight:600;font-size:17px;color:var(--ink);white-space:nowrap;text-decoration:none;padding-bottom:2px;border-radius:999px}
   /* 2026-10-19: the 8% tint, spread 8px past the number by a shadow so no gap in the row moves; the ring goes round the tint */
   .hdr-tel:is(:focus-visible,:active){background-color:rgba(17,17,16,.08);box-shadow:0 0 0 8px rgba(17,17,16,.08)}
   .hdr-tel:focus-visible{outline-offset:8px}
-  .hdr .btn{display:inline-flex}
+  .hdr-in>.btn{display:inline-flex}
 }
 /* 2026-10-16 (Franco's GO, p1-final): the bar says Call with the number, and Text, in 3 to 2, with a 1px paper-toned top edge
    so it keeps its top over the dark footer. The dark footer runs under it (padded), so no strip of paper shows below the
    footer. It steps aside on a short screen (a phone on its side, big zoom: CALLBAR-RESEARCH change 2); the page's own call
    buttons stay, and the footer's button and number come back there */
 .callbar{position:fixed;left:0;right:0;bottom:0;z-index:45;display:grid;grid-template-columns:3fr 2fr;background:var(--ink);padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -1px 0 rgba(233,228,216,.42)}
-.callbar a{min-height:var(--bar-h);display:flex;align-items:center;justify-content:center;white-space:nowrap;color:#fff;font-weight:600;font-size:17px;text-decoration:none}
+.callbar a{min-height:var(--bar-h);display:flex;align-items:center;justify-content:center;white-space:nowrap;color:#fff;font-weight:600;font-size:17px;line-height:26px;text-decoration:none}
 .callbar .cb-n{font-weight:500;margin-left:.3em}
 .callbar a+a{border-left:1px solid rgba(255,255,255,.25)}
 .callbar a:focus-visible{outline-color:#fff;outline-offset:-5px}
@@ -277,37 +291,32 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
 body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom))}
 @media (max-width:899px) and (min-height:501px){body:has(>.callbar):has(>.foot){padding-bottom:0}body:has(>.callbar)>.foot{padding-bottom:calc(32px + var(--bar-h) + env(safe-area-inset-bottom))}}
 @media (max-width:899px) and (max-height:500px){.callbar{display:none}body:has(.callbar){padding-bottom:0}}
-@media (max-width:339px){:lang(es) .callbar a:first-child{font-size:15px}}   /* round 4 (2026-10-18): "Llamar (352) 226-0681" is 175px at 17px, 7px over its 192px half with
+@media (max-width:339px){:lang(es) .callbar a:first-child{font-size:15px;padding-bottom:1px}:lang(es) .callbar .ico-call{width:14px;height:14px;translate:0 1.5px}}   /* round 4 (2026-10-18): "Llamar (352) 226-0681" is 175px at 17px, 7px over its 192px half with
    12px each side; at 15px (154px) it fits, so the Spanish bar keeps the number at 320 as the English does (it dropped it until today) */
 @media (min-width:900px){.callbar{display:none}body:has(.callbar){padding-bottom:0}}
 @media (max-width:899px){body:has(input:not([type=checkbox],[type=radio]):focus,textarea:focus) .callbar{display:none}}   /* 2026-10-15: three bars on screen while typing in a form; checkboxes and radios (the filter chips) keep it, and the body padding stays so nothing jumps */
 @media (hover:hover) and (pointer:fine){.hdr-tel:hover{background-color:rgba(17,17,16,.08);box-shadow:0 0 0 8px rgba(17,17,16,.08)}}
-.hdr .btn{white-space:nowrap}
-@media (min-width:900px) and (max-width:1079px){.nav ul{gap:16px}.nav a{font-size:var(--fs-15)}}
-@media (min-width:900px) and (pointer:coarse){.nav a{padding-block:11px}}   /* 2026-10-19: on an iPad's row each link is 45 to 48px tall, not 35 to 38 (a mouse keeps the slim row) */
+.hdr-in>.btn{white-space:nowrap}
+@media (min-width:900px) and (max-width:1079px){.nav ul{gap:16px}.nav ul a{font-size:var(--fs-15)}}
+@media (min-width:900px) and (pointer:coarse){.nav ul a{padding-block:11px}}   /* 2026-10-19: on an iPad's row each link is 45 to 48px tall, not 35 to 38 (a mouse keeps the slim row) */
 @media (min-width:900px) and (max-width:1023px){.nav ul{gap:14px}}   /* 2026-10-16 (p1-final): the English row ran 33px past the edge at 920 */
 /* 2026-10-16 (Franco's GO, note 10): the number shows from 1240px only. At 1024 it sat 12px after "Contact" and read as an eighth
    menu item; under 1240 the header button, the hero and the call block carry it. check.py's HEADER_JS holds 32px on both sides */
 @media (max-width:1239px){.hdr-tel{display:none!important}}
-@media (min-width:900px) and (max-width:1239px){.hdr .btn{margin-left:12px}}   /* 2026-10-16 repair: 12 + the row's 12px gap = 24px after the last item (the approved desktop's 1024); HEADER_JS holds it */
+@media (min-width:900px) and (max-width:1239px){.hdr-in>.btn{margin-left:12px}}   /* 2026-10-16 repair: 12 + the row's 12px gap = 24px after the last item (the approved desktop's 1024); HEADER_JS holds it */
 @media (min-width:1140px){.hdr-tel{margin-left:32px}}   /* 2026-10-15: at 24px the number read as one more menu item; from 1140, since under 1120 the extra room wrapped "How it works" */   /* room for "Call or text us" and the number on a small laptop */
-/* the header in Spanish (moved here from the two Spanish pages' own styles, 2026-10-15). Spanish runs about 23% longer
-   (ES-VOICE) and a label never wraps. With "Artículos" added the row needs about 1194px at 15px with 14px between labels and
-   the number 24px out, and it never fits at English's 17px, so the menu button stays up to 1279px and the row shows from
-   1280px (measured: 6px to spare at 1280 and 1440; the old 1180 to 1279 row squeezed the logo to 26 to 106px) */
-:lang(es) .nav a{white-space:nowrap}
-@media (min-width:900px) and (max-width:1279px){
+/* the header in Spanish: a label never wraps. With five links since Nov 24 (item 8; seven until then) the row is English's from 960,
+   17px with 24px gaps from 1080 and the number from 1240, so a Spanish laptop gets its links. At 900 the same row runs 17px past the
+   edge at 15px, so from 900 to 959 the menu button stays and opens the list under the header (it stayed to 1279 until Nov 24) */
+:lang(es) .nav ul a{white-space:nowrap}
+@media (min-width:900px) and (max-width:959px){
   :lang(es) .nav{position:absolute;display:none;margin-left:0;background:var(--paper);border-bottom:1px solid var(--rule)}
   :lang(es) .nav.open{display:block}
   :lang(es) .nav ul{display:grid;gap:0;padding:8px var(--g) 18px}
-  :lang(es) .nav a{font-size:19px;padding:12px 0}
-  :lang(es) .hdr-tel{display:none!important}
-  :lang(es) .hdr .btn{margin-left:auto}   /* 2026-10-16 (p1-final round 2): "Llámenos" sits by Menu, not by the logo */
-  :lang(es) .menu-b{display:inline-block;margin-left:0}
+  :lang(es) .nav ul a{font-size:19px;padding:12px 0}
+  :lang(es) .hdr-in>.btn{margin-left:auto}   /* 2026-10-16 (p1-final round 2): "Llámenos" sits by Menu, not by the logo */
+  :lang(es) .menu-b{display:inline-flex;margin-left:0}
 }
-/* 2026-10-16 (note 10): with the pill gone and the button "Llámenos", the row has room; 18px between the logo, the nav and the
-   button, and the number 32px from "Contacto" (HEADER_JS measures it at 1280, 1366 and 1440) */
-@media (min-width:1280px){:lang(es) .hdr-in{gap:18px}:lang(es) .nav ul{gap:16px}:lang(es) .nav a{font-size:var(--fs-15)}:lang(es) .hdr-tel{margin-left:32px}}
 @media (prefers-reduced-motion:no-preference){.hdr-tel{transition:background-color var(--t-press) var(--ease-out),box-shadow var(--t-press) var(--ease-out)}.hdr-tel:hover,.hdr-tel:focus-visible{transition-duration:var(--t-hover)}}
 /* a phone turned sideways: the header scrolls away, so a sample screen is not squeezed between three fixed bars (the call bar stays) */
 @media (max-width:899px) and (max-height:500px){.hdr{position:static}}
@@ -317,6 +326,25 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 @media (max-width:899px){
   .nav.open{height:calc(100vh - var(--hdr-h));height:calc(100dvh - var(--hdr-h));overflow-y:auto;overscroll-behavior:contain;border-bottom:0;padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom))}
   body:has(.nav.open){overflow:hidden}
+  /* Nov 24 (item 8): every link in ink (grey read as switched off), the page you are on semibold with a 24px ink underline. A phone
+     has no hover, so that line is never a second mark beside one (Franco's Oct 19 rule keeps its hold on the computer's row) */
+  .nav ul{padding-bottom:12px}
+  .nav ul a{position:relative;color:var(--ink)}
+  .nav ul a[aria-current]::before{content:"";position:absolute;left:0;bottom:9px;width:24px;height:2px;border-radius:1px;background:var(--ink)}
+  .nav-more{display:block;margin:0 var(--g);padding-block:24px;border-top:1px solid var(--rule)}
+  .nav-facts{margin:0}
+  .nav-facts span{display:block;font-size:16px;line-height:1.4;color:var(--muted);text-wrap:balance}
+  .nav-facts span+span{margin-top:10px}   /* a wrapped fact keeps its lines close, so it never reads as a fourth one */
+  .nav-calc{margin-top:24px}
+}
+/* a short phone (320 x 568): the links are 44px tall and the gaps close, so the block's button clears the call bar */
+@media (max-width:899px) and (max-height:640px){
+  .nav ul{padding-block:2px 6px}
+  .nav ul a{padding-block:8px}
+  .nav ul a[aria-current]::before{bottom:5px}
+  .nav-more{padding-block:14px 8px}
+  .nav-facts span+span{margin-top:6px}
+  .nav-calc{margin-top:14px}
 }
 
 /* ======================================================================= 6. links, buttons, the call block */
@@ -339,15 +367,22 @@ body:has(.callbar){padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:10px 26px;border-radius:999px;border:2px solid var(--ink);
   background:var(--ink);color:#fff;font-weight:600;font-size:17px;line-height:1.2;text-decoration:none;text-align:center;cursor:pointer}
 /* the handset in every call button and the call bar's Call half (answers build, Nov 10; Franco, Nov 9: "just your average like
-   telephone icon to the left of Call us inside the button"). shared_text.py writes it, 1em in the button's own colour, 0.4em before
-   the words; the button keeps its padding and min-height, so the tap size holds and the width never changes after load */
-.ico-call{flex:none;display:block;width:1em;height:1em}
-.btn:has(>.ico-call){gap:.4em}
+   telephone icon to the left of Call us inside the button"). shared_text.py writes it in the button's own colour, 0.4em before the
+   words; the button keeps its min-height, so the tap size holds and the width never changes after load.
+   Nov 24 (Franco, Nov 13: "is it me or is the button not centered with the icon"): at 1em the handset rode 1.9px above the capitals'
+   middle on the 20px buttons and stood 1.24 times their height. It is 18, 16 or 14px beside 20, 17 or 15px words, set down to the
+   capitals' middle, on whole-pixel lines, and pulled 0.08em left, so the icon and the words sit in the middle of the button as a pair.
+   Every call button has 22px of side padding, in both languages. The icon's width and height are set here, over the svg's own
+   (check.py CALLICON_JS) */
+.ico-call{flex:none;display:block;width:16px;height:16px;margin-left:-.08em;translate:0 1px}
+.btn-lg>.ico-call{width:18px;height:18px;translate:0 2px}
+.btn-sm>.ico-call{width:14px;height:14px;translate:0 1.5px}
+.btn:has(>.ico-call){gap:.4em;padding-inline:22px}
+.btn:not(.btn-lg,.btn-sm):has(>.ico-call){line-height:20px}
 .callbar .ico-call{margin-right:.4em}
-.hdr .btn-sm:has(>.ico-call){padding-inline:14px}   /* the header's button gives 8px of its sides back, so the Spanish menu keeps 32px from the logo at 1280 to 1440 (HEADER_JS) */
 .btn-o{background:transparent;color:var(--ink)}
-.btn-sm{min-height:44px;padding:6px 18px;font-size:15px}
-.btn-lg{min-height:58px;padding:12px 32px;font-size:var(--fs-20)}
+.btn-sm{min-height:44px;padding:5px 18px 7px;font-size:15px}   /* Nov 24: 1px more under the words than over them, on both sizes: the font sets capitals 1 to 1.5px under its line's middle (check.py CALLICON_JS) */
+.btn-lg{min-height:58px;padding:11px 32px 13px;font-size:var(--fs-20)}
 .btn:is(:focus-visible,:active){background:var(--ink-hover);border-color:var(--ink-hover)}.btn-o:is(:focus-visible,:active){background:rgba(17,17,16,.08);border-color:var(--ink)}   /* 2026-10-19: a press takes the hover's colour, so it still answers with reduced motion (no scale) */
 @media (hover:hover) and (pointer:fine){.btn:hover{background:var(--ink-hover);border-color:var(--ink-hover)}.btn-o:hover{background:rgba(17,17,16,.08);border-color:var(--ink)}}
 /* 2026-10-15: on a ruled or graph ground the outline button is filled with paper, so the lines never run through its label;
@@ -485,17 +520,20 @@ a.strip:focus-visible{outline-offset:3px}
 /* ======================================================================= 11. the walk sheet on the clipboard */
 .clip{margin:0}
 .board{position:relative;border-radius:12px;padding:28px 12px 12px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 1px 0 var(--board-edge),0 14px 30px rgba(58,47,28,.2)}
-/* 2026-10-17 round 2 (the owner judge: the trade pages' clipboards wore a single pill clip, Home's the two-rivet lever clip): one
-   board looks like one board. Every clipboard takes Home's clip, the same drawing as assets/clip.svg (a flat lever, the rolled pivot,
-   a flat brushed jaw with a curled lip, two plain rivets) and Home's sizes: 176 x 54 to 420px, 214 x 66 from 421, its lever over
-   the board's top edge and its jaw over the paper's top 12 to 14px, with the one soft shadow. The board's top padding went to the
-   sheet's (board + sheet: 28 + 32 to 420px, 34 + 34 to 599, 34 + 36 from 600), so each sheet's first line sits 20px or more
-   under the jaw: where it was to 420 and from 600, 8px lower from 421 to 599 (the 430px iPhones), where the big clip's jaw
-   reaches lower. Home draws the same clip inline (home.css). check.py BOARD_JS */
-.clamp{position:absolute;left:50%;top:-11px;z-index:3;width:176px;height:54px;transform:translateX(-50%);background:url(assets/clip.svg) 0 0/100% 100% no-repeat;filter:drop-shadow(0 2px 2px rgba(40,28,12,.28))}
+/* one board looks like one board (2026-10-17 round 2; the owner judge had met a pill clip on the trade pages and another on Home).
+   Since Nov 24 (Franco's cold hero review, item 11) every clipboard wears the steel clip of assets/clip.svg: a bell handle with its
+   hanging hole, the hinge roll with two dark grips, a flat jaw with a turned lip. 132 x 60 to 420px (42% of its board at most: 121 x
+   55 at 320; Home's also 35% at least), 158 x 72 from 421, its handle over the board's top edge, its jaw over the paper's top,
+   one soft shadow. It ends 5px lower than the lever clip it replaced, so each sheet's top padding is 2px more to 420px, 3px to 599 and
+   1px from 600 (board + sheet: 28 + 34, 34 + 37, 34 + 37): 14px under the clip's box. On a phone the letterhead gives 2px back under
+   its words, so the rows stay where they were and the call bar still lands between two of them on every trade page (2 and 5px
+   lower put it through one on Electrical). Home draws the same clip inline (home.css). check.py BOARD_JS,
+   clip_src_problems */
+.clamp{position:absolute;left:50%;top:-12px;z-index:3;width:min(132px,42%);aspect-ratio:132/60;transform:translateX(-50%);background:url(assets/clip.svg) 0 0/100% 100% no-repeat;filter:drop-shadow(0 1.5px 1px rgba(40,28,12,.30))}
 .clamp i{display:none}
-.board>.sheet{padding-top:32px}
-@media (min-width:421px){.clamp{top:-14px;width:214px;height:66px}.board{padding-top:34px}.board>.sheet{padding-top:34px}}
+.board>.sheet{padding-top:34px}
+@media (max-width:599px){.board>.sheet>.lh{padding-bottom:10px}}
+@media (min-width:421px){.clamp{top:-15px;width:158px}.board{padding-top:34px}.board>.sheet{padding-top:37px}}
 /* 2026-10-16 (the new Home's clipboard, every clipboard in Phase D): hardboard with its fibre. Here because the url() resolves from
    this stylesheet; home.css draws the rest of the board. 2026-10-17 (Franco's iPhone): the fibre was the grain multiplied over the
    gradient (background-blend-mode), and iPhone Safari dropped the blend and painted the pale grain alone. grain-board.webp is the
@@ -530,7 +568,7 @@ a.strip:focus-visible{outline-offset:3px}
 .sh-time{font-size:15px;margin-top:8px}
 [data-f=time] b{white-space:nowrap}   /* 2026-10-17 round 2: "about 15 hours a month" stays whole on every page, as on Home (it split "about / 15 hours" on the trade pages) */
 .sh-note{font-size:15px;color:var(--muted);margin-top:10px}
-@media (min-width:600px){.board{padding:34px 18px 18px}.sheet{padding:24px 24px 18px}.board>.sheet{padding-top:36px}}
+@media (min-width:600px){.board{padding:34px 18px 18px}.sheet{padding:24px 24px 18px}.board>.sheet{padding-top:37px}}
 @media (max-width:699px){.board{box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 1px 0 var(--board-edge),0 6px 12px -2px rgba(58,47,28,.16)}}   /* 2026-10-17: phone-size, as --lift-hi (it lay over the line under the clipboard) */
 
 /* ======================================================================= 12. facts you can check */
@@ -750,8 +788,8 @@ html:not(.js) [data-tabs] [role=tablist]{display:none}   /* no JS: the tool tabs
 .ticket th{font-weight:700;text-align:left;border-bottom:1px dashed #999;font-size:12px}
 .ticket td{padding:3px 4px 3px 0;vertical-align:top}.ticket .r{text-align:right}
 .tk-sum{display:flex;justify-content:space-between;font-size:12px}.tk-tot{font-weight:700;border-top:1px dashed #999;padding-top:3px;margin-top:3px}
-.doc-clip{position:relative;width:min(100%,320px);border-radius:14px;background:linear-gradient(170deg,var(--board),var(--board-lo));padding:40px 12px 12px;box-shadow:var(--lift-hi);margin-inline:auto}
-.doc-clip .clamp{width:96px}
+.doc-clip{position:relative;width:min(100%,320px);border-radius:14px;background:linear-gradient(170deg,var(--board),var(--board-lo));padding:30px 12px 12px;box-shadow:var(--lift-hi);margin-inline:auto}
+.doc-clip .clamp{top:-8px;width:96px}   /* 96 x 44; the jaw over the paper's top 6px */
 .doc-clip .doc{box-shadow:0 1px 2px rgba(0,0,0,.16);min-height:280px}
 .dt{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
 .dt th{font-size:12px;font-weight:600;color:#55555a;text-align:left;padding:0 6px 6px 0;border-bottom:1px solid #ddd}

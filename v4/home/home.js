@@ -4,8 +4,7 @@
    intro, slip, picker, nightTag, variants, seat, pickerRow, toolsFollow, stopHead, chipsPeek; "home ORIGINAL-2026-10-30-generalist.js"
    beside this file has them). What runs: What we automate's PDF picture (orderPic, as built), the walk film and the night film
    (films; direction C of the Nov 4 review since Nov 5, "home ORIGINAL-2026-11-05-films-c.js" has the Oct 30 films), the hero
-   sheet's late rows on a phone (heroFill), the sheet's rows that jump to the film (sheetMap) and the walk heading's second tone
-   (twoTone). */
+   sheet's late rows on a phone (heroFill), the sheet's rows that jump to the film (sheetMap), and the phone caption's figure over the clipboard, copied from the sheet's total (egTotal, Nov 24). */
 (function () {
   var ES = /^es\b/i.test(document.documentElement.getAttribute('lang') || '');
   // GSAP 3.15.0 with Flip and CustomEase, vendored beside system.js (system/assets/vendor, gsap.LICENSE.md): one load for the page,
@@ -406,7 +405,7 @@
       function again() {
         if (F.mode !== 'done') return;
         var sa = window.SA && SA.mode === 'play';
-        if (F.ratio >= .5 && !sa && !document.hidden) { F.due = false; F.play(0); }
+        if (F.ratio >= .45 && !sa && !document.hidden) { F.due = false; F.play(0); }
         else { F.due = true; if (sa) F.loopT = setTimeout(again, 1000); }
       }
       function done() { F.mode = 'done'; label('pause'); fig.classList.add('done'); idle(); clearTimeout(F.loopT); F.loopT = setTimeout(again, HOLD); }
@@ -433,7 +432,8 @@
         else if (F.mode === 'wait') { F.mode = 'held'; label('play'); }
         else if (F.mode === 'held') F.play(0);
       });
-      // job: one-time focus. Half the film on screen between the header and the call bar starts it; under a fifth, it is away
+      // job: one-time focus. Near half the film on screen between the header and the call bar starts it; under a fifth, it is away.
+      // .45 since Nov 24 (.5 until then): on a 320 x 568 phone the Spanish walk is 864px tall and 431px of it fits under the header
       var io = null;
       F.watch = function () {
         if (io) io.disconnect();
@@ -441,7 +441,7 @@
         io = new IntersectionObserver(function (es) {
           es.forEach(function (e) {
             F.ratio = e.intersectionRatio;
-            if (F.ratio >= .5) {
+            if (F.ratio >= .45) {
               F.away = false;
               if (F.mode === 'wait' && !F.played) { if (F.pending != null) { F.jump(F.pending); F.pending = null; } else F.play(0); }
               else if (F.mode === 'away') F.play();
@@ -449,7 +449,7 @@
             } else if (F.ratio < .2 && F.mode === 'play') F.away = true;
             if (!e.isIntersecting) idle();
           });
-        }, { threshold: [0, .2, .5, .8, 1], rootMargin: '-' + top + 'px 0px -' + bot + 'px 0px' });
+        }, { threshold: [0, .2, .45, .8, 1], rootMargin: '-' + top + 'px 0px -' + bot + 'px 0px' });
         io.observe(fig);
       };
       return F;
@@ -773,7 +773,7 @@
       return list.some(function (f) { if (f.mode !== 'play') return false; var r = f.fig.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; });
     };
     // B is in view and waits: a film playing with under half of it on screen stops at its next stop, and its cf:idle starts B
-    CF.yieldTo = function () { list.forEach(function (f) { if (f.mode === 'play' && f.ratio < .5) f.away = true; }); };
+    CF.yieldTo = function () { list.forEach(function (f) { if (f.mode === 'play' && f.ratio < .45) f.away = true; }); };
     // the hero sheet's rows link to the walk's marks (#stop-1 to 3): the page scrolls there (sheetMap), and the film plays that step
     document.addEventListener('click', function (e) {
       // Nov 9 (the judges' graft 3, p1-corner's rows): a line of the film's own walk sheet is a button that plays its step
@@ -817,7 +817,7 @@
      scrolls into view, one row after another as the sheet does. A computer, reduced motion and ?still are left as they are */
   function heroFill() {
     var s = document.querySelector('.hm4-hero .sheet[data-fill]');
-    if (!s || !s.classList.contains('writing') || s.classList.contains('wait') || !('IntersectionObserver' in window)) return;
+    if (!s || !s.classList.contains('writing') || !('IntersectionObserver' in window)) return;   // since Nov 24 the sheet starts low enough on a phone to wait (system.js .wait), and its parts wait one by one all the same
     var bar = document.querySelector('.callbar'), barH = bar && bar.getClientRects().length && getComputedStyle(bar).display !== 'none' ? bar.offsetHeight : 0;
     if (!barH) return;
     var low = innerHeight - barH;
@@ -866,24 +866,22 @@
     wire();
   }
 
-  /* 12 two-tone (the walk's heading): the claim in ink, "Here's where." in the muted second tone; system.js writes the heading again
-     on each pick. The close's heading carries its own span in the markup */
-  function twoTone() {
+  /* the phone caption's figure over the clipboard is the sheet's own total ("$3,552 a month"; hero-review-2026-11-23, item 1), copied
+     each time system.js writes the sheet, so the two never disagree. The last space holds, so "a month" never splits */
+  function egTotal() {
     function apply() {
-      var h = document.querySelector('#walk [data-walk-head]'); if (!h || h.querySelector('.walk-where')) return;
-      var last = h.lastChild, m = last && last.nodeType === 3 && /^(\.\s*)(\S.*)$/.exec(last.nodeValue); if (!m) return;
-      last.nodeValue = m[1]; var sp = document.createElement('span'); sp.className = 'walk-where'; sp.textContent = m[2]; h.appendChild(sp);
+      var t = document.querySelector('.hm4-hero .sheet [data-f="total"]'), b = document.querySelector('.hm4-hero [data-eg-total]');
+      if (t && b && t.textContent.trim()) b.textContent = t.textContent.trim().replace(/\s+(?=\S+$)/, '\u00a0');
     }
     Lumora.on(apply); apply();
   }
-
 
   function start() {
     orderPic();   // What we automate's picture (the code picture it replaced moved to How it works, Oct 27)
     films();      // the walk film and the night film (direction C, Nov 5)
     heroFill();   // the hero sheet on a phone: what starts under the call bar writes in when it comes into view (Nov 5)
     if (!window.Lumora) return;
-    sheetMap(); twoTone();
+    sheetMap(); egTotal();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
