@@ -487,7 +487,7 @@
       K.to(4.0, b[0], { autoAlpha: 1, y: 0 }, 'caption', b[0].textContent);
       K.swap(4.5, flag, sent, 'stage', 'the flag becomes Sent');
       // review fixes, Nov 10: lines 1 and 2 win back part of their dollars, so the pen strikes nothing there; the line says what it wins back
-      K.to(6.9, res(0), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '36 of 48 followed up, $1,170 back');
+      K.to(6.9, res(0), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '$1,170 won back');
       /* 2. Maria Garcia: on today's call list */
       K.to(8.6, L[0], { autoAlpha: dim }, 'sheet', 'line 2 lights'); tl.to(K.track(L[1]), { autoAlpha: 1, duration: .25, ease: OUT }, 8.6);
       K.to(9.1, ol, { autoAlpha: 0, duration: .3 }, 'stage', 'crossfade to Excel'); tl.to(K.track(xl), { autoAlpha: 1, y: 0, duration: .3, ease: OUT }, 9.1);
@@ -497,7 +497,7 @@
       K.to(13.0, cur, { autoAlpha: 1 }, 'stage', 'E12 selected');
       K.to(14.0, b[1], { autoAlpha: 1, y: 0 }, 'caption', b[1].textContent);
       K.swap(14.5, e0, e1, 'stage', 'E12 becomes Yes and the call date'); tl.to(K.track(okf), { autoAlpha: 1, duration: .3, ease: OUT }, 14.5);
-      K.to(17.8, res(1), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '24 of 30 called in time, $960 back');
+      K.to(17.8, res(1), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '$960 won back');
       /* 3. Lisa Anderson: the invoice fills in from her policy, then its details are checked against it */
       K.to(19.4, L[1], { autoAlpha: dim }, 'sheet', 'line 3 lights'); tl.to(K.track(L[2]), { autoAlpha: 1, duration: .25, ease: OUT }, 19.4);
       K.to(19.9, xl, { autoAlpha: 0, duration: .3 }, 'stage', 'crossfade to the policy and the invoice'); tl.to(K.track(inv), { autoAlpha: 1, y: 0, duration: .3, ease: OUT }, 19.9);
@@ -520,7 +520,7 @@
       // (the review round: at 32.0 s the line had 2.6 s of quiet reading; the Spanish one needs 4.96 s)
       var e = ph ? 32.1 : 31.15;
       K.to(e, strike(2), { scaleX: 1, duration: .5, ease: MOVE }, 'sheet', 'the pen strikes $792');
-      K.to(e + .5, res(2), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '33 hours of typing back');
+      K.to(e + .5, res(2), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '33 hours of typing, $792 won back');
       /* the end: the whole sheet, the loss before any fix and the month won back (the total is no longer struck: $630 of it stays lost) */
       e += ph ? 1.5 : 1.1;
       if (ph) K.to(e, over, { autoAlpha: 1, y: 0 }, 'sheet', 'the full sheet comes over the stage');
@@ -550,7 +550,7 @@
       K.start(roll, { y: 0 }); K.start(cur, { autoAlpha: 0 }); K.start(np, { autoAlpha: 0 }); K.start(rings, { strokeDasharray: '1 2', strokeDashoffset: 1.01 });
       /* 11:40 PM: three bills against their quotes, one over */
       K.to(1.0, okSt, { autoAlpha: 1, duration: .75 }, 'desk', 'two Matches quote ticks');
-      K.to(2.4, okRows, { opacity: .4 }, 'desk', 'the other rows dim, Plover IT turns red'); tl.to(K.track(red), { autoAlpha: 1, duration: .25, ease: OUT }, 2.4);
+      K.to(2.4, okRows, { opacity: .4 }, 'desk', 'the other rows dim, Second Street IT turns red'); tl.to(K.track(red), { autoAlpha: 1, duration: .25, ease: OUT }, 2.4);
       K.cap(5.0, caps[0], caps[1]);
       tl.to(nt, { autoAlpha: 1, y: 0, duration: .25, ease: OUT }, 6.5);
       K.fly(5.75, red, li[0], li[0].textContent, .9, 'phone', 'the red line lands on the morning list');
@@ -572,7 +572,7 @@
       K.to(21.0, desk, { opacity: .35, duration: .5 }, 'desk', 'the desk dims');
       K.swap(21.5, kk[2], kk[3], 'phone', 'clock 6:30');
       tl.set(ntH, { display: 'block' }, 22.0); tl.set(li[2], { display: 'list-item' }, 22.0);
-      K.to(22.0, [ntH, li[2]], { autoAlpha: 1, duration: .4 }, 'phone', 'the note grows: 3 things need you');
+      K.to(22.0, [ntH, li[2]], { autoAlpha: 1, duration: .4 }, 'phone', 'the note grows: 2 things need you');
       tl.to(K.track(tm[0]), { autoAlpha: 0, duration: .15 }, 22.0); tl.to(K.track(tm[1]), { autoAlpha: 1, duration: .25 }, 22.08);
       return 26.5;
     }
@@ -665,7 +665,7 @@
       K.to(4.0, b[0], { autoAlpha: 1, y: 0 }, 'caption', b[0].textContent);
       K.to(4.5, send, { autoAlpha: 1 }, 'stage', 'Sent by itself');
       // review fixes, Nov 10: lines 1 and 2 win back part of their dollars, so the pen strikes nothing there; the line says what it wins back
-      K.to(6.9, res(0), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '36 of 48 followed up, $1,170 back');
+      K.to(6.9, res(0), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '$1,170 won back');
       K.to(7.9, ol, OUTW, 'stage', 'the Outlook window leaves'); cutIn(0, 7.9);
       /* 2. Maria Garcia: on today's call list */
       K.to(8.6, L[0], { autoAlpha: dim }, 'sheet', 'line 2 lights'); tl.to(K.track(L[1]), { autoAlpha: 1, duration: .25, ease: OUT }, 8.6);
@@ -675,7 +675,7 @@
       K.to(13.0, cur, { autoAlpha: 1 }, 'stage', 'E12 selected');
       K.to(14.0, b[1], { autoAlpha: 1, y: 0 }, 'caption', b[1].textContent);
       K.swap(14.5, e0, e1, 'stage', 'E12 becomes Yes and the call date'); tl.to(K.track(okf), { autoAlpha: 1, duration: .3, ease: OUT }, 14.5);
-      K.to(17.8, res(1), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '24 of 30 called in time, $960 back');
+      K.to(17.8, res(1), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '$960 won back');
       K.to(18.8, xl, OUTW, 'stage', 'the Excel window leaves'); cutIn(1, 18.8);
       /* 3. Lisa Anderson: the invoice fills in from her policy, then its details are checked against it */
       K.to(19.4, L[1], { autoAlpha: dim }, 'sheet', 'line 3 lights'); tl.to(K.track(L[2]), { autoAlpha: 1, duration: .25, ease: OUT }, 19.4);
@@ -693,7 +693,7 @@
       K.swap(28.75, rs, saved, 'stage', 'Review and send becomes Saved');
       var e = 32.1;
       K.to(e, strike(2), { scaleX: 1, duration: .5, ease: MOVE }, 'sheet', 'the pen strikes $792');
-      K.to(e + .5, res(2), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '33 hours of typing back');
+      K.to(e + .5, res(2), { autoAlpha: 1, y: 0, duration: .4 }, 'sheet', '33 hours of typing, $792 won back');
       tl.to(K.track(box.parentNode), { autoAlpha: 0, y: 10, duration: .3, ease: OUT }, e + 1.0);   // the pen box leaves with its window
       K.to(e + 1.0, inv, OUTW, 'stage', 'the last window leaves');
       if (CUT[2].indexOf(hd) >= 0) tl.to(K.track(hd), { autoAlpha: 1, duration: .3, ease: OUT }, e + 1.0);   // the rows come back with "the whole sheet lights"
@@ -730,7 +730,7 @@
       K.start(roll, { y: 0 }); K.start(cur, { autoAlpha: 0 }); K.start(np, { autoAlpha: 0 }); K.start(rings, { strokeDasharray: '1 2', strokeDashoffset: 1.01 });
       /* 11:40 PM: three bills against their quotes, each check in turn, one over */
       K.to(1.0, okSt, { autoAlpha: 1, duration: .35, stagger: .4 }, 'desk', 'Matches quote ticks, one bill after the other');
-      K.to(2.4, okRows, { opacity: .4 }, 'desk', 'the other rows dim, Plover IT turns red'); tl.to(K.track(red), { autoAlpha: 1, duration: .25, ease: OUT }, 2.4);
+      K.to(2.4, okRows, { opacity: .4 }, 'desk', 'the other rows dim, Second Street IT turns red'); tl.to(K.track(red), { autoAlpha: 1, duration: .25, ease: OUT }, 2.4);
       K.cap(5.0, caps[0], caps[1]);
       tl.to(nt, { autoAlpha: 1, y: 0, duration: .25, ease: OUT }, 6.5);
       K.fly(5.75, red, li[0], li[0].textContent, .9, 'phone', 'the red line flies into the morning list');
@@ -753,7 +753,7 @@
       K.to(21.0, pol, OUTW, 'desk', 'the policy sheet leaves');
       K.swap(21.5, kk[2], kk[3], 'phone', 'clock 6:30');
       tl.set(ntH, { display: 'block' }, 22.0); tl.set(li[2], { display: 'list-item' }, 22.0);
-      K.to(22.0, [ntH, li[2]], { autoAlpha: 1, duration: .4 }, 'phone', 'the note grows: 3 things need you');
+      K.to(22.0, [ntH, li[2]], { autoAlpha: 1, duration: .4 }, 'phone', 'the note grows: 2 things need you');
       tl.to(K.track(tm[0]), { autoAlpha: 0, duration: .15 }, 22.0); tl.to(K.track(tm[1]), { autoAlpha: 1, duration: .25 }, 22.08);
       return 26.5;
     }

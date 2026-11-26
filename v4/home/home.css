@@ -679,7 +679,7 @@ html.still .sa-ctl,.sa.still .sa-ctl{display:none}   /* Nov 6: the row held the 
 .pv-biz{display:grid;min-width:0;font-size:12px;line-height:15px;color:#5f6368}
 .pv-biz b{font-size:13px;line-height:16px;color:#111110}
 .pv-biz span{white-space:nowrap}
-/* Franco, Oct 27: "obvs add the lil logo to the invoice... just to make it a bit more yk realistic looking". Main Street Dental's
+/* Franco, Oct 27: "obvs add the lil logo to the invoice... just to make it a bit more yk realistic looking". Maple Court Dental's
    own mark, a tooth in one ink line, on its name's line as a small letterhead sets it. It takes no height (14px in the name's
    16px line) and 17px of width (a 22px mark beside both lines grew the letterhead and pushed the Spanish "Formulario de pedido"
    under the business at 360) */
@@ -784,7 +784,7 @@ html.still .sa-ctl,.sa.still .sa-ctl{display:none}   /* Nov 6: the row held the 
   html.js:not(.still) .sa:not(.done):not(.still) .mn{opacity:0;transform:translateY(12px)}
 }
 
-/* the walk end's time back names its example ("Time back for the example office:", Nov 6; "Time back for Sanderling's office:" with its
+/* the walk end's time back names its example ("Time back for the example office:", Nov 6; "Time back for" the agency's made-up name with its
    Sample stamp from 2026-10-30): a time back alone above Call us read as what an owner gets (check.py's first read, 2026-10-30) */
 .walk-tl .walk-time{display:inline}
 /* the walk end on a computer is one column since the slip beside it left (2026-10-30) */
@@ -1671,7 +1671,7 @@ html.js .hm4-hero .sheet[data-fill] .fill-wait,html.js .hm4-hero .sheet[data-fil
 }
 /* the hero sheet's row links on a phone: 44px tall (they were 43 at 320 and 375) */
 @media (max-width:899px){.sh-go::after{top:-.5px;bottom:-.5px}}
-/* review fixes, Nov 10: the walk film's end frame on a narrow phone. "Won back" / "Lo que recupera" stays one line beside its figure
+/* review fixes, Nov 10: the walk film's end frame on a narrow phone. "Won back" / "Total recuperado" stays one line beside its figure
    (it broke to "Lo que / recupera" at 320); under 340 the figure is 20px with an 8px gap, so the Spanish one stays inside the sheet */
 @media (max-width:359px){.cf-walk .cf-won>span{white-space:nowrap}}
 @media (max-width:339px){.cf-walk .cf-main-sheet .cf-won,.cf-walk .cf-over .cf-won{gap:8px}.cf-walk .cf-main-sheet .cf-won b,.cf-walk .cf-over .cf-won b{font-size:20px}}
@@ -1695,3 +1695,31 @@ html.js .hm4-hero .sheet[data-fill] .fill-wait,html.js .hm4-hero .sheet[data-fil
   #top .hero-calc{margin-top:10px}
 }
 @media (min-width:900px){#top .hero-eg{display:none}}
+
+/* everything-2026-11-24 (Nov 25, the builder): the words of the review's changes, fitted. Change 4: three sentences under the film's call
+   run under the button on a computer, where a 24em column set them in five to seven short lines. Change 9: why Lumora opens the band in
+   the body weight, over the bold tools line, which keeps its words. Change 7: the calculator's second sentence in the body weight, and
+   the Spanish top bar on one line from 900 to 959. Change 12: the amount due beside each ring */
+@media (min-width:760px){
+  .dk-end{align-items:start}
+  .dk-act .walk-dl{flex-basis:100%;max-width:46em}
+}
+.auto-why{margin-top:12px;font-size:17px;line-height:1.5;color:var(--body);max-width:34em}
+.auto-why+.auto-tools{margin-top:10px}
+.pol-w{position:relative}   /* the pen ring stays round the two words; the amount due follows it */
+.pol-due{margin-left:16px}
+@media (min-width:760px){.pol-c.cnp{padding-right:0}}
+@media (min-width:760px) and (max-width:1199px){.pol-due{font-size:.9em;margin-left:14px}}
+html[lang=es] .ol-karen .ol-s{white-space:normal;line-height:1.25}
+html[lang=es] .po-mail .ol-sb{font-size:18px;line-height:1.2;margin-bottom:6px}
+html[lang=es] .po-mail p{margin:8px 0 10px}
+@media (max-width:759px){   /* a phone: the customer and statement columns give the commission column room for the amount */
+  .po-pol .cx-grid th:first-child,.po-pol .cx-grid td.rn{width:26px}
+  .po-pol .cx-grid td:nth-child(2),.po-pol .cx-grid th:nth-child(2){width:94px}
+  .po-pol .cx-grid td:nth-child(3),.po-pol .cx-grid th:nth-child(3){width:78px}
+  .po-pol .cx-grid td.pol-c{text-overflow:clip}
+  .pol-due{margin-left:15px;font-size:13px}
+}
+@media (max-width:369px){.po-pol .pol-due{display:none}}
+.pk-calc .pk-own{font-weight:400;color:var(--body)}
+@media (min-width:900px) and (max-width:959px){html[lang=es] .util{font-size:14px}}
