@@ -107,7 +107,7 @@
 .how-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 24px;margin-bottom:26px}
 .how-h .t-lede{color:var(--muted)}
 @media (min-width:900px){.hm4-how .tl-head{flex-direction:column;align-items:flex-start;gap:6px}}
-@media (min-width:900px){.hm4-how .how-h{display:grid;grid-template-columns:minmax(0,var(--tl-head,15em)) minmax(0,1fr);column-gap:28px}}   /* 2026-10-16: "You can stop after any of them." starts on the rows' text column (the rows' own grid) */
+@media (min-width:900px){.hm4-how .how-h{display:grid;grid-template-columns:minmax(0,var(--tl-head,15em)) minmax(0,1fr);column-gap:28px}}   /* 2026-10-16: the steps' stop line starts on the rows' text column (the rows' own grid) */
 :lang(es) .hm4-how{--tl-head:17em}   /* 2026-10-16: "Cómo funciona" is 282px at 44px; at 15em (255px) it broke onto two lines */
 .tl4 .price,.tl4 .mb{font-size:17px}
 .tl-ai{color:var(--muted);max-width:36em}

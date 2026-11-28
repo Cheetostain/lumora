@@ -18,6 +18,8 @@
     var e = t.es, o = {}, q, n = t.night4; if (!e) { ESMISS.push(k + ': no Spanish block'); return t; }
     for (q in t) if (q !== 'es') o[q] = t[q];
     ['name', 'line', 'href', 'sub', 'short', 'time'].forEach(function (f) { if (e[f] != null) o[f] = e[f]; else if (t[f] != null) ESMISS.push(k + ': ' + f); });
+    if (e.shop) o.shop = e.shop;   // Nov 27 (N2): a sample with no made-up name says what it is in each language ("Una agencia de seguros")
+    if (e.eg) o.eg = e.eg; else if (t.eg) ESMISS.push(k + ': eg');   // Nov 27 (P1): the walk heading's trade phrase
     o.rows = t.rows.map(function (r) {
       var y = (e.rows || {})[r.id] || {}, x = {};
       for (q in r) x[q] = r[q]; for (q in y) x[q] = y[q];
@@ -217,7 +219,7 @@
   }
   // 2026-10-17 (Franco's iPhone: "$399 a month reads like not what we're losing"): a figure that stands alone says it is a loss,
   // "Losing $399 a month" / "Pierde $399 al mes" (per 'yr': a year / al año). Home types or binds the same words
-  L.losing = function (n, per) { return tr('Losing ', 'Pierde ') + money(n) + ' ' + (per === 'yr' ? tr('a year', 'al año') : tr('a month', 'al mes')); };
+  L.losing = function (n, per) { return tr('Losing ', 'Se pierden ') + money(n) + ' ' + (per === 'yr' ? tr('a year', 'al año') : tr('a month', 'al mes')); };
 
   /* ================================================================ the pencil */
   // 2026-10-17 polish (Franco's list item 4: every pencil mark 3 to 4.5px off what it holds, never crowding its neighbours; the
@@ -606,8 +608,13 @@
     var won = el.querySelector('.cf-won b'), wm = won && /\$[\d,]+/.exec(won.textContent);
     if (wm) { h.innerHTML = hx(t.shop) + (ES ? ' perdía ' : ' was losing ') + '<span class="walk-h-usd">' + money(total(t)) + '\u00a0' + perWord(t).replace(/ /g, '\u00a0') + '</span>. ' +
       '<span class="walk-won">' + (ES ? 'Los\u00a0arreglos recuperaron\u00a0' : 'The\u00a0fixes won back\u00a0') + wm[0] + '.</span>'; return; }
-    h.innerHTML = hx(t.shop) + (ES ? ' pierde ' : ' loses ') + '<span class="walk-h-usd">' + money(total(t)) + '\u00a0' + perWord(t).replace(/ /g, '\u00a0') + '</span>' +
-      (ES ? '. Le\u00a0mostramos dónde.' : '. Here\'s where.');
+    // words run, Nov 27 (P1): "Example: a plumbing shop loses $2,710 a month." The trade's phrase (eg in trades-src.json and
+    // trades-src-es.json) in place of the made-up name, the word example at the start (lint R8 lets .walk-h open on it, as Home's
+    // does), and "Here's where." went. A trade with no phrase keeps its name, so a missing field shows in check.py, not as a blank
+    var eg = t.eg;   // localize() put the Spanish phrase in on a Spanish page
+    // a Spanish heading never ends a line on a short word (check.py item 6, PICKS_SHORT): "un negocio de plomería"
+    if (eg && ES) eg = eg.split(' ').map(function (w, i, a) { return w + (i < a.length - 1 ? (/^(?:a|al|de|del|el|la|las|los|lo|le|se|su|sus|y|e|o|u|en|con|por|que|un|una|no|mi)$/i.test(w) ? '\u00a0' : ' ') : ''); }).join('');
+    h.innerHTML = (eg ? (ES ? 'Ejemplo: ' : 'Example: ') + hx(eg) : hx(t.shop)) + (ES ? ' pierde ' : ' loses ') + '<span class="walk-h-usd">' + money(total(t)) + '\u00a0' + perWord(t).replace(/ /g, '\u00a0') + '</span>.';
   }
   var shown = {};
   var BIND = {
@@ -669,7 +676,7 @@
       // resume pass 2026-10-19 (both judges: a trade hero on a phone stood still for its first 4 s): the figure wears the walk's red pen
       // underline, drawn once when the card is in view (initDraw; system.css delays it to 0.8 s). One pen ring a page still holds
       // the figure keeps one line (no-break spaces); where it doesn't fit beside "Losing", it goes under it whole
-      if (s('usd')) s('usd').innerHTML = '<span class="loss-k">' + tr('Losing', 'Pierde') + '</span> <span class="su">' + (money(r.usd) + perShort(t)).replace(/ /g, ' ') + UNDER_SVG + '</span>'; if (s('f')) s('f').textContent = keepCounts(r.f);
+      if (s('usd')) s('usd').innerHTML = '<span class="loss-k">' + tr('Losing', 'Se pierden') + '</span> <span class="su">' + (money(r.usd) + perShort(t)).replace(/ /g, ' ') + UNDER_SVG + '</span>'; if (s('f')) s('f').textContent = keepCounts(r.f);
       if (el.tagName === 'A') el.href = '#' + ($('[data-bind=sheet]') ? $('[data-bind=sheet]').id || 'sheet' : 'sheet');
     },
     text: function (el, t) { var v = t[el.getAttribute('data-field')]; if (v != null) el.textContent = v; },
@@ -694,12 +701,14 @@
         if (ES) {
           var me = /, (\d+) (.+)$/.exec(t.short) || [], qui = t.per === 'yr' ? 'una administradora de propiedades con ' :
             /^Restaurante/.test(t.short) ? 'un restaurante y bar con capacidad para ' : 'un negocio con ';
-          if (leak) leak.innerHTML = 'De la hoja de ' + qui + (me[1] ? me[1] + ' ' + (/^Restaurante/.test(t.short) ? 'personas' : me[2]) : '') + ': ' +
-            esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', una pérdida de <b class="loss">' + money(r.usd) + perShort(t) + '</b>.';
+          if (leak) leak.innerHTML = 'De la hoja de ejemplo de ' + qui + (me[1] ? me[1] + ' ' + (/^Restaurante/.test(t.short) ? 'personas' : me[2]) : '') + ': ' +
+            esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', una pérdida de <b class="loss">' + money(r.usd) + perShort(t) + (t.per === 'yr' ? ', ' + money(r.usd / 12) + ' al mes' : '') + '</b>.';
           return;
         }
         // 2026-10-17: the figure is red and says it is a loss ("losing"), so it never reads as the price of the line above
-        if (leak) leak.innerHTML = 'From the sheet for a ' + who + ': ' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', losing <b class="loss">' + money(r.usd) + perShort(t) + '</b>.';
+        // Nov 27 (P1): the tile says it is the example
+        // sheet's, and the one row counted by the year (property managers) gives its month too, so the eight tiles compare at a glance
+        if (leak) leak.innerHTML = 'From the example sheet for a ' + who + ': ' + esc(r.b.charAt(0).toLowerCase() + r.b.slice(1).replace(/ (\d+)$/, '\u00a0$1')) + ', losing <b class="loss">' + money(r.usd) + perShort(t) + (t.per === 'yr' ? ', ' + money(r.usd / 12) + ' a month' : '') + '</b>.';
       });
     },
     bigfig: function (el, t) {
@@ -726,7 +735,7 @@
         var id = 'stop-' + (i + 1);
         return '<li class="stop page" id="' + id + '" data-usd="' + r.usd + '" data-place="' + esc(r.place) + '">' +
           '<p class="tab"><span class="tab-n">' + (i + 1) + '</span>Stop ' + (i + 1) + ' · ' + esc(r.place) + '</p><h3>' + esc(r.b) + '</h3>' +
-          '<div class="stop-body"><div class="pic"><div class="g2r" data-g2r data-state="after" role="img" aria-label="' + esc(altAfter(r.after)) + '" data-label-before="' + esc(altBefore(r)) + '" data-label-after="' + esc(altAfter(r.after)) + '">' +
+          '<div class="stop-body"><div class="pic" data-nosnippet><div class="g2r" data-g2r data-state="after" role="img" aria-label="' + esc(altAfter(r.after)) + '" data-label-before="' + esc(altBefore(r)) + '" data-label-after="' + esc(altAfter(r.after)) + '">' +
           '<div class="before">' + beforeHTML(r) + '</div><div class="after">' + realHTML(r.after) + '</div></div></div>' +   // Nov 6: no Sample stamp
           '<div class="stop-notes"><p class="pencil">' + esc(r.note) + '</p>' +
           '<p class="find"><span class="find-usd money">' + money(r.usd) + ' ' + perWord(t) + UNDER_SVG + '</span><span class="find-f">' + esc(r.f) + '</span></p>' +
@@ -807,13 +816,13 @@
       if (N.lock) {
         var nts = N.nts.map(function (x, i) { return { x: x, i: i }; }).sort(function (a, b) { return key(b.x.at) - key(a.x.at); });   // newest on top, as a phone shows them
         // data-day / data-eve: the loop ticks the big clock through the night (9:40 ... 6:41) and the date line with it
-        lock = '<div class="pic n4-phone"><div class="lk4 crop-m" data-day="' + esc(day) + '" data-eve="' + esc(eve) + '" role="img" aria-label="' + esc(tr('Example: the shop phone\'s lock screen at 6:41 a.m., ', 'Ejemplo: la pantalla de bloqueo del teléfono del negocio a las 6:41 a. m., ') + day + '. ' +
+        lock = '<div class="pic n4-phone" data-nosnippet><div class="lk4 crop-m" data-day="' + esc(day) + '" data-eve="' + esc(eve) + '" role="img" aria-label="' + esc(tr('Example: the shop phone\'s lock screen at 6:41 a.m., ', 'Ejemplo: la pantalla de bloqueo del teléfono del negocio a las 6:41 a. m., ') + day + '. ' +
           nts.map(function (o) { return o.x.t + ', ' + hora(o.x.at) + ': ' + o.x.p + (o.x.fx ? '. ' + o.x.fx : ''); }).join('. ') + '.') + '">' +
           (el.hasAttribute('data-iph') ? iph : function (s) { return ph4(s, '', true); })('<p class="lk4-d' + (el.hasAttribute('data-iph') ? ' iph-date' : '') + '" aria-hidden="true">' + esc(day) + '</p><p class="lk4-t' + (el.hasAttribute('data-iph') ? ' iph-clock' : '') + '" aria-hidden="true">6:41</p><div class="lk4-nts" aria-hidden="true">' + nts.map(function (o) {
             var x = o.x; return '<div class="lk4-nt" data-n="' + nNt[o.i] + '" data-t="' + esc(x.at) + '" data-task="' + x.task + '"><span class="ap ap-' + x.app.toLowerCase() + '">' + (APPS[x.app] || APPS.List) + '</span><div><p class="nr"><b>' + esc(x.t) + '</b><span>' + whole(esc(hora(x.at))) + '</span></p><p>' + esc(x.p) + '</p>' +
               (x.fx ? '<span class="fx">↩ ' + esc(x.fx) + '</span>' : '') + '</div></div>'; }).join('') + '</div>') + '</div></div>';
       }
-      figs.innerHTML = lock + '<div class="pic n4-paper"><div class="np"><div class="np-h"><b>' + esc(N.paper + ', ' + t.shop) + '</b><span>' + esc(logDate) + '</span></div><ol class="np-rows">' +
+      figs.innerHTML = lock + '<div class="pic n4-paper" data-nosnippet><div class="np"><div class="np-h"><b>' + esc(N.paper + ', ' + t.shop) + '</b><span>' + esc(logDate) + '</span></div><ol class="np-rows">' +
         N.rows.map(function (r, i) { return '<li data-n="' + nRow[i] + '" data-t="' + esc(r[0]) + '" data-task="' + r[2] + '"><time>' + whole(esc(hora(r[0]))) + '</time><span>' + whole(esc(r[1])) + '</span></li>'; }).join('') +
         '</ol><p class="np-foot">' + esc((t.morning && t.morning.src) || tr('From your own job list, invoices, bills and email', 'De su lista de trabajos, sus facturas, las facturas de proveedores y su correo')) + '</p></div></div>';
       figs.classList.toggle('nolock', !N.lock);
@@ -884,9 +893,11 @@
       // the stop's head is its pencil-circled number beside the PLACE in the shop ("The shop phone"), with the leak's name on
       // a plain line under it: a walk goes room by room, and a calls row never becomes a heading (R1; review 2026-10-10)
       // the Before / After buttons sit under the picture they switch
+      // words run, Nov 27 (D1): every stop picture carries data-nosnippet, so a search snippet never quotes a sample paper as a fact and
+      // a prerender keeps it (the night's two pictures in night4 too)
       return '<li class="stop page" id="stop-' + n + '" data-usd="' + r.usd + '" data-place="' + esc(place) + '" data-task="' + task + '"' + (P ? ' data-state="after"' : '') + '>' +
         '<div class="stop-h">' + (one ? '' : '<span class="tab-n">' + n + '</span>') + '<div class="stop-t"><h3>' + (one ? '' : '<span class="sr">' + tr('Stop ', 'Paso ') + n + ': </span>') + esc(headEs(place)) + '</h3><p class="stop-leak">' + esc(r.b) + '</p></div></div>' +
-        '<div class="stop-body"><div class="pic' + (P ? ' has-seg' : '') + '"' + (task === 'calls' ? ' data-pic="calls"' : '') + '>' + pic +
+        '<div class="stop-body"><div class="pic' + (P ? ' has-seg' : '') + '" data-nosnippet' + (task === 'calls' ? ' data-pic="calls"' : '') + '>' + pic +
         (P ? '<div class="seg" role="group" aria-label="' + tr('Show stop ', 'Mostrar el paso ') + n + ': ' + esc(place) + '"><button type="button" data-show="before" aria-pressed="false">' + tr('Before', 'Antes') + '</button><button type="button" data-show="after" aria-pressed="true">' + tr('After', 'Después') + '</button></div>' : '') +
         '</div>' +
         // last pass item 5 (2026-10-26): a row with noteAfter says it under the After picture and its note under Before, as Home's
@@ -894,8 +905,10 @@
         '<div class="stop-notes"><p class="pencil">' + (P && r.noteAfter ? '<span class="bo">' + esc(r.note) + '</span><span class="ao">' + esc(r.noteAfter) + '</span>' : esc(r.note)) + '</p>' +
         // 2026-10-17: every stop's figure says what it is in each state, not only a one-stop walk's ("$399 a month" alone read as a price)
         // round 4 (2026-10-18): the label sits on the figure's line, "Won back $1,900 a month", as a loss reads "Losing $1,900 a month";
+        // words run, Nov 27 (P1, E1): After says "Was losing $1,900 a month" (the fix stopped claiming every dollar came back), and the
+        // Spanish says "Se pierden" / "Se perdían", never "Pierde" (the visitor is not the one losing it);
         // "$1,900 a month" alone in big ink under a small label read as a monthly price. It wraps only where the line can't hold both
-        '<p class="find"><span class="find-l">' + (P ? '<span class="find-k"><span class="bo">' + tr('Lost', 'Pierde') + '</span><span class="ao">' + tr('Won back', 'Recupera') + '</span></span>' : '<span class="find-k">' + tr('Lost', 'Pierde') + '</span>') + ' ' +
+        '<p class="find"><span class="find-l">' + (P ? '<span class="find-k"><span class="bo">' + tr('Lost', 'Se pierden') + '</span><span class="ao">' + tr('Was losing', 'Se perdían') + '</span></span>' : '<span class="find-k">' + tr('Lost', 'Se pierden') + '</span>') + ' ' +
         '<span class="find-usd money">' + money(r.usd) + ' ' + perWord(t) + UNDER_SVG + '</span></span>' + (noF ? (r.count ? '<span class="find-f">' + esc(r.count) + '</span>' : '') : '<span class="find-f">' + esc(r.fs || r.f) + '</span>') + '</p>' +
         // agency pass 2026-10-18 (rank 8): with no formula under the stops, a row's counting line (trades-src "count") says which of the
         // owner's own records the figure comes from, and names an outside rate once, so a $1,900 never reads as made up for the pitch
@@ -1144,7 +1157,7 @@
       while (a && sec.contains(a)) { c = a; a = a.parentElement && a.parentElement.closest(SEAT_ATOM); }   // the outermost unit that holds it
       while (c.parentElement && c.parentElement !== sec && /^inline/.test(getComputedStyle(c).display)) c = c.parentElement;
       return c; };
-    for (var pass = 0; pass < 3; pass++) {
+    for (var pass = 0; pass < 6; pass++) {   // a pass moves one chip of a cut row; What we automate's first row holds four since the Offices chip (Nov 27)
       var L = lines(), first = L.filter(function (o) { return cut(o, 0); }).sort(function (a, b) { return a.t - b.t; })[0]; if (!first) return;
       // the unit that holds the cut line, and up to two blocks before it in the same column. A push down happens at that unit alone; a
       // lift is shared by them in proportion to the air over each (each keeps 6px of it, a card with a shadow 16, and gives 16px at most), so no one gap closes
@@ -1396,8 +1409,12 @@
     // and "The businesses and numbers here are samples." fail now; "the example shop" in a result's own line stays (its FTC note)
     // Nov 24 (hero-review-2026-11-23, item 1; Franco: "implement Home's first screen"): the phone caption over Home's clipboard opens
     // "Example:", the one line that tells a stranger what the sheet is before he reaches it (.hero-eg); everywhere else the word fails
-    texts(function (v, pe) { var m = /\bour\s+example\b|^\s*(?:an?\s+)?(?:samples?|examples?|ejemplos?|muestras?)(?:\s+[^\s:]+)?\s*:|\((?:samples?|examples?|ejemplos?|muestras?)\)|\b(?:are|is)\s+(?:all\s+)?(?:samples|examples)\b|\bson\s+(?:todos\s+)?(?:muestras|ejemplos)\b|\b(?:our|the|a|an)\s+sample\s+(?!sheets?\b|numbers?\b|(?:win\s+)?rates?\b|(?:yearly\s+)?fee\b|figures?\b|data\b|\$)\S+|\b(?:our|the|a|an)\s+sample\s*$|, a sample[.,]|\bsample sheet for\b|\bsample business\b|\bNuestr[oa]s?\s+\S+\s+de\s+ejemplo\b|\bUn ejemplo(?::|\s+con\b)|\bhoja de ejemplo de\b|\b(?:un|una)\s+\S+\s+de\s+\S+(?:\s+\S+)?\s+de\s+ejemplo\b|\bnegocio de ejemplo, hoy\b/i.exec(v);
-      if (m && !pe.closest('.hero-eg, .walk-h')) E.push('R8: "' + m[0].trim() + '" marks a business or a job as a sample in shown words (' + (pe.className || pe.tagName.toLowerCase()) + '); the footer says the examples are made up.'); });
+    // words run, Nov 27 (P1): the trade walk headings open "Example:" (.walk-h) and the Industries tiles say "From the example sheet
+    // for" / "De la hoja de ejemplo de" (.ix-leak)
+    // and "our example sheet" / "nuestra hoja de ejemplo" names the sheet, not a business, as "the sample sheet" always could (P10's
+    // "we also walk" line on Industries and What we automate)
+    texts(function (v, pe) { var m = /\bour\s+example\b(?!\s+sheets?\b)|^\s*(?:an?\s+)?(?:samples?|examples?|ejemplos?|muestras?)(?:\s+[^\s:]+)?\s*:|\((?:samples?|examples?|ejemplos?|muestras?)\)|\b(?:are|is)\s+(?:all\s+)?(?:samples|examples)\b|\bson\s+(?:todos\s+)?(?:muestras|ejemplos)\b|\b(?:our|the|a|an)\s+sample\s+(?!sheets?\b|numbers?\b|(?:win\s+)?rates?\b|(?:yearly\s+)?fee\b|figures?\b|data\b|\$)\S+|\b(?:our|the|a|an)\s+sample\s*$|, a sample[.,]|\bsample sheet for\b|\bsample business\b|\bNuestr[oa]s?\s+(?!hojas?\s)\S+\s+de\s+ejemplo\b|\bUn ejemplo(?::|\s+con\b)|\bhoja de ejemplo de\b|\b(?:un|una)\s+\S+\s+de\s+\S+(?:\s+\S+)?\s+de\s+ejemplo\b|\bnegocio de ejemplo, hoy\b/i.exec(v);
+      if (m && !pe.closest('.hero-eg, .walk-h, .ix-leak')) E.push('R8: "' + m[0].trim() + '" marks a business or a job as a sample in shown words (' + (pe.className || pe.tagName.toLowerCase()) + '); the footer says the examples are made up.'); });
     // a stamp in words: any shown element whose whole text is the word, in either language and with or without a second word or a
     // colon ("Sample", "Example", "EXAMPLE", "Sample data", "Ejemplo:", "Datos de ejemplo"; Nov 7, reviewers: an "Example" badge was the
     // likeliest way one comes back, and only the bare Sample / Ejemplo failed), the calculator's own tags aside
@@ -1405,7 +1422,7 @@
     // the law's one exception (FTC 16 CFR 255.2(c), the .com disclosures guide: the note sits with the claim, a footer can't qualify
     // it): a result someone got from the work (Won back, Time back, Recupera, se ahorra) says example (ejemplo) in the words of its
     // own picture, stop or walk end, shown with it
-    var RES = /\b(?:Won back|Time back|fixes won back)\b|\bRecupera\b|\barreglos recuperaron\b|\bLo que recupera\b|\bse ahorran?\b|\bWhat the fix did\b|\bLo que logró el arreglo\b/;
+    var RES = /\b(?:Won back|Was losing|Time back|fixes won back)\b|\bRecupera\b|\bSe perdían\b|\barreglos recuperaron\b|\bLo que recupera\b|\bse ahorran?\b|\bWhat the fix did\b|\bLo que logró el arreglo\b/;
     // Nov 6, benchmark pass: the word is body size (12px or more) and shares one screen with the figure (How it works' full sheet
     // had "example" on its business line 1,264px above its time back at 393 wide, so its time line says it now). The word is
     // example, for the shop or for a rate ("1 in 2 is an example rate", "una tasa de ejemplo"); until Nov 7 "sample" counted too,
@@ -1467,8 +1484,6 @@
     if (/every dollar back|todo su dinero/i.test(text)) E.push('Money back: "every dollar back" is retired; the line says "the walk fee".');
     // agency pass 2026-10-18 (rank 5): the bound short fact too; the old one, "Money back up to 7 days...", sat under the $1,500 floor and read as the fix money
     shown('.mb, [data-shared^=moneyback]').forEach(function (m) { if (!/walk fee|lo que pagó por la visita/i.test(m.innerText)) E.push('Money back: a money-back line without "the walk fee": ' + m.innerText.slice(0, 50)); });
-    // R9 bans the no-reviews line (Franco 2026-10-13: never volunteer what Lumora lacks; say it only when someone asks). Until then R9 required it
-    if (/no (?:client )?reviews here yet|no hay rese[ñn]as de clientes/i.test(text)) E.push('R9: the retired no-reviews line ("Lumora is new, so there are no client reviews here yet.") is back; say it only when someone asks.');
     // R6: one phone component (the drawn frame with its camera island), never rotated, one width on a computer, .491 wide to tall
     if (shown('.scr-phone, .scr-lock').length) E.push('R6: an old phone style (.scr-phone or .scr-lock) on a v4 page.');
     // 2026-10-16 (the new Home): the measured iPhone 15 (.iph, system.css section 28) is a phone component too: the device keeps its
@@ -1650,9 +1665,11 @@
   // The card's first line is the shared reply, word for word (shared-text.json reply; check.py close_static_problems compares them).
   // The open-now line, its holiday list and OUT went on 2026-10-23: Franco, "They can just open the Google business" (the Google
   // profile carries the hours, so the site keeps no second copy that can go stale), and the promise audit (PROPAGATION D38, D46)
-  // moved the 10 a.m. clock to the free call script and the voicemail greeting
-  function callStatus() {
-    return tr('We usually call you back the same business day.', 'Por lo general le devolvemos la llamada el mismo día hábil.');
+  // moved the 10 a.m. clock to the free call script and the voicemail greeting. Words run, Nov 27 (S4): the call line is the shared
+  // reply ("by call or text"); the text card opens on "Text us any time." with the short reply, so a text is welcome at any hour
+  function callStatus(text) {
+    return text ? tr('Text us any time. We usually reply the same business day.', 'Mándenos un mensaje a cualquier hora. Por lo general le respondemos el mismo día hábil.')
+      : tr('We usually reply the same business day, by call or text.', 'Por lo general le respondemos el mismo día hábil, por llamada o por mensaje de\u00a0texto.');
   }
   L.callStatus = callStatus;   // test hook: check.py reads the line the card would show
   function initCallCard() {
@@ -1661,10 +1678,15 @@
     var card = null, anchor = null, closedAt = 0, closedFrom = null, first = new WeakMap();
     var links = function () { return $$('a[href^="tel:"], a[href^="sms:"]').filter(function (a) { return !a.closest('.callcard, .callbar'); }); };
     links().forEach(function (a) { first.set(a, a.getAttribute('href')); });
+    // words run, Nov 27 (P6): an sms: link whose words the page rewrote (the calculator's estimate) opened nothing on a computer, where
+    // the browser drops an sms: link. It opens the card now, with the estimate on a first line above the reply line, so the figure
+    // still reaches us: he says it when he calls or texts. The code stays the plain text code; a phone still opens the message
     var own = function (a) { return /^sms:/.test(a.getAttribute('href')) && first.has(a) && first.get(a) !== a.getAttribute('href'); };
+    var estimate = function (a) { var b = ''; try { b = decodeURIComponent((a.getAttribute('href').split(/[?&]body=/)[1] || '').split('&')[0]); } catch (e) {}
+      var m = /\$\d[\d,]*/.exec(b); return m ? m[0] : ''; };
     function mark() {   // the controls say they open a dialog only where they do
       links().forEach(function (a) {
-        if (fine.matches && !own(a)) { a.setAttribute('aria-haspopup', 'dialog'); a.setAttribute('aria-controls', 'callcard'); a.setAttribute('aria-expanded', card && a === anchor && card.matches(':popover-open') ? 'true' : 'false'); }
+        if (fine.matches) { a.setAttribute('aria-haspopup', 'dialog'); a.setAttribute('aria-controls', 'callcard'); a.setAttribute('aria-expanded', card && a === anchor && card.matches(':popover-open') ? 'true' : 'false'); }
         else ['aria-haspopup', 'aria-controls', 'aria-expanded'].forEach(function (n) { a.removeAttribute(n); });
       });
     }
@@ -1674,7 +1696,7 @@
       card.className = 'callcard'; card.id = 'callcard'; card.tabIndex = -1;
       card.setAttribute('popover', 'auto'); card.setAttribute('role', 'dialog');
       card.setAttribute('aria-label', tr('Call or text us', 'Llámenos o escríbanos')); card.setAttribute('aria-describedby', 'cc-st');
-      card.innerHTML = '<p class="cc-st" id="cc-st"></p>' +
+      card.innerHTML = '<p class="cc-est" hidden></p><p class="cc-st" id="cc-st"></p>' +
         '<div class="cc-qr"><svg viewBox="-2 -2 29 29" aria-hidden="true" focusable="false"><path d=""/></svg><p class="cc-qc"></p></div>' +
         '<p class="cc-n">(352) 226-0681</p>' +
         '<p class="cc-tel"><a class="u" href="tel:+13522260681">' + tr('Call from this computer', 'Llamar desde esta computadora') + '</a></p>' +
@@ -1709,13 +1731,16 @@
     addEventListener('scroll', function () { if (card && anchor && card.matches(':popover-open') && pinned(anchor)) { noScroll = true; place(); noScroll = false; } }, { passive: true });
     document.addEventListener('click', function (e) {
       var a = e.target.closest && e.target.closest('a[href^="tel:"], a[href^="sms:"]');
-      if (!a || !fine.matches || a.closest('.callcard, .callbar') || own(a) || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (!a || !fine.matches || a.closest('.callcard, .callbar') || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
       if (closedFrom === a && performance.now() - closedAt < 400) { closedFrom = null; return; }   // the press that closed it was on this control
       if (!card) build();
       var text = /^sms:/.test(a.getAttribute('href'));
       anchor = a;
-      $('.cc-st', card).innerHTML = callStatus();
+      $('.cc-st', card).innerHTML = callStatus(text);
+      var est = own(a) ? estimate(a) : '', ce = $('.cc-est', card);
+      ce.hidden = !est;
+      ce.textContent = est ? tr('Your estimate: about ' + est + ' a month. Mention it when you call or text, and we start from there.', 'Su cálculo: unos ' + est + ' al mes. Díganoslo cuando llame o escriba, y empezamos por ahí.') : '';
       $('.cc-qr path', card).setAttribute('d', QR[text ? 'sms' : 'tel']);
       $('.cc-qc', card).textContent = text
         ? tr('Point your phone\'s camera at this code to text us. It opens a new message to our number.', 'Apunte la cámara de su celular a este código para escribirnos. Se abre un mensaje nuevo a nuestro número.')

@@ -124,7 +124,7 @@
    walk row's card bleeds out by its padding (system.css), so its words keep the other rows' x (2026-10-16, Franco) */
 .how-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 24px;margin-bottom:26px}
 .how-h .t-lede{color:var(--muted)}
-@media (min-width:900px){.hm4-how .how-h{display:grid;grid-template-columns:minmax(0,var(--tl-head,15em)) minmax(0,1fr);column-gap:28px}}   /* 2026-10-16: "You can stop after any of them." starts on the rows' text column */
+@media (min-width:900px){.hm4-how .how-h{display:grid;grid-template-columns:minmax(0,var(--tl-head,15em)) minmax(0,1fr);column-gap:28px}}   /* 2026-10-16: the steps' stop line starts on the rows' text column */
 :lang(es) .hm4-how{--tl-head:17em}   /* 2026-10-16: "Cómo funciona" is 282px at 44px; at 15em (255px) it broke onto two lines */
 @media (min-width:900px){.hm4-how .tl-head{flex-direction:column;align-items:flex-start;gap:6px}}   /* on a computer the step column is narrow, so every tag gets its own line (one wrapped and three didn't) */
 .tl4 .price,.tl4 .mb{font-size:17px}
@@ -476,7 +476,7 @@
 
 @media (max-width:699px){.walk-also{margin-top:12px}}
 
-/* How it works from 1240px. The alive build put its heading and "You can stop after any of them." in their own column, sticky
+/* How it works from 1240px. The alive build put its heading and the steps' stop line in their own column, sticky
    beside the steps (how-split, alive round item 17: "the heading travels down with the reader"). After the promise audit the steps
    are short: the whole section fits one laptop screen, so the heading never travelled and stood over 541px of bare paper (567 in
    Spanish), the hole Franco named on Oct 25 ("too much empty space that breaks the design of the website"). Space pass fixes,

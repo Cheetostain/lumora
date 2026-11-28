@@ -146,6 +146,7 @@ html:not(.js) .menu-b{display:none}
 .callcard:focus{outline:none}
 .callcard p{margin:0}
 .cc-st{font-size:var(--fs-15);line-height:1.45;color:var(--body)}
+.callcard .cc-est{margin:0 0 8px;font-size:var(--fs-15);line-height:1.45;color:var(--ink)}
 .cc-st b{display:block;font-size:var(--fs-17);color:var(--ink)}
 .cc-qr{display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px;align-items:center;margin:14px 0 12px}
 .cc-qr svg{display:block;width:112px;height:112px;background:#fff}

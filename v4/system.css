@@ -175,6 +175,11 @@ h3,.t-sub{font-size:clamp(20px,2vw,var(--fs-24));line-height:1.18;letter-spacing
   .hero[data-ground=ruled] .hero-tool.ix{position:relative}   /* Industries: words in both columns, so both are plain paper, as How it works and the full list */
   .hero[data-ground=ruled] .hero-tool.ix::before{content:"";position:absolute;z-index:-1;top:-600px;bottom:-600px;left:-28px;right:-50vw;background:var(--paper);pointer-events:none}
   .hero[data-ground=ruled]:not(:has(.hiw-tl,.wa-find,.hero-tool.ix)) :is(.hero-copy,.ct-copy,.ab-copy)::before{right:-64px;background:linear-gradient(90deg,var(--paper) calc(100% - 64px),transparent)}
+  /* words run, Nov 27 (P10, P14): Contact's caption under the phone sits on the lined pad, and when the thread's bubble grew a line its
+     two Spanish lines landed on a rule (check.py RULED_JS). The caption's own lines get the plain paper, fading in and out over 64px as
+     the word column does, so no rule runs through it at any wrap; a layer behind the words, so the caption keeps its size and place */
+  .hero[data-ground=ruled] .ct-fig .cap{position:relative;z-index:0}
+  .hero[data-ground=ruled] .ct-fig .cap::before{content:"";position:absolute;z-index:-1;inset:0 -64px;background:linear-gradient(90deg,transparent,var(--paper) 64px calc(100% - 64px),transparent);pointer-events:none}
 }
 [data-ground=night]{background:radial-gradient(rgba(233,228,216,.05) 1px,transparent 1.2px) 0 0/5px 5px,var(--night);color:var(--on-night)}
 [data-ground=night] b{color:#fff}
@@ -1108,6 +1113,7 @@ html:not(.js) .menu-b{display:none}   /* without JS the menu cannot open; the fo
 .callcard:focus{outline:none}   /* the dialog itself takes focus on open so a screen reader reads its status; the links inside keep the ring */
 .callcard p{margin:0}
 .cc-st{font-size:var(--fs-15);line-height:1.45;color:var(--body)}
+.callcard .cc-est{margin:0 0 8px;font-size:var(--fs-15);line-height:1.45;color:var(--ink)}   /* words run, Nov 27 (P6): the calculator's estimate, above the reply */
 .cc-st b{display:block;font-size:var(--fs-17);color:var(--ink)}
 .cc-qr{display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px;align-items:center;margin:14px 0 12px}
 .cc-qr svg{display:block;width:112px;height:112px;background:#fff}
